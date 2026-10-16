@@ -41,6 +41,10 @@ set_target_properties(scancore PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
     MACOSX_BUNDLE_ICON_FILE scancore.icns)
 target_compile_definitions(scancore PRIVATE SCANCORE_VERSION="${PROJECT_VERSION}")
+if(NOT SCANCORE_WITH_NOVEL_PACK_INSTALLER)
+    target_compile_definitions(scancore PRIVATE SCANCORE_DISABLE_NOVEL_PACK)
+    target_compile_definitions(scancore_core PRIVATE SCANCORE_DISABLE_NOVEL_PACK)
+endif()
 
 file(GLOB_RECURSE SCANCORE_QML RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CONFIGURE_DEPENDS qml/*.qml)
 if(ANDROID)

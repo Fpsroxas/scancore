@@ -14,6 +14,7 @@ class Extensions : public QObject {
     Q_OBJECT
     QML_ELEMENT
     QML_SINGLETON
+    Q_PROPERTY(bool novelPackAvailable READ novelPackAvailable CONSTANT)
     Q_PROPERTY(bool novelPackInstalled READ novelPackInstalled NOTIFY changed)
     Q_PROPERTY(bool busy READ busy NOTIFY changed)
     Q_PROPERTY(QString status READ status NOTIFY changed)
@@ -21,6 +22,7 @@ class Extensions : public QObject {
 public:
     explicit Extensions(QObject *parent = nullptr) : QObject(parent) {}
 
+    bool novelPackAvailable() const;
     bool novelPackInstalled() const;
     bool busy() const { return m_busy; }
     QString status() const { return m_status; }

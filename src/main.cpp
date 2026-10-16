@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
     // Development hook for testing updates.
     if (qEnvironmentVariableIsSet("SCANCORE_PRETEND_VERSION"))
         Application::setApplicationVersion(qEnvironmentVariable("SCANCORE_PRETEND_VERSION"));
-    Application::setDesktopFileName(QStringLiteral("com.mediumdev.ScanCore"));
+    Application::setDesktopFileName(QStringLiteral("com.mediumdev.scancore"));
     Application::setWindowIcon(QIcon(QStringLiteral(":/branding/scancore.svg")));
 #ifndef Q_OS_ANDROID
     QApplication::setQuitOnLastWindowClosed(false);

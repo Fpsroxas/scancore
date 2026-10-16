@@ -220,14 +220,15 @@ Item {
             }
             SettingRow {
                 visible: App.platform !== "android"
-                title: "Extended novel sources" + (Extensions.novelPackInstalled ? " · installed" : "")
-                description: Extensions.busy ? Extensions.status
+                title: "Extended novel sources" + (!Extensions.novelPackAvailable ? " · unavailable in this build" : Extensions.novelPackInstalled ? " · installed" : "")
+                description: !Extensions.novelPackAvailable ? "The downloadable Python novel-source pack is disabled in this build."
+                    : Extensions.busy ? Extensions.status
                     : Extensions.novelPackInstalled ? Novels.sources().filter(s => s.extended).length + " more novel sites from lightnovel-crawler. Pick them from “More sources” on the Novels page; pasted book links from any of them open directly."
                     : "Adds about 260 more novel sites using lightnovel-crawler. Downloads a private copy of Python and the crawler (about 400 MB) into the app data folder." + (Extensions.status ? " Last attempt: " + Extensions.status : "")
                 Row {
                     spacing: 8
                     ScButton {
-                        visible: !Extensions.novelPackInstalled
+                        visible: Extensions.novelPackAvailable && !Extensions.novelPackInstalled
                         variant: "primary"
                         text: "Install"
                         iconName: "download"
@@ -236,7 +237,7 @@ Item {
                         onClicked: page.report(Extensions.installNovelPack(), (r) => "Extended novel sources installed")
                     }
                     ScButton {
-                        visible: Extensions.novelPackInstalled
+                        visible: Extensions.novelPackAvailable && Extensions.novelPackInstalled
                         text: "Remove"
                         variant: "ghost"
                         onClicked: Extensions.removeNovelPack()
@@ -307,6 +308,7 @@ Item {
 
             SectionTitle { text: "About" }
             SettingRow {
+                visible: !Updater.managedByFlatpak
                 title: "SCANCORE " + App.version
                 description: Updater.state === "checking" ? "Checking for updates…"
                     : Updater.state === "current" ? "You have the latest version."
@@ -332,12 +334,19 @@ Item {
                 }
             }
             SettingRow {
+                visible: Updater.managedByFlatpak
+                title: "SCANCORE " + App.version
+                description: "Updates are delivered by Flatpak through your software center or system updater."
+            }
+            SettingRow {
+                visible: !Updater.managedByFlatpak
                 title: "Install updates automatically"
                 description: Updater.canInstall ? "New versions download in the background and install when you restart."
                     : "This copy cannot update itself (for example a portable or source build); you will be told when a new version is out."
                 Toggle { checked: App.settings.autoUpdate !== false; onToggled: App.setSetting("autoUpdate", checked) }
             }
             SettingRow {
+                visible: !Updater.managedByFlatpak
                 title: "Check for app updates"
                 Toggle { checked: App.settings.checkAppUpdates !== false; onToggled: App.setSetting("checkAppUpdates", checked) }
             }

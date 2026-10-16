@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
 
 project(ScanCore
-    VERSION 1.1.4
+    VERSION 1.0.0
     DESCRIPTION "Read comics and novels and watch anime, entirely on your own machine"
     HOMEPAGE_URL "https://github.com/medium-gh/scancore"
     LANGUAGES C CXX)
@@ -13,6 +13,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(SCANCORE_WITH_WEBENGINE "Embedded web players (ReAnime) and site verification windows" ON)
 option(SCANCORE_WITH_MPV "Native video playback through libmpv (not used yet)" OFF)
+option(SCANCORE_WITH_NOVEL_PACK_INSTALLER "Allow downloading the optional Python novel-source pack" ON)
 option(SCANCORE_BUILD_TESTS "Build unit tests" ON)
 
 find_package(Qt6 6.8 REQUIRED COMPONENTS
@@ -38,9 +39,11 @@ if(SCANCORE_WITH_WEBENGINE)
     endif()
 endif()
 
-# Android version code: major * 10000 + minor * 100 + patch.
+# Keep Android's numeric version code above the previously shipped 1.1.4 build
+# (10104) even though the public version is being reset to 1.0.0. The offset
+# also keeps subsequent 1.0.x releases increasing monotonically.
 math(EXPR SCANCORE_ANDROID_VERSION_CODE
-    "${PROJECT_VERSION_MAJOR} * 10000 + ${PROJECT_VERSION_MINOR} * 100 + ${PROJECT_VERSION_PATCH}")
+    "${PROJECT_VERSION_MAJOR} * 10000 + ${PROJECT_VERSION_MINOR} * 100 + ${PROJECT_VERSION_PATCH} + 105")
 
 include(GNUInstallDirs)
 include(cmake/Dependencies.cmake)

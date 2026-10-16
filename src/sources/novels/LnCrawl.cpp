@@ -23,9 +23,13 @@ QString LnCrawlRuntime::vendor() { return root() + QStringLiteral("/vendor"); }
 QString LnCrawlRuntime::bridge() { return root() + QStringLiteral("/bridge.py"); }
 
 bool LnCrawlRuntime::installed() {
+#ifdef SCANCORE_DISABLE_NOVEL_PACK
+    return false;
+#else
     const auto py = python();
     return !py.isEmpty() && QFile::exists(py) && QDir(vendor() + QStringLiteral("/sources")).exists() &&
            QFile::exists(bridge());
+#endif
 }
 
 QJsonObject LnCrawlSource::run(QJsonObject request, int timeoutMs) {

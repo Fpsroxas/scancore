@@ -114,9 +114,9 @@ To show it in your app launcher (GNOME, KDE, rofi, wofi and others), keep it som
 mkdir -p ~/Applications ~/.local/share/applications ~/.local/share/icons/hicolor/scalable/apps
 mv SCANCORE-*-linux-x86_64.AppImage ~/Applications/SCANCORE.AppImage
 curl -fsSL https://raw.githubusercontent.com/medium-gh/scancore/main/resources/branding/scancore.svg \
-  -o ~/.local/share/icons/hicolor/scalable/apps/com.mediumdev.ScanCore.svg
-printf '[Desktop Entry]\nType=Application\nName=SCANCORE\nExec=%s %%U\nIcon=com.mediumdev.ScanCore\nCategories=Graphics;Viewer;\n' \
-  "$HOME/Applications/SCANCORE.AppImage" > ~/.local/share/applications/com.mediumdev.ScanCore.desktop
+  -o ~/.local/share/icons/hicolor/scalable/apps/com.mediumdev.scancore.svg
+printf '[Desktop Entry]\nType=Application\nName=SCANCORE\nExec=%s %%U\nIcon=com.mediumdev.scancore\nCategories=Graphics;Viewer;\n' \
+  "$HOME/Applications/SCANCORE.AppImage" > ~/.local/share/applications/com.mediumdev.scancore.desktop
 ```
 
 AppImages need FUSE 2 (`libfuse2` on Debian and Ubuntu, `fuse2` on Arch).

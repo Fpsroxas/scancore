@@ -55,6 +55,8 @@ QString Updater::assetSuffix() const {
 }
 
 bool Updater::canInstall() const {
+    if (managedByFlatpak())
+        return false;
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     // Only the AppImage can replace itself; the runtime sets $APPIMAGE.
     return !qEnvironmentVariableIsEmpty("APPIMAGE") && QFileInfo(qEnvironmentVariable("APPIMAGE")).isWritable();
@@ -66,6 +68,10 @@ bool Updater::canInstall() const {
 #else
     return true;
 #endif
+}
+
+bool Updater::managedByFlatpak() const {
+    return qEnvironmentVariableIsSet("FLATPAK_ID");
 }
 
 QString Updater::downloadPath() const {
@@ -85,6 +91,9 @@ void Updater::setState(const QString &state, const QString &error) {
 }
 
 void Updater::startAutomatic() {
+    // Flatpak updates are delivered by the user's Flatpak remote/software center.
+    if (managedByFlatpak())
+        return;
     if (App::instance()->settings().value(QStringLiteral("checkAppUpdates"), true).toBool()) {
         QTimer::singleShot(5000, this, [this] { check(true); });
         m_timer.start(6 * 3600 * 1000);
@@ -92,6 +101,8 @@ void Updater::startAutomatic() {
 }
 
 void Updater::check(bool quiet) {
+    if (managedByFlatpak())
+        return;
     if (m_state == QLatin1String("checking") || m_state == QLatin1String("downloading") ||
         m_state == QLatin1String("ready"))
         return;

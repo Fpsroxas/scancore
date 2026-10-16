@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.mediumdev.scancore</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>SCANCORE</name>
+  <summary>Read comics and novels and watch anime</summary>
+  <developer id="com.mediumdev">
+    <name>Medium Dev</name>
+  </developer>
+  <description>
+    <p>SCANCORE brings comics, web novels and anime together in a native desktop app. Browse public sources, keep a personal library and reading history, and download chapters for offline reading.</p>
+    <p>Your library and settings stay on your device. An optional account can sync library and reading progress with scancore.onl.</p>
+    <p>SCANCORE is also available for Android, with a phone-focused interface and touch controls.</p>
+    <ul>
+      <li>Read manga, manhwa, webtoons and novels with adjustable reading controls.</li>
+      <li>Browse anime and play supported episodes inside the app.</li>
+      <li>Track series in one library, with history, progress and chapter downloads.</li>
+      <li>Use light, dark and black themes, keyboard shortcuts and backup and restore.</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">com.mediumdev.scancore.desktop</launchable>
+  <url type="homepage">https://scancore.onl/</url>
+  <url type="bugtracker">https://github.com/medium-gh/scancore/issues</url>
+  <url type="vcs-browser">https://github.com/medium-gh/scancore</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/medium-gh/scancore/0b6ec6cf9d6c2b0bf3a91a7466de28f57f25b808/docs/screenshots/home.webp</image>
+      <caption>Library and recommendations on the home screen</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/medium-gh/scancore/0b6ec6cf9d6c2b0bf3a91a7466de28f57f25b808/docs/screenshots/comic-reader.webp</image>
+      <caption>Read comics in a continuous reader</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/medium-gh/scancore/0b6ec6cf9d6c2b0bf3a91a7466de28f57f25b808/docs/screenshots/novel-reader.webp</image>
+      <caption>Adjustable novel reader</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/medium-gh/scancore/0b6ec6cf9d6c2b0bf3a91a7466de28f57f25b808/docs/screenshots/anime.webp</image>
+      <caption>Browse anime</caption>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="1.0.0" date="2026-10-16">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#100--2026-10-16</url>
+      <description>
+        <p>First Flatpak-ready release of SCANCORE, with comics, novels and anime, a local library, reading history, offline downloads, and the latest desktop and phone layout improvements.</p>
+      </description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">moderate</content_attribute>
+    <content_attribute id="violence-fantasy">moderate</content_attribute>
+    <content_attribute id="sex-nudity">mild</content_attribute>
+  </content_rating>
+</component>

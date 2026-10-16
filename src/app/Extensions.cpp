@@ -60,7 +60,17 @@ QString findFile(const QString &dir, const QString &name) {
 
 } // namespace
 
-bool Extensions::novelPackInstalled() const { return novels::LnCrawlRuntime::installed(); }
+bool Extensions::novelPackAvailable() const {
+#ifdef SCANCORE_DISABLE_NOVEL_PACK
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool Extensions::novelPackInstalled() const {
+    return novelPackAvailable() && novels::LnCrawlRuntime::installed();
+}
 
 void Extensions::setStatus(const QString &status) {
     QMetaObject::invokeMethod(this, [this, status] {
@@ -70,6 +80,8 @@ void Extensions::setStatus(const QString &status) {
 }
 
 Task *Extensions::installNovelPack() {
+    if (!novelPackAvailable())
+        return Task::run([]() -> QVariant { throw Error(QStringLiteral("The extended novel pack is disabled in this build.")); });
     m_busy = true;
     m_status = QStringLiteral("Starting…");
     emit changed();
@@ -156,6 +168,8 @@ Task *Extensions::installNovelPack() {
 }
 
 void Extensions::removeNovelPack() {
+    if (!novelPackAvailable())
+        return;
     QDir(novels::LnCrawlRuntime::root()).removeRecursively();
     novels::Registry::rebuild();
     emit changed();

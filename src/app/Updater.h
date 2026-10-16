@@ -30,6 +30,7 @@ class Updater : public QObject {
     Q_PROPERTY(QString error READ error NOTIFY changed)
     Q_PROPERTY(double progress READ progress NOTIFY progressChanged)
     Q_PROPERTY(bool canInstall READ canInstall NOTIFY changed)
+    Q_PROPERTY(bool managedByFlatpak READ managedByFlatpak CONSTANT)
     Q_PROPERTY(qint64 size READ size NOTIFY changed)
 
 public:
@@ -44,6 +45,7 @@ public:
     QString error() const { return m_error; }
     double progress() const { return m_progress; }
     bool canInstall() const;
+    bool managedByFlatpak() const;
     qint64 size() const { return m_size; }
 
     // quiet: no "up to date" state change when nothing is newer.
