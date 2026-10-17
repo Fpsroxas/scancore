@@ -1,368 +1,301 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import QtQuick.Dialogs
 import ScanCore
 
+// Settings. Wide windows list the categories beside one long page that
+// scrolls through all of them; phones show the categories as a list and
+// open each on its own page (SettingsDetail.qml).
 Item {
     id: page
-    property var cacheTask: App.cacheSize()
-    property var updateTask: null
-    property var sourcesTask: null
-    property var backupTask: null
 
-    component SectionTitle: Text {
-        topPadding: 30
-        bottomPadding: 6
-        color: Theme.text
-        font.family: Theme.fontDisplay
-        font.pixelSize: Theme.textXl
-        font.weight: Font.DemiBold
+    readonly property var sections: [
+        { key: "account", file: "AccountSettings.qml", title: "Account", subtitle: "Optional sync with scancore.onl", icon: "user-round", tint: "sky" },
+        { key: "appearance", file: "AppearanceSettings.qml", title: "Appearance", subtitle: "Theme, accent colour and motion", icon: "palette", tint: "violet" },
+        { key: "reading", file: "ReadingSettings.qml", title: "Reading", subtitle: "Comic and novel readers", icon: "book-open", tint: "ember" },
+        { key: "anime", file: "AnimeSettings.qml", title: "Anime", subtitle: "Playback and skipping", icon: "tv", tint: "rose" },
+        { key: "library", file: "LibrarySettings.qml", title: "Library", subtitle: "New chapters and notifications", icon: "library", tint: "green" },
+        { key: "sources", file: "SourcesSettings.qml", title: "Sources", subtitle: "The sites SCANCORE reads from", icon: "globe", tint: "amber" },
+        { key: "storage", file: "StorageSettings.qml", title: "Storage", subtitle: "Cache, downloads and backups", icon: "hard-drive", tint: "mono" },
+        { key: "about", file: "AboutSettings.qml", title: "About", subtitle: "Version, updates and help", icon: "info", tint: "mono" }
+    ]
+
+    function tint(name) {
+        if (name === "green") return Theme.success
+        if (name === "amber") return Theme.warning
+        if (name === "mono" || !Theme.accents[name]) return Theme.textMuted
+        return Theme.dark ? Theme.accents[name].dark : Theme.accents[name].light
     }
 
-    function report(task, success) {
-        task.finished.connect(() => Router.toast(typeof success === "function" ? success(task.result) : success, "success"))
-        task.failed.connect((error) => Router.toast(error, "error"))
-        return task
+    // One line under each category on the phone list.
+    function summary(key) {
+        App.settings
+        switch (key) {
+        case "appearance": {
+            const theme = { system: "System", light: "Light", dark: "Dark", black: "Black" }[App.settings.theme] || "Dark"
+            const accent = String(App.settings.accent || "mono")
+            return theme + " theme · " + accent.charAt(0).toUpperCase() + accent.slice(1) + " accent"
+        }
+        case "reading":
+            return (App.settings.readerMode === "paged" ? "Pages" : "Vertical strip") + " · "
+                + ({ "Literata": "Serif", "DM Sans": "Sans", "Space Grotesk": "Grotesk" }[App.settings.novelFont] || "Serif") + " text"
+        case "anime":
+            return "Auto-next " + (App.settings.autoNext !== false ? "on" : "off") + " · Auto-skip " + (App.settings.autoSkip === true ? "on" : "off")
+        case "library": {
+            const hours = App.settings.libraryCheckHours
+            return hours > 0 ? "Checks for new chapters every " + (hours === 1 ? "hour" : hours === 24 ? "day" : hours + " hours") : "Update checks off"
+        }
+        case "sources": return "Source list version " + App.manifestVersion
+        case "storage": return "Cache, downloads and backup"
+        case "about": return "Version " + App.version
+        }
+        return ""
     }
 
-    SmoothFlickable {
+    function open(section) {
+        Router.shell.push("pages/SettingsDetail.qml", { section: section, tint: page.tint(section.tint) })
+    }
+
+    Loader {
         anchors.fill: parent
-        contentHeight: column.height + 80
+        sourceComponent: Theme.compact ? phoneLayout : wideLayout
+    }
 
-        Column {
-            id: column
-            x: Theme.gutter
-            width: Math.min(parent.width - 2 * Theme.gutter, 860)
+    // ------------------------------------------------------------ wide
 
-            PageHeader {
-                x: -Theme.gutter
-                width: column.width + 2 * Theme.gutter
-                title: "Settings"
-                subtitle: "Everything is stored on this computer"
+    Component {
+        id: wideLayout
+        Item {
+            id: wide
+            readonly property bool showNav: width >= 860
+            property int current: 0
+
+            function scrollTo(i) {
+                const target = panes.itemAt(i)
+                if (target) flick.scrollTo(Math.min(flick.maxY, target.y + content.y - 24), true)
             }
 
-            SectionTitle { text: "scancore.onl account" }
-            SettingRow {
-                visible: Account.signedIn
-                title: "Signed in as " + (Account.user.username || Account.user.email || "")
-                description: Account.syncing ? "Syncing…"
-                    : Account.lastSync ? "Library and reading history synced " + App.relativeTime(Number(Account.lastSync)) + "."
-                    : "Your website library and reading history sync with this app."
-                Row {
-                    spacing: 8
-                    ScButton {
-                        text: "Sync now"
-                        iconName: "refresh-cw"
-                        loading: Account.syncing
-                        onClicked: page.report(Account.sync(), (r) => "Synced: " + r.libraryImported + " saved, " + r.historyImported + " read, " + r.pushed + " sent to the website")
-                    }
-                    ScButton { text: "Sign out"; variant: "ghost"; onClicked: Account.signOut() }
-                }
-            }
             Column {
-                visible: !Account.signedIn
-                width: parent.width
-                spacing: 14
-                topPadding: 4
+                id: nav
+                visible: wide.showNav
+                x: Theme.gutter
+                y: 24
+                width: 212
+                spacing: 2
                 Text {
-                    width: parent.width
-                    wrapMode: Text.Wrap
-                    text: "Optional. Bring your scancore.onl library and comic reading history into this app, and send saves made here back to the website."
+                    text: "Settings"
+                    color: Theme.text
+                    font.family: Theme.fontDisplay
+                    font.pixelSize: Theme.text3xl
+                    font.weight: Font.Bold
+                    font.letterSpacing: -0.6
+                }
+                Text {
+                    bottomPadding: 20
+                    text: "Stored on this computer"
                     color: Theme.textMuted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
                 }
-                AuthForm {
-                    width: Math.min(parent.width, 420)
-                    onDone: Router.toast("Signed in", "success")
-                }
-            }
-
-            SectionTitle { text: "Appearance" }
-            SettingRow {
-                title: "Theme"
-                Segmented {
-                    options: [{ value: "system", label: "System", icon: "monitor" }, { value: "light", label: "Light", icon: "sun" },
-                              { value: "dark", label: "Dark", icon: "moon" }, { value: "black", label: "Black" }]
-                    value: App.settings.theme
-                    onPicked: (v) => App.setSetting("theme", v)
-                }
-            }
-            SettingRow {
-                title: "Accent"
-                description: "Mono matches the SCANCORE website."
-                Row {
-                    spacing: 10
-                    Repeater {
-                        model: ["mono", "violet", "ember", "sky", "rose"]
-                        Rectangle {
-                            required property string modelData
-                            width: 28
-                            height: 28
-                            radius: 14
-                            color: Theme.dark ? Theme.accents[modelData].dark : Theme.accents[modelData].light
-                            border.width: App.settings.accent === modelData ? 3 : 0
-                            border.color: Theme.bg
+                Repeater {
+                    model: page.sections
+                    AbstractButton {
+                        id: item
+                        required property var modelData
+                        required property int index
+                        readonly property bool active: wide.current === index
+                        width: nav.width
+                        height: 40
+                        hoverEnabled: true
+                        onClicked: wide.scrollTo(index)
+                        background: Rectangle {
+                            radius: Theme.radiusMd
+                            color: item.active ? Theme.surface2 : item.hovered ? Theme.alpha(Theme.text, 0.04) : "transparent"
+                            border.width: item.active ? 1 : 0
+                            border.color: Theme.border
+                        }
+                        contentItem: Row {
+                            leftPadding: 8
+                            spacing: 11
                             Rectangle {
-                                anchors.fill: parent
-                                anchors.margins: -3
-                                radius: width / 2
-                                color: "transparent"
-                                border.width: 2
-                                border.color: Theme.text
-                                visible: App.settings.accent === modelData
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 26
+                                height: 26
+                                radius: 8
+                                color: Theme.alpha(page.tint(item.modelData.tint), item.active ? 0.2 : 0.12)
+                                Icon { anchors.centerIn: parent; name: item.modelData.icon; size: 14; color: page.tint(item.modelData.tint) }
                             }
-                            MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: App.setSetting("accent", modelData) }
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: item.modelData.title
+                                color: item.active ? Theme.text : Theme.textMuted
+                                font.family: Theme.fontSans
+                                font.pixelSize: Theme.textMd
+                                font.weight: item.active ? Font.DemiBold : Font.Medium
+                            }
                         }
                     }
                 }
             }
-            SettingRow {
-                title: "Reduce motion"
-                description: "Turns off page transitions, hover lifts and other animations."
-                Toggle { checked: App.settings.reducedMotion === true; onToggled: App.setSetting("reducedMotion", checked) }
-            }
-            SettingRow {
-                title: "Show adult sources"
-                description: "Lists sources marked as adult in the comic source picker."
-                Toggle { checked: App.settings.showNsfwSources === true; onToggled: App.setSetting("showNsfwSources", checked) }
-            }
 
-            SectionTitle { text: "Comic reader" }
-            SettingRow {
-                title: "Layout"
-                description: "Vertical strip suits webtoons and manhwa; pages suit manga. Press M while reading to switch."
-                Segmented {
-                    options: [{ value: "strip", label: "Vertical", icon: "move-vertical" }, { value: "paged", label: "Pages", icon: "layers" }]
-                    value: App.settings.readerMode
-                    onPicked: (v) => App.setSetting("readerMode", v)
-                }
-            }
-            SettingRow {
-                title: "Strip width · " + App.settings.readerWidth + " px"
-                description: "Ctrl + scroll while reading adjusts it too."
-                ScSlider { width: 240; from: 360; to: 2000; stepSize: 20; value: App.settings.readerWidth; onMoved: App.setSetting("readerWidth", value) }
-            }
-            SettingRow {
-                title: "Page direction"
-                Segmented {
-                    options: [{ value: "ltr", label: "Left to right" }, { value: "rtl", label: "Right to left" }]
-                    value: App.settings.readerDirection
-                    onPicked: (v) => App.setSetting("readerDirection", v)
-                }
-            }
-
-            SectionTitle { text: "Novel reader" }
-            SettingRow {
-                title: "Font"
-                Segmented {
-                    options: [{ value: "Literata", label: "Serif" }, { value: "DM Sans", label: "Sans" }, { value: "Space Grotesk", label: "Grotesk" }]
-                    value: App.settings.novelFont
-                    onPicked: (v) => App.setSetting("novelFont", v)
-                }
-            }
-            SettingRow {
-                title: "Text size · " + App.settings.novelSize
-                ScSlider { width: 240; from: 13; to: 34; stepSize: 1; value: App.settings.novelSize; onMoved: App.setSetting("novelSize", value) }
-            }
-            SettingRow {
-                title: "Reading theme"
-                Select {
-                    model: [{ value: "app", label: "Match the app" }, { value: "paper", label: "Paper" }, { value: "sepia", label: "Sepia" },
-                            { value: "dark", label: "Dark" }, { value: "black", label: "Black" }]
-                    value: App.settings.novelTheme
-                    onPicked: (v) => App.setSetting("novelTheme", v)
-                }
-            }
-
-            SectionTitle { text: "Anime" }
-            SettingRow {
-                title: "Play the next episode automatically"
-                Toggle { checked: App.settings.autoNext !== false; onToggled: App.setSetting("autoNext", checked) }
-            }
-            SettingRow {
-                title: "Skip intros and recaps automatically"
-                description: "Uses AniSkip timestamps when they exist. Otherwise a Skip button appears."
-                Toggle { checked: App.settings.autoSkip === true; onToggled: App.setSetting("autoSkip", checked) }
-            }
-
-            SectionTitle { text: "Library" }
-            SettingRow {
-                title: "Check for new chapters"
-                description: "Saved comics and novels are checked in the background while SCANCORE is open."
-                Select {
-                    model: [{ value: 0, label: "Never" }, { value: 1, label: "Every hour" }, { value: 2, label: "Every 2 hours" },
-                            { value: 6, label: "Every 6 hours" }, { value: 24, label: "Once a day" }]
-                    value: App.settings.libraryCheckHours
-                    onPicked: (v) => App.setSetting("libraryCheckHours", v)
-                }
-            }
-            SettingRow {
-                title: "Desktop notifications for new chapters"
-                Toggle { checked: App.settings.notifyUpdates !== false; onToggled: App.setSetting("notifyUpdates", checked) }
-            }
-            SettingRow {
-                title: "Keep running in the tray when the window closes"
-                description: "Lets update checks and downloads continue in the background."
-                Toggle { checked: App.settings.closeToTray === true; onToggled: App.setSetting("closeToTray", checked) }
-            }
-
-            SectionTitle { text: "Sources" }
-            SettingRow {
-                title: "Source list version " + App.manifestVersion
-                description: "Site addresses and availability update from the SCANCORE repository without a new release."
-                ScButton {
-                    text: "Check now"
-                    iconName: "refresh-cw"
-                    loading: page.sourcesTask ? page.sourcesTask.loading : false
-                    onClicked: page.sourcesTask = page.report(App.refreshSources(), (r) => r.changed ? "Sources updated to version " + r.version : "Sources are up to date")
-                }
-            }
-            SettingRow {
-                visible: App.platform !== "android"
-                title: "Extended novel sources" + (!Extensions.novelPackAvailable ? " · unavailable in this build" : Extensions.novelPackInstalled ? " · installed" : "")
-                description: !Extensions.novelPackAvailable ? "The downloadable Python novel-source pack is disabled in this build."
-                    : Extensions.busy ? Extensions.status
-                    : Extensions.novelPackInstalled ? Novels.sources().filter(s => s.extended).length + " more novel sites from lightnovel-crawler. Pick them from “More sources” on the Novels page; pasted book links from any of them open directly."
-                    : "Adds about 260 more novel sites using lightnovel-crawler. Downloads a private copy of Python and the crawler (about 400 MB) into the app data folder." + (Extensions.status ? " Last attempt: " + Extensions.status : "")
-                Row {
-                    spacing: 8
-                    ScButton {
-                        visible: Extensions.novelPackAvailable && !Extensions.novelPackInstalled
-                        variant: "primary"
-                        text: "Install"
-                        iconName: "download"
-                        loading: Extensions.busy
-                        enabled: !Extensions.busy
-                        onClicked: page.report(Extensions.installNovelPack(), (r) => "Extended novel sources installed")
+            SmoothFlickable {
+                id: flick
+                anchors.fill: parent
+                anchors.leftMargin: wide.showNav ? nav.x + nav.width + 24 : 0
+                contentHeight: content.y + content.height + 120
+                onContentYChanged: {
+                    // The last category whose heading has scrolled near the top.
+                    let found = 0
+                    for (let i = 0; i < panes.count; ++i) {
+                        const p = panes.itemAt(i)
+                        if (p && p.y + content.y - 140 <= contentY) found = i
                     }
-                    ScButton {
-                        visible: Extensions.novelPackAvailable && Extensions.novelPackInstalled
-                        text: "Remove"
-                        variant: "ghost"
-                        onClicked: Extensions.removeNovelPack()
+                    if (contentY >= maxY - 4) found = panes.count - 1
+                    wide.current = found
+                }
+
+                Column {
+                    id: content
+                    x: wide.showNav ? 8 : Theme.gutter
+                    y: wide.showNav ? 30 : 0
+                    width: Math.min(flick.width - x - Theme.gutter, 780)
+                    spacing: 48
+
+                    PageHeader {
+                        visible: !wide.showNav
+                        x: -Theme.gutter
+                        width: content.width + 2 * Theme.gutter
+                        title: "Settings"
+                        subtitle: "Stored on this computer"
+                    }
+
+                    Repeater {
+                        id: panes
+                        model: page.sections
+                        Loader {
+                            required property var modelData
+                            width: content.width
+                            Component.onCompleted: setSource(Qt.resolvedUrl("../settings/" + modelData.file), { tint: page.tint(modelData.tint) })
+                        }
                     }
                 }
             }
-            Repeater {
-                model: { Extensions.novelPackInstalled; return Comics.sources().map(s => Object.assign({ kind: "Comics" }, s)).concat(Novels.sources().filter(s => !s.extended).map(s => Object.assign({ kind: "Novels" }, s))) }
-                SettingRow {
-                    required property var modelData
-                    title: modelData.label
-                    description: modelData.kind + " · " + modelData.base.replace("https://", "") + (modelData.enabled ? "" : " · " + modelData.disabledReason)
-                    Row {
-                        spacing: 6
+        }
+    }
+
+    // ------------------------------------------------------------ phone
+
+    Component {
+        id: phoneLayout
+        SmoothFlickable {
+            contentHeight: list.height + 40
+
+            Column {
+                id: list
+                x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
+                spacing: 22
+
+                PageHeader {
+                    x: -Theme.gutter
+                    width: list.width + 2 * Theme.gutter
+                    title: "Settings"
+                    subtitle: "Stored on this device"
+                }
+
+                // Account summary; opens the account page.
+                AbstractButton {
+                    id: accountCard
+                    width: parent.width
+                    height: 76
+                    onClicked: page.open(page.sections[0])
+                    background: Rectangle {
+                        radius: Theme.radiusLg
+                        color: accountCard.pressed ? Theme.surface2 : Theme.surface
+                        border.width: 1
+                        border.color: Theme.border
+                    }
+                    contentItem: Item {
                         Rectangle {
+                            x: 14
                             anchors.verticalCenter: parent.verticalCenter
-                            width: 8; height: 8; radius: 4
-                            color: modelData.enabled ? Theme.success : Theme.textFaint
+                            width: 46
+                            height: 46
+                            radius: 23
+                            color: Account.signedIn ? Theme.accent : Theme.alpha(page.tint("sky"), 0.14)
+                            Text {
+                                anchors.centerIn: parent
+                                visible: Account.signedIn
+                                text: String(Account.user.username || Account.user.email || "?").slice(0, 1).toUpperCase()
+                                color: Theme.onAccent
+                                font.family: Theme.fontDisplay
+                                font.pixelSize: 20
+                                font.weight: Font.Bold
+                            }
+                            Icon { anchors.centerIn: parent; visible: !Account.signedIn; name: "user-round"; size: 20; color: page.tint("sky") }
                         }
-                        IconButton { iconName: "globe"; tip: "Open in SCANCORE to pass a browser check"; onClicked: Router.openSiteCheck(modelData.base + "/") }
-                        IconButton { iconName: "external-link"; tip: "Open site"; onClicked: App.openUrl(modelData.base) }
+                        Column {
+                            x: 74
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: parent.width - x - 40
+                            spacing: 3
+                            Text {
+                                width: parent.width
+                                text: Account.signedIn ? (Account.user.username || Account.user.email) : "Sign in to sync"
+                                color: Theme.text
+                                font.family: Theme.fontSans
+                                font.pixelSize: Theme.textLg
+                                font.weight: Font.DemiBold
+                                elide: Text.ElideRight
+                            }
+                            Text {
+                                width: parent.width
+                                text: Account.signedIn ? (Account.syncing ? "Syncing…" : Account.lastSync ? "Synced " + App.relativeTime(Number(Account.lastSync)) : "scancore.onl account")
+                                                       : "Library and anime progress on every device"
+                                color: Theme.textMuted
+                                font.family: Theme.fontSans
+                                font.pixelSize: Theme.textSm
+                                elide: Text.ElideRight
+                            }
+                        }
+                        Icon {
+                            anchors.right: parent.right
+                            anchors.rightMargin: 14
+                            anchors.verticalCenter: parent.verticalCenter
+                            name: "chevron-right"
+                            size: 18
+                            color: Theme.textFaint
+                        }
                     }
                 }
-            }
 
-            SectionTitle { text: "Storage" }
-            SettingRow {
-                title: "Image cache · " + (page.cacheTask && page.cacheTask.ok ? App.formatBytes(page.cacheTask.result) : "…")
-                description: "Covers and pages you have viewed, kept for faster loading. Limited to " + App.settings.imageCacheMB + " MB."
-                ScButton {
-                    text: "Clear"
-                    onClicked: {
-                        App.clearCache()
-                        Router.toast("Cache cleared")
-                        refreshCache.start()
+                Repeater {
+                    model: [[1, 2, 3], [4, 5, 6], [7]]
+                    SettingsGroup {
+                        required property var modelData
+                        Repeater {
+                            model: modelData
+                            SettingRow {
+                                required property int modelData
+                                readonly property var section: page.sections[modelData]
+                                iconName: section.icon
+                                iconTint: page.tint(section.tint)
+                                title: section.title
+                                description: page.summary(section.key)
+                                clickable: true
+                                onClicked: page.open(section)
+                            }
+                        }
                     }
                 }
-            }
-            Timer { id: refreshCache; interval: 800; onTriggered: page.cacheTask = App.cacheSize() }
-            SettingRow {
-                title: "Downloads · " + Downloads.sizeOnDisk()
-                description: Downloads.folder()
-                ScButton { text: "Open folder"; iconName: "folder-open"; onClicked: App.openFolder(Downloads.folder()) }
-            }
-            SettingRow {
-                title: "Backup"
-                description: "Your library, history, reading positions and settings in one file."
-                Row {
-                    spacing: 8
-                    ScButton { text: "Export"; iconName: "download"; onClicked: exportDialog.open() }
-                    ScButton { text: "Restore"; onClicked: importDialog.open() }
-                }
-            }
-            FileDialog {
-                id: exportDialog
-                fileMode: FileDialog.SaveFile
-                defaultSuffix: "scancore"
-                nameFilters: ["SCANCORE backup (*.scancore)"]
-                selectedFile: "scancore-backup-" + Qt.formatDate(new Date(), "yyyy-MM-dd") + ".scancore"
-                onAccepted: page.backupTask = page.report(App.exportBackup(selectedFile), "Backup saved")
-            }
-            FileDialog {
-                id: importDialog
-                fileMode: FileDialog.OpenFile
-                nameFilters: ["SCANCORE backup (*.scancore)", "All files (*)"]
-                onAccepted: page.backupTask = page.report(App.importBackup(selectedFile), (r) => r)
-            }
 
-            SectionTitle { text: "About" }
-            SettingRow {
-                visible: !Updater.managedByFlatpak
-                title: "SCANCORE " + App.version
-                description: Updater.state === "checking" ? "Checking for updates…"
-                    : Updater.state === "current" ? "You have the latest version."
-                    : Updater.state === "available" ? "Version " + Updater.version + " is available."
-                    : Updater.state === "downloading" ? "Downloading " + Updater.version + " · " + Math.round(Updater.progress * 100) + "%"
-                    : Updater.state === "ready" ? "Version " + Updater.version + " is ready to install."
-                    : Updater.state === "error" ? Updater.error
-                    : "Open source app by Medium Dev."
-                Row {
-                    spacing: 8
-                    ScButton {
-                        visible: Updater.state === "available" || Updater.state === "ready"
-                        variant: "primary"
-                        text: Updater.state === "ready" ? "Restart to update" : Updater.canInstall ? "Update" : "Download"
-                        onClicked: Updater.canInstall ? (Updater.state === "ready" ? Updater.install() : Updater.download()) : App.openUrl(Updater.pageUrl)
-                    }
-                    ScButton {
-                        text: "Check for updates"
-                        loading: Updater.state === "checking"
-                        enabled: Updater.state !== "downloading"
-                        onClicked: Updater.check(false)
-                    }
+                Text {
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    text: "SCANCORE " + App.version + " · Medium Dev"
+                    color: Theme.textFaint
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textXs + 1
                 }
-            }
-            SettingRow {
-                visible: Updater.managedByFlatpak
-                title: "SCANCORE " + App.version
-                description: "Updates are delivered by Flatpak through your software center or system updater."
-            }
-            SettingRow {
-                visible: !Updater.managedByFlatpak
-                title: "Install updates automatically"
-                description: Updater.canInstall ? "New versions download in the background and install when you restart."
-                    : "This copy cannot update itself (for example a portable or source build); you will be told when a new version is out."
-                Toggle { checked: App.settings.autoUpdate !== false; onToggled: App.setSetting("autoUpdate", checked) }
-            }
-            SettingRow {
-                visible: !Updater.managedByFlatpak
-                title: "Check for app updates"
-                Toggle { checked: App.settings.checkAppUpdates !== false; onToggled: App.setSetting("checkAppUpdates", checked) }
-            }
-            SettingRow {
-                title: "Source code"
-                description: "github.com/medium-gh/scancore · MIT licence. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0)."
-                IconButton { iconName: "external-link"; onClicked: App.openUrl("https://github.com/medium-gh/scancore") }
-            }
-            SettingRow {
-                title: "Welcome tour"
-                description: "See the introduction again."
-                ScButton { text: "Show"; onClicked: Router.shell.showWelcome() }
-            }
-            SettingRow {
-                title: "Keyboard shortcuts"
-                description: "Ctrl+K search · Ctrl+1–5 sections · Ctrl+B sidebar · Alt+Left back · F11 full screen. In readers: arrows, Space, N/P chapters, F full screen, M layout, +/− size, Esc close."
             }
         }
     }

@@ -13,6 +13,28 @@ ApplicationWindow {
     title: "SCANCORE"
     color: Theme.bg
     font.family: Theme.fontSans
+    // The default background and palette come from the platform theme (GTK,
+    // KDE), which would tint the app with the system's colours.
+    background: Rectangle { color: Theme.bg }
+    palette {
+        window: Theme.bg
+        windowText: Theme.text
+        base: Theme.surface
+        alternateBase: Theme.surface2
+        text: Theme.text
+        button: Theme.surface2
+        buttonText: Theme.text
+        brightText: Theme.text
+        highlight: Theme.accent
+        highlightedText: Theme.onAccent
+        placeholderText: Theme.textFaint
+        toolTipBase: Theme.surface3
+        toolTipText: Theme.text
+        link: Theme.accent
+        mid: Theme.surface3
+        dark: Theme.bg
+        light: Theme.surface3
+    }
 
     readonly property bool immersiveOpen: immersive.depth > 0
 
@@ -40,14 +62,6 @@ ApplicationWindow {
     }
 
     Connections {
-        target: App
-        function onActivateRequested() {
-            window.show()
-            window.raise()
-            window.requestActivate()
-        }
-    }
-    Connections {
         target: Library
         function onUpdatesFound(count, titles) {
             shell.toast(count + " new chapter" + (count === 1 ? "" : "s") + " in your library", "success")
@@ -58,7 +72,8 @@ ApplicationWindow {
         function onFinished(title) { shell.toast("Downloaded " + title, "success") }
     }
 
-    // Android back: close the reader, pop the page, then return to Home.
+    // Android Back arrives as a close request: close the reader, pop the
+    // page, then return to Home. Only Back on Home leaves the app.
     onClosing: (close) => {
         if (App.platform !== "android") {
             if (App.settings.closeToTray === true) {
@@ -67,9 +82,8 @@ ApplicationWindow {
             }
             return
         }
-        if (immersive.depth > 0 || (shell.stackFor(shell.section) && shell.stackFor(shell.section).depth > 1)) {
+        if (shell.back()) {
             close.accepted = false
-            shell.back()
         } else if (shell.section !== "home") {
             close.accepted = false
             shell.goSection("home")
@@ -118,13 +132,21 @@ ApplicationWindow {
             immersive.push(Qt.resolvedUrl(path), props)
         }
 
+        // Closes the reader or player, or pops the current page. Returns
+        // false when there is nothing to go back to.
         function back() {
             if (immersive.depth > 0) {
-                immersive.pop()
-                return
+                // pop() never removes a stack's last item, and a reader is
+                // always alone in this one.
+                immersive.popCurrentItem()
+                return true
             }
             const stack = stackFor(section)
-            if (stack && stack.depth > 1) stack.pop()
+            if (stack && stack.depth > 1) {
+                stack.pop()
+                return true
+            }
+            return false
         }
 
         function toast(message, kind) { toasts.show(message, kind) }
@@ -148,9 +170,12 @@ ApplicationWindow {
         function showWelcome() { onboarding.active = true }
     }
 
-    Item {
+    // A focus scope that holds focus whenever no reader is open, so Escape
+    // from any page (or from nowhere in particular) reaches it.
+    FocusScope {
         id: shellView
         anchors.fill: parent
+        focus: true
         // The parent's safe area, so these margins do not feed back into it.
         anchors.topMargin: parent.SafeArea.margins.top
         anchors.bottomMargin: parent.SafeArea.margins.bottom
@@ -160,6 +185,9 @@ ApplicationWindow {
         visible: opacity > 0
         Behavior on opacity { NumberAnimation { duration: Motion.normal } }
         Behavior on scale { NumberAnimation { duration: Motion.slow; easing.type: Easing.OutCubic } }
+        // Disabling drops focus; take it back when the reader closes.
+        onEnabledChanged: if (enabled) forceActiveFocus()
+        Keys.onEscapePressed: (event) => event.accepted = shell.back()
 
         Sidebar {
             id: sidebar
@@ -231,12 +259,17 @@ ApplicationWindow {
     // Readers and the player cover the whole window.
     StackView {
         id: immersive
+        // Readers that set edgeToEdge draw under the system bars and pad
+        // their own controls; everything else stays inside the safe area.
+        readonly property bool edgeToEdge: currentItem !== null && currentItem.edgeToEdge === true
         anchors.fill: parent
         // The parent's safe area, so these margins do not feed back into it.
-        anchors.topMargin: parent.SafeArea.margins.top
-        anchors.bottomMargin: parent.SafeArea.margins.bottom
+        anchors.topMargin: edgeToEdge ? 0 : parent.SafeArea.margins.top
+        anchors.bottomMargin: edgeToEdge ? 0 : parent.SafeArea.margins.bottom
         visible: depth > 0 || busy
         z: 10
+        // Readers handle their own keys, so they need focus as soon as they open.
+        onCurrentItemChanged: if (currentItem) currentItem.forceActiveFocus()
         pushEnter: Transition {
             ParallelAnimation {
                 NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.slow; easing.type: Easing.OutCubic }
@@ -299,6 +332,11 @@ ApplicationWindow {
 
     Shortcut { sequences: ["Ctrl+K", "Ctrl+P"]; onActivated: palette.open() }
     Shortcut { sequences: ["Alt+Left", StandardKey.Back]; onActivated: shell.back() }
+    // The back button on mice.
+    TapHandler {
+        acceptedButtons: Qt.BackButton
+        onTapped: shell.back()
+    }
     Shortcut { sequence: "Ctrl+B"; onActivated: App.setSetting("sidebarCollapsed", !(App.settings.sidebarCollapsed === true)) }
     Shortcut { sequence: "Ctrl+1"; onActivated: shell.goSection("home") }
     Shortcut { sequence: "Ctrl+2"; onActivated: shell.goSection("comics") }

@@ -10,7 +10,8 @@ Rectangle {
     readonly property string host: url.replace(/^https?:\/\//, "").replace(/\/.*$/, "")
     color: Theme.bg
     focus: true
-    Keys.onEscapePressed: Router.back()
+    // A shortcut, because the embedded browser keeps keys once it has focus.
+    Shortcut { sequence: "Esc"; onActivated: Router.back() }
 
     Rectangle {
         id: bar

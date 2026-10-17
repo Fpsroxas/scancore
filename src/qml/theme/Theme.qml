@@ -12,16 +12,27 @@ QtObject {
         || (mode === "system" && Qt.styleHints.colorScheme !== Qt.ColorScheme.Light)
     readonly property bool black: mode === "black"
 
-    readonly property color bg: black ? "#000000" : dark ? "#0c0c0d" : "#f7f7f8"
-    readonly property color sidebar: black ? "#050505" : dark ? "#101012" : "#efeff1"
-    readonly property color surface: black ? "#0b0b0b" : dark ? "#151517" : "#ffffff"
-    readonly property color surface2: black ? "#141414" : dark ? "#1c1c1f" : "#f1f1f3"
-    readonly property color surface3: black ? "#1d1d1d" : dark ? "#26262a" : "#e6e6e9"
-    readonly property color border: dark ? "#25252a" : "#e2e2e6"
-    readonly property color borderStrong: dark ? "#36363c" : "#cfcfd5"
-    readonly property color text: dark ? "#f2f2f3" : "#141416"
-    readonly property color textMuted: dark ? "#a3a3ab" : "#5f5f68"
-    readonly property color textFaint: dark ? "#6c6c75" : "#94949c"
+    // Base colours per theme. Settings draws its theme previews from these.
+    readonly property var palettes: ({
+        light: { bg: "#f7f7f8", sidebar: "#efeff1", surface: "#ffffff", surface2: "#f1f1f3", surface3: "#e6e6e9",
+                 border: "#e2e2e6", borderStrong: "#cfcfd5", text: "#141416", textMuted: "#5f5f68", textFaint: "#94949c" },
+        dark: { bg: "#0c0c0d", sidebar: "#101012", surface: "#151517", surface2: "#1c1c1f", surface3: "#26262a",
+                border: "#25252a", borderStrong: "#36363c", text: "#f2f2f3", textMuted: "#a3a3ab", textFaint: "#6c6c75" },
+        black: { bg: "#000000", sidebar: "#050505", surface: "#0b0b0b", surface2: "#141414", surface3: "#1d1d1d",
+                 border: "#25252a", borderStrong: "#36363c", text: "#f2f2f3", textMuted: "#a3a3ab", textFaint: "#6c6c75" }
+    })
+    readonly property var palette: palettes[black ? "black" : dark ? "dark" : "light"]
+
+    readonly property color bg: palette.bg
+    readonly property color sidebar: palette.sidebar
+    readonly property color surface: palette.surface
+    readonly property color surface2: palette.surface2
+    readonly property color surface3: palette.surface3
+    readonly property color border: palette.border
+    readonly property color borderStrong: palette.borderStrong
+    readonly property color text: palette.text
+    readonly property color textMuted: palette.textMuted
+    readonly property color textFaint: palette.textFaint
     readonly property color overlay: dark ? Qt.rgba(0, 0, 0, 0.6) : Qt.rgba(0.1, 0.1, 0.12, 0.35)
     readonly property color danger: dark ? "#f87171" : "#dc2626"
     readonly property color success: dark ? "#4ade80" : "#16a34a"
@@ -38,6 +49,15 @@ QtObject {
     readonly property var accentSet: accents[App.settings.accent] || accents.mono
     readonly property color accent: dark ? accentSet.dark : accentSet.light
     readonly property color onAccent: dark ? accentSet.on.dark : accentSet.on.light
+
+    // Novel reader page colours; "app" follows the app theme.
+    readonly property var readingThemes: ({
+        app: { label: "App", bg: bg, text: text, muted: textMuted, chrome: surface },
+        paper: { label: "Paper", bg: "#f7f4ec", text: "#2a2925", muted: "#79766d", chrome: "#efebe1" },
+        sepia: { label: "Sepia", bg: "#efe3c8", text: "#4a3826", muted: "#8a7457", chrome: "#e6d8b9" },
+        dark: { label: "Dark", bg: "#17171a", text: "#d9d9de", muted: "#8b8b93", chrome: "#1f1f23" },
+        black: { label: "Black", bg: "#000000", text: "#c9c9ce", muted: "#77777e", chrome: "#0d0d0f" }
+    })
 
     readonly property string fontSans: "DM Sans"
     readonly property string fontDisplay: "Space Grotesk"

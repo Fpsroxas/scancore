@@ -1,0 +1,19 @@
+PackageIdentifier: MediumDev.ScanCore
+PackageVersion: 1.0.0
+PackageLocale: en-US
+Publisher: Medium Dev
+PackageName: SCANCORE
+License: MIT
+ShortDescription: Read comics and novels and watch anime in a native app
+Description: Read manga, manhwa, webtoons and web novels, and watch anime from dozens of sites. Your library, history and downloads stay on your device.
+PackageUrl: https://github.com/medium-gh/scancore
+PublisherUrl: https://mediumdev.com
+PublisherSupportUrl: https://github.com/medium-gh/scancore/issues
+Tags:
+  - anime
+  - comics
+  - manga
+  - novels
+  - reader
+ManifestType: defaultLocale
+ManifestVersion: 1.12.0

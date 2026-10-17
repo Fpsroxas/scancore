@@ -13,12 +13,17 @@ Item {
 
     ListModel { id: toasts }
 
+    // Phones are narrower than a full-size toast plus its margin.
+    readonly property int margin: Theme.compact ? 16 : 24
+    readonly property real toastWidth: Math.min(360, width - 2 * margin)
+
     Column {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.margins: 24
+        anchors.margins: root.margin
+        anchors.bottomMargin: root.margin + root.SafeArea.margins.bottom
         spacing: 10
-        width: 360
+        width: root.toastWidth
 
         add: Transition {
             ParallelAnimation {
@@ -37,7 +42,7 @@ Item {
                 required property string message
                 required property string kind
                 required property int index
-                width: 360
+                width: root.toastWidth
                 height: label.implicitHeight + 28
                 radius: Theme.radiusLg
                 color: Theme.surface

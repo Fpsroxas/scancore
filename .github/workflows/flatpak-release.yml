@@ -1,0 +1,60 @@
+name: Flatpak release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to build or update, e.g. v1.0.0
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  flatpak:
+    name: Build and upload Flatpak bundle
+    runs-on: ubuntu-24.04
+    steps:
+      # v1.0.0 predates the upstream copy of this manifest. Keeping the
+      # manifest on main also lets a manual run add the bundle to that release.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set release version
+        shell: bash
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          echo "RELEASE_TAG=$TAG" >> "$GITHUB_ENV"
+          echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
+
+      - name: Install Flatpak build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak flatpak-builder python3-yaml
+          flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+      - name: Check manifest release pin
+        run: |
+          APP_TAG=$(python3 -c 'import yaml; m=yaml.safe_load(open("com.mediumdev.scancore.yml")); print(next(s["tag"] for mod in m["modules"] if mod["name"] == "scancore" for s in mod["sources"] if s.get("url") == "https://github.com/medium-gh/scancore.git"))')
+          if [ "$APP_TAG" != "$RELEASE_TAG" ]; then
+            echo "The Flatpak manifest pins $APP_TAG, but this release is $RELEASE_TAG." >&2
+            echo "Update the manifest's SCANCORE tag and commit on main before releasing." >&2
+            exit 1
+          fi
+
+      - name: Build Flatpak bundle
+        run: |
+          flatpak-builder --user --force-clean --install-deps-from=flathub \
+            --repo=repo flatpak-build com.mediumdev.scancore.yml
+          mkdir -p dist
+          flatpak build-bundle --runtime-repo=https://dl.flathub.org/repo/flathub.flatpakrepo \
+            repo "dist/SCANCORE-$VERSION-linux-x86_64.flatpak" com.mediumdev.scancore master
+
+      - name: Upload to GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$RELEASE_TAG" dist/*.flatpak --repo "$GITHUB_REPOSITORY" --clobber

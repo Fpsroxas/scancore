@@ -1,0 +1,114 @@
+import QtQuick
+import QtQuick.Dialogs
+import ScanCore
+
+SettingsPane {
+    id: pane
+    title: "Storage"
+    subtitle: "Cache, downloads and backups"
+    iconName: "hard-drive"
+
+    property var cacheTask: App.cacheSize()
+    readonly property real cacheBytes: cacheTask && cacheTask.ok ? Number(cacheTask.result) : 0
+    readonly property real cacheLimit: (App.settings.imageCacheMB || 1024) * 1024 * 1024
+
+    function report(task, success) {
+        task.finished.connect(() => Router.toast(typeof success === "function" ? success(task.result) : success, "success"))
+        task.failed.connect((error) => Router.toast(error, "error"))
+    }
+
+    SettingsGroup {
+        title: "On this device"
+        SettingRow {
+            iconName: "layers"
+            title: "Image cache"
+            description: "Covers and pages you have viewed, kept so they load instantly next time."
+            ScButton {
+                text: "Clear"
+                onClicked: {
+                    App.clearCache()
+                    Router.toast("Cache cleared")
+                    refreshCache.start()
+                }
+            }
+        }
+        // Usage meter for the cache.
+        Item {
+            width: parent.width
+            height: 46
+            Rectangle {
+                x: 62
+                y: 2
+                width: parent.width - x - 16
+                height: 6
+                radius: 3
+                color: Theme.surface3
+                Rectangle {
+                    width: Math.max(height, parent.width * Math.min(1, pane.cacheBytes / pane.cacheLimit))
+                    height: parent.height
+                    radius: 3
+                    color: Theme.accent
+                    Behavior on width { NumberAnimation { duration: Motion.slow; easing.type: Easing.OutCubic } }
+                }
+            }
+            Text {
+                x: 62
+                y: 16
+                text: (pane.cacheTask && pane.cacheTask.ok ? App.formatBytes(pane.cacheBytes) : "Measuring…")
+                    + " of " + App.formatBytes(pane.cacheLimit)
+                color: Theme.textMuted
+                font.family: Theme.fontSans
+                font.pixelSize: Theme.textXs + 1
+            }
+        }
+        SettingRow {
+            iconName: "download"
+            title: "Downloaded chapters"
+            description: Downloads.sizeOnDisk() + (App.platform !== "android" ? " · " + Downloads.folder() : "")
+            ScButton {
+                visible: App.platform !== "android"
+                text: "Open folder"
+                iconName: "folder-open"
+                onClicked: App.openFolder(Downloads.folder())
+            }
+        }
+        SettingRow {
+            visible: App.platform !== "android"
+            iconName: "hard-drive"
+            title: "App data"
+            description: App.dataFolder
+            ScButton { text: "Open folder"; iconName: "folder-open"; onClicked: App.openFolder(App.dataFolder) }
+        }
+    }
+    Timer { id: refreshCache; interval: 800; onTriggered: pane.cacheTask = App.cacheSize() }
+
+    SettingsGroup {
+        title: "Backup"
+        note: "Restoring replaces what is on this device when SCANCORE next starts."
+        SettingRow {
+            iconName: "shield-check"
+            title: "Back up everything"
+            description: "Your library, history, reading positions and settings in one file."
+            Row {
+                spacing: 8
+                ScButton { text: "Export"; iconName: "download"; onClicked: exportDialog.open() }
+                ScButton { text: "Restore"; variant: "ghost"; onClicked: importDialog.open() }
+            }
+        }
+    }
+
+    FileDialog {
+        id: exportDialog
+        fileMode: FileDialog.SaveFile
+        defaultSuffix: "scancore"
+        nameFilters: ["SCANCORE backup (*.scancore)"]
+        selectedFile: "scancore-backup-" + Qt.formatDate(new Date(), "yyyy-MM-dd") + ".scancore"
+        onAccepted: pane.report(App.exportBackup(selectedFile), "Backup saved")
+    }
+    FileDialog {
+        id: importDialog
+        fileMode: FileDialog.OpenFile
+        nameFilters: ["SCANCORE backup (*.scancore)", "All files (*)"]
+        onAccepted: pane.report(App.importBackup(selectedFile), (r) => r)
+    }
+}

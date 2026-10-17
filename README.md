@@ -94,10 +94,13 @@ Get the latest version from the **[releases page](https://github.com/medium-gh/s
 | Platform | File | Notes |
 | --- | --- | --- |
 | **Linux** (x86_64) | `SCANCORE-<version>-linux-x86_64.AppImage` | Runs on any recent distribution. Updates itself in place. |
+| **Linux** (Flatpak) | `SCANCORE-<version>-linux-x86_64.flatpak` | Install with Flatpak; updates are handled by Flatpak. Requires the Flathub runtime. |
 | **Windows** 10/11 (x64) | `SCANCORE-<version>-windows-x64-setup.exe` | Installer with Start menu entry. Updates itself. |
 | | `SCANCORE-<version>-windows-x64-portable.zip` | No install; unzip and run `scancore.exe`. |
 | **macOS** 13+ (Apple Silicon and Intel) | `SCANCORE-<version>-macos-universal.dmg` | Drag to Applications. Updates itself. |
 | **Android** 9+ (arm64) | `SCANCORE-<version>-android-arm64.apk` | Sideload; updates open the system installer. |
+
+Community package definitions for [AUR, WinGet, Scoop and Homebrew](docs/package-managers.md) are maintained separately from GitHub release uploads.
 
 <details>
 <summary><b>Install notes for each platform</b></summary>
@@ -120,6 +123,14 @@ printf '[Desktop Entry]\nType=Application\nName=SCANCORE\nExec=%s %%U\nIcon=com.
 ```
 
 AppImages need FUSE 2 (`libfuse2` on Debian and Ubuntu, `fuse2` on Arch).
+
+**Flatpak.** Install Flatpak and configure the Flathub remote for your distribution, then install the downloaded bundle:
+
+```bash
+flatpak install --user ./SCANCORE-*-linux-x86_64.flatpak
+```
+
+The bundle contains SCANCORE; Flatpak downloads the KDE runtime from Flathub. Future app updates are provided by Flatpak, not the in-app updater.
 
 **Windows.** Run the installer. SmartScreen may warn about an unrecognised app the first time: choose *More info*, then *Run anyway*.
 

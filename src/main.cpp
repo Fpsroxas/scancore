@@ -149,6 +149,15 @@ int main(int argc, char *argv[]) {
     engine.loadFromModule("ScanCore", "Main");
     if (engine.rootObjects().isEmpty())
         return 1;
+    if (auto *window = qobject_cast<QQuickWindow *>(engine.rootObjects().first())) {
+        QObject::connect(appState, &App::activateRequested, window, [window] {
+            if (window->visibility() == QWindow::Hidden || window->visibility() == QWindow::Minimized)
+                window->setVisibility(QWindow::Windowed);
+            window->show();
+            window->raise();
+            window->requestActivate();
+        });
+    }
     // The window decides whether closing hides to the tray; once it is gone
     // there is nothing left to show.
     QObject::connect(engine.rootObjects().first(), &QObject::destroyed, &app, &Application::quit);

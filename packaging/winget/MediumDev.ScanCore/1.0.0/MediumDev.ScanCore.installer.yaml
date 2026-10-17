@@ -1,0 +1,18 @@
+PackageIdentifier: MediumDev.ScanCore
+PackageVersion: 1.0.0
+InstallerLocale: en-US
+Platform:
+  - Windows.Desktop
+MinimumOSVersion: 10.0.0.0
+InstallerType: inno
+Scope: machine
+UpgradeBehavior: install
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/medium-gh/scancore/releases/download/v1.0.0/SCANCORE-1.0.0-windows-x64-setup.exe
+    InstallerSha256: e0317cbf49b6c41842294c45cc97cabbba4d622b608ea542da74338fe56d4c1e
+    InstallerSwitches:
+      Silent: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
+      SilentWithProgress: /SILENT /SUPPRESSMSGBOXES /NORESTART /SP-
+ManifestType: installer
+ManifestVersion: 1.12.0

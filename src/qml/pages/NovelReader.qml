@@ -23,18 +23,18 @@ Rectangle {
     property var resumePosition: null
     property bool finished: false
 
-    readonly property var themes: ({
-        app: { bg: Theme.bg, text: Theme.text, muted: Theme.textMuted, chrome: Theme.surface },
-        paper: { bg: "#f7f4ec", text: "#2a2925", muted: "#79766d", chrome: "#efebe1" },
-        sepia: { bg: "#efe3c8", text: "#4a3826", muted: "#8a7457", chrome: "#e6d8b9" },
-        dark: { bg: "#17171a", text: "#d9d9de", muted: "#8b8b93", chrome: "#1f1f23" },
-        black: { bg: "#000000", text: "#c9c9ce", muted: "#77777e", chrome: "#0d0d0f" }
-    })
+    readonly property var themes: Theme.readingThemes
     readonly property var look: themes[App.settings.novelTheme] || themes.app
     readonly property int fontSize: App.settings.novelSize || 19
     readonly property real lineHeight: App.settings.novelLineHeight || 1.5
     readonly property int columnWidth: Math.min(width - 64, App.settings.novelWidth || 720)
     readonly property string fontFamily: App.settings.novelFont || Theme.fontSerif
+
+    // Drawn under the phone's status bar in the reading theme's colour; the
+    // bars and text are padded by the inset instead.
+    readonly property bool edgeToEdge: true
+    readonly property real insetTop: SafeArea.margins.top
+    readonly property real insetBottom: SafeArea.margins.bottom
 
     color: look.bg
     focus: true
@@ -119,7 +119,7 @@ Rectangle {
     SmoothFlickable {
         id: flick
         anchors.fill: parent
-        contentHeight: body.y + body.height + 120
+        contentHeight: body.y + body.height + 120 + reader.insetBottom
         wheelStep: 110
         ScrollBar.vertical: ScScrollBar {}
 
@@ -144,7 +144,7 @@ Rectangle {
         Column {
             id: body
             x: (flick.width - width) / 2
-            y: 110
+            y: 110 + reader.insetTop
             width: reader.columnWidth
             spacing: reader.fontSize * 0.9
 
@@ -271,13 +271,29 @@ Rectangle {
         }
     }
 
-    HoverHandler {
-        onPointChanged: if (point.position.y < 90) reader.barsShown = true
+    // Desktop: the bar returns when the mouse moves near the top. Phone: a
+    // tap toggles it.
+    PointerMotion {
+        onMoved: (position) => { if (position.y < 90 + reader.insetTop) reader.barsShown = true }
+    }
+    TapHandler {
+        enabled: App.platform === "android"
+        onSingleTapped: reader.barsShown = !reader.barsShown
+    }
+
+    // The status bar area keeps the reading theme's colour.
+    Rectangle {
+        z: 1
+        width: parent.width
+        height: reader.insetTop
+        visible: height > 0
+        color: reader.look.bg
     }
 
     // Reading progress along the top edge.
     Rectangle {
         z: 2
+        y: reader.insetTop
         height: 2
         width: parent.width * Math.min(1, Math.max(0, flick.contentY / Math.max(1, flick.contentHeight - flick.height)))
         color: Theme.accent
@@ -288,7 +304,7 @@ Rectangle {
         id: topBar
         z: 1
         width: parent.width
-        height: 64
+        height: 64 + reader.insetTop
         y: reader.barsShown ? 0 : -height
         color: Theme.alpha(reader.look.chrome, 0.94)
         Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
@@ -297,6 +313,7 @@ Rectangle {
         Row {
             x: 16
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: reader.insetTop / 2
             spacing: 12
             IconButton {
                 iconName: "arrow-left"
@@ -330,6 +347,7 @@ Rectangle {
             anchors.right: parent.right
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: reader.insetTop / 2
             spacing: 4
             IconButton { iconName: "chevron-left"; iconColor: reader.look.text; enabled: reader.hasPrev; tip: "Previous chapter"; onClicked: reader.load(reader.index - 1) }
             IconButton { iconName: "chevron-right"; iconColor: reader.look.text; enabled: reader.hasNext; tip: "Next chapter"; onClicked: reader.load(reader.index + 1) }
@@ -347,7 +365,7 @@ Rectangle {
     Popup {
         id: chapterPopup
         x: parent.width - width - 16
-        y: 70
+        y: 70 + reader.insetTop
         width: 360
         height: Math.min(parent.height - 120, 600)
         padding: 6
@@ -384,14 +402,14 @@ Rectangle {
     Popup {
         id: typePopup
         x: parent.width - width - 16
-        y: 70
+        y: 70 + reader.insetTop
         width: 340
         padding: 20
         background: Rectangle { radius: Theme.radiusLg; color: Theme.surface; border.width: 1; border.color: Theme.borderStrong }
         enter: Transition {
             ParallelAnimation {
                 NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.fast }
-                NumberAnimation { property: "y"; from: 58; to: 70; duration: Motion.normal; easing.type: Easing.OutCubic }
+                NumberAnimation { property: "y"; from: 58 + reader.insetTop; to: 70 + reader.insetTop; duration: Motion.normal; easing.type: Easing.OutCubic }
             }
         }
         contentItem: Column {

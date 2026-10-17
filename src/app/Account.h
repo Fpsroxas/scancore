@@ -11,7 +11,8 @@ namespace sc {
 // Optional link to a scancore.onl account. Signing in stores the site's
 // session cookie in the app's cookie jar; the password is never saved.
 // Sync brings the website library and comic reading history into the local
-// library and adds local saves to the website when it knows the series.
+// library, adds local saves to the website when it knows the series, and
+// keeps anime watch progress in step both ways.
 class Account : public QObject {
     Q_OBJECT
     QML_ELEMENT
@@ -40,7 +41,7 @@ public:
     Q_INVOKABLE QVariantList passwordChecks(const QString &password) const;
     Q_INVOKABLE QString usernameProblem(const QString &username) const;
     Q_INVOKABLE void signOut();
-    // {libraryImported, historyImported, pushed}
+    // {libraryImported, historyImported, pushed, morePending}
     Q_INVOKABLE sc::Task *sync();
 
 signals:

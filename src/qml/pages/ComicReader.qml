@@ -28,6 +28,12 @@ Rectangle {
     property bool finished: false
     property var resumePosition: null
 
+    // Drawn under the phone's status and navigation bars; the controls are
+    // padded by these insets instead (see the immersive stack in Main.qml).
+    readonly property bool edgeToEdge: true
+    readonly property real insetTop: SafeArea.margins.top
+    readonly property real insetBottom: SafeArea.margins.bottom
+
     color: "#000000"
     focus: true
 
@@ -104,10 +110,20 @@ Rectangle {
         controlsShown = true
         hideTimer.restart()
     }
+    function toggleControls() {
+        if (controlsShown) controlsShown = false
+        else showControls()
+    }
     Timer {
         id: hideTimer
         interval: 2600
-        onTriggered: if (!settingsPopup.opened && !chapterPopup.opened && !scrubber.pressed) reader.controlsShown = false
+        onTriggered: {
+            // Stay up while the pointer rests on the controls or a popup is open.
+            if (settingsPopup.opened || chapterPopup.opened || scrubber.pressed || topHover.hovered || bottomHover.hovered)
+                restart()
+            else
+                reader.controlsShown = false
+        }
     }
 
     function scrollBy(delta) {
@@ -367,14 +383,15 @@ Rectangle {
         }
     }
 
-    // Reveal controls when the pointer moves.
-    HoverHandler {
-        id: hover
-        onPointChanged: reader.showControls()
+    // Desktop: moving the mouse reveals the controls. Phone: a tap toggles
+    // them; on desktop single clicks are left alone and a double click does.
+    PointerMotion {
+        onMoved: reader.showControls()
     }
     TapHandler {
         enabled: reader.mode === "strip"
-        onDoubleTapped: reader.controlsShown ? (reader.controlsShown = false) : reader.showControls()
+        onSingleTapped: if (App.platform === "android") reader.toggleControls()
+        onDoubleTapped: if (App.platform !== "android") reader.toggleControls()
     }
 
     // Thin progress rail on the right edge.
@@ -395,25 +412,35 @@ Rectangle {
 
     // ------------------------------------------------------------ top bar
 
+    // Keeps the status bar legible over light pages while the controls are hidden.
+    Rectangle {
+        width: parent.width
+        height: reader.insetTop
+        visible: height > 0
+        color: Qt.rgba(0, 0, 0, 0.6)
+    }
+
     Item {
         id: topBar
         width: parent.width
-        height: 76
+        height: 76 + reader.insetTop
         y: reader.controlsShown ? 0 : -height
         opacity: reader.controlsShown ? 1 : 0
         Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
         Behavior on opacity { NumberAnimation { duration: Motion.normal } }
+        HoverHandler { id: topHover; enabled: App.platform !== "android" }
 
         Rectangle {
             anchors.fill: parent
             gradient: Gradient {
                 GradientStop { position: 0; color: Qt.rgba(0, 0, 0, 0.85) }
+                GradientStop { position: reader.insetTop / topBar.height; color: Qt.rgba(0, 0, 0, 0.8) }
                 GradientStop { position: 1; color: Qt.rgba(0, 0, 0, 0) }
             }
         }
         Row {
             x: 18
-            y: 16
+            y: 16 + reader.insetTop
             spacing: 12
             IconButton {
                 iconName: "arrow-left"
@@ -446,7 +473,7 @@ Rectangle {
         Row {
             anchors.right: parent.right
             anchors.rightMargin: 18
-            y: 16
+            y: 16 + reader.insetTop
             spacing: 4
             IconButton {
                 iconName: "list"
@@ -480,11 +507,12 @@ Rectangle {
     Item {
         id: bottomBar
         width: parent.width
-        height: 84
+        height: 84 + reader.insetBottom
         y: reader.controlsShown ? parent.height - height : parent.height
         opacity: reader.controlsShown ? 1 : 0
         Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
         Behavior on opacity { NumberAnimation { duration: Motion.normal } }
+        HoverHandler { id: bottomHover; enabled: App.platform !== "android" }
 
         Rectangle {
             anchors.fill: parent
@@ -496,7 +524,7 @@ Rectangle {
         Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 18
+            anchors.bottomMargin: 18 + reader.insetBottom
             width: Math.min(parent.width - 40, 720)
             height: 48
             radius: 24
@@ -561,9 +589,9 @@ Rectangle {
     Popup {
         id: chapterPopup
         x: parent.width - width - 18
-        y: 70
+        y: 70 + reader.insetTop
         width: 340
-        height: Math.min(parent.height - 160, 560)
+        height: Math.min(parent.height - 160 - reader.insetTop - reader.insetBottom, 560)
         padding: 6
         onOpened: chapterList.positionViewAtIndex(reader.index, ListView.Center)
         background: Rectangle { radius: Theme.radiusLg; color: "#151517"; border.width: 1; border.color: "#2a2a30" }
@@ -603,14 +631,14 @@ Rectangle {
     Popup {
         id: settingsPopup
         x: parent.width - width - 18
-        y: 70
+        y: 70 + reader.insetTop
         width: 320
         padding: 18
         background: Rectangle { radius: Theme.radiusLg; color: "#151517"; border.width: 1; border.color: "#2a2a30" }
         enter: Transition {
             ParallelAnimation {
                 NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.fast }
-                NumberAnimation { property: "y"; from: 60; to: 70; duration: Motion.normal; easing.type: Easing.OutCubic }
+                NumberAnimation { property: "y"; from: 60 + reader.insetTop; to: 70 + reader.insetTop; duration: Motion.normal; easing.type: Easing.OutCubic }
             }
         }
         exit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Motion.fast } }

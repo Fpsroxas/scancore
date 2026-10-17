@@ -1,0 +1,17 @@
+{
+    "version": "1.0.0",
+    "description": "Read comics and novels and watch anime in a native app",
+    "homepage": "https://github.com/medium-gh/scancore",
+    "license": "MIT",
+    "url": "https://github.com/medium-gh/scancore/releases/download/v1.0.0/SCANCORE-1.0.0-windows-x64-portable.zip",
+    "hash": "5492661ddf30f67ebe58a0d4391466724f710f49060a114d8ba901040221f756",
+    "shortcuts": [
+        ["scancore.exe", "SCANCORE"]
+    ],
+    "checkver": {
+        "github": "https://github.com/medium-gh/scancore"
+    },
+    "autoupdate": {
+        "url": "https://github.com/medium-gh/scancore/releases/download/v$version/SCANCORE-$version-windows-x64-portable.zip"
+    }
+}

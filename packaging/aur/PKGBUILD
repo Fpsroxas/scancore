@@ -1,0 +1,39 @@
+# Maintainer: Logesh Senthil <logesh@mediumdev.com>
+pkgname=scancore
+pkgver=1.0.0
+pkgrel=1
+pkgdesc='Read comics and novels and watch anime in a native Qt app'
+arch=('x86_64')
+url='https://github.com/medium-gh/scancore'
+license=('MIT')
+depends=('gcc-libs' 'glibc' 'qt6-base' 'qt6-declarative' 'qt6-imageformats' 'qt6-svg')
+optdepends=(
+  'qt6-webengine: embedded anime player and site verification windows'
+  'qt6-wayland: native Wayland platform integration'
+)
+makedepends=('cmake' 'ninja')
+source=(
+  "scancore-${pkgver}.tar.gz::https://github.com/medium-gh/scancore/archive/refs/tags/v${pkgver}.tar.gz"
+  'lexbor-2.7.0.tar.gz::https://github.com/lexbor/lexbor/archive/refs/tags/v2.7.0.tar.gz'
+)
+sha256sums=(
+  '427b25942a5bbc5570a3a3696cbeef6af95b93c2afee6547cf932842ac6a9bc9'
+  'e2473ade7173f69c56731ba71291d2ba705675ede2bb4423dc939ed70bcb55b5'
+)
+
+build() {
+  cmake -S "${srcdir}/scancore-${pkgver}" -B build -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DFETCHCONTENT_SOURCE_DIR_LEXBOR="${srcdir}/lexbor-2.7.0" \
+    -DSCANCORE_BUILD_TESTS=OFF \
+    -DSCANCORE_WITH_NOVEL_PACK_INSTALLER=OFF
+  cmake --build build
+}
+
+package() {
+  DESTDIR="${pkgdir}" cmake --install build
+  install -Dm644 "${srcdir}/scancore-${pkgver}/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

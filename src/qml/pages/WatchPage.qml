@@ -144,31 +144,21 @@ Rectangle {
         Router.back()
     }
 
-    Keys.onPressed: (event) => {
-        if (event.key === Qt.Key_Escape) {
-            if (fullScreen) Window.window.showNormal()
-            else exit()
-            event.accepted = true
-        } else if (event.key === Qt.Key_N && hasNext) { load(index + 1); event.accepted = true }
-        else if (event.key === Qt.Key_P && hasPrev) { load(index - 1); event.accepted = true }
+    function leave() {
+        if (fullScreen) Window.window.showNormal()
+        else exit()
     }
-    // The embedded browser keeps keyboard focus while the video plays.
+
+    // The embedded browser takes keyboard focus once the video is clicked and
+    // keeps keys from reaching this page, so desktop keys are shortcuts.
+    Shortcut { sequence: "Esc"; enabled: !watch.phone; onActivated: watch.leave() }
     Shortcut { sequence: "F"; enabled: !watch.phone; onActivated: watch.toggleFullScreen() }
-    Shortcut { sequence: "Esc"; enabled: watch.fullScreen && !watch.phone; onActivated: Window.window.showNormal() }
+    Shortcut { sequence: "N"; enabled: !watch.phone && watch.hasNext; onActivated: watch.load(watch.index + 1) }
+    Shortcut { sequence: "P"; enabled: !watch.phone && watch.hasPrev; onActivated: watch.load(watch.index - 1) }
 
     // Any mouse movement, including over the video, brings the chrome back.
-    // Qt Quick also sends a hover at the same position on every repainted
-    // frame, so only a pointer that actually moved counts.
-    property point lastPointer: Qt.point(-1, -1)
-    HoverHandler {
-        enabled: !watch.phone
-        onPointChanged: {
-            const p = point.scenePosition
-            if (Math.abs(p.x - watch.lastPointer.x) + Math.abs(p.y - watch.lastPointer.y) < 3) return
-            watch.lastPointer = p
-            watch.wake()
-        }
-        onHoveredChanged: watch.wake()
+    PointerMotion {
+        onMoved: watch.wake()
     }
     Timer {
         id: idleTimer
