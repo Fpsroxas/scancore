@@ -13,7 +13,7 @@ Rectangle {
     readonly property int steps: 5
     signal finished()
 
-    color: Theme.bg
+    color: Theme.base
     focus: true
 
     function go(next) {

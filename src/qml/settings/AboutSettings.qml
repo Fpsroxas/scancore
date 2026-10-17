@@ -59,7 +59,16 @@ SettingsPane {
                     color: Theme.dark ? "#000000" : "#141416"
                     border.width: 1
                     border.color: Theme.borderStrong
-                    Icon { anchors.centerIn: parent; name: "scancore-mark"; size: 30; color: "#ffffff" }
+                    // The mark is twice as wide as it is tall.
+                    Icon {
+                        anchors.centerIn: parent
+                        name: "scancore-mark"
+                        size: 32
+                        height: 16
+                        sourceSize: Qt.size(64 * Screen.devicePixelRatio, 32 * Screen.devicePixelRatio)
+                        fillMode: Image.PreserveAspectFit
+                        color: "#ffffff"
+                    }
                 }
                 Column {
                     anchors.verticalCenter: parent.verticalCenter

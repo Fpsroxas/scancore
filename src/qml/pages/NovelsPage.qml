@@ -29,6 +29,16 @@ Item {
             page.libraryTask = Library.entries("novel")
         }
     }
+    property var history: []
+    property var saved: []
+    Connections {
+        target: page.historyTask
+        function onFinished(result) { page.history = Router.keep(page.history, result) }
+    }
+    Connections {
+        target: page.libraryTask
+        function onFinished(result) { page.saved = Router.keep(page.saved, result) }
+    }
 
     function search(text) {
         field.text = text
@@ -37,6 +47,7 @@ Item {
 
     function run(text) {
         query = text.trim()
+        if (query.length > 0) recent.remember(query)
         searchTask = query.length > 0 ? Novels.search(query, source) : null
         flick.scrollTo(0)
     }
@@ -157,16 +168,22 @@ Item {
                 width: parent.width
                 spacing: 36
 
+                RecentSearches {
+                    id: recent
+                    key: "recentNovelSearches"
+                    onPicked: (text) => page.search(text)
+                }
+
                 Shelf {
                     title: "Continue reading"
-                    items: page.historyTask && page.historyTask.ok ? page.historyTask.result : []
+                    items: page.history
                     subtitleFor: (it) => it.unitTitle || ""
                     progressFor: (it) => it.completed ? 1 : (it.percent || 0)
                     onOpened: (it, cover) => Router.resume(it)
                 }
                 Shelf {
                     title: "Saved novels"
-                    items: page.libraryTask && page.libraryTask.ok ? page.libraryTask.result : []
+                    items: page.saved
                     badgeFor: (it) => it.newUnits > 0 ? "+" + it.newUnits : ""
                     subtitleFor: (it) => it.author || ""
                     onOpened: (it, cover) => Router.openSeries(it, cover)
@@ -193,4 +210,6 @@ Item {
             }
         }
     }
+
+    BackToTop { flick: flick }
 }

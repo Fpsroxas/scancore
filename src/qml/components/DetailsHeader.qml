@@ -23,12 +23,18 @@ Item {
     width: parent ? parent.width : 900
     implicitHeight: Math.max(info.y + info.height, coverBox.y + coverBox.height) + 34
 
-    // Backdrop
+    // Backdrop. Over a background picture or a see-through window the page
+    // has no colour to fade into, so the backdrop fades out itself.
     Item {
         anchors.left: parent.left
         anchors.right: parent.right
         height: 420
         clip: true
+        layer.enabled: Theme.layered
+        layer.effect: MultiEffect {
+            maskEnabled: true
+            maskSource: backdropFade
+        }
         Image {
             id: backdropSource
             anchors.fill: parent
@@ -55,6 +61,19 @@ Item {
                 GradientStop { position: 0.6; color: Theme.alpha(Theme.bg, 0.8) }
                 GradientStop { position: 1.0; color: Theme.bg }
             }
+        }
+    }
+
+    Rectangle {
+        id: backdropFade
+        width: parent.width
+        height: 420
+        visible: false
+        layer.enabled: true
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "white" }
+            GradientStop { position: 0.45; color: Qt.rgba(1, 1, 1, 0.7) }
+            GradientStop { position: 1.0; color: "transparent" }
         }
     }
 

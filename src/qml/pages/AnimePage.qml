@@ -21,15 +21,35 @@ Item {
         function onChanged() { refresh.restart() }
     }
     Timer { id: refresh; interval: 500; onTriggered: page.historyTask = Library.history("anime", 16) }
+    property var history: []
+    Connections {
+        target: page.historyTask
+        function onFinished(result) { page.history = Router.keep(page.history, result) }
+    }
 
-    Timer {
-        interval: 7000
+    // Slide timing: the active dot fills as it runs; hovering the spotlight
+    // pauses it.
+    property real slideProgress: 0
+    function showSlide(i) {
+        const n = spotlight.length
+        if (n === 0) return
+        spot = (i + n) % n
+        slideTimer.restart()
+    }
+    NumberAnimation {
+        id: slideTimer
+        target: page
+        property: "slideProgress"
+        from: 0
+        to: 1
+        duration: 7000
         running: page.spotlight.length > 1 && page.visible && !Motion.reduced
-        repeat: true
-        onTriggered: page.spot = (page.spot + 1) % page.spotlight.length
+        paused: running && heroHover.hovered
+        onFinished: page.showSlide(page.spot + 1)
     }
 
     SmoothFlickable {
+        id: flick
         anchors.fill: parent
         contentHeight: column.height + 60
 
@@ -45,43 +65,74 @@ Item {
                 height: Math.min(520, Math.max(380, page.height * 0.56))
                 clip: true
 
-                Repeater {
-                    model: page.spotlight
-                    delegate: Item {
-                        id: slide
-                        required property var modelData
-                        required property int index
-                        readonly property bool current: index === page.spot
-                        anchors.fill: parent
-                        opacity: current ? 1 : 0
-                        visible: opacity > 0
-                        Behavior on opacity { NumberAnimation { duration: 900; easing.type: Easing.InOutQuad } }
-                        Image {
-                            id: banner
+                HoverHandler { id: heroHover; enabled: !Theme.touch }
+                // Swipe (or drag) sideways for the next or previous title.
+                DragHandler {
+                    target: null
+                    yAxis.enabled: false
+                    onActiveChanged: {
+                        if (active || Math.abs(translation.x) < 60) return
+                        page.showSlide(page.spot + (translation.x < 0 ? 1 : -1))
+                    }
+                }
+
+                // Over a background picture or a see-through window there is no
+                // page colour to fade into; the slides fade out themselves.
+                Rectangle {
+                    id: heroFade
+                    anchors.fill: parent
+                    visible: false
+                    layer.enabled: true
+                    gradient: Gradient {
+                        GradientStop { position: 0.5; color: "white" }
+                        GradientStop { position: 1.0; color: "transparent" }
+                    }
+                }
+                Item {
+                    anchors.fill: parent
+                    layer.enabled: Theme.layered
+                    layer.effect: MultiEffect {
+                        maskEnabled: true
+                        maskSource: heroFade
+                    }
+                    Repeater {
+                        model: page.spotlight
+                        delegate: Item {
+                            id: slide
+                            required property var modelData
+                            required property int index
+                            readonly property bool current: index === page.spot
                             anchors.fill: parent
-                            source: App.image(slide.modelData.banner)
-                            fillMode: Image.PreserveAspectCrop
-                            asynchronous: true
-                            sourceSize.width: 1920
-                            scale: slide.current ? 1.08 : 1.0
-                            Behavior on scale { NumberAnimation { duration: 8000; easing.type: Easing.Linear } }
+                            opacity: current ? 1 : 0
+                            visible: opacity > 0
+                            Behavior on opacity { NumberAnimation { duration: 900; easing.type: Easing.InOutQuad } }
+                            Image {
+                                id: banner
+                                anchors.fill: parent
+                                source: App.image(slide.modelData.banner)
+                                fillMode: Image.PreserveAspectCrop
+                                asynchronous: true
+                                sourceSize.width: 1920
+                                scale: slide.current ? 1.08 : 1.0
+                                Behavior on scale { NumberAnimation { duration: 8000; easing.type: Easing.Linear } }
+                            }
                         }
                     }
-                }
-                Rectangle {
-                    anchors.fill: parent
-                    gradient: Gradient {
-                        orientation: Gradient.Horizontal
-                        GradientStop { position: 0.0; color: Theme.alpha(Theme.bg, 0.95) }
-                        GradientStop { position: 0.55; color: Theme.alpha(Theme.bg, 0.45) }
-                        GradientStop { position: 1.0; color: Theme.alpha(Theme.bg, 0.1) }
+                    Rectangle {
+                        anchors.fill: parent
+                        gradient: Gradient {
+                            orientation: Gradient.Horizontal
+                            GradientStop { position: 0.0; color: Theme.alpha(Theme.base, 0.95) }
+                            GradientStop { position: 0.55; color: Theme.alpha(Theme.base, 0.45) }
+                            GradientStop { position: 1.0; color: Theme.alpha(Theme.base, 0.1) }
+                        }
                     }
-                }
-                Rectangle {
-                    anchors.fill: parent
-                    gradient: Gradient {
-                        GradientStop { position: 0.55; color: "transparent" }
-                        GradientStop { position: 1.0; color: Theme.bg }
+                    Rectangle {
+                        anchors.fill: parent
+                        gradient: Gradient {
+                            GradientStop { position: 0.55; color: "transparent" }
+                            GradientStop { position: 1.0; color: Theme.bg }
+                        }
                     }
                 }
 
@@ -159,13 +210,24 @@ Item {
                     Repeater {
                         model: page.spotlight.length
                         Rectangle {
+                            id: dot
                             required property int index
-                            width: index === page.spot ? 28 : 8
+                            readonly property bool active: index === page.spot
+                            width: active ? 28 : 8
                             height: 8
                             radius: 4
-                            color: index === page.spot ? Theme.text : Theme.alpha(Theme.text, 0.3)
+                            color: Theme.alpha(Theme.text, active ? 0.35 : 0.3)
+                            clip: true
                             Behavior on width { NumberAnimation { duration: Motion.slow; easing.type: Easing.OutCubic } }
-                            MouseArea { anchors.fill: parent; anchors.margins: -6; cursorShape: Qt.PointingHandCursor; onClicked: page.spot = index }
+                            // Fills while the slide shows; solid when it does not advance.
+                            Rectangle {
+                                visible: dot.active
+                                height: parent.height
+                                radius: 4
+                                width: slideTimer.running ? Math.max(8, parent.width * page.slideProgress) : parent.width
+                                color: Theme.text
+                            }
+                            MouseArea { anchors.fill: parent; anchors.margins: -6; cursorShape: Qt.PointingHandCursor; onClicked: page.showSlide(index) }
                         }
                     }
                 }
@@ -198,7 +260,7 @@ Item {
 
             Shelf {
                 title: "Continue watching"
-                items: page.historyTask && page.historyTask.ok ? page.historyTask.result : []
+                items: page.history
                 subtitleFor: (it) => "Episode " + (it.unitNumber || it.unitKey || "")
                 progressFor: (it) => it.completed ? 1 : (it.percent || 0)
                 onOpened: (it, cover) => Router.resume(it)
@@ -241,4 +303,6 @@ Item {
             }
         }
     }
+
+    BackToTop { flick: flick }
 }

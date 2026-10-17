@@ -10,7 +10,7 @@ Column {
     property var items: []
     property bool loading: false
     property string error: ""
-    property int cardWidth: Theme.compact ? 118 : 156
+    property int cardWidth: Math.round((Theme.compact ? 118 : 156) * Theme.coverScale)
     property real coverRatio: 1.5
     property string actionText: ""
     property var subtitleFor: (item) => ""
@@ -19,6 +19,10 @@ Column {
     signal action()
     signal retry()
     signal opened(var item, Item coverItem)
+
+    // As in CoverGrid: only the first fill rises in.
+    property bool settled: false
+    onItemsChanged: if (items.length > 0 && !settled) Qt.callLater(() => shelf.settled = true)
 
     spacing: 14
     width: parent ? parent.width : 800
@@ -99,6 +103,10 @@ Column {
             flickDeceleration: 4000
             reuseItems: true
             cacheBuffer: 600
+            // Covers that scroll into view later appear at once; the
+            // staggered entrance is for the first screenful.
+            property bool scrolled: false
+            onContentXChanged: if (contentX > originX - leftMargin + 2) scrolled = true
 
             function scrollBy(delta) {
                 const target = Math.max(-leftMargin, Math.min(contentWidth - width + rightMargin + originX, contentX + delta))
@@ -136,12 +144,44 @@ Column {
                 width: shelf.cardWidth
                 height: list.height
                 item: modelData
-                index: index
+                index: list.scrolled ? 0 : index
+                animateIn: !shelf.settled
                 coverRatio: shelf.coverRatio
                 subtitle: shelf.subtitleFor(modelData)
                 badge: shelf.badgeFor(modelData)
                 progress: shelf.progressFor(modelData)
                 onOpened: (it, cover) => shelf.opened(it, cover)
+            }
+        }
+
+        // Desktop: the row fades out at an edge with more to scroll to (not over
+        // a background picture, which has no single colour to fade into).
+        Rectangle {
+            visible: list.visible && !Theme.compact && !Theme.layered
+            anchors.left: parent.left
+            width: Theme.gutter + 24
+            height: parent.height
+            opacity: list.contentX > list.originX - list.leftMargin + 4 ? 1 : 0
+            Behavior on opacity { NumberAnimation { duration: Motion.normal } }
+            gradient: Gradient {
+                orientation: Gradient.Horizontal
+                GradientStop { position: 0.0; color: Theme.bg }
+                GradientStop { position: 0.45; color: Theme.alpha(Theme.bg, 0.85) }
+                GradientStop { position: 1.0; color: Theme.alpha(Theme.bg, 0) }
+            }
+        }
+        Rectangle {
+            visible: list.visible && !Theme.compact && !Theme.layered
+            anchors.right: parent.right
+            width: Theme.gutter + 24
+            height: parent.height
+            opacity: list.contentWidth > list.width && list.contentX < list.originX + list.contentWidth - list.width + list.rightMargin - 4 ? 1 : 0
+            Behavior on opacity { NumberAnimation { duration: Motion.normal } }
+            gradient: Gradient {
+                orientation: Gradient.Horizontal
+                GradientStop { position: 0.0; color: Theme.alpha(Theme.bg, 0) }
+                GradientStop { position: 0.55; color: Theme.alpha(Theme.bg, 0.85) }
+                GradientStop { position: 1.0; color: Theme.bg }
             }
         }
 

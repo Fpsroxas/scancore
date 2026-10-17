@@ -305,4 +305,6 @@ Item {
             NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.normal }
         }
     }
+
+    BackToTop { flick: list }
 }

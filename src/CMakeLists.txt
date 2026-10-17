@@ -53,7 +53,7 @@ endif()
 if(NOT SCANCORE_WITH_SYSTEM_WEBVIEW)
     list(REMOVE_ITEM SCANCORE_QML qml/components/WebPlayerSystem.qml)
 endif()
-set_source_files_properties(qml/theme/Theme.qml qml/theme/Motion.qml qml/Router.qml
+set_source_files_properties(qml/theme/Theme.qml qml/theme/Motion.qml qml/Router.qml qml/Keymap.qml
     PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 qt_add_qml_module(scancore
@@ -66,6 +66,7 @@ qt_add_qml_module(scancore
         app/Anime.cpp app/Anime.h
         app/App.cpp app/App.h
         app/Comics.cpp app/Comics.h
+        app/Customize.cpp app/Customize.h
         app/Downloads.cpp app/Downloads.h
         app/Extensions.cpp app/Extensions.h
         app/Images.cpp app/Images.h

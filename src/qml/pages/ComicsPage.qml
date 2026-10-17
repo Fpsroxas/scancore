@@ -11,6 +11,16 @@ Item {
     property int latestLimit: 36
     property var latestTask: Comics.latest(latestLimit)
     property var historyTask: Library.history("comic", 16)
+    property var history: []
+    Connections {
+        target: page.historyTask
+        function onFinished(result) { page.history = Router.keep(page.history, result) }
+    }
+    Connections {
+        target: Library
+        function onChanged() { refreshHistory.restart() }
+    }
+    Timer { id: refreshHistory; interval: 500; onTriggered: page.historyTask = Library.history("comic", 16) }
     readonly property bool searching: query.length > 0
 
     function search(text) {
@@ -26,6 +36,7 @@ Item {
             return
         }
         query = trimmed
+        if (query.length > 0) recent.remember(query)
         searchTask = query.length > 0 ? Comics.search(query, source) : null
         flick.scrollTo(0)
     }
@@ -164,9 +175,15 @@ Item {
                 width: parent.width
                 spacing: 34
 
+                RecentSearches {
+                    id: recent
+                    key: "recentComicSearches"
+                    onPicked: (text) => page.search(text)
+                }
+
                 Shelf {
                     title: "Continue reading"
-                    items: page.historyTask && page.historyTask.ok ? page.historyTask.result : []
+                    items: page.history
                     subtitleFor: (it) => it.unitTitle || ""
                     progressFor: (it) => it.completed ? 1 : (it.percent || 0)
                     onOpened: (it, cover) => Router.resume(it)
@@ -206,4 +223,6 @@ Item {
             }
         }
     }
+
+    BackToTop { flick: flick }
 }

@@ -18,7 +18,25 @@ Item {
         onTriggered: page.task = Downloads.items()
     }
 
-    readonly property var items: task && task.ok ? task.result : []
+    // Running downloads refresh this list several times a second. The rows
+    // are replaced only when downloads come, go or change state; page counts
+    // are read from `progress`, so rows (and the scroll position) stay put.
+    property var items: []
+    property var progress: ({})
+    property string shape: ""
+    Connections {
+        target: page.task
+        function onFinished(result) {
+            const counts = {}
+            for (const i of result) counts[i.id] = { done: i.done, total: i.total }
+            page.progress = counts
+            const shape = JSON.stringify(result.map(i => [i.id, i.status, i.error]))
+            if (shape !== page.shape) {
+                page.shape = shape
+                page.items = result
+            }
+        }
+    }
     // Measuring walks the whole downloads folder, so only when what is saved
     // changes, not on every page of a running download.
     readonly property int savedCount: items.filter(i => i.status === "done").length
@@ -50,7 +68,7 @@ Item {
             StateView {
                 width: list.width
                 height: visible ? 320 : 0
-                task: page.task
+                task: page.items.length === 0 ? page.task : null
                 empty: page.task && page.task.ok && page.items.length === 0
                 emptyTitle: "No downloads yet"
                 emptyText: "On a comic or novel page, use the download button on a chapter, or select several at once. Downloaded chapters open without a connection."
@@ -61,6 +79,7 @@ Item {
         delegate: Item {
             id: row
             required property var modelData
+            readonly property var count: page.progress[modelData.id] || { done: modelData.done, total: modelData.total }
             width: list.width
             height: 74
 
@@ -113,7 +132,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         color: Theme.surface3
                         Rectangle {
-                            width: parent.width * (row.modelData.total > 0 ? row.modelData.done / row.modelData.total : 0)
+                            width: parent.width * (row.count.total > 0 ? row.count.done / row.count.total : 0)
                             height: parent.height
                             radius: 2
                             color: Theme.accent
@@ -121,7 +140,7 @@ Item {
                         }
                     }
                     Text {
-                        text: row.modelData.status === "running" ? (row.modelData.total ? row.modelData.done + " of " + row.modelData.total + " pages" : "Starting…")
+                        text: row.modelData.status === "running" ? (row.count.total ? row.count.done + " of " + row.count.total + " pages" : "Starting…")
                             : row.modelData.status === "queued" ? "Waiting"
                             : row.modelData.status === "failed" ? (row.modelData.error || "Failed")
                             : "Saved " + App.relativeTime(row.modelData.createdAt)
@@ -150,4 +169,6 @@ Item {
             }
         }
     }
+
+    BackToTop { flick: list }
 }

@@ -4,6 +4,23 @@ Downloads for the current version are listed on the [releases page](https://gith
 
 ## Unreleased
 
+- **Your own theme.** Pick the window colour on a colour wheel, with a brightness slider that decides how dark it is, and the whole app follows it. Add a picture or animated GIF behind everything, fitted, dimmed and blurred to taste. Panels can be see-through, and so can the whole window, showing your desktop through it. Accents can be any colour too, and indigo, emerald and amber join the presets.
+- **Share themes** as .sct files: one file with the colours, transparency and background picture inside it, which works on every system. Import from Settings → Theme, or drop the file on the window.
+- **Settings shows one category at a time** on desktop, with a search box over the list of categories, instead of one long page to scroll through.
+- **Navigation your way**: a full sidebar, a floating one, an icon rail or a dock, on the left or right (the dock on the top or bottom).
+- **Change any shortcut** in Settings → Keyboard: click it and press the new keys. A key taken from another action moves over, and each one can go back to its default. The shortcuts sheet (**?**) shows yours.
+- Settings → Interface adds text size, cover size (fit more covers on screen, or fewer and larger), animation speed (relaxed, default or snappy) and the page SCANCORE opens on.
+- **Pick up where you left off.** Home leads with the last thing you read or watched, with its progress and a Continue button.
+- **Library sorting**: new chapters first, recently read, recently added, or by title. History has a search box.
+- **Recent searches** on the Comics and Novels pages, one click to search again.
+- **Quick commands** in the Ctrl+K palette: switch theme, reduce motion, check for new chapters, sync, and a sheet of every keyboard shortcut (also on **?**).
+- Comic reader: in page mode, swipe or drag sideways to turn the page.
+- Anime: endings can be skipped automatically too, and the next-episode countdown can be 3, 8 or 15 seconds. With intros skipped automatically, the Skip button now still appears for endings, which were otherwise impossible to skip.
+- Livelier details: notifications show an icon and the time left, pause while you point at them and can be swiped away; the anime spotlight shows when the next title comes, pauses on hover and can be swiped; shelves fade at the edge that scrolls; long pages have a back-to-top button; dialogs spring in.
+- Lists no longer blink or replay their entrance when the library changes in the background, for example after a sync or while chapters download, and the Downloads list keeps its place during downloads.
+- Signing out asks first.
+- The sidebar scrolls instead of overlapping its Settings button in short windows.
+- The logo on Settings → About is no longer stretched.
 - **Anime plays on Windows, macOS and Linux again.** Episodes are H.264 video, which the browser built into the desktop downloads could not decode, so the player only ever showed a spinner (Android was unaffected). Windows now plays through Microsoft Edge WebView2 and macOS through the system's WebKit. The Flatpak gains the player, using Flathub's Qt WebEngine, which has the codec, and the AppImage is built with a Qt WebEngine that has it too. Where a build still cannot play a video, the player says so and offers to open the episode in your browser.
 - The player has a button to open the episode in your browser. On Windows and macOS the episode list sits beside the video, and in full screen the controls come back when the pointer reaches the top edge.
 - **Sync is lighter.** While you watch or read, changes are sent to scancore.onl at most once a minute instead of every few seconds, and saves the website does not recognise are no longer offered again at every sync.

@@ -144,6 +144,11 @@ Rectangle {
         Router.back()
     }
 
+    function keyHint(action) {
+        const keys = Keymap.labels(action)
+        return keys.length ? " (" + keys[0] + ")" : ""
+    }
+
     Keys.onPressed: (event) => {
         switch (event.key) {
         case Qt.Key_Escape: exit(); break
@@ -153,18 +158,29 @@ Rectangle {
         case Qt.Key_PageUp: scrollBy(-height * 0.85); break
         case Qt.Key_Right: mode === "paged" ? pageView.turn(App.settings.readerDirection === "rtl" ? -1 : 1) : (hasNext && load(index + 1)); break
         case Qt.Key_Left: mode === "paged" ? pageView.turn(App.settings.readerDirection === "rtl" ? 1 : -1) : (hasPrev && load(index - 1)); break
-        case Qt.Key_N: if (hasNext) load(index + 1); break
-        case Qt.Key_P: if (hasPrev) load(index - 1); break
-        case Qt.Key_Home: mode === "strip" ? strip.positionViewAtBeginning() : (pageView.page = 0); break
-        case Qt.Key_End: mode === "strip" ? strip.positionViewAtEnd() : (pageView.page = panels.length - 1); break
-        case Qt.Key_F: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen(); break
-        case Qt.Key_M: App.setSetting("readerMode", mode === "strip" ? "paged" : "strip"); break
-        case Qt.Key_Equal: case Qt.Key_Plus: App.setSetting("readerWidth", Math.min(2400, stripWidth + 80)); break
-        case Qt.Key_Minus: App.setSetting("readerWidth", Math.max(360, stripWidth - 80)); break
         default: return
         }
         event.accepted = true
     }
+
+    // The rest come from Settings → Keyboard (see Keymap).
+    Shortcut { sequences: Keymap.sequences("reader.next"); onActivated: if (reader.hasNext) reader.load(reader.index + 1) }
+    Shortcut { sequences: Keymap.sequences("reader.prev"); onActivated: if (reader.hasPrev) reader.load(reader.index - 1) }
+    Shortcut {
+        sequences: Keymap.sequences("reader.first")
+        onActivated: reader.mode === "strip" ? strip.positionViewAtBeginning() : (pageView.page = 0)
+    }
+    Shortcut {
+        sequences: Keymap.sequences("reader.last")
+        onActivated: reader.mode === "strip" ? strip.positionViewAtEnd() : (pageView.page = reader.panels.length - 1)
+    }
+    Shortcut {
+        sequences: Keymap.sequences("reader.fullscreen")
+        onActivated: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
+    }
+    Shortcut { sequences: Keymap.sequences("reader.mode"); onActivated: App.setSetting("readerMode", reader.mode === "strip" ? "paged" : "strip") }
+    Shortcut { sequences: Keymap.sequences("reader.wider"); onActivated: App.setSetting("readerWidth", Math.min(2400, reader.stripWidth + 80)) }
+    Shortcut { sequences: Keymap.sequences("reader.narrower"); onActivated: App.setSetting("readerWidth", Math.max(360, reader.stripWidth - 80)) }
 
     // ------------------------------------------------------------ strip
 
@@ -369,6 +385,29 @@ Rectangle {
                 else reader.controlsShown ? (reader.controlsShown = false) : reader.showControls()
             }
             onWheel: (wheel) => pageView.turn(wheel.angleDelta.y < 0 ? 1 : -1)
+
+            // Swipe (or drag) sideways to turn the page; the page follows
+            // and springs back from a short swipe. Inside the MouseArea, so it
+            // sees the press before the MouseArea takes it.
+            DragHandler {
+                id: swipe
+                target: null
+                yAxis.enabled: false
+                onTranslationChanged: if (active) pageHolder.x = translation.x * 0.7
+                onActiveChanged: {
+                    if (active) {
+                        pageSwap.stop()
+                        return
+                    }
+                    const dx = translation.x
+                    if (Math.abs(dx) > Math.min(90, pageView.width * 0.12)) {
+                        const forward = dx < 0 ? !pageView.rtl : pageView.rtl
+                        pageView.turn(forward ? 1 : -1)
+                    }
+                    if (!pageSwap.running) springBack.start()
+                }
+            }
+            NumberAnimation { id: springBack; target: pageHolder; property: "x"; to: 0; duration: Motion.normal; easing.type: Easing.OutCubic }
         }
     }
 
@@ -507,7 +546,7 @@ Rectangle {
             IconButton {
                 iconName: reader.mode === "strip" ? "move-vertical" : "layers"
                 iconColor: "white"
-                tip: reader.mode === "strip" ? "Switch to pages (M)" : "Switch to vertical strip (M)"
+                tip: (reader.mode === "strip" ? "Switch to pages" : "Switch to vertical strip") + reader.keyHint("reader.mode")
                 onClicked: App.setSetting("readerMode", reader.mode === "strip" ? "paged" : "strip")
             }
             IconButton {
@@ -519,7 +558,7 @@ Rectangle {
             IconButton {
                 iconName: Window.window && Window.window.visibility === Window.FullScreen ? "minimize" : "maximize"
                 iconColor: "white"
-                tip: "Full screen (F)"
+                tip: "Full screen" + reader.keyHint("reader.fullscreen")
                 onClicked: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
             }
         }
@@ -562,7 +601,7 @@ Rectangle {
                 iconName: "skip-back"
                 iconColor: "white"
                 enabled: reader.hasPrev
-                tip: "Previous chapter (P)"
+                tip: "Previous chapter" + reader.keyHint("reader.prev")
                 onClicked: reader.load(reader.index - 1)
             }
             Text {
@@ -601,7 +640,7 @@ Rectangle {
                 iconName: "skip-forward"
                 iconColor: "white"
                 enabled: reader.hasNext
-                tip: "Next chapter (N)"
+                tip: "Next chapter" + reader.keyHint("reader.next")
                 onClicked: reader.load(reader.index + 1)
             }
         }

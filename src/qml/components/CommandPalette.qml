@@ -2,7 +2,8 @@ import QtQuick
 import QtQuick.Controls.Basic
 import ScanCore
 
-// Ctrl+K: jump anywhere, search any media type, or reopen something recent.
+// Ctrl+K: jump anywhere, search any media type, reopen something recent, or
+// run a quick command (theme, motion, update check, sync, shortcuts).
 Popup {
     id: palette
     parent: Overlay.overlay
@@ -36,7 +37,35 @@ Popup {
         for (const [key, label, icon] of pages)
             if (!lower || label.toLowerCase().includes(lower))
                 out.push({ icon: icon, label: "Go to " + label, run: () => Router.go(key) })
+        const commands = [
+            { icon: Theme.dark ? "sun" : "moon", label: Theme.dark ? "Switch to the light theme" : "Switch to the dark theme",
+              run: () => App.setSetting("theme", Theme.dark ? "light" : "dark") },
+            { icon: "sparkles", label: Motion.reduced ? "Turn animations back on" : "Reduce motion",
+              run: () => App.setSetting("reducedMotion", !Motion.reduced) },
+            { icon: "refresh-cw", label: "Check the library for new chapters", run: () => checkLibrary() }
+        ]
+        if (Account.signedIn)
+            commands.push({ icon: "cloud", label: "Sync with scancore.onl", run: () => Account.sync() })
+        if (App.platform !== "android")
+            commands.push({ icon: "keyboard", label: "Keyboard shortcuts", detail: "?", run: () => Router.shell.openShortcuts() })
+        for (const c of commands)
+            if (!lower || c.label.toLowerCase().includes(lower))
+                out.push(c)
         return out
+    }
+
+    // Held here so the check is not cancelled when the palette closes.
+    property var checkTask: null
+    function checkLibrary() {
+        Router.toast("Checking your library for new chapters…")
+        checkTask = Library.checkUpdates()
+    }
+    Connections {
+        target: palette.checkTask
+        function onFinished(result) {
+            if (result.newUnits === 0) Router.toast("Everything is up to date")
+        }
+        function onFailed(error) { Router.toast(error, "error") }
     }
 
     function searchIn(section, q) {

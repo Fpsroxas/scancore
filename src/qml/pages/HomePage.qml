@@ -13,7 +13,18 @@ Item {
     property var animeTask: Anime.home()
     property var novelsTask: Novels.discover()
 
-    readonly property var updates: (libraryTask && libraryTask.ok ? libraryTask.result : []).filter(e => e.newUnits > 0)
+    // The last results, kept while a refresh runs.
+    property var history: []
+    property var library: []
+    readonly property var updates: library.filter(e => e.newUnits > 0)
+    Connections {
+        target: page.historyTask
+        function onFinished(result) { page.history = Router.keep(page.history, result) }
+    }
+    Connections {
+        target: page.libraryTask
+        function onFinished(result) { page.library = Router.keep(page.library, result) }
+    }
 
     Connections {
         target: Library
@@ -34,6 +45,7 @@ Item {
     }
 
     SmoothFlickable {
+        id: flick
         anchors.fill: parent
         contentHeight: column.height + 60
 
@@ -95,10 +107,18 @@ Item {
                 }
             }
 
+            // The latest of them, large.
+            Loader {
+                width: parent.width
+                active: page.history.length > 0
+                visible: active
+                sourceComponent: ResumeCard { entry: page.history[0] }
+            }
+
             Shelf {
                 title: "Continue"
-                items: page.historyTask && page.historyTask.ok ? page.historyTask.result : []
-                loading: page.historyTask ? page.historyTask.loading && items.length === 0 : false
+                items: page.history.slice(1)
+                loading: page.historyTask ? page.historyTask.loading && page.history.length === 0 : false
                 subtitleFor: (it) => it.media === "anime" ? "Episode " + (it.unitNumber || it.unitKey) : (it.unitTitle || "")
                 progressFor: (it) => it.completed ? 1 : (it.percent || 0)
                 onOpened: (it, cover) => Router.resume(it)
@@ -156,4 +176,6 @@ Item {
             }
         }
     }
+
+    BackToTop { flick: flick }
 }

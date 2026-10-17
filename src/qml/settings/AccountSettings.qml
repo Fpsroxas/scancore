@@ -101,9 +101,18 @@ SettingsPane {
                     enabled: !Account.syncing
                     onClicked: pane.report(Account.sync())
                 }
-                ScButton { text: "Sign out"; iconName: "log-out"; variant: "ghost"; onClicked: Account.signOut() }
+                ScButton { text: "Sign out"; iconName: "log-out"; variant: "ghost"; onClicked: signOutConfirm.open() }
             }
         }
+    }
+
+    ConfirmDialog {
+        id: signOutConfirm
+        heading: "Sign out of scancore.onl?"
+        message: "Your library and reading progress stay on this device. They stop syncing until you sign in again."
+        confirmText: "Sign out"
+        destructive: true
+        onConfirmed: Account.signOut()
     }
 
     // Signed out: what an account is for, then the form.

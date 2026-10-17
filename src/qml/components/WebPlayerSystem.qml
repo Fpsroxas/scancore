@@ -28,8 +28,9 @@ Item {
     // blurs the wrapper's window; handing focus back re-arms that for the next
     // tap.
     signal interacted()
-    // Desktop: a key the page took while it had focus ("escape", "n", "p").
-    signal key(string name)
+    // Desktop: a key pressed while the page had focus, as the DOM tells it:
+    // {key, ctrl, alt, shift, meta}.
+    signal key(var press)
     // The player's own codec support, for parity with WebPlayer. System web
     // views play H.264, so this never fires.
     signal unsupported()
@@ -62,8 +63,8 @@ Item {
 
     // Desktop: the video's state, plus the keys pressed since the last call.
     readonly property string probe: "(function(){var w=window;if(!w.__sc){w.__sc={k:[]};"
-        + "w.addEventListener('keydown',function(e){if(e.ctrlKey||e.altKey||e.metaKey)return;"
-        + "var k=String(e.key).toLowerCase();if(k==='escape'||k==='n'||k==='p')w.__sc.k.push(k)},true)}"
+        + "w.addEventListener('keydown',function(e){if(e.repeat||/^(Control|Shift|Alt|Meta)$/.test(e.key))return;"
+        + "w.__sc.k.push({key:e.key,ctrl:e.ctrlKey,alt:e.altKey,shift:e.shiftKey,meta:e.metaKey})},true)}"
         + "var v=document.querySelector('video'),k=w.__sc.k;w.__sc.k=[];"
         + "return JSON.stringify({t:v?v.currentTime:0,d:v&&isFinite(v.duration)?v.duration:0,s:v&&v.ended?'Ended':'',k:k})})()"
 

@@ -163,4 +163,6 @@ Item {
             }
         }
     }
+
+    BackToTop { flick: flick }
 }

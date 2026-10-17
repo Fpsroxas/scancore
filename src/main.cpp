@@ -1,5 +1,6 @@
 #include "app/Account.h"
 #include "app/App.h"
+#include "app/Customize.h"
 #include "app/Images.h"
 #include "app/Updater.h"
 #include "app/WebBridge.h"
@@ -132,12 +133,36 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+#ifndef Q_OS_ANDROID
+    // A see-through window needs an alpha channel from the start.
+    if (Customize::savedThemeIsTranslucent()) {
+        Customize::setTranslucentWindow(true);
+        QQuickWindow::setDefaultAlphaBuffer(true);
+    }
+#endif
+
     installWebBridge();
     Account::instance();
     auto *appState = App::instance();
     QQmlApplicationEngine engine;
     engine.addImageProvider(QStringLiteral("remote"), new RemoteImageProvider);
     engine.addImageProvider(QStringLiteral("icon"), new IconProvider);
+    engine.addImageProvider(QStringLiteral("colorwheel"), new ColorWheelProvider);
+    // Settings saved by Settings pages that App does not list among its
+    // defaults (text and cover size, animation speed, start page and others)
+    // are restored as they were stored, in the object QML uses too.
+    const auto restoreSettings = [](App *app) {
+        if (!app)
+            return;
+        for (const auto &row : Database::query(QStringLiteral("SELECT key FROM prefs WHERE key LIKE 'setting.%'"))) {
+            const auto key = row.toMap().value(QStringLiteral("key")).toString().mid(8);
+            if (!key.isEmpty() && !app->settings().contains(key))
+                app->setSetting(key, Database::pref(QStringLiteral("setting.") + key));
+        }
+    };
+    restoreSettings(appState);
+    if (auto *qmlApp = engine.singletonInstance<App *>("ScanCore", "App"); qmlApp != appState)
+        restoreSettings(qmlApp);
 
 #ifndef Q_OS_ANDROID
     QSystemTrayIcon tray(QApplication::windowIcon());

@@ -285,4 +285,6 @@ Item {
             }
         }
     }
+
+    BackToTop { flick: flick }
 }

@@ -4,10 +4,16 @@ import ScanCore
 
 // Collapsible navigation rail. The selection indicator slides between
 // items; collapsing animates the width and fades the labels.
+// style: "sidebar" (full height), "floating" (a rounded panel inset from the
+// window's edges) or "rail" (icons only); side: "left" or "right".
 Rectangle {
     id: sidebar
     property string current: "home"
-    property bool collapsed: App.settings.sidebarCollapsed === true
+    property string style: "sidebar"
+    property string side: "left"
+    readonly property bool floating: style === "floating"
+    readonly property bool rail: style === "rail"
+    property bool collapsed: rail || App.settings.sidebarCollapsed === true
     signal navigate(string section)
     signal openPalette()
 
@@ -25,10 +31,15 @@ Rectangle {
     implicitWidth: collapsed ? 72 : 228
     width: implicitWidth
     color: Theme.sidebar
+    radius: floating ? Theme.radiusXl : 0
+    border.width: floating ? 1 : 0
+    border.color: Theme.border
     Behavior on width { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
 
+    // The edge towards the content.
     Rectangle {
-        anchors.right: parent.right
+        visible: !sidebar.floating
+        x: sidebar.side === "right" ? 0 : parent.width - 1
         width: 1
         height: parent.height
         color: Theme.border
@@ -94,6 +105,8 @@ Rectangle {
             }
             Text {
                 x: 38
+                width: parent.width - x - kbdBadge.width - 16
+                elide: Text.ElideRight
                 anchors.verticalCenter: parent.verticalCenter
                 text: "Search everything"
                 color: Theme.textFaint
@@ -104,6 +117,7 @@ Rectangle {
                 Behavior on opacity { NumberAnimation { duration: Motion.fast } }
             }
             Rectangle {
+                id: kbdBadge
                 anchors.right: parent.right
                 anchors.rightMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
@@ -112,11 +126,12 @@ Rectangle {
                 radius: 5
                 color: Theme.surface3
                 opacity: sidebar.collapsed ? 0 : 1
-                visible: opacity > 0
+                visible: opacity > 0 && kbd.text.length > 0
                 Text {
                     id: kbd
                     anchors.centerIn: parent
-                    text: App.platform === "macos" ? "⌘K" : "Ctrl K"
+                    // The first key for search, from Settings → Keyboard.
+                    text: Keymap.labels("palette")[0] || ""
                     color: Theme.textFaint
                     font.family: Theme.fontSans
                     font.pixelSize: 11
@@ -124,14 +139,32 @@ Rectangle {
             }
         }
         ToolTip.visible: sidebar.collapsed && hovered
-        ToolTip.text: "Search (Ctrl+K)"
+        ToolTip.text: "Search" + (Keymap.labels("palette").length ? " (" + Keymap.labels("palette")[0] + ")" : "")
     }
 
-    Item {
+    // Scrolls when the window is too short for every section above the
+    // Settings button.
+    Flickable {
         id: navArea
         y: searchButton.y + searchButton.height + 18
         width: parent.width
-        height: navColumn.height
+        height: Math.min(navColumn.height, bottomColumn.y - y - 8)
+        contentWidth: width
+        contentHeight: navColumn.height
+        interactive: contentHeight > height
+        // Keep the current section in view.
+        function reveal() {
+            const item = indicator.target
+            if (!item || !interactive) {
+                contentY = 0
+                return
+            }
+            if (item.y < contentY) contentY = item.y
+            else if (item.y + item.height > contentY + height) contentY = item.y + item.height - height
+        }
+        onHeightChanged: Qt.callLater(reveal)
+        boundsBehavior: Flickable.StopAtBounds
+        clip: interactive
 
         // Sliding selection indicator.
         Rectangle {
@@ -144,6 +177,7 @@ Rectangle {
                 return null
             }
             visible: target !== null
+            onTargetChanged: Qt.callLater(navArea.reveal)
             x: 12
             width: parent.width - 24
             height: 40
@@ -152,12 +186,13 @@ Rectangle {
             color: Theme.alpha(Theme.text, Theme.dark ? 0.08 : 0.07)
             Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
             Rectangle {
-                x: -12
+                x: sidebar.side === "right" ? parent.width + 9 : -12
                 anchors.verticalCenter: parent.verticalCenter
                 width: 3
                 height: 18
                 radius: 2
                 color: Theme.accent
+                visible: !sidebar.floating
             }
         }
 
@@ -192,7 +227,8 @@ Rectangle {
                         onClicked: sidebar.navigate(modelData.key)
                         background: Rectangle {
                             radius: Theme.radiusMd
-                            color: navButton.hovered && sidebar.current !== modelData.key ? Theme.alpha(Theme.text, 0.04) : "transparent"
+                            color: navButton.hovered && sidebar.current !== modelData.key ? Theme.alpha(Theme.text, 0.05) : Theme.alpha(Theme.text, 0)
+                            Behavior on color { ColorAnimation { duration: Motion.fast } }
                         }
                         contentItem: Item {
                             Icon {
@@ -249,6 +285,7 @@ Rectangle {
     }
 
     Column {
+        id: bottomColumn
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 14
         width: parent.width
@@ -294,6 +331,7 @@ Rectangle {
 
         AbstractButton {
             id: collapseButton
+            visible: !sidebar.rail
             x: 12
             width: parent.width - 24
             height: 36
@@ -309,6 +347,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     name: "panel-left"
                     size: 17
+                    mirror: sidebar.side === "right"
                     color: Theme.textFaint
                     Behavior on x { NumberAnimation { duration: Motion.slow; easing.type: Easing.OutCubic } }
                 }

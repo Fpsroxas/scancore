@@ -52,6 +52,31 @@ QtObject {
         if (shell) shell.push("pages/AnimeSchedule.qml", {})
     }
 
+    // For pages that refresh a list in the background: the old list when
+    // the new one holds the same, so views keep their items (and scroll
+    // position) instead of rebuilding them.
+    function keep(old, fresh) {
+        return JSON.stringify(old) === JSON.stringify(fresh) ? old : fresh
+    }
+
+    // Switches to a theme read from a .sct file (Customize.importTheme).
+    function applyTheme(theme) {
+        const t = Object.assign({}, theme)
+        const accent = t.accent
+        delete t.accent
+        App.setSetting("customTheme", t)
+        if (accent) {
+            App.setSetting("customAccent", accent)
+            App.setSetting("accent", "custom")
+        }
+        App.setSetting("theme", "custom")
+        const name = t.name ? "“" + t.name + "”" : "The theme"
+        if (t.windowOpacity < 1 && !Customize.translucentWindow && Customize.canRestart)
+            toast(name + " is on. Restart SCANCORE to make the window see-through.", "success")
+        else
+            toast(name + " is on", "success")
+    }
+
     // Resume an item from history or the library at its last unit.
     function resume(entry) {
         if (!shell || !entry) return

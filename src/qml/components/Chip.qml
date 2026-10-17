@@ -8,6 +8,8 @@ AbstractButton {
     property bool selected: checked
     property string iconName
     property string detail
+    // A colour dot before the label (theme presets).
+    property color dot: "transparent"
 
     checkable: false
     hoverEnabled: true
@@ -34,6 +36,16 @@ AbstractButton {
             id: row
             anchors.centerIn: parent
             spacing: 6
+            Rectangle {
+                visible: chip.dot.a > 0
+                width: 12
+                height: 12
+                radius: 6
+                color: chip.dot
+                border.width: 1
+                border.color: Theme.alpha(chip.selected ? Theme.accentInk : Theme.text, 0.3)
+                anchors.verticalCenter: parent.verticalCenter
+            }
             Icon {
                 visible: chip.iconName.length > 0
                 name: chip.iconName

@@ -40,7 +40,7 @@
 - **Works the moment you open it.** The sources are built in. There are no extension repositories to find or add.
 - **Three kinds of media, one library.** Comics, novels and anime share the same library, history, downloads and search.
 - **Local first.** No account and no server needed. Everything lives in one SQLite file you can back up.
-- **Smooth.** Covers fly into their details page, sections and pages glide, readers scroll with easing, and a "Reduce motion" switch turns all of it off.
+- **Smooth.** Covers fly into their details page, sections and pages glide, readers scroll with easing. Animation speed is adjustable, and a "Reduce motion" switch turns all of it off.
 - **Updates itself.** New versions download in the background and install when you restart, on every platform.
 
 ## Features
@@ -48,9 +48,9 @@
 ### Comics
 - Search **Asura Scans, Webtoon, MangaDex, Flame Comics, HiveToons, Vortex Scans, Qi Manga, ThunderScans and MangaRead** at once, ranked by how well each title matches.
 - **Vertical strip** for webtoons and manhwa, or **page by page** for manga, left-to-right or right-to-left.
-- Adjustable strip width (Ctrl + scroll), panel gaps, a progress rail, and very tall strips that stay sharp.
+- Adjustable strip width (Ctrl + scroll), panel gaps, a progress rail, and very tall strips that stay sharp. In page mode, swipe or drag to turn pages.
 - The next chapter is fetched ahead of time, and your exact place is remembered in every chapter.
-- Latest-updates feed across sources. Paste a series link to open it directly.
+- Latest-updates feed across sources, and your recent searches one click away. Paste a series link to open it directly.
 
 ### Novels
 - **Royal Road** discovery shelves (top rated, rising stars, trending, new and completed) plus search across the NovelFull family: NovelFull, AllNovelFull, ReadNovelFull, FreeWebNovel, LibRead and more.
@@ -60,14 +60,16 @@
 ### Anime
 - **AniList**-powered trending, seasonal, popular and top lists, a rotating spotlight, search with genre, year, format and status filters, and a 7-day **airing schedule**.
 - Details with episode thumbnails and titles, related entries and recommendations.
-- Episodes play inside the app, with **resume**, **auto-next** and **AniSkip** intro, ending and recap skipping.
+- Episodes play inside the app, with **resume**, **auto-next** (with a countdown you can set) and **AniSkip** intro, ending and recap skipping, automatic or on a button.
 
 ### Library and everything else
-- **Library** with new-chapter checks in the background and desktop notifications.
-- **History** grouped by day, **offline downloads** for comic and novel chapters, and a **Ctrl+K command palette**.
+- **Library** with new-chapter checks in the background, desktop notifications and four ways to sort.
+- **Home** picks up where you left off: the last thing you read or watched, one click from carrying on.
+- **History** grouped by day and searchable, **offline downloads** for comic and novel chapters, a **Ctrl+K command palette** with quick commands, and every keyboard shortcut on one sheet (press **?**), each one changeable in Settings → Keyboard.
 - **Optional scancore.onl account**: sign in or sign up from the welcome screen or Settings to bring your website library and comic reading history into the app and send saves back.
 - **Browser checks**: if a site asks for one, open it inside SCANCORE once and the app reuses the clearance (desktop).
-- Light, dark and black themes, five accent colours, backup and restore, tray icon and keyboard control throughout.
+- **Make it yours**: light, dark and black themes, or your own: a window colour from a colour wheel, any accent, a picture or animated GIF behind everything, see-through panels and window. Themes share as single `.sct` files that work on every system.
+- Navigation as a sidebar, floating sidebar, icon rail or dock, on either side; adjustable text and cover sizes and animation speed, a choice of start page, backup and restore, tray icon and keyboard control throughout.
 - **Phone layout** on Android: bottom tabs, stacked details pages and touch controls.
 
 ## Screenshots

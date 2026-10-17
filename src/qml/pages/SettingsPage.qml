@@ -2,22 +2,42 @@ import QtQuick
 import QtQuick.Controls.Basic
 import ScanCore
 
-// Settings. Wide windows list the categories beside one long page that
-// scrolls through all of them; phones show the categories as a list and
-// open each on its own page (SettingsDetail.qml).
+// Settings. Wide windows list the categories beside the one being shown;
+// phones show the categories as a list and open each on its own page
+// (SettingsDetail.qml).
 Item {
     id: page
 
-    readonly property var sections: [
-        { key: "account", file: "AccountSettings.qml", title: "Account", subtitle: "Optional sync with scancore.onl", icon: "user-round", tint: "sky" },
-        { key: "appearance", file: "AppearanceSettings.qml", title: "Appearance", subtitle: "Theme, accent colour and motion", icon: "palette", tint: "violet" },
-        { key: "reading", file: "ReadingSettings.qml", title: "Reading", subtitle: "Comic and novel readers", icon: "book-open", tint: "ember" },
-        { key: "anime", file: "AnimeSettings.qml", title: "Anime", subtitle: "Playback and skipping", icon: "tv", tint: "rose" },
-        { key: "library", file: "LibrarySettings.qml", title: "Library", subtitle: "New chapters and notifications", icon: "library", tint: "green" },
-        { key: "sources", file: "SourcesSettings.qml", title: "Sources", subtitle: "The sites SCANCORE reads from", icon: "globe", tint: "amber" },
-        { key: "storage", file: "StorageSettings.qml", title: "Storage", subtitle: "Cache, downloads and backups", icon: "hard-drive", tint: "mono" },
-        { key: "about", file: "AboutSettings.qml", title: "About", subtitle: "Version, updates and help", icon: "info", tint: "mono" }
+    // keywords: what the category list's search also finds it by.
+    readonly property var allSections: [
+        { key: "account", file: "AccountSettings.qml", title: "Account", subtitle: "Optional sync with scancore.onl", icon: "user-round", tint: "sky",
+          keywords: "sign in sign out sync scancore.onl website login" },
+        { key: "theme", file: "ThemeSettings.qml", title: "Theme", subtitle: "Colours, background and transparency", icon: "palette", tint: "violet",
+          keywords: "dark light black system custom colour color accent wheel background picture image gif wallpaper transparency transparent opacity panels export import sct share" },
+        { key: "interface", file: "InterfaceSettings.qml", title: "Interface", subtitle: "Navigation, size and motion", icon: "layout-grid", tint: "indigo",
+          keywords: "sidebar dock rail floating navigation left right top bottom text size font cover animation motion speed reduce start page" },
+        { key: "keyboard", file: "KeyboardSettings.qml", title: "Keyboard", subtitle: "Shortcuts", icon: "keyboard", tint: "mono",
+          keywords: "keys shortcuts keybinds hotkeys bindings", desktop: true },
+        { key: "reading", file: "ReadingSettings.qml", title: "Reading", subtitle: "Comic and novel readers", icon: "book-open", tint: "ember",
+          keywords: "comic novel reader strip pages direction width gap font size line spacing justify sepia paper" },
+        { key: "anime", file: "AnimeSettings.qml", title: "Anime", subtitle: "Playback and skipping", icon: "tv", tint: "rose",
+          keywords: "player next episode autoplay countdown skip intro ending recap" },
+        { key: "library", file: "LibrarySettings.qml", title: "Library", subtitle: "New chapters and notifications", icon: "library", tint: "green",
+          keywords: "updates new chapters check notifications tray background" },
+        { key: "sources", file: "SourcesSettings.qml", title: "Sources", subtitle: "The sites SCANCORE reads from", icon: "globe", tint: "amber",
+          keywords: "sites nsfw manifest novel pack extensions" },
+        { key: "storage", file: "StorageSettings.qml", title: "Storage", subtitle: "Cache, downloads and backups", icon: "hard-drive", tint: "mono",
+          keywords: "cache downloads folder backup restore export data" },
+        { key: "about", file: "AboutSettings.qml", title: "About", subtitle: "Version, updates and help", icon: "info", tint: "mono",
+          keywords: "version updates help licence discord welcome" }
     ]
+    readonly property var sections: allSections.filter(s => !s.desktop || App.platform !== "android")
+
+    function sectionFor(key) {
+        for (const s of sections)
+            if (s.key === key) return s
+        return null
+    }
 
     function tint(name) {
         if (name === "green") return Theme.success
@@ -30,16 +50,24 @@ Item {
     function summary(key) {
         App.settings
         switch (key) {
-        case "appearance": {
-            const theme = { system: "System", light: "Light", dark: "Dark", black: "Black" }[App.settings.theme] || "Dark"
+        case "theme": {
+            const theme = { system: "System", light: "Light", dark: "Dark", black: "Black", custom: "Custom" }[App.settings.theme] || "Dark"
             const accent = String(App.settings.accent || "mono")
             return theme + " theme · " + accent.charAt(0).toUpperCase() + accent.slice(1) + " accent"
+        }
+        case "interface":
+            return ({ sidebar: "Sidebar", floating: "Floating sidebar", rail: "Icon rail", dock: "Dock" }[App.settings.navStyle] || "Sidebar")
+                + " · " + ({ relaxed: "relaxed", snappy: "snappy" }[App.settings.motionSpeed] || "default") + " motion"
+        case "keyboard": {
+            const changed = Object.keys(Keymap.changed).length
+            return changed ? changed + (changed === 1 ? " shortcut changed" : " shortcuts changed") : "Default shortcuts"
         }
         case "reading":
             return (App.settings.readerMode === "paged" ? "Pages" : "Vertical strip") + " · "
                 + ({ "Literata": "Serif", "DM Sans": "Sans", "Space Grotesk": "Grotesk" }[App.settings.novelFont] || "Serif") + " text"
         case "anime":
-            return "Auto-next " + (App.settings.autoNext !== false ? "on" : "off") + " · Auto-skip " + (App.settings.autoSkip === true ? "on" : "off")
+            return "Auto-next " + (App.settings.autoNext !== false ? "on" : "off") + " · Auto-skip "
+                + (App.settings.autoSkip === true || App.settings.autoSkipEndings === true ? "on" : "off")
         case "library": {
             const hours = App.settings.libraryCheckHours
             return hours > 0 ? "Checks for new chapters every " + (hours === 1 ? "hour" : hours === 24 ? "day" : hours + " hours") : "Update checks off"
@@ -66,20 +94,41 @@ Item {
         id: wideLayout
         Item {
             id: wide
-            readonly property bool showNav: width >= 860
-            property int current: 0
+            readonly property int navWidth: width >= 1000 ? 240 : 204
+            property string currentKey: page.sectionFor(App.settings.settingsCategory) ? App.settings.settingsCategory : "account"
+            readonly property var current: page.sectionFor(currentKey) || page.sections[0]
+            property string query: ""
+            readonly property var matches: {
+                const q = query.trim().toLowerCase()
+                if (!q) return page.sections
+                return page.sections.filter(s => (s.title + " " + s.subtitle + " " + s.keywords).toLowerCase().includes(q))
+            }
 
-            function scrollTo(i) {
-                const target = panes.itemAt(i)
-                if (target) flick.scrollTo(Math.min(flick.maxY, target.y + content.y - 24), true)
+            function show(key) {
+                if (key === currentKey) return
+                currentKey = key
+                App.setSetting("settingsCategory", key)
+            }
+
+            // Over a background picture the list sits on a panel, like the
+            // sidebar, so it stays readable.
+            Rectangle {
+                visible: Theme.layered
+                x: nav.x - 12
+                y: nav.y - 14
+                width: nav.width + 24
+                height: nav.height + 28
+                radius: Theme.radiusXl
+                color: Theme.sidebar
+                border.width: 1
+                border.color: Theme.border
             }
 
             Column {
                 id: nav
-                visible: wide.showNav
                 x: Theme.gutter
                 y: 24
-                width: 212
+                width: wide.navWidth
                 spacing: 2
                 Text {
                     text: "Settings"
@@ -90,28 +139,36 @@ Item {
                     font.letterSpacing: -0.6
                 }
                 Text {
-                    bottomPadding: 20
+                    bottomPadding: 16
                     text: "Stored on this computer"
                     color: Theme.textMuted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
                 }
+                SearchField {
+                    width: parent.width
+                    implicitHeight: 36
+                    placeholderText: "Find a setting"
+                    onTextChanged: wide.query = text
+                    onSubmitted: if (wide.matches.length > 0) wide.show(wide.matches[0].key)
+                }
+                Item { width: 1; height: 12 }
                 Repeater {
-                    model: page.sections
+                    model: wide.matches
                     AbstractButton {
                         id: item
                         required property var modelData
-                        required property int index
-                        readonly property bool active: wide.current === index
+                        readonly property bool active: wide.currentKey === modelData.key
                         width: nav.width
                         height: 40
                         hoverEnabled: true
-                        onClicked: wide.scrollTo(index)
+                        onClicked: wide.show(modelData.key)
                         background: Rectangle {
                             radius: Theme.radiusMd
-                            color: item.active ? Theme.surface2 : item.hovered ? Theme.alpha(Theme.text, 0.04) : "transparent"
+                            color: item.active ? Theme.surface2 : item.hovered ? Theme.alpha(Theme.text, 0.04) : Theme.alpha(Theme.text, 0)
                             border.width: item.active ? 1 : 0
                             border.color: Theme.border
+                            Behavior on color { ColorAnimation { duration: Motion.fast } }
                         }
                         contentItem: Row {
                             leftPadding: 8
@@ -126,6 +183,8 @@ Item {
                             }
                             Text {
                                 anchors.verticalCenter: parent.verticalCenter
+                                width: nav.width - 60
+                                elide: Text.ElideRight
                                 text: item.modelData.title
                                 color: item.active ? Theme.text : Theme.textMuted
                                 font.family: Theme.fontSans
@@ -135,47 +194,63 @@ Item {
                         }
                     }
                 }
+                Text {
+                    visible: wide.matches.length === 0
+                    topPadding: 8
+                    leftPadding: 8
+                    text: "Nothing matches"
+                    color: Theme.textFaint
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textSm
+                }
             }
 
+            // The chosen category, sliding in when it changes.
             SmoothFlickable {
                 id: flick
                 anchors.fill: parent
-                anchors.leftMargin: wide.showNav ? nav.x + nav.width + 24 : 0
-                contentHeight: content.y + content.height + 120
-                onContentYChanged: {
-                    // The last category whose heading has scrolled near the top.
-                    let found = 0
-                    for (let i = 0; i < panes.count; ++i) {
-                        const p = panes.itemAt(i)
-                        if (p && p.y + content.y - 140 <= contentY) found = i
-                    }
-                    if (contentY >= maxY - 4) found = panes.count - 1
-                    wide.current = found
+                anchors.leftMargin: nav.x + nav.width + 28
+                contentHeight: pane.y + pane.height + 80
+
+                // Over a background picture: a panel behind the category, so
+                // its headings and notes stay readable.
+                Rectangle {
+                    visible: Theme.layered
+                    x: pane.x - 20
+                    y: pane.y - 20
+                    width: pane.width + 40
+                    height: pane.height + 40
+                    radius: Theme.radiusXl
+                    color: Theme.sidebar
+                    border.width: 1
+                    border.color: Theme.border
+                    opacity: pane.opacity
                 }
 
-                Column {
-                    id: content
-                    x: wide.showNav ? 8 : Theme.gutter
-                    y: wide.showNav ? 30 : 0
-                    width: Math.min(flick.width - x - Theme.gutter, 780)
-                    spacing: 48
-
-                    PageHeader {
-                        visible: !wide.showNav
-                        x: -Theme.gutter
-                        width: content.width + 2 * Theme.gutter
-                        title: "Settings"
-                        subtitle: "Stored on this computer"
+                Loader {
+                    id: pane
+                    x: Theme.layered ? 24 : 4
+                    y: Theme.layered ? 44 : 30
+                    width: Math.min(flick.width - x - Theme.gutter - (Theme.layered ? 20 : 0), 780)
+                    property string key: ""
+                    onLoaded: reveal.restart()
+                    Component.onCompleted: load()
+                    function load() {
+                        key = wide.current.key
+                        setSource(Qt.resolvedUrl("../settings/" + wide.current.file), { tint: page.tint(wide.current.tint) })
                     }
-
-                    Repeater {
-                        id: panes
-                        model: page.sections
-                        Loader {
-                            required property var modelData
-                            width: content.width
-                            Component.onCompleted: setSource(Qt.resolvedUrl("../settings/" + modelData.file), { tint: page.tint(modelData.tint) })
+                    Connections {
+                        target: wide
+                        function onCurrentKeyChanged() {
+                            flick.scrollTo(0, false)
+                            pane.load()
                         }
+                    }
+                    transform: Translate { id: shift }
+                    ParallelAnimation {
+                        id: reveal
+                        NumberAnimation { target: pane; property: "opacity"; from: 0; to: 1; duration: Motion.normal; easing.type: Easing.OutCubic }
+                        NumberAnimation { target: shift; property: "y"; from: 14; to: 0; duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
                     }
                 }
             }
@@ -269,14 +344,14 @@ Item {
                 }
 
                 Repeater {
-                    model: [[1, 2, 3], [4, 5, 6], [7]]
+                    model: [["theme", "interface", "keyboard"], ["reading", "anime", "library"], ["sources", "storage"], ["about"]]
                     SettingsGroup {
                         required property var modelData
                         Repeater {
-                            model: modelData
+                            model: modelData.filter(key => page.sectionFor(key) !== null)
                             SettingRow {
-                                required property int modelData
-                                readonly property var section: page.sections[modelData]
+                                required property string modelData
+                                readonly property var section: page.sectionFor(modelData)
                                 iconName: section.icon
                                 iconTint: page.tint(section.tint)
                                 title: section.title

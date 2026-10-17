@@ -12,7 +12,7 @@ Item {
     property string url
     signal time(real seconds, real total, string status)
     signal interacted() // phone only; the desktop page watches the mouse itself
-    signal key(string name) // WebPlayerSystem only; shortcuts reach the page here
+    signal key(var press) // WebPlayerSystem only; shortcuts reach the page here
     // This Qt WebEngine cannot decode H.264, which every episode uses. Qt's
     // own packages are built without it; distribution and Flathub ones have it.
     signal unsupported()

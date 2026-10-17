@@ -10,10 +10,21 @@ Item {
     property var task: Library.entries("")
     property var checkTask: null
 
+    readonly property string sort: App.settings.librarySort || "updates"
+    // The last result, kept while a refresh runs.
+    property var all: []
+    Connections {
+        target: page.task
+        function onFinished(result) { page.all = Router.keep(page.all, result) }
+    }
     readonly property var entries: {
-        const all = task && task.ok ? task.result : []
         const f = filter.trim().toLowerCase()
-        return all.filter(e => (!media || e.media === media) && (!f || (e.title || "").toLowerCase().includes(f)))
+        const out = page.all.filter(e => (!media || e.media === media) && (!f || (e.title || "").toLowerCase().includes(f)))
+        // "updates" keeps the stored order: new chapters first, then recent.
+        if (sort === "recent") out.sort((a, b) => (b.progressAt || 0) - (a.progressAt || 0))
+        else if (sort === "added") out.sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0))
+        else if (sort === "title") out.sort((a, b) => String(a.title || "").localeCompare(String(b.title || "")))
+        return out
     }
 
     function search(text) { filter = text }
@@ -33,6 +44,7 @@ Item {
     }
 
     SmoothFlickable {
+        id: flick
         anchors.fill: parent
         contentHeight: column.height + 60
 
@@ -43,7 +55,7 @@ Item {
 
             PageHeader {
                 title: "Library"
-                subtitle: (page.task && page.task.ok ? page.task.result.length : 0) + " saved"
+                subtitle: page.all.length + " saved"
                     + (Library.unreadUpdates > 0 ? " · " + Library.unreadUpdates + " new chapters" : "")
                 ScButton {
                     text: page.checkTask && page.checkTask.loading ? "Checking…" : "Check for updates"
@@ -69,6 +81,13 @@ Item {
                     text: page.filter
                     onTextChanged: page.filter = text
                 }
+                Select {
+                    implicitWidth: 196
+                    model: [{ value: "updates", label: "New chapters first" }, { value: "recent", label: "Recently read" },
+                            { value: "added", label: "Recently added" }, { value: "title", label: "Title A–Z" }]
+                    value: page.sort
+                    onPicked: (v) => App.setSetting("librarySort", v)
+                }
             }
 
             CoverGrid {
@@ -83,7 +102,7 @@ Item {
 
             StateView {
                 width: parent.width
-                task: page.task
+                task: page.all.length === 0 ? page.task : null
                 empty: page.task && page.task.ok && page.entries.length === 0
                 emptyTitle: page.filter || page.media ? "Nothing matches" : "Your library is empty"
                 emptyText: "Open any comic, novel or anime and choose “Add to library” to keep it here. SCANCORE checks saved series for new chapters in the background."
@@ -92,4 +111,6 @@ Item {
             }
         }
     }
+
+    BackToTop { flick: flick }
 }

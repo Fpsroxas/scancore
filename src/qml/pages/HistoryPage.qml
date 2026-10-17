@@ -6,7 +6,17 @@ import ScanCore
 Item {
     id: page
     property string media: ""
+    property string filter: ""
     property var task: Library.history("", 300)
+
+    function search(text) { filter = text }
+
+    // The last result, kept while a refresh runs.
+    property var all: []
+    Connections {
+        target: page.task
+        function onFinished(result) { page.all = Router.keep(page.all, result) }
+    }
 
     Connections {
         target: Library
@@ -23,7 +33,9 @@ Item {
     }
 
     readonly property var rows: {
-        const all = (task && task.ok ? task.result : []).filter(e => !media || e.media === media)
+        const f = filter.trim().toLowerCase()
+        const all = page.all
+            .filter(e => (!media || e.media === media) && (!f || (e.title || "").toLowerCase().includes(f)))
         const out = []
         let last = ""
         for (const e of all) {
@@ -56,23 +68,33 @@ Item {
                     text: "Clear history"
                     iconName: "trash"
                     variant: "danger"
-                    enabled: page.rows.length > 0
+                    enabled: page.all.length > 0
                     onClicked: confirm.open()
                 }
             }
-            Segmented {
+            Flow {
                 x: Theme.gutter
-                options: [{ value: "", label: "All" }, { value: "comic", label: "Comics", icon: "book-open" },
-                          { value: "novel", label: "Novels", icon: "book-text" }, { value: "anime", label: "Anime", icon: "tv" }]
-                value: page.media
-                onPicked: (v) => page.media = v
+                width: list.width - 2 * Theme.gutter
+                spacing: 12
+                Segmented {
+                    options: [{ value: "", label: "All" }, { value: "comic", label: "Comics", icon: "book-open" },
+                              { value: "novel", label: "Novels", icon: "book-text" }, { value: "anime", label: "Anime", icon: "tv" }]
+                    value: page.media
+                    onPicked: (v) => page.media = v
+                }
+                SearchField {
+                    width: Theme.compact ? parent.width : 260
+                    placeholderText: "Search history"
+                    text: page.filter
+                    onTextChanged: page.filter = text
+                }
             }
             StateView {
                 width: list.width
                 height: visible ? 300 : 0
-                task: page.task
+                task: page.all.length === 0 ? page.task : null
                 empty: page.task && page.task.ok && page.rows.length === 0
-                emptyTitle: "Nothing read yet"
+                emptyTitle: page.filter || page.media ? "Nothing matches" : "Nothing read yet"
                 emptyText: "Chapters and episodes you open show up here, with your place saved."
                 emptyIcon: "history"
                 onRetry: page.task = Library.history("", 300)
@@ -174,31 +196,14 @@ Item {
         }
     }
 
-    Dialog {
+    ConfirmDialog {
         id: confirm
-        anchors.centerIn: parent
-        modal: true
-        title: ""
-        width: Math.min(400, page.width - 32)
-        padding: 24
-        background: Rectangle { radius: Theme.radiusLg; color: Theme.surface; border.width: 1; border.color: Theme.borderStrong }
-        contentItem: Column {
-            spacing: 16
-            Text { text: "Clear " + (page.media ? page.media + " " : "") + "history?"; color: Theme.text; font.family: Theme.fontDisplay; font.pixelSize: Theme.textLg; font.weight: Font.DemiBold }
-            Text {
-                width: confirm.availableWidth
-                wrapMode: Text.Wrap
-                text: "Your place in every series will be forgotten. Your library and downloads are kept."
-                color: Theme.textMuted
-                font.family: Theme.fontSans
-                font.pixelSize: Theme.textSm
-            }
-            Row {
-                anchors.right: parent.right
-                spacing: 8
-                ScButton { text: "Cancel"; onClicked: confirm.close() }
-                ScButton { text: "Clear"; variant: "danger"; onClicked: { Library.clearHistory(page.media); confirm.close() } }
-            }
-        }
+        heading: "Clear " + (page.media ? page.media + " " : "") + "history?"
+        message: "Your place in every series will be forgotten. Your library and downloads are kept."
+        confirmText: "Clear"
+        destructive: true
+        onConfirmed: Library.clearHistory(page.media)
     }
+
+    BackToTop { flick: list }
 }

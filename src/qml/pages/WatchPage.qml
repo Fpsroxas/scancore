@@ -59,6 +59,14 @@ Rectangle {
         return null
     }
     readonly property string skipLabel: activeSkip ? (activeSkip.type.indexOf("ed") >= 0 ? "Skip ending" : activeSkip.type === "recap" ? "Skip recap" : "Skip intro") : ""
+    // Settings → Anime: intros and recaps, and endings, can each be skipped
+    // without asking; the Skip button is for the rest.
+    function skipsItself(s) {
+        if (!s) return false
+        if (s.type === "ed" || s.type === "mixed-ed") return App.settings.autoSkipEndings === true
+        return App.settings.autoSkip === true
+    }
+    readonly property bool showSkip: activeSkip !== null && !skipsItself(activeSkip)
     readonly property string episodeLine: "Episode " + (episode.number || "") + (episode.title && !String(episode.title).startsWith("Episode") ? " · " + episode.title : "")
 
     color: "#000000"
@@ -127,7 +135,7 @@ Rectangle {
         if (total > 0) duration = total
         position = seconds
         saveProgress(false)
-        if (activeSkip && App.settings.autoSkip === true && (activeSkip.type === "op" || activeSkip.type === "mixed-op" || activeSkip.type === "recap"))
+        if (skipsItself(activeSkip))
             player.seek(activeSkip.end)
         if ((status === "Ended" || (total > 0 && seconds >= total - 1)) && !ended) {
             ended = true
@@ -175,15 +183,20 @@ Rectangle {
     // The embedded browser takes keyboard focus once the video is clicked and
     // keeps keys from reaching this page, so desktop keys are shortcuts. A
     // system web view keeps them from Qt altogether; its page passes them on.
-    function pageKey(name) {
-        if (name === "escape") leave()
-        else if (name === "n") nextEpisode()
-        else if (name === "p" && hasPrev) load(index - 1)
+    function pageKey(press) {
+        if (press.key === "Escape") leave()
+        else if (Keymap.matchesWeb("player.next", press)) nextEpisode()
+        else if (Keymap.matchesWeb("player.prev", press) && hasPrev) load(index - 1)
     }
+    function keyHint(action) {
+        const keys = Keymap.labels(action)
+        return keys.length ? " (" + keys[0] + ")" : ""
+    }
+    // The keys come from Settings → Keyboard (see Keymap).
     Shortcut { sequence: "Esc"; enabled: !watch.phone; onActivated: watch.leave() }
-    Shortcut { sequence: "F"; enabled: !watch.phone; onActivated: watch.toggleFullScreen() }
-    Shortcut { sequence: "N"; enabled: !watch.phone && watch.hasNext; onActivated: watch.load(watch.index + 1) }
-    Shortcut { sequence: "P"; enabled: !watch.phone && watch.hasPrev; onActivated: watch.load(watch.index - 1) }
+    Shortcut { sequences: Keymap.sequences("player.fullscreen"); enabled: !watch.phone; onActivated: watch.toggleFullScreen() }
+    Shortcut { sequences: Keymap.sequences("player.next"); enabled: !watch.phone && watch.hasNext; onActivated: watch.load(watch.index + 1) }
+    Shortcut { sequences: Keymap.sequences("player.prev"); enabled: !watch.phone && watch.hasPrev; onActivated: watch.load(watch.index - 1) }
 
     // Any mouse movement, including over the video, brings the chrome back.
     PointerMotion {
@@ -230,7 +243,7 @@ Rectangle {
                 target: player.item
                 function onTime(seconds, total, status) { watch.onPlayerTime(seconds, total, status) }
                 function onInteracted() { watch.wake() }
-                function onKey(name) { watch.pageKey(name) }
+                function onKey(press) { watch.pageKey(press) }
                 function onUnsupported() { watch.unsupported = true }
             }
         }
@@ -326,7 +339,7 @@ Rectangle {
             anchors.bottom: parent.bottom
             anchors.rightMargin: 40
             anchors.bottomMargin: 80
-            visible: !watch.phone && !watch.systemView && watch.activeSkip !== null && !(App.settings.autoSkip === true)
+            visible: !watch.phone && !watch.systemView && watch.showSkip
             variant: "primary"
             iconName: "skip-forward"
             text: watch.skipLabel
@@ -364,10 +377,12 @@ Rectangle {
         }
         Timer {
             id: nextCountdown
-            property real remaining: 8
+            // Settings → Anime: how long the countdown lasts.
+            readonly property real length: Number(App.settings.nextCountdown) || 8
+            property real remaining: length
             interval: 100
             repeat: true
-            onRunningChanged: if (running) remaining = 8
+            onRunningChanged: if (running) remaining = length
             onTriggered: {
                 remaining -= 0.1
                 if (remaining <= 0) {
@@ -441,7 +456,7 @@ Rectangle {
             visible: watch.systemView && !watch.phone && (skipNow.visible || nextNow.visible)
             ScButton {
                 id: skipNow
-                visible: watch.activeSkip !== null && !(App.settings.autoSkip === true)
+                visible: watch.showSkip
                 compact: true
                 variant: "primary"
                 iconName: "skip-forward"
@@ -480,8 +495,8 @@ Rectangle {
                 }
             }
             Item { width: 8; height: 1 }
-            IconButton { iconName: "skip-back"; iconColor: "white"; enabled: watch.hasPrev; tip: "Previous episode (P)"; onClicked: watch.load(watch.index - 1) }
-            IconButton { iconName: "skip-forward"; iconColor: "white"; enabled: watch.hasNext; tip: "Next episode (N)"; onClicked: watch.load(watch.index + 1) }
+            IconButton { iconName: "skip-back"; iconColor: "white"; enabled: watch.hasPrev; tip: "Previous episode" + watch.keyHint("player.prev"); onClicked: watch.load(watch.index - 1) }
+            IconButton { iconName: "skip-forward"; iconColor: "white"; enabled: watch.hasNext; tip: "Next episode" + watch.keyHint("player.next"); onClicked: watch.load(watch.index + 1) }
             IconButton { iconName: "list"; iconColor: "white"; active: watch.sideOpen; tip: "Episodes"; onClicked: watch.sideOpen = !watch.sideOpen }
             IconButton {
                 iconName: "external-link"
@@ -493,7 +508,7 @@ Rectangle {
             IconButton {
                 iconName: watch.fullScreen ? "minimize" : "maximize"
                 iconColor: "white"
-                tip: watch.fullScreen ? "Exit full screen (F)" : "Full screen (F)"
+                tip: (watch.fullScreen ? "Exit full screen" : "Full screen") + watch.keyHint("player.fullscreen")
                 onClicked: watch.toggleFullScreen()
             }
         }
@@ -646,9 +661,9 @@ Rectangle {
             Row {
                 x: 16
                 spacing: 8
-                visible: (watch.activeSkip !== null && !(App.settings.autoSkip === true)) || nextCountdown.running
+                visible: (watch.showSkip) || nextCountdown.running
                 ScButton {
-                    visible: watch.activeSkip !== null && !(App.settings.autoSkip === true)
+                    visible: watch.showSkip
                     variant: "primary"
                     compact: true
                     iconName: "skip-forward"
@@ -705,7 +720,7 @@ Rectangle {
                 iconColor: "white"
                 diameter: 44
                 filled: true
-                visible: watch.activeSkip !== null && !(App.settings.autoSkip === true)
+                visible: watch.showSkip
                 onClicked: player.seek(watch.activeSkip.end)
             }
             IconButton { iconName: "skip-forward"; iconColor: "white"; diameter: 44; enabled: watch.hasNext; onClicked: watch.nextEpisode() }

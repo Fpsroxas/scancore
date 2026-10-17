@@ -11,13 +11,17 @@ ApplicationWindow {
     minimumHeight: 560
     visible: true
     title: "SCANCORE"
-    color: Theme.bg
+    // Clear only when the window has an alpha channel to show through.
+    color: Customize.translucentWindow ? "transparent" : Theme.base
     font.family: Theme.fontSans
     // The default background and palette come from the platform theme (GTK,
-    // KDE), which would tint the app with the system's colours.
-    background: Rectangle { color: Theme.bg }
+    // KDE), which would tint the app with the system's colours. The custom
+    // theme may add a picture here.
+    background: WindowBackdrop {
+        playing: !window.immersiveOpen && window.visibility !== Window.Minimized && window.visibility !== Window.Hidden
+    }
     palette {
-        window: Theme.bg
+        window: Theme.base
         windowText: Theme.text
         base: Theme.surface
         alternateBase: Theme.surface2
@@ -32,11 +36,32 @@ ApplicationWindow {
         toolTipText: Theme.text
         link: Theme.accent
         mid: Theme.surface3
-        dark: Theme.bg
+        dark: Theme.base
         light: Theme.surface3
     }
 
     readonly property bool immersiveOpen: immersive.depth > 0
+
+    // Settings → Interface: how navigation sits on wide windows. Phones
+    // always use the bottom tabs.
+    readonly property string navStyle: Theme.compact ? "tabs"
+        : ["sidebar", "floating", "rail", "dock"].indexOf(App.settings.navStyle) >= 0 ? App.settings.navStyle : "sidebar"
+    readonly property string navSide: navStyle === "dock" ? (App.settings.dockSide === "top" ? "top" : "bottom")
+        : App.settings.navSide === "right" ? "right" : "left"
+    readonly property bool sidebarShown: navStyle === "sidebar" || navStyle === "floating" || navStyle === "rail"
+    readonly property int navInset: navStyle === "floating" ? 10 : 0
+
+    // A .sct theme dropped on the window, or opened from Settings.
+    property var themeTask: null
+    property url pendingTheme
+    function importTheme(url) {
+        themeTask = Customize.importTheme(url)
+    }
+    Connections {
+        target: window.themeTask
+        function onFinished(theme) { Router.applyTheme(theme) }
+        function onFailed(error) { shell.toast(error, "error") }
+    }
 
 
     Component.onCompleted: {
@@ -48,8 +73,14 @@ ApplicationWindow {
             window.height = start.size[1]
         }
         if (start.screenshot) screenshotTimer.start()
-        if (start.section) shell.goSection(start.section)
+        // The page chosen in Settings → Interface → Start.
+        const first = start.section || App.settings.startSection
+        if (first && first !== "home") shell.goSection(first)
         if (start.siteCheck) Qt.callLater(() => Router.openSiteCheck(start.siteCheck))
+        if (start.toasts) for (const t of start.toasts) shell.toast(t.message, t.kind)
+        if (start.palette) Qt.callLater(() => palette.open())
+        if (start.shortcuts) Qt.callLater(() => shortcutsSheet.open())
+        if (start.push) Qt.callLater(() => shell.push(start.push.path, start.push.props || {}))
         if (start.installNovelPack) {
             const task = Extensions.installNovelPack()
             task.finished.connect((r) => console.log("novel pack installed:", JSON.stringify(r)))
@@ -172,6 +203,8 @@ ApplicationWindow {
 
         function openPalette() { palette.open() }
 
+        function openShortcuts() { shortcutsSheet.open() }
+
         function showWelcome() { onboarding.active = true }
     }
 
@@ -194,11 +227,20 @@ ApplicationWindow {
         onEnabledChanged: if (enabled) forceActiveFocus()
         Keys.onEscapePressed: (event) => event.accepted = shell.back()
 
+        Shadow {
+            target: sidebar
+            visible: sidebar.visible && sidebar.floating
+            lift: 0.5
+        }
         Sidebar {
             id: sidebar
-            visible: !Theme.compact
-            width: Theme.compact ? 0 : implicitWidth
-            height: parent.height
+            visible: window.sidebarShown
+            style: window.navStyle
+            side: window.navSide
+            width: visible ? implicitWidth : 0
+            x: side === "right" ? parent.width - width - window.navInset : window.navInset
+            y: window.navInset
+            height: parent.height - 2 * window.navInset
             current: shell.section
             onNavigate: (name) => shell.goSection(name)
             onOpenPalette: palette.open()
@@ -206,10 +248,12 @@ ApplicationWindow {
 
         Item {
             id: content
-            anchors.left: Theme.compact ? parent.left : sidebar.right
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: Theme.compact ? tabBar.top : parent.bottom
+            anchors.left: window.sidebarShown && window.navSide === "left" ? sidebar.right : parent.left
+            anchors.right: window.sidebarShown && window.navSide === "right" ? sidebar.left : parent.right
+            anchors.top: dock.visible && window.navSide === "top" ? dock.bottom : parent.top
+            anchors.bottom: Theme.compact ? tabBar.top : dock.visible && window.navSide === "bottom" ? dock.top : parent.bottom
+            anchors.topMargin: dock.visible && window.navSide === "top" ? 6 : 0
+            anchors.bottomMargin: dock.visible && window.navSide === "bottom" ? 6 : 0
             clip: true
 
             Repeater {
@@ -245,6 +289,29 @@ ApplicationWindow {
                 }
             }
         }
+    }
+
+    // Wide windows with the dock style: a floating bar along the top or bottom.
+    Shadow {
+        parent: shellView
+        target: dock
+        visible: dock.visible
+        lift: 0.8
+        z: 2
+    }
+    Dock {
+        id: dock
+        parent: shellView
+        visible: window.navStyle === "dock"
+        side: window.navSide
+        z: 3
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: side === "top" ? 12 : parent.height - height - 12
+        width: Math.min(implicitWidth, parent.width - 24)
+        height: implicitHeight
+        current: shell.section
+        onNavigate: (name) => shell.goSection(name)
+        onOpenPalette: palette.open()
     }
 
     // Phone layout: bottom tabs instead of the sidebar.
@@ -315,8 +382,34 @@ ApplicationWindow {
         z: 30
     }
 
+    ShortcutsSheet {
+        id: shortcutsSheet
+        z: 30
+    }
+
     UpdateBanner {
         z: 35
+    }
+
+    // Drop a .sct theme on the window to use it.
+    DropArea {
+        anchors.fill: parent
+        z: 60
+        onEntered: (drag) => drag.accepted = drag.hasUrls && drag.urls.some(u => String(u).toLowerCase().endsWith(".sct"))
+        onDropped: (drop) => {
+            const url = drop.urls.find(u => String(u).toLowerCase().endsWith(".sct"))
+            if (!url) return
+            window.pendingTheme = url
+            themeConfirm.open()
+        }
+    }
+    ConfirmDialog {
+        id: themeConfirm
+        heading: "Use this theme?"
+        message: decodeURIComponent(String(window.pendingTheme).replace(/^.*\//, ""))
+            + " replaces your custom theme and switches SCANCORE to it."
+        confirmText: "Use theme"
+        onConfirmed: window.importTheme(window.pendingTheme)
     }
     Toasts {
         id: toasts
@@ -335,23 +428,31 @@ ApplicationWindow {
 
     // ------------------------------------------------------------------ keys
 
-    Shortcut { sequences: ["Ctrl+K", "Ctrl+P"]; onActivated: palette.open() }
+    // The keys come from Settings → Keyboard (see Keymap).
+    Shortcut { sequences: Keymap.sequences("palette"); onActivated: palette.open() }
+    Shortcut { sequences: Keymap.sequences("shortcuts"); enabled: App.platform !== "android"; onActivated: shortcutsSheet.open() }
     // StandardKey.Back is also Android's Back key.
-    Shortcut { sequences: ["Alt+Left", StandardKey.Back]; onActivated: shell.systemBack() }
+    Shortcut { sequences: Keymap.sequences("back").concat([StandardKey.Back]); onActivated: shell.systemBack() }
     // The back button on mice.
     TapHandler {
         acceptedButtons: Qt.BackButton
         onTapped: shell.back()
     }
-    Shortcut { sequence: "Ctrl+B"; onActivated: App.setSetting("sidebarCollapsed", !(App.settings.sidebarCollapsed === true)) }
-    Shortcut { sequence: "Ctrl+1"; onActivated: shell.goSection("home") }
-    Shortcut { sequence: "Ctrl+2"; onActivated: shell.goSection("comics") }
-    Shortcut { sequence: "Ctrl+3"; onActivated: shell.goSection("novels") }
-    Shortcut { sequence: "Ctrl+4"; onActivated: shell.goSection("anime") }
-    Shortcut { sequence: "Ctrl+5"; onActivated: shell.goSection("library") }
-    Shortcut { sequence: "Ctrl+,"; onActivated: shell.goSection("settings") }
     Shortcut {
-        sequence: "F11"
+        sequences: Keymap.sequences("sidebar")
+        enabled: window.navStyle === "sidebar" || window.navStyle === "floating"
+        onActivated: App.setSetting("sidebarCollapsed", !(App.settings.sidebarCollapsed === true))
+    }
+    Shortcut { sequences: Keymap.sequences("home"); onActivated: shell.goSection("home") }
+    Shortcut { sequences: Keymap.sequences("comics"); onActivated: shell.goSection("comics") }
+    Shortcut { sequences: Keymap.sequences("novels"); onActivated: shell.goSection("novels") }
+    Shortcut { sequences: Keymap.sequences("anime"); onActivated: shell.goSection("anime") }
+    Shortcut { sequences: Keymap.sequences("library"); onActivated: shell.goSection("library") }
+    Shortcut { sequences: Keymap.sequences("history"); onActivated: shell.goSection("history") }
+    Shortcut { sequences: Keymap.sequences("downloads"); onActivated: shell.goSection("downloads") }
+    Shortcut { sequences: Keymap.sequences("settings"); onActivated: shell.goSection("settings") }
+    Shortcut {
+        sequences: Keymap.sequences("fullscreen")
         onActivated: window.visibility === Window.FullScreen ? window.showNormal() : window.showFullScreen()
     }
 }
