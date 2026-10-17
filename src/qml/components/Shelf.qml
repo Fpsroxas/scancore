@@ -113,16 +113,21 @@ Column {
                 easing.type: Easing.BezierSpline
                 easing.bezierCurve: Motion.emphasized
             }
+            // Sideways wheels, and Shift with an ordinary wheel, scroll the row;
+            // a plain wheel must reach the page. A WheelHandler takes every
+            // event it is offered before onWheel runs (setting
+            // event.accepted = false there changes nothing), so each one is
+            // only offered the events it uses: with the cursor over a row,
+            // the page used not to scroll at all.
             WheelHandler {
                 acceptedDevices: PointerDevice.Mouse
-                onWheel: (event) => {
-                    const delta = event.angleDelta.x !== 0 ? -event.angleDelta.x : -event.angleDelta.y
-                    if (Math.abs(event.angleDelta.x) < Math.abs(event.angleDelta.y) && !(event.modifiers & Qt.ShiftModifier)) {
-                        event.accepted = false
-                        return
-                    }
-                    list.scrollBy(delta * 1.4)
-                }
+                orientation: Qt.Horizontal
+                onWheel: (event) => list.scrollBy(-event.angleDelta.x * 1.4)
+            }
+            WheelHandler {
+                acceptedDevices: PointerDevice.Mouse
+                acceptedModifiers: Qt.ShiftModifier
+                onWheel: (event) => list.scrollBy(-(event.angleDelta.y || event.angleDelta.x) * 1.4)
             }
 
             delegate: CoverCard {

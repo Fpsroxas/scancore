@@ -106,15 +106,6 @@ SettingsPane {
         }
     }
 
-    SettingsGroup {
-        visible: Account.signedIn
-        title: "What syncs"
-        note: "Sync runs when SCANCORE starts and shortly after you save, read or watch something. Novel reading positions stay on this device."
-        SettingRow { iconName: "library"; iconTint: Theme.success; title: "Library"; description: "Comics, novels and anime you save, both ways." }
-        SettingRow { iconName: "tv"; iconTint: Theme.success; title: "Anime watch progress"; description: "Episodes and where you stopped, both ways, so you can continue on any device." }
-        SettingRow { iconName: "book-open"; iconTint: Theme.success; title: "Comic reading positions"; description: "The chapter and page you are on in each series, both ways." }
-    }
-
     // Signed out: what an account is for, then the form.
     Rectangle {
         visible: !Account.signedIn

@@ -162,13 +162,18 @@ PanelImage::~PanelImage() {
         m_cancel->store(true);
 }
 
+// Pages bind source and referer to the same chapter result, and QML updates
+// the two in no particular order. Starting on the source alone could request
+// the page without its referer, which sites that protect their images answer
+// with 403 (the first page in page mode stayed black), so both wait for the
+// end of the update.
 void PanelImage::setSource(const QString &source) {
     if (source == m_source)
         return;
     m_source = source;
     emit sourceChanged();
     if (isComponentComplete())
-        start();
+        startSoon();
 }
 
 void PanelImage::setReferer(const QString &referer) {
@@ -176,6 +181,21 @@ void PanelImage::setReferer(const QString &referer) {
         return;
     m_referer = referer;
     emit sourceChanged();
+    if (isComponentComplete() && !m_source.isEmpty() && m_status != Ready)
+        startSoon();
+}
+
+void PanelImage::startSoon() {
+    if (m_startQueued)
+        return;
+    m_startQueued = true;
+    QMetaObject::invokeMethod(
+        this,
+        [this] {
+            m_startQueued = false;
+            start();
+        },
+        Qt::QueuedConnection);
 }
 
 void PanelImage::setMaxDecodeWidth(int width) {

@@ -12,6 +12,11 @@ Item {
     property string url
     signal time(real seconds, real total, string status)
     signal interacted() // phone only; the desktop page watches the mouse itself
+    signal key(string name) // WebPlayerSystem only; shortcuts reach the page here
+    // This Qt WebEngine cannot decode H.264, which every episode uses. Qt's
+    // own packages are built without it; distribution and Flathub ones have it.
+    signal unsupported()
+    property bool reportedUnsupported: false
 
     function seek(seconds) {
         web.runJavaScript("window.scSeek && window.scSeek(" + Number(seconds) + ")")
@@ -23,7 +28,7 @@ Item {
             + "<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}iframe{border:0;width:100%;height:100%}</style>"
             + "</head><body><iframe id='f' src=\"" + safe + "\" allow='autoplay; fullscreen; encrypted-media; picture-in-picture' allowfullscreen referrerpolicy='origin'></iframe>"
             + "<script>"
-            + "window.__sc={t:0,d:0,s:''};var f=document.getElementById('f');"
+            + "window.__sc={t:0,d:0,s:'',h264:!!(window.MediaSource&&MediaSource.isTypeSupported('video/mp4; codecs=\\\"avc1.42E01E\\\"'))};var f=document.getElementById('f');"
             + "addEventListener('message',function(e){if(e.source!==f.contentWindow)return;var x=e.data;"
             + "if(typeof x==='string'){try{x=JSON.parse(x)}catch(_){return}}if(!x)return;"
             + "if(x.currentTime!==undefined){__sc.t=+x.currentTime||0;__sc.d=+x.duration||0}"
@@ -33,7 +38,10 @@ Item {
             + "</script></body></html>"
     }
 
-    onUrlChanged: if (url) web.loadHtml(wrapper(url), "https://reanime.to/")
+    onUrlChanged: {
+        reportedUnsupported = false
+        if (url) web.loadHtml(wrapper(url), "https://reanime.to/")
+    }
 
     WebEngineView {
         id: web
@@ -75,6 +83,10 @@ Item {
         onTriggered: web.runJavaScript("JSON.stringify(window.__sc||{})", (result) => {
             try {
                 const s = JSON.parse(result)
+                if (s.h264 === false && !root.reportedUnsupported) {
+                    root.reportedUnsupported = true
+                    root.unsupported()
+                }
                 if (s.d > 0) root.time(s.t, s.d, s.s || "")
             } catch (e) {}
         })

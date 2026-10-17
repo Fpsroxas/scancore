@@ -135,11 +135,13 @@ void Library::save(const QVariantMap &series, const QString &category) {
                                   "ON CONFLICT(series_id) DO UPDATE SET category = excluded.category"),
                    {id, category, Database::now(), known});
     notifyChanged();
+    emit saved(id);
 }
 
 void Library::remove(const QString &seriesId) {
     Database::exec(QStringLiteral("DELETE FROM library WHERE series_id = ?"), {seriesId});
     notifyChanged();
+    emit removed(seriesId);
 }
 
 void Library::setCategory(const QString &seriesId, const QString &category) {

@@ -15,12 +15,17 @@ class Anime : public QObject {
     QML_SINGLETON
     Q_PROPERTY(bool webPlayerAvailable READ webPlayerAvailable CONSTANT)
     Q_PROPERTY(bool nativePlayerAvailable READ nativePlayerAvailable CONSTANT)
+    // Which embedded browser shows the player: "system" (the platform's own
+    // web view: Android WebView, WebView2 on Windows, WKWebView on macOS),
+    // "webengine" (Qt WebEngine) or "" when there is none.
+    Q_PROPERTY(QString playerEngine READ playerEngine CONSTANT)
 
 public:
     explicit Anime(QObject *parent = nullptr) : QObject(parent) {}
 
     bool webPlayerAvailable() const;
     bool nativePlayerAvailable() const;
+    QString playerEngine() const;
 
     Q_INVOKABLE QString seriesId(int anilistId) const;
     Q_INVOKABLE QStringList genres() const;

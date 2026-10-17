@@ -2,6 +2,10 @@ id: com.mediumdev.scancore
 runtime: org.kde.Platform
 runtime-version: '6.11'
 sdk: org.kde.Sdk
+# Qt WebEngine for the anime player and browser checks. Flathub builds it
+# with the H.264 codec the episodes use.
+base: io.qt.qtwebengine.BaseApp
+base-version: '6.11'
 command: scancore
 finish-args:
   - --socket=wayland
@@ -10,6 +14,9 @@ finish-args:
   - --share=network
   - --device=dri
   - --socket=pulseaudio
+  - --env=QTWEBENGINEPROCESS_PATH=/app/bin/QtWebEngineProcess
+cleanup-commands:
+  - /app/cleanup-BaseApp.sh
 modules:
   - name: scancore
     buildsystem: cmake-ninja
@@ -18,7 +25,6 @@ modules:
       - -DCMAKE_BUILD_TYPE=Release
       - -DSCANCORE_BUILD_TESTS=OFF
       - -DSCANCORE_WITH_NOVEL_PACK_INSTALLER=OFF
-      - -DSCANCORE_WITH_WEBENGINE=OFF
       - -DFETCHCONTENT_FULLY_DISCONNECTED=ON
       - -DFETCHCONTENT_SOURCE_DIR_LEXBOR=/run/build/scancore/lexbor
     sources:

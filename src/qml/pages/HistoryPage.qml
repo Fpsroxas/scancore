@@ -179,14 +179,14 @@ Item {
         anchors.centerIn: parent
         modal: true
         title: ""
-        width: 400
+        width: Math.min(400, page.width - 32)
         padding: 24
         background: Rectangle { radius: Theme.radiusLg; color: Theme.surface; border.width: 1; border.color: Theme.borderStrong }
         contentItem: Column {
             spacing: 16
             Text { text: "Clear " + (page.media ? page.media + " " : "") + "history?"; color: Theme.text; font.family: Theme.fontDisplay; font.pixelSize: Theme.textLg; font.weight: Font.DemiBold }
             Text {
-                width: 352
+                width: confirm.availableWidth
                 wrapMode: Text.Wrap
                 text: "Your place in every series will be forgotten. Your library and downloads are kept."
                 color: Theme.textMuted

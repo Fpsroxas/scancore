@@ -5,7 +5,7 @@ Thanks for helping. Bug reports go in [Issues](https://github.com/medium-gh/scan
 ## Prerequisites
 
 - CMake 3.28+, Ninja and a C++20 compiler (GCC 13+, Clang 17+ or MSVC 2022)
-- Qt 6.9+ with Qt Declarative, Qt SVG, Qt Image Formats and Qt WebEngine (Qt WebEngine is optional; without it the anime player and browser checks are disabled)
+- Qt 6.9+ with Qt Declarative, Qt SVG, Qt Image Formats and Qt WebEngine (Qt WebEngine is optional; without it the anime player and browser checks are disabled), plus Qt WebView on Windows and macOS, where the anime player uses the system's web view
 
 The README lists the [package commands per system](README.md#build-from-source). Android additionally needs Qt for Android, the Android SDK, NDK r27c and JDK 17 (see [Android](README.md#android)).
 

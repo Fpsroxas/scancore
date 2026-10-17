@@ -71,6 +71,9 @@ protected:
 
 private:
     void start();
+    // Starts once the current round of property changes is over, so a
+    // source and its referer set together load together.
+    void startSoon();
     void setStatus(Status status, const QString &error = {});
 
     QString m_source;
@@ -83,6 +86,7 @@ private:
     bool m_tilesDirty = false;
     CancelFlag m_cancel;
     int m_generation = 0;
+    bool m_startQueued = false;
 };
 
 } // namespace sc

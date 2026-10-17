@@ -15,13 +15,14 @@ Item {
     Timer {
         id: refresh
         interval: 250
-        onTriggered: {
-            page.task = Downloads.items()
-            page.sizeText = Downloads.sizeOnDisk()
-        }
+        onTriggered: page.task = Downloads.items()
     }
 
     readonly property var items: task && task.ok ? task.result : []
+    // Measuring walks the whole downloads folder, so only when what is saved
+    // changes, not on every page of a running download.
+    readonly property int savedCount: items.filter(i => i.status === "done").length
+    onSavedCountChanged: sizeText = Downloads.sizeOnDisk()
     readonly property int failedCount: items.filter(i => i.status === "failed").length
 
     ListView {
@@ -43,7 +44,7 @@ Item {
                     spacing: 8
                     ScButton { visible: page.failedCount > 0; text: "Retry failed"; iconName: "refresh-cw"; onClicked: Downloads.retryFailed() }
                     ScButton { visible: page.failedCount > 0; text: "Clear failed"; variant: "ghost"; onClicked: Downloads.clearFinished() }
-                    ScButton { text: "Open folder"; iconName: "folder-open"; onClicked: App.openFolder(Downloads.folder()) }
+                    ScButton { visible: App.platform !== "android"; text: "Open folder"; iconName: "folder-open"; onClicked: App.openFolder(Downloads.folder()) }
                 }
             }
             StateView {
@@ -83,6 +84,7 @@ Item {
                 source: row.modelData.cover || ""
             }
             Column {
+                id: details
                 anchors.left: cover.right
                 anchors.leftMargin: 16
                 anchors.right: actions.left
@@ -99,10 +101,13 @@ Item {
                     elide: Text.ElideRight
                 }
                 Row {
+                    id: statusRow
+                    width: parent.width
                     spacing: 10
                     Rectangle {
+                        id: bar
                         visible: row.modelData.status === "running" || row.modelData.status === "queued"
-                        width: 160
+                        width: Math.min(160, details.width * 0.45)
                         height: 4
                         radius: 2
                         anchors.verticalCenter: parent.verticalCenter
@@ -124,7 +129,7 @@ Item {
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm
                         elide: Text.ElideRight
-                        width: Math.min(implicitWidth, list.width - 520)
+                        width: Math.min(implicitWidth, statusRow.width - (bar.visible ? bar.width + statusRow.spacing : 0))
                     }
                 }
             }

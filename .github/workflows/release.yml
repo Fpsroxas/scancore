@@ -16,7 +16,8 @@ permissions:
 
 env:
   QT_VERSION: 6.11.3
-  QT_MODULES: qtwebengine qtwebchannel qtpositioning qtimageformats
+  # qtwebview: the anime player on Windows (WebView2) and macOS (WKWebView).
+  QT_MODULES: qtwebengine qtwebview qtwebchannel qtpositioning qtimageformats
 
 jobs:
   # Fails within seconds when the tag and the app's own version differ,
@@ -25,6 +26,8 @@ jobs:
   version:
     name: Check version
     runs-on: ubuntu-24.04
+    outputs:
+      qt: ${{ env.QT_VERSION }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -44,9 +47,20 @@ jobs:
           fi
           echo "Tag $TAG matches CMakeLists.txt."
 
+  # Qt WebEngine with the H.264 codec for the AppImage (see qtwebengine.yml).
+  # Quick when it was built before; hours the first time for a Qt version.
+  webengine:
+    needs: version
+    uses: ./.github/workflows/qtwebengine.yml
+    with:
+      qt: ${{ needs.version.outputs.qt }}
+
   build:
     name: ${{ matrix.name }}
-    needs: version
+    needs: [version, webengine]
+    # Without the codec build the AppImage is still made; its player then
+    # explains that it cannot play the video and offers the browser.
+    if: ${{ !cancelled() && needs.version.result == 'success' }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -94,6 +108,20 @@ jobs:
           version: ${{ matrix.qt || env.QT_VERSION }}
           modules: ${{ env.QT_MODULES }}
           cache: true
+
+      - name: Qt WebEngine with codecs
+        if: runner.os == 'Linux'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ needs.webengine.outputs.available }}" != "true" ]; then
+            echo "::warning::No Qt WebEngine with codecs for Qt $QT_VERSION; this AppImage cannot play anime episodes."
+            exit 0
+          fi
+          gh release download "qtwebengine-$QT_VERSION" --repo "$GITHUB_REPOSITORY" \
+            --pattern "qtwebengine-$QT_VERSION-codecs-linux-x86_64.tar.xz" --dir "$RUNNER_TEMP"
+          tar -xJf "$RUNNER_TEMP/qtwebengine-$QT_VERSION-codecs-linux-x86_64.tar.xz" -C "$QT_ROOT_DIR"
+          echo "Qt WebEngine with codecs laid over $QT_ROOT_DIR."
 
       - name: Build
         shell: bash
@@ -167,6 +195,11 @@ jobs:
           New-Item -ItemType Directory -Force dist\windows | Out-Null
           Copy-Item build\bin\scancore.exe dist\windows\
           windeployqt --release --qmldir src\qml --no-translations --compiler-runtime dist\windows\scancore.exe
+          # The anime player's WebView2 backend, which windeployqt may leave out.
+          if (-not (Test-Path dist\windows\plugins\webview\qtwebview_webview2.dll)) {
+            New-Item -ItemType Directory -Force dist\windows\plugins\webview | Out-Null
+            Copy-Item "$env:QT_ROOT_DIR\plugins\webview\qtwebview_webview2.dll" dist\windows\plugins\webview\
+          }
           Compress-Archive -Path dist\windows\* -DestinationPath "dist\SCANCORE-$env:VERSION-windows-x64-portable.zip"
           & "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" "/DAppVersion=$env:VERSION" "/DSourceDir=$PWD\dist\windows" `
             "/O$PWD\dist" packaging\windows\scancore.iss
@@ -176,7 +209,12 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           cp -R build/bin/scancore.app SCANCORE.app
-          macdeployqt SCANCORE.app -qmldir=src/qml -dmg -always-overwrite
+          # The anime player's WKWebView backend, in case macdeployqt leaves it
+          # out; listed with -executable so its Qt references are rewritten.
+          mkdir -p SCANCORE.app/Contents/PlugIns/webview
+          cp "$QT_ROOT_DIR/plugins/webview/libqtwebview_darwin.dylib" SCANCORE.app/Contents/PlugIns/webview/
+          macdeployqt SCANCORE.app -qmldir=src/qml -dmg -always-overwrite \
+            -executable=SCANCORE.app/Contents/PlugIns/webview/libqtwebview_darwin.dylib
           mkdir -p dist && mv SCANCORE.dmg "dist/SCANCORE-$VERSION-macos-universal.dmg"
 
       - uses: actions/upload-artifact@v4

@@ -65,6 +65,9 @@ public:
 signals:
     void changed();
     void updatesFound(int count, const QStringList &titles);
+    // The user saved or removed a series (not sync, which writes directly).
+    void saved(const QString &seriesId);
+    void removed(const QString &seriesId);
 
 private:
     int m_revision = 0;

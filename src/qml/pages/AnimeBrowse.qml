@@ -44,11 +44,17 @@ Item {
     }
     Timer { id: debounce; interval: 450; onTriggered: page.run(true) }
 
+    function loadMore() {
+        if (!hasNext || !task || task.loading) return
+        pageNumber += 1
+        run(false)
+    }
+
     SmoothFlickable {
         id: flick
         anchors.fill: parent
         contentHeight: column.height + 60
-        onAtYEndChanged: if (atYEnd && page.hasNext && page.task && !page.task.loading) { page.pageNumber += 1; page.run(false) }
+        onAtYEndChanged: if (atYEnd) page.loadMore()
 
         Column {
             id: column
@@ -67,7 +73,7 @@ Item {
                 spacing: 10
                 SearchField {
                     id: field
-                    width: 360
+                    width: Math.min(360, parent.width)
                     text: page.q
                     placeholderText: "Search titles"
                     onTextChanged: if (text !== page.q) { page.q = text; debounce.restart() }
@@ -134,6 +140,15 @@ Item {
                 items: page.results
                 subtitleFor: (it) => [it.format, it.year, it.score ? it.score + "%" : ""].filter(Boolean).join(" · ")
                 onOpened: (it, cover) => Router.openSeries(it, cover)
+            }
+
+            // When the results do not fill the page there is no scrolling to
+            // reach the end with.
+            ScButton {
+                anchors.horizontalCenter: parent.horizontalCenter
+                visible: page.hasNext && page.task !== null && page.task.ok
+                text: "Load more"
+                onClicked: page.loadMore()
             }
 
             StateView {

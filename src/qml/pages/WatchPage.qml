@@ -7,11 +7,15 @@ import ScanCore
 // an embedded browser; ScanCore reads its position for resume, auto-next and
 // AniSkip intro skipping.
 //
-// Desktop: the video fills the page and the top bar and episode list float
-// over it, fading out after a few seconds without mouse movement.
-// Phone: the system WebView is a native view drawn above everything Qt
-// renders, so nothing can overlap it. Portrait puts the controls and
-// episodes below a 16:9 player; landscape goes full screen with a slim rail.
+// Desktop with Qt WebEngine (Linux): the video fills the page and the top
+// bar and episode list float over it, fading out after a few seconds without
+// mouse movement.
+// System web views (phones, and Windows and macOS desktops) are native views
+// drawn above everything Qt renders, so nothing can overlap them.
+// Desktops dock the bar above the video and the episode list beside it; in
+// full screen they hide until the pointer reaches the top edge.
+// Phone portrait puts the controls and episodes below a 16:9 player;
+// landscape goes full screen with a slim rail.
 Rectangle {
     id: watch
     property var media: ({})
@@ -34,10 +38,18 @@ Rectangle {
     readonly property bool phone: App.platform === "android"
     readonly property bool landscape: width > height
     readonly property bool fullScreen: Window.window !== null && Window.window.visibility === Window.FullScreen
+    readonly property bool systemView: Anime.playerEngine === "system"
+    // Desktop layout for a native player view (SCANCORE_START
+    // {"playerLayout": "docked"} tries it with Qt WebEngine).
+    readonly property bool docked: !phone && (systemView || App.startAction.playerLayout === "docked")
+    // The embedded browser cannot decode this video (see WebPlayer).
+    property bool unsupported: false
+    readonly property var progress: { Library.revision; return Library.progressMap(series.id) }
 
-    // Desktop chrome auto-hide.
+    // Desktop chrome auto-hide. Docked chrome only hides in full screen, as
+    // hiding it resizes the video.
     property bool idle: false
-    readonly property bool chromeShown: !idle || !player.active
+    readonly property bool chromeShown: !player.active || unsupported || (docked ? !fullScreen || !idle : !idle)
 
     readonly property var streams: streamsTask && streamsTask.ok ? streamsTask.result.streams : []
     readonly property var skips: skipTask && skipTask.ok ? skipTask.result : []
@@ -59,6 +71,7 @@ Rectangle {
         position = 0
         duration = 0
         ended = false
+        unsupported = false
         skipTask = null
         const p = Library.progressMap(series.id)[episodes[i].key]
         resumeAt = p && !p.completed && p.position ? (p.position.seconds || 0) : 0
@@ -153,8 +166,20 @@ Rectangle {
         else exit()
     }
 
+    function nextEpisode() {
+        if (!hasNext) return
+        nextCountdown.stop()
+        load(index + 1)
+    }
+
     // The embedded browser takes keyboard focus once the video is clicked and
-    // keeps keys from reaching this page, so desktop keys are shortcuts.
+    // keeps keys from reaching this page, so desktop keys are shortcuts. A
+    // system web view keeps them from Qt altogether; its page passes them on.
+    function pageKey(name) {
+        if (name === "escape") leave()
+        else if (name === "n") nextEpisode()
+        else if (name === "p" && hasPrev) load(index - 1)
+    }
     Shortcut { sequence: "Esc"; enabled: !watch.phone; onActivated: watch.leave() }
     Shortcut { sequence: "F"; enabled: !watch.phone; onActivated: watch.toggleFullScreen() }
     Shortcut { sequence: "N"; enabled: !watch.phone && watch.hasNext; onActivated: watch.load(watch.index + 1) }
@@ -174,24 +199,93 @@ Rectangle {
     }
 
     // ---------------------------------------------------------------- player
+    // Full screen with the docked chrome hidden: a strip along the top edge
+    // that the native view does not cover, so the pointer can bring it back.
+    Item {
+        id: edge
+        visible: watch.docked && !watch.chromeShown
+        width: parent.width
+        height: 4
+        HoverHandler { onHoveredChanged: if (hovered) watch.wake() }
+    }
+
     Item {
         id: stage
         x: 0
-        y: watch.phone && !watch.landscape ? bar.height : 0
-        width: watch.phone && watch.landscape ? watch.width - rail.width : watch.width
-        height: watch.phone && !watch.landscape ? Math.round(Math.min(watch.width * 9 / 16, watch.height * 0.45)) : watch.height
+        y: watch.phone ? (watch.landscape ? 0 : bar.height)
+         : watch.docked ? (watch.chromeShown ? bar.height : edge.visible ? edge.height : 0) : 0
+        width: watch.phone && watch.landscape ? watch.width - rail.width
+             : watch.docked ? watch.width - side.width : watch.width
+        height: watch.phone && !watch.landscape ? Math.round(Math.min(watch.width * 9 / 16, watch.height * 0.45))
+              : watch.height - y
 
         Loader {
             id: player
             anchors.fill: parent
-            active: App.webEngine && watch.currentUrl.length > 0
-            source: watch.phone ? "../components/WebPlayerMobile.qml" : "../components/WebPlayer.qml"
+            active: Anime.playerEngine !== "" && watch.currentUrl.length > 0
+            source: watch.systemView ? "../components/WebPlayerSystem.qml" : "../components/WebPlayer.qml"
             onLoaded: item.url = Qt.binding(() => watch.currentUrl)
             function seek(seconds) { if (item) item.seek(seconds) }
             Connections {
                 target: player.item
                 function onTime(seconds, total, status) { watch.onPlayerTime(seconds, total, status) }
                 function onInteracted() { watch.wake() }
+                function onKey(name) { watch.pageKey(name) }
+                function onUnsupported() { watch.unsupported = true }
+            }
+        }
+
+        // This build's browser cannot play the video: say so, and offer the
+        // system browser, which can. Drawn over the (Qt WebEngine) player.
+        Rectangle {
+            anchors.fill: parent
+            visible: watch.unsupported && player.active
+            color: "#000000"
+            Column {
+                anchors.centerIn: parent
+                width: Math.min(460, parent.width - 48)
+                spacing: 14
+                Icon {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    name: "tv-minimal"
+                    size: 34
+                    color: "#a1a1aa"
+                }
+                Text {
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.Wrap
+                    text: "This copy of SCANCORE cannot play this video"
+                    color: "white"
+                    font.family: Theme.fontDisplay
+                    font.pixelSize: Theme.textLg
+                    font.weight: Font.DemiBold
+                }
+                Text {
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.Wrap
+                    text: "Its built-in browser lacks the H.264 video codec. Watch this episode in your browser, or use "
+                        + "the SCANCORE Flatpak or your distribution's package, which include it."
+                    color: "#a1a1aa"
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textSm
+                    lineHeight: 1.3
+                }
+                Row {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 8
+                    ScButton {
+                        variant: "primary"
+                        text: "Open in browser"
+                        iconName: "external-link"
+                        onClicked: App.openUrl(watch.currentUrl)
+                    }
+                    ScButton {
+                        text: "Get SCANCORE"
+                        onClicked: App.openUrl("https://scancore.onl/desktop")
+                    }
+                }
             }
         }
 
@@ -210,7 +304,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
                 visible: text.length > 0
-                text: !App.webEngine ? "This build of SCANCORE has no embedded browser, which the ReAnime player needs."
+                text: Anime.playerEngine === "" ? "This build of SCANCORE has no embedded browser, which the ReAnime player needs."
                     : watch.streamsTask && !watch.streamsTask.loading
                       ? (watch.streamsTask.ok ? (watch.streamsTask.result.message || "") : watch.streamsTask.error) : ""
                 color: "#d4d4d8"
@@ -232,7 +326,7 @@ Rectangle {
             anchors.bottom: parent.bottom
             anchors.rightMargin: 40
             anchors.bottomMargin: 80
-            visible: !watch.phone && watch.activeSkip !== null && !(App.settings.autoSkip === true)
+            visible: !watch.phone && !watch.systemView && watch.activeSkip !== null && !(App.settings.autoSkip === true)
             variant: "primary"
             iconName: "skip-forward"
             text: watch.skipLabel
@@ -249,7 +343,7 @@ Rectangle {
             color: "#141416"
             border.width: 1
             border.color: "#2a2a30"
-            visible: !watch.phone && nextCountdown.running
+            visible: !watch.phone && !watch.systemView && nextCountdown.running
             Column {
                 anchors.fill: parent
                 anchors.margins: 16
@@ -263,7 +357,7 @@ Rectangle {
                 }
                 Row {
                     spacing: 8
-                    ScButton { compact: true; variant: "primary"; text: "Play now"; onClicked: { nextCountdown.stop(); watch.load(watch.index + 1) } }
+                    ScButton { compact: true; variant: "primary"; text: "Play now"; onClicked: watch.nextEpisode() }
                     ScButton { compact: true; text: "Cancel"; onClicked: nextCountdown.stop() }
                 }
             }
@@ -290,12 +384,12 @@ Rectangle {
     Rectangle {
         id: bar
         width: parent.width
-        height: watch.phone ? 52 : 72
-        visible: watch.phone ? !watch.landscape : opacity > 0.01
-        opacity: watch.phone || watch.chromeShown ? 1 : 0
-        Behavior on opacity { enabled: !watch.phone; NumberAnimation { duration: Motion.slow } }
-        color: watch.phone ? "#0b0b0c" : "transparent"
-        gradient: watch.phone ? null : barShade
+        height: watch.phone ? 52 : watch.docked ? 64 : 72
+        visible: watch.phone ? !watch.landscape : watch.docked ? watch.chromeShown : opacity > 0.01
+        opacity: watch.phone || watch.docked || watch.chromeShown ? 1 : 0
+        Behavior on opacity { enabled: !watch.phone && !watch.docked; NumberAnimation { duration: Motion.slow } }
+        color: watch.phone || watch.docked ? "#0b0b0c" : "transparent"
+        gradient: watch.phone || watch.docked ? null : barShade
         Gradient {
             id: barShade
             GradientStop { position: 0.0; color: Qt.rgba(0, 0, 0, 0.85) }
@@ -315,7 +409,7 @@ Rectangle {
         Column {
             anchors.left: backButton.right
             anchors.leftMargin: 10
-            anchors.right: watch.phone ? parent.right : controls.left
+            anchors.right: watch.phone ? parent.right : barActions.left
             anchors.rightMargin: watch.phone ? 16 : 12
             anchors.verticalCenter: parent.verticalCenter
             Text {
@@ -335,6 +429,38 @@ Rectangle {
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textSm
                 elide: Text.ElideRight
+            }
+        }
+        // Docked: skip and up-next live here, as nothing can float over the video.
+        Row {
+            id: barActions
+            anchors.right: controls.left
+            anchors.rightMargin: visible ? 12 : 0
+            anchors.verticalCenter: parent.verticalCenter
+            spacing: 6
+            visible: watch.systemView && !watch.phone && (skipNow.visible || nextNow.visible)
+            ScButton {
+                id: skipNow
+                visible: watch.activeSkip !== null && !(App.settings.autoSkip === true)
+                compact: true
+                variant: "primary"
+                iconName: "skip-forward"
+                text: watch.skipLabel
+                onClicked: player.seek(watch.activeSkip.end)
+            }
+            ScButton {
+                id: nextNow
+                visible: nextCountdown.running
+                compact: true
+                variant: "primary"
+                text: "Next in " + Math.ceil(nextCountdown.remaining) + "s"
+                onClicked: watch.nextEpisode()
+            }
+            ScButton {
+                visible: nextCountdown.running
+                compact: true
+                text: "Cancel"
+                onClicked: nextCountdown.stop()
             }
         }
         Row {
@@ -358,6 +484,13 @@ Rectangle {
             IconButton { iconName: "skip-forward"; iconColor: "white"; enabled: watch.hasNext; tip: "Next episode (N)"; onClicked: watch.load(watch.index + 1) }
             IconButton { iconName: "list"; iconColor: "white"; active: watch.sideOpen; tip: "Episodes"; onClicked: watch.sideOpen = !watch.sideOpen }
             IconButton {
+                iconName: "external-link"
+                iconColor: "white"
+                enabled: watch.currentUrl.length > 0
+                tip: "Open in your browser"
+                onClicked: App.openUrl(watch.currentUrl)
+            }
+            IconButton {
                 iconName: watch.fullScreen ? "minimize" : "maximize"
                 iconColor: "white"
                 tip: watch.fullScreen ? "Exit full screen (F)" : "Full screen (F)"
@@ -371,7 +504,7 @@ Rectangle {
         id: row
         required property var modelData
         required property int index
-        readonly property var state: { Library.revision; return Library.progressMap(watch.series.id)[modelData.key] || null }
+        readonly property var state: watch.progress[modelData.key] || null
         height: 64
         hoverEnabled: true
         onClicked: watch.load(index)
@@ -418,18 +551,20 @@ Rectangle {
         }
     }
 
-    // Desktop: slides over the right edge of the video.
+    // Desktop: slides over the right edge of the video; docked, it sits
+    // beside it (and does not animate, which would resize the video on
+    // every frame).
     Rectangle {
         id: side
         visible: !watch.phone && width > 0
-        y: bar.height
-        height: parent.height - bar.height
+        y: bar.visible ? bar.height : 0
+        height: parent.height - y
         anchors.right: parent.right
         width: watch.sideOpen && watch.chromeShown ? 340 : 0
-        color: Qt.rgba(0.055, 0.055, 0.063, 0.94)
-        radius: Theme.radiusLg
+        color: watch.docked ? "#0b0b0c" : Qt.rgba(0.055, 0.055, 0.063, 0.94)
+        radius: watch.docked ? 0 : Theme.radiusLg
         clip: true
-        Behavior on width { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
+        Behavior on width { enabled: !watch.docked; NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
         HoverHandler { id: sideHover }
 
         ListView {
@@ -525,7 +660,7 @@ Rectangle {
                     variant: "primary"
                     compact: true
                     text: "Next in " + Math.ceil(nextCountdown.remaining) + "s"
-                    onClicked: { nextCountdown.stop(); watch.load(watch.index + 1) }
+                    onClicked: watch.nextEpisode()
                 }
                 ScButton {
                     visible: nextCountdown.running
@@ -573,7 +708,7 @@ Rectangle {
                 visible: watch.activeSkip !== null && !(App.settings.autoSkip === true)
                 onClicked: player.seek(watch.activeSkip.end)
             }
-            IconButton { iconName: "skip-forward"; iconColor: "white"; diameter: 44; enabled: watch.hasNext; onClicked: { nextCountdown.stop(); watch.load(watch.index + 1) } }
+            IconButton { iconName: "skip-forward"; iconColor: "white"; diameter: 44; enabled: watch.hasNext; onClicked: watch.nextEpisode() }
         }
     }
 }

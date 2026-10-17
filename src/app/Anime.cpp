@@ -11,6 +11,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QRegularExpression>
+#include <QSettings>
 
 namespace sc {
 
@@ -197,6 +198,38 @@ bool Anime::nativePlayerAvailable() const {
     return true;
 #else
     return false;
+#endif
+}
+
+QString Anime::playerEngine() const {
+    // Development override: SCANCORE_PLAYER=webengine|system.
+    if (const auto forced = qEnvironmentVariable("SCANCORE_PLAYER"); !forced.isEmpty())
+        return forced;
+#if defined(SCANCORE_HAVE_WEBVIEW) && defined(Q_OS_WIN)
+    // The episodes are H.264, which the Qt WebEngine in the official Qt
+    // packages cannot decode; WebView2 can. It ships with Windows 11 and is
+    // installed with Edge on Windows 10, but may have been removed.
+    static const bool webView2 = [] {
+        for (const auto *root : {"HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node", "HKEY_LOCAL_MACHINE\\SOFTWARE",
+                                 "HKEY_CURRENT_USER\\Software"}) {
+            const QSettings key(QStringLiteral("%1\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}")
+                                    .arg(QLatin1String(root)),
+                                QSettings::NativeFormat);
+            const auto version = key.value(QStringLiteral("pv")).toString();
+            if (!version.isEmpty() && version != QLatin1String("0.0.0.0"))
+                return true;
+        }
+        return false;
+    }();
+    if (webView2)
+        return QStringLiteral("system");
+#elif defined(SCANCORE_HAVE_WEBVIEW)
+    return QStringLiteral("system");
+#endif
+#ifdef SCANCORE_HAVE_WEBENGINE
+    return QStringLiteral("webengine");
+#else
+    return {};
 #endif
 }
 

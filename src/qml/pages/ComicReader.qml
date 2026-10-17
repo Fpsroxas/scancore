@@ -321,6 +321,24 @@ Rectangle {
                 visible: pageImage.status === PanelImage.Loading
                 color: "#7a7a80"
             }
+            Column {
+                anchors.centerIn: parent
+                spacing: 10
+                visible: pageImage.status === PanelImage.Error
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: "Page " + (pageView.page + 1) + " did not load"
+                    color: "#a0a0a8"
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textSm
+                }
+                ScButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: "Retry"
+                    compact: true
+                    onClicked: pageImage.reload()
+                }
+            }
         }
         // Preload neighbours.
         Repeater {
@@ -375,7 +393,7 @@ Rectangle {
             font.pixelSize: Theme.textMd
         }
         Text {
-            width: 420
+            width: Math.min(420, reader.width - 48)
             visible: reader.task !== null && !reader.task.loading && !reader.task.ok
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.Wrap

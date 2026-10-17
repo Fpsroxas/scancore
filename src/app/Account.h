@@ -3,7 +3,9 @@
 #include "core/Task.h"
 
 #include <QObject>
+#include <QPointer>
 #include <QQmlEngine>
+#include <QTimer>
 #include <QVariantMap>
 
 namespace sc {
@@ -11,8 +13,9 @@ namespace sc {
 // Optional link to a scancore.onl account. Signing in stores the site's
 // session cookie in the app's cookie jar; the password is never saved.
 // Sync brings the website library and comic reading history into the local
-// library, adds local saves to the website when it knows the series, and
-// keeps anime watch progress in step both ways.
+// library, adds local saves to the website when it knows the series (and
+// removes the ones removed here), and keeps anime watch progress and comic
+// reading positions in step both ways.
 class Account : public QObject {
     Q_OBJECT
     QML_ELEMENT
@@ -41,7 +44,8 @@ public:
     Q_INVOKABLE QVariantList passwordChecks(const QString &password) const;
     Q_INVOKABLE QString usernameProblem(const QString &username) const;
     Q_INVOKABLE void signOut();
-    // {libraryImported, historyImported, pushed, morePending}
+    // {libraryImported, historyImported, pushed, morePending}. While a sync
+    // runs, returns that one.
     Q_INVOKABLE sc::Task *sync();
 
 signals:
@@ -50,10 +54,18 @@ signals:
 private:
     sc::Task *authenticate(const QString &path, const QJsonObject &body);
     void setUser(const QVariantMap &user);
+    // A sync soon after a change in the library or progress, but not more
+    // than about once a minute.
+    void scheduleSync();
     static QVariantMap importAll(const QJsonObject &session);
 
     QVariantMap m_user;
     bool m_syncing = false;
+    // Something changed during a sync, so another follows it.
+    bool m_dirty = false;
+    qint64 m_lastSyncEnded = 0;
+    QTimer m_soon;
+    QPointer<Task> m_task;
 };
 
 } // namespace sc

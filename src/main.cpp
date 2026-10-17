@@ -11,9 +11,11 @@
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
 
+#ifdef SCANCORE_HAVE_WEBVIEW
+#include <QtWebView/QtWebView>
+#endif
 #ifdef Q_OS_ANDROID
 #include <QGuiApplication>
-#include <QtWebView/QtWebView>
 #else
 #include <QApplication>
 #include <QMenu>
@@ -91,8 +93,16 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     QtWebEngineQuick::initialize();
 #endif
-#ifdef Q_OS_ANDROID
+#ifdef SCANCORE_HAVE_WEBVIEW
+#ifdef Q_OS_WIN
+    // Let the player start the next episode without a click, as it does in
+    // Qt WebEngine and on Android.
+    if (qEnvironmentVariableIsEmpty("WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS"))
+        qputenv("WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS", "--autoplay-policy=no-user-gesture-required");
+#endif
     QtWebView::initialize();
+#endif
+#ifdef Q_OS_ANDROID
     using Application = QGuiApplication;
 #else
     using Application = QApplication;

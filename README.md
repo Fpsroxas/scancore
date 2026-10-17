@@ -108,7 +108,7 @@ Community package definitions for [AUR, WinGet, Scoop and Homebrew](docs/package
 | Platform | Needs |
 | --- | --- |
 | **Linux** | x86_64 distribution from 2022 or later (glibc 2.35+, since the AppImage is built on Ubuntu 22.04) and FUSE 2 for the AppImage; or any distribution with Flatpak |
-| **Windows** | Windows 10 or 11, 64-bit |
+| **Windows** | Windows 10 or 11, 64-bit. Anime plays in Microsoft Edge WebView2, which Windows 11 includes and Windows 10 gets with Edge |
 | **macOS** | macOS 13 or later, Apple Silicon or Intel |
 | **Android** | Android 9 or later, arm64 |
 
@@ -142,7 +142,7 @@ AppImages need FUSE 2 (`libfuse2` on Debian and Ubuntu, `fuse2` on Arch).
 flatpak install --user ./SCANCORE-*-linux-x86_64.flatpak
 ```
 
-The bundle contains SCANCORE; Flatpak downloads the KDE runtime from Flathub. Future app updates are provided by Flatpak, not the in-app updater.
+The bundle contains SCANCORE; Flatpak downloads the KDE runtime and Qt WebEngine (the anime player) from Flathub. Future app updates are provided by Flatpak, not the in-app updater.
 
 **Windows.** Run the installer. SmartScreen may warn about an unrecognised app the first time: choose *More info*, then *Run anyway*.
 
@@ -193,9 +193,11 @@ Installing the dependencies:
 | Fedora | `sudo dnf install cmake ninja-build qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtsvg-devel qt6-qtimageformats qt6-qtwebengine-devel` |
 | Ubuntu, Debian | Needs an archive with Qt 6.9 or newer (otherwise use the [Qt Online Installer](https://www.qt.io/download-qt-installer)): `sudo apt install cmake ninja-build qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-image-formats-plugins qt6-webengine-dev` |
 | macOS | `brew install cmake ninja qt` |
-| Windows | Install Qt 6.9+ for MSVC 2022 with the [Qt Online Installer](https://www.qt.io/download-qt-installer) (tick Qt WebEngine and Qt Image Formats), then build from a *Developer PowerShell for VS 2022* with `-DCMAKE_PREFIX_PATH=C:\Qt\6.x.y\msvc2022_64`. |
+| Windows | Install Qt 6.9+ for MSVC 2022 with the [Qt Online Installer](https://www.qt.io/download-qt-installer) (tick Qt WebEngine, Qt WebView and Qt Image Formats), then build from a *Developer PowerShell for VS 2022* with `-DCMAKE_PREFIX_PATH=C:\Qt\6.x.y\msvc2022_64`. |
 
 Build options: `-DSCANCORE_WITH_WEBENGINE=OFF` builds without the embedded browser. The anime player and browser checks are then unavailable, and everything else works.
+
+Anime episodes are H.264 video. Distribution and Flathub builds of Qt WebEngine can play it, but the Qt WebEngine in the Qt Online Installer cannot. On Windows and macOS the player therefore uses the system's web view through Qt WebView (WebView2 or WKWebView); `-DSCANCORE_WITH_SYSTEM_WEBVIEW=OFF` turns that off. On Linux, build against your distribution's Qt WebEngine, or one configured with `-DFEATURE_webengine_proprietary_codecs=ON` (see `.github/workflows/qtwebengine.yml`).
 
 ### Android
 

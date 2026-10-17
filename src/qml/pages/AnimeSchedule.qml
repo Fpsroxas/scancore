@@ -37,9 +37,7 @@ Item {
                 showBack: true
             }
 
-            Row {
-                x: Theme.gutter
-                spacing: 8
+            ChipRow {
                 Repeater {
                     model: page.days
                     Chip {
@@ -101,8 +99,11 @@ Item {
                             }
                             Column {
                                 anchors.verticalCenter: parent.verticalCenter
+                                width: row.width - 10 - 64 - 46 - 2 * 18 - 10
                                 spacing: 4
                                 Text {
+                                    width: parent.width
+                                    elide: Text.ElideRight
                                     text: row.modelData.title
                                     color: Theme.text
                                     font.family: Theme.fontSans
@@ -110,6 +111,8 @@ Item {
                                     font.weight: Font.DemiBold
                                 }
                                 Text {
+                                    width: parent.width
+                                    elide: Text.ElideRight
                                     text: "Episode " + row.modelData.airingEpisode
                                         + (row.modelData.episodes ? " of " + row.modelData.episodes : "")
                                         + " · " + (row.aired ? "aired " : "airs ") + App.relativeTime(row.modelData.airingAt)

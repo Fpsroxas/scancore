@@ -12,6 +12,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(SCANCORE_WITH_WEBENGINE "Embedded web players (ReAnime) and site verification windows" ON)
+option(SCANCORE_WITH_SYSTEM_WEBVIEW "Play anime in the system web view (WebView2 on Windows, WKWebView on macOS)" ON)
 option(SCANCORE_WITH_MPV "Native video playback through libmpv (not used yet)" OFF)
 option(SCANCORE_WITH_NOVEL_PACK_INSTALLER "Allow downloading the optional Python novel-source pack" ON)
 option(SCANCORE_BUILD_TESTS "Build unit tests" ON)
@@ -27,8 +28,26 @@ if(ANDROID)
     set(SCANCORE_WITH_MPV OFF)
     set(SCANCORE_BUILD_TESTS OFF)
     find_package(Qt6 REQUIRED COMPONENTS WebView)
+    set(SCANCORE_WITH_SYSTEM_WEBVIEW ON)
 else()
     find_package(Qt6 REQUIRED COMPONENTS Widgets)
+endif()
+
+# Anime episodes are H.264 video. The Qt WebEngine in Qt's own packages is
+# built without that codec, so on Windows and macOS the player uses the
+# system's web view (Qt WebView), which has it. Linux has no system web view;
+# there the player needs a Qt WebEngine built with proprietary codecs, as
+# distribution and Flathub packages are.
+if(NOT ANDROID)
+    if(SCANCORE_WITH_SYSTEM_WEBVIEW AND (WIN32 OR APPLE))
+        find_package(Qt6 6.9 QUIET COMPONENTS WebView)
+        if(NOT Qt6WebView_FOUND)
+            message(WARNING "Qt WebView not found; anime will use Qt WebEngine, which may lack the H.264 codec")
+            set(SCANCORE_WITH_SYSTEM_WEBVIEW OFF)
+        endif()
+    else()
+        set(SCANCORE_WITH_SYSTEM_WEBVIEW OFF)
+    endif()
 endif()
 
 if(SCANCORE_WITH_WEBENGINE)

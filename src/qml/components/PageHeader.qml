@@ -1,7 +1,9 @@
 import QtQuick
 import ScanCore
 
-// Large page title with an optional subtitle and trailing controls.
+// Large page title with an optional subtitle and trailing controls. On
+// phones the controls go below the title, which would otherwise be squeezed
+// to nothing beside them.
 Item {
     id: header
     property string title
@@ -9,8 +11,9 @@ Item {
     property bool showBack: false
     default property alias trailing: trailingRow.data
 
+    readonly property bool stacked: Theme.compact && trailingRow.width > 0
     width: parent ? parent.width : 800
-    implicitHeight: column.implicitHeight + 28
+    implicitHeight: column.implicitHeight + 28 + (stacked ? trailingRow.height + 14 : 0)
 
     IconButton {
         id: back
@@ -26,7 +29,7 @@ Item {
         id: column
         x: header.showBack ? Theme.gutter + 34 : Theme.gutter
         y: 24
-        width: parent.width - x - trailingRow.width - Theme.gutter - 12
+        width: parent.width - x - Theme.gutter - (header.stacked ? 0 : trailingRow.width + 12)
         spacing: 4
         Text {
             width: parent.width
@@ -51,9 +54,8 @@ Item {
 
     Row {
         id: trailingRow
-        anchors.right: parent.right
-        anchors.rightMargin: Theme.gutter
-        y: 30
+        x: header.stacked ? Theme.gutter : parent.width - width - Theme.gutter
+        y: header.stacked ? column.y + column.height + 14 : 30
         spacing: 8
     }
 }

@@ -113,15 +113,27 @@ QString animeTitle(const QJsonObject &anime) {
 }
 
 // The website keeps watch progress per episode unit; this maps an AniList
-// show's episode numbers to those units.
-QHash<int, QString> episodeUnits(int anilistId) {
-    QHash<int, QString> units;
-    const auto json = getJson(QStringLiteral("/api/anime/media/%1/episodes").arg(anilistId));
-    for (const auto &value : json.value("episodes").toArray()) {
-        const auto episode = value.toObject();
-        units.insert(episode.value("episode_number").toInt(), episode.value("unitId").toString());
+// show's episode numbers to those units. Kept for a day, and fetched again
+// when an episode is missing (a new one aired).
+QHash<int, QString> episodeUnits(int anilistId, int episode) {
+    const auto key = QStringLiteral("scancore.onl:units:%1").arg(anilistId);
+    const auto parse = [](const QByteArray &body) {
+        QHash<int, QString> units;
+        for (const auto &value : QJsonDocument::fromJson(body).object().value("episodes").toArray()) {
+            const auto row = value.toObject();
+            units.insert(row.value("episode_number").toInt(), row.value("unitId").toString());
+        }
+        return units;
+    };
+    if (const auto cached = Database::cacheGet(key)) {
+        auto units = parse(*cached);
+        if (units.contains(episode))
+            return units;
     }
-    return units;
+    const auto json = getJson(QStringLiteral("/api/anime/media/%1/episodes").arg(anilistId));
+    const auto body = QJsonDocument(json).toJson(QJsonDocument::Compact);
+    Database::cachePut(key, body, 86400);
+    return parse(body);
 }
 
 // Local anime progress changed since the last push -> website, in one batch
@@ -148,6 +160,14 @@ int pushAnimeProgress(bool batchSupported, bool *more) {
     };
     QList<Pending> pending;
     QHash<int, QHash<int, QString>> unitsByShow;
+    // The newest episode of each show in this batch, so a cached episode list
+    // that predates it is fetched again.
+    QHash<int, int> newestEpisode;
+    for (const auto &value : rows) {
+        const auto row = value.toMap();
+        const int id = row.value("series_id").toString().section(QLatin1Char(':'), 2).toInt();
+        newestEpisode[id] = std::max(newestEpisode.value(id), row.value("unit_key").toInt());
+    }
     for (const auto &value : rows) {
         const auto row = value.toMap();
         const int anilistId = row.value("series_id").toString().section(QLatin1Char(':'), 2).toInt();
@@ -161,7 +181,7 @@ int pushAnimeProgress(bool batchSupported, bool *more) {
         if (anilistId > 0 && episode > 0 && duration >= 1) {
             if (!unitsByShow.contains(anilistId)) {
                 try {
-                    unitsByShow.insert(anilistId, episodeUnits(anilistId));
+                    unitsByShow.insert(anilistId, episodeUnits(anilistId, newestEpisode.value(anilistId)));
                 } catch (const Error &e) {
                     // A show the website does not know is skipped, not retried forever.
                     if (e.status() < 400 || e.status() >= 500 || e.status() == 401 || e.status() == 429)
@@ -384,18 +404,46 @@ Account::Account(QObject *parent) : QObject(parent) {
     m_user = Database::pref(QStringLiteral("account.user")).toMap();
     if (signedIn())
         QTimer::singleShot(6000, this, [this] { sync(); });
-    // Mirror saves made in the app shortly after they happen.
-    QTimer *debounce = new QTimer(this);
-    debounce->setSingleShot(true);
-    debounce->setInterval(4000);
-    connect(debounce, &QTimer::timeout, this, [this] {
+    m_soon.setSingleShot(true);
+    connect(&m_soon, &QTimer::timeout, this, [this] {
         if (signedIn() && !m_syncing)
             sync();
     });
-    connect(Library::instance(), &Library::changed, this, [this, debounce] {
-        if (signedIn() && !m_syncing)
-            debounce->start();
+    // Mirror saves, reads and watches shortly after they happen.
+    connect(Library::instance(), &Library::changed, this, &Account::scheduleSync);
+    // A series removed here is removed from the website at the next sync,
+    // rather than brought back by it.
+    connect(Library::instance(), &Library::removed, this, [this](const QString &id) {
+        if (!signedIn())
+            return;
+        auto removed = Database::pref(QStringLiteral("account.libraryRemoved")).toStringList();
+        if (!removed.contains(id)) {
+            removed.append(id);
+            Database::setPref(QStringLiteral("account.libraryRemoved"), removed);
+        }
     });
+    connect(Library::instance(), &Library::saved, this, [](const QString &id) {
+        auto removed = Database::pref(QStringLiteral("account.libraryRemoved")).toStringList();
+        if (removed.removeAll(id) > 0)
+            Database::setPref(QStringLiteral("account.libraryRemoved"), removed);
+    });
+}
+
+void Account::scheduleSync() {
+    if (!signedIn())
+        return;
+    if (m_syncing) {
+        m_dirty = true;
+        return;
+    }
+    if (m_soon.isActive())
+        return;
+    // The players and readers record progress every few seconds, and a sync
+    // is several requests to a site that limits them per minute.
+    constexpr qint64 kQuiet = 4000;
+    constexpr qint64 kMinGap = 60000;
+    const qint64 sinceLast = QDateTime::currentMSecsSinceEpoch() - m_lastSyncEnded;
+    m_soon.start(int(std::clamp(kMinGap - sinceLast, kQuiet, kMinGap)));
 }
 
 Account *Account::instance() {
@@ -492,6 +540,10 @@ void Account::signOut() {
     Database::setPref(QStringLiteral("account.animePushedAt"), 0);
     Database::setPref(QStringLiteral("account.animePulledAt"), 0);
     Database::setPref(QStringLiteral("account.comicPushedAt"), 0);
+    Database::setPref(QStringLiteral("account.libraryPushedAt"), 0);
+    Database::setPref(QStringLiteral("account.libraryRemoved"), QStringList());
+    m_soon.stop();
+    m_dirty = false;
 }
 
 QVariantMap Account::importAll(const QJsonObject &session) {
@@ -499,6 +551,10 @@ QVariantMap Account::importAll(const QJsonObject &session) {
     int historyImported = 0;
     int pushed = 0;
     QSet<QString> remoteIds;
+    // Removed here since the last sync, and the website's ids for them.
+    const auto removedList = Database::pref(QStringLiteral("account.libraryRemoved")).toStringList();
+    const QSet<QString> removed(removedList.begin(), removedList.end());
+    QHash<QString, QString> removedRemote;
 
     // Website library -> local library.
     QString cursor;
@@ -512,6 +568,10 @@ QVariantMap Account::importAll(const QJsonObject &session) {
                 continue;
             const auto id = series.value("id").toString();
             remoteIds.insert(id);
+            if (removed.contains(id)) {
+                removedRemote.insert(id, entry.value("series").toObject().value("id").toString());
+                continue;
+            }
             if (!Library::instance()->isSaved(id)) {
                 Library::upsertSeries(series);
                 Database::exec(QStringLiteral("INSERT OR IGNORE INTO library(series_id, category, added_at) VALUES(?, ?, ?)"),
@@ -522,6 +582,38 @@ QVariantMap Account::importAll(const QJsonObject &session) {
         cursor = json.value("nextCursor").toString();
         if (cursor.isEmpty())
             break;
+    }
+
+    // Local removals -> website. Kept for the next sync when the website
+    // cannot be reached; dropped when it no longer has the series, or the
+    // series was saved here again.
+    QSet<QString> removalsDone;
+    for (const auto &id : removed) {
+        const auto remote = removedRemote.value(id);
+        if (remote.isEmpty() || Library::instance()->isSaved(id)) {
+            removalsDone.insert(id);
+            continue;
+        }
+        Request request;
+        request.method = "DELETE";
+        request.url = QUrl(kSite + QStringLiteral("/api/library?seriesId=") + QString::fromLatin1(QUrl::toPercentEncoding(remote)));
+        request.headers = {{"Accept", "application/json"}};
+        try {
+            const auto response = Http::send(request);
+            if (response.status == 401)
+                throw Error(QStringLiteral("Your scancore.onl session ended. Sign in again."), 401);
+            if (response.ok() || response.status == 404)
+                removalsDone.insert(id);
+        } catch (const Error &e) {
+            if (e.status() == 401)
+                throw;
+        }
+    }
+    if (!removalsDone.isEmpty()) {
+        // Re-read: a removal made while this sync ran must not be lost.
+        auto pending = Database::pref(QStringLiteral("account.libraryRemoved")).toStringList();
+        pending.removeIf([&](const QString &id) { return removalsDone.contains(id); });
+        Database::setPref(QStringLiteral("account.libraryRemoved"), pending);
     }
 
     // What this website accepts from the app; an older one gets neither.
@@ -597,12 +689,20 @@ QVariantMap Account::importAll(const QJsonObject &session) {
     if (newestPulledComic > Database::pref(QStringLiteral("account.comicPushedAt"), 0).toLongLong())
         Database::setPref(QStringLiteral("account.comicPushedAt"), newestPulledComic);
 
-    // Local library -> website, for series the website already knows.
+    // Local library -> website, for series the website already knows. Each
+    // save is offered once: a series the website does not know would
+    // otherwise be sent again at every sync.
+    const auto librarySince = Database::pref(QStringLiteral("account.libraryPushedAt"), 0).toLongLong();
+    qint64 libraryNewest = librarySince;
+    bool libraryRetry = false;
+    const auto transientStatus = [](int status) { return status == 0 || status == 429 || status >= 500; };
     QStringList comicUrls;
-    const auto local = Database::query(QStringLiteral(
-        "SELECT s.id, s.media, s.source_url, l.category FROM library l JOIN series s ON s.id = l.series_id"));
+    const auto local = Database::query(QStringLiteral("SELECT s.id, s.media, s.source_url, l.category, l.added_at "
+                                                      "FROM library l JOIN series s ON s.id = l.series_id WHERE l.added_at > ?"),
+                                       {librarySince});
     for (const auto &value : local) {
         const auto row = value.toMap();
+        libraryNewest = std::max(libraryNewest, row.value("added_at").toLongLong());
         const auto id = row.value("id").toString();
         if (remoteIds.contains(id))
             continue;
@@ -614,9 +714,12 @@ QVariantMap Account::importAll(const QJsonObject &session) {
         const auto body = QJsonDocument(QJsonObject{{"sourceUrl", url}, {"status", statusFor(row.value("category").toString())}})
                               .toJson(QJsonDocument::Compact);
         try {
-            if (Http::postJson(QUrl(kSite + QStringLiteral("/api/library")), body, {{"Accept", "application/json"}}).ok())
+            const auto response = Http::postJson(QUrl(kSite + QStringLiteral("/api/library")), body, {{"Accept", "application/json"}});
+            if (response.ok())
                 ++pushed;
+            libraryRetry |= transientStatus(response.status);
         } catch (const Error &) {
+            libraryRetry = true;
         }
     }
     for (int i = 0; i < comicUrls.size(); i += 120) {
@@ -629,9 +732,13 @@ QVariantMap Account::importAll(const QJsonObject &session) {
                                                  {{"Accept", "application/json"}});
             if (response.ok())
                 pushed += QJsonDocument::fromJson(response.body).object().value("imported").toInt();
+            libraryRetry |= transientStatus(response.status);
         } catch (const Error &) {
+            libraryRetry = true;
         }
     }
+    if (!libraryRetry && libraryNewest > librarySince)
+        Database::setPref(QStringLiteral("account.libraryPushedAt"), libraryNewest);
     // Anime watch progress, both ways: local changes first, so a pull cannot
     // overwrite something newer that has not gone up yet.
     int animePushed = 0;
@@ -652,6 +759,10 @@ QVariantMap Account::importAll(const QJsonObject &session) {
 }
 
 Task *Account::sync() {
+    if (m_syncing && m_task)
+        return m_task;
+    m_soon.stop();
+    m_dirty = false;
     m_syncing = true;
     emit changed();
     auto *task = Task::run([]() -> QVariant {
@@ -660,6 +771,11 @@ Task *Account::sync() {
             throw Error(QStringLiteral("Your scancore.onl session ended. Sign in again."), 401);
         return importAll(session);
     });
+    // Kept alive here rather than by QML: a page that starts a sync and
+    // drops the task would otherwise let the garbage collector cancel it
+    // halfway, and "Syncing…" would never end.
+    QQmlEngine::setObjectOwnership(task, QQmlEngine::CppOwnership);
+    m_task = task;
     connect(task, &Task::changed, this, [this, task] {
         if (task->loading())
             return;
@@ -678,7 +794,13 @@ Task *Account::sync() {
             setUser({});
         }
         m_syncing = false;
+        m_lastSyncEnded = QDateTime::currentMSecsSinceEpoch();
         emit changed();
+        task->deleteLater();
+        if (m_dirty) {
+            m_dirty = false;
+            scheduleSync();
+        }
     });
     return task;
 }
