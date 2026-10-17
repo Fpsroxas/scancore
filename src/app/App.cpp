@@ -21,7 +21,9 @@
 #include <QLocale>
 #include <QQuickWindow>
 #include <QStandardPaths>
-#ifndef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#else
 #include <QSystemTrayIcon>
 #endif
 #include <QVersionNumber>
@@ -137,6 +139,19 @@ void App::openUrl(const QString &url) const {
     const QUrl parsed(url);
     if (parsed.scheme() == QLatin1String("https") || parsed.scheme() == QLatin1String("http"))
         QDesktopServices::openUrl(parsed);
+}
+
+void App::moveToBackground() const {
+#ifdef Q_OS_ANDROID
+    // What Back on an app's first screen does on Android 12 and later. Runs on
+    // the Android UI thread without waiting for it, so it cannot deadlock with
+    // Qt's thread.
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread([] {
+        QJniObject activity = QNativeInterface::QAndroidApplication::context();
+        if (activity.isValid())
+            activity.callMethod<jboolean>("moveTaskToBack", "(Z)Z", jboolean(true));
+    });
+#endif
 }
 
 void App::openFolder(const QString &path) const {

@@ -98,7 +98,7 @@ AbstractButton {
                     id: badgeText
                     anchors.centerIn: parent
                     text: card.badge
-                    color: Theme.onAccent
+                    color: Theme.accentInk
                     font.family: Theme.fontSans
                     font.pixelSize: 11
                     font.weight: Font.Bold

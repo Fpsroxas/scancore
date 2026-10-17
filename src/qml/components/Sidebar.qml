@@ -233,7 +233,7 @@ Rectangle {
                                     anchors.centerIn: parent
                                     visible: !sidebar.collapsed
                                     text: parent.count > 99 ? "99+" : parent.count
-                                    color: Theme.onAccent
+                                    color: Theme.accentInk
                                     font.family: Theme.fontSans
                                     font.pixelSize: 11
                                     font.weight: Font.Bold

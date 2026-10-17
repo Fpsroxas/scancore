@@ -48,6 +48,9 @@ public:
     Q_INVOKABLE QVariantMap progressMap(const QString &seriesId) const;
     Q_INVOKABLE QVariantMap lastProgress(const QString &seriesId) const;
     Q_INVOKABLE QVariantMap seriesRow(const QString &seriesId) const;
+    // The chapter list saved the last time the series was opened, so its
+    // page can show it before the site answers.
+    Q_INVOKABLE QVariantList storedUnits(const QString &seriesId) const { return cachedUnits(seriesId); }
 
     // Checks saved comics and novels for new chapters.
     Q_INVOKABLE sc::Task *checkUpdates();

@@ -123,6 +123,13 @@ Rectangle {
         wheelStep: 110
         ScrollBar.vertical: ScScrollBar {}
 
+        // Phone: a tap toggles the bar. On the flickable, which takes
+        // touches before anything behind it.
+        TapHandler {
+            enabled: App.platform === "android"
+            onSingleTapped: reader.barsShown = !reader.barsShown
+        }
+
         onContentYChanged: {
             const delta = contentY - reader.lastY
             if (Math.abs(delta) > 6) {
@@ -271,14 +278,9 @@ Rectangle {
         }
     }
 
-    // Desktop: the bar returns when the mouse moves near the top. Phone: a
-    // tap toggles it.
+    // Desktop: the bar returns when the mouse moves near the top.
     PointerMotion {
         onMoved: (position) => { if (position.y < 90 + reader.insetTop) reader.barsShown = true }
-    }
-    TapHandler {
-        enabled: App.platform === "android"
-        onSingleTapped: reader.barsShown = !reader.barsShown
     }
 
     // The status bar area keeps the reading theme's colour.
@@ -329,7 +331,7 @@ Rectangle {
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textMd
                     font.weight: Font.DemiBold
-                    width: Math.min(implicitWidth, reader.width - 360)
+                    width: Math.min(implicitWidth, reader.width - 90 - novelActions.width)
                     elide: Text.ElideRight
                 }
                 Text {
@@ -338,12 +340,13 @@ Rectangle {
                     color: reader.look.muted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
-                    width: Math.min(implicitWidth, reader.width - 360)
+                    width: Math.min(implicitWidth, reader.width - 90 - novelActions.width)
                     elide: Text.ElideRight
                 }
             }
         }
         Row {
+            id: novelActions
             anchors.right: parent.right
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter

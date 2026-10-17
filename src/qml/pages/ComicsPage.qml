@@ -57,10 +57,7 @@ Item {
                 onTextChanged: if (text.length === 0 && page.query.length > 0) page.run("")
             }
 
-            Flow {
-                x: Theme.gutter
-                width: parent.width - 2 * Theme.gutter
-                spacing: 8
+            ChipRow {
                 Chip {
                     text: "All sources"
                     selected: page.source === "all"

@@ -16,7 +16,7 @@ option(SCANCORE_WITH_MPV "Native video playback through libmpv (not used yet)" O
 option(SCANCORE_WITH_NOVEL_PACK_INSTALLER "Allow downloading the optional Python novel-source pack" ON)
 option(SCANCORE_BUILD_TESTS "Build unit tests" ON)
 
-find_package(Qt6 6.8 REQUIRED COMPONENTS
+find_package(Qt6 6.9 REQUIRED COMPONENTS
     Core Gui Network Sql Qml Quick QuickControls2 Svg Concurrent)
 qt_standard_project_setup(REQUIRES 6.8)
 
@@ -32,7 +32,7 @@ else()
 endif()
 
 if(SCANCORE_WITH_WEBENGINE)
-    find_package(Qt6 6.8 QUIET COMPONENTS WebEngineQuick WebEngineCore)
+    find_package(Qt6 6.9 QUIET COMPONENTS WebEngineQuick WebEngineCore)
     if(NOT Qt6WebEngineQuick_FOUND)
         message(WARNING "Qt WebEngine not found; building without embedded web players")
         set(SCANCORE_WITH_WEBENGINE OFF)

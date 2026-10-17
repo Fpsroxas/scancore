@@ -38,13 +38,13 @@ AbstractButton {
                 visible: chip.iconName.length > 0
                 name: chip.iconName
                 size: 14
-                color: chip.selected ? Theme.onAccent : Theme.textMuted
+                color: chip.selected ? Theme.accentInk : Theme.textMuted
                 anchors.verticalCenter: parent.verticalCenter
             }
             Text {
                 text: chip.text
                 font: chip.font
-                color: chip.selected ? Theme.onAccent : Theme.text
+                color: chip.selected ? Theme.accentInk : Theme.text
                 anchors.verticalCenter: parent.verticalCenter
             }
             Text {
@@ -52,7 +52,7 @@ AbstractButton {
                 text: chip.detail
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textXs
-                color: chip.selected ? Theme.alpha(Theme.onAccent, 0.7) : Theme.textFaint
+                color: chip.selected ? Theme.alpha(Theme.accentInk, 0.7) : Theme.textFaint
                 anchors.verticalCenter: parent.verticalCenter
             }
         }

@@ -24,7 +24,7 @@ Switch {
             radius: 10
             y: 3
             x: control.checked ? parent.width - width - 3 : 3
-            color: control.checked ? Theme.onAccent : (Theme.dark ? "#d8d8dc" : "#ffffff")
+            color: control.checked ? Theme.accentInk : (Theme.dark ? "#d8d8dc" : "#ffffff")
             Behavior on x { NumberAnimation { duration: Motion.normal; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.spring } }
             Behavior on width { NumberAnimation { duration: Motion.fast } }
         }

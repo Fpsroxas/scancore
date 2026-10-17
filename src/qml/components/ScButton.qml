@@ -13,7 +13,7 @@ AbstractButton {
     readonly property color fill: variant === "primary" ? Theme.accent
         : variant === "secondary" ? Theme.surface2
         : variant === "danger" ? Theme.alpha(Theme.danger, 0.14) : "transparent"
-    readonly property color ink: variant === "primary" ? Theme.onAccent
+    readonly property color ink: variant === "primary" ? Theme.accentInk
         : variant === "danger" ? Theme.danger : Theme.text
 
     implicitHeight: compact ? 30 : 38
@@ -34,7 +34,7 @@ AbstractButton {
         Rectangle {
             anchors.fill: parent
             radius: parent.radius
-            color: control.variant === "primary" ? Theme.onAccent : Theme.text
+            color: control.variant === "primary" ? Theme.accentInk : Theme.text
             opacity: control.pressed ? 0.12 : control.hovered ? 0.06 : 0
             Behavior on opacity { NumberAnimation { duration: Motion.fast } }
         }

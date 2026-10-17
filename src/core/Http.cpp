@@ -13,6 +13,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
+#include <thread>
 
 namespace sc {
 
@@ -135,7 +136,15 @@ QByteArray Http::userAgent() {
     return g_userAgent;
 }
 
-Response Http::send(const Request &request) {
+namespace {
+
+// A network failure worth one more try: the connection dropped or the
+// network blinked, as opposed to a bad address or a refusal.
+struct TransientError : Error {
+    using Error::Error;
+};
+
+Response sendOnce(const Request &request) {
     if (request.url.scheme() != QLatin1String("https") && request.url.scheme() != QLatin1String("http"))
         throw Error(QStringLiteral("Unsupported address: %1").arg(request.url.toString()));
     if (CancelScope::cancelled())
@@ -147,7 +156,7 @@ Response Http::send(const Request &request) {
         throw Error(QStringLiteral("Cancelled"), 499);
 
     QNetworkRequest req(request.url);
-    req.setHeader(QNetworkRequest::UserAgentHeader, userAgent());
+    req.setHeader(QNetworkRequest::UserAgentHeader, Http::userAgent());
     req.setAttribute(QNetworkRequest::Http2AllowedAttribute, true);
     req.setTransferTimeout(request.timeoutMs);
     for (const auto &[name, value] : request.headers) {
@@ -216,9 +225,41 @@ Response Http::send(const Request &request) {
             throw Error(QStringLiteral("Could not find %1. Check your connection.").arg(slot.host), 502);
         if (error == QNetworkReply::SslHandshakeFailedError)
             throw Error(QStringLiteral("Secure connection to %1 failed.").arg(slot.host), 502);
-        throw Error(QStringLiteral("Could not reach %1 (%2).").arg(slot.host, reply->errorString()), 502);
+        const auto message = QStringLiteral("Could not reach %1 (%2).").arg(slot.host, reply->errorString());
+        if (error == QNetworkReply::RemoteHostClosedError || error == QNetworkReply::TemporaryNetworkFailureError ||
+            error == QNetworkReply::NetworkSessionFailedError || error == QNetworkReply::UnknownNetworkError ||
+            error == QNetworkReply::ProxyConnectionClosedError)
+            throw TransientError(message, 502);
+        throw Error(message, 502);
     }
     return response;
+}
+
+bool waitBeforeRetry() {
+    for (int i = 0; i < 8; ++i) {
+        if (CancelScope::cancelled())
+            return false;
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+    return !CancelScope::cancelled();
+}
+
+} // namespace
+
+// GETs are retried once after a dropped connection or a passing gateway
+// error, which otherwise surface as a failed page that works on Try again.
+Response Http::send(const Request &request) {
+    const bool idempotent = request.method == "GET";
+    try {
+        auto response = sendOnce(request);
+        const bool gateway = response.status == 502 || response.status == 503 || response.status == 504;
+        if (!idempotent || !gateway || response.isChallenge() || !waitBeforeRetry())
+            return response;
+    } catch (const TransientError &) {
+        if (!idempotent || !waitBeforeRetry())
+            throw;
+    }
+    return sendOnce(request);
 }
 
 Response Http::get(const QUrl &url, const Headers &headers, int timeoutMs) {
@@ -270,6 +311,15 @@ QJsonDocument Http::getJson(const QUrl &url, const Headers &headers, int timeout
         hasAccept |= h.first.compare("Accept", Qt::CaseInsensitive) == 0;
     if (!hasAccept)
         all.append(QPair<QByteArray, QByteArray>("Accept", "application/json, text/plain, */*"));
+    const auto response = getOk(url, all, timeoutMs);
+    // A body cut off in transit is not JSON but is not a web page either;
+    // fetching it again usually works.
+    QJsonParseError error{};
+    auto doc = QJsonDocument::fromJson(response.body, &error);
+    if (error.error == QJsonParseError::NoError)
+        return doc;
+    if (response.isHtml() || response.body.trimmed().startsWith('<') || !waitBeforeRetry())
+        return response.json();
     return getOk(url, all, timeoutMs).json();
 }
 

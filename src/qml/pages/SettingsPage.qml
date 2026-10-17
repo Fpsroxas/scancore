@@ -226,7 +226,7 @@ Item {
                                 anchors.centerIn: parent
                                 visible: Account.signedIn
                                 text: String(Account.user.username || Account.user.email || "?").slice(0, 1).toUpperCase()
-                                color: Theme.onAccent
+                                color: Theme.accentInk
                                 font.family: Theme.fontDisplay
                                 font.pixelSize: 20
                                 font.weight: Font.Bold

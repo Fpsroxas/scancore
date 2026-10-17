@@ -26,7 +26,7 @@ ApplicationWindow {
         buttonText: Theme.text
         brightText: Theme.text
         highlight: Theme.accent
-        highlightedText: Theme.onAccent
+        highlightedText: Theme.accentInk
         placeholderText: Theme.textFaint
         toolTipBase: Theme.surface3
         toolTipText: Theme.text
@@ -72,8 +72,7 @@ ApplicationWindow {
         function onFinished(title) { shell.toast("Downloaded " + title, "success") }
     }
 
-    // Android Back arrives as a close request: close the reader, pop the
-    // page, then return to Home. Only Back on Home leaves the app.
+    // On Android a Back that nothing else took can arrive as a close request.
     onClosing: (close) => {
         if (App.platform !== "android") {
             if (App.settings.closeToTray === true) {
@@ -82,12 +81,8 @@ ApplicationWindow {
             }
             return
         }
-        if (shell.back()) {
-            close.accepted = false
-        } else if (shell.section !== "home") {
-            close.accepted = false
-            shell.goSection("home")
-        }
+        close.accepted = false
+        shell.systemBack()
     }
 
     // ------------------------------------------------------------------ shell
@@ -147,6 +142,16 @@ ApplicationWindow {
                 return true
             }
             return false
+        }
+
+        // Back from the system (Android Back, Alt+Left): go back, and on
+        // Android then return to Home and finally send the app to the
+        // background, as Back does on an app's first screen. Android does not
+        // close an app's last window.
+        function systemBack() {
+            if (back() || App.platform !== "android") return
+            if (section !== "home") goSection("home")
+            else App.moveToBackground()
         }
 
         function toast(message, kind) { toasts.show(message, kind) }
@@ -331,7 +336,8 @@ ApplicationWindow {
     // ------------------------------------------------------------------ keys
 
     Shortcut { sequences: ["Ctrl+K", "Ctrl+P"]; onActivated: palette.open() }
-    Shortcut { sequences: ["Alt+Left", StandardKey.Back]; onActivated: shell.back() }
+    // StandardKey.Back is also Android's Back key.
+    Shortcut { sequences: ["Alt+Left", StandardKey.Back]; onActivated: shell.systemBack() }
     // The back button on mice.
     TapHandler {
         acceptedButtons: Qt.BackButton

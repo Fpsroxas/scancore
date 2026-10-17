@@ -44,6 +44,9 @@ public:
     Q_INVOKABLE QString image(const QString &url, const QString &referer = QString()) const;
     Q_INVOKABLE QString icon(const QString &name, const QString &color) const;
     Q_INVOKABLE void openUrl(const QString &url) const;
+    // Android: send the app to the background, as Back on the first screen
+    // does. Does nothing elsewhere.
+    Q_INVOKABLE void moveToBackground() const;
     Q_INVOKABLE void openFolder(const QString &path) const;
     Q_INVOKABLE void copy(const QString &text) const;
     Q_INVOKABLE void notify(const QString &title, const QString &body);

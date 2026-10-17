@@ -51,7 +51,7 @@ SettingsPane {
                     Text {
                         anchors.centerIn: parent
                         text: pane.name.slice(0, 1).toUpperCase()
-                        color: Theme.onAccent
+                        color: Theme.accentInk
                         font.family: Theme.fontDisplay
                         font.pixelSize: 22
                         font.weight: Font.Bold

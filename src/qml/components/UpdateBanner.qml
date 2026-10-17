@@ -30,7 +30,7 @@ Rectangle {
             width: 40; height: 40; radius: 12
             color: Theme.accent
             anchors.verticalCenter: parent.verticalCenter
-            Icon { anchors.centerIn: parent; name: "download"; size: 18; color: Theme.onAccent }
+            Icon { anchors.centerIn: parent; name: "download"; size: 18; color: Theme.accentInk }
         }
         Column {
             anchors.verticalCenter: parent.verticalCenter

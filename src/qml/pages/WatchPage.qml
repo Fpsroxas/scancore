@@ -72,7 +72,11 @@ Rectangle {
         if (phone && landscape) Window.window.showFullScreen()
         wake()
     }
-    Component.onDestruction: saveProgress(true)
+    // However the player is closed (Back, Esc, the arrow), leave full screen.
+    Component.onDestruction: {
+        saveProgress(true)
+        if (phone && fullScreen) Window.window.showNormal()
+    }
 
     // Phones: rotating to landscape is the way into full screen.
     onLandscapeChanged: {

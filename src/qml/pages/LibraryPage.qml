@@ -53,8 +53,9 @@ Item {
                 }
             }
 
-            Row {
+            Flow {
                 x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
                 spacing: 12
                 Segmented {
                     options: [{ value: "", label: "All" }, { value: "comic", label: "Comics", icon: "book-open" },
@@ -63,7 +64,7 @@ Item {
                     onPicked: (v) => page.media = v
                 }
                 SearchField {
-                    width: 260
+                    width: Theme.compact ? parent.width : 260
                     placeholderText: "Filter library"
                     text: page.filter
                     onTextChanged: page.filter = text

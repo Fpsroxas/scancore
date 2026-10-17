@@ -57,7 +57,7 @@ AbstractButton {
                     visible: tile.selected
                     name: "check"
                     size: 11
-                    color: Theme.onAccent
+                    color: Theme.accentInk
                 }
             }
             Column {

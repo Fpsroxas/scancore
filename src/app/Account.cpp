@@ -213,7 +213,7 @@ int pullAnimeProgress() {
         }
         const auto seriesId = latest.value("seriesId").toString();
         const auto episodes =
-            getJson(QStringLiteral("/api/anime/progress/series?seriesId=") + seriesId).value("progress").toArray();
+            getJson(QStringLiteral("/api/anime/progress/series?seriesId=") + QString::fromLatin1(QUrl::toPercentEncoding(seriesId))).value("progress").toArray();
         for (const auto &item : episodes) {
             const auto episode = item.toObject();
             const int number = episode.value("episode").toInt();

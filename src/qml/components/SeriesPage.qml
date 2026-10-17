@@ -27,7 +27,9 @@ Item {
         return base
     }
     readonly property string seriesId: series.id || (media === "novel" ? Novels.seriesId(url) : Comics.seriesId(url))
-    readonly property var chapters: task && task.ok ? task.result.chapters : []
+    // Until the site answers, the chapter list saved last time (if any).
+    readonly property var storedChapters: Library.storedUnits(seriesId)
+    readonly property var chapters: task && task.ok ? task.result.chapters : storedChapters
     readonly property var progress: { Library.revision; return Library.progressMap(seriesId) }
     readonly property var downloads: { Downloads.revision; return Downloads.states(seriesId) }
     readonly property bool saved: { Library.revision; return Library.isSaved(seriesId) }
@@ -84,6 +86,15 @@ Item {
         Router.toast("Downloading " + units.length + (units.length === 1 ? " chapter" : " chapters"))
     }
 
+    // Continue straight from the saved chapter list; the fresh one replaces
+    // it on this page when it arrives.
+    Component.onCompleted: {
+        if (autoResume && storedChapters.length > 0) {
+            autoResume = false
+            Qt.callLater(() => page.openAt(page.resumeInfo.index))
+        }
+    }
+
     Connections {
         target: page.task
         function onFinished() {
@@ -131,7 +142,7 @@ Item {
                 ]
                 primaryText: page.resumeInfo.label
                 primaryDetail: page.resumeInfo.detail
-                busy: page.task ? page.task.loading : false
+                busy: page.task ? page.task.loading && page.chapters.length === 0 : false
                 saved: page.saved
                 onPrimary: page.openAt(page.resumeInfo.index)
                 onToggleSaved: page.toggleSave()

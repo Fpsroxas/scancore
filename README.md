@@ -163,7 +163,7 @@ To check every built-in source against the live sites:
 
 ### Desktop (Linux, Windows, macOS)
 
-Requirements: CMake 3.28+, Ninja, a C++20 compiler (GCC 13+, Clang 17+ or MSVC 2022), and **Qt 6.8 or newer** with Qt Quick, Qt Quick Controls, Qt SVG, Qt Image Formats and **Qt WebEngine** (for the anime player; optional). [lexbor](https://github.com/lexbor/lexbor), the HTML parser, is downloaded automatically.
+Requirements: CMake 3.28+, Ninja, a C++20 compiler (GCC 13+, Clang 17+ or MSVC 2022), and **Qt 6.9 or newer** with Qt Quick, Qt Quick Controls, Qt SVG, Qt Image Formats and **Qt WebEngine** (for the anime player; optional). [lexbor](https://github.com/lexbor/lexbor), the HTML parser, is downloaded automatically.
 
 ```bash
 git clone https://github.com/medium-gh/scancore.git && cd scancore
@@ -179,9 +179,9 @@ Installing the dependencies:
 | --- | --- |
 | Arch Linux | `sudo pacman -S cmake ninja qt6-base qt6-declarative qt6-svg qt6-imageformats qt6-webengine` |
 | Fedora | `sudo dnf install cmake ninja-build qt6-qtbase-devel qt6-qtdeclarative-devel qt6-qtsvg-devel qt6-qtimageformats qt6-qtwebengine-devel` |
-| Ubuntu 24.04+ | `sudo apt install cmake ninja-build qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-image-formats-plugins qt6-webengine-dev` |
+| Ubuntu, Debian | Needs an archive with Qt 6.9 or newer (otherwise use the [Qt Online Installer](https://www.qt.io/download-qt-installer)): `sudo apt install cmake ninja-build qt6-base-dev qt6-declarative-dev qt6-svg-dev qt6-image-formats-plugins qt6-webengine-dev` |
 | macOS | `brew install cmake ninja qt` |
-| Windows | Install Qt 6.8+ for MSVC 2022 with the [Qt Online Installer](https://www.qt.io/download-qt-installer) (tick Qt WebEngine and Qt Image Formats), then build from a *Developer PowerShell for VS 2022* with `-DCMAKE_PREFIX_PATH=C:\Qt\6.x.y\msvc2022_64`. |
+| Windows | Install Qt 6.9+ for MSVC 2022 with the [Qt Online Installer](https://www.qt.io/download-qt-installer) (tick Qt WebEngine and Qt Image Formats), then build from a *Developer PowerShell for VS 2022* with `-DCMAKE_PREFIX_PATH=C:\Qt\6.x.y\msvc2022_64`. |
 
 Build options: `-DSCANCORE_WITH_WEBENGINE=OFF` builds without the embedded browser. The anime player and browser checks are then unavailable, and everything else works.
 

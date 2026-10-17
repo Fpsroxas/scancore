@@ -118,8 +118,10 @@ Rectangle {
         id: hideTimer
         interval: 2600
         onTriggered: {
-            // Stay up while the pointer rests on the controls or a popup is open.
-            if (settingsPopup.opened || chapterPopup.opened || scrubber.pressed || topHover.hovered || bottomHover.hovered)
+            // Stay up while the pointer rests on the controls, a popup is
+            // open, or there are no pages yet (loading, or an error to act on).
+            if (settingsPopup.opened || chapterPopup.opened || scrubber.pressed || topHover.hovered || bottomHover.hovered
+                || reader.panels.length === 0)
                 restart()
             else
                 reader.controlsShown = false
@@ -192,6 +194,14 @@ Rectangle {
             property: "contentY"
             duration: 300
             easing.type: Easing.OutCubic
+        }
+
+        // Phone: a tap toggles the controls; on desktop single clicks are left
+        // alone and a double click does. On the list itself, which takes
+        // touches before anything behind it.
+        TapHandler {
+            onSingleTapped: if (App.platform === "android") reader.toggleControls()
+            onDoubleTapped: if (App.platform !== "android") reader.toggleControls()
         }
 
         WheelHandler {
@@ -383,15 +393,9 @@ Rectangle {
         }
     }
 
-    // Desktop: moving the mouse reveals the controls. Phone: a tap toggles
-    // them; on desktop single clicks are left alone and a double click does.
+    // Desktop: moving the mouse reveals the controls.
     PointerMotion {
         onMoved: reader.showControls()
-    }
-    TapHandler {
-        enabled: reader.mode === "strip"
-        onSingleTapped: if (App.platform === "android") reader.toggleControls()
-        onDoubleTapped: if (App.platform !== "android") reader.toggleControls()
     }
 
     // Thin progress rail on the right edge.
@@ -457,7 +461,7 @@ Rectangle {
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textMd
                     font.weight: Font.DemiBold
-                    width: Math.min(implicitWidth, reader.width - 420)
+                    width: Math.min(implicitWidth, reader.width - 100 - topActions.width)
                     elide: Text.ElideRight
                 }
                 Text {
@@ -465,12 +469,13 @@ Rectangle {
                     color: "#b4b4bb"
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
-                    width: Math.min(implicitWidth, reader.width - 420)
+                    width: Math.min(implicitWidth, reader.width - 100 - topActions.width)
                     elide: Text.ElideRight
                 }
             }
         }
         Row {
+            id: topActions
             anchors.right: parent.right
             anchors.rightMargin: 18
             y: 16 + reader.insetTop

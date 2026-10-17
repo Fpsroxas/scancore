@@ -454,7 +454,7 @@ Rectangle {
                     scale: 0.4
                     Component.onCompleted: pop.start()
                     NumberAnimation on scale { id: pop; running: false; to: 1; duration: Motion.page; easing.type: Easing.OutBack }
-                    Icon { anchors.centerIn: parent; name: "check"; size: 34; color: Theme.onAccent }
+                    Icon { anchors.centerIn: parent; name: "check"; size: 34; color: Theme.accentInk }
                 }
                 Text {
                     width: parent.width

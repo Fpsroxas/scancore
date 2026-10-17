@@ -48,7 +48,7 @@ AbstractButton {
                 visible: row.selected
                 name: "check"
                 size: 12
-                color: Theme.onAccent
+                color: Theme.accentInk
             }
         }
 

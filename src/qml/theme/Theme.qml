@@ -48,7 +48,9 @@ QtObject {
     })
     readonly property var accentSet: accents[App.settings.accent] || accents.mono
     readonly property color accent: dark ? accentSet.dark : accentSet.light
-    readonly property color onAccent: dark ? accentSet.on.dark : accentSet.on.light
+    // Text and icons on the accent colour. (A name starting with "on" would be
+    // read as a signal handler and silently never bound.)
+    readonly property color accentInk: dark ? accentSet.on.dark : accentSet.on.light
 
     // Novel reader page colours; "app" follows the app theme.
     readonly property var readingThemes: ({
