@@ -32,7 +32,7 @@ public:
     QVariantMap user() const { return m_user; }
     bool syncing() const { return m_syncing; }
     QString lastSync() const;
-    QString site() const { return QStringLiteral("https://scancore.onl"); }
+    QString site() const { return qEnvironmentVariable("SCANCORE_SITE", QStringLiteral("https://scancore.onl")); }
 
     Q_INVOKABLE sc::Task *signIn(const QString &email, const QString &password);
     // Creates a scancore.onl account and signs in.

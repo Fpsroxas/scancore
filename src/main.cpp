@@ -63,7 +63,9 @@ void openStorage() {
     }
     Database::open(db);
     CookieJar::shared().load(data + QStringLiteral("/cookies.txt"));
-    ImageCache::init(cache + QStringLiteral("/images"), 1024LL * 1024 * 1024);
+    // The size chosen in Settings → Storage (it was always 1 GB before).
+    const qint64 cacheMb = std::max<qint64>(128, Database::pref(QStringLiteral("setting.imageCacheMB"), 1024).toLongLong());
+    ImageCache::init(cache + QStringLiteral("/images"), cacheMb * 1024 * 1024);
     Manifest::load(data + QStringLiteral("/manifest.json"));
     comics::Registry::rebuild();
     novels::Registry::rebuild();

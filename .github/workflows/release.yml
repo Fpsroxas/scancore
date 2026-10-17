@@ -19,8 +19,34 @@ env:
   QT_MODULES: qtwebengine qtwebchannel qtpositioning qtimageformats
 
 jobs:
+  # Fails within seconds when the tag and the app's own version differ,
+  # before any platform is built. Installed copies compare the version the
+  # app reports, so a mismatch would keep offering the same update.
+  version:
+    name: Check version
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+      - name: Tag matches CMakeLists.txt
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          VERSION="${TAG#v}"
+          PROJECT_VERSION=$(sed -nE '/^project\(/,/\)/ s/^[[:space:]]*VERSION[[:space:]]+([0-9]+\.[0-9]+\.[0-9]+).*/\1/p' CMakeLists.txt | head -1)
+          if [ -z "$PROJECT_VERSION" ]; then
+            echo "::error file=CMakeLists.txt::No VERSION found in project() in CMakeLists.txt."
+            exit 1
+          fi
+          if [ "$PROJECT_VERSION" != "$VERSION" ]; then
+            echo "::error file=CMakeLists.txt::Tag $TAG does not match the app version $PROJECT_VERSION in CMakeLists.txt. Set VERSION $VERSION in project() and tag again, or tag v$PROJECT_VERSION."
+            exit 1
+          fi
+          echo "Tag $TAG matches CMakeLists.txt."
+
   build:
     name: ${{ matrix.name }}
+    needs: version
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -35,7 +61,7 @@ jobs:
           - name: macOS
             os: macos-14
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.inputs.tag || github.ref }}
 
@@ -165,9 +191,10 @@ jobs:
 
   android:
     name: Android
+    needs: version
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.inputs.tag || github.ref }}
 
@@ -230,7 +257,8 @@ jobs:
 
   publish:
     needs: [build, android]
-    runs-on: ubuntu-latest
+    # Pinned: ubuntu-latest moves to a new release from 19 October 2026.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/download-artifact@v4
         with:

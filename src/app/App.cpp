@@ -117,8 +117,11 @@ void App::setSetting(const QString &key, const QVariant &value) {
     Database::setPref(QStringLiteral("setting.") + key, value);
     if (key == QLatin1String("libraryCheckHours"))
         scheduleLibraryCheck();
-    if (key == QLatin1String("imageCacheMB"))
-        ImageCache::setBudget(value.toLongLong() * 1024 * 1024);
+    if (key == QLatin1String("imageCacheMB")) {
+        ImageCache::setBudget(std::max<qint64>(128, value.toLongLong()) * 1024 * 1024);
+        // A smaller limit takes effect now, not at the next start.
+        runInBackground([] { ImageCache::trim(); });
+    }
     emit settingsChanged();
 }
 

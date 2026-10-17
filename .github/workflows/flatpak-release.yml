@@ -20,7 +20,7 @@ jobs:
     steps:
       # v1.0.0 predates the upstream copy of this manifest. Keeping the
       # manifest on main also lets a manual run add the bundle to that release.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: main
 

@@ -8,6 +8,8 @@
 
 #include <QDateTime>
 #include <QHash>
+#include <QSet>
+#include <QUuid>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -19,7 +21,8 @@ namespace sc {
 
 namespace {
 
-const QString kSite = QStringLiteral("https://scancore.onl");
+// SCANCORE_SITE points the app at a local copy of the website (development).
+const QString kSite = qEnvironmentVariable("SCANCORE_SITE", QStringLiteral("https://scancore.onl"));
 
 Headers apiHeaders() {
     return {{"Accept", "application/json"}, {"Content-Type", "application/json"}};
@@ -121,10 +124,12 @@ QHash<int, QString> episodeUnits(int anilistId) {
     return units;
 }
 
-// Local anime progress changed since the last push -> website. Mutations are
-// rate limited per minute, so a long backlog goes up over several syncs.
-int pushAnimeProgress(bool *more) {
-    constexpr int kBatch = 30;
+// Local anime progress changed since the last push -> website, in one batch
+// request. A website without the batch endpoint gets one request per
+// episode, at most 30 a sync (its per-minute write limit).
+int pushAnimeProgress(bool batchSupported, bool *more) {
+    constexpr int kBatch = 100;
+    constexpr int kSingleLimit = 30;
     const auto since = Database::pref(QStringLiteral("account.animePushedAt"), 0).toLongLong();
     const auto rows = Database::query(QStringLiteral(R"(
         SELECT series_id, unit_key, position, completed, updated_at FROM progress
@@ -132,9 +137,17 @@ int pushAnimeProgress(bool *more) {
     )"),
                                       {since, kBatch});
     *more = rows.size() == kBatch;
+    if (rows.isEmpty())
+        return 0;
+
+    // Each row with the item to send, or an empty item when the website has
+    // no unit for it (skipped, not retried).
+    struct Pending {
+        qint64 at;
+        QJsonObject item;
+    };
+    QList<Pending> pending;
     QHash<int, QHash<int, QString>> unitsByShow;
-    qint64 pushedUpTo = since;
-    int pushed = 0;
     for (const auto &value : rows) {
         const auto row = value.toMap();
         const int anilistId = row.value("series_id").toString().section(QLatin1Char(':'), 2).toInt();
@@ -144,45 +157,161 @@ int pushAnimeProgress(bool *more) {
         double duration = position.value("duration").toDouble();
         if (duration < 1 && row.value("completed").toBool())
             seconds = duration = 1; // marked watched without playing
-        try {
-            QString unit;
-            if (anilistId > 0 && episode > 0 && duration >= 1) {
-                if (!unitsByShow.contains(anilistId)) {
-                    try {
-                        unitsByShow.insert(anilistId, episodeUnits(anilistId));
-                    } catch (const Error &e) {
-                        // A show the website does not know is skipped, not retried forever.
-                        if (e.status() < 400 || e.status() >= 500 || e.status() == 401 || e.status() == 429)
-                            throw;
-                        unitsByShow.insert(anilistId, {});
-                    }
+        QString unit;
+        if (anilistId > 0 && episode > 0 && duration >= 1) {
+            if (!unitsByShow.contains(anilistId)) {
+                try {
+                    unitsByShow.insert(anilistId, episodeUnits(anilistId));
+                } catch (const Error &e) {
+                    // A show the website does not know is skipped, not retried forever.
+                    if (e.status() < 400 || e.status() >= 500 || e.status() == 401 || e.status() == 429)
+                        throw;
+                    unitsByShow.insert(anilistId, {});
                 }
-                unit = unitsByShow.value(anilistId).value(episode);
             }
-            if (!unit.isEmpty()) {
-                const auto body = QJsonDocument(QJsonObject{{"unitId", unit},
-                                                            {"seconds", std::clamp(seconds, 0.0, 36000.0)},
-                                                            {"duration", std::clamp(duration, 1.0, 36000.0)},
-                                                            {"track", false}})
-                                      .toJson(QJsonDocument::Compact);
-                const auto response = Http::postJson(QUrl(kSite + QStringLiteral("/api/anime/progress")), body,
-                                                     {{"Accept", "application/json"}});
-                // Stop at the first failure that might pass later (rate
-                // limit, server trouble) so nothing is skipped; an episode
-                // the website rejects is.
-                if (response.status == 429 || response.status >= 500 || response.status == 401 || response.status == 0)
-                    break;
-                if (response.ok())
-                    ++pushed;
-            }
-        } catch (const Error &) {
-            Database::setPref(QStringLiteral("account.animePushedAt"), pushedUpTo);
-            throw;
+            unit = unitsByShow.value(anilistId).value(episode);
         }
-        pushedUpTo = row.value("updated_at").toLongLong();
+        QJsonObject item;
+        if (!unit.isEmpty())
+            item = QJsonObject{{"unitId", unit},
+                               {"seconds", std::clamp(seconds, 0.0, 36000.0)},
+                               {"duration", std::clamp(duration, 1.0, 36000.0)},
+                               {"track", false}};
+        pending.append({row.value("updated_at").toLongLong(), item});
     }
-    Database::setPref(QStringLiteral("account.animePushedAt"), pushedUpTo);
+
+    const auto transient = [](int status) { return status == 429 || status >= 500 || status == 0; };
+    QJsonArray items;
+    for (const auto &p : pending)
+        if (!p.item.isEmpty())
+            items.append(p.item);
+    if (items.isEmpty()) {
+        Database::setPref(QStringLiteral("account.animePushedAt"), pending.last().at);
+        return 0;
+    }
+
+    if (batchSupported) {
+        const auto batch = Http::postJson(QUrl(kSite + QStringLiteral("/api/anime/progress/batch")),
+                                          QJsonDocument(QJsonObject{{"items", items}}).toJson(QJsonDocument::Compact),
+                                          {{"Accept", "application/json"}});
+        if (batch.status == 401)
+            throw Error(QStringLiteral("Your scancore.onl session ended. Sign in again."), 401);
+        if (batch.ok()) {
+            Database::setPref(QStringLiteral("account.animePushedAt"), pending.last().at);
+            return QJsonDocument::fromJson(batch.body).object().value("saved").toInt();
+        }
+        if (transient(batch.status))
+            return 0;
+    }
+
+    // No batch endpoint yet: one episode at a time.
+    qint64 doneUpTo = since;
+    int pushed = 0;
+    int sent = 0;
+    for (const auto &p : pending) {
+        if (!p.item.isEmpty()) {
+            if (sent == kSingleLimit) {
+                *more = true;
+                break;
+            }
+            ++sent;
+            const auto response = Http::postJson(QUrl(kSite + QStringLiteral("/api/anime/progress")),
+                                                 QJsonDocument(p.item).toJson(QJsonDocument::Compact),
+                                                 {{"Accept", "application/json"}});
+            if (response.status == 401 || transient(response.status))
+                break; // nothing skipped; an episode the website rejects is
+            if (response.ok())
+                ++pushed;
+        }
+        doneUpTo = p.at;
+    }
+    Database::setPref(QStringLiteral("account.animePushedAt"), doneUpTo);
     return pushed;
+}
+
+// Local comic reading positions saved since the last push -> the website's
+// reading history: the latest chapter of each series, which is what the
+// website keeps. The website keys these entries itself ("scancore-app").
+int pushComicProgress(double serverStamp) {
+    constexpr int kMaxEntries = 120;
+    const auto since = Database::pref(QStringLiteral("account.comicPushedAt"), 0).toLongLong();
+    const auto rows = Database::query(QStringLiteral(R"(
+        SELECT p.series_id, p.unit_key, p.unit_title, p.unit_number, p.unit_url, p.position, p.percent, p.updated_at,
+               s.title, s.source_url, s.cover,
+               (SELECT idx FROM units u WHERE u.series_id = p.series_id AND u.unit_key = p.unit_key) AS idx
+        FROM progress p JOIN series s ON s.id = p.series_id
+        WHERE p.series_id LIKE 'comic:%' AND p.updated_at > ? ORDER BY p.updated_at DESC
+    )"),
+                                      {since});
+    if (rows.isEmpty())
+        return 0;
+    const auto newest = rows.first().toMap().value("updated_at").toLongLong();
+    const auto isWebUrl = [](const QString &value) {
+        const QUrl url(value);
+        return url.isValid() && (url.scheme() == QLatin1String("https") || url.scheme() == QLatin1String("http"));
+    };
+    const auto nowMs = QDateTime::currentMSecsSinceEpoch();
+
+    QJsonArray history;
+    QSet<QString> seen;
+    for (const auto &value : rows) {
+        const auto row = value.toMap();
+        const auto seriesId = row.value("series_id").toString();
+        if (seen.contains(seriesId))
+            continue;
+        seen.insert(seriesId);
+        const auto title = row.value("title").toString().trimmed();
+        const auto seriesUrl = row.value("source_url").toString();
+        const auto unitUrl = row.value("unit_url").toString();
+        const auto chapterUrl = isWebUrl(unitUrl) ? unitUrl : row.value("unit_key").toString();
+        if (title.isEmpty() || !isWebUrl(seriesUrl) || !isWebUrl(chapterUrl))
+            continue;
+        const auto position = QJsonDocument::fromJson(row.value("position").toByteArray()).object();
+        const int panel = std::max(0, position.value("panel").toInt());
+        const double percent = row.value("percent").toDouble();
+        const int total = percent > 0 ? std::max(panel + 1, int(std::lround((panel + 1) / percent))) : panel + 1;
+        history.append(QJsonObject{
+            {"key", "scancore-app"},
+            {"client", "scancore-app"},
+            {"comic", QJsonObject{{"title", title.left(1000)}, {"title_no", ""}, {"url", seriesUrl}, {"thumbnail", row.value("cover").toString()}}},
+            {"chapter", QJsonObject{{"episode_no", row.value("unit_number").toString().left(50)},
+                                    {"episode_url", chapterUrl},
+                                    {"title", row.value("unit_title").toString()}}},
+            {"updatedAt", double(std::min(nowMs, row.value("updated_at").toLongLong() * 1000))},
+            {"panelIndex", panel},
+            {"scrollY", 0},
+            {"chapterIndex", std::max(0, row.value("idx").isNull() ? 0 : row.value("idx").toInt())},
+            {"totalPanels", total},
+        });
+        if (history.size() == kMaxEntries)
+            break;
+    }
+    if (history.isEmpty()) {
+        Database::setPref(QStringLiteral("account.comicPushedAt"), newest);
+        return 0;
+    }
+
+    // The website accepts a write only against its latest version; if
+    // another device got in first, try again once with the new stamp.
+    double stamp = serverStamp;
+    for (int attempt = 0; attempt < 2; ++attempt) {
+        const auto body = QJsonDocument(QJsonObject{{"history", history},
+                                                    {"clientStamp", stamp},
+                                                    {"mutationId", QUuid::createUuid().toString(QUuid::WithoutBraces)}})
+                              .toJson(QJsonDocument::Compact);
+        const auto response =
+            Http::postJson(QUrl(kSite + QStringLiteral("/api/progress")), body, {{"Accept", "application/json"}});
+        if (response.status == 401)
+            throw Error(QStringLiteral("Your scancore.onl session ended. Sign in again."), 401);
+        if (response.ok()) {
+            Database::setPref(QStringLiteral("account.comicPushedAt"), newest);
+            return history.size();
+        }
+        if (response.status != 409)
+            return 0;
+        stamp = QJsonDocument::fromJson(response.body).object().value("serverStamp").toDouble();
+    }
+    return 0;
 }
 
 // Website anime progress -> local, for shows that changed there since the
@@ -362,6 +491,7 @@ void Account::signOut() {
     // A different account starts from scratch, uploading this device's history.
     Database::setPref(QStringLiteral("account.animePushedAt"), 0);
     Database::setPref(QStringLiteral("account.animePulledAt"), 0);
+    Database::setPref(QStringLiteral("account.comicPushedAt"), 0);
 }
 
 QVariantMap Account::importAll(const QJsonObject &session) {
@@ -394,7 +524,30 @@ QVariantMap Account::importAll(const QJsonObject &session) {
             break;
     }
 
+    // What this website accepts from the app; an older one gets neither.
+    bool comicHistory = false;
+    bool animeBatch = false;
+    try {
+        const auto appSync = getJson(QStringLiteral("/api/capabilities")).value("appSync").toObject();
+        comicHistory = appSync.value("comicHistory").toBool();
+        animeBatch = appSync.value("animeBatch").toBool();
+    } catch (const Error &) {
+    }
+
+    // Local comic positions -> website first, so the pull below cannot
+    // replace something newer that has not gone up yet.
+    int comicsPushed = 0;
+    try {
+        if (comicHistory)
+            comicsPushed = pushComicProgress(session.value("serverStamp").toDouble());
+    } catch (const Error &e) {
+        if (e.status() == 401)
+            throw;
+        qWarning().noquote() << "Comic progress sync:" << e.message();
+    }
+
     // Website comic reading history -> local progress, when newer.
+    qint64 newestPulledComic = 0;
     for (const auto &value : session.value("history").toArray()) {
         const auto entry = value.toObject();
         const auto comic = entry.value("comic").toObject();
@@ -415,6 +568,16 @@ QVariantMap Account::importAll(const QJsonObject &session) {
                                {"sourceUrl", url},
                                {"title", comic.value("title").toString()},
                                {"cover", comic.value("thumbnail").toString()}});
+        // The website may name the chapter by a different URL; use this app's
+        // chapter when the URL or, failing that, the number matches.
+        const auto episodeNo = chapter.value("episode_no").toVariant().toString();
+        auto unitKey = Database::scalar(
+            QStringLiteral("SELECT unit_key FROM units WHERE series_id = ? AND (unit_key = ? OR url = ?) LIMIT 1"),
+            {id, chapterUrl, chapterUrl});
+        if (!unitKey.isValid() && !episodeNo.isEmpty())
+            unitKey = Database::scalar(QStringLiteral("SELECT unit_key FROM units WHERE series_id = ? AND number = ? LIMIT 1"),
+                                       {id, episodeNo});
+        const auto key = unitKey.isValid() ? unitKey.toString() : chapterUrl;
         const int total = std::max(1, entry.value("totalPanels").toInt(1));
         const int panel = entry.value("panelIndex").toInt();
         const double percent = std::min(1.0, double(panel + 1) / total);
@@ -425,10 +588,14 @@ QVariantMap Account::importAll(const QJsonObject &session) {
             ON CONFLICT(series_id, unit_key) DO UPDATE SET position = excluded.position, percent = excluded.percent,
                 completed = MAX(progress.completed, excluded.completed), updated_at = excluded.updated_at
         )"),
-                       {id, chapterUrl, chapter.value("title").toString(), chapter.value("episode_no").toVariant().toString(),
-                        chapterUrl, position, percent, percent >= 0.98 ? 1 : 0, updated > 0 ? updated : Database::now()});
+                       {id, key, chapter.value("title").toString(), episodeNo, chapterUrl, position, percent,
+                        percent >= 0.98 ? 1 : 0, updated > 0 ? updated : Database::now()});
+        newestPulledComic = std::max(newestPulledComic, updated);
         ++historyImported;
     }
+    // What just came from the website must not be pushed straight back.
+    if (newestPulledComic > Database::pref(QStringLiteral("account.comicPushedAt"), 0).toLongLong())
+        Database::setPref(QStringLiteral("account.comicPushedAt"), newestPulledComic);
 
     // Local library -> website, for series the website already knows.
     QStringList comicUrls;
@@ -471,7 +638,7 @@ QVariantMap Account::importAll(const QJsonObject &session) {
     int animePulled = 0;
     bool morePending = false;
     try {
-        animePushed = pushAnimeProgress(&morePending);
+        animePushed = pushAnimeProgress(animeBatch, &morePending);
         animePulled = pullAnimeProgress();
     } catch (const Error &e) {
         if (e.status() == 401)
@@ -480,7 +647,7 @@ QVariantMap Account::importAll(const QJsonObject &session) {
     }
     return {{"libraryImported", libraryImported},
             {"historyImported", historyImported + animePulled},
-            {"pushed", pushed + animePushed},
+            {"pushed", pushed + animePushed + comicsPushed},
             {"morePending", morePending}};
 }
 

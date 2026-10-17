@@ -22,13 +22,25 @@ SettingsPane {
         SettingRow {
             iconName: "layers"
             title: "Image cache"
-            description: "Covers and pages you have viewed, kept so they load instantly next time."
-            ScButton {
-                text: "Clear"
-                onClicked: {
-                    App.clearCache()
-                    Router.toast("Cache cleared")
-                    refreshCache.start()
+            description: "Covers and pages you have viewed, kept so they load instantly next time. The oldest are removed first when it is full."
+            Row {
+                spacing: 8
+                Select {
+                    model: [{ value: 256, label: "256 MB" }, { value: 512, label: "512 MB" }, { value: 1024, label: "1 GB" },
+                            { value: 2048, label: "2 GB" }, { value: 4096, label: "4 GB" }]
+                    value: App.settings.imageCacheMB || 1024
+                    onPicked: (v) => {
+                        App.setSetting("imageCacheMB", v)
+                        refreshCache.start()
+                    }
+                }
+                ScButton {
+                    text: "Clear"
+                    onClicked: {
+                        App.clearCache()
+                        Router.toast("Cache cleared")
+                        refreshCache.start()
+                    }
                 }
             }
         }

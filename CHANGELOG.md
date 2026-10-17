@@ -8,6 +8,8 @@ Downloads for the current version are listed on the [releases page](https://gith
 - **Comic reader controls stay out of the way.** They no longer reappear on their own while you read or scroll; move the mouse (desktop) or tap (phone) to bring them back. On phones the readers now fill the screen behind the status bar, and the comic reader's top bar sits at the very top.
 - **Anime progress syncs.** With a scancore.onl account, episodes you watch and where you stopped now sync between your devices and the website.
 - **New Settings.** Settings is organised into categories with picture choices for the theme and reader layout, a live preview for novel text, and its own phone layout. Panel gap, progress rail, line spacing, column width and justified text are now adjustable there.
+- **Faster to pick up where you left off.** Comics and novels you have opened before show their chapters immediately, and Continue starts reading without waiting for the site. A request that fails because the connection blinked is retried once automatically.
+- Android: Back on Home now leaves the app (it stays running in the background), and a tap shows or hides the reader controls.
 - Buttons and chips on the accent colour have readable text in the light theme and with coloured accents.
 - Phones: source pickers scroll sideways instead of wrapping, the library filter no longer runs off screen, and reader titles show.
 - Leaving the phone player in landscape no longer leaves the app in full screen (thanks to @Doomguy-BFG9000).

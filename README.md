@@ -20,6 +20,7 @@
 
 <p align="center">
   <a href="#download">Download</a> ·
+  <a href="#system-requirements">Requirements</a> ·
   <a href="#features">Features</a> ·
   <a href="#screenshots">Screenshots</a> ·
   <a href="#community">Community</a> ·
@@ -101,6 +102,17 @@ Get the latest version from the **[releases page](https://github.com/medium-gh/s
 | **Android** 9+ (arm64) | `SCANCORE-<version>-android-arm64.apk` | Sideload; updates open the system installer. |
 
 Community package definitions for [AUR, WinGet, Scoop and Homebrew](docs/package-managers.md) are maintained separately from GitHub release uploads.
+
+### System requirements
+
+| Platform | Needs |
+| --- | --- |
+| **Linux** | x86_64 distribution from 2022 or later (glibc 2.35+, since the AppImage is built on Ubuntu 22.04) and FUSE 2 for the AppImage; or any distribution with Flatpak |
+| **Windows** | Windows 10 or 11, 64-bit |
+| **macOS** | macOS 13 or later, Apple Silicon or Intel |
+| **Android** | Android 9 or later, arm64 |
+
+An internet connection is needed to browse sources; downloaded chapters read offline.
 
 <details>
 <summary><b>Install notes for each platform</b></summary>
