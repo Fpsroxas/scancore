@@ -65,7 +65,7 @@ public:
     const SourceConfig &config() const { return m_config; }
     QString key() const { return m_config.key; }
     QString label() const { return m_config.label; }
-    bool owns(const QUrl &url) const;
+    virtual bool owns(const QUrl &url) const;
 
     virtual QList<Book> search(const QString &query) = 0;
     virtual Book book(const QString &url, QList<ChapterRef> &chapters) = 0;

@@ -1,8 +1,11 @@
 #include "app/Account.h"
+#include "app/Activity.h"
 #include "app/App.h"
 #include "app/Customize.h"
 #include "app/Images.h"
+#include "app/Presence.h"
 #include "app/SingleInstance.h"
+#include "app/Sync.h"
 #include "app/Updater.h"
 #include "app/WebBridge.h"
 #include "core/Cookies.h"
@@ -11,12 +14,14 @@
 #include "core/ImageCache.h"
 #include "sources/Manifest.h"
 #include "sources/comics/Registry.h"
+#include "sources/local/Local.h"
 #include "sources/novels/Registry.h"
 
 #ifdef SCANCORE_HAVE_WEBVIEW
 #include <QtWebView/QtWebView>
 #endif
 #ifdef Q_OS_ANDROID
+#include <QFileOpenEvent>
 #include <QGuiApplication>
 #else
 #include <QApplication>
@@ -37,6 +42,10 @@
 #ifdef SCANCORE_HAVE_WEBENGINE
 #include <QtWebEngineQuick/QtWebEngineQuick>
 #endif
+#ifdef SCANCORE_HAVE_PDF
+#include <QBuffer>
+#include <QPdfDocument>
+#endif
 
 using namespace sc;
 
@@ -50,6 +59,45 @@ void loadFonts() {
     font.setPixelSize(14);
     font.setHintingPreference(QFont::PreferNoHinting);
     QGuiApplication::setFont(font);
+}
+
+#ifdef Q_OS_MACOS
+// Finder opens files (a .sct theme, a comic) with an event, not arguments.
+class FileOpenFilter : public QObject {
+public:
+    using QObject::QObject;
+    bool eventFilter(QObject *watched, QEvent *event) override {
+        if (event->type() != QEvent::FileOpen)
+            return QObject::eventFilter(watched, event);
+        const auto target = static_cast<QFileOpenEvent *>(event)->file();
+        QTimer::singleShot(0, App::instance(), [target] { emit App::instance()->openRequested(target); });
+        return true;
+    }
+};
+#endif
+
+// PDF pages on this device, drawn as pictures for the comic reader.
+void registerPdf() {
+#ifdef SCANCORE_HAVE_PDF
+    local::setPdfRenderer({[](const QString &path) {
+                               QPdfDocument doc;
+                               return doc.load(path) == QPdfDocument::Error::None ? doc.pageCount() : 0;
+                           },
+                           [](const QString &path, int page, int width) -> QByteArray {
+                               QPdfDocument doc;
+                               if (doc.load(path) != QPdfDocument::Error::None)
+                                   return {};
+                               const auto size = doc.pagePointSize(page);
+                               if (size.isEmpty())
+                                   return {};
+                               const auto image = doc.render(page, QSize(width, int(width * size.height() / size.width())));
+                               QByteArray png;
+                               QBuffer buffer(&png);
+                               buffer.open(QIODevice::WriteOnly);
+                               image.save(&buffer, "PNG");
+                               return png;
+                           }});
+#endif
 }
 
 void openStorage() {
@@ -72,6 +120,7 @@ void openStorage() {
     // The size chosen in Settings → Storage (it was always 1 GB before).
     const qint64 cacheMb = std::max<qint64>(128, Database::pref(QStringLiteral("setting.imageCacheMB"), 1024).toLongLong());
     ImageCache::init(cache + QStringLiteral("/images"), cacheMb * 1024 * 1024);
+    registerPdf();
     Manifest::load(data + QStringLiteral("/manifest.json"));
     comics::Registry::rebuild();
     novels::Registry::rebuild();
@@ -112,6 +161,9 @@ int main(int argc, char *argv[]) {
     using Application = QApplication;
 #endif
     Application app(argc, argv);
+#ifdef Q_OS_MACOS
+    app.installEventFilter(new FileOpenFilter(&app));
+#endif
     Application::setOrganizationName(QStringLiteral("Medium Dev"));
     Application::setOrganizationDomain(QStringLiteral("mediumdev.com"));
     Application::setApplicationName(QStringLiteral("ScanCore"));
@@ -160,7 +212,10 @@ int main(int argc, char *argv[]) {
 
     installWebBridge();
     Account::instance();
+    Activity::instance();
+    Sync::instance();
     auto *appState = App::instance();
+    Customize::applyLanguage();
     QQmlApplicationEngine engine;
     engine.addImageProvider(QStringLiteral("remote"), new RemoteImageProvider);
     engine.addImageProvider(QStringLiteral("icon"), new IconProvider);
@@ -221,6 +276,7 @@ int main(int argc, char *argv[]) {
     });
 #endif
 
+    Presence::instance();
     appState->startBackgroundWork();
     Updater::instance()->startAutomatic();
 

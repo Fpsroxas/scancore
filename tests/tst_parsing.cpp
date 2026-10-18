@@ -3,6 +3,7 @@
 
 #include "core/Html.h"
 #include "sources/comics/ComicSource.h"
+#include "sources/local/Local.h"
 #include "sources/novels/NovelSource.h"
 
 #include <QFile>
@@ -68,6 +69,14 @@ private slots:
         comics::sortChapters(list);
         QCOMPARE(list[0].number, QStringLiteral("2"));
         QCOMPARE(list[2].number, QStringLiteral("10"));
+    }
+
+    void gunzip() {
+        // Python's gzip, with a file name in the header.
+        const auto packed = QByteArray::fromHex("1f8b08080000000002ff6261636b75702e7461636869626b000b7676f473f60f7255484a4cce2e2d50081ee58ff2e9c8070008b786ca80020000");
+        QCOMPARE(local::gunzip(packed), QByteArray("SCANCORE backup ").repeated(40));
+        QVERIFY(local::gunzip(packed.left(12)).isEmpty());
+        QVERIFY(local::gunzip("not gzip at all").isEmpty());
     }
 
     void manifestIsValid() {

@@ -20,50 +20,51 @@ Popup {
         const q = input.text.trim()
         const out = []
         if (q.length > 0) {
-            out.push({ group: "Search", icon: "book-open", label: "Search comics for “" + q + "”", run: () => searchIn("comics", q) })
-            out.push({ group: "Search", icon: "book-text", label: "Search novels for “" + q + "”", run: () => searchIn("novels", q) })
-            out.push({ group: "Search", icon: "tv", label: "Search anime for “" + q + "”", run: () => searchIn("anime", q) })
+            out.push({ group: qsTr("Search"), icon: "book-open", label: qsTr("Search comics for “") + q + "”", run: () => searchIn("comics", q) })
+            out.push({ group: qsTr("Search"), icon: "book-text", label: qsTr("Search novels for “") + q + "”", run: () => searchIn("novels", q) })
+            out.push({ group: qsTr("Search"), icon: "tv", label: qsTr("Search anime for “") + q + "”", run: () => searchIn("anime", q) })
         }
         const lower = q.toLowerCase()
         for (const entry of recent) {
             if (out.length > 14) break
             if (lower && !(entry.title || "").toLowerCase().includes(lower)) continue
-            out.push({ group: "Recent", icon: entry.media === "anime" ? "tv" : entry.media === "novel" ? "book-text" : "book-open",
+            out.push({ group: qsTr("Recent"), icon: entry.media === "anime" ? "tv" : entry.media === "novel" ? "book-text" : "book-open",
                        label: entry.title, detail: entry.unitTitle || "", cover: entry.cover, run: () => Router.resume(entry) })
         }
-        const pages = [["home", "Home", "house"], ["comics", "Comics", "book-open"], ["novels", "Novels", "book-text"],
-                       ["anime", "Anime", "tv"], ["library", "Library", "library"], ["history", "History", "history"],
-                       ["downloads", "Downloads", "download"], ["settings", "Settings", "settings"]]
+        const pages = [["home", "Home", "house"], ["comics", qsTr("Comics"), "book-open"], ["novels", qsTr("Novels"), "book-text"],
+                       ["anime", qsTr("Anime"), "tv"], ["library", qsTr("Library"), "library"], ["history", qsTr("History"), "history"],
+                       ["activity", qsTr("Activity"), "activity"],
+                       ["downloads", qsTr("Downloads"), "download"], ["settings", qsTr("Settings"), "settings"]]
         for (const [key, label, icon] of pages)
             if (!lower || label.toLowerCase().includes(lower))
-                out.push({ group: "Pages", icon: icon, label: "Go to " + label, run: () => Router.go(key) })
+                out.push({ group: qsTr("Pages"), icon: icon, label: qsTr("Go to ") + label, run: () => Router.go(key) })
         const commands = [
-            { icon: Theme.dark ? "sun" : "moon", label: Theme.dark ? "Switch to the light theme" : "Switch to the dark theme",
+            { icon: Theme.dark ? "sun" : "moon", label: Theme.dark ? qsTr("Switch to the light theme") : qsTr("Switch to the dark theme"),
               run: () => App.setSetting("theme", Theme.dark ? "light" : "dark") },
-            { icon: "sparkles", label: Motion.reduced ? "Turn animations back on" : "Reduce motion",
+            { icon: "sparkles", label: Motion.reduced ? qsTr("Turn animations back on") : qsTr("Reduce motion"),
               run: () => App.setSetting("reducedMotion", !Motion.reduced) },
-            { icon: "refresh-cw", label: "Check the library for new chapters", run: () => checkLibrary() }
+            { icon: "refresh-cw", label: qsTr("Check the library for new chapters"), run: () => checkLibrary() }
         ]
         if (Account.signedIn)
-            commands.push({ icon: "cloud", label: "Sync with scancore.onl", run: () => Account.sync() })
+            commands.push({ icon: "cloud", label: qsTr("Sync with scancore.onl"), run: () => Account.sync() })
         if (App.platform !== "android")
-            commands.push({ icon: "keyboard", label: "Keyboard shortcuts", detail: "?", run: () => Router.shell.openShortcuts() })
+            commands.push({ icon: "keyboard", label: qsTr("Keyboard shortcuts"), detail: "?", run: () => Router.shell.openShortcuts() })
         for (const c of commands)
             if (!lower || c.label.toLowerCase().includes(lower))
-                out.push(Object.assign({ group: "Commands" }, c))
+                out.push(Object.assign({ group: qsTr("Commands") }, c))
         return out
     }
 
     // Held here so the check is not cancelled when the palette closes.
     property var checkTask: null
     function checkLibrary() {
-        Router.toast("Checking your library for new chapters…")
+        Router.toast(qsTr("Checking your library for new chapters…"))
         checkTask = Library.checkUpdates()
     }
     Connections {
         target: root.checkTask
         function onFinished(result) {
-            if (result.newUnits === 0) Router.toast("Everything is up to date")
+            if (result.newUnits === 0) Router.toast(qsTr("Everything is up to date"))
         }
         function onFailed(error) { Router.toast(error, "error") }
     }
@@ -129,7 +130,7 @@ Popup {
             height: 60
             leftPadding: 54
             rightPadding: 20
-            placeholderText: "Search comics, novels, anime or jump to a page"
+            placeholderText: qsTr("Search comics, novels, anime or jump to a page")
             placeholderTextColor: Theme.textFaint
             color: Theme.text
             font.family: Theme.fontSans

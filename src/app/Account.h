@@ -24,7 +24,9 @@ class Account : public QObject {
     Q_PROPERTY(QVariantMap user READ user NOTIFY changed)
     Q_PROPERTY(bool syncing READ syncing NOTIFY changed)
     Q_PROPERTY(QString lastSync READ lastSync NOTIFY changed)
-    Q_PROPERTY(QString site READ site CONSTANT)
+    // scancore.onl, or a SCANCORE website hosted elsewhere.
+    Q_PROPERTY(QString site READ site NOTIFY changed)
+    Q_PROPERTY(bool customSite READ customSite NOTIFY changed)
 
 public:
     static Account *instance();
@@ -34,7 +36,11 @@ public:
     QVariantMap user() const { return m_user; }
     bool syncing() const { return m_syncing; }
     QString lastSync() const;
-    QString site() const { return qEnvironmentVariable("SCANCORE_SITE", QStringLiteral("https://scancore.onl")); }
+    QString site() const;
+    bool customSite() const;
+    // While signed out: the website to sign in to; empty for scancore.onl.
+    // Returns what is wrong with the address, or nothing.
+    Q_INVOKABLE QString setSite(const QString &address);
 
     Q_INVOKABLE sc::Task *signIn(const QString &email, const QString &password);
     // Creates a scancore.onl account and signs in.
@@ -61,6 +67,8 @@ private:
     // A sync soon after a change in the library or progress, but not more
     // than about once a minute.
     void scheduleSync();
+    // Account sync rests while WebDAV or folder sync is on (see Sync).
+    bool active() const;
     static QVariantMap importAll(const QJsonObject &session);
 
     QVariantMap m_user;

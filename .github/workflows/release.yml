@@ -20,7 +20,7 @@ env:
   # published sources (qtwebengine.yml), and Qt has not published 6.11.3's.
   LINUX_QT_VERSION: 6.11.2
   # qtwebview: the anime player on Windows (WebView2) and macOS (WKWebView).
-  QT_MODULES: qtwebengine qtwebview qtwebchannel qtpositioning qtimageformats
+  QT_MODULES: qtwebengine qtwebview qtwebchannel qtpositioning qtimageformats qtpdf
 
 jobs:
   # Fails within seconds when the tag and the app's own version differ,

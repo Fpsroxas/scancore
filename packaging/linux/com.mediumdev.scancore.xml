@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SCANCORE theme files (.sct): opening one offers to use the theme. -->
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-scancore-theme">
+    <comment>SCANCORE theme</comment>
+    <sub-class-of type="application/json"/>
+    <generic-icon name="application-x-generic"/>
+    <glob pattern="*.sct"/>
+  </mime-type>
+</mime-info>

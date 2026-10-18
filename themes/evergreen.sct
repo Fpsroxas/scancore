@@ -1,0 +1,14 @@
+{
+  "format": "scancore-theme",
+  "version": 1,
+  "name": "Evergreen",
+  "app": "SCANCORE 1.3.0",
+  "colors": {
+    "window": "#0f1a15",
+    "accent": "#5fd39a"
+  },
+  "window": {
+    "opacity": 1,
+    "panels": 0.85
+  }
+}

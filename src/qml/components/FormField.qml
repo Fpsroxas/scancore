@@ -56,7 +56,7 @@ Column {
             diameter: 32
             iconSize: 16
             iconName: showing ? "eye-off" : "eye"
-            tip: showing ? "Hide password" : "Show password"
+            tip: showing ? qsTr("Hide password") : qsTr("Show password")
             onClicked: {
                 showing = !showing
                 input.echoMode = showing ? TextInput.Normal : TextInput.Password

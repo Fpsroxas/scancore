@@ -10,25 +10,27 @@ Item {
 
     // keywords: what the category list's search also finds it by.
     readonly property var allSections: [
-        { key: "account", file: "AccountSettings.qml", title: "Account", subtitle: "Optional sync with scancore.onl", icon: "user-round", tint: "sky",
-          keywords: "sign in sign out sync scancore.onl website login" },
-        { key: "theme", file: "ThemeSettings.qml", title: "Theme", subtitle: "Colours, background and transparency", icon: "palette", tint: "violet",
+        { key: "account", file: "AccountSettings.qml", title: qsTr("Sync"), subtitle: qsTr("scancore.onl, your server, WebDAV or a folder"), icon: "cloud", tint: "sky",
+          keywords: "account sign in sign out sync scancore.onl website login server self host own database webdav nextcloud owncloud synology folder syncthing dropbox onedrive devices" },
+        { key: "connections", file: "ConnectionsSettings.qml", title: qsTr("Connections"), subtitle: qsTr("AniList, MyAnimeList, Comick and imports"), icon: "link", tint: "emerald",
+          keywords: "anilist myanimelist mal comick tracking tracker list discord rich presence status import mihon tachiyomi tachibk backup export xml bring library" },
+        { key: "theme", file: "ThemeSettings.qml", title: qsTr("Theme"), subtitle: qsTr("Colours, background and transparency"), icon: "palette", tint: "violet",
           keywords: "dark light black system custom colour color accent wheel background picture image gif wallpaper transparency transparent opacity panels export import sct share" },
-        { key: "interface", file: "InterfaceSettings.qml", title: "Interface", subtitle: "Navigation, size and motion", icon: "layout-grid", tint: "indigo",
-          keywords: "sidebar dock rail floating navigation left right top bottom text size font cover animation motion speed reduce start page" },
-        { key: "keyboard", file: "KeyboardSettings.qml", title: "Keyboard", subtitle: "Shortcuts", icon: "keyboard", tint: "mono",
+        { key: "interface", file: "InterfaceSettings.qml", title: qsTr("Interface"), subtitle: qsTr("Navigation, size and motion"), icon: "layout-grid", tint: "indigo",
+          keywords: "language translation idioma langue bahasa idioma sidebar dock rail floating navigation left right top bottom text size font cover animation motion speed reduce start page" },
+        { key: "keyboard", file: "KeyboardSettings.qml", title: qsTr("Keyboard"), subtitle: qsTr("Shortcuts"), icon: "keyboard", tint: "mono",
           keywords: "keys shortcuts keybinds hotkeys bindings", desktop: true },
-        { key: "reading", file: "ReadingSettings.qml", title: "Reading", subtitle: "Comic and novel readers", icon: "book-open", tint: "ember",
+        { key: "reading", file: "ReadingSettings.qml", title: qsTr("Reading"), subtitle: qsTr("Comic and novel readers"), icon: "book-open", tint: "ember",
           keywords: "comic novel reader strip pages direction width gap font size line spacing justify sepia paper" },
-        { key: "anime", file: "AnimeSettings.qml", title: "Anime", subtitle: "Playback and skipping", icon: "tv", tint: "rose",
+        { key: "anime", file: "AnimeSettings.qml", title: qsTr("Anime"), subtitle: qsTr("Playback and skipping"), icon: "tv", tint: "rose",
           keywords: "player next episode autoplay countdown skip intro ending recap" },
-        { key: "library", file: "LibrarySettings.qml", title: "Library", subtitle: "New chapters and notifications", icon: "library", tint: "green",
+        { key: "library", file: "LibrarySettings.qml", title: qsTr("Library"), subtitle: qsTr("New chapters and notifications"), icon: "library", tint: "green",
           keywords: "updates new chapters check notifications tray background" },
-        { key: "sources", file: "SourcesSettings.qml", title: "Sources", subtitle: "The sites SCANCORE reads from", icon: "globe", tint: "amber",
+        { key: "sources", file: "SourcesSettings.qml", title: qsTr("Sources"), subtitle: qsTr("The sites SCANCORE reads from"), icon: "globe", tint: "amber",
           keywords: "sites nsfw manifest novel pack extensions" },
-        { key: "storage", file: "StorageSettings.qml", title: "Storage", subtitle: "Cache, downloads and backups", icon: "hard-drive", tint: "mono",
+        { key: "storage", file: "StorageSettings.qml", title: qsTr("Storage"), subtitle: qsTr("Cache, downloads and backups"), icon: "hard-drive", tint: "mono",
           keywords: "cache downloads folder backup restore export data" },
-        { key: "about", file: "AboutSettings.qml", title: "About", subtitle: "Version, updates and help", icon: "info", tint: "mono",
+        { key: "about", file: "AboutSettings.qml", title: qsTr("About"), subtitle: qsTr("Version, updates and help"), icon: "info", tint: "mono",
           keywords: "version updates help licence discord welcome" }
     ]
     readonly property var sections: allSections.filter(s => !s.desktop || App.platform !== "android")
@@ -51,30 +53,36 @@ Item {
         App.settings
         switch (key) {
         case "theme": {
-            const theme = { system: "System", light: "Light", dark: "Dark", black: "Black", custom: "Custom" }[App.settings.theme] || "Dark"
+            const theme = { system: qsTr("System"), light: qsTr("Light"), dark: qsTr("Dark"), black: qsTr("Black"), custom: qsTr("Custom") }[App.settings.theme] || qsTr("Dark")
             const accent = String(App.settings.accent || "mono")
-            return theme + " theme · " + accent.charAt(0).toUpperCase() + accent.slice(1) + " accent"
+            return theme + qsTr(" theme · ") + accent.charAt(0).toUpperCase() + accent.slice(1) + qsTr(" accent")
         }
         case "interface":
-            return ({ sidebar: "Sidebar", floating: "Floating sidebar", rail: "Icon rail", dock: "Dock" }[App.settings.navStyle] || "Sidebar")
-                + " · " + ({ relaxed: "relaxed", snappy: "snappy" }[App.settings.motionSpeed] || "default") + " motion"
+            return ({ sidebar: qsTr("Sidebar"), floating: qsTr("Floating sidebar"), rail: qsTr("Icon rail"), dock: qsTr("Dock") }[App.settings.navStyle] || qsTr("Sidebar"))
+                + " · " + ({ relaxed: "relaxed", snappy: "snappy" }[App.settings.motionSpeed] || "default") + qsTr(" motion")
         case "keyboard": {
             const changed = Object.keys(Keymap.changed).length
-            return changed ? changed + (changed === 1 ? " shortcut changed" : " shortcuts changed") : "Default shortcuts"
+            return changed ? changed + (changed === 1 ? qsTr(" shortcut changed") : qsTr(" shortcuts changed")) : qsTr("Default shortcuts")
         }
         case "reading":
-            return (App.settings.readerMode === "paged" ? "Pages" : "Vertical strip") + " · "
-                + ({ "Literata": "Serif", "DM Sans": "Sans", "Space Grotesk": "Grotesk" }[App.settings.novelFont] || "Serif") + " text"
+            return (App.settings.readerMode === "paged" ? qsTr("Pages") : qsTr("Vertical strip")) + " · "
+                + ({ "Literata": qsTr("Serif"), "DM Sans": qsTr("Sans"), "Space Grotesk": qsTr("Grotesk") }[App.settings.novelFont] || qsTr("Serif")) + qsTr(" text")
         case "anime":
-            return "Auto-next " + (App.settings.autoNext !== false ? "on" : "off") + " · Auto-skip "
+            return qsTr("Auto-next ") + (App.settings.autoNext !== false ? "on" : "off") + qsTr(" · Auto-skip ")
                 + (App.settings.autoSkip === true || App.settings.autoSkipEndings === true ? "on" : "off")
         case "library": {
             const hours = App.settings.libraryCheckHours
-            return hours > 0 ? "Checks for new chapters every " + (hours === 1 ? "hour" : hours === 24 ? "day" : hours + " hours") : "Update checks off"
+            return hours > 0 ? qsTr("Checks for new chapters every ") + (hours === 1 ? "hour" : hours === 24 ? "day" : hours + qsTr(" hours")) : qsTr("Update checks off")
         }
-        case "sources": return "Source list version " + App.manifestVersion
-        case "storage": return "Cache, downloads and backup"
-        case "about": return "Version " + App.version
+        case "connections": {
+            Trackers.anilist
+            const on = [Trackers.anilist.name ? "AniList" : "", Trackers.mal.name ? "MyAnimeList" : "", Trackers.comick.name ? qsTr("Comick") : "",
+                        Presence.available && App.settings.discordPresence === true ? qsTr("Discord") : ""].filter(s => s)
+            return on.length ? on.join(" · ") + qsTr(" connected") : qsTr("Tracking and imports")
+        }
+        case "sources": return qsTr("Source list version ") + App.manifestVersion
+        case "storage": return qsTr("Cache, downloads and backup")
+        case "about": return qsTr("Version ") + App.version
         }
         return ""
     }
@@ -131,7 +139,7 @@ Item {
                 width: wide.navWidth
                 spacing: 2
                 Text {
-                    text: "Settings"
+                    text: qsTr("Settings")
                     color: Theme.text
                     font.family: Theme.fontDisplay
                     font.pixelSize: Theme.text3xl
@@ -140,7 +148,7 @@ Item {
                 }
                 Text {
                     bottomPadding: 16
-                    text: "Stored on this computer"
+                    text: qsTr("Stored on this computer")
                     color: Theme.textMuted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -148,7 +156,7 @@ Item {
                 SearchField {
                     width: parent.width
                     implicitHeight: 36
-                    placeholderText: "Find a setting"
+                    placeholderText: qsTr("Find a setting")
                     onTextChanged: wide.query = text
                     onSubmitted: if (wide.matches.length > 0) wide.show(wide.matches[0].key)
                 }
@@ -198,7 +206,7 @@ Item {
                     visible: wide.matches.length === 0
                     topPadding: 8
                     leftPadding: 8
-                    text: "Nothing matches"
+                    text: qsTr("Nothing matches")
                     color: Theme.textFaint
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -273,8 +281,8 @@ Item {
                 PageHeader {
                     x: -Theme.gutter
                     width: list.width + 2 * Theme.gutter
-                    title: "Settings"
-                    subtitle: "Stored on this device"
+                    title: qsTr("Settings")
+                    subtitle: qsTr("Stored on this device")
                 }
 
                 // Account summary; opens the account page.
@@ -315,7 +323,8 @@ Item {
                             spacing: 3
                             Text {
                                 width: parent.width
-                                text: Account.signedIn ? (Account.user.username || Account.user.email) : "Sign in to sync"
+                                text: Sync.kind === "webdav" ? qsTr("Syncing with WebDAV") : Sync.kind === "folder" ? qsTr("Syncing with a folder")
+                                    : Account.signedIn ? (Account.user.username || Account.user.email) : qsTr("Set up sync")
                                 color: Theme.text
                                 font.family: Theme.fontSans
                                 font.pixelSize: Theme.textLg
@@ -324,8 +333,9 @@ Item {
                             }
                             Text {
                                 width: parent.width
-                                text: Account.signedIn ? (Account.syncing ? "Syncing…" : Account.lastSync ? "Synced " + App.relativeTime(Number(Account.lastSync)) : "scancore.onl account")
-                                                       : "Library and anime progress on every device"
+                                text: Sync.kind !== "" ? (Sync.syncing ? qsTr("Syncing…") : Sync.lastSync ? qsTr("Synced ") + App.relativeTime(Number(Sync.lastSync)) : Sync.location)
+                                    : Account.signedIn ? (Account.syncing ? qsTr("Syncing…") : Account.lastSync ? qsTr("Synced ") + App.relativeTime(Number(Account.lastSync)) : String(Account.site).replace(/^https?:\/\//, "") + qsTr(" account"))
+                                    : qsTr("scancore.onl, your server, WebDAV or a folder")
                                 color: Theme.textMuted
                                 font.family: Theme.fontSans
                                 font.pixelSize: Theme.textSm
@@ -344,7 +354,7 @@ Item {
                 }
 
                 Repeater {
-                    model: [["theme", "interface", "keyboard"], ["reading", "anime", "library"], ["sources", "storage"], ["about"]]
+                    model: [["theme", "interface", "keyboard"], ["reading", "anime", "library"], ["connections", "sources", "storage"], ["about"]]
                     SettingsGroup {
                         required property var modelData
                         Repeater {
@@ -366,7 +376,7 @@ Item {
                 Text {
                     width: parent.width
                     horizontalAlignment: Text.AlignHCenter
-                    text: "SCANCORE " + App.version + " · Medium Dev"
+                    text: qsTr("SCANCORE ") + App.version + qsTr(" · Medium Dev")
                     color: Theme.textFaint
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textXs + 1

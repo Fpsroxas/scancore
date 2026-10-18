@@ -60,7 +60,7 @@ AbstractButton {
             Behavior on x { NumberAnimation { duration: Motion.normal; easing.type: Easing.OutCubic } }
             Text {
                 width: parent.width
-                text: row.unit.title || ("Chapter " + (row.unit.number || ""))
+                text: row.unit.title || (qsTr("Chapter ") + (row.unit.number || ""))
                 color: row.done ? Theme.textFaint : Theme.text
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textMd
@@ -90,7 +90,7 @@ AbstractButton {
                     text: {
                         const parts = []
                         if (row.unit.released) parts.push(App.relativeTime(row.unit.released))
-                        if (row.done) parts.push("Read")
+                        if (row.done) parts.push(qsTr("Read"))
                         return parts.join(" · ")
                     }
                     color: Theme.textFaint
@@ -128,15 +128,15 @@ AbstractButton {
                 iconColor: row.download && row.download.status === "done" ? Theme.success
                          : row.download && row.download.status === "failed" ? Theme.danger : Theme.textMuted
                 iconSize: 16
-                tip: row.download && row.download.status === "done" ? "Downloaded · click to remove"
-                   : row.download && row.download.status === "failed" ? "Download failed · click to retry" : "Download"
+                tip: row.download && row.download.status === "done" ? qsTr("Downloaded · click to remove")
+                   : row.download && row.download.status === "failed" ? qsTr("Download failed · click to retry") : qsTr("Download")
                 onClicked: row.download && row.download.status === "done" ? row.removeDownload() : row.requestDownload()
             }
             IconButton {
                 visible: row.hovered || Theme.touch
                 iconName: row.done ? "eye-off" : "eye"
                 iconSize: 16
-                tip: row.done ? "Mark unread" : "Mark read"
+                tip: row.done ? qsTr("Mark unread") : qsTr("Mark read")
                 onClicked: row.toggleRead()
             }
         }

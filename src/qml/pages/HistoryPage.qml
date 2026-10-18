@@ -29,7 +29,7 @@ Item {
         const today = new Date()
         today.setHours(0, 0, 0, 0)
         const diff = Math.floor((today - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000)
-        return diff <= 0 ? "Today" : diff === 1 ? "Yesterday" : diff < 7 ? Qt.formatDate(d, "dddd") : Qt.formatDate(d, "d MMMM yyyy")
+        return diff <= 0 ? qsTr("Today") : diff === 1 ? qsTr("Yesterday") : diff < 7 ? Qt.formatDate(d, "dddd") : Qt.formatDate(d, "d MMMM yyyy")
     }
 
     readonly property var rows: {
@@ -62,10 +62,10 @@ Item {
             width: list.width
             spacing: 18
             PageHeader {
-                title: "History"
-                subtitle: "What you read and watched, newest first"
+                title: qsTr("History")
+                subtitle: qsTr("What you read and watched, newest first")
                 ScButton {
-                    text: "Clear history"
+                    text: qsTr("Clear history")
                     iconName: "trash"
                     variant: "danger"
                     enabled: page.all.length > 0
@@ -77,14 +77,14 @@ Item {
                 width: list.width - 2 * Theme.gutter
                 spacing: 12
                 Segmented {
-                    options: [{ value: "", label: "All" }, { value: "comic", label: "Comics", icon: "book-open" },
-                              { value: "novel", label: "Novels", icon: "book-text" }, { value: "anime", label: "Anime", icon: "tv" }]
+                    options: [{ value: "", label: qsTr("All") }, { value: "comic", label: qsTr("Comics"), icon: "book-open" },
+                              { value: "novel", label: qsTr("Novels"), icon: "book-text" }, { value: "anime", label: qsTr("Anime"), icon: "tv" }]
                     value: page.media
                     onPicked: (v) => page.media = v
                 }
                 SearchField {
                     width: Theme.compact ? parent.width : 260
-                    placeholderText: "Search history"
+                    placeholderText: qsTr("Search history")
                     text: page.filter
                     onTextChanged: page.filter = text
                 }
@@ -94,8 +94,8 @@ Item {
                 height: visible ? 300 : 0
                 task: page.all.length === 0 ? page.task : null
                 empty: page.task && page.task.ok && page.rows.length === 0
-                emptyTitle: page.filter || page.media ? "Nothing matches" : "Nothing read yet"
-                emptyText: "Chapters and episodes you open show up here, with your place saved."
+                emptyTitle: page.filter || page.media ? qsTr("Nothing matches") : qsTr("Nothing read yet")
+                emptyText: qsTr("Chapters and episodes you open show up here, with your place saved.")
                 emptyIcon: "history"
                 onRetry: page.task = Library.history("", 300)
             }
@@ -172,7 +172,7 @@ Item {
                         }
                         Text {
                             width: parent.width
-                            text: (item.e.media === "anime" ? "Episode " + (item.e.unitNumber || item.e.unitKey) : (item.e.unitTitle || ""))
+                            text: (item.e.media === "anime" ? qsTr("Episode ") + (item.e.unitNumber || item.e.unitKey) : (item.e.unitTitle || ""))
                                 + " · " + (item.e.completed ? "finished" : Math.round((item.e.percent || 0) * 100) + "%")
                                 + " · " + App.relativeTime(item.e.progressAt)
                             color: Theme.textMuted
@@ -188,8 +188,8 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         opacity: item.hovered || Theme.touch ? 1 : 0
                         Behavior on opacity { NumberAnimation { duration: Motion.fast } }
-                        IconButton { iconName: "info"; tip: "Details"; onClicked: Router.openSeries(item.e, cover) }
-                        IconButton { iconName: "x"; tip: "Remove from history"; onClicked: Library.forget(item.e.id) }
+                        IconButton { iconName: "info"; tip: qsTr("Details"); onClicked: Router.openSeries(item.e, cover) }
+                        IconButton { iconName: "x"; tip: qsTr("Remove from history"); onClicked: Library.forget(item.e.id) }
                     }
                 }
             }
@@ -198,9 +198,9 @@ Item {
 
     ConfirmDialog {
         id: confirm
-        heading: "Clear " + (page.media ? page.media + " " : "") + "history?"
-        message: "Your place in every series will be forgotten. Your library and downloads are kept."
-        confirmText: "Clear"
+        heading: qsTr("Clear ") + (page.media ? page.media + " " : "") + qsTr("history?")
+        message: qsTr("Your place in every series will be forgotten. Your library and downloads are kept.")
+        confirmText: qsTr("Clear")
         destructive: true
         onConfirmed: Library.clearHistory(page.media)
     }

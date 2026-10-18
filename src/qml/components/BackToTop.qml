@@ -63,5 +63,5 @@ AbstractButton {
     }
     ToolTip.visible: hovered
     ToolTip.delay: 600
-    ToolTip.text: "Back to top"
+    ToolTip.text: qsTr("Back to top")
 }

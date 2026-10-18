@@ -4,8 +4,8 @@ import ScanCore
 
 SettingsPane {
     id: pane
-    title: "Storage"
-    subtitle: "Cache, downloads and backups"
+    title: qsTr("Storage")
+    subtitle: qsTr("Cache, downloads and backups")
     iconName: "hard-drive"
 
     property var cacheTask: App.cacheSize()
@@ -18,16 +18,16 @@ SettingsPane {
     }
 
     SettingsGroup {
-        title: "On this device"
+        title: qsTr("On this device")
         SettingRow {
             iconName: "layers"
-            title: "Image cache"
-            description: "Covers and pages you have viewed, kept so they load instantly next time. The oldest are removed first when it is full."
+            title: qsTr("Image cache")
+            description: qsTr("Covers and pages you have viewed, kept so they load instantly next time. The oldest are removed first when it is full.")
             Row {
                 spacing: 8
                 Select {
-                    model: [{ value: 256, label: "256 MB" }, { value: 512, label: "512 MB" }, { value: 1024, label: "1 GB" },
-                            { value: 2048, label: "2 GB" }, { value: 4096, label: "4 GB" }]
+                    model: [{ value: 256, label: qsTr("256 MB") }, { value: 512, label: qsTr("512 MB") }, { value: 1024, label: qsTr("1 GB") },
+                            { value: 2048, label: qsTr("2 GB") }, { value: 4096, label: qsTr("4 GB") }]
                     value: App.settings.imageCacheMB || 1024
                     onPicked: (v) => {
                         App.setSetting("imageCacheMB", v)
@@ -35,10 +35,10 @@ SettingsPane {
                     }
                 }
                 ScButton {
-                    text: "Clear"
+                    text: qsTr("Clear")
                     onClicked: {
                         App.clearCache()
-                        Router.toast("Cache cleared")
+                        Router.toast(qsTr("Cache cleared"))
                         refreshCache.start()
                     }
                 }
@@ -66,8 +66,8 @@ SettingsPane {
             Text {
                 x: 62
                 y: 16
-                text: (pane.cacheTask && pane.cacheTask.ok ? App.formatBytes(pane.cacheBytes) : "Measuring…")
-                    + " of " + App.formatBytes(pane.cacheLimit)
+                text: (pane.cacheTask && pane.cacheTask.ok ? App.formatBytes(pane.cacheBytes) : qsTr("Measuring…"))
+                    + qsTr(" of ") + App.formatBytes(pane.cacheLimit)
                 color: Theme.textMuted
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textXs + 1
@@ -75,11 +75,11 @@ SettingsPane {
         }
         SettingRow {
             iconName: "download"
-            title: "Downloaded chapters"
+            title: qsTr("Downloaded chapters")
             description: Downloads.sizeOnDisk() + (App.platform !== "android" ? " · " + Downloads.folder() : "")
             ScButton {
                 visible: App.platform !== "android"
-                text: "Open folder"
+                text: qsTr("Open folder")
                 iconName: "folder-open"
                 onClicked: App.openFolder(Downloads.folder())
             }
@@ -87,24 +87,24 @@ SettingsPane {
         SettingRow {
             visible: App.platform !== "android"
             iconName: "hard-drive"
-            title: "App data"
+            title: qsTr("App data")
             description: App.dataFolder
-            ScButton { text: "Open folder"; iconName: "folder-open"; onClicked: App.openFolder(App.dataFolder) }
+            ScButton { text: qsTr("Open folder"); iconName: "folder-open"; onClicked: App.openFolder(App.dataFolder) }
         }
     }
     Timer { id: refreshCache; interval: 800; onTriggered: pane.cacheTask = App.cacheSize() }
 
     SettingsGroup {
-        title: "Backup"
-        note: "Restoring replaces what is on this device when SCANCORE next starts."
+        title: qsTr("Backup")
+        note: qsTr("Restoring replaces what is on this device when SCANCORE next starts.")
         SettingRow {
             iconName: "shield-check"
-            title: "Back up everything"
-            description: "Your library, history, reading positions and settings in one file."
+            title: qsTr("Back up everything")
+            description: qsTr("Your library, history, reading positions and settings in one file.")
             Row {
                 spacing: 8
-                ScButton { text: "Export"; iconName: "download"; onClicked: exportDialog.open() }
-                ScButton { text: "Restore"; variant: "ghost"; onClicked: importDialog.open() }
+                ScButton { text: qsTr("Export"); iconName: "download"; onClicked: exportDialog.open() }
+                ScButton { text: qsTr("Restore"); variant: "ghost"; onClicked: importDialog.open() }
             }
         }
     }
@@ -113,14 +113,14 @@ SettingsPane {
         id: exportDialog
         fileMode: FileDialog.SaveFile
         defaultSuffix: "scancore"
-        nameFilters: ["SCANCORE backup (*.scancore)"]
+        nameFilters: [qsTr("SCANCORE backup (*.scancore)")]
         selectedFile: "scancore-backup-" + Qt.formatDate(new Date(), "yyyy-MM-dd") + ".scancore"
-        onAccepted: pane.report(App.exportBackup(selectedFile), "Backup saved")
+        onAccepted: pane.report(App.exportBackup(selectedFile), qsTr("Backup saved"))
     }
     FileDialog {
         id: importDialog
         fileMode: FileDialog.OpenFile
-        nameFilters: ["SCANCORE backup (*.scancore)", "All files (*)"]
+        nameFilters: [qsTr("SCANCORE backup (*.scancore)"), qsTr("All files (*)")]
         onAccepted: pane.report(App.importBackup(selectedFile), (r) => r)
     }
 }

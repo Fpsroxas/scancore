@@ -56,13 +56,13 @@ Item {
             width: list.width
             spacing: 14
             PageHeader {
-                title: "Downloads"
-                subtitle: page.items.filter(i => i.status === "done").length + " chapters saved · " + page.sizeText
+                title: qsTr("Downloads")
+                subtitle: page.items.filter(i => i.status === "done").length + qsTr(" chapters saved · ") + page.sizeText
                 Row {
                     spacing: 8
-                    ScButton { visible: page.failedCount > 0; text: "Retry failed"; iconName: "refresh-cw"; onClicked: Downloads.retryFailed() }
-                    ScButton { visible: page.failedCount > 0; text: "Clear failed"; variant: "ghost"; onClicked: Downloads.clearFinished() }
-                    ScButton { visible: App.platform !== "android"; text: "Open folder"; iconName: "folder-open"; onClicked: App.openFolder(Downloads.folder()) }
+                    ScButton { visible: page.failedCount > 0; text: qsTr("Retry failed"); iconName: "refresh-cw"; onClicked: Downloads.retryFailed() }
+                    ScButton { visible: page.failedCount > 0; text: qsTr("Clear failed"); variant: "ghost"; onClicked: Downloads.clearFinished() }
+                    ScButton { visible: App.platform !== "android"; text: qsTr("Open folder"); iconName: "folder-open"; onClicked: App.openFolder(Downloads.folder()) }
                 }
             }
             StateView {
@@ -70,8 +70,8 @@ Item {
                 height: visible ? 320 : 0
                 task: page.items.length === 0 ? page.task : null
                 empty: page.task && page.task.ok && page.items.length === 0
-                emptyTitle: "No downloads yet"
-                emptyText: "On a comic or novel page, use the download button on a chapter, or select several at once. Downloaded chapters open without a connection."
+                emptyTitle: qsTr("No downloads yet")
+                emptyText: qsTr("On a comic or novel page, use the download button on a chapter, or select several at once. Downloaded chapters open without a connection.")
                 emptyIcon: "download"
             }
         }
@@ -140,10 +140,10 @@ Item {
                         }
                     }
                     Text {
-                        text: row.modelData.status === "running" ? (row.count.total ? row.count.done + " of " + row.count.total + " pages" : "Starting…")
-                            : row.modelData.status === "queued" ? "Waiting"
-                            : row.modelData.status === "failed" ? (row.modelData.error || "Failed")
-                            : "Saved " + App.relativeTime(row.modelData.createdAt)
+                        text: row.modelData.status === "running" ? (row.count.total ? row.count.done + qsTr(" of ") + row.count.total + qsTr(" pages") : qsTr("Starting…"))
+                            : row.modelData.status === "queued" ? qsTr("Waiting")
+                            : row.modelData.status === "failed" ? (row.modelData.error || qsTr("Failed"))
+                            : qsTr("Saved ") + App.relativeTime(row.modelData.createdAt)
                         color: row.modelData.status === "failed" ? Theme.danger : Theme.textMuted
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm
@@ -158,11 +158,11 @@ Item {
                 anchors.rightMargin: Theme.gutter - 6
                 anchors.verticalCenter: parent.verticalCenter
                 Spinner { visible: row.modelData.status === "running"; size: 16; anchors.verticalCenter: parent.verticalCenter }
-                IconButton { visible: row.modelData.status === "failed"; iconName: "refresh-cw"; tip: "Retry"; onClicked: Downloads.retry(row.modelData.id) }
+                IconButton { visible: row.modelData.status === "failed"; iconName: "refresh-cw"; tip: qsTr("Retry"); onClicked: Downloads.retry(row.modelData.id) }
                 IconButton {
                     visible: row.modelData.status === "done"
                     iconName: "book-open"
-                    tip: "Open series"
+                    tip: qsTr("Open series")
                     onClicked: Router.openSeries({ media: row.modelData.media, sourceUrl: row.modelData.sourceUrl, title: row.modelData.seriesTitle, cover: row.modelData.cover, source: row.modelData.source }, cover)
                 }
                 IconButton { visible: row.modelData.status !== "running"; iconName: "trash"; tip: "Delete"; onClicked: Downloads.remove(row.modelData.id) }

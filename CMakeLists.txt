@@ -16,9 +16,20 @@ option(SCANCORE_WITH_SYSTEM_WEBVIEW "Play anime in the system web view (WebView2
 option(SCANCORE_WITH_MPV "Native video playback through libmpv (not used yet)" OFF)
 option(SCANCORE_WITH_NOVEL_PACK_INSTALLER "Allow downloading the optional Python novel-source pack" ON)
 option(SCANCORE_BUILD_TESTS "Build unit tests" ON)
+# Public ids of SCANCORE's registered apps (not secrets: the sign-ins use
+# PKCE or show a token, as every desktop and phone app must); features that
+# need one stay hidden without it.
+set(SCANCORE_DISCORD_APP_ID "" CACHE STRING "Discord application id, for Rich Presence")
+set(SCANCORE_ANILIST_CLIENT_ID "" CACHE STRING "AniList API client id, for tracking")
+set(SCANCORE_MAL_CLIENT_ID "" CACHE STRING "MyAnimeList API client id, for tracking")
+set(SCANCORE_COMICK_CLIENT_ID "" CACHE STRING "Comick public app client id, for tracking and imports")
 
 find_package(Qt6 6.9 REQUIRED COMPONENTS
     Core Gui Network Sql Qml Quick QuickControls2 Svg Concurrent)
+# QZipReader (CBZ and EPUB files) lives in Qt Core's private API. Every
+# package ships the Qt it was built with, so the version tie is no risk.
+set(QT_NO_PRIVATE_MODULE_WARNING ON)
+find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
 qt_standard_project_setup(REQUIRES 6.8)
 
 if(ANDROID)
@@ -49,6 +60,11 @@ if(NOT ANDROID)
         set(SCANCORE_WITH_SYSTEM_WEBVIEW OFF)
     endif()
 endif()
+
+# PDF files on this device (Settings → Sources), drawn by Qt PDF.
+find_package(Qt6 6.9 QUIET COMPONENTS Pdf)
+# Translations (i18n/); without Qt's Linguist tools the app is English only.
+find_package(Qt6 6.9 QUIET COMPONENTS LinguistTools)
 
 if(SCANCORE_WITH_WEBENGINE)
     find_package(Qt6 6.9 QUIET COMPONENTS WebEngineQuick WebEngineCore)

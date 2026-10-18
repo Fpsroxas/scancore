@@ -9,7 +9,7 @@ Item {
     property var entry: ({})
     readonly property bool anime: entry.media === "anime"
     readonly property real percent: entry.completed ? 1 : (entry.percent || 0)
-    readonly property string unitLine: anime ? "Episode " + (entry.unitNumber || entry.unitKey || "")
+    readonly property string unitLine: anime ? qsTr("Episode ") + (entry.unitNumber || entry.unitKey || "")
                                              : (entry.unitTitle || "")
 
     width: parent ? parent.width : 800
@@ -111,7 +111,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 6
             Text {
-                text: card.anime ? "Continue watching" : "Continue reading"
+                text: card.anime ? qsTr("Continue watching") : qsTr("Continue reading")
                 color: Theme.textMuted
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textXs
@@ -157,7 +157,7 @@ Item {
                 }
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
-                    text: card.entry.completed ? "Finished" : Math.round(card.percent * 100) + "%"
+                    text: card.entry.completed ? qsTr("Finished") : Math.round(card.percent * 100) + "%"
                     color: Theme.textFaint
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textXs + 1
@@ -174,13 +174,13 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 8
             ScButton {
-                text: "Details"
+                text: qsTr("Details")
                 onClicked: Router.openSeries(card.entry, cover)
             }
             ScButton {
                 variant: "primary"
                 iconName: "play"
-                text: "Continue"
+                text: qsTr("Continue")
                 onClicked: Router.resume(card.entry)
             }
         }

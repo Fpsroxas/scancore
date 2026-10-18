@@ -155,6 +155,66 @@ QImage IconProvider::requestImage(const QString &id, QSize *size, const QSize &r
 
 // ---------------------------------------------------------------- PanelImage
 
+namespace {
+
+// The page inside a scan's plain margin: the box around everything that
+// differs from its corners, when they share a near-white or near-black
+// colour. Pages without such a margin, or where trimming would take most
+// of the page, stay whole.
+QRect contentRect(const QImage &image) {
+    const int w = image.width();
+    const int h = image.height();
+    if (w < 64 || h < 64)
+        return image.rect();
+    const QRgb corners[] = {image.pixel(1, 1), image.pixel(w - 2, 1), image.pixel(1, h - 2), image.pixel(w - 2, h - 2)};
+    const auto close = [](QRgb a, QRgb b, int tolerance) {
+        return std::abs(qRed(a) - qRed(b)) <= tolerance && std::abs(qGreen(a) - qGreen(b)) <= tolerance &&
+               std::abs(qBlue(a) - qBlue(b)) <= tolerance;
+    };
+    const QRgb margin = corners[0];
+    for (const auto corner : corners)
+        if (!close(corner, margin, 24))
+            return image.rect();
+    const int level = qGray(margin);
+    if (level > 30 && level < 225)
+        return image.rect();
+    // A line counts as content when more than a few of its pixels differ.
+    const auto busyRow = [&](int y) {
+        int count = 0;
+        for (int x = 0; x < w; x += 2)
+            if (!close(image.pixel(x, y), margin, 40) && ++count > w / 400 + 2)
+                return true;
+        return false;
+    };
+    const auto busyColumn = [&](int x, int top, int bottom) {
+        int count = 0;
+        for (int y = top; y <= bottom; y += 2)
+            if (!close(image.pixel(x, y), margin, 40) && ++count > h / 400 + 2)
+                return true;
+        return false;
+    };
+    int top = 0;
+    while (top < h - 1 && !busyRow(top))
+        ++top;
+    int bottom = h - 1;
+    while (bottom > top && !busyRow(bottom))
+        --bottom;
+    int left = 0;
+    while (left < w - 1 && !busyColumn(left, top, bottom))
+        ++left;
+    int right = w - 1;
+    while (right > left && !busyColumn(right, top, bottom))
+        --right;
+    // A little air around the art.
+    const int pad = std::max(2, w / 200);
+    const QRect box = QRect(QPoint(left, top), QPoint(right, bottom)).adjusted(-pad, -pad, pad, pad) & image.rect();
+    if (box.width() < w * 0.6 || box.height() < h * 0.6)
+        return image.rect();
+    return box;
+}
+
+} // namespace
+
 PanelImage::PanelImage(QQuickItem *parent) : QQuickItem(parent) { setFlag(ItemHasContents, true); }
 
 PanelImage::~PanelImage() {
@@ -205,6 +265,14 @@ void PanelImage::setMaxDecodeWidth(int width) {
     emit sourceChanged();
 }
 
+void PanelImage::setCropBorders(bool crop) {
+    if (crop == m_cropBorders)
+        return;
+    m_cropBorders = crop;
+    emit sourceChanged();
+    startSoon();
+}
+
 void PanelImage::componentComplete() {
     QQuickItem::componentComplete();
     start();
@@ -241,7 +309,7 @@ void PanelImage::start() {
     const int generation = ++m_generation;
     QPointer<PanelImage> self(this);
     panelPool().start([self, generation, cancel = m_cancel, source = m_source, referer = m_referer,
-                       maxWidth = m_maxDecodeWidth] {
+                       maxWidth = m_maxDecodeWidth, crop = m_cropBorders] {
         CancelScope scope(cancel);
         QList<QImage> tiles;
         QSize size;
@@ -251,6 +319,8 @@ void PanelImage::start() {
             if (cancel->load())
                 return;
             auto image = decode(data, {}, maxWidth);
+            if (crop)
+                image = image.copy(contentRect(image));
             size = image.size();
             image = image.convertToFormat(image.hasAlphaChannel() ? QImage::Format_RGBA8888_Premultiplied
                                                                   : QImage::Format_RGBX8888);

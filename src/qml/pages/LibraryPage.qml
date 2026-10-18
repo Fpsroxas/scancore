@@ -37,7 +37,7 @@ Item {
     Connections {
         target: page.checkTask
         function onFinished(result) {
-            Router.toast(result.newUnits > 0 ? result.newUnits + " new chapters found" : "Everything is up to date",
+            Router.toast(result.newUnits > 0 ? result.newUnits + qsTr(" new chapters found") : qsTr("Everything is up to date"),
                          result.newUnits > 0 ? "success" : "info")
         }
         function onFailed(error) { Router.toast(error, "error") }
@@ -54,11 +54,11 @@ Item {
             spacing: 22
 
             PageHeader {
-                title: "Library"
-                subtitle: page.all.length + " saved"
-                    + (Library.unreadUpdates > 0 ? " · " + Library.unreadUpdates + " new chapters" : "")
+                title: qsTr("Library")
+                subtitle: page.all.length + qsTr(" saved")
+                    + (Library.unreadUpdates > 0 ? " · " + Library.unreadUpdates + qsTr(" new chapters") : "")
                 ScButton {
-                    text: page.checkTask && page.checkTask.loading ? "Checking…" : "Check for updates"
+                    text: page.checkTask && page.checkTask.loading ? qsTr("Checking…") : qsTr("Check for updates")
                     iconName: "refresh-cw"
                     loading: page.checkTask ? page.checkTask.loading : false
                     onClicked: page.checkTask = Library.checkUpdates()
@@ -70,21 +70,21 @@ Item {
                 width: parent.width - 2 * Theme.gutter
                 spacing: 12
                 Segmented {
-                    options: [{ value: "", label: "All" }, { value: "comic", label: "Comics", icon: "book-open" },
-                              { value: "novel", label: "Novels", icon: "book-text" }, { value: "anime", label: "Anime", icon: "tv" }]
+                    options: [{ value: "", label: qsTr("All") }, { value: "comic", label: qsTr("Comics"), icon: "book-open" },
+                              { value: "novel", label: qsTr("Novels"), icon: "book-text" }, { value: "anime", label: qsTr("Anime"), icon: "tv" }]
                     value: page.media
                     onPicked: (v) => page.media = v
                 }
                 SearchField {
                     width: Theme.compact ? parent.width : 260
-                    placeholderText: "Filter library"
+                    placeholderText: qsTr("Filter library")
                     text: page.filter
                     onTextChanged: page.filter = text
                 }
                 Select {
                     implicitWidth: 196
-                    model: [{ value: "updates", label: "New chapters first" }, { value: "recent", label: "Recently read" },
-                            { value: "added", label: "Recently added" }, { value: "title", label: "Title A–Z" }]
+                    model: [{ value: "updates", label: qsTr("New chapters first") }, { value: "recent", label: qsTr("Recently read") },
+                            { value: "added", label: qsTr("Recently added") }, { value: "title", label: qsTr("Title A–Z") }]
                     value: page.sort
                     onPicked: (v) => App.setSetting("librarySort", v)
                 }
@@ -95,8 +95,8 @@ Item {
                 badgeFor: (it) => it.newUnits > 0 ? "+" + it.newUnits : ""
                 progressFor: (it) => it.unitKey ? (it.completed ? 1 : (it.percent || 0)) : -1
                 subtitleFor: (it) => it.unitTitle
-                    ? (it.media === "anime" ? "Episode " + (it.unitNumber || it.unitKey) : it.unitTitle)
-                    : (it.media === "anime" ? "Anime" : it.media === "novel" ? "Novel" : "Comic")
+                    ? (it.media === "anime" ? qsTr("Episode ") + (it.unitNumber || it.unitKey) : it.unitTitle)
+                    : (it.media === "anime" ? qsTr("Anime") : it.media === "novel" ? qsTr("Novel") : qsTr("Comic"))
                 onOpened: (it, cover) => Router.openSeries(it, cover)
             }
 
@@ -104,8 +104,8 @@ Item {
                 width: parent.width
                 task: page.all.length === 0 ? page.task : null
                 empty: page.task && page.task.ok && page.entries.length === 0
-                emptyTitle: page.filter || page.media ? "Nothing matches" : "Your library is empty"
-                emptyText: "Open any comic, novel or anime and choose “Add to library” to keep it here. SCANCORE checks saved series for new chapters in the background."
+                emptyTitle: page.filter || page.media ? qsTr("Nothing matches") : qsTr("Your library is empty")
+                emptyText: qsTr("Open any comic, novel or anime and choose “Add to library” to keep it here. SCANCORE checks saved series for new chapters in the background.")
                 emptyIcon: "library"
                 onRetry: page.task = Library.entries("")
             }

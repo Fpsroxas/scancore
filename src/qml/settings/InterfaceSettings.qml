@@ -4,8 +4,8 @@ import ScanCore
 
 SettingsPane {
     id: pane
-    title: "Interface"
-    subtitle: "Navigation, size and motion"
+    title: qsTr("Interface")
+    subtitle: qsTr("Navigation, size and motion")
     iconName: "layout-grid"
 
     readonly property string navStyle: ["sidebar", "floating", "rail", "dock"].indexOf(App.settings.navStyle) >= 0
@@ -88,9 +88,24 @@ SettingsPane {
     }
 
     SettingsGroup {
+        title: qsTr("Language")
+        note: qsTr("Help translate SCANCORE: the translations are the .ts files in the i18n folder of the repository.")
+        SettingRow {
+            iconName: "globe"
+            title: qsTr("Language")
+            description: qsTr("Titles and chapter names stay as the sites write them.")
+            Select {
+                model: [{ value: "system", label: qsTr("System") }].concat(Customize.languages)
+                value: Customize.language
+                onPicked: (v) => Customize.setLanguage(v)
+            }
+        }
+    }
+
+    SettingsGroup {
         visible: App.platform !== "android"
-        title: "Navigation"
-        note: "Narrow windows and phones always use tabs along the bottom."
+        title: qsTr("Navigation")
+        note: qsTr("Narrow windows and phones always use tabs along the bottom.")
         Flow {
             x: 12
             width: parent.width - 24
@@ -98,10 +113,10 @@ SettingsPane {
             bottomPadding: 12
             spacing: 12
             Repeater {
-                model: [{ value: "sidebar", label: "Sidebar", detail: "Full height" },
-                        { value: "floating", label: "Floating", detail: "Inset panel" },
-                        { value: "rail", label: "Rail", detail: "Icons only" },
-                        { value: "dock", label: "Dock", detail: "A bar of icons" }]
+                model: [{ value: "sidebar", label: qsTr("Sidebar"), detail: qsTr("Full height") },
+                        { value: "floating", label: qsTr("Floating"), detail: qsTr("Inset panel") },
+                        { value: "rail", label: qsTr("Rail"), detail: qsTr("Icons only") },
+                        { value: "dock", label: qsTr("Dock"), detail: qsTr("A bar of icons") }]
                 ChoiceTile {
                     required property var modelData
                     width: pane.tileWidth
@@ -115,16 +130,16 @@ SettingsPane {
         }
         SettingRow {
             iconName: "panel-left"
-            title: pane.navStyle === "dock" ? "Dock position" : "Sidebar position"
+            title: pane.navStyle === "dock" ? qsTr("Dock position") : qsTr("Sidebar position")
             Segmented {
                 visible: pane.navStyle !== "dock"
-                options: [{ value: "left", label: "Left" }, { value: "right", label: "Right" }]
+                options: [{ value: "left", label: qsTr("Left") }, { value: "right", label: qsTr("Right") }]
                 value: pane.rightSide ? "right" : "left"
                 onPicked: (v) => App.setSetting("navSide", v)
             }
             Segmented {
                 visible: pane.navStyle === "dock"
-                options: [{ value: "bottom", label: "Bottom" }, { value: "top", label: "Top" }]
+                options: [{ value: "bottom", label: qsTr("Bottom") }, { value: "top", label: qsTr("Top") }]
                 value: pane.topSide ? "top" : "bottom"
                 onPicked: (v) => App.setSetting("dockSide", v)
             }
@@ -132,24 +147,24 @@ SettingsPane {
     }
 
     SettingsGroup {
-        title: "Size"
+        title: qsTr("Size")
         SettingRow {
             iconName: "type"
-            title: "Text size"
-            description: "Titles, labels and descriptions throughout the app."
+            title: qsTr("Text size")
+            description: qsTr("Titles, labels and descriptions throughout the app.")
             Segmented {
-                options: [{ value: 0.92, label: "Small" }, { value: 1, label: "Default" },
-                          { value: 1.1, label: "Large" }, { value: 1.2, label: "Larger" }]
+                options: [{ value: 0.92, label: qsTr("Small") }, { value: 1, label: qsTr("Default") },
+                          { value: 1.1, label: qsTr("Large") }, { value: 1.2, label: qsTr("Larger") }]
                 value: Theme.textScale
                 onPicked: (v) => App.setSetting("textScale", v)
             }
         }
         SettingRow {
             iconName: "layout-grid"
-            title: "Cover size"
-            description: "How big covers are in grids and rows. Smaller fits more on screen."
+            title: qsTr("Cover size")
+            description: qsTr("How big covers are in grids and rows. Smaller fits more on screen.")
             Segmented {
-                options: [{ value: "small", label: "Small" }, { value: "default", label: "Default" }, { value: "large", label: "Large" }]
+                options: [{ value: "small", label: qsTr("Small") }, { value: "default", label: qsTr("Default") }, { value: "large", label: qsTr("Large") }]
                 value: App.settings.coverSize || "default"
                 onPicked: (v) => App.setSetting("coverSize", v)
             }
@@ -157,36 +172,36 @@ SettingsPane {
     }
 
     SettingsGroup {
-        title: "Motion"
+        title: qsTr("Motion")
         SettingRow {
             iconName: "gauge"
-            title: "Animation speed"
-            description: "How quickly pages, menus and covers move."
+            title: qsTr("Animation speed")
+            description: qsTr("How quickly pages, menus and covers move.")
             enabled: !Motion.reduced
             opacity: enabled ? 1 : 0.45
             Segmented {
-                options: [{ value: "relaxed", label: "Relaxed" }, { value: "default", label: "Default" }, { value: "snappy", label: "Snappy" }]
+                options: [{ value: "relaxed", label: qsTr("Relaxed") }, { value: "default", label: qsTr("Default") }, { value: "snappy", label: qsTr("Snappy") }]
                 value: App.settings.motionSpeed || "default"
                 onPicked: (v) => App.setSetting("motionSpeed", v)
             }
         }
         SettingRow {
             iconName: "sparkles"
-            title: "Reduce motion"
-            description: "Turns off page transitions, hover lifts, animated backgrounds and other animations."
+            title: qsTr("Reduce motion")
+            description: qsTr("Turns off page transitions, hover lifts, animated backgrounds and other animations.")
             Toggle { checked: App.settings.reducedMotion === true; onToggled: App.setSetting("reducedMotion", checked) }
         }
     }
 
     SettingsGroup {
-        title: "Start"
+        title: qsTr("Start")
         SettingRow {
             iconName: "house"
-            title: "Open SCANCORE on"
-            description: "The page you see when the app starts."
+            title: qsTr("Open SCANCORE on")
+            description: qsTr("The page you see when the app starts.")
             Select {
-                model: [{ value: "home", label: "Home" }, { value: "comics", label: "Comics" }, { value: "novels", label: "Novels" },
-                        { value: "anime", label: "Anime" }, { value: "library", label: "Library" }, { value: "history", label: "History" }]
+                model: [{ value: "home", label: "Home" }, { value: "comics", label: qsTr("Comics") }, { value: "novels", label: qsTr("Novels") },
+                        { value: "anime", label: qsTr("Anime") }, { value: "library", label: qsTr("Library") }, { value: "history", label: qsTr("History") }]
                 value: App.settings.startSection || "home"
                 onPicked: (v) => App.setSetting("startSection", v)
             }

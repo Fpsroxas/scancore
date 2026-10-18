@@ -78,11 +78,11 @@ QtObject {
 
     // Novel reader page colours; "app" follows the app theme.
     readonly property var readingThemes: ({
-        app: { label: "App", bg: base, text: text, muted: textMuted, chrome: palette.surface },
-        paper: { label: "Paper", bg: "#f7f4ec", text: "#2a2925", muted: "#79766d", chrome: "#efebe1" },
-        sepia: { label: "Sepia", bg: "#efe3c8", text: "#4a3826", muted: "#8a7457", chrome: "#e6d8b9" },
-        dark: { label: "Dark", bg: "#17171a", text: "#d9d9de", muted: "#8b8b93", chrome: "#1f1f23" },
-        black: { label: "Black", bg: "#000000", text: "#c9c9ce", muted: "#77777e", chrome: "#0d0d0f" }
+        app: { label: qsTr("App"), bg: base, text: text, muted: textMuted, chrome: palette.surface },
+        paper: { label: qsTr("Paper"), bg: "#f7f4ec", text: "#2a2925", muted: "#79766d", chrome: "#efebe1" },
+        sepia: { label: qsTr("Sepia"), bg: "#efe3c8", text: "#4a3826", muted: "#8a7457", chrome: "#e6d8b9" },
+        dark: { label: qsTr("Dark"), bg: "#17171a", text: "#d9d9de", muted: "#8b8b93", chrome: "#1f1f23" },
+        black: { label: qsTr("Black"), bg: "#000000", text: "#c9c9ce", muted: "#77777e", chrome: "#0d0d0f" }
     })
 
     readonly property string fontSans: "DM Sans"

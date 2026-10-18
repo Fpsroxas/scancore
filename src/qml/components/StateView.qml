@@ -9,7 +9,7 @@ Item {
     property string error: task && !task.loading && task.error !== "Cancelled" ? task.error : ""
     property string verifyUrl: task && !task.loading ? (task.verifyUrl || "") : ""
     property bool empty: false
-    property string emptyTitle: "Nothing here yet"
+    property string emptyTitle: qsTr("Nothing here yet")
     property string emptyText: ""
     property string emptyIcon: "sparkles"
     property bool compact: false
@@ -49,7 +49,7 @@ Item {
         Text {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
-            text: root.error.length > 0 ? "Something went wrong" : root.emptyTitle
+            text: root.error.length > 0 ? qsTr("Something went wrong") : root.emptyTitle
             color: Theme.text
             font.family: Theme.fontDisplay
             font.pixelSize: root.compact ? Theme.textMd : Theme.textLg
@@ -72,13 +72,13 @@ Item {
             ScButton {
                 visible: root.verifyUrl.length > 0 && App.platform !== "android"
                 variant: "primary"
-                text: "Open browser check"
+                text: qsTr("Open browser check")
                 iconName: "globe"
                 compact: true
                 onClicked: Router.openSiteCheck(root.verifyUrl)
             }
             ScButton {
-                text: "Try again"
+                text: qsTr("Try again")
                 iconName: "refresh-cw"
                 compact: true
                 onClicked: root.retry()

@@ -1,6 +1,7 @@
 #include "Registry.h"
 
 #include "sources/Manifest.h"
+#include "sources/local/LocalSources.h"
 
 #include <QJsonArray>
 #include <QReadWriteLock>
@@ -33,6 +34,13 @@ void Registry::rebuild() {
         if (auto source = createSource(config))
             sources.append(std::shared_ptr<Source>(std::move(source)));
     }
+    // Files on this device: opens any file, and lists the chosen folders.
+    SourceConfig local;
+    local.key = QStringLiteral("local");
+    local.label = QStringLiteral("On this device");
+    local.engine = QStringLiteral("local");
+    local.base = QStringLiteral("file://");
+    sources.append(std::shared_ptr<Source>(local::createComicSource(local)));
     QWriteLocker lock(&g_lock);
     g_sources = sources;
 }

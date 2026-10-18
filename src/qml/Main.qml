@@ -95,20 +95,23 @@ ApplicationWindow {
     Connections {
         target: Library
         function onUpdatesFound(count, titles) {
-            shell.toast(count + " new chapter" + (count === 1 ? "" : "s") + " in your library", "success")
+            shell.toast(count + qsTr(" new chapter") + (count === 1 ? "" : "s") + qsTr(" in your library"), "success")
         }
     }
     Connections {
         target: Downloads
-        function onFinished(title) { shell.toast("Downloaded " + title, "success") }
+        function onFinished(title) { shell.toast(qsTr("Downloaded ") + title, "success") }
     }
     // A file or link given on the command line or by a second launch.
     Connections {
         target: App
         function onOpenRequested(target) {
-            if (String(target).toLowerCase().endsWith(".sct")) {
+            const lower = String(target).toLowerCase()
+            if (lower.endsWith(".sct")) {
                 window.pendingTheme = target
                 themeConfirm.open()
+            } else if (/\.(cbz|zip|cbr|rar|cb7|7z|cbt|pdf|epub)$/.test(lower)) {
+                Router.openFile(target)
             }
         }
     }
@@ -268,7 +271,7 @@ ApplicationWindow {
 
             Repeater {
                 id: sectionRepeater
-                model: ["home", "comics", "novels", "anime", "library", "history", "downloads", "settings"]
+                model: ["home", "comics", "novels", "anime", "library", "history", "activity", "downloads", "settings"]
                 delegate: Loader {
                     id: sectionLoader
                     required property string modelData
@@ -291,6 +294,7 @@ ApplicationWindow {
                             case "anime": return "pages/AnimePage.qml"
                             case "library": return "pages/LibraryPage.qml"
                             case "history": return "pages/HistoryPage.qml"
+                            case "activity": return "pages/ActivityPage.qml"
                             case "downloads": return "pages/DownloadsPage.qml"
                             default: return "pages/SettingsPage.qml"
                             }
@@ -415,10 +419,10 @@ ApplicationWindow {
     }
     ConfirmDialog {
         id: themeConfirm
-        heading: "Use this theme?"
+        heading: qsTr("Use this theme?")
         message: decodeURIComponent(String(window.pendingTheme).replace(/^.*\//, ""))
-            + " replaces your custom theme and switches SCANCORE to it."
-        confirmText: "Use theme"
+            + qsTr(" replaces your custom theme and switches SCANCORE to it.")
+        confirmText: qsTr("Use theme")
         onConfirmed: window.importTheme(window.pendingTheme)
     }
     Toasts {
@@ -459,6 +463,7 @@ ApplicationWindow {
     Shortcut { sequences: Keymap.sequences("anime"); onActivated: shell.goSection("anime") }
     Shortcut { sequences: Keymap.sequences("library"); onActivated: shell.goSection("library") }
     Shortcut { sequences: Keymap.sequences("history"); onActivated: shell.goSection("history") }
+    Shortcut { sequences: Keymap.sequences("activity"); onActivated: shell.goSection("activity") }
     Shortcut { sequences: Keymap.sequences("downloads"); onActivated: shell.goSection("downloads") }
     Shortcut { sequences: Keymap.sequences("settings"); onActivated: shell.goSection("settings") }
     Shortcut {

@@ -67,7 +67,7 @@ AbstractButton {
             Text {
                 visible: recorder.labels.length === 0
                 anchors.verticalCenter: parent.verticalCenter
-                text: "None"
+                text: qsTr("None")
                 color: Theme.textFaint
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textSm
@@ -98,7 +98,7 @@ AbstractButton {
         Text {
             anchors.centerIn: parent
             visible: recorder.recording
-            text: "Press keys…"
+            text: qsTr("Press keys…")
             color: Theme.accent
             font.family: Theme.fontSans
             font.pixelSize: Theme.textSm

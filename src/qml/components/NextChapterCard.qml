@@ -10,7 +10,7 @@ Column {
 
     Text {
         anchors.horizontalCenter: parent.horizontalCenter
-        text: card.host.hasNext ? "End of " + (card.host.unit.title || "chapter") : "You're all caught up"
+        text: card.host.hasNext ? qsTr("End of ") + (card.host.unit.title || "chapter") : qsTr("You're all caught up")
         color: "#e4e4e7"
         font.family: Theme.fontDisplay
         font.pixelSize: Theme.textXl
@@ -22,7 +22,7 @@ Column {
     Text {
         anchors.horizontalCenter: parent.horizontalCenter
         visible: card.host.hasNext
-        text: "Next: " + (card.host.hasNext ? card.host.chapters[card.host.index + 1].title : "")
+        text: qsTr("Next: ") + (card.host.hasNext ? card.host.chapters[card.host.index + 1].title : "")
         color: "#9a9aa2"
         font.family: Theme.fontSans
         font.pixelSize: Theme.textSm
@@ -36,12 +36,12 @@ Column {
         ScButton {
             visible: card.host.hasNext
             variant: "primary"
-            text: "Next chapter"
+            text: qsTr("Next chapter")
             iconName: "skip-forward"
             onClicked: card.host.load(card.host.index + 1)
         }
         ScButton {
-            text: "Back to details"
+            text: qsTr("Back to details")
             onClicked: card.host.exit()
         }
     }

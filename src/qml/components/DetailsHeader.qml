@@ -10,7 +10,7 @@ Item {
     property var series: ({})
     property string kicker: ""
     property var meta: []              // strings
-    property string primaryText: "Start reading"
+    property string primaryText: qsTr("Start reading")
     property string primaryDetail: ""
     property bool saved: false
     property bool busy: false
@@ -82,7 +82,7 @@ Item {
         y: 20
         iconName: "arrow-left"
         filled: true
-        tip: "Back"
+        tip: qsTr("Back")
         onClicked: Router.back()
     }
 
@@ -187,7 +187,7 @@ Item {
                 onClicked: header.primary()
             }
             ScButton {
-                text: header.saved ? "In library" : "Add to library"
+                text: header.saved ? qsTr("In library") : qsTr("Add to library")
                 iconName: header.saved ? "bookmark-check" : "bookmark"
                 onClicked: header.toggleSaved()
             }

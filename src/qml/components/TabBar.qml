@@ -11,12 +11,12 @@ Rectangle {
     signal openPalette()
 
     readonly property var tabs: [
-        { key: "home", label: "Home", icon: "house" },
-        { key: "comics", label: "Comics", icon: "book-open" },
-        { key: "novels", label: "Novels", icon: "book-text" },
-        { key: "anime", label: "Anime", icon: "tv" },
-        { key: "library", label: "Library", icon: "library" },
-        { key: "more", label: "More", icon: "ellipsis" }
+        { key: "home", label: qsTr("Home"), icon: "house" },
+        { key: "comics", label: qsTr("Comics"), icon: "book-open" },
+        { key: "novels", label: qsTr("Novels"), icon: "book-text" },
+        { key: "anime", label: qsTr("Anime"), icon: "tv" },
+        { key: "library", label: qsTr("Library"), icon: "library" },
+        { key: "more", label: qsTr("More"), icon: "ellipsis" }
     ]
     readonly property int currentIndex: {
         const i = tabs.findIndex(t => t.key === current)
@@ -106,10 +106,11 @@ Rectangle {
         contentItem: Column {
             Repeater {
                 model: [
-                    { key: "search", label: "Search", icon: "search" },
-                    { key: "history", label: "History", icon: "history" },
-                    { key: "downloads", label: "Downloads", icon: "download" },
-                    { key: "settings", label: "Settings", icon: "settings" }
+                    { key: "search", label: qsTr("Search"), icon: "search" },
+                    { key: "history", label: qsTr("History"), icon: "history" },
+                    { key: "activity", label: qsTr("Activity"), icon: "activity" },
+                    { key: "downloads", label: qsTr("Downloads"), icon: "download" },
+                    { key: "settings", label: qsTr("Settings"), icon: "settings" }
                 ]
                 delegate: ItemDelegate {
                     required property var modelData

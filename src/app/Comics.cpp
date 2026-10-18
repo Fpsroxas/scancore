@@ -13,6 +13,7 @@
 #include <QJsonDocument>
 #include <QMutex>
 #include <QRegularExpression>
+#include <QUrlQuery>
 
 namespace sc {
 
@@ -119,7 +120,8 @@ Task *Comics::search(const QString &query, const QString &only) {
             return Task::resolved(*hit);
     }
     return Task::run([q, only, cacheKey]() -> QVariant {
-        if (q.isEmpty())
+        // Files on this device are listed without a search.
+        if (q.isEmpty() && only != QLatin1String("local"))
             return QVariantMap{{"comics", QVariantList()}, {"providers", QVariantList()}};
         QList<std::shared_ptr<Source>> selected;
         for (const auto &source : Registry::all())
@@ -181,6 +183,124 @@ Task *Comics::search(const QString &query, const QString &only) {
         QMutexLocker lock(&g_searchMutex);
         g_searches.insert(cacheKey, new QVariantMap(result));
         g_searchTimes.insert(cacheKey, QDateTime::currentSecsSinceEpoch());
+        return result;
+    });
+}
+
+Task *Comics::catalog(const QString &query) {
+    const auto q = query.simplified();
+    const auto cacheKey = QStringLiteral("comick|") + q.toLower();
+    {
+        QMutexLocker lock(&g_searchMutex);
+        if (auto *hit = g_searches.object(cacheKey);
+            hit && QDateTime::currentSecsSinceEpoch() - g_searchTimes.value(cacheKey) < 180)
+            return Task::resolved(*hit);
+    }
+    return Task::run([q, cacheKey]() -> QVariant {
+        QUrl url(QStringLiteral("https://api.comick.dev/v1.0/search/"));
+        url.setQuery(QUrlQuery{{"q", q.left(100)}, {"page", "1"}, {"limit", "40"}, {"showall", "false"}});
+        const auto response = Http::get(url, {{"Accept", "application/json"}, {"Referer", "https://comick.dev/"}});
+        if (!response.ok())
+            throw Error(QStringLiteral("Comick's catalogue is unavailable right now (%1).").arg(response.status), response.status);
+        static const QHash<QString, QString> kinds{{"kr", "Manhwa"}, {"cn", "Manhua"}, {"jp", "Manga"}};
+        static const QStringList statuses{QString(), QStringLiteral("Ongoing"), QStringLiteral("Completed"), QStringLiteral("Cancelled"),
+                                          QStringLiteral("Hiatus")};
+        QVariantList comics;
+        for (const auto &value : response.json().array()) {
+            const auto c = value.toObject();
+            if (c.value("media_type").toString() == QLatin1String("anime"))
+                continue;
+            QStringList titles{c.value("title").toString()};
+            for (const auto &t : c.value("md_titles").toArray())
+                titles.append(t.toObject().value("title").toString());
+            titles.removeAll(QString());
+            titles.removeDuplicates();
+            const auto covers = c.value("md_covers").toArray();
+            auto key = covers.isEmpty() ? QString() : covers.first().toObject().value("b2key").toString();
+            // The medium size ("-m"); the original can be half a megabyte.
+            if (const auto dot = key.lastIndexOf(QLatin1Char('.')); dot > 0)
+                key.insert(dot, QStringLiteral("-m"));
+            const auto lastChapter = c.value("last_chapter");
+            comics.append(QVariantMap{
+                {"catalog", QStringLiteral("comick")},
+                {"hid", c.value("hid").toString()},
+                {"slug", c.value("slug").toString()},
+                {"media", QStringLiteral("comic")},
+                {"title", titles.value(0)},
+                {"titles", titles},
+                {"cover", key.isEmpty() ? QString() : QStringLiteral("https://meo.comick.pictures/") + key},
+                {"type", kinds.value(c.value("country").toString(), QStringLiteral("Comic"))},
+                {"status", statuses.value(c.value("status").toInt())},
+                {"year", c.value("year").toInt()},
+                {"lastChapter", lastChapter.isDouble() ? QString::number(lastChapter.toDouble()) : QString()},
+                {"rating", c.value("bayesian_rating").toString()},
+                {"description", c.value("desc").toString()},
+                {"genres", QVariantList()}});
+        }
+        QVariantMap result{{"comics", comics}, {"providers", QVariantList()}};
+        QMutexLocker lock(&g_searchMutex);
+        g_searches.insert(cacheKey, new QVariantMap(result));
+        g_searchTimes.insert(cacheKey, QDateTime::currentSecsSinceEpoch());
+        return result;
+    });
+}
+
+Task *Comics::resolve(const QVariantMap &item) {
+    return Task::run([item]() -> QVariant {
+        const auto hid = item.value("hid").toString();
+        const auto cacheKey = QStringLiteral("comick-resolve:") + hid;
+        if (!hid.isEmpty())
+            if (auto cached = Database::cacheGet(cacheKey))
+                return QJsonDocument::fromJson(*cached).toVariant();
+        // Every name it goes by, as sources write titles in Latin letters.
+        QStringList names;
+        QSet<QString> wanted;
+        for (const auto &title : item.value("titles").toStringList() + QStringList{item.value("title").toString()}) {
+            const auto n = normalized(title);
+            if (n.isEmpty() || wanted.contains(n))
+                continue;
+            wanted.insert(n);
+            names.append(title);
+        }
+        if (names.isEmpty())
+            throw Error(QStringLiteral("This title has no name SCANCORE's sources could list it under."));
+        QList<std::shared_ptr<Source>> sources;
+        for (const auto &source : Registry::all())
+            if (source->enabled() && source->key() != QLatin1String("local"))
+                sources.append(source);
+        // The main title first; other names only for sources that missed.
+        QVariantList matches;
+        QSet<QString> found;
+        for (int round = 0; round < std::min<int>(names.size(), 3) && found.size() < sources.size(); ++round) {
+            QList<std::shared_ptr<Source>> asked;
+            QList<std::function<QList<Summary>()>> jobs;
+            for (const auto &source : sources)
+                if (!found.contains(source->key())) {
+                    asked.append(source);
+                    jobs.append([source, name = names[round]] { return source->search(name); });
+                }
+            const auto results = parallel(jobs);
+            for (int i = 0; i < results.size(); ++i) {
+                if (!results[i].ok())
+                    continue;
+                for (const auto &summary : *results[i].value)
+                    if (wanted.contains(normalized(summary.title)) && !found.contains(asked[i]->key())) {
+                        found.insert(asked[i]->key());
+                        matches.append(QVariantMap{{"source", asked[i]->key()},
+                                                   {"sourceLabel", asked[i]->label()},
+                                                   {"url", summary.url},
+                                                   {"title", summary.title},
+                                                   {"cover", summary.cover},
+                                                   {"order", sources.indexOf(asked[i])}});
+                    }
+            }
+        }
+        // In the order of the source list.
+        std::sort(matches.begin(), matches.end(),
+                  [](const QVariant &a, const QVariant &b) { return a.toMap().value("order").toInt() < b.toMap().value("order").toInt(); });
+        const QVariantMap result{{"matches", matches}};
+        if (!hid.isEmpty() && !matches.isEmpty())
+            Database::cachePut(cacheKey, QJsonDocument::fromVariant(result).toJson(QJsonDocument::Compact), 86400);
         return result;
     });
 }

@@ -129,7 +129,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             visible: root.step > 0 && root.step < root.steps - 1
             variant: "ghost"
-            text: "Back"
+            text: qsTr("Back")
             onClicked: root.go(root.step - 1)
         }
         ScButton {
@@ -138,7 +138,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             visible: root.step < root.steps - 1
             variant: root.step === 3 ? "ghost" : "primary"
-            text: root.step === 0 ? "Get started" : root.step === 3 ? "Skip for now" : "Continue"
+            text: root.step === 0 ? qsTr("Get started") : root.step === 3 ? qsTr("Skip for now") : qsTr("Continue")
             onClicked: root.go(root.step + 1)
         }
         Text {
@@ -146,7 +146,7 @@ Rectangle {
             anchors.rightMargin: Theme.gutter
             anchors.bottom: parent.top
             visible: root.step === 0
-            text: "Skip intro"
+            text: qsTr("Skip intro")
             color: Theme.textFaint
             font.family: Theme.fontSans
             font.pixelSize: Theme.textSm
@@ -252,7 +252,7 @@ Rectangle {
                     width: Math.min(root.width - 2 * Theme.gutter, 520)
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.Wrap
-                    text: "Comics, novels and anime in one fast app. Everything runs and stays on your device."
+                    text: qsTr("Comics, novels and anime in one fast app. Everything runs and stays on your device.")
                     color: Theme.textMuted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textLg
@@ -275,18 +275,18 @@ Rectangle {
                 width: parent.width - 2 * Theme.gutter
                 spacing: 28
                 Heading {
-                    kicker: "Everything in one place"
-                    title: "Read and watch from dozens of sites at once"
-                    body: "Search every source together, keep your place in every series, and download chapters for offline reading."
+                    kicker: qsTr("Everything in one place")
+                    title: qsTr("Read and watch from dozens of sites at once")
+                    body: qsTr("Search every source together, keep your place in every series, and download chapters for offline reading.")
                 }
                 Flow {
                     width: parent.width
                     spacing: 16
                     Repeater {
                         model: [
-                            { icon: "book-open", title: "Comics", text: "Manhwa, manga and webtoons from Asura, Webtoon, MangaDex and more. Vertical strip or page by page." },
-                            { icon: "book-text", title: "Novels", text: "Royal Road and the big web-novel sites, with a reader you can tune: fonts, spacing, paper and sepia themes." },
-                            { icon: "tv", title: "Anime", text: "Trending, seasonal and top lists from AniList, a weekly schedule, and episodes that resume where you stopped." }
+                            { icon: "book-open", title: qsTr("Comics"), text: qsTr("Manhwa, manga and webtoons from Asura, Webtoon, MangaDex and more. Vertical strip or page by page.") },
+                            { icon: "book-text", title: qsTr("Novels"), text: qsTr("Royal Road and the big web-novel sites, with a reader you can tune: fonts, spacing, paper and sepia themes.") },
+                            { icon: "tv", title: qsTr("Anime"), text: qsTr("Trending, seasonal and top lists from AniList, a weekly schedule, and episodes that resume where you stopped.") }
                         ]
                         Rectangle {
                             id: card
@@ -343,16 +343,16 @@ Rectangle {
                 width: Math.min(parent.width - 2 * Theme.gutter, 640)
                 spacing: 26
                 Heading {
-                    kicker: "Make it yours"
-                    title: "Pick a look"
-                    body: "Changes apply right away. You can adjust these and much more in Settings."
+                    kicker: qsTr("Make it yours")
+                    title: qsTr("Pick a look")
+                    body: qsTr("Changes apply right away. You can adjust these and much more in Settings.")
                 }
                 Column {
                     spacing: 10
                     Text { text: "Theme"; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
                     Segmented {
-                        options: [{ value: "system", label: "System", icon: "monitor" }, { value: "light", label: "Light", icon: "sun" },
-                                  { value: "dark", label: "Dark", icon: "moon" }, { value: "black", label: "Black" }]
+                        options: [{ value: "system", label: qsTr("System"), icon: "monitor" }, { value: "light", label: qsTr("Light"), icon: "sun" },
+                                  { value: "dark", label: qsTr("Dark"), icon: "moon" }, { value: "black", label: qsTr("Black") }]
                         value: App.settings.theme
                         onPicked: (v) => App.setSetting("theme", v)
                     }
@@ -384,7 +384,7 @@ Rectangle {
                     spacing: 10
                     Text { text: "Comics open as"; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
                     Segmented {
-                        options: [{ value: "strip", label: "Vertical strip", icon: "move-vertical" }, { value: "paged", label: "Pages", icon: "layers" }]
+                        options: [{ value: "strip", label: qsTr("Vertical strip"), icon: "move-vertical" }, { value: "paged", label: qsTr("Pages"), icon: "layers" }]
                         value: App.settings.readerMode
                         onPicked: (v) => App.setSetting("readerMode", v)
                     }
@@ -413,11 +413,11 @@ Rectangle {
                     id: accountIntro
                     x: Theme.gutter
                     width: Theme.compact ? parent.width - 2 * Theme.gutter : Math.min(420, parent.width / 2 - Theme.gutter)
-                    kicker: "Optional"
-                    title: Account.signedIn ? "You're signed in" : "Bring your scancore.onl account"
+                    kicker: qsTr("Optional")
+                    title: Account.signedIn ? qsTr("You're signed in") : qsTr("Bring your scancore.onl account")
                     body: Account.signedIn
-                        ? "Signed in as " + (Account.user.username || Account.user.email) + ". Your website library and reading history are syncing into this app."
-                        : "Sign in to bring your website library and comic reading history here and keep both in step. Everything works without an account too."
+                        ? qsTr("Signed in as ") + (Account.user.username || Account.user.email) + qsTr(". Your website library and reading history are syncing into this app.")
+                        : qsTr("Sign in to bring your website library and comic reading history here and keep both in step. Everything works without an account too.")
                 }
                 AuthForm {
                     id: accountForm
@@ -432,7 +432,7 @@ Rectangle {
                     x: Theme.gutter
                     y: accountIntro.height + 24
                     variant: "primary"
-                    text: "Continue"
+                    text: qsTr("Continue")
                     onClicked: root.go(4)
                 }
             }
@@ -459,7 +459,7 @@ Rectangle {
                 Text {
                     width: parent.width
                     horizontalAlignment: Text.AlignHCenter
-                    text: "You're all set"
+                    text: qsTr("You're all set")
                     color: Theme.text
                     font.family: Theme.fontDisplay
                     font.pixelSize: Theme.compact ? 30 : 40
@@ -469,10 +469,10 @@ Rectangle {
                     width: parent.width
                     spacing: 12
                     Repeater {
-                        model: (Theme.touch ? [] : [{ icon: "command", text: "Press Ctrl+K to search everything or jump anywhere." }]).concat([
-                            { icon: "bookmark", text: "Add series to your library and SCANCORE checks them for new chapters." },
-                            { icon: "download", text: "Download chapters to read without a connection." },
-                            { icon: "settings", text: "Reader layout, novel typography and themes live in Settings." }
+                        model: (Theme.touch ? [] : [{ icon: "command", text: qsTr("Press Ctrl+K to search everything or jump anywhere.") }]).concat([
+                            { icon: "bookmark", text: qsTr("Add series to your library and SCANCORE checks them for new chapters.") },
+                            { icon: "download", text: qsTr("Download chapters to read without a connection.") },
+                            { icon: "settings", text: qsTr("Reader layout, novel typography and themes live in Settings.") }
                         ])
                         Row {
                             required property var modelData
@@ -498,7 +498,7 @@ Rectangle {
                 ScButton {
                     anchors.horizontalCenter: parent.horizontalCenter
                     variant: "primary"
-                    text: "Start exploring"
+                    text: qsTr("Start exploring")
                     iconName: "chevron-right"
                     onClicked: root.finish()
                 }

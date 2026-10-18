@@ -1,6 +1,7 @@
 #include "Account.h"
 
 #include "Library.h"
+#include "Sync.h"
 #include "core/Cookies.h"
 #include "core/Database.h"
 #include "sources/comics/Registry.h"
@@ -21,8 +22,19 @@ namespace sc {
 
 namespace {
 
+const QString kDefaultSite = QStringLiteral("https://scancore.onl");
+
+// scancore.onl, or a SCANCORE website hosted elsewhere (Settings → Sync).
 // SCANCORE_SITE points the app at a local copy of the website (development).
-const QString kSite = qEnvironmentVariable("SCANCORE_SITE", QStringLiteral("https://scancore.onl"));
+QString siteUrl() {
+    if (qEnvironmentVariableIsSet("SCANCORE_SITE"))
+        return qEnvironmentVariable("SCANCORE_SITE");
+    const auto own = Database::pref(QStringLiteral("account.site")).toString();
+    return own.isEmpty() ? kDefaultSite : own;
+}
+
+// How the website is named in messages: "scancore.onl", or its host.
+QString siteName() { return QUrl(siteUrl()).host(); }
 
 Headers apiHeaders() {
     return {{"Accept", "application/json"}, {"Content-Type", "application/json"}};
@@ -90,11 +102,11 @@ QVariantMap localSeries(const QJsonObject &series) {
 }
 
 QJsonObject getJson(const QString &path) {
-    const auto response = Http::get(QUrl(kSite + path), apiHeaders(), 20000);
+    const auto response = Http::get(QUrl(siteUrl() + path), apiHeaders(), 20000);
     if (response.status == 401)
-        throw Error(QStringLiteral("Your scancore.onl session ended. Sign in again."), 401);
+        throw Error(QStringLiteral("Your %1 session ended. Sign in again.").arg(siteName()), 401);
     if (!response.ok())
-        throw Error(QStringLiteral("scancore.onl responded with HTTP %1.").arg(response.status), response.status);
+        throw Error(QStringLiteral("%1 responded with HTTP %2.").arg(siteName()).arg(response.status), response.status);
     return response.json().object();
 }
 
@@ -116,7 +128,7 @@ QString animeTitle(const QJsonObject &anime) {
 // show's episode numbers to those units. Kept for a day, and fetched again
 // when an episode is missing (a new one aired).
 QHash<int, QString> episodeUnits(int anilistId, int episode) {
-    const auto key = QStringLiteral("scancore.onl:units:%1").arg(anilistId);
+    const auto key = QStringLiteral("%1:units:%2").arg(siteName()).arg(anilistId);
     const auto parse = [](const QByteArray &body) {
         QHash<int, QString> units;
         for (const auto &value : QJsonDocument::fromJson(body).object().value("episodes").toArray()) {
@@ -211,11 +223,11 @@ int pushAnimeProgress(bool batchSupported, bool *more) {
     }
 
     if (batchSupported) {
-        const auto batch = Http::postJson(QUrl(kSite + QStringLiteral("/api/anime/progress/batch")),
+        const auto batch = Http::postJson(QUrl(siteUrl() + QStringLiteral("/api/anime/progress/batch")),
                                           QJsonDocument(QJsonObject{{"items", items}}).toJson(QJsonDocument::Compact),
                                           {{"Accept", "application/json"}});
         if (batch.status == 401)
-            throw Error(QStringLiteral("Your scancore.onl session ended. Sign in again."), 401);
+            throw Error(QStringLiteral("Your %1 session ended. Sign in again.").arg(siteName()), 401);
         if (batch.ok()) {
             Database::setPref(QStringLiteral("account.animePushedAt"), pending.last().at);
             return QJsonDocument::fromJson(batch.body).object().value("saved").toInt();
@@ -235,7 +247,7 @@ int pushAnimeProgress(bool batchSupported, bool *more) {
                 break;
             }
             ++sent;
-            const auto response = Http::postJson(QUrl(kSite + QStringLiteral("/api/anime/progress")),
+            const auto response = Http::postJson(QUrl(siteUrl() + QStringLiteral("/api/anime/progress")),
                                                  QJsonDocument(p.item).toJson(QJsonDocument::Compact),
                                                  {{"Accept", "application/json"}});
             if (response.status == 401 || transient(response.status))
@@ -320,9 +332,9 @@ int pushComicProgress(double serverStamp) {
                                                     {"mutationId", QUuid::createUuid().toString(QUuid::WithoutBraces)}})
                               .toJson(QJsonDocument::Compact);
         const auto response =
-            Http::postJson(QUrl(kSite + QStringLiteral("/api/progress")), body, {{"Accept", "application/json"}});
+            Http::postJson(QUrl(siteUrl() + QStringLiteral("/api/progress")), body, {{"Accept", "application/json"}});
         if (response.status == 401)
-            throw Error(QStringLiteral("Your scancore.onl session ended. Sign in again."), 401);
+            throw Error(QStringLiteral("Your %1 session ended. Sign in again.").arg(siteName()), 401);
         if (response.ok()) {
             Database::setPref(QStringLiteral("account.comicPushedAt"), newest);
             return history.size();
@@ -402,11 +414,11 @@ int pullAnimeProgress() {
 
 Account::Account(QObject *parent) : QObject(parent) {
     m_user = Database::pref(QStringLiteral("account.user")).toMap();
-    if (signedIn())
+    if (signedIn() && active())
         QTimer::singleShot(6000, this, [this] { sync(); });
     m_soon.setSingleShot(true);
     connect(&m_soon, &QTimer::timeout, this, [this] {
-        if (signedIn() && !m_syncing)
+        if (signedIn() && active() && !m_syncing)
             sync();
     });
     // Mirror saves, reads and watches shortly after they happen.
@@ -429,8 +441,31 @@ Account::Account(QObject *parent) : QObject(parent) {
     });
 }
 
+bool Account::active() const { return Database::pref(QStringLiteral("sync.kind")).toString().isEmpty(); }
+
+QString Account::site() const { return siteUrl(); }
+
+bool Account::customSite() const { return siteUrl() != kDefaultSite; }
+
+QString Account::setSite(const QString &address) {
+    if (signedIn())
+        return QStringLiteral("Sign out first.");
+    auto text = address.trimmed();
+    while (text.endsWith(QLatin1Char('/')))
+        text.chop(1);
+    if (!text.isEmpty() && !text.contains(QLatin1String("://")))
+        text.prepend(QStringLiteral("https://"));
+    const QUrl url(text);
+    if (!text.isEmpty() && (!url.isValid() || url.host().isEmpty() ||
+                            (url.scheme() != QLatin1String("https") && url.scheme() != QLatin1String("http"))))
+        return QStringLiteral("Enter the server's address, like http://192.168.1.20:8787 or https://sync.example.com.");
+    Database::setPref(QStringLiteral("account.site"), text == kDefaultSite ? QString() : text);
+    emit changed();
+    return {};
+}
+
 void Account::scheduleSync() {
-    if (!signedIn())
+    if (!signedIn() || !active())
         return;
     if (m_syncing) {
         m_dirty = true;
@@ -468,7 +503,7 @@ void Account::setUser(const QVariantMap &user) {
 
 Task *Account::authenticate(const QString &path, const QJsonObject &body) {
     auto *task = Task::run([path, body]() -> QVariant {
-        const auto response = Http::postJson(QUrl(kSite + path), QJsonDocument(body).toJson(QJsonDocument::Compact),
+        const auto response = Http::postJson(QUrl(siteUrl() + path), QJsonDocument(body).toJson(QJsonDocument::Compact),
                                              {{"Accept", "application/json"}});
         const auto json = QJsonDocument::fromJson(response.body).object();
         if (!response.ok()) {
@@ -477,7 +512,7 @@ Task *Account::authenticate(const QString &path, const QJsonObject &body) {
                 message = json.value("problem").toObject().value("message").toString();
             if (response.status == 429)
                 message = QStringLiteral("Too many attempts. Wait a few minutes and try again.");
-            throw Error(message.isEmpty() ? QStringLiteral("scancore.onl responded with HTTP %1.").arg(response.status)
+            throw Error(message.isEmpty() ? QStringLiteral("%1 responded with HTTP %2.").arg(siteName()).arg(response.status)
                                           : message,
                         response.status);
         }
@@ -527,10 +562,10 @@ QString Account::usernameProblem(const QString &username) const {
 void Account::signOut() {
     runInBackground([] {
         try {
-            Http::postJson(QUrl(kSite + QStringLiteral("/api/auth/logout")), "{}", {{"Accept", "application/json"}});
+            Http::postJson(QUrl(siteUrl() + QStringLiteral("/api/auth/logout")), "{}", {{"Accept", "application/json"}});
         } catch (const Error &) {
         }
-        for (const auto &cookie : CookieJar::shared().cookiesForUrl(QUrl(kSite)))
+        for (const auto &cookie : CookieJar::shared().cookiesForUrl(QUrl(siteUrl())))
             CookieJar::shared().deleteCookie(cookie);
         CookieJar::shared().save();
     });
@@ -547,6 +582,22 @@ void Account::signOut() {
 }
 
 QVariantMap Account::importAll(const QJsonObject &session) {
+    // A SCANCORE sync server (scancore-web) keeps only the devices' snapshots,
+    // which hold the library, removals, progress and activity whole; the
+    // website's own library and history calls do not exist there.
+    bool devicesOnly = false;
+    try {
+        devicesOnly = getJson(QStringLiteral("/api/capabilities")).value("appSync").toObject().value("devicesOnly").toBool();
+    } catch (const Error &e) {
+        if (e.status() == 401)
+            throw;
+    }
+    if (devicesOnly) {
+        auto store = Sync::serverStore(siteUrl());
+        const auto merged = Sync::exchange(*store, QStringLiteral("account.devicesSeen")).value("merged").toInt();
+        return {{"libraryImported", 0}, {"historyImported", merged}, {"pushed", 0}, {"morePending", false}};
+    }
+
     int libraryImported = 0;
     int historyImported = 0;
     int pushed = 0;
@@ -574,8 +625,9 @@ QVariantMap Account::importAll(const QJsonObject &session) {
             }
             if (!Library::instance()->isSaved(id)) {
                 Library::upsertSeries(series);
-                Database::exec(QStringLiteral("INSERT OR IGNORE INTO library(series_id, category, added_at) VALUES(?, ?, ?)"),
-                               {id, categoryFor(entry.value("status").toString()), Database::now()});
+                Database::exec(QStringLiteral("INSERT OR IGNORE INTO library(series_id, category, added_at, changed_at) "
+                                              "VALUES(?, ?, ?, ?)"),
+                               {id, categoryFor(entry.value("status").toString()), Database::now(), Database::now()});
                 ++libraryImported;
             }
         }
@@ -596,12 +648,12 @@ QVariantMap Account::importAll(const QJsonObject &session) {
         }
         Request request;
         request.method = "DELETE";
-        request.url = QUrl(kSite + QStringLiteral("/api/library?seriesId=") + QString::fromLatin1(QUrl::toPercentEncoding(remote)));
+        request.url = QUrl(siteUrl() + QStringLiteral("/api/library?seriesId=") + QString::fromLatin1(QUrl::toPercentEncoding(remote)));
         request.headers = {{"Accept", "application/json"}};
         try {
             const auto response = Http::send(request);
             if (response.status == 401)
-                throw Error(QStringLiteral("Your scancore.onl session ended. Sign in again."), 401);
+                throw Error(QStringLiteral("Your %1 session ended. Sign in again.").arg(siteName()), 401);
             if (response.ok() || response.status == 404)
                 removalsDone.insert(id);
         } catch (const Error &e) {
@@ -619,10 +671,12 @@ QVariantMap Account::importAll(const QJsonObject &session) {
     // What this website accepts from the app; an older one gets neither.
     bool comicHistory = false;
     bool animeBatch = false;
+    bool appDevices = false;
     try {
         const auto appSync = getJson(QStringLiteral("/api/capabilities")).value("appSync").toObject();
         comicHistory = appSync.value("comicHistory").toBool();
         animeBatch = appSync.value("animeBatch").toBool();
+        appDevices = appSync.value("devices").toBool();
     } catch (const Error &) {
     }
 
@@ -714,7 +768,7 @@ QVariantMap Account::importAll(const QJsonObject &session) {
         const auto body = QJsonDocument(QJsonObject{{"sourceUrl", url}, {"status", statusFor(row.value("category").toString())}})
                               .toJson(QJsonDocument::Compact);
         try {
-            const auto response = Http::postJson(QUrl(kSite + QStringLiteral("/api/library")), body, {{"Accept", "application/json"}});
+            const auto response = Http::postJson(QUrl(siteUrl() + QStringLiteral("/api/library")), body, {{"Accept", "application/json"}});
             if (response.ok())
                 ++pushed;
             libraryRetry |= transientStatus(response.status);
@@ -727,7 +781,7 @@ QVariantMap Account::importAll(const QJsonObject &session) {
         for (const auto &url : comicUrls.mid(i, 120))
             urls.append(url);
         try {
-            const auto response = Http::postJson(QUrl(kSite + QStringLiteral("/api/library/import")),
+            const auto response = Http::postJson(QUrl(siteUrl() + QStringLiteral("/api/library/import")),
                                                  QJsonDocument(QJsonObject{{"urls", urls}}).toJson(QJsonDocument::Compact),
                                                  {{"Accept", "application/json"}});
             if (response.ok())
@@ -752,8 +806,21 @@ QVariantMap Account::importAll(const QJsonObject &session) {
             throw;
         qWarning().noquote() << "Anime progress sync:" << e.message();
     }
+    // Device snapshots, on websites that keep them: everything the website's
+    // own library does not know (novels, most comic sites, activity).
+    int devicesMerged = 0;
+    if (appDevices) {
+        try {
+            auto store = Sync::serverStore(siteUrl());
+            devicesMerged = Sync::exchange(*store, QStringLiteral("account.devicesSeen")).value("merged").toInt();
+        } catch (const Error &e) {
+            if (e.status() == 401)
+                throw;
+            qWarning().noquote() << "Device sync:" << e.message();
+        }
+    }
     return {{"libraryImported", libraryImported},
-            {"historyImported", historyImported + animePulled},
+            {"historyImported", historyImported + animePulled + devicesMerged},
             {"pushed", pushed + animePushed + comicsPushed},
             {"morePending", morePending}};
 }
@@ -768,7 +835,7 @@ Task *Account::sync() {
     auto *task = Task::run([]() -> QVariant {
         const auto session = getJson(QStringLiteral("/api/auth/session"));
         if (session.value("user").isNull())
-            throw Error(QStringLiteral("Your scancore.onl session ended. Sign in again."), 401);
+            throw Error(QStringLiteral("Your %1 session ended. Sign in again.").arg(siteName()), 401);
         return importAll(session);
     });
     // Kept alive here rather than by QML: a page that starts a sync and
@@ -783,7 +850,11 @@ Task *Account::sync() {
         // does not start another sync.
         if (task->ok()) {
             Database::setPref(QStringLiteral("account.lastSync"), Database::now());
+            // What the sync brought in is not a change to send back; without
+            // this every sync scheduled another a minute later.
+            const bool dirty = m_dirty;
             Library::instance()->notifyChanged();
+            m_dirty = dirty;
             // The website limits writes per minute; send the rest shortly.
             if (task->result().toMap().value(QStringLiteral("morePending")).toBool())
                 QTimer::singleShot(65000, this, [this] {

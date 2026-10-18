@@ -156,7 +156,7 @@ Item {
                     transform: Translate { id: heroShift }
 
                     Text {
-                        text: "#" + (page.spot + 1) + " trending"
+                        text: "#" + (page.spot + 1) + qsTr(" trending")
                         color: Theme.textMuted
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textXs
@@ -178,7 +178,7 @@ Item {
                         lineHeight: 1.0
                     }
                     Text {
-                        text: heroText.media ? [heroText.media.format, heroText.media.year, heroText.media.episodes ? heroText.media.episodes + " episodes" : "", heroText.media.score ? heroText.media.score + "%" : "", (heroText.media.genres || []).slice(0, 3).join(", ")].filter(Boolean).join("  ·  ") : ""
+                        text: heroText.media ? [heroText.media.format, heroText.media.year, heroText.media.episodes ? heroText.media.episodes + qsTr(" episodes") : "", heroText.media.score ? heroText.media.score + "%" : "", (heroText.media.genres || []).slice(0, 3).join(", ")].filter(Boolean).join("  ·  ") : ""
                         color: Theme.textMuted
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textMd
@@ -187,12 +187,12 @@ Item {
                         spacing: 10
                         ScButton {
                             variant: "primary"
-                            text: "Watch now"
+                            text: qsTr("Watch now")
                             iconName: "play"
                             onClicked: Router.openSeries(heroText.media, null)
                         }
                         ScButton {
-                            text: heroText.media && Library.revision >= 0 && Library.isSaved(heroText.media.id) ? "In library" : "Add to library"
+                            text: heroText.media && Library.revision >= 0 && Library.isSaved(heroText.media.id) ? qsTr("In library") : qsTr("Add to library")
                             iconName: "bookmark"
                             onClicked: {
                                 if (Library.isSaved(heroText.media.id)) Library.remove(heroText.media.id)
@@ -239,16 +239,16 @@ Item {
                     anchors.rightMargin: Theme.gutter
                     y: 24
                     width: 300
-                    placeholderText: "Search anime"
+                    placeholderText: qsTr("Search anime")
                     onSubmitted: (text) => Router.openAnimeBrowse({ q: text })
                 }
                 Row {
                     x: Theme.gutter
                     y: 24
                     spacing: 8
-                    ScButton { text: "Browse"; iconName: "compass"; compact: true; onClicked: Router.openAnimeBrowse({}) }
-                    ScButton { text: "Schedule"; iconName: "calendar"; compact: true; onClicked: Router.openAnimeSchedule() }
-                    ScButton { visible: Theme.compact; text: "Search"; iconName: "search"; compact: true; onClicked: Router.openAnimeBrowse({}) }
+                    ScButton { text: qsTr("Browse"); iconName: "compass"; compact: true; onClicked: Router.openAnimeBrowse({}) }
+                    ScButton { text: qsTr("Schedule"); iconName: "calendar"; compact: true; onClicked: Router.openAnimeSchedule() }
+                    ScButton { visible: Theme.compact; text: qsTr("Search"); iconName: "search"; compact: true; onClicked: Router.openAnimeBrowse({}) }
                 }
 
                 StateView {
@@ -259,43 +259,43 @@ Item {
             }
 
             Shelf {
-                title: "Continue watching"
+                title: qsTr("Continue watching")
                 items: page.history
-                subtitleFor: (it) => "Episode " + (it.unitNumber || it.unitKey || "")
+                subtitleFor: (it) => qsTr("Episode ") + (it.unitNumber || it.unitKey || "")
                 progressFor: (it) => it.completed ? 1 : (it.percent || 0)
                 onOpened: (it, cover) => Router.resume(it)
             }
             Shelf {
-                title: "Airing today"
-                actionText: "Full schedule"
+                title: qsTr("Airing today")
+                actionText: qsTr("Full schedule")
                 onAction: Router.openAnimeSchedule()
                 items: page.todayTask && page.todayTask.ok ? page.todayTask.result : []
                 loading: page.todayTask ? page.todayTask.loading : false
-                subtitleFor: (it) => "Ep " + it.airingEpisode + " · " + Qt.formatTime(new Date(it.airingAt * 1000), "hh:mm")
+                subtitleFor: (it) => qsTr("Ep ") + it.airingEpisode + " · " + Qt.formatTime(new Date(it.airingAt * 1000), "hh:mm")
                 onOpened: (it, cover) => Router.openSeries(it, cover)
             }
             Shelf {
-                title: "Trending now"
+                title: qsTr("Trending now")
                 items: page.home ? page.home.trending : []
                 loading: page.homeTask ? page.homeTask.loading : false
                 subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
                 onOpened: (it, cover) => Router.openSeries(it, cover)
             }
             Shelf {
-                title: page.home ? page.home.seasonName : "This season"
+                title: page.home ? page.home.seasonName : qsTr("This season")
                 items: page.home ? page.home.season : []
                 loading: page.homeTask ? page.homeTask.loading : false
-                subtitleFor: (it) => it.nextEpisode ? "Ep " + it.nextEpisode + " " + App.relativeTime(it.nextAiringAt) : [it.format, it.status].filter(Boolean).join(" · ")
+                subtitleFor: (it) => it.nextEpisode ? qsTr("Ep ") + it.nextEpisode + " " + App.relativeTime(it.nextAiringAt) : [it.format, it.status].filter(Boolean).join(" · ")
                 onOpened: (it, cover) => Router.openSeries(it, cover)
             }
             Shelf {
-                title: "All-time popular"
+                title: qsTr("All-time popular")
                 items: page.home ? page.home.popular : []
                 subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
                 onOpened: (it, cover) => Router.openSeries(it, cover)
             }
             Shelf {
-                title: "Top rated"
+                title: qsTr("Top rated")
                 items: page.home ? page.home.top : []
                 badgeFor: (it) => it.score ? it.score + "%" : ""
                 subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")

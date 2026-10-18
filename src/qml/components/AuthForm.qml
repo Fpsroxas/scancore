@@ -34,7 +34,7 @@ Column {
     }
 
     Segmented {
-        options: [{ value: "signin", label: "Sign in" }, { value: "signup", label: "Create account" }]
+        options: [{ value: "signin", label: qsTr("Sign in") }, { value: "signup", label: qsTr("Create account") }]
         value: form.mode
         onPicked: (v) => {
             form.mode = v
@@ -44,28 +44,28 @@ Column {
 
     FormField {
         id: email
-        label: "Email"
+        label: qsTr("Email")
         placeholder: "you@example.com"
         inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase
-        problem: text.length > 3 && !form.emailOk ? "Enter a valid email address" : ""
+        problem: text.length > 3 && !form.emailOk ? qsTr("Enter a valid email address") : ""
         onAccepted: form.mode === "signup" ? username.focusInput() : password.focusInput()
     }
 
     FormField {
         id: username
         visible: form.mode === "signup"
-        label: "Username"
-        placeholder: "Shown on comments and reviews"
+        label: qsTr("Username")
+        placeholder: qsTr("Shown on comments and reviews")
         inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
         problem: Account.usernameProblem(text)
-        hint: "3–32 letters, numbers or underscores"
+        hint: qsTr("3–32 letters, numbers or underscores")
         onAccepted: password.focusInput()
     }
 
     FormField {
         id: password
-        label: "Password"
-        placeholder: form.mode === "signin" ? "Your password" : "Choose a strong password"
+        label: qsTr("Password")
+        placeholder: form.mode === "signin" ? qsTr("Your password") : qsTr("Choose a strong password")
         echoMode: TextInput.Password
         onAccepted: form.submit()
     }
@@ -127,7 +127,7 @@ Column {
     ScButton {
         width: parent.width
         variant: "primary"
-        text: form.mode === "signin" ? "Sign in" : "Create account"
+        text: form.mode === "signin" ? qsTr("Sign in") : qsTr("Create account")
         loading: form.busy
         enabled: form.canSubmit
         onClicked: form.submit()
@@ -136,7 +136,8 @@ Column {
     Text {
         width: parent.width
         wrapMode: Text.Wrap
-        text: "Your account lives on scancore.onl. Your password is sent only there and is never stored by this app."
+        text: (Account.customSite ? qsTr("Your account lives on %1.") : qsTr("Your account lives on scancore.onl."))
+            .arg(String(Account.site).replace(/^https?:\/\//, "")) + " " + qsTr("Your password is sent only there and is never stored by this app.")
         color: Theme.textFaint
         font.family: Theme.fontSans
         font.pixelSize: Theme.textXs + 1

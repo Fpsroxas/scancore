@@ -1,0 +1,16 @@
+<p>SCANCORE brings comics, web novels and anime together in one fast app. Everything runs on your phone: your library, history and settings stay there unless you choose to sync them.</p>
+<p><b>Comics</b> — manhwa, manga and webtoons from Asura, Webtoon, MangaDex and more, found through Comick's catalogue so you can search almost any series by any of its names. Read in a vertical strip or page by page, with two-page spreads, border trimming and zoom, and settings that each series can keep for itself.</p>
+<p><b>Novels</b> — Royal Road and the big web-novel sites, with a reader you can tune: fonts, spacing, paper and sepia themes.</p>
+<p><b>Anime</b> — trending, seasonal and top lists from AniList, a weekly schedule, and episodes that resume where you stopped, with skip buttons for intros and endings.</p>
+<p><b>Your files</b> — CBZ, CBR, 7z and PDF comics and EPUB books on your device.</p>
+<p><b>Everything else</b></p>
+<ul>
+<li>One library with history, download for offline reading and new-chapter checks</li>
+<li>Activity: time spent, streaks and a year in review</li>
+<li>Sync with scancore.onl, your own server, WebDAV or a folder</li>
+<li>Keep AniList, MyAnimeList and Comick up to date as you read and watch</li>
+<li>Bring your library from Mihon or Tachiyomi backups, AniList, MyAnimeList or Comick</li>
+<li>Themes with your own colours and background pictures, and a gallery of shared ones</li>
+<li>In English, Spanish, French, Brazilian Portuguese and Indonesian</li>
+</ul>
+<p>SCANCORE is free and open source (MIT). It hosts no content: it reads public websites the way a browser does.</p>

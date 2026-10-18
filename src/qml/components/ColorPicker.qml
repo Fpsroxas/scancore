@@ -8,7 +8,7 @@ import ScanCore
 // colour it opened with.
 Popup {
     id: picker
-    property string title: "Colour"
+    property string title: qsTr("Colour")
     property var swatches: ["#0b0b0f", "#15171d", "#1b2230", "#14231d", "#2a1621", "#231a12",
                             "#f4f1ea", "#eef2f7", "#7c9cff", "#a78bfa", "#34d399", "#fb923c", "#fb7185", "#38bdf8"]
     signal changed(color value)
@@ -84,7 +84,7 @@ Popup {
                 iconName: "x"
                 diameter: 30
                 iconSize: 15
-                tip: "Done"
+                tip: qsTr("Done")
                 onClicked: picker.close()
             }
         }
@@ -166,7 +166,7 @@ Popup {
                 width: parent.width
                 height: 16
                 Text {
-                    text: "Brightness"
+                    text: qsTr("Brightness")
                     color: Theme.textMuted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textXs + 1
@@ -273,7 +273,7 @@ Popup {
             }
             ScButton {
                 id: revert
-                text: "Revert"
+                text: qsTr("Revert")
                 compact: true
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: picker.setColor(picker.original)

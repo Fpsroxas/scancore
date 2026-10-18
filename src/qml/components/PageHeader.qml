@@ -21,7 +21,7 @@ Item {
         x: Theme.gutter - 8
         y: 26
         iconName: "arrow-left"
-        tip: "Back"
+        tip: qsTr("Back")
         onClicked: Router.back()
     }
 

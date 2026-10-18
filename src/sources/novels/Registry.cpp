@@ -2,6 +2,7 @@
 
 #include "LnCrawl.h"
 #include "sources/Manifest.h"
+#include "sources/local/LocalSources.h"
 
 #include <QFile>
 #include <QJsonDocument>
@@ -66,6 +67,13 @@ void Registry::rebuild() {
             }
         }
     }
+    // EPUB books on this device.
+    SourceConfig local;
+    local.key = QStringLiteral("local");
+    local.label = QStringLiteral("On this device");
+    local.engine = QStringLiteral("local");
+    local.base = QStringLiteral("file://");
+    sources.append(std::shared_ptr<Source>(local::createNovelSource(local)));
     QWriteLocker lock(&g_lock);
     g_sources = sources;
 }

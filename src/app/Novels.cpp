@@ -97,7 +97,8 @@ Task *Novels::discover() {
 
 Task *Novels::search(const QString &query, const QString &only) {
     return Task::run([query = query.simplified(), only]() -> QVariant {
-        if (query.isEmpty())
+        // Books on this device are listed without a search.
+        if (query.isEmpty() && only != QLatin1String("local"))
             return QVariantMap{{"books", QVariantList()}, {"providers", QVariantList()}};
         // A pasted book link opens that book directly.
         if (query.startsWith(QLatin1String("http")))

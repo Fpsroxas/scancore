@@ -1,0 +1,14 @@
+{
+  "format": "scancore-theme",
+  "version": 1,
+  "name": "Midnight Ink",
+  "app": "SCANCORE 1.3.0",
+  "colors": {
+    "window": "#0f1424",
+    "accent": "#8fa8ff"
+  },
+  "window": {
+    "opacity": 1,
+    "panels": 0.85
+  }
+}

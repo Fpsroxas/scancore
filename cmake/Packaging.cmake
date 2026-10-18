@@ -7,6 +7,9 @@ if(UNIX AND NOT APPLE AND NOT ANDROID)
         RENAME com.mediumdev.scancore.svg)
     install(FILES ${PROJECT_SOURCE_DIR}/packaging/linux/com.mediumdev.scancore.metainfo.xml
         DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
+    # .sct theme files.
+    install(FILES ${PROJECT_SOURCE_DIR}/packaging/linux/com.mediumdev.scancore.xml
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
 endif()
 
 # CPack: a tarball everywhere; installers are built by the release workflow

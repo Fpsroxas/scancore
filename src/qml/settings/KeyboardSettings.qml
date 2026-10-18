@@ -4,8 +4,8 @@ import ScanCore
 
 SettingsPane {
     id: pane
-    title: "Keyboard"
-    subtitle: "Shortcuts for the app, readers and player"
+    title: qsTr("Keyboard")
+    subtitle: qsTr("Shortcuts for the app, readers and player")
     iconName: "keyboard"
 
     // Gives `id` the keys `sequence`, taking them from an action that
@@ -14,24 +14,24 @@ SettingsPane {
         const other = Keymap.conflict(id, sequence)
         if (other) {
             Keymap.set(other.id, Keymap.sequences(other.id).filter(s => !Customize.sameKeys(s, sequence)))
-            Router.toast(Customize.keyText(sequence) + " moved from “" + other.label + "”")
+            Router.toast(Customize.keyText(sequence) + qsTr(" moved from “") + other.label + "”")
         }
         Keymap.set(id, [sequence])
     }
 
     SettingsGroup {
-        title: "Shortcuts"
+        title: qsTr("Shortcuts")
         note: "Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. "
-            + "Escape, the arrow keys and scrolling keys always work as they do."
+            + qsTr("Escape, the arrow keys and scrolling keys always work as they do.")
         SettingRow {
             iconName: "keyboard"
-            title: "Every shortcut on one sheet"
-            description: "Press " + (Keymap.labels("shortcuts")[0] || "?") + " anywhere to see them."
+            title: qsTr("Every shortcut on one sheet")
+            description: qsTr("Press ") + (Keymap.labels("shortcuts")[0] || "?") + qsTr(" anywhere to see them.")
             Row {
                 spacing: 8
-                ScButton { text: "Show"; onClicked: Router.shell.openShortcuts() }
+                ScButton { text: qsTr("Show"); onClicked: Router.shell.openShortcuts() }
                 ScButton {
-                    text: "Reset all"
+                    text: qsTr("Reset all")
                     variant: "ghost"
                     enabled: Object.keys(Keymap.changed).length > 0
                     onClicked: Keymap.resetAll()
@@ -51,7 +51,7 @@ SettingsPane {
                     id: row
                     required property var modelData
                     title: modelData.label
-                    description: Keymap.isDefault(modelData.id) ? "" : "Default: "
+                    description: Keymap.isDefault(modelData.id) ? "" : qsTr("Default: ")
                         + (modelData.keys.length ? modelData.keys.map(k => Customize.keyText(k)).join(", ") : "none")
                     Row {
                         spacing: 4
@@ -66,7 +66,7 @@ SettingsPane {
                             iconName: "undo-2"
                             iconSize: 15
                             diameter: 32
-                            tip: "Back to the default"
+                            tip: qsTr("Back to the default")
                             onClicked: Keymap.reset(row.modelData.id)
                         }
                     }

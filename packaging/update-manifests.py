@@ -61,7 +61,8 @@ depends=('gcc-libs' 'glibc' 'qt6-base' 'qt6-declarative' 'qt6-imageformats' 'qt6
 optdepends=(
   'qt6-wayland: native Wayland platform integration'
 )
-makedepends=('cmake' 'ninja')
+# qt6-tools: lrelease, for the translations.
+makedepends=('cmake' 'ninja' 'qt6-tools')
 source=(
   "scancore-${{pkgver}}.tar.gz::https://github.com/{REPO}/archive/refs/tags/v${{pkgver}}.tar.gz"
   'lexbor-{LEXBOR[0]}.tar.gz::https://github.com/lexbor/lexbor/archive/refs/tags/v{LEXBOR[0]}.tar.gz'
@@ -100,6 +101,7 @@ def srcinfo(version, source_sha):
 	license = MIT
 	makedepends = cmake
 	makedepends = ninja
+	makedepends = qt6-tools
 	depends = gcc-libs
 	depends = glibc
 	depends = qt6-base
@@ -145,6 +147,8 @@ MinimumOSVersion: 10.0.0.0
 InstallerType: inno
 Scope: machine
 UpgradeBehavior: install
+FileExtensions:
+  - sct
 Installers:
   - Architecture: x64
     InstallerUrl: https://github.com/{REPO}/releases/download/v{version}/SCANCORE-{version}-windows-x64-setup.exe

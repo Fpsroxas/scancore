@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "themes": [
+    {
+      "id": "midnight-ink",
+      "name": "Midnight Ink",
+      "author": "SCANCORE",
+      "description": "Deep navy with a soft periwinkle accent.",
+      "window": "#0f1424",
+      "accent": "#8fa8ff",
+      "file": "midnight-ink.sct"
+    },
+    {
+      "id": "sakura",
+      "name": "Sakura",
+      "author": "SCANCORE",
+      "description": "Dusky plum with cherry-blossom pink.",
+      "window": "#1d1219",
+      "accent": "#ff8fb8",
+      "file": "sakura.sct"
+    },
+    {
+      "id": "evergreen",
+      "name": "Evergreen",
+      "author": "SCANCORE",
+      "description": "Forest green for long reading nights.",
+      "window": "#0f1a15",
+      "accent": "#5fd39a",
+      "file": "evergreen.sct"
+    },
+    {
+      "id": "ember",
+      "name": "Ember",
+      "author": "SCANCORE",
+      "description": "Warm charcoal with a glowing orange.",
+      "window": "#1a1310",
+      "accent": "#ff9a4d",
+      "file": "ember.sct"
+    },
+    {
+      "id": "deep-sea",
+      "name": "Deep Sea",
+      "author": "SCANCORE",
+      "description": "Teal depths with an aqua accent.",
+      "window": "#0b181c",
+      "accent": "#3fd0d4",
+      "file": "deep-sea.sct"
+    },
+    {
+      "id": "paper",
+      "name": "Paper",
+      "author": "SCANCORE",
+      "description": "Light, warm and easy on the eyes.",
+      "window": "#f4efe6",
+      "accent": "#b0582f",
+      "file": "paper.sct"
+    },
+    {
+      "id": "aurora",
+      "name": "Aurora",
+      "author": "SCANCORE",
+      "description": "Northern lights behind see-through panels.",
+      "window": "#0d1220",
+      "accent": "#7ef0c4",
+      "file": "aurora.sct",
+      "background": true,
+      "preview": "aurora.jpg"
+    },
+    {
+      "id": "dusk",
+      "name": "Dusk",
+      "author": "SCANCORE",
+      "description": "A sunset gradient behind see-through panels.",
+      "window": "#1a1020",
+      "accent": "#ffb36b",
+      "file": "dusk.sct",
+      "background": true,
+      "preview": "dusk.jpg"
+    }
+  ]
+}

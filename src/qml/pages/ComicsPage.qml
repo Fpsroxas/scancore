@@ -21,7 +21,15 @@ Item {
         function onChanged() { refreshHistory.restart() }
     }
     Timer { id: refreshHistory; interval: 500; onTriggered: page.historyTask = Library.history("comic", 16) }
-    readonly property bool searching: query.length > 0
+    // Files on this device are listed without a search.
+    // "All sources" searches Comick's catalogue, then finds the pick on a source.
+    readonly property bool useCatalog: source === "all" && App.settings.comickCatalog !== false
+    // The catalogue could not be reached, so the sources were searched instead.
+    property bool catalogFailed: false
+    readonly property bool catalogResults: !!searchTask && searchTask.ok && !catalogFailed && useCatalog && query.length > 0
+    readonly property bool browsingLocal: source === "local" && query.length === 0
+    readonly property bool searching: query.length > 0 || source === "local"
+    Component.onCompleted: if (source === "local") run("")
 
     function search(text) {
         field.text = text
@@ -37,9 +45,22 @@ Item {
         }
         query = trimmed
         if (query.length > 0) recent.remember(query)
-        searchTask = query.length > 0 ? Comics.search(query, source) : null
+        catalogFailed = false
+        searchTask = query.length > 0 && useCatalog ? Comics.catalog(query)
+            : query.length > 0 || source === "local" ? Comics.search(query, source) : null
         flick.scrollTo(0)
     }
+
+    Connections {
+        target: page.searchTask
+        function onFailed() {
+            if (!page.useCatalog || page.catalogFailed || page.query.length === 0) return
+            page.catalogFailed = true
+            page.searchTask = Comics.search(page.query, "all")
+        }
+    }
+
+    ReadFromDialog { id: readFrom }
 
     readonly property var sources: Comics.sources().filter(s => s.enabled && (!s.nsfw || App.settings.showNsfwSources))
 
@@ -54,8 +75,8 @@ Item {
             spacing: 26
 
             PageHeader {
-                title: "Comics"
-                subtitle: page.sources.length + " sources · manhwa, manga and webtoons"
+                title: qsTr("Comics")
+                subtitle: page.sources.length + qsTr(" sources · manhwa, manga and webtoons")
             }
 
             SearchField {
@@ -63,19 +84,19 @@ Item {
                 x: Theme.gutter
                 width: Math.min(parent.width - 2 * Theme.gutter, 760)
                 large: true
-                placeholderText: "Search titles across every source"
+                placeholderText: page.useCatalog ? qsTr("Search every manhwa, manga and comic") : qsTr("Search titles across every source")
                 onSubmitted: (text) => page.run(text)
                 onTextChanged: if (text.length === 0 && page.query.length > 0) page.run("")
             }
 
             ChipRow {
                 Chip {
-                    text: "All sources"
+                    text: qsTr("All sources")
                     selected: page.source === "all"
                     onClicked: {
                         page.source = "all"
                         App.setSetting("comicSource", "all")
-                        if (page.searching) page.run(page.query)
+                        page.run(page.query)
                     }
                 }
                 Repeater {
@@ -92,7 +113,7 @@ Item {
                         onClicked: {
                             page.source = modelData.key
                             App.setSetting("comicSource", modelData.key)
-                            if (page.searching) page.run(page.query)
+                            if (page.searching || modelData.key === "local") page.run(page.query)
                         }
                     }
                 }
@@ -110,8 +131,11 @@ Item {
                     visible: page.searchTask && page.searchTask.ok
                     Text {
                         x: Theme.gutter
-                        text: page.searchTask && page.searchTask.ok
-                              ? page.searchTask.result.comics.length + " results for “" + page.query + "”" : ""
+                        text: !page.searchTask || !page.searchTask.ok ? ""
+                            : page.browsingLocal ? page.searchTask.result.comics.length + qsTr(" on this device")
+                            : page.catalogResults ? page.searchTask.result.comics.length + qsTr(" titles for “") + page.query + qsTr("” from Comick's catalogue")
+                            : page.searchTask.result.comics.length + qsTr(" results for “") + page.query + "”"
+                                + (page.catalogFailed ? qsTr(" · Comick is unavailable, so your sources were searched") : "")
                         color: Theme.textMuted
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm
@@ -122,7 +146,7 @@ Item {
                         readonly property var failed: page.searchTask && page.searchTask.ok
                             ? page.searchTask.result.providers.filter(p => !p.ok) : []
                         visible: failed.length > 0
-                        text: failed.map(p => p.label).join(", ") + (failed.length === 1 ? " is" : " are") + " unavailable"
+                        text: (failed.length === 1 ? qsTr("%1 is unavailable") : qsTr("%1 are unavailable")).arg(failed.map(p => p.label).join(", "))
                         color: Theme.warning
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm
@@ -146,7 +170,7 @@ Item {
                             required property var modelData
                             compact: true
                             iconName: "globe"
-                            text: "Pass " + modelData.label + "'s browser check"
+                            text: qsTr("Pass %1's browser check").arg(modelData.label)
                             onClicked: Router.openSiteCheck(modelData.verifyUrl)
                         }
                     }
@@ -154,18 +178,29 @@ Item {
 
                 CoverGrid {
                     items: page.searchTask && page.searchTask.ok ? page.searchTask.result.comics : []
-                    subtitleFor: (it) => it.sourceLabel + (it.type ? " · " + it.type : "")
-                    onOpened: (it, cover) => Router.openSeries(it, cover)
+                    subtitleFor: (it) => it.catalog
+                        ? [it.type, it.status, it.lastChapter ? qsTr("Ch. ") + it.lastChapter : ""].filter(s => s).join(" · ")
+                        : it.sourceLabel + (it.type ? " · " + it.type : "")
+                    onOpened: (it, cover) => it.catalog ? readFrom.start(it) : Router.openSeries(it, cover)
                 }
 
                 StateView {
                     width: parent.width
                     task: page.searchTask
                     empty: page.searchTask && page.searchTask.ok && page.searchTask.result.comics.length === 0
-                    emptyTitle: "No comics found"
-                    emptyText: "Try a shorter title or another source. You can also paste a series link."
-                    emptyIcon: "search"
+                    emptyTitle: page.browsingLocal ? qsTr("No comics on this device yet") : qsTr("No comics found")
+                    emptyText: page.browsingLocal
+                        ? qsTr("Choose the folders that hold your comics in Settings → Sources. Folders of images, CBZ, CBR and PDF files all work.")
+                        : qsTr("Try a shorter title or another source. You can also paste a series link.")
+                    emptyIcon: page.browsingLocal ? "folder-open" : "search"
                     onRetry: page.run(page.query)
+                }
+                ScButton {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    visible: page.browsingLocal && page.searchTask && page.searchTask.ok && page.searchTask.result.comics.length === 0
+                    text: qsTr("Choose folders")
+                    iconName: "folder-open"
+                    onClicked: Router.openSettings("sources")
                 }
             }
 
@@ -182,7 +217,7 @@ Item {
                 }
 
                 Shelf {
-                    title: "Continue reading"
+                    title: qsTr("Continue reading")
                     items: page.history
                     subtitleFor: (it) => it.unitTitle || ""
                     progressFor: (it) => it.completed ? 1 : (it.percent || 0)
@@ -194,7 +229,7 @@ Item {
                     spacing: 16
                     Text {
                         x: Theme.gutter
-                        text: "Latest chapters"
+                        text: qsTr("Latest chapters")
                         color: Theme.text
                         font.family: Theme.fontDisplay
                         font.pixelSize: Theme.textXl
@@ -213,7 +248,7 @@ Item {
                     ScButton {
                         anchors.horizontalCenter: parent.horizontalCenter
                         visible: page.latestTask && page.latestTask.ok && page.latestLimit < 120
-                        text: "Show more"
+                        text: qsTr("Show more")
                         onClicked: {
                             page.latestLimit += 36
                             page.latestTask = Comics.latest(page.latestLimit)

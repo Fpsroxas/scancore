@@ -9,7 +9,21 @@ QtObject {
     property string section: "home"
 
     function go(name) { if (shell) shell.goSection(name) }
+    // A page on top of the current section's stack.
+    function push(path, props) { if (shell) shell.push(path, props || {}) }
     function back() { if (shell) shell.back() }
+    // A comic or book file: an archive, folder or PDF of pages, or an EPUB.
+    function openFile(url) {
+        const address = String(url)
+        const name = decodeURIComponent(address.replace(/[?#].*$/, "").replace(/\/$/, "").replace(/^.*\//, ""))
+        const media = /\.epub$/i.test(name) ? "novel" : "comic"
+        openSeries({ media: media, sourceUrl: address, source: "local", title: name.replace(/\.[^.]+$/, "").replace(/_/g, " ") }, null)
+    }
+    // Settings, at one category.
+    function openSettings(category) {
+        App.setSetting("settingsCategory", category)
+        go("settings")
+    }
     function toast(message, kind) { if (shell) shell.toast(message, kind || "info") }
 
     // item: a search/library map with id, media, sourceUrl, title, cover.
@@ -70,11 +84,11 @@ QtObject {
             App.setSetting("accent", "custom")
         }
         App.setSetting("theme", "custom")
-        const name = t.name ? "“" + t.name + "”" : "The theme"
+        const name = t.name ? "“" + t.name + "”" : qsTr("The theme")
         if (t.windowOpacity < 1 && !Customize.translucentWindow && Customize.canRestart)
-            toast(name + " is on. Restart SCANCORE to make the window see-through.", "success")
+            toast(name + qsTr(" is on. Restart SCANCORE to make the window see-through."), "success")
         else
-            toast(name + " is on", "success")
+            toast(name + qsTr(" is on"), "success")
     }
 
     // Resume an item from history or the library at its last unit.

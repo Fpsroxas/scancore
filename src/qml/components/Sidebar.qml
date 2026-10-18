@@ -18,14 +18,15 @@ Rectangle {
     signal openPalette()
 
     readonly property var sections: [
-        { key: "home", label: "Home", icon: "house" },
-        { key: "comics", label: "Comics", icon: "book-open" },
-        { key: "novels", label: "Novels", icon: "book-text" },
-        { key: "anime", label: "Anime", icon: "tv" },
+        { key: "home", label: qsTr("Home"), icon: "house" },
+        { key: "comics", label: qsTr("Comics"), icon: "book-open" },
+        { key: "novels", label: qsTr("Novels"), icon: "book-text" },
+        { key: "anime", label: qsTr("Anime"), icon: "tv" },
         { key: "divider" },
-        { key: "library", label: "Library", icon: "library" },
-        { key: "history", label: "History", icon: "history" },
-        { key: "downloads", label: "Downloads", icon: "download" }
+        { key: "library", label: qsTr("Library"), icon: "library" },
+        { key: "history", label: qsTr("History"), icon: "history" },
+        { key: "activity", label: qsTr("Activity"), icon: "activity" },
+        { key: "downloads", label: qsTr("Downloads"), icon: "download" }
     ]
 
     implicitWidth: collapsed ? 72 : 228
@@ -108,7 +109,7 @@ Rectangle {
                 width: parent.width - x - kbdBadge.width - 16
                 elide: Text.ElideRight
                 anchors.verticalCenter: parent.verticalCenter
-                text: "Search everything"
+                text: qsTr("Search everything")
                 color: Theme.textFaint
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textSm
@@ -139,7 +140,7 @@ Rectangle {
             }
         }
         ToolTip.visible: sidebar.collapsed && hovered
-        ToolTip.text: "Search" + (Keymap.labels("palette").length ? " (" + Keymap.labels("palette")[0] + ")" : "")
+        ToolTip.text: qsTr("Search") + (Keymap.labels("palette").length ? " (" + Keymap.labels("palette")[0] + ")" : "")
     }
 
     // Scrolls when the window is too short for every section above the
@@ -317,7 +318,7 @@ Rectangle {
                 Text {
                     x: 44
                     anchors.verticalCenter: parent.verticalCenter
-                    text: "Settings"
+                    text: qsTr("Settings")
                     color: sidebar.current === "settings" ? Theme.text : Theme.textMuted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textMd
@@ -354,7 +355,7 @@ Rectangle {
                 Text {
                     x: 44
                     anchors.verticalCenter: parent.verticalCenter
-                    text: "Collapse"
+                    text: qsTr("Collapse")
                     color: Theme.textFaint
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm

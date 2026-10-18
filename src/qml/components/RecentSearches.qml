@@ -28,7 +28,7 @@ Column {
         Text {
             x: Theme.gutter
             anchors.verticalCenter: parent.verticalCenter
-            text: "Recent searches"
+            text: qsTr("Recent searches")
             color: Theme.textFaint
             font.family: Theme.fontSans
             font.pixelSize: Theme.textXs
@@ -42,7 +42,7 @@ Column {
             anchors.verticalCenter: parent.verticalCenter
             variant: "ghost"
             compact: true
-            text: "Clear"
+            text: qsTr("Clear")
             onClicked: App.setSetting(root.key, [])
         }
     }

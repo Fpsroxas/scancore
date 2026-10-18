@@ -88,7 +88,7 @@ public:
     QString key() const { return m_config.key; }
     QString label() const { return m_config.label; }
     bool enabled() const { return m_config.enabled; }
-    bool owns(const QUrl &url) const;
+    virtual bool owns(const QUrl &url) const;
 
     virtual QList<Summary> search(const QString &query) = 0;
     virtual QList<Chapter> chapters(const QString &seriesUrl) = 0;

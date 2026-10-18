@@ -1,7 +1,9 @@
 #include "Library.h"
 
+#include "Activity.h"
 #include "Comics.h"
 #include "Novels.h"
+#include "Trackers.h"
 #include "core/Database.h"
 #include "core/Parallel.h"
 
@@ -131,21 +133,31 @@ void Library::save(const QVariantMap &series, const QString &category) {
     upsertSeries(series);
     const auto id = series.value(QStringLiteral("id")).toString();
     const auto known = Database::scalar(QStringLiteral("SELECT COUNT(*) FROM units WHERE series_id = ?"), {id}).toInt();
-    Database::exec(QStringLiteral("INSERT INTO library(series_id, category, added_at, known_units) VALUES(?, ?, ?, ?) "
-                                  "ON CONFLICT(series_id) DO UPDATE SET category = excluded.category"),
-                   {id, category, Database::now(), known});
+    Database::transaction([&] {
+        Database::query(QStringLiteral("INSERT INTO library(series_id, category, added_at, known_units, changed_at) "
+                                       "VALUES(?, ?, ?, ?, ?) ON CONFLICT(series_id) DO UPDATE SET "
+                                       "category = excluded.category, changed_at = excluded.changed_at"),
+                        {id, category, Database::now(), known, Database::now()});
+        Database::query(QStringLiteral("DELETE FROM library_removed WHERE series_id = ?"), {id});
+    });
     notifyChanged();
     emit saved(id);
 }
 
 void Library::remove(const QString &seriesId) {
-    Database::exec(QStringLiteral("DELETE FROM library WHERE series_id = ?"), {seriesId});
+    // The removal is kept so file sync can remove it on other devices too.
+    Database::transaction([&] {
+        Database::query(QStringLiteral("DELETE FROM library WHERE series_id = ?"), {seriesId});
+        Database::query(QStringLiteral("INSERT OR REPLACE INTO library_removed(series_id, removed_at) VALUES(?, ?)"),
+                        {seriesId, Database::now()});
+    });
     notifyChanged();
     emit removed(seriesId);
 }
 
 void Library::setCategory(const QString &seriesId, const QString &category) {
-    Database::exec(QStringLiteral("UPDATE library SET category = ? WHERE series_id = ?"), {category, seriesId});
+    Database::exec(QStringLiteral("UPDATE library SET category = ?, changed_at = ? WHERE series_id = ?"),
+                   {category, Database::now(), seriesId});
     notifyChanged();
 }
 
@@ -211,6 +223,9 @@ void Library::recordProgress(const QVariantMap &series, const QVariantMap &unit,
     if (seriesId.isEmpty() || key.isEmpty())
         return;
     upsertSeries(series);
+    const bool wasCompleted =
+        Database::scalar(QStringLiteral("SELECT completed FROM progress WHERE series_id = ? AND unit_key = ?"), {seriesId, key})
+            .toBool();
     Database::exec(QStringLiteral(R"(
         INSERT INTO progress(series_id, unit_key, unit_title, unit_number, unit_url, position, percent, completed, updated_at)
         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -222,6 +237,11 @@ void Library::recordProgress(const QVariantMap &series, const QVariantMap &unit,
                    {seriesId, key, unit.value(QStringLiteral("title")).toString(),
                     unit.value(QStringLiteral("number")).toString(), unit.value(QStringLiteral("url")).toString(),
                     json(position), std::clamp(percent, 0.0, 1.0), completed ? 1 : 0, Database::now()});
+    // Finished just now, by reading or watching (not marked by hand).
+    if (completed && !wasCompleted) {
+        Activity::unitFinished(seriesId.section(QLatin1Char(':'), 0, 0));
+        Trackers::unitFinished(seriesId);
+    }
     notifyChanged();
 }
 
@@ -245,6 +265,9 @@ void Library::markUnits(const QVariantMap &series, const QVariantList &units, bo
                                 {seriesId, u.value(QStringLiteral("key")).toString()});
         }
     });
+    // Marked as read by hand: lists on AniList and MyAnimeList follow.
+    if (completed)
+        Trackers::unitFinished(seriesId);
     notifyChanged();
 }
 

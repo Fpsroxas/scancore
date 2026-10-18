@@ -2,22 +2,22 @@ import QtQuick
 import ScanCore
 
 SettingsPane {
-    title: "Anime"
-    subtitle: "Playback and skipping"
+    title: qsTr("Anime")
+    subtitle: qsTr("Playback and skipping")
     iconName: "tv"
 
     SettingsGroup {
-        title: "Player"
-        note: "Episodes resume where you stopped. Skip times come from AniSkip when someone has submitted them."
+        title: qsTr("Player")
+        note: qsTr("Episodes resume where you stopped. Skip times come from AniSkip when someone has submitted them.")
         SettingRow {
             iconName: "skip-forward"
-            title: "Play the next episode automatically"
-            description: "Starts after a short countdown you can cancel."
+            title: qsTr("Play the next episode automatically")
+            description: qsTr("Starts after a short countdown you can cancel.")
             Toggle { checked: App.settings.autoNext !== false; onToggled: App.setSetting("autoNext", checked) }
         }
         SettingRow {
             iconName: "clock"
-            title: "Countdown before the next episode"
+            title: qsTr("Countdown before the next episode")
             enabled: App.settings.autoNext !== false
             opacity: enabled ? 1 : 0.45
             Segmented {
@@ -28,14 +28,14 @@ SettingsPane {
         }
         SettingRow {
             iconName: "rotate-ccw"
-            title: "Skip intros and recaps automatically"
-            description: "Otherwise a Skip button appears while they play."
+            title: qsTr("Skip intros and recaps automatically")
+            description: qsTr("Otherwise a Skip button appears while they play.")
             Toggle { checked: App.settings.autoSkip === true; onToggled: App.setSetting("autoSkip", checked) }
         }
         SettingRow {
             iconName: "skip-forward"
-            title: "Skip endings automatically"
-            description: "Goes straight to the next episode's countdown when the credits start."
+            title: qsTr("Skip endings automatically")
+            description: qsTr("Goes straight to the next episode's countdown when the credits start.")
             Toggle { checked: App.settings.autoSkipEndings === true; onToggled: App.setSetting("autoSkipEndings", checked) }
         }
     }

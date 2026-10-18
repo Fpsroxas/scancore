@@ -23,18 +23,18 @@ Rectangle {
             x: 16
             anchors.verticalCenter: parent.verticalCenter
             spacing: 12
-            IconButton { iconName: "arrow-left"; tip: "Close"; onClicked: Router.back() }
+            IconButton { iconName: "arrow-left"; tip: qsTr("Close"); onClicked: Router.back() }
             Column {
                 anchors.verticalCenter: parent.verticalCenter
                 Text {
-                    text: "Browser check for " + page.host
+                    text: qsTr("Browser check for ") + page.host
                     color: Theme.text
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textMd
                     font.weight: Font.DemiBold
                 }
                 Text {
-                    text: "Complete any check the site shows. When its normal page appears, press Done."
+                    text: qsTr("Complete any check the site shows. When its normal page appears, press Done.")
                     color: Theme.textMuted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -46,13 +46,13 @@ Rectangle {
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
             spacing: 8
-            IconButton { iconName: "refresh-cw"; tip: "Reload"; onClicked: if (loader.item) loader.item.reload() }
+            IconButton { iconName: "refresh-cw"; tip: qsTr("Reload"); onClicked: if (loader.item) loader.item.reload() }
             ScButton {
                 variant: "primary"
-                text: "Done"
+                text: qsTr("Done")
                 iconName: "check"
                 onClicked: {
-                    Router.toast("Try again now; " + page.host + " should load.", "success")
+                    Router.toast("Try again now; " + page.host + qsTr(" should load."), "success")
                     Router.back()
                 }
             }
@@ -72,7 +72,7 @@ Rectangle {
     Text {
         anchors.centerIn: parent
         visible: !App.webEngine
-        text: "This build has no embedded browser. Open " + page.host + " in your browser instead."
+        text: qsTr("This build has no embedded browser. Open ") + page.host + qsTr(" in your browser instead.")
         color: Theme.textMuted
         font.family: Theme.fontSans
         font.pixelSize: Theme.textMd

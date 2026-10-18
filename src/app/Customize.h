@@ -36,10 +36,24 @@ class Customize : public QObject {
     Q_PROPERTY(bool translucentWindow READ translucentWindow CONSTANT)
     // SCANCORE can start itself again (not inside Flatpak or on phones).
     Q_PROPERTY(bool canRestart READ canRestart CONSTANT)
+    // The interface language: "system", or one of `languages`.
+    Q_PROPERTY(QString language READ language NOTIFY languageChanged)
+    // [{value, label}], each in its own language.
+    Q_PROPERTY(QVariantList languages READ languages CONSTANT)
 
 public:
     static Customize *instance();
-    static Customize *create(QQmlEngine *, QJSEngine *) { return instance(); }
+    static Customize *create(QQmlEngine *engine, QJSEngine *) {
+        instance()->m_engine = engine;
+        return instance();
+    }
+
+    // Loads the saved language's translation (main(), before the UI).
+    static void applyLanguage();
+    QString language() const;
+    QVariantList languages() const;
+    // Switches the language now: the whole interface is redrawn in it.
+    Q_INVOKABLE void setLanguage(const QString &code);
 
     // Whether the saved theme asks for a see-through window; main() then
     // gives windows an alpha channel before creating any.
@@ -64,11 +78,21 @@ public:
     Q_INVOKABLE sc::Task *exportTheme(const QVariantMap &theme, const QUrl &file);
     // A theme map ready for the customTheme setting, plus "accent".
     Q_INVOKABLE sc::Task *importTheme(const QUrl &file);
+    // The themes people have shared in the SCANCORE repository (themes/):
+    // [{id, name, author, description, window, accent, preview, file}].
+    Q_INVOKABLE sc::Task *gallery();
+    // Downloads one from the gallery; the result is what importTheme gives.
+    Q_INVOKABLE sc::Task *installTheme(const QString &url);
 
     Q_INVOKABLE void restart();
 
+signals:
+    void languageChanged();
+
 private:
     explicit Customize(QObject *parent = nullptr) : QObject(parent) {}
+
+    QQmlEngine *m_engine = nullptr;
 };
 
 } // namespace sc

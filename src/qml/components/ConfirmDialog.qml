@@ -67,7 +67,7 @@ Dialog {
             anchors.right: parent.right
             spacing: 8
             ScButton {
-                text: "Cancel"
+                text: qsTr("Cancel")
                 onClicked: dialog.close()
             }
             ScButton {

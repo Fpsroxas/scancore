@@ -23,6 +23,14 @@ public:
 
     // {comics: [...], providers: [{source, label, ok, count, error}]}
     Q_INVOKABLE sc::Task *search(const QString &query, const QString &source = QStringLiteral("all"));
+    // Titles from Comick's catalogue, which knows far more series (and their
+    // other names) than any one site: {comics: [{hid, title, titles, cover,
+    // type, status, year, ...}], providers: []}.
+    Q_INVOKABLE sc::Task *catalog(const QString &query);
+    // Where a catalogue title can be read: the series on SCANCORE's sources
+    // listed under any of its names. {matches: [{source, sourceLabel, url,
+    // title, cover}]}
+    Q_INVOKABLE sc::Task *resolve(const QVariantMap &item);
     // {series: {...}, chapters: [...], offline: bool, error?: string}
     Q_INVOKABLE sc::Task *series(const QString &url, const QVariantMap &summary = {});
     // {panels: [{url, width, height}], referer, offline}

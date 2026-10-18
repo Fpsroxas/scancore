@@ -27,6 +27,7 @@ ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 PrivilegesRequiredOverridesAllowed=dialog
 WizardStyle=modern
+ChangesAssociations=yes
 LicenseFile=..\..\LICENSE
 
 [Tasks]
@@ -34,6 +35,16 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+[Registry]
+; .sct theme files open in SCANCORE, which offers to use the theme.
+Root: HKA; Subkey: "Software\Classes\.sct"; ValueType: string; ValueName: ""; ValueData: "SCANCORE.Theme"; Flags: uninsdeletevalue
+Root: HKA; Subkey: "Software\Classes\SCANCORE.Theme"; ValueType: string; ValueName: ""; ValueData: "SCANCORE theme"; Flags: uninsdeletekey
+Root: HKA; Subkey: "Software\Classes\SCANCORE.Theme\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\scancore.exe,0"
+Root: HKA; Subkey: "Software\Classes\SCANCORE.Theme\shell\open\command"; ValueType: string; ValueName: ""; ValueData: """{app}\scancore.exe"" ""%1"""
+Root: HKA; Subkey: "Software\Classes\Applications\scancore.exe\SupportedTypes"; ValueType: string; ValueName: ".sct"; ValueData: ""
+Root: HKA; Subkey: "Software\Classes\Applications\scancore.exe\SupportedTypes"; ValueType: string; ValueName: ".cbz"; ValueData: ""
+Root: HKA; Subkey: "Software\Classes\Applications\scancore.exe\SupportedTypes"; ValueType: string; ValueName: ".epub"; ValueData: ""
 
 [Icons]
 Name: "{autoprograms}\SCANCORE"; Filename: "{app}\scancore.exe"

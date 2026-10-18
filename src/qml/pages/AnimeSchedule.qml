@@ -32,8 +32,8 @@ Item {
             spacing: 22
 
             PageHeader {
-                title: "Schedule"
-                subtitle: "Episodes airing this week, in your time zone"
+                title: qsTr("Schedule")
+                subtitle: qsTr("Episodes airing this week, in your time zone")
                 showBack: true
             }
 
@@ -43,7 +43,7 @@ Item {
                     Chip {
                         required property var modelData
                         required property int index
-                        text: index === 0 ? "Today" : index === 1 ? "Tomorrow" : Qt.formatDate(modelData, "ddd d")
+                        text: index === 0 ? qsTr("Today") : index === 1 ? qsTr("Tomorrow") : Qt.formatDate(modelData, "ddd d")
                         selected: page.day === index
                         onClicked: page.day = index
                     }
@@ -113,9 +113,9 @@ Item {
                                 Text {
                                     width: parent.width
                                     elide: Text.ElideRight
-                                    text: "Episode " + row.modelData.airingEpisode
-                                        + (row.modelData.episodes ? " of " + row.modelData.episodes : "")
-                                        + " · " + (row.aired ? "aired " : "airs ") + App.relativeTime(row.modelData.airingAt)
+                                    text: qsTr("Episode ") + row.modelData.airingEpisode
+                                        + (row.modelData.episodes ? qsTr(" of ") + row.modelData.episodes : "")
+                                        + " · " + (row.aired ? qsTr("aired ") : qsTr("airs ")) + App.relativeTime(row.modelData.airingAt)
                                     color: Theme.textMuted
                                     font.family: Theme.fontSans
                                     font.pixelSize: Theme.textSm
@@ -130,7 +130,7 @@ Item {
                 width: parent.width
                 task: page.task
                 empty: page.task && page.task.ok && page.task.result.length === 0
-                emptyTitle: "Nothing airs this day"
+                emptyTitle: qsTr("Nothing airs this day")
                 emptyIcon: "calendar"
                 onRetry: page.task = page.load()
             }

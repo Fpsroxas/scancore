@@ -58,7 +58,7 @@ Rectangle {
             if (position >= s.start && position < s.end - 1) return s
         return null
     }
-    readonly property string skipLabel: activeSkip ? (activeSkip.type.indexOf("ed") >= 0 ? "Skip ending" : activeSkip.type === "recap" ? "Skip recap" : "Skip intro") : ""
+    readonly property string skipLabel: activeSkip ? (activeSkip.type.indexOf("ed") >= 0 ? qsTr("Skip ending") : activeSkip.type === "recap" ? qsTr("Skip recap") : qsTr("Skip intro")) : ""
     // Settings → Anime: intros and recaps, and endings, can each be skipped
     // without asking; the Skip button is for the rest.
     function skipsItself(s) {
@@ -67,7 +67,7 @@ Rectangle {
         return App.settings.autoSkip === true
     }
     readonly property bool showSkip: activeSkip !== null && !skipsItself(activeSkip)
-    readonly property string episodeLine: "Episode " + (episode.number || "") + (episode.title && !String(episode.title).startsWith("Episode") ? " · " + episode.title : "")
+    readonly property string episodeLine: qsTr("Episode ") + (episode.number || "") + (episode.title && !String(episode.title).startsWith("Episode") ? " · " + episode.title : "")
 
     color: "#000000"
     focus: true
@@ -85,6 +85,7 @@ Rectangle {
         resumeAt = p && !p.completed && p.position ? (p.position.seconds || 0) : 0
         currentUrl = ""
         streamsTask = Anime.streams(media.anilistId, episodes[i].number)
+        Presence.show("anime", series.title || "", qsTr("Episode ") + (episodes[i].number || ""))
         if (phone && !landscape) phoneList.positionViewAtIndex(i, ListView.Contain)
     }
 
@@ -92,9 +93,12 @@ Rectangle {
         load(index)
         if (phone && landscape) Window.window.showFullScreen()
         wake()
+        Activity.setMedia("anime")
     }
     // However the player is closed (Back, Esc, the arrow), leave full screen.
     Component.onDestruction: {
+        Activity.setMedia("")
+        Presence.clear()
         saveProgress(true)
         if (phone && fullScreen) Window.window.showNormal()
     }
@@ -136,10 +140,13 @@ Rectangle {
             skipTask = Anime.skipTimes(media.anilistId, episode.number, Math.round(total))
             if (resumeAt > 5 && resumeAt < total - 30 && seconds < resumeAt - 5) {
                 player.seek(resumeAt)
-                Router.toast("Resumed at " + formatTime(resumeAt))
+                Router.toast(qsTr("Resumed at ") + formatTime(resumeAt))
             }
         }
         if (total > 0) duration = total
+        // Moving forward: the episode is playing, which counts as watching
+        // time on the Activity page.
+        if (seconds > position && seconds - position < 5) Activity.playing()
         position = seconds
         saveProgress(false)
         if (skipsItself(activeSkip))
@@ -275,7 +282,7 @@ Rectangle {
                     width: parent.width
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.Wrap
-                    text: "This copy of SCANCORE cannot play this video"
+                    text: qsTr("This copy of SCANCORE cannot play this video")
                     color: "white"
                     font.family: Theme.fontDisplay
                     font.pixelSize: Theme.textLg
@@ -285,8 +292,8 @@ Rectangle {
                     width: parent.width
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.Wrap
-                    text: "Its built-in browser lacks the H.264 video codec. Watch this episode in your browser, or use "
-                        + "the SCANCORE Flatpak or your distribution's package, which include it."
+                    text: qsTr("Its built-in browser lacks the H.264 video codec. Watch this episode in your browser, or use ")
+                        + qsTr("the SCANCORE Flatpak or your distribution's package, which include it.")
                     color: "#a1a1aa"
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -297,12 +304,12 @@ Rectangle {
                     spacing: 8
                     ScButton {
                         variant: "primary"
-                        text: "Open in browser"
+                        text: qsTr("Open in browser")
                         iconName: "external-link"
                         onClicked: App.openUrl(watch.currentUrl)
                     }
                     ScButton {
-                        text: "Get SCANCORE"
+                        text: qsTr("Get SCANCORE")
                         onClicked: App.openUrl("https://scancore.onl/desktop")
                     }
                 }
@@ -324,7 +331,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
                 visible: text.length > 0
-                text: Anime.playerEngine === "" ? "This build of SCANCORE has no embedded browser, which the ReAnime player needs."
+                text: Anime.playerEngine === "" ? qsTr("This build of SCANCORE has no embedded browser, which the ReAnime player needs.")
                     : watch.streamsTask && !watch.streamsTask.loading
                       ? (watch.streamsTask.ok ? (watch.streamsTask.result.message || "") : watch.streamsTask.error) : ""
                 color: "#d4d4d8"
@@ -334,7 +341,7 @@ Rectangle {
             ScButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: watch.streamsTask !== null && !watch.streamsTask.loading && watch.streams.length === 0
-                text: "Try again"
+                text: qsTr("Try again")
                 iconName: "refresh-cw"
                 onClicked: watch.load(watch.index)
             }
@@ -369,7 +376,7 @@ Rectangle {
                 anchors.margins: 16
                 spacing: 10
                 Text {
-                    text: "Next episode in " + Math.ceil(nextCountdown.remaining) + "s"
+                    text: qsTr("Next episode in ") + Math.ceil(nextCountdown.remaining) + "s"
                     color: "white"
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textMd
@@ -377,8 +384,8 @@ Rectangle {
                 }
                 Row {
                     spacing: 8
-                    ScButton { compact: true; variant: "primary"; text: "Play now"; onClicked: watch.nextEpisode() }
-                    ScButton { compact: true; text: "Cancel"; onClicked: nextCountdown.stop() }
+                    ScButton { compact: true; variant: "primary"; text: qsTr("Play now"); onClicked: watch.nextEpisode() }
+                    ScButton { compact: true; text: qsTr("Cancel"); onClicked: nextCountdown.stop() }
                 }
             }
         }
@@ -425,7 +432,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             iconName: "arrow-left"
             iconColor: "white"
-            tip: "Close player (Esc)"
+            tip: qsTr("Close player (Esc)")
             onClicked: watch.exit()
         }
         Column {
@@ -475,13 +482,13 @@ Rectangle {
                 visible: nextCountdown.running
                 compact: true
                 variant: "primary"
-                text: "Next in " + Math.ceil(nextCountdown.remaining) + "s"
+                text: qsTr("Next in ") + Math.ceil(nextCountdown.remaining) + "s"
                 onClicked: watch.nextEpisode()
             }
             ScButton {
                 visible: nextCountdown.running
                 compact: true
-                text: "Cancel"
+                text: qsTr("Cancel")
                 onClicked: nextCountdown.stop()
             }
         }
@@ -502,20 +509,20 @@ Rectangle {
                 }
             }
             Item { width: 8; height: 1 }
-            IconButton { iconName: "skip-back"; iconColor: "white"; enabled: watch.hasPrev; tip: "Previous episode" + watch.keyHint("player.prev"); onClicked: watch.load(watch.index - 1) }
-            IconButton { iconName: "skip-forward"; iconColor: "white"; enabled: watch.hasNext; tip: "Next episode" + watch.keyHint("player.next"); onClicked: watch.load(watch.index + 1) }
-            IconButton { iconName: "list"; iconColor: "white"; active: watch.sideOpen; tip: "Episodes"; onClicked: watch.sideOpen = !watch.sideOpen }
+            IconButton { iconName: "skip-back"; iconColor: "white"; enabled: watch.hasPrev; tip: qsTr("Previous episode") + watch.keyHint("player.prev"); onClicked: watch.load(watch.index - 1) }
+            IconButton { iconName: "skip-forward"; iconColor: "white"; enabled: watch.hasNext; tip: qsTr("Next episode") + watch.keyHint("player.next"); onClicked: watch.load(watch.index + 1) }
+            IconButton { iconName: "list"; iconColor: "white"; active: watch.sideOpen; tip: qsTr("Episodes"); onClicked: watch.sideOpen = !watch.sideOpen }
             IconButton {
                 iconName: "external-link"
                 iconColor: "white"
                 enabled: watch.currentUrl.length > 0
-                tip: "Open in your browser"
+                tip: qsTr("Open in your browser")
                 onClicked: App.openUrl(watch.currentUrl)
             }
             IconButton {
                 iconName: watch.fullScreen ? "minimize" : "maximize"
                 iconColor: "white"
-                tip: (watch.fullScreen ? "Exit full screen" : "Full screen") + watch.keyHint("player.fullscreen")
+                tip: (watch.fullScreen ? qsTr("Exit full screen") : qsTr("Full screen")) + watch.keyHint("player.fullscreen")
                 onClicked: watch.toggleFullScreen()
             }
         }
@@ -541,7 +548,7 @@ Rectangle {
                 width: 92
                 height: 52
                 anchors.verticalCenter: parent.verticalCenter
-                Cover { anchors.fill: parent; radius: 6; source: row.modelData.image || ""; title: "EP " + row.modelData.number }
+                Cover { anchors.fill: parent; radius: 6; source: row.modelData.image || ""; title: qsTr("EP ") + row.modelData.number }
                 Rectangle {
                     visible: row.state !== null
                     anchors.bottom: parent.bottom
@@ -555,7 +562,7 @@ Rectangle {
                 width: row.width - 92 - 10 - 6 - 8
                 Text {
                     width: parent.width
-                    text: "Episode " + row.modelData.number
+                    text: qsTr("Episode ") + row.modelData.number
                     color: row.index === watch.index ? "white" : "#d4d4d8"
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -681,13 +688,13 @@ Rectangle {
                     visible: nextCountdown.running
                     variant: "primary"
                     compact: true
-                    text: "Next in " + Math.ceil(nextCountdown.remaining) + "s"
+                    text: qsTr("Next in ") + Math.ceil(nextCountdown.remaining) + "s"
                     onClicked: watch.nextEpisode()
                 }
                 ScButton {
                     visible: nextCountdown.running
                     compact: true
-                    text: "Cancel"
+                    text: qsTr("Cancel")
                     onClicked: nextCountdown.stop()
                 }
             }

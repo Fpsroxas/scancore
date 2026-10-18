@@ -16,9 +16,9 @@ Popup {
 
     // Keys that cannot be changed, listed with the ones that can.
     readonly property var fixed: ({
-        app: [["Esc", "Back, or close the reader"]],
-        reader: [["←  →", "Previous or next page or chapter"]],
-        player: [["Esc", "Leave full screen, then close"]]
+        app: [["Esc", qsTr("Back, or close the reader")]],
+        reader: [["←  →", qsTr("Previous or next page or chapter")]],
+        player: [["Esc", qsTr("Leave full screen, then close")]]
     })
     readonly property var groups: Keymap.scopes.map(scope => ({
         title: scope.title,
@@ -62,7 +62,7 @@ Popup {
             }
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: "Keyboard shortcuts"
+                text: qsTr("Keyboard shortcuts")
                 rightPadding: 12
                 color: Theme.text
                 font.family: Theme.fontDisplay
@@ -77,7 +77,7 @@ Popup {
             spacing: 6
             ScButton {
                 compact: true
-                text: "Change shortcuts"
+                text: qsTr("Change shortcuts")
                 anchors.verticalCenter: parent.verticalCenter
                 onClicked: {
                     sheet.close()
@@ -87,7 +87,7 @@ Popup {
             }
             IconButton {
                 iconName: "x"
-                tip: "Close (Esc)"
+                tip: qsTr("Close (Esc)")
                 onClicked: sheet.close()
             }
         }

@@ -17,7 +17,7 @@ Item {
     property var results: []
     property bool hasNext: false
     property var task: null
-    readonly property var years: [{ value: 0, label: "Any" }].concat(
+    readonly property var years: [{ value: 0, label: qsTr("Any") }].concat(
         Array.from({ length: 50 }, (_, i) => ({ value: new Date().getFullYear() + 1 - i, label: String(new Date().getFullYear() + 1 - i) })))
 
     function run(reset) {
@@ -62,8 +62,8 @@ Item {
             spacing: 20
 
             PageHeader {
-                title: "Browse anime"
-                subtitle: "Search AniList by title, genre, year and more"
+                title: qsTr("Browse anime")
+                subtitle: qsTr("Search AniList by title, genre, year and more")
                 showBack: true
             }
 
@@ -75,26 +75,26 @@ Item {
                     id: field
                     width: Math.min(360, parent.width)
                     text: page.q
-                    placeholderText: "Search titles"
+                    placeholderText: qsTr("Search titles")
                     onTextChanged: if (text !== page.q) { page.q = text; debounce.restart() }
                 }
                 Select {
-                    model: [{ value: "", label: "Best match" }, { value: "POPULARITY_DESC", label: "Most popular" },
-                            { value: "TRENDING_DESC", label: "Trending" }, { value: "SCORE_DESC", label: "Highest rated" },
-                            { value: "START_DATE_DESC", label: "Newest" }, { value: "FAVOURITES_DESC", label: "Most favourited" }]
+                    model: [{ value: "", label: qsTr("Best match") }, { value: "POPULARITY_DESC", label: qsTr("Most popular") },
+                            { value: "TRENDING_DESC", label: qsTr("Trending") }, { value: "SCORE_DESC", label: qsTr("Highest rated") },
+                            { value: "START_DATE_DESC", label: qsTr("Newest") }, { value: "FAVOURITES_DESC", label: qsTr("Most favourited") }]
                     value: page.sort
                     onPicked: (v) => { page.sort = v; page.run(true) }
                 }
                 Select {
-                    model: [{ value: "", label: "Any format" }, { value: "TV", label: "TV" }, { value: "MOVIE", label: "Movie" },
-                            { value: "OVA", label: "OVA" }, { value: "ONA", label: "ONA" }, { value: "SPECIAL", label: "Special" },
-                            { value: "TV_SHORT", label: "TV Short" }]
+                    model: [{ value: "", label: qsTr("Any format") }, { value: "TV", label: "TV" }, { value: "MOVIE", label: qsTr("Movie") },
+                            { value: "OVA", label: "OVA" }, { value: "ONA", label: "ONA" }, { value: "SPECIAL", label: qsTr("Special") },
+                            { value: "TV_SHORT", label: qsTr("TV Short") }]
                     value: page.format
                     onPicked: (v) => { page.format = v; page.run(true) }
                 }
                 Select {
-                    model: [{ value: "", label: "Any status" }, { value: "RELEASING", label: "Airing" },
-                            { value: "FINISHED", label: "Finished" }, { value: "NOT_YET_RELEASED", label: "Upcoming" }]
+                    model: [{ value: "", label: qsTr("Any status") }, { value: "RELEASING", label: qsTr("Airing") },
+                            { value: "FINISHED", label: qsTr("Finished") }, { value: "NOT_YET_RELEASED", label: qsTr("Upcoming") }]
                     value: page.status
                     onPicked: (v) => { page.status = v; page.run(true) }
                 }
@@ -102,14 +102,14 @@ Item {
                     implicitWidth: 120
                     model: page.years
                     value: page.yearFrom
-                    displayText: page.yearFrom ? "From " + page.yearFrom : "From any year"
+                    displayText: page.yearFrom ? qsTr("From ") + page.yearFrom : qsTr("From any year")
                     onPicked: (v) => { page.yearFrom = v; page.run(true) }
                 }
                 Select {
                     implicitWidth: 120
                     model: page.years
                     value: page.yearTo
-                    displayText: page.yearTo ? "To " + page.yearTo : "To any year"
+                    displayText: page.yearTo ? qsTr("To ") + page.yearTo : qsTr("To any year")
                     onPicked: (v) => { page.yearTo = v; page.run(true) }
                 }
             }
@@ -147,7 +147,7 @@ Item {
             ScButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: page.hasNext && page.task !== null && page.task.ok
-                text: "Load more"
+                text: qsTr("Load more")
                 onClicked: page.loadMore()
             }
 
@@ -157,7 +157,7 @@ Item {
                 task: page.task
                 compact: page.results.length > 0
                 empty: page.task && page.task.ok && page.results.length === 0
-                emptyTitle: "No anime match these filters"
+                emptyTitle: qsTr("No anime match these filters")
                 emptyIcon: "funnel"
                 onRetry: page.run(page.pageNumber === 1)
             }

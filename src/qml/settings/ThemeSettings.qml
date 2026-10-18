@@ -5,8 +5,8 @@ import ScanCore
 
 SettingsPane {
     id: pane
-    title: "Theme"
-    subtitle: "Colours, background and transparency"
+    title: qsTr("Theme")
+    subtitle: qsTr("Colours, background and transparency")
     iconName: "palette"
 
     readonly property bool custom: Theme.custom
@@ -21,9 +21,9 @@ SettingsPane {
 
     // Starting points for the custom theme: a window colour each.
     readonly property var presets: [
-        { name: "Midnight", base: "#15171d" }, { name: "Ocean", base: "#0e1a29" }, { name: "Forest", base: "#12201a" },
-        { name: "Plum", base: "#1e1424" }, { name: "Ember", base: "#22150f" }, { name: "Slate", base: "#262a31" },
-        { name: "Paper", base: "#f3efe6" }, { name: "Mist", base: "#e9eef4" }, { name: "Blush", base: "#f6e9ec" }
+        { name: qsTr("Midnight"), base: "#15171d" }, { name: qsTr("Ocean"), base: "#0e1a29" }, { name: qsTr("Forest"), base: "#12201a" },
+        { name: qsTr("Plum"), base: "#1e1424" }, { name: qsTr("Ember"), base: "#22150f" }, { name: qsTr("Slate"), base: "#262a31" },
+        { name: qsTr("Paper"), base: "#f3efe6" }, { name: qsTr("Mist"), base: "#e9eef4" }, { name: qsTr("Blush"), base: "#f6e9ec" }
     ]
 
     // A tiny window drawn in a palette's own colours.
@@ -99,7 +99,7 @@ SettingsPane {
     }
 
     SettingsGroup {
-        title: "Theme"
+        title: qsTr("Theme")
         Flow {
             x: 12
             width: parent.width - 24
@@ -107,10 +107,10 @@ SettingsPane {
             bottomPadding: 12
             spacing: 12
             Repeater {
-                model: [{ value: "system", label: "System", detail: "Follows your device" },
-                        { value: "light", label: "Light" }, { value: "dark", label: "Dark" },
-                        { value: "black", label: "Black", detail: "For OLED screens" },
-                        { value: "custom", label: "Custom", detail: "Your colours" }]
+                model: [{ value: "system", label: qsTr("System"), detail: qsTr("Follows your device") },
+                        { value: "light", label: qsTr("Light") }, { value: "dark", label: qsTr("Dark") },
+                        { value: "black", label: qsTr("Black"), detail: qsTr("For OLED screens") },
+                        { value: "custom", label: qsTr("Custom"), detail: qsTr("Your colours") }]
                 ChoiceTile {
                     required property var modelData
                     width: pane.tileWidth
@@ -158,8 +158,8 @@ SettingsPane {
     }
 
     SettingsGroup {
-        title: "Accent"
-        note: "Mono matches the scancore.onl website. Custom takes any colour."
+        title: qsTr("Accent")
+        note: qsTr("Mono matches the scancore.onl website. Custom takes any colour.")
         Flow {
             x: 16
             width: parent.width - 32
@@ -168,7 +168,7 @@ SettingsPane {
             spacing: Theme.compact ? 14 : 18
             Repeater {
                 model: Theme.accentNames.map(name => ({ value: name, label: name.charAt(0).toUpperCase() + name.slice(1) }))
-                    .concat([{ value: "custom", label: "Custom" }])
+                    .concat([{ value: "custom", label: qsTr("Custom") }])
                 AbstractButton {
                     id: swatch
                     required property var modelData
@@ -244,13 +244,13 @@ SettingsPane {
 
     SettingsGroup {
         visible: pane.custom
-        title: "Custom theme"
+        title: qsTr("Custom theme")
         note: "Every colour in the app is made from the window colour; its brightness decides whether the theme is light or dark."
 
         SettingRow {
             iconName: "palette"
-            title: "Window colour"
-            description: String(Theme.customBase).toUpperCase() + (Theme.dark ? " · dark" : " · light")
+            title: qsTr("Window colour")
+            description: String(Theme.customBase).toUpperCase() + (Theme.dark ? qsTr(" · dark") : qsTr(" · light"))
             Row {
                 spacing: 10
                 AbstractButton {
@@ -265,7 +265,7 @@ SettingsPane {
                         border.color: parent.hovered ? Theme.text : Theme.borderStrong
                     }
                 }
-                ScButton { text: "Change"; onClicked: basePicker.edit(Theme.customBase) }
+                ScButton { text: qsTr("Change"); onClicked: basePicker.edit(Theme.customBase) }
             }
         }
         // Quick starting points.
@@ -287,8 +287,8 @@ SettingsPane {
         }
         SettingRow {
             iconName: "layers"
-            title: "Panels"
-            description: "How solid the sidebar and cards are over a background picture or a see-through window."
+            title: qsTr("Panels")
+            description: qsTr("How solid the sidebar and cards are over a background picture or a see-through window.")
             Level {
                 value: Theme.panelOpacity
                 from: 0.2
@@ -298,23 +298,23 @@ SettingsPane {
         SettingRow {
             visible: App.platform !== "android"
             iconName: "monitor"
-            title: "Window transparency"
-            description: Customize.translucentWindow ? "See your desktop through the window."
+            title: qsTr("Window transparency")
+            description: Customize.translucentWindow ? qsTr("See your desktop through the window.")
                 : (Number(Theme.customTheme.windowOpacity) < 1
-                   ? "Takes effect when SCANCORE restarts." : "See your desktop through the window. Takes effect after a restart.")
+                   ? qsTr("Takes effect when SCANCORE restarts.") : qsTr("See your desktop through the window. Takes effect after a restart."))
             Row {
                 spacing: 8
                 Level {
                     value: Theme.clamp(Number(Theme.customTheme.windowOpacity), 0.3, 1, 1)
                     from: 0.3
-                    suffix: "% solid"
+                    suffix: qsTr("% solid")
                     onMoved: (v) => pane.update({ windowOpacity: Math.round(v * 100) / 100 })
                 }
                 ScButton {
                     visible: Customize.canRestart && !Customize.translucentWindow && Number(Theme.customTheme.windowOpacity) < 1
                     compact: true
                     variant: "primary"
-                    text: "Restart"
+                    text: qsTr("Restart")
                     anchors.verticalCenter: parent.verticalCenter
                     onClicked: Customize.restart()
                 }
@@ -324,8 +324,8 @@ SettingsPane {
 
     SettingsGroup {
         visible: pane.custom
-        title: "Background"
-        note: "PNG, JPEG, GIF or WebP, up to 40 MB. SCANCORE keeps its own copy. Animated backgrounds pause while a reader or the player is open."
+        title: qsTr("Background")
+        note: qsTr("PNG, JPEG, GIF or WebP, up to 40 MB. SCANCORE keeps its own copy. Animated backgrounds pause while a reader or the player is open.")
 
         Item {
             width: parent.width
@@ -362,14 +362,14 @@ SettingsPane {
         }
         SettingRow {
             iconName: "sparkles"
-            title: Theme.backgroundSource ? "Background picture" : "No background picture"
-            description: Theme.backgroundSource ? (Theme.customTheme.backgroundAnimated ? "Animated" : "Picture") : "Use a picture or GIF behind everything."
+            title: Theme.backgroundSource ? qsTr("Background picture") : qsTr("No background picture")
+            description: Theme.backgroundSource ? (Theme.customTheme.backgroundAnimated ? qsTr("Animated") : qsTr("Picture")) : qsTr("Use a picture or GIF behind everything.")
             Row {
                 spacing: 8
-                ScButton { text: Theme.backgroundSource ? "Change" : "Choose…"; iconName: "folder-open"; onClicked: backgroundDialog.open() }
+                ScButton { text: Theme.backgroundSource ? qsTr("Change") : qsTr("Choose…"); iconName: "folder-open"; onClicked: backgroundDialog.open() }
                 ScButton {
                     visible: Theme.backgroundSource.length > 0
-                    text: "Remove"
+                    text: qsTr("Remove")
                     variant: "ghost"
                     onClicked: pane.update({ background: "", backgroundAnimated: false })
                 }
@@ -377,18 +377,18 @@ SettingsPane {
         }
         SettingRow {
             visible: Theme.backgroundSource.length > 0
-            title: "Fit"
+            title: qsTr("Fit")
             Segmented {
-                options: [{ value: "cover", label: "Fill" }, { value: "contain", label: "Fit" },
-                          { value: "tile", label: "Tile" }, { value: "stretch", label: "Stretch" }]
+                options: [{ value: "cover", label: qsTr("Fill") }, { value: "contain", label: qsTr("Fit") },
+                          { value: "tile", label: qsTr("Tile") }, { value: "stretch", label: qsTr("Stretch") }]
                 value: Theme.customTheme.backgroundFit || "cover"
                 onPicked: (v) => pane.update({ backgroundFit: v })
             }
         }
         SettingRow {
             visible: Theme.backgroundSource.length > 0
-            title: "Dim"
-            description: "Darkens (or lightens) the picture towards the window colour, for readable text."
+            title: qsTr("Dim")
+            description: qsTr("Darkens (or lightens) the picture towards the window colour, for readable text.")
             Level {
                 value: Theme.clamp(Number(Theme.customTheme.backgroundDim), 0, 0.95, 0.55)
                 to: 0.95
@@ -397,7 +397,7 @@ SettingsPane {
         }
         SettingRow {
             visible: Theme.backgroundSource.length > 0
-            title: "Blur"
+            title: qsTr("Blur")
             Level {
                 value: Theme.clamp(Number(Theme.customTheme.backgroundBlur), 0, 1, 0)
                 onMoved: (v) => pane.update({ backgroundBlur: Math.round(v * 100) / 100 })
@@ -405,19 +405,88 @@ SettingsPane {
         }
     }
 
+    // Themes people shared in the SCANCORE repository.
+    property var galleryTask: null
+    Component.onCompleted: galleryTask = Customize.gallery()
     SettingsGroup {
-        title: "Share"
-        note: "A .sct file holds the colours, transparency and background picture in one file that works on every system."
-            + (App.platform !== "android" ? " You can also drop one on the window." : "")
+        title: qsTr("Gallery")
+        note: "Picking one makes it your custom theme; change it as you like afterwards. Share yours by adding its .sct file to "
+            + qsTr("the themes folder of the SCANCORE repository.")
+        Flow {
+            x: 12
+            width: parent.width - 24
+            topPadding: 12
+            bottomPadding: 12
+            spacing: 12
+            Repeater {
+                model: pane.galleryTask && pane.galleryTask.ok ? pane.galleryTask.result : []
+                ChoiceTile {
+                    id: galleryTile
+                    required property var modelData
+                    property var installTask: null
+                    width: pane.tileWidth
+                    label: modelData.name
+                    detail: installTask && installTask.loading ? qsTr("Downloading…") : modelData.author ? qsTr("by ") + modelData.author : ""
+                    selected: pane.custom && Theme.customTheme.name === modelData.name
+                    onClicked: {
+                        installTask = Customize.installTheme(modelData.file)
+                        installTask.finished.connect((theme) => Router.applyTheme(theme))
+                        installTask.failed.connect((error) => Router.toast(error, "error"))
+                    }
+                    ToolTip.visible: hovered && modelData.description.length > 0
+                    ToolTip.text: modelData.description
+                    ToolTip.delay: 600
+                    ThemePreview { colors: Theme.generate(Qt.color(galleryTile.modelData.window)) }
+                    Image {
+                        anchors.fill: parent
+                        visible: status === Image.Ready
+                        source: galleryTile.modelData.preview || ""
+                        sourceSize.width: 300
+                        fillMode: Image.PreserveAspectCrop
+                        asynchronous: true
+                    }
+                    // The accent, as a dot in the corner.
+                    Rectangle {
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        anchors.margins: 8
+                        width: 14
+                        height: 14
+                        radius: 7
+                        color: Qt.color(galleryTile.modelData.accent)
+                        border.width: 2
+                        border.color: Qt.rgba(0, 0, 0, 0.35)
+                    }
+                }
+            }
+        }
+        Text {
+            visible: !!pane.galleryTask && (pane.galleryTask.loading || !pane.galleryTask.ok)
+            x: 16
+            topPadding: 14
+            bottomPadding: 14
+            width: parent.width - 32
+            wrapMode: Text.Wrap
+            text: pane.galleryTask && pane.galleryTask.loading ? qsTr("Loading the gallery…") : pane.galleryTask ? pane.galleryTask.error : ""
+            color: Theme.textMuted
+            font.family: Theme.fontSans
+            font.pixelSize: Theme.textSm
+        }
+    }
+
+    SettingsGroup {
+        title: qsTr("Share")
+        note: qsTr("A .sct file holds the colours, transparency and background picture in one file that works on every system.")
+            + (App.platform !== "android" ? qsTr(" You can also drop one on the window.") : "")
         SettingRow {
             visible: pane.custom
             iconName: "type"
-            title: "Name"
+            title: qsTr("Name")
             TextField {
                 width: Theme.compact ? pane.width - 70 : 220
                 height: 36
                 text: Theme.customTheme.name || ""
-                placeholderText: "My theme"
+                placeholderText: qsTr("My theme")
                 placeholderTextColor: Theme.textFaint
                 color: Theme.text
                 font.family: Theme.fontSans
@@ -436,17 +505,17 @@ SettingsPane {
         }
         SettingRow {
             iconName: "shield-check"
-            title: "Theme file"
-            description: pane.custom ? "Save this theme, or use one someone shared." : "Use a theme someone shared."
+            title: qsTr("Theme file")
+            description: pane.custom ? qsTr("Save this theme, or use one someone shared.") : qsTr("Use a theme someone shared.")
             Row {
                 spacing: 8
                 ScButton {
                     visible: pane.custom
-                    text: "Export…"
+                    text: qsTr("Export…")
                     iconName: "download"
                     onClicked: exportDialog.open()
                 }
-                ScButton { text: "Import…"; variant: pane.custom ? "ghost" : "secondary"; onClicked: importDialog.open() }
+                ScButton { text: qsTr("Import…"); variant: pane.custom ? "ghost" : "secondary"; onClicked: importDialog.open() }
             }
         }
     }
@@ -455,12 +524,12 @@ SettingsPane {
 
     ColorPicker {
         id: basePicker
-        title: "Window colour"
+        title: qsTr("Window colour")
         onChanged: (c) => pane.update({ base: String(c).slice(0, 7) })
     }
     ColorPicker {
         id: accentPicker
-        title: "Accent colour"
+        title: qsTr("Accent colour")
         swatches: ["#f2f2f3", "#7c9cff", "#818cf8", "#a78bfa", "#c084fc", "#f472b6", "#fb7185", "#f87171",
                    "#fb923c", "#fbbf24", "#a3e635", "#34d399", "#2dd4bf", "#38bdf8"]
         onChanged: (c) => {
@@ -472,7 +541,7 @@ SettingsPane {
     FileDialog {
         id: backgroundDialog
         fileMode: FileDialog.OpenFile
-        nameFilters: ["Pictures and GIFs (*.png *.jpg *.jpeg *.gif *.webp)", "All files (*)"]
+        nameFilters: [qsTr("Pictures and GIFs (*.png *.jpg *.jpeg *.gif *.webp)"), qsTr("All files (*)")]
         onAccepted: {
             const result = Customize.useBackground(selectedFile)
             if (!result.ok) {
@@ -489,17 +558,17 @@ SettingsPane {
         id: exportDialog
         fileMode: FileDialog.SaveFile
         defaultSuffix: "sct"
-        nameFilters: ["SCANCORE theme (*.sct)"]
+        nameFilters: [qsTr("SCANCORE theme (*.sct)")]
         selectedFile: (Theme.customTheme.name || "scancore-theme").replace(/[^\w\- ]+/g, "").trim().replace(/\s+/g, "-").toLowerCase() + ".sct"
         onAccepted: {
             const theme = Object.assign({}, Theme.customTheme, { accent: Theme.customAccent ? String(Theme.accent).slice(0, 7) : "" })
-            pane.watch(Customize.exportTheme(theme, selectedFile), (name) => "Saved " + name)
+            pane.watch(Customize.exportTheme(theme, selectedFile), (name) => qsTr("Saved ") + name)
         }
     }
     FileDialog {
         id: importDialog
         fileMode: FileDialog.OpenFile
-        nameFilters: ["SCANCORE theme (*.sct)", "All files (*)"]
+        nameFilters: [qsTr("SCANCORE theme (*.sct)"), qsTr("All files (*)")]
         onAccepted: pane.watch(Customize.importTheme(selectedFile), (theme) => { Router.applyTheme(theme); return "" })
     }
 

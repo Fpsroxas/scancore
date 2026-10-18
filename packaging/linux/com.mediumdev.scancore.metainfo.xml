@@ -23,6 +23,15 @@
   <url type="homepage">https://scancore.onl/</url>
   <url type="bugtracker">https://github.com/medium-gh/scancore/issues</url>
   <url type="vcs-browser">https://github.com/medium-gh/scancore</url>
+  <url type="translate">https://github.com/medium-gh/scancore/tree/main/i18n</url>
+  <provides>
+    <mediatype>application/x-scancore-theme</mediatype>
+  </provides>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/medium-gh/scancore/0b6ec6cf9d6c2b0bf3a91a7466de28f57f25b808/docs/screenshots/home.webp</image>

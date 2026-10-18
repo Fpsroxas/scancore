@@ -1,0 +1,4473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="id" sourcelanguage="en">
+    <context>
+        <name>AboutSettings</name>
+        <message>
+            <source>About</source>
+            <translation>Tentang</translation>
+        </message>
+        <message>
+            <source>Version, updates and help</source>
+            <translation>Versi, pembaruan, dan bantuan</translation>
+        </message>
+        <message>
+            <source>Updates come through Flatpak.</source>
+            <translation>Pembaruan datang lewat Flatpak.</translation>
+        </message>
+        <message>
+            <source>Checking for updates…</source>
+            <translation>Memeriksa pembaruan…</translation>
+        </message>
+        <message>
+            <source>You have the latest version.</source>
+            <translation>Anda memakai versi terbaru.</translation>
+        </message>
+        <message>
+            <source>Version </source>
+            <translation>Versi </translation>
+        </message>
+        <message>
+            <source> is available.</source>
+            <translation> tersedia.</translation>
+        </message>
+        <message>
+            <source>Downloading </source>
+            <translation>Mengunduh </translation>
+        </message>
+        <message>
+            <source> is ready to install.</source>
+            <translation> siap dipasang.</translation>
+        </message>
+        <message>
+            <source>Free and open source, by Medium Dev.</source>
+            <translation>Gratis dan sumber terbuka, oleh Medium Dev.</translation>
+        </message>
+        <message>
+            <source>Restart to update</source>
+            <translation>Mulai ulang untuk memperbarui</translation>
+        </message>
+        <message>
+            <source>Update</source>
+            <translation>Perbarui</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Unduh</translation>
+        </message>
+        <message>
+            <source>Check for updates</source>
+            <translation>Periksa pembaruan</translation>
+        </message>
+        <message>
+            <source>Updates</source>
+            <translation>Pembaruan</translation>
+        </message>
+        <message>
+            <source>Check for app updates</source>
+            <translation>Periksa pembaruan aplikasi</translation>
+        </message>
+        <message>
+            <source>Install updates automatically</source>
+            <translation>Pasang pembaruan otomatis</translation>
+        </message>
+        <message>
+            <source>New versions download in the background and install when you restart.</source>
+            <translation>Versi baru diunduh di latar belakang dan dipasang saat Anda memulai ulang.</translation>
+        </message>
+        <message>
+            <source>Help and community</source>
+            <translation>Bantuan dan komunitas</translation>
+        </message>
+        <message>
+            <source>The SCANCORE website</source>
+            <translation>Situs web SCANCORE</translation>
+        </message>
+        <message>
+            <source>Discord</source>
+            <translation>Discord</translation>
+        </message>
+        <message>
+            <source>Questions, feedback and updates</source>
+            <translation>Pertanyaan, masukan, dan kabar terbaru</translation>
+        </message>
+        <message>
+            <source>Report a problem</source>
+            <translation>Laporkan masalah</translation>
+        </message>
+        <message>
+            <source>Opens GitHub Issues</source>
+            <translation>Membuka GitHub Issues</translation>
+        </message>
+        <message>
+            <source>Welcome tour</source>
+            <translation>Tur sambutan</translation>
+        </message>
+        <message>
+            <source>See the introduction again</source>
+            <translation>Lihat pengenalan lagi</translation>
+        </message>
+        <message>
+            <source>Keyboard shortcuts</source>
+            <translation>Pintasan papan ketik</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Cari semuanya</translation>
+        </message>
+        <message>
+            <source>Back, or close the reader</source>
+            <translation>Kembali, atau tutup pembaca</translation>
+        </message>
+        <message>
+            <source>Switch section</source>
+            <translation>Pindah bagian</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source>Collapse the sidebar</source>
+            <translation>Ciutkan bilah sisi</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>Layar penuh</translation>
+        </message>
+        <message>
+            <source>Next or previous chapter</source>
+            <translation>Bab berikutnya atau sebelumnya</translation>
+        </message>
+        <message>
+            <source>Strip or pages (comics)</source>
+            <translation>Strip atau halaman (komik)</translation>
+        </message>
+        <message>
+            <source>Scroll a screen</source>
+            <translation>Gulir satu layar</translation>
+        </message>
+        <message>
+            <source>Width or text size</source>
+            <translation>Lebar atau ukuran teks</translation>
+        </message>
+        <message>
+            <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0).</source>
+            <translation>Lisensi MIT · github.com/medium-gh/scancore. Fon: DM Sans, Space Grotesk, Literata (OFL). Ikon: Lucide (ISC). Penguraian HTML: lexbor (Apache 2.0).</translation>
+        </message>
+    </context>
+    <context>
+        <name>AccountSettings</name>
+        <message>
+            <source>Sync</source>
+            <translation>Sinkronisasi</translation>
+        </message>
+        <message>
+            <source>Your library, progress and activity on every device</source>
+            <translation>Pustaka, progres, dan aktivitas Anda di setiap perangkat</translation>
+        </message>
+        <message>
+            <source>Your server</source>
+            <translation>Server Anda</translation>
+        </message>
+        <message>
+            <source>Folder</source>
+            <translation>Folder</translation>
+        </message>
+        <message>
+            <source>Syncing…</source>
+            <translation>Menyinkronkan…</translation>
+        </message>
+        <message>
+            <source>Synced </source>
+            <translation>Disinkronkan </translation>
+        </message>
+        <message>
+            <source>Not synced yet</source>
+            <translation>Belum disinkronkan</translation>
+        </message>
+        <message>
+            <source>Synced · </source>
+            <translation>Disinkronkan · </translation>
+        </message>
+        <message>
+            <source> saved, </source>
+            <translation> tersimpan, </translation>
+        </message>
+        <message>
+            <source> progress updates in, </source>
+            <translation> pembaruan progres masuk, </translation>
+        </message>
+        <message>
+            <source> sent</source>
+            <translation> terkirim</translation>
+        </message>
+        <message>
+            <source>You are signed in to </source>
+            <translation>Anda masuk ke </translation>
+        </message>
+        <message>
+            <source>. Sign out to use </source>
+            <translation>. Keluar untuk memakai </translation>
+        </message>
+        <message>
+            <source>another website.</source>
+            <translation>situs web lain.</translation>
+        </message>
+        <message>
+            <source>Sync is using </source>
+            <translation>Sinkronisasi memakai </translation>
+        </message>
+        <message>
+            <source>a folder</source>
+            <translation>folder</translation>
+        </message>
+        <message>
+            <source> now. Stop that first to sync through an account.</source>
+            <translation> sekarang. Hentikan dulu untuk menyinkronkan lewat akun.</translation>
+        </message>
+        <message>
+            <source>Sync now</source>
+            <translation>Sinkronkan sekarang</translation>
+        </message>
+        <message>
+            <source>Sign out</source>
+            <translation>Keluar</translation>
+        </message>
+        <message>
+            <source>Sign out of </source>
+            <translation>Keluar dari </translation>
+        </message>
+        <message>
+            <source>Your library and reading progress stay on this device. They stop syncing until you sign in again.</source>
+            <translation>Pustaka dan progres baca Anda tetap di perangkat ini. Keduanya berhenti tersinkron sampai Anda masuk lagi.</translation>
+        </message>
+        <message>
+            <source>Sign in to </source>
+            <translation>Masuk ke </translation>
+        </message>
+        <message>
+            <source>Use scancore.onl</source>
+            <translation>Gunakan scancore.onl</translation>
+        </message>
+        <message>
+            <source>The SCANCORE sync server keeps your account, library, progress and activity on a computer, NAS or server of your own. </source>
+            <translation>Server sinkronisasi SCANCORE menyimpan akun, pustaka, progres, dan aktivitas Anda di komputer, NAS, atau server milik Anda sendiri. </translation>
+        </message>
+        <message>
+            <source>Start it with one Docker command (see How to set it up), then enter its address and sign in here.</source>
+            <translation>Jalankan dengan satu perintah Docker (lihat Cara memasang), lalu masukkan alamatnya dan masuk di sini.</translation>
+        </message>
+        <message>
+            <source>Server address</source>
+            <translation>Alamat server</translation>
+        </message>
+        <message>
+            <source>Change server</source>
+            <translation>Ganti server</translation>
+        </message>
+        <message>
+            <source>Use this server</source>
+            <translation>Gunakan server ini</translation>
+        </message>
+        <message>
+            <source>How to set it up</source>
+            <translation>Cara memasang</translation>
+        </message>
+        <message>
+            <source>Sync with </source>
+            <translation>Sinkronkan dengan </translation>
+        </message>
+        <message>
+            <source>Keep your library, progress and activity the same on every device</source>
+            <translation>Jaga pustaka, progres, dan aktivitas tetap sama di setiap perangkat</translation>
+        </message>
+        <message>
+            <source> and on the website. Everything works without an account.</source>
+            <translation> dan di situs web. Semuanya berfungsi tanpa akun.</translation>
+        </message>
+        <message>
+            <source>Signed in</source>
+            <translation>Sudah masuk</translation>
+        </message>
+        <message>
+            <source>Syncing here pauses your </source>
+            <translation>Sinkronisasi di sini menjeda sinkronisasi akun </translation>
+        </message>
+        <message>
+            <source> account sync until you stop.</source>
+            <translation> sampai Anda menghentikannya.</translation>
+        </message>
+        <message>
+            <source> changes from other devices</source>
+            <translation> perubahan dari perangkat lain</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Semuanya sudah terbaru</translation>
+        </message>
+        <message>
+            <source>Stop syncing</source>
+            <translation>Berhenti sinkronisasi</translation>
+        </message>
+        <message>
+            <source>Stop syncing?</source>
+            <translation>Berhenti sinkronisasi?</translation>
+        </message>
+        <message>
+            <source>This device stops reading and writing </source>
+            <translation>Perangkat ini berhenti membaca dan menulis </translation>
+        </message>
+        <message>
+            <source>the WebDAV folder</source>
+            <translation>folder WebDAV</translation>
+        </message>
+        <message>
+            <source>the folder</source>
+            <translation>folder itu</translation>
+        </message>
+        <message>
+            <source>. What is there stays, so other devices keep their copy.</source>
+            <translation>. Isinya tetap ada, jadi perangkat lain menyimpan salinannya.</translation>
+        </message>
+        <message>
+            <source>Keep a SCANCORE folder on any WebDAV server, such as Nextcloud, ownCloud, Synology or Koofr. </source>
+            <translation>Simpan folder SCANCORE di server WebDAV mana pun, seperti Nextcloud, ownCloud, Synology, atau Koofr. </translation>
+        </message>
+        <message>
+            <source>Every device you connect to it syncs with the others, no account needed.</source>
+            <translation>Setiap perangkat yang Anda hubungkan tersinkron dengan yang lain, tanpa perlu akun.</translation>
+        </message>
+        <message>
+            <source>WebDAV address</source>
+            <translation>Alamat WebDAV</translation>
+        </message>
+        <message>
+            <source>Nextcloud: Files → Settings → WebDAV shows yours.</source>
+            <translation>Nextcloud: Berkas → Pengaturan → WebDAV menampilkan milik Anda.</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Nama pengguna</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Kata sandi</translation>
+        </message>
+        <message>
+            <source>Kept on this device. An app password, if your server offers them, is best.</source>
+            <translation>Disimpan di perangkat ini. Kata sandi aplikasi, jika server Anda menyediakannya, lebih baik.</translation>
+        </message>
+        <message>
+            <source>Connect</source>
+            <translation>Hubungkan</translation>
+        </message>
+        <message>
+            <source>Syncing with WebDAV</source>
+            <translation>Sinkronisasi dengan WebDAV</translation>
+        </message>
+        <message>
+            <source>Choose a folder that Syncthing, Dropbox, OneDrive, iCloud Drive or Nextcloud keeps the same on your computers. </source>
+            <translation>Pilih folder yang dijaga sama oleh Syncthing, Dropbox, OneDrive, iCloud Drive, atau Nextcloud di komputer Anda. </translation>
+        </message>
+        <message>
+            <source>SCANCORE keeps a small file for each device in it and reads the others'.</source>
+            <translation>SCANCORE menyimpan file kecil untuk setiap perangkat di sana dan membaca milik yang lain.</translation>
+        </message>
+        <message>
+            <source>Choose folder</source>
+            <translation>Pilih folder</translation>
+        </message>
+        <message>
+            <source>Syncing with the folder</source>
+            <translation>Sinkronisasi dengan folder itu</translation>
+        </message>
+        <message>
+            <source>Devices</source>
+            <translation>Perangkat</translation>
+        </message>
+        <message>
+            <source> (this device)</source>
+            <translation> (perangkat ini)</translation>
+        </message>
+        <message>
+            <source>· updated </source>
+            <translation>· diperbarui </translation>
+        </message>
+    </context>
+    <context>
+        <name>ActivityPage</name>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Browsing</source>
+            <translation>Menjelajah</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> bab</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> bab</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> episode</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> episode</translation>
+        </message>
+        <message>
+            <source>Activity</source>
+            <translation>Aktivitas</translation>
+        </message>
+        <message>
+            <source>Your reading and watching, on every device you sync</source>
+            <translation>Bacaan dan tontonan Anda, di setiap perangkat yang Anda sinkronkan</translation>
+        </message>
+        <message>
+            <source>Your </source>
+            <translation>Milik Anda: </translation>
+        </message>
+        <message>
+            <source>Today</source>
+            <translation>Hari ini</translation>
+        </message>
+        <message>
+            <source>This week</source>
+            <translation>Minggu ini</translation>
+        </message>
+        <message>
+            <source>This month</source>
+            <translation>Bulan ini</translation>
+        </message>
+        <message>
+            <source>All time</source>
+            <translation>Sepanjang waktu</translation>
+        </message>
+        <message>
+            <source>Streak</source>
+            <translation>Rentetan</translation>
+        </message>
+        <message>
+            <source>Longest </source>
+            <translation>Terlama: </translation>
+        </message>
+        <message>
+            <source>The last year</source>
+            <translation>Setahun terakhir</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>Waktu</translation>
+        </message>
+        <message>
+            <source>Chapters &amp; episodes</source>
+            <translation>Bab &amp; episode</translation>
+        </message>
+        <message>
+            <source>All</source>
+            <translation>Semua</translation>
+        </message>
+        <message>
+            <source>Mon</source>
+            <translation>Sen</translation>
+        </message>
+        <message>
+            <source>Wed</source>
+            <translation>Rab</translation>
+        </message>
+        <message>
+            <source>Fri</source>
+            <translation>Jum</translation>
+        </message>
+        <message>
+            <source>Browsing </source>
+            <translation>Menjelajah </translation>
+        </message>
+        <message>
+            <source>Nothing</source>
+            <translation>Tidak ada</translation>
+        </message>
+        <message>
+            <source>Time spent</source>
+            <translation>Waktu yang dihabiskan</translation>
+        </message>
+        <message>
+            <source>Chapters and episodes</source>
+            <translation>Bab dan episode</translation>
+        </message>
+        <message>
+            <source>30 days</source>
+            <translation>30 hari</translation>
+        </message>
+        <message>
+            <source>12 weeks</source>
+            <translation>12 minggu</translation>
+        </message>
+        <message>
+            <source>12 months</source>
+            <translation>12 bulan</translation>
+        </message>
+        <message>
+            <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
+            <translation>Waktu dihitung saat SCANCORE digunakan: di pembaca, memutar episode, atau menjelajah. Bab yang selesai sebelum waktu dicatat berasal dari riwayat baca Anda.</translation>
+        </message>
+    </context>
+    <context>
+        <name>AnimeBrowse</name>
+        <message>
+            <source>Any</source>
+            <translation>Apa saja</translation>
+        </message>
+        <message>
+            <source>Browse anime</source>
+            <translation>Jelajahi anime</translation>
+        </message>
+        <message>
+            <source>Search AniList by title, genre, year and more</source>
+            <translation>Cari di AniList berdasarkan judul, genre, tahun, dan lainnya</translation>
+        </message>
+        <message>
+            <source>Search titles</source>
+            <translation>Cari judul</translation>
+        </message>
+        <message>
+            <source>Best match</source>
+            <translation>Paling cocok</translation>
+        </message>
+        <message>
+            <source>Most popular</source>
+            <translation>Paling populer</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>Tren</translation>
+        </message>
+        <message>
+            <source>Highest rated</source>
+            <translation>Rating tertinggi</translation>
+        </message>
+        <message>
+            <source>Newest</source>
+            <translation>Terbaru</translation>
+        </message>
+        <message>
+            <source>Most favourited</source>
+            <translation>Paling difavoritkan</translation>
+        </message>
+        <message>
+            <source>Any format</source>
+            <translation>Format apa saja</translation>
+        </message>
+        <message>
+            <source>Movie</source>
+            <translation>Film</translation>
+        </message>
+        <message>
+            <source>Special</source>
+            <translation>Spesial</translation>
+        </message>
+        <message>
+            <source>TV Short</source>
+            <translation>TV pendek</translation>
+        </message>
+        <message>
+            <source>Any status</source>
+            <translation>Status apa saja</translation>
+        </message>
+        <message>
+            <source>Airing</source>
+            <translation>Sedang tayang</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>Selesai</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <translation>Akan datang</translation>
+        </message>
+        <message>
+            <source>From </source>
+            <translation>Dari </translation>
+        </message>
+        <message>
+            <source>From any year</source>
+            <translation>Tahun berapa pun</translation>
+        </message>
+        <message>
+            <source>To </source>
+            <translation>Sampai </translation>
+        </message>
+        <message>
+            <source>To any year</source>
+            <translation>Sampai tahun berapa pun</translation>
+        </message>
+        <message>
+            <source>Load more</source>
+            <translation>Muat lagi</translation>
+        </message>
+        <message>
+            <source>No anime match these filters</source>
+            <translation>Tidak ada anime yang cocok dengan filter ini</translation>
+        </message>
+    </context>
+    <context>
+        <name>AnimeDetails</name>
+        <message>
+            <source>Watch</source>
+            <translation>Tonton</translation>
+        </message>
+        <message>
+            <source>Watch episode </source>
+            <translation>Tonton episode </translation>
+        </message>
+        <message>
+            <source>Continue episode </source>
+            <translation>Lanjutkan episode </translation>
+        </message>
+        <message>
+            <source>% watched</source>
+            <translation>% ditonton</translation>
+        </message>
+        <message>
+            <source>Watch episode 1</source>
+            <translation>Tonton episode 1</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> episode</translation>
+        </message>
+        <message>
+            <source> episodes so far</source>
+            <translation> episode sejauh ini</translation>
+        </message>
+        <message>
+            <source> min</source>
+            <translation> mnt</translation>
+        </message>
+        <message>
+            <source>Ep </source>
+            <translation>Ep </translation>
+        </message>
+        <message>
+            <source>Added to your library</source>
+            <translation>Ditambahkan ke pustaka Anda</translation>
+        </message>
+        <message>
+            <source>Removed from your library</source>
+            <translation>Dihapus dari pustaka Anda</translation>
+        </message>
+        <message>
+            <source>Watch trailer</source>
+            <translation>Tonton trailer</translation>
+        </message>
+        <message>
+            <source>Open on AniList</source>
+            <translation>Buka di AniList</translation>
+        </message>
+        <message>
+            <source>Tracking</source>
+            <translation>Pelacakan</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>Episode</translation>
+        </message>
+        <message>
+            <source>Mark all as watched</source>
+            <translation>Tandai semua sudah ditonton</translation>
+        </message>
+        <message>
+            <source>Newest first</source>
+            <translation>Terbaru dulu</translation>
+        </message>
+        <message>
+            <source>Oldest first</source>
+            <translation>Terlama dulu</translation>
+        </message>
+        <message>
+            <source>No episodes yet</source>
+            <translation>Belum ada episode</translation>
+        </message>
+        <message>
+            <source>Episode </source>
+            <translation>Episode </translation>
+        </message>
+        <message>
+            <source> airs </source>
+            <translation> tayang </translation>
+        </message>
+        <message>
+            <source>This anime has not aired yet.</source>
+            <translation>Anime ini belum tayang.</translation>
+        </message>
+        <message>
+            <source>Related</source>
+            <translation>Terkait</translation>
+        </message>
+        <message>
+            <source>You might also like</source>
+            <translation>Mungkin Anda suka</translation>
+        </message>
+    </context>
+    <context>
+        <name>AnimePage</name>
+        <message>
+            <source> trending</source>
+            <translation> sedang tren</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> episode</translation>
+        </message>
+        <message>
+            <source>Watch now</source>
+            <translation>Tonton sekarang</translation>
+        </message>
+        <message>
+            <source>In library</source>
+            <translation>Di pustaka</translation>
+        </message>
+        <message>
+            <source>Add to library</source>
+            <translation>Tambah ke pustaka</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Cari anime</translation>
+        </message>
+        <message>
+            <source>Browse</source>
+            <translation>Jelajahi</translation>
+        </message>
+        <message>
+            <source>Schedule</source>
+            <translation>Jadwal</translation>
+        </message>
+        <message>
+            <source>Search</source>
+            <translation>Cari</translation>
+        </message>
+        <message>
+            <source>Continue watching</source>
+            <translation>Lanjutkan menonton</translation>
+        </message>
+        <message>
+            <source>Episode </source>
+            <translation>Episode </translation>
+        </message>
+        <message>
+            <source>Airing today</source>
+            <translation>Tayang hari ini</translation>
+        </message>
+        <message>
+            <source>Full schedule</source>
+            <translation>Jadwal lengkap</translation>
+        </message>
+        <message>
+            <source>Ep </source>
+            <translation>Ep </translation>
+        </message>
+        <message>
+            <source>Trending now</source>
+            <translation>Sedang tren</translation>
+        </message>
+        <message>
+            <source>This season</source>
+            <translation>Musim ini</translation>
+        </message>
+        <message>
+            <source>All-time popular</source>
+            <translation>Populer sepanjang masa</translation>
+        </message>
+        <message>
+            <source>Top rated</source>
+            <translation>Rating teratas</translation>
+        </message>
+    </context>
+    <context>
+        <name>AnimeSchedule</name>
+        <message>
+            <source>Schedule</source>
+            <translation>Jadwal</translation>
+        </message>
+        <message>
+            <source>Episodes airing this week, in your time zone</source>
+            <translation>Episode yang tayang minggu ini, di zona waktu Anda</translation>
+        </message>
+        <message>
+            <source>Today</source>
+            <translation>Hari ini</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>Besok</translation>
+        </message>
+        <message>
+            <source>Episode </source>
+            <translation>Episode </translation>
+        </message>
+        <message>
+            <source> of </source>
+            <translation> dari </translation>
+        </message>
+        <message>
+            <source>aired </source>
+            <translation>tayang </translation>
+        </message>
+        <message>
+            <source>airs </source>
+            <translation>tayang </translation>
+        </message>
+        <message>
+            <source>Nothing airs this day</source>
+            <translation>Tidak ada yang tayang hari ini</translation>
+        </message>
+    </context>
+    <context>
+        <name>AnimeSettings</name>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Playback and skipping</source>
+            <translation>Pemutaran dan melewati</translation>
+        </message>
+        <message>
+            <source>Player</source>
+            <translation>Pemutar</translation>
+        </message>
+        <message>
+            <source>Episodes resume where you stopped. Skip times come from AniSkip when someone has submitted them.</source>
+            <translation>Episode dilanjutkan dari tempat Anda berhenti. Waktu lewati berasal dari AniSkip jika ada yang mengirimkannya.</translation>
+        </message>
+        <message>
+            <source>Play the next episode automatically</source>
+            <translation>Putar episode berikutnya otomatis</translation>
+        </message>
+        <message>
+            <source>Starts after a short countdown you can cancel.</source>
+            <translation>Dimulai setelah hitung mundur singkat yang bisa dibatalkan.</translation>
+        </message>
+        <message>
+            <source>Countdown before the next episode</source>
+            <translation>Hitung mundur sebelum episode berikutnya</translation>
+        </message>
+        <message>
+            <source>Skip intros and recaps automatically</source>
+            <translation>Lewati intro dan rekap otomatis</translation>
+        </message>
+        <message>
+            <source>Otherwise a Skip button appears while they play.</source>
+            <translation>Jika tidak, tombol Lewati muncul saat diputar.</translation>
+        </message>
+        <message>
+            <source>Skip endings automatically</source>
+            <translation>Lewati ending otomatis</translation>
+        </message>
+        <message>
+            <source>Goes straight to the next episode's countdown when the credits start.</source>
+            <translation>Langsung ke hitung mundur episode berikutnya saat kredit dimulai.</translation>
+        </message>
+    </context>
+    <context>
+        <name>AuthForm</name>
+        <message>
+            <source>Sign in</source>
+            <translation>Masuk</translation>
+        </message>
+        <message>
+            <source>Create account</source>
+            <translation>Buat akun</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>Email</translation>
+        </message>
+        <message>
+            <source>Enter a valid email address</source>
+            <translation>Masukkan alamat email yang valid</translation>
+        </message>
+        <message>
+            <source>Username</source>
+            <translation>Nama pengguna</translation>
+        </message>
+        <message>
+            <source>Shown on comments and reviews</source>
+            <translation>Ditampilkan di komentar dan ulasan</translation>
+        </message>
+        <message>
+            <source>3–32 letters, numbers or underscores</source>
+            <translation>3–32 huruf, angka, atau garis bawah</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Kata sandi</translation>
+        </message>
+        <message>
+            <source>Your password</source>
+            <translation>Kata sandi Anda</translation>
+        </message>
+        <message>
+            <source>Choose a strong password</source>
+            <translation>Pilih kata sandi yang kuat</translation>
+        </message>
+        <message>
+            <source>Your account lives on %1.</source>
+            <translation>Akun Anda ada di %1.</translation>
+        </message>
+        <message>
+            <source>Your account lives on scancore.onl.</source>
+            <translation>Akun Anda ada di scancore.onl.</translation>
+        </message>
+        <message>
+            <source>Your password is sent only there and is never stored by this app.</source>
+            <translation>Kata sandi hanya dikirim ke sana dan tidak pernah disimpan aplikasi ini.</translation>
+        </message>
+    </context>
+    <context>
+        <name>BackToTop</name>
+        <message>
+            <source>Back to top</source>
+            <translation>Kembali ke atas</translation>
+        </message>
+    </context>
+    <context>
+        <name>ColorPicker</name>
+        <message>
+            <source>Colour</source>
+            <translation>Warna</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Selesai</translation>
+        </message>
+        <message>
+            <source>Brightness</source>
+            <translation>Kecerahan</translation>
+        </message>
+        <message>
+            <source>Revert</source>
+            <translation>Kembalikan</translation>
+        </message>
+    </context>
+    <context>
+        <name>ComicReader</name>
+        <message>
+            <source>Page </source>
+            <translation>Halaman </translation>
+        </message>
+        <message>
+            <source> did not load</source>
+            <translation> gagal dimuat</translation>
+        </message>
+        <message>
+            <source>Retry</source>
+            <translation>Coba lagi</translation>
+        </message>
+        <message>
+            <source>Try again</source>
+            <translation>Coba lagi</translation>
+        </message>
+        <message>
+            <source>Close reader (Esc)</source>
+            <translation>Tutup pembaca (Esc)</translation>
+        </message>
+        <message>
+            <source>  ·  Downloaded</source>
+            <translation>  ·  Diunduh</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>Bab</translation>
+        </message>
+        <message>
+            <source>Switch to pages</source>
+            <translation>Beralih ke halaman</translation>
+        </message>
+        <message>
+            <source>Switch to vertical strip</source>
+            <translation>Beralih ke strip vertikal</translation>
+        </message>
+        <message>
+            <source>Reader settings</source>
+            <translation>Pengaturan pembaca</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>Layar penuh</translation>
+        </message>
+        <message>
+            <source>Previous chapter</source>
+            <translation>Bab sebelumnya</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Bab berikutnya</translation>
+        </message>
+        <message>
+            <source>Vertical</source>
+            <translation>Vertikal</translation>
+        </message>
+        <message>
+            <source>Pages</source>
+            <translation>Halaman</translation>
+        </message>
+        <message>
+            <source>Left to right</source>
+            <translation>Kiri ke kanan</translation>
+        </message>
+        <message>
+            <source>Right to left</source>
+            <translation>Kanan ke kiri</translation>
+        </message>
+        <message>
+            <source>One page</source>
+            <translation>Satu halaman</translation>
+        </message>
+        <message>
+            <source>Two pages</source>
+            <translation>Dua halaman</translation>
+        </message>
+    </context>
+    <context>
+        <name>ComicsPage</name>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source> sources · manhwa, manga and webtoons</source>
+            <translation> sumber · manhwa, manga, dan webtoon</translation>
+        </message>
+        <message>
+            <source>Search every manhwa, manga and comic</source>
+            <translation>Cari manhwa, manga, dan komik apa pun</translation>
+        </message>
+        <message>
+            <source>Search titles across every source</source>
+            <translation>Cari judul di semua sumber</translation>
+        </message>
+        <message>
+            <source>All sources</source>
+            <translation>Semua sumber</translation>
+        </message>
+        <message>
+            <source> on this device</source>
+            <translation> di perangkat ini</translation>
+        </message>
+        <message>
+            <source> titles for “</source>
+            <translation> judul untuk “</translation>
+        </message>
+        <message>
+            <source>” from Comick's catalogue</source>
+            <translation>” dari katalog Comick</translation>
+        </message>
+        <message>
+            <source> results for “</source>
+            <translation> hasil untuk “</translation>
+        </message>
+        <message>
+            <source> · Comick is unavailable, so your sources were searched</source>
+            <translation> · Comick tidak tersedia, jadi sumber Anda yang dicari</translation>
+        </message>
+        <message>
+            <source>%1 is unavailable</source>
+            <translation>%1 tidak tersedia</translation>
+        </message>
+        <message>
+            <source>%1 are unavailable</source>
+            <translation>%1 tidak tersedia</translation>
+        </message>
+        <message>
+            <source>Pass %1's browser check</source>
+            <translation>Lewati pemeriksaan peramban %1</translation>
+        </message>
+        <message>
+            <source>Ch. </source>
+            <translation>Bab </translation>
+        </message>
+        <message>
+            <source>No comics on this device yet</source>
+            <translation>Belum ada komik di perangkat ini</translation>
+        </message>
+        <message>
+            <source>No comics found</source>
+            <translation>Komik tidak ditemukan</translation>
+        </message>
+        <message>
+            <source>Choose the folders that hold your comics in Settings → Sources. Folders of images, CBZ, CBR and PDF files all work.</source>
+            <translation>Pilih folder berisi komik Anda di Pengaturan → Sumber. Folder gambar, file CBZ, CBR, dan PDF semuanya bisa.</translation>
+        </message>
+        <message>
+            <source>Try a shorter title or another source. You can also paste a series link.</source>
+            <translation>Coba judul yang lebih pendek atau sumber lain. Anda juga bisa menempel tautan seri.</translation>
+        </message>
+        <message>
+            <source>Choose folders</source>
+            <translation>Pilih folder</translation>
+        </message>
+        <message>
+            <source>Continue reading</source>
+            <translation>Lanjutkan membaca</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Bab terbaru</translation>
+        </message>
+        <message>
+            <source>Show more</source>
+            <translation>Tampilkan lebih banyak</translation>
+        </message>
+    </context>
+    <context>
+        <name>CommandPalette</name>
+        <message>
+            <source>Search</source>
+            <translation>Cari</translation>
+        </message>
+        <message>
+            <source>Search comics for “</source>
+            <translation>Cari komik “</translation>
+        </message>
+        <message>
+            <source>Search novels for “</source>
+            <translation>Cari novel “</translation>
+        </message>
+        <message>
+            <source>Search anime for “</source>
+            <translation>Cari anime “</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Terkini</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source>History</source>
+            <translation>Riwayat</translation>
+        </message>
+        <message>
+            <source>Activity</source>
+            <translation>Aktivitas</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>Unduhan</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Pengaturan</translation>
+        </message>
+        <message>
+            <source>Pages</source>
+            <translation>Halaman</translation>
+        </message>
+        <message>
+            <source>Go to </source>
+            <translation>Ke </translation>
+        </message>
+        <message>
+            <source>Switch to the light theme</source>
+            <translation>Beralih ke tema terang</translation>
+        </message>
+        <message>
+            <source>Switch to the dark theme</source>
+            <translation>Beralih ke tema gelap</translation>
+        </message>
+        <message>
+            <source>Turn animations back on</source>
+            <translation>Nyalakan lagi animasi</translation>
+        </message>
+        <message>
+            <source>Reduce motion</source>
+            <translation>Kurangi gerakan</translation>
+        </message>
+        <message>
+            <source>Check the library for new chapters</source>
+            <translation>Periksa bab baru di pustaka</translation>
+        </message>
+        <message>
+            <source>Sync with scancore.onl</source>
+            <translation>Sinkronkan dengan scancore.onl</translation>
+        </message>
+        <message>
+            <source>Keyboard shortcuts</source>
+            <translation>Pintasan papan ketik</translation>
+        </message>
+        <message>
+            <source>Commands</source>
+            <translation>Perintah</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Memeriksa bab baru di pustaka Anda…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Semuanya sudah terbaru</translation>
+        </message>
+        <message>
+            <source>Search comics, novels, anime or jump to a page</source>
+            <translation>Cari komik, novel, anime, atau pindah ke halaman</translation>
+        </message>
+    </context>
+    <context>
+        <name>ConfirmDialog</name>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+    </context>
+    <context>
+        <name>ConnectionsSettings</name>
+        <message>
+            <source>Connections</source>
+            <translation>Koneksi</translation>
+        </message>
+        <message>
+            <source>Tracking and imports</source>
+            <translation>Pelacakan dan impor</translation>
+        </message>
+        <message>
+            <source>1 series added</source>
+            <translation>1 seri ditambahkan</translation>
+        </message>
+        <message>
+            <source> series added</source>
+            <translation> seri ditambahkan</translation>
+        </message>
+        <message>
+            <source> chapter or episode</source>
+            <translation> bab atau episode</translation>
+        </message>
+        <message>
+            <source> chapters and episodes</source>
+            <translation> bab dan episode</translation>
+        </message>
+        <message>
+            <source> marked</source>
+            <translation> ditandai</translation>
+        </message>
+        <message>
+            <source> waiting to be found</source>
+            <translation> menunggu ditemukan</translation>
+        </message>
+        <message>
+            <source>Tracking</source>
+            <translation>Pelacakan</translation>
+        </message>
+        <message>
+            <source>Finishing a chapter or episode moves the series forward on your list. Anime are matched by their AniList entry and </source>
+            <translation>Menyelesaikan bab atau episode memajukan seri di daftar Anda. Anime dicocokkan lewat entri AniList-nya dan </translation>
+        </message>
+        <message>
+            <source>This copy of SCANCORE was built without AniList, MyAnimeList and Comick ids, so tracking is off. Official downloads have them.</source>
+            <translation>Salinan SCANCORE ini dibuat tanpa ID AniList, MyAnimeList, dan Comick, jadi pelacakan mati. Unduhan resmi memilikinya.</translation>
+        </message>
+        <message>
+            <source>Connected as </source>
+            <translation>Terhubung sebagai </translation>
+        </message>
+        <message>
+            <source>Sign in on the page that opened, then paste the token it shows.</source>
+            <translation>Masuk di halaman yang terbuka, lalu tempel token yang ditampilkan.</translation>
+        </message>
+        <message>
+            <source>Keep your AniList lists up to date.</source>
+            <translation>Jaga daftar AniList Anda tetap terbaru.</translation>
+        </message>
+        <message>
+            <source>Open again</source>
+            <translation>Buka lagi</translation>
+        </message>
+        <message>
+            <source>Connect</source>
+            <translation>Hubungkan</translation>
+        </message>
+        <message>
+            <source>Disconnect</source>
+            <translation>Putuskan</translation>
+        </message>
+        <message>
+            <source>Paste the token</source>
+            <translation>Tempel token</translation>
+        </message>
+        <message>
+            <source>Use token</source>
+            <translation>Gunakan token</translation>
+        </message>
+        <message>
+            <source>Connected to AniList as </source>
+            <translation>Terhubung ke AniList sebagai </translation>
+        </message>
+        <message>
+            <source>Waiting for you to sign in on the page that opened…</source>
+            <translation>Menunggu Anda masuk di halaman yang terbuka…</translation>
+        </message>
+        <message>
+            <source>Keep your MyAnimeList lists up to date.</source>
+            <translation>Jaga daftar MyAnimeList Anda tetap terbaru.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+        <message>
+            <source>Connected to MyAnimeList as </source>
+            <translation>Terhubung ke MyAnimeList sebagai </translation>
+        </message>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>Waiting for you to allow SCANCORE on the page that opened…</source>
+            <translation>Menunggu Anda mengizinkan SCANCORE di halaman yang terbuka…</translation>
+        </message>
+        <message>
+            <source>Keep your Comick library up to date, and bring it into SCANCORE.</source>
+            <translation>Jaga pustaka Comick Anda tetap terbaru dan bawa ke SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Connected to Comick as </source>
+            <translation>Terhubung ke Comick sebagai </translation>
+        </message>
+        <message>
+            <source>Discord</source>
+            <translation>Discord</translation>
+        </message>
+        <message>
+            <source>Shown while a reader or the player is open, through the Discord app on this computer.</source>
+            <translation>Ditampilkan saat pembaca atau pemutar terbuka, melalui aplikasi Discord di komputer ini.</translation>
+        </message>
+        <message>
+            <source>Show what you read and watch on Discord</source>
+            <translation>Tampilkan yang Anda baca dan tonton di Discord</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Mati</translation>
+        </message>
+        <message>
+            <source>Connected to Discord</source>
+            <translation>Terhubung ke Discord</translation>
+        </message>
+        <message>
+            <source>Discord is not running</source>
+            <translation>Discord tidak berjalan</translation>
+        </message>
+        <message>
+            <source>Keep titles private</source>
+            <translation>Rahasiakan judul</translation>
+        </message>
+        <message>
+            <source>Shows “Reading a comic” without saying which.</source>
+            <translation>Menampilkan “Membaca komik” tanpa menyebut judulnya.</translation>
+        </message>
+        <message>
+            <source>Bring your library</source>
+            <translation>Bawa pustaka Anda</translation>
+        </message>
+        <message>
+            <source>Anime come in with the episodes you watched. Comics and novels come in when one of your sources has them, </source>
+            <translation>Anime masuk beserta episode yang sudah ditonton. Komik dan novel masuk jika salah satu sumber Anda memilikinya, </translation>
+        </message>
+        <message>
+            <source>Mihon or Tachiyomi backup</source>
+            <translation>Cadangan Mihon atau Tachiyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore.</source>
+            <translation>File .tachibk dari Lainnya → Cadangkan dan pulihkan.</translation>
+        </message>
+        <message>
+            <source>Choose file</source>
+            <translation>Pilih file</translation>
+        </message>
+        <message>
+            <source>Anime, comics and novels from a public AniList list.</source>
+            <translation>Anime, komik, dan novel dari daftar AniList publik.</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Nama pengguna</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>Impor</translation>
+        </message>
+        <message>
+            <source>Everything </source>
+            <translation>Semua yang </translation>
+        </message>
+        <message>
+            <source> follows on Comick.</source>
+            <translation> ikuti di Comick.</translation>
+        </message>
+        <message>
+            <source>Connect Comick above to bring in what you follow there.</source>
+            <translation>Hubungkan Comick di atas untuk membawa yang Anda ikuti di sana.</translation>
+        </message>
+        <message>
+            <source>The anime or manga list file from MyAnimeList's export page.</source>
+            <translation>File daftar anime atau manga dari halaman ekspor MyAnimeList.</translation>
+        </message>
+        <message>
+            <source>Export page</source>
+            <translation>Halaman ekspor</translation>
+        </message>
+        <message>
+            <source>Mihon or Tachiyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Cadangan Mihon atau Tachiyomi (*.tachibk *.proto.gz)</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>Semua file (*)</translation>
+        </message>
+        <message>
+            <source>MyAnimeList export (*.xml *.xml.gz *.gz)</source>
+            <translation>Ekspor MyAnimeList (*.xml *.xml.gz *.gz)</translation>
+        </message>
+        <message>
+            <source>Waiting to be found · </source>
+            <translation>Menunggu ditemukan · </translation>
+        </message>
+        <message>
+            <source>Adding a source in Settings → Sources, or a site coming back, can find more of them later.</source>
+            <translation>Menambah sumber di Pengaturan → Sumber, atau situs yang kembali aktif, bisa menemukan lebih banyak nanti.</translation>
+        </message>
+        <message>
+            <source>Look for them on every source</source>
+            <translation>Cari di semua sumber</translation>
+        </message>
+        <message>
+            <source>Searching… this can take a few minutes.</source>
+            <translation>Mencari… ini bisa memakan beberapa menit.</translation>
+        </message>
+        <message>
+            <source>Adds the ones a source has under exactly the same title.</source>
+            <translation>Menambahkan yang dimiliki sumber dengan judul persis sama.</translation>
+        </message>
+        <message>
+            <source>Stop</source>
+            <translation>Berhenti</translation>
+        </message>
+        <message>
+            <source>Find them</source>
+            <translation>Cari</translation>
+        </message>
+        <message>
+            <source>Found </source>
+            <translation>Ditemukan </translation>
+        </message>
+        <message>
+            <source> still waiting</source>
+            <translation> masih menunggu</translation>
+        </message>
+        <message>
+            <source>None found yet</source>
+            <translation>Belum ada yang ditemukan</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source> read</source>
+            <translation> dibaca</translation>
+        </message>
+        <message>
+            <source> · from </source>
+            <translation> · dari </translation>
+        </message>
+        <message>
+            <source>Forget</source>
+            <translation>Lupakan</translation>
+        </message>
+        <message>
+            <source>Show all </source>
+            <translation>Tampilkan semua </translation>
+        </message>
+        <message>
+            <source>Forget all</source>
+            <translation>Lupakan semua</translation>
+        </message>
+        <message>
+            <source>Forget these titles?</source>
+            <translation>Lupakan judul-judul ini?</translation>
+        </message>
+    </context>
+    <context>
+        <name>DetailsHeader</name>
+        <message>
+            <source>Start reading</source>
+            <translation>Mulai membaca</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source>In library</source>
+            <translation>Di pustaka</translation>
+        </message>
+        <message>
+            <source>Add to library</source>
+            <translation>Tambah ke pustaka</translation>
+        </message>
+    </context>
+    <context>
+        <name>Dock</name>
+        <message>
+            <source>Search</source>
+            <translation>Cari</translation>
+        </message>
+        <message>
+            <source>Home</source>
+            <translation>Beranda</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source>History</source>
+            <translation>Riwayat</translation>
+        </message>
+        <message>
+            <source>Activity</source>
+            <translation>Aktivitas</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>Unduhan</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Pengaturan</translation>
+        </message>
+    </context>
+    <context>
+        <name>DownloadsPage</name>
+        <message>
+            <source>Downloads</source>
+            <translation>Unduhan</translation>
+        </message>
+        <message>
+            <source> chapters saved · </source>
+            <translation> bab tersimpan · </translation>
+        </message>
+        <message>
+            <source>Retry failed</source>
+            <translation>Coba lagi yang gagal</translation>
+        </message>
+        <message>
+            <source>Clear failed</source>
+            <translation>Hapus yang gagal</translation>
+        </message>
+        <message>
+            <source>Open folder</source>
+            <translation>Buka folder</translation>
+        </message>
+        <message>
+            <source>No downloads yet</source>
+            <translation>Belum ada unduhan</translation>
+        </message>
+        <message>
+            <source>On a comic or novel page, use the download button on a chapter, or select several at once. Downloaded chapters open without a connection.</source>
+            <translation>Di halaman komik atau novel, gunakan tombol unduh pada bab, atau pilih beberapa sekaligus. Bab yang diunduh terbuka tanpa koneksi.</translation>
+        </message>
+        <message>
+            <source> of </source>
+            <translation> dari </translation>
+        </message>
+        <message>
+            <source> pages</source>
+            <translation> halaman</translation>
+        </message>
+        <message>
+            <source>Starting…</source>
+            <translation>Memulai…</translation>
+        </message>
+        <message>
+            <source>Waiting</source>
+            <translation>Menunggu</translation>
+        </message>
+        <message>
+            <source>Failed</source>
+            <translation>Gagal</translation>
+        </message>
+        <message>
+            <source>Saved </source>
+            <translation>Disimpan </translation>
+        </message>
+        <message>
+            <source>Retry</source>
+            <translation>Coba lagi</translation>
+        </message>
+        <message>
+            <source>Open series</source>
+            <translation>Buka seri</translation>
+        </message>
+    </context>
+    <context>
+        <name>FormField</name>
+        <message>
+            <source>Hide password</source>
+            <translation>Sembunyikan kata sandi</translation>
+        </message>
+        <message>
+            <source>Show password</source>
+            <translation>Tampilkan kata sandi</translation>
+        </message>
+    </context>
+    <context>
+        <name>HistoryPage</name>
+        <message>
+            <source>Today</source>
+            <translation>Hari ini</translation>
+        </message>
+        <message>
+            <source>Yesterday</source>
+            <translation>Kemarin</translation>
+        </message>
+        <message>
+            <source>History</source>
+            <translation>Riwayat</translation>
+        </message>
+        <message>
+            <source>What you read and watched, newest first</source>
+            <translation>Yang Anda baca dan tonton, terbaru dulu</translation>
+        </message>
+        <message>
+            <source>Clear history</source>
+            <translation>Hapus riwayat</translation>
+        </message>
+        <message>
+            <source>All</source>
+            <translation>Semua</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Search history</source>
+            <translation>Riwayat pencarian</translation>
+        </message>
+        <message>
+            <source>Nothing matches</source>
+            <translation>Tidak ada yang cocok</translation>
+        </message>
+        <message>
+            <source>Nothing read yet</source>
+            <translation>Belum ada yang dibaca</translation>
+        </message>
+        <message>
+            <source>Chapters and episodes you open show up here, with your place saved.</source>
+            <translation>Bab dan episode yang Anda buka muncul di sini, dengan posisi tersimpan.</translation>
+        </message>
+        <message>
+            <source>Episode </source>
+            <translation>Episode </translation>
+        </message>
+        <message>
+            <source>Details</source>
+            <translation>Detail</translation>
+        </message>
+        <message>
+            <source>Remove from history</source>
+            <translation>Hapus dari riwayat</translation>
+        </message>
+        <message>
+            <source>Clear </source>
+            <translation>Hapus </translation>
+        </message>
+        <message>
+            <source>history?</source>
+            <translation>riwayat?</translation>
+        </message>
+        <message>
+            <source>Your place in every series will be forgotten. Your library and downloads are kept.</source>
+            <translation>Posisi Anda di setiap seri akan dilupakan. Pustaka dan unduhan tetap disimpan.</translation>
+        </message>
+        <message>
+            <source>Clear</source>
+            <translation>Hapus</translation>
+        </message>
+    </context>
+    <context>
+        <name>HomePage</name>
+        <message>
+            <source>Up late</source>
+            <translation>Begadang</translation>
+        </message>
+        <message>
+            <source>Good morning</source>
+            <translation>Selamat pagi</translation>
+        </message>
+        <message>
+            <source>Good afternoon</source>
+            <translation>Selamat siang</translation>
+        </message>
+        <message>
+            <source>Good evening</source>
+            <translation>Selamat malam</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Lanjutkan</translation>
+        </message>
+        <message>
+            <source>Episode </source>
+            <translation>Episode </translation>
+        </message>
+        <message>
+            <source>New in your library</source>
+            <translation>Baru di pustaka Anda</translation>
+        </message>
+        <message>
+            <source>Latest comic chapters</source>
+            <translation>Bab komik terbaru</translation>
+        </message>
+        <message>
+            <source>More</source>
+            <translation>Lainnya</translation>
+        </message>
+        <message>
+            <source>Trending anime</source>
+            <translation>Anime yang sedang tren</translation>
+        </message>
+        <message>
+            <source>Browse</source>
+            <translation>Jelajahi</translation>
+        </message>
+        <message>
+            <source> novels</source>
+            <translation> novel</translation>
+        </message>
+    </context>
+    <context>
+        <name>InterfaceSettings</name>
+        <message>
+            <source>Interface</source>
+            <translation>Antarmuka</translation>
+        </message>
+        <message>
+            <source>Navigation, size and motion</source>
+            <translation>Navigasi, ukuran, dan gerakan</translation>
+        </message>
+        <message>
+            <source>Language</source>
+            <translation>Bahasa</translation>
+        </message>
+        <message>
+            <source>Help translate SCANCORE: the translations are the .ts files in the i18n folder of the repository.</source>
+            <translation>Bantu terjemahkan SCANCORE: terjemahannya adalah file .ts di folder i18n repositori.</translation>
+        </message>
+        <message>
+            <source>Titles and chapter names stay as the sites write them.</source>
+            <translation>Judul dan nama bab tetap seperti yang ditulis situs.</translation>
+        </message>
+        <message>
+            <source>System</source>
+            <translation>Sistem</translation>
+        </message>
+        <message>
+            <source>Navigation</source>
+            <translation>Navigasi</translation>
+        </message>
+        <message>
+            <source>Narrow windows and phones always use tabs along the bottom.</source>
+            <translation>Jendela sempit dan ponsel selalu memakai tab di bawah.</translation>
+        </message>
+        <message>
+            <source>Sidebar</source>
+            <translation>Bilah sisi</translation>
+        </message>
+        <message>
+            <source>Full height</source>
+            <translation>Tinggi penuh</translation>
+        </message>
+        <message>
+            <source>Floating</source>
+            <translation>Mengambang</translation>
+        </message>
+        <message>
+            <source>Inset panel</source>
+            <translation>Panel dalam</translation>
+        </message>
+        <message>
+            <source>Rail</source>
+            <translation>Rel</translation>
+        </message>
+        <message>
+            <source>Icons only</source>
+            <translation>Ikon saja</translation>
+        </message>
+        <message>
+            <source>Dock</source>
+            <translation>Dok</translation>
+        </message>
+        <message>
+            <source>A bar of icons</source>
+            <translation>Bilah ikon</translation>
+        </message>
+        <message>
+            <source>Dock position</source>
+            <translation>Posisi dok</translation>
+        </message>
+        <message>
+            <source>Sidebar position</source>
+            <translation>Posisi bilah sisi</translation>
+        </message>
+        <message>
+            <source>Left</source>
+            <translation>Kiri</translation>
+        </message>
+        <message>
+            <source>Right</source>
+            <translation>Kanan</translation>
+        </message>
+        <message>
+            <source>Bottom</source>
+            <translation>Bawah</translation>
+        </message>
+        <message>
+            <source>Top</source>
+            <translation>Atas</translation>
+        </message>
+        <message>
+            <source>Size</source>
+            <translation>Ukuran</translation>
+        </message>
+        <message>
+            <source>Text size</source>
+            <translation>Ukuran teks</translation>
+        </message>
+        <message>
+            <source>Titles, labels and descriptions throughout the app.</source>
+            <translation>Judul, label, dan deskripsi di seluruh aplikasi.</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Kecil</translation>
+        </message>
+        <message>
+            <source>Default</source>
+            <translation>Bawaan</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>Besar</translation>
+        </message>
+        <message>
+            <source>Larger</source>
+            <translation>Lebih besar</translation>
+        </message>
+        <message>
+            <source>Cover size</source>
+            <translation>Ukuran sampul</translation>
+        </message>
+        <message>
+            <source>How big covers are in grids and rows. Smaller fits more on screen.</source>
+            <translation>Seberapa besar sampul di kisi dan baris. Lebih kecil muat lebih banyak.</translation>
+        </message>
+        <message>
+            <source>Motion</source>
+            <translation>Gerakan</translation>
+        </message>
+        <message>
+            <source>Animation speed</source>
+            <translation>Kecepatan animasi</translation>
+        </message>
+        <message>
+            <source>How quickly pages, menus and covers move.</source>
+            <translation>Seberapa cepat halaman, menu, dan sampul bergerak.</translation>
+        </message>
+        <message>
+            <source>Relaxed</source>
+            <translation>Santai</translation>
+        </message>
+        <message>
+            <source>Snappy</source>
+            <translation>Gesit</translation>
+        </message>
+        <message>
+            <source>Reduce motion</source>
+            <translation>Kurangi gerakan</translation>
+        </message>
+        <message>
+            <source>Turns off page transitions, hover lifts, animated backgrounds and other animations.</source>
+            <translation>Mematikan transisi halaman, efek saat kursor di atas, latar animasi, dan animasi lain.</translation>
+        </message>
+        <message>
+            <source>Start</source>
+            <translation>Mulai</translation>
+        </message>
+        <message>
+            <source>Open SCANCORE on</source>
+            <translation>Buka SCANCORE di</translation>
+        </message>
+        <message>
+            <source>The page you see when the app starts.</source>
+            <translation>Halaman yang muncul saat aplikasi dimulai.</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source>History</source>
+            <translation>Riwayat</translation>
+        </message>
+    </context>
+    <context>
+        <name>KeyRecorder</name>
+        <message>
+            <source>None</source>
+            <translation>Tidak ada</translation>
+        </message>
+        <message>
+            <source>Press keys…</source>
+            <translation>Tekan tombol…</translation>
+        </message>
+    </context>
+    <context>
+        <name>KeyboardSettings</name>
+        <message>
+            <source>Keyboard</source>
+            <translation>Papan ketik</translation>
+        </message>
+        <message>
+            <source>Shortcuts for the app, readers and player</source>
+            <translation>Pintasan untuk aplikasi, pembaca, dan pemutar</translation>
+        </message>
+        <message>
+            <source> moved from “</source>
+            <translation> dipindahkan dari “</translation>
+        </message>
+        <message>
+            <source>Shortcuts</source>
+            <translation>Pintasan</translation>
+        </message>
+        <message>
+            <source>Escape, the arrow keys and scrolling keys always work as they do.</source>
+            <translation>Escape, tombol panah, dan tombol gulir selalu berfungsi seperti biasa.</translation>
+        </message>
+        <message>
+            <source>Every shortcut on one sheet</source>
+            <translation>Semua pintasan dalam satu lembar</translation>
+        </message>
+        <message>
+            <source>Press </source>
+            <translation>Tekan </translation>
+        </message>
+        <message>
+            <source> anywhere to see them.</source>
+            <translation> di mana saja untuk melihatnya.</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>Tampilkan</translation>
+        </message>
+        <message>
+            <source>Reset all</source>
+            <translation>Atur ulang semua</translation>
+        </message>
+        <message>
+            <source>Default: </source>
+            <translation>Bawaan: </translation>
+        </message>
+        <message>
+            <source>Back to the default</source>
+            <translation>Kembali ke bawaan</translation>
+        </message>
+    </context>
+    <context>
+        <name>Keymap</name>
+        <message>
+            <source>Search and commands</source>
+            <translation>Pencarian dan perintah</translation>
+        </message>
+        <message>
+            <source>Show keyboard shortcuts</source>
+            <translation>Tampilkan pintasan papan ketik</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source>Go to Home</source>
+            <translation>Ke Beranda</translation>
+        </message>
+        <message>
+            <source>Go to Comics</source>
+            <translation>Ke Komik</translation>
+        </message>
+        <message>
+            <source>Go to Novels</source>
+            <translation>Ke Novel</translation>
+        </message>
+        <message>
+            <source>Go to Anime</source>
+            <translation>Ke Anime</translation>
+        </message>
+        <message>
+            <source>Go to Library</source>
+            <translation>Ke Pustaka</translation>
+        </message>
+        <message>
+            <source>Go to History</source>
+            <translation>Ke Riwayat</translation>
+        </message>
+        <message>
+            <source>Go to Activity</source>
+            <translation>Ke Aktivitas</translation>
+        </message>
+        <message>
+            <source>Go to Downloads</source>
+            <translation>Ke Unduhan</translation>
+        </message>
+        <message>
+            <source>Go to Settings</source>
+            <translation>Ke Pengaturan</translation>
+        </message>
+        <message>
+            <source>Collapse or expand the sidebar</source>
+            <translation>Ciutkan atau bentangkan bilah sisi</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>Layar penuh</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Bab berikutnya</translation>
+        </message>
+        <message>
+            <source>Previous chapter</source>
+            <translation>Bab sebelumnya</translation>
+        </message>
+        <message>
+            <source>Switch between strip and pages</source>
+            <translation>Beralih antara strip dan halaman</translation>
+        </message>
+        <message>
+            <source>Wider strip, larger text</source>
+            <translation>Strip lebih lebar, teks lebih besar</translation>
+        </message>
+        <message>
+            <source>Narrower strip, smaller text</source>
+            <translation>Strip lebih sempit, teks lebih kecil</translation>
+        </message>
+        <message>
+            <source>First page</source>
+            <translation>Halaman pertama</translation>
+        </message>
+        <message>
+            <source>Last page</source>
+            <translation>Halaman terakhir</translation>
+        </message>
+        <message>
+            <source>Scroll down</source>
+            <translation>Gulir ke bawah</translation>
+        </message>
+        <message>
+            <source>Scroll up</source>
+            <translation>Gulir ke atas</translation>
+        </message>
+        <message>
+            <source>Scroll down a screen</source>
+            <translation>Gulir satu layar ke bawah</translation>
+        </message>
+        <message>
+            <source>Scroll up a screen</source>
+            <translation>Gulir satu layar ke atas</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Episode berikutnya</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>Episode sebelumnya</translation>
+        </message>
+        <message>
+            <source>Anywhere</source>
+            <translation>Di mana saja</translation>
+        </message>
+        <message>
+            <source>Comic and novel readers</source>
+            <translation>Pembaca komik dan novel</translation>
+        </message>
+        <message>
+            <source>Anime player</source>
+            <translation>Pemutar anime</translation>
+        </message>
+    </context>
+    <context>
+        <name>LibraryPage</name>
+        <message>
+            <source> new chapters found</source>
+            <translation> bab baru ditemukan</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Semuanya sudah terbaru</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source> saved</source>
+            <translation> tersimpan</translation>
+        </message>
+        <message>
+            <source> new chapters</source>
+            <translation> bab baru</translation>
+        </message>
+        <message>
+            <source>Checking…</source>
+            <translation>Memeriksa…</translation>
+        </message>
+        <message>
+            <source>Check for updates</source>
+            <translation>Periksa pembaruan</translation>
+        </message>
+        <message>
+            <source>All</source>
+            <translation>Semua</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Filter library</source>
+            <translation>Saring pustaka</translation>
+        </message>
+        <message>
+            <source>New chapters first</source>
+            <translation>Bab baru dulu</translation>
+        </message>
+        <message>
+            <source>Recently read</source>
+            <translation>Baru dibaca</translation>
+        </message>
+        <message>
+            <source>Recently added</source>
+            <translation>Baru ditambahkan</translation>
+        </message>
+        <message>
+            <source>Title A–Z</source>
+            <translation>Judul A–Z</translation>
+        </message>
+        <message>
+            <source>Episode </source>
+            <translation>Episode </translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Nothing matches</source>
+            <translation>Tidak ada yang cocok</translation>
+        </message>
+        <message>
+            <source>Your library is empty</source>
+            <translation>Pustaka Anda kosong</translation>
+        </message>
+        <message>
+            <source>Open any comic, novel or anime and choose “Add to library” to keep it here. SCANCORE checks saved series for new chapters in the background.</source>
+            <translation>Buka komik, novel, atau anime apa pun lalu pilih “Tambah ke pustaka” untuk menyimpannya di sini. SCANCORE memeriksa bab baru dari seri tersimpan di latar belakang.</translation>
+        </message>
+    </context>
+    <context>
+        <name>LibrarySettings</name>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source>New chapters and notifications</source>
+            <translation>Bab baru dan notifikasi</translation>
+        </message>
+        <message>
+            <source>Updates</source>
+            <translation>Pembaruan</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Periksa bab baru</translation>
+        </message>
+        <message>
+            <source>Saved comics and novels are checked in the background while SCANCORE is open.</source>
+            <translation>Komik dan novel tersimpan diperiksa di latar belakang saat SCANCORE terbuka.</translation>
+        </message>
+        <message>
+            <source>Never</source>
+            <translation>Tidak pernah</translation>
+        </message>
+        <message>
+            <source>Every hour</source>
+            <translation>Setiap jam</translation>
+        </message>
+        <message>
+            <source>Every 2 hours</source>
+            <translation>Setiap 2 jam</translation>
+        </message>
+        <message>
+            <source>Every 6 hours</source>
+            <translation>Setiap 6 jam</translation>
+        </message>
+        <message>
+            <source>Once a day</source>
+            <translation>Sekali sehari</translation>
+        </message>
+        <message>
+            <source>Notify me about new chapters</source>
+            <translation>Beri tahu saya tentang bab baru</translation>
+        </message>
+        <message>
+            <source>Background</source>
+            <translation>Latar</translation>
+        </message>
+        <message>
+            <source>Keep running in the tray when the window closes</source>
+            <translation>Tetap berjalan di baki saat jendela ditutup</translation>
+        </message>
+        <message>
+            <source>Lets update checks and downloads continue in the background.</source>
+            <translation>Membiarkan pemeriksaan pembaruan dan unduhan tetap berjalan di latar belakang.</translation>
+        </message>
+    </context>
+    <context>
+        <name>Main</name>
+        <message>
+            <source> new chapter</source>
+            <translation> bab baru</translation>
+        </message>
+        <message>
+            <source> in your library</source>
+            <translation> di pustaka Anda</translation>
+        </message>
+        <message>
+            <source>Downloaded </source>
+            <translation>Diunduh </translation>
+        </message>
+        <message>
+            <source>Use this theme?</source>
+            <translation>Gunakan tema ini?</translation>
+        </message>
+        <message>
+            <source> replaces your custom theme and switches SCANCORE to it.</source>
+            <translation> menggantikan tema kustom Anda dan menerapkannya ke SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Use theme</source>
+            <translation>Gunakan tema</translation>
+        </message>
+    </context>
+    <context>
+        <name>NextChapterCard</name>
+        <message>
+            <source>End of </source>
+            <translation>Akhir dari </translation>
+        </message>
+        <message>
+            <source>You're all caught up</source>
+            <translation>Semua sudah terbaca</translation>
+        </message>
+        <message>
+            <source>Next: </source>
+            <translation>Berikutnya: </translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Bab berikutnya</translation>
+        </message>
+        <message>
+            <source>Back to details</source>
+            <translation>Kembali ke detail</translation>
+        </message>
+    </context>
+    <context>
+        <name>NovelReader</name>
+        <message>
+            <source>Previous</source>
+            <translation>Sebelumnya</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Bab berikutnya</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>Selesai</translation>
+        </message>
+        <message>
+            <source>Try again</source>
+            <translation>Coba lagi</translation>
+        </message>
+        <message>
+            <source>Close (Esc)</source>
+            <translation>Tutup (Esc)</translation>
+        </message>
+        <message>
+            <source> of </source>
+            <translation> dari </translation>
+        </message>
+        <message>
+            <source> · Downloaded</source>
+            <translation> · Diunduh</translation>
+        </message>
+        <message>
+            <source>Previous chapter</source>
+            <translation>Bab sebelumnya</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>Bab</translation>
+        </message>
+        <message>
+            <source>Text settings</source>
+            <translation>Pengaturan teks</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>Layar penuh</translation>
+        </message>
+        <message>
+            <source>Serif</source>
+            <translation>Serif</translation>
+        </message>
+        <message>
+            <source>Sans</source>
+            <translation>Sans</translation>
+        </message>
+        <message>
+            <source>Grotesk</source>
+            <translation>Grotesk</translation>
+        </message>
+    </context>
+    <context>
+        <name>NovelsPage</name>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Web novels and light novels from </source>
+            <translation>Novel web dan light novel dari </translation>
+        </message>
+        <message>
+            <source> sources</source>
+            <translation> sumber</translation>
+        </message>
+        <message>
+            <source>Search by title, or paste a book link</source>
+            <translation>Cari berdasarkan judul, atau tempel tautan buku</translation>
+        </message>
+        <message>
+            <source>More sources (</source>
+            <translation>Sumber lain (</translation>
+        </message>
+        <message>
+            <source>All sources</source>
+            <translation>Semua sumber</translation>
+        </message>
+        <message>
+            <source> on this device</source>
+            <translation> di perangkat ini</translation>
+        </message>
+        <message>
+            <source> results for “</source>
+            <translation> hasil untuk “</translation>
+        </message>
+        <message>
+            <source>Pass %1's browser check</source>
+            <translation>Lewati pemeriksaan peramban %1</translation>
+        </message>
+        <message>
+            <source>No books on this device yet</source>
+            <translation>Belum ada buku di perangkat ini</translation>
+        </message>
+        <message>
+            <source>No novels found</source>
+            <translation>Novel tidak ditemukan</translation>
+        </message>
+        <message>
+            <source>Choose the folders that hold your EPUB books in Settings → Sources.</source>
+            <translation>Pilih folder berisi buku EPUB Anda di Pengaturan → Sumber.</translation>
+        </message>
+        <message>
+            <source>Try fewer words, another source, or paste the book's link.</source>
+            <translation>Coba lebih sedikit kata, sumber lain, atau tempel tautan bukunya.</translation>
+        </message>
+        <message>
+            <source>Choose folders</source>
+            <translation>Pilih folder</translation>
+        </message>
+        <message>
+            <source>Continue reading</source>
+            <translation>Lanjutkan membaca</translation>
+        </message>
+        <message>
+            <source>Saved novels</source>
+            <translation>Novel tersimpan</translation>
+        </message>
+        <message>
+            <source>Discover</source>
+            <translation>Temukan</translation>
+        </message>
+    </context>
+    <context>
+        <name>Onboarding</name>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source>Get started</source>
+            <translation>Mulai</translation>
+        </message>
+        <message>
+            <source>Skip for now</source>
+            <translation>Lewati dulu</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Lanjutkan</translation>
+        </message>
+        <message>
+            <source>Skip intro</source>
+            <translation>Lewati intro</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime in one fast app. Everything runs and stays on your device.</source>
+            <translation>Komik, novel, dan anime dalam satu aplikasi cepat. Semua berjalan dan tersimpan di perangkat Anda.</translation>
+        </message>
+        <message>
+            <source>Everything in one place</source>
+            <translation>Semuanya di satu tempat</translation>
+        </message>
+        <message>
+            <source>Read and watch from dozens of sites at once</source>
+            <translation>Baca dan tonton dari puluhan situs sekaligus</translation>
+        </message>
+        <message>
+            <source>Search every source together, keep your place in every series, and download chapters for offline reading.</source>
+            <translation>Cari di semua sumber sekaligus, simpan posisi di setiap seri, dan unduh bab untuk dibaca luring.</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Manhwa, manga and webtoons from Asura, Webtoon, MangaDex and more. Vertical strip or page by page.</source>
+            <translation>Manhwa, manga, dan webtoon dari Asura, Webtoon, MangaDex, dan lainnya. Strip vertikal atau per halaman.</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Royal Road and the big web-novel sites, with a reader you can tune: fonts, spacing, paper and sepia themes.</source>
+            <translation>Royal Road dan situs novel web besar, dengan pembaca yang bisa diatur: fon, spasi, tema kertas dan sepia.</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Trending, seasonal and top lists from AniList, a weekly schedule, and episodes that resume where you stopped.</source>
+            <translation>Daftar tren, musiman, dan teratas dari AniList, jadwal mingguan, dan episode yang dilanjutkan dari tempat Anda berhenti.</translation>
+        </message>
+        <message>
+            <source>Make it yours</source>
+            <translation>Jadikan milik Anda</translation>
+        </message>
+        <message>
+            <source>Pick a look</source>
+            <translation>Pilih tampilan</translation>
+        </message>
+        <message>
+            <source>Changes apply right away. You can adjust these and much more in Settings.</source>
+            <translation>Perubahan langsung berlaku. Anda bisa mengatur ini dan banyak lagi di Pengaturan.</translation>
+        </message>
+        <message>
+            <source>System</source>
+            <translation>Sistem</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Terang</translation>
+        </message>
+        <message>
+            <source>Dark</source>
+            <translation>Gelap</translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <translation>Hitam</translation>
+        </message>
+        <message>
+            <source>Vertical strip</source>
+            <translation>Strip vertikal</translation>
+        </message>
+        <message>
+            <source>Pages</source>
+            <translation>Halaman</translation>
+        </message>
+        <message>
+            <source>Optional</source>
+            <translation>Opsional</translation>
+        </message>
+        <message>
+            <source>You're signed in</source>
+            <translation>Anda sudah masuk</translation>
+        </message>
+        <message>
+            <source>Bring your scancore.onl account</source>
+            <translation>Bawa akun scancore.onl Anda</translation>
+        </message>
+        <message>
+            <source>Signed in as </source>
+            <translation>Masuk sebagai </translation>
+        </message>
+        <message>
+            <source>. Your website library and reading history are syncing into this app.</source>
+            <translation>. Pustaka dan riwayat baca situs web Anda sedang disinkronkan ke aplikasi ini.</translation>
+        </message>
+        <message>
+            <source>Sign in to bring your website library and comic reading history here and keep both in step. Everything works without an account too.</source>
+            <translation>Masuk untuk membawa pustaka situs web dan riwayat baca komik Anda ke sini dan menjaga keduanya tetap selaras. Semuanya juga berfungsi tanpa akun.</translation>
+        </message>
+        <message>
+            <source>You're all set</source>
+            <translation>Semua siap</translation>
+        </message>
+        <message>
+            <source>Press Ctrl+K to search everything or jump anywhere.</source>
+            <translation>Tekan Ctrl+K untuk mencari apa saja atau pindah ke mana saja.</translation>
+        </message>
+        <message>
+            <source>Add series to your library and SCANCORE checks them for new chapters.</source>
+            <translation>Tambahkan seri ke pustaka dan SCANCORE akan memeriksa bab baru.</translation>
+        </message>
+        <message>
+            <source>Download chapters to read without a connection.</source>
+            <translation>Unduh bab untuk dibaca tanpa koneksi.</translation>
+        </message>
+        <message>
+            <source>Reader layout, novel typography and themes live in Settings.</source>
+            <translation>Tata letak pembaca, tipografi novel, dan tema ada di Pengaturan.</translation>
+        </message>
+        <message>
+            <source>Start exploring</source>
+            <translation>Mulai menjelajah</translation>
+        </message>
+    </context>
+    <context>
+        <name>PageHeader</name>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+    </context>
+    <context>
+        <name>ReadFromDialog</name>
+        <message>
+            <source>Looking for it on your sources…</source>
+            <translation>Mencarinya di sumber Anda…</translation>
+        </message>
+        <message>
+            <source>None of your sources has it yet.</source>
+            <translation>Belum ada sumber Anda yang memilikinya.</translation>
+        </message>
+        <message>
+            <source>Read it from</source>
+            <translation>Baca dari</translation>
+        </message>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+    </context>
+    <context>
+        <name>ReadingSettings</name>
+        <message>
+            <source>Reading</source>
+            <translation>Membaca</translation>
+        </message>
+        <message>
+            <source>Comic and novel readers</source>
+            <translation>Pembaca komik dan novel</translation>
+        </message>
+        <message>
+            <source>Comic reader</source>
+            <translation>Pembaca komik</translation>
+        </message>
+        <message>
+            <source>While reading: M switches layout, Ctrl + scroll changes the strip width (or zooms a page), and F goes full screen. Each series can keep its own settings from the reader's settings button.</source>
+            <translation>Saat membaca: M mengganti tata letak, Ctrl + gulir mengubah lebar strip (atau memperbesar halaman), dan F masuk layar penuh. Setiap seri bisa punya pengaturan sendiri dari tombol pengaturan pembaca.</translation>
+        </message>
+        <message>
+            <source>Vertical strip</source>
+            <translation>Strip vertikal</translation>
+        </message>
+        <message>
+            <source>Webtoons, manhwa</source>
+            <translation>Webtoon, manhwa</translation>
+        </message>
+        <message>
+            <source>Pages</source>
+            <translation>Halaman</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Page direction</source>
+            <translation>Arah halaman</translation>
+        </message>
+        <message>
+            <source>For the Pages layout.</source>
+            <translation>Untuk tata letak Halaman.</translation>
+        </message>
+        <message>
+            <source>Left to right</source>
+            <translation>Kiri ke kanan</translation>
+        </message>
+        <message>
+            <source>Right to left</source>
+            <translation>Kanan ke kiri</translation>
+        </message>
+        <message>
+            <source>Two pages side by side</source>
+            <translation>Dua halaman berdampingan</translation>
+        </message>
+        <message>
+            <source>In the Pages layout, when the window is wider than it is tall. Covers and double-page spreads stay alone.</source>
+            <translation>Di tata letak Halaman, saat jendela lebih lebar daripada tinggi. Sampul dan halaman ganda tetap sendiri.</translation>
+        </message>
+        <message>
+            <source>Trim page borders</source>
+            <translation>Pangkas tepi halaman</translation>
+        </message>
+        <message>
+            <source>Cuts the plain white or black margin around scanned pages in the Pages layout.</source>
+            <translation>Memotong margin putih atau hitam polos pada halaman pindaian di tata letak Halaman.</translation>
+        </message>
+        <message>
+            <source>Strip width</source>
+            <translation>Lebar strip</translation>
+        </message>
+        <message>
+            <source>How wide the vertical strip is on large screens.</source>
+            <translation>Lebar strip vertikal di layar besar.</translation>
+        </message>
+        <message>
+            <source> px</source>
+            <translation> px</translation>
+        </message>
+        <message>
+            <source>Gap between panels</source>
+            <translation>Jarak antar panel</translation>
+        </message>
+        <message>
+            <source>Progress rail</source>
+            <translation>Rel progres</translation>
+        </message>
+        <message>
+            <source>A thin line on the right edge showing how far through the chapter you are.</source>
+            <translation>Garis tipis di tepi kanan yang menunjukkan sejauh mana Anda membaca bab.</translation>
+        </message>
+        <message>
+            <source>Novel reader</source>
+            <translation>Pembaca novel</translation>
+        </message>
+        <message>
+            <source>The lamps of the old city came on one by one, and for a moment the whole street seemed to hold its breath. </source>
+            <translation>Lampu-lampu kota tua menyala satu per satu, dan sesaat seluruh jalan seolah menahan napas. </translation>
+        </message>
+        <message>
+            <source>She turned the page and kept reading.</source>
+            <translation>Ia membalik halaman dan terus membaca.</translation>
+        </message>
+        <message>
+            <source>Reading theme</source>
+            <translation>Tema baca</translation>
+        </message>
+        <message>
+            <source>Font</source>
+            <translation>Fon</translation>
+        </message>
+        <message>
+            <source>Serif</source>
+            <translation>Serif</translation>
+        </message>
+        <message>
+            <source>Sans</source>
+            <translation>Sans</translation>
+        </message>
+        <message>
+            <source>Grotesk</source>
+            <translation>Grotesk</translation>
+        </message>
+        <message>
+            <source>Text size</source>
+            <translation>Ukuran teks</translation>
+        </message>
+        <message>
+            <source>Line spacing</source>
+            <translation>Spasi baris</translation>
+        </message>
+        <message>
+            <source>Column width</source>
+            <translation>Lebar kolom</translation>
+        </message>
+        <message>
+            <source>Justify text</source>
+            <translation>Ratakan teks</translation>
+        </message>
+        <message>
+            <source>Even right edges, like a printed book.</source>
+            <translation>Tepi kanan rata, seperti buku cetak.</translation>
+        </message>
+    </context>
+    <context>
+        <name>RecentSearches</name>
+        <message>
+            <source>Recent searches</source>
+            <translation>Pencarian terkini</translation>
+        </message>
+        <message>
+            <source>Clear</source>
+            <translation>Hapus</translation>
+        </message>
+    </context>
+    <context>
+        <name>ResumeCard</name>
+        <message>
+            <source>Episode </source>
+            <translation>Episode </translation>
+        </message>
+        <message>
+            <source>Continue watching</source>
+            <translation>Lanjutkan menonton</translation>
+        </message>
+        <message>
+            <source>Continue reading</source>
+            <translation>Lanjutkan membaca</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>Selesai</translation>
+        </message>
+        <message>
+            <source>Details</source>
+            <translation>Detail</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Lanjutkan</translation>
+        </message>
+    </context>
+    <context>
+        <name>Router</name>
+        <message>
+            <source>The theme</source>
+            <translation>Tema itu</translation>
+        </message>
+        <message>
+            <source> is on. Restart SCANCORE to make the window see-through.</source>
+            <translation> aktif. Mulai ulang SCANCORE agar jendela tembus pandang.</translation>
+        </message>
+        <message>
+            <source> is on</source>
+            <translation> aktif</translation>
+        </message>
+    </context>
+    <context>
+        <name>SeriesPage</name>
+        <message>
+            <source>Start reading</source>
+            <translation>Mulai membaca</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Lanjutkan</translation>
+        </message>
+        <message>
+            <source>Next: </source>
+            <translation>Berikutnya: </translation>
+        </message>
+        <message>
+            <source>Read again</source>
+            <translation>Baca lagi</translation>
+        </message>
+        <message>
+            <source>You finished </source>
+            <translation>Anda menyelesaikan </translation>
+        </message>
+        <message>
+            <source>Removed from your library</source>
+            <translation>Dihapus dari pustaka Anda</translation>
+        </message>
+        <message>
+            <source>Added to your library</source>
+            <translation>Ditambahkan ke pustaka Anda</translation>
+        </message>
+        <message>
+            <source>Downloading </source>
+            <translation>Mengunduh </translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> bab</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> bab</translation>
+        </message>
+        <message>
+            <source> · Novel</source>
+            <translation> · Novel</translation>
+        </message>
+        <message>
+            <source> · Comic</source>
+            <translation> · Komik</translation>
+        </message>
+        <message>
+            <source>Offline copy</source>
+            <translation>Salinan luring</translation>
+        </message>
+        <message>
+            <source>Show in its folder</source>
+            <translation>Tampilkan di foldernya</translation>
+        </message>
+        <message>
+            <source>Open on the website</source>
+            <translation>Buka di situs web</translation>
+        </message>
+        <message>
+            <source>Tracking</source>
+            <translation>Pelacakan</translation>
+        </message>
+        <message>
+            <source>Refresh</source>
+            <translation>Segarkan</translation>
+        </message>
+        <message>
+            <source>Find chapter</source>
+            <translation>Cari bab</translation>
+        </message>
+        <message>
+            <source>Download </source>
+            <translation>Unduh </translation>
+        </message>
+        <message>
+            <source>Unread</source>
+            <translation>Belum dibaca</translation>
+        </message>
+        <message>
+            <source>All</source>
+            <translation>Semua</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+        <message>
+            <source>Select chapters to download</source>
+            <translation>Pilih bab untuk diunduh</translation>
+        </message>
+        <message>
+            <source>Mark all as read</source>
+            <translation>Tandai semua sudah dibaca</translation>
+        </message>
+        <message>
+            <source>Newest first</source>
+            <translation>Terbaru dulu</translation>
+        </message>
+        <message>
+            <source>Oldest first</source>
+            <translation>Terlama dulu</translation>
+        </message>
+        <message>
+            <source>No chapters available</source>
+            <translation>Tidak ada bab tersedia</translation>
+        </message>
+        <message>
+            <source>This source has not published readable chapters for this title.</source>
+            <translation>Sumber ini belum menerbitkan bab yang bisa dibaca untuk judul ini.</translation>
+        </message>
+        <message>
+            <source>Showing the saved chapter list. </source>
+            <translation>Menampilkan daftar bab tersimpan. </translation>
+        </message>
+    </context>
+    <context>
+        <name>SettingsPage</name>
+        <message>
+            <source>Sync</source>
+            <translation>Sinkronisasi</translation>
+        </message>
+        <message>
+            <source>scancore.onl, your server, WebDAV or a folder</source>
+            <translation>scancore.onl, server Anda, WebDAV, atau folder</translation>
+        </message>
+        <message>
+            <source>Connections</source>
+            <translation>Koneksi</translation>
+        </message>
+        <message>
+            <source>AniList, MyAnimeList, Comick and imports</source>
+            <translation>AniList, MyAnimeList, Comick, dan impor</translation>
+        </message>
+        <message>
+            <source>Theme</source>
+            <translation>Tema</translation>
+        </message>
+        <message>
+            <source>Colours, background and transparency</source>
+            <translation>Warna, latar, dan transparansi</translation>
+        </message>
+        <message>
+            <source>Interface</source>
+            <translation>Antarmuka</translation>
+        </message>
+        <message>
+            <source>Navigation, size and motion</source>
+            <translation>Navigasi, ukuran, dan gerakan</translation>
+        </message>
+        <message>
+            <source>Keyboard</source>
+            <translation>Papan ketik</translation>
+        </message>
+        <message>
+            <source>Shortcuts</source>
+            <translation>Pintasan</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Membaca</translation>
+        </message>
+        <message>
+            <source>Comic and novel readers</source>
+            <translation>Pembaca komik dan novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Playback and skipping</source>
+            <translation>Pemutaran dan melewati</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source>New chapters and notifications</source>
+            <translation>Bab baru dan notifikasi</translation>
+        </message>
+        <message>
+            <source>Sources</source>
+            <translation>Sumber</translation>
+        </message>
+        <message>
+            <source>The sites SCANCORE reads from</source>
+            <translation>Situs yang dibaca SCANCORE</translation>
+        </message>
+        <message>
+            <source>Storage</source>
+            <translation>Penyimpanan</translation>
+        </message>
+        <message>
+            <source>Cache, downloads and backups</source>
+            <translation>Cache, unduhan, dan cadangan</translation>
+        </message>
+        <message>
+            <source>About</source>
+            <translation>Tentang</translation>
+        </message>
+        <message>
+            <source>Version, updates and help</source>
+            <translation>Versi, pembaruan, dan bantuan</translation>
+        </message>
+        <message>
+            <source>System</source>
+            <translation>Sistem</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Terang</translation>
+        </message>
+        <message>
+            <source>Dark</source>
+            <translation>Gelap</translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <translation>Hitam</translation>
+        </message>
+        <message>
+            <source>Custom</source>
+            <translation>Kustom</translation>
+        </message>
+        <message>
+            <source> theme · </source>
+            <translation> tema · </translation>
+        </message>
+        <message>
+            <source> accent</source>
+            <translation> (aksen)</translation>
+        </message>
+        <message>
+            <source>Sidebar</source>
+            <translation>Bilah sisi</translation>
+        </message>
+        <message>
+            <source>Floating sidebar</source>
+            <translation>Bilah sisi mengambang</translation>
+        </message>
+        <message>
+            <source>Icon rail</source>
+            <translation>Rel ikon</translation>
+        </message>
+        <message>
+            <source>Dock</source>
+            <translation>Dok</translation>
+        </message>
+        <message>
+            <source> motion</source>
+            <translation> gerakan</translation>
+        </message>
+        <message>
+            <source> shortcut changed</source>
+            <translation> pintasan diubah</translation>
+        </message>
+        <message>
+            <source> shortcuts changed</source>
+            <translation> pintasan diubah</translation>
+        </message>
+        <message>
+            <source>Default shortcuts</source>
+            <translation>Pintasan bawaan</translation>
+        </message>
+        <message>
+            <source>Pages</source>
+            <translation>Halaman</translation>
+        </message>
+        <message>
+            <source>Vertical strip</source>
+            <translation>Strip vertikal</translation>
+        </message>
+        <message>
+            <source>Serif</source>
+            <translation>Serif</translation>
+        </message>
+        <message>
+            <source>Sans</source>
+            <translation>Sans</translation>
+        </message>
+        <message>
+            <source>Grotesk</source>
+            <translation>Grotesk</translation>
+        </message>
+        <message>
+            <source> text</source>
+            <translation> (teks)</translation>
+        </message>
+        <message>
+            <source>Auto-next </source>
+            <translation>Lanjut otomatis </translation>
+        </message>
+        <message>
+            <source> · Auto-skip </source>
+            <translation> · Lewati otomatis </translation>
+        </message>
+        <message>
+            <source>Checks for new chapters every </source>
+            <translation>Memeriksa bab baru setiap </translation>
+        </message>
+        <message>
+            <source> hours</source>
+            <translation> jam</translation>
+        </message>
+        <message>
+            <source>Update checks off</source>
+            <translation>Pemeriksaan pembaruan mati</translation>
+        </message>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>Discord</source>
+            <translation>Discord</translation>
+        </message>
+        <message>
+            <source> connected</source>
+            <translation> terhubung</translation>
+        </message>
+        <message>
+            <source>Tracking and imports</source>
+            <translation>Pelacakan dan impor</translation>
+        </message>
+        <message>
+            <source>Source list version </source>
+            <translation>Versi daftar sumber </translation>
+        </message>
+        <message>
+            <source>Cache, downloads and backup</source>
+            <translation>Cache, unduhan, dan cadangan</translation>
+        </message>
+        <message>
+            <source>Version </source>
+            <translation>Versi </translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Pengaturan</translation>
+        </message>
+        <message>
+            <source>Stored on this computer</source>
+            <translation>Disimpan di komputer ini</translation>
+        </message>
+        <message>
+            <source>Find a setting</source>
+            <translation>Cari pengaturan</translation>
+        </message>
+        <message>
+            <source>Nothing matches</source>
+            <translation>Tidak ada yang cocok</translation>
+        </message>
+        <message>
+            <source>Stored on this device</source>
+            <translation>Disimpan di perangkat ini</translation>
+        </message>
+        <message>
+            <source>Syncing with WebDAV</source>
+            <translation>Sinkronisasi dengan WebDAV</translation>
+        </message>
+        <message>
+            <source>Syncing with a folder</source>
+            <translation>Sinkronisasi dengan folder</translation>
+        </message>
+        <message>
+            <source>Set up sync</source>
+            <translation>Atur sinkronisasi</translation>
+        </message>
+        <message>
+            <source>Syncing…</source>
+            <translation>Menyinkronkan…</translation>
+        </message>
+        <message>
+            <source>Synced </source>
+            <translation>Disinkronkan </translation>
+        </message>
+        <message>
+            <source> account</source>
+            <translation> akun</translation>
+        </message>
+        <message>
+            <source>SCANCORE </source>
+            <translation>SCANCORE </translation>
+        </message>
+        <message>
+            <source> · Medium Dev</source>
+            <translation> · Medium Dev</translation>
+        </message>
+    </context>
+    <context>
+        <name>ShortcutsSheet</name>
+        <message>
+            <source>Back, or close the reader</source>
+            <translation>Kembali, atau tutup pembaca</translation>
+        </message>
+        <message>
+            <source>Previous or next page or chapter</source>
+            <translation>Halaman atau bab sebelumnya atau berikutnya</translation>
+        </message>
+        <message>
+            <source>Leave full screen, then close</source>
+            <translation>Keluar dari layar penuh, lalu tutup</translation>
+        </message>
+        <message>
+            <source>Keyboard shortcuts</source>
+            <translation>Pintasan papan ketik</translation>
+        </message>
+        <message>
+            <source>Change shortcuts</source>
+            <translation>Ubah pintasan</translation>
+        </message>
+        <message>
+            <source>Close (Esc)</source>
+            <translation>Tutup (Esc)</translation>
+        </message>
+    </context>
+    <context>
+        <name>Sidebar</name>
+        <message>
+            <source>Home</source>
+            <translation>Beranda</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source>History</source>
+            <translation>Riwayat</translation>
+        </message>
+        <message>
+            <source>Activity</source>
+            <translation>Aktivitas</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>Unduhan</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Cari semuanya</translation>
+        </message>
+        <message>
+            <source>Search</source>
+            <translation>Cari</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Pengaturan</translation>
+        </message>
+        <message>
+            <source>Collapse</source>
+            <translation>Ciutkan</translation>
+        </message>
+    </context>
+    <context>
+        <name>SiteCheck</name>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Browser check for </source>
+            <translation>Pemeriksaan peramban untuk </translation>
+        </message>
+        <message>
+            <source>Complete any check the site shows. When its normal page appears, press Done.</source>
+            <translation>Selesaikan pemeriksaan yang ditampilkan situs. Saat halaman normalnya muncul, tekan Selesai.</translation>
+        </message>
+        <message>
+            <source>Reload</source>
+            <translation>Muat ulang</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Selesai</translation>
+        </message>
+        <message>
+            <source> should load.</source>
+            <translation> seharusnya dimuat.</translation>
+        </message>
+        <message>
+            <source>This build has no embedded browser. Open </source>
+            <translation>Build ini tidak punya peramban bawaan. Buka </translation>
+        </message>
+        <message>
+            <source> in your browser instead.</source>
+            <translation> di peramban Anda.</translation>
+        </message>
+    </context>
+    <context>
+        <name>SourcesSettings</name>
+        <message>
+            <source>Sources</source>
+            <translation>Sumber</translation>
+        </message>
+        <message>
+            <source>The sites SCANCORE reads from</source>
+            <translation>Situs yang dibaca SCANCORE</translation>
+        </message>
+        <message>
+            <source>Sources updated to version </source>
+            <translation>Sumber diperbarui ke versi </translation>
+        </message>
+        <message>
+            <source>Sources are up to date</source>
+            <translation>Sumber sudah terbaru</translation>
+        </message>
+        <message>
+            <source>Pass a browser check for this site</source>
+            <translation>Lewati pemeriksaan peramban untuk situs ini</translation>
+        </message>
+        <message>
+            <source>Open site</source>
+            <translation>Buka situs</translation>
+        </message>
+        <message>
+            <source>On this device</source>
+            <translation>Di perangkat ini</translation>
+        </message>
+        <message>
+            <source>Each folder or file in these folders is a series: folders of images, CBZ, CBR, 7z and PDF files for comics, and EPUB books for novels. </source>
+            <translation>Setiap folder atau file di folder ini adalah satu seri: folder gambar, file CBZ, CBR, 7z, dan PDF untuk komik, dan buku EPUB untuk novel. </translation>
+        </message>
+        <message>
+            <source>Comics and Novels list them under On this device. CBR and 7z files need 7-Zip, unrar or bsdtar installed.</source>
+            <translation>Komik dan Novel menampilkannya di “Di perangkat ini”. File CBR dan 7z memerlukan 7-Zip, unrar, atau bsdtar.</translation>
+        </message>
+        <message>
+            <source>Stop listing this folder</source>
+            <translation>Berhenti menampilkan folder ini</translation>
+        </message>
+        <message>
+            <source>Add another folder</source>
+            <translation>Tambah folder lain</translation>
+        </message>
+        <message>
+            <source>Add a folder</source>
+            <translation>Tambah folder</translation>
+        </message>
+        <message>
+            <source>Nothing is copied: SCANCORE reads the files where they are.</source>
+            <translation>Tidak ada yang disalin: SCANCORE membaca file di tempatnya.</translation>
+        </message>
+        <message>
+            <source>Add folder</source>
+            <translation>Tambah folder</translation>
+        </message>
+        <message>
+            <source>Open a file</source>
+            <translation>Buka file</translation>
+        </message>
+        <message>
+            <source>Comics and books (*.cbz *.zip *.cbr *.rar *.cb7 *.7z *.pdf *.epub)</source>
+            <translation>Komik dan buku (*.cbz *.zip *.cbr *.rar *.cb7 *.7z *.pdf *.epub)</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>Semua file (*)</translation>
+        </message>
+        <message>
+            <source>Source list</source>
+            <translation>Daftar sumber</translation>
+        </message>
+        <message>
+            <source>Site addresses and availability come from the SCANCORE repository, so a moved or broken site can be fixed without a new release.</source>
+            <translation>Alamat dan ketersediaan situs berasal dari repositori SCANCORE, jadi situs yang pindah atau rusak bisa diperbaiki tanpa rilis baru.</translation>
+        </message>
+        <message>
+            <source>Version </source>
+            <translation>Versi </translation>
+        </message>
+        <message>
+            <source> comic and </source>
+            <translation> komik dan </translation>
+        </message>
+        <message>
+            <source> novel sources built in.</source>
+            <translation> sumber novel bawaan.</translation>
+        </message>
+        <message>
+            <source>Check now</source>
+            <translation>Periksa sekarang</translation>
+        </message>
+        <message>
+            <source>Search with Comick's catalogue</source>
+            <translation>Cari dengan katalog Comick</translation>
+        </message>
+        <message>
+            <source>“All sources” searches comick.dev, which knows almost every series under all its names, then opens </source>
+            <translation>“Semua sumber” mencari di comick.dev, yang mengenal hampir semua seri dengan semua namanya, lalu membuka </translation>
+        </message>
+        <message>
+            <source>the one you pick from a source that has it. Off: each source is searched directly.</source>
+            <translation>yang Anda pilih dari sumber yang memilikinya. Mati: setiap sumber dicari langsung.</translation>
+        </message>
+        <message>
+            <source>Show adult sources</source>
+            <translation>Tampilkan sumber dewasa</translation>
+        </message>
+        <message>
+            <source>Lists sources marked 18+ in the comic source picker.</source>
+            <translation>Menampilkan sumber bertanda 18+ di pemilih sumber komik.</translation>
+        </message>
+        <message>
+            <source>Extended novel sources</source>
+            <translation>Sumber novel tambahan</translation>
+        </message>
+        <message>
+            <source>Not available in this build</source>
+            <translation>Tidak tersedia di build ini</translation>
+        </message>
+        <message>
+            <source> more novel sites installed</source>
+            <translation> situs novel tambahan terpasang</translation>
+        </message>
+        <message>
+            <source>About 260 more novel sites</source>
+            <translation>Sekitar 260 situs novel lagi</translation>
+        </message>
+        <message>
+            <source>The downloadable Python novel-source pack is turned off in this build.</source>
+            <translation>Paket sumber novel Python yang bisa diunduh dinonaktifkan di build ini.</translation>
+        </message>
+        <message>
+            <source>Uses lightnovel-crawler. Downloads a private copy of Python and the crawler (about 400 MB) into the app data folder.</source>
+            <translation>Memakai lightnovel-crawler. Mengunduh salinan pribadi Python dan crawler (sekitar 400 MB) ke folder data aplikasi.</translation>
+        </message>
+        <message>
+            <source> Last attempt: </source>
+            <translation> Percobaan terakhir: </translation>
+        </message>
+        <message>
+            <source>Install</source>
+            <translation>Pasang</translation>
+        </message>
+        <message>
+            <source>Extended novel sources installed</source>
+            <translation>Sumber novel tambahan terpasang</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Hapus</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+    </context>
+    <context>
+        <name>StateView</name>
+        <message>
+            <source>Nothing here yet</source>
+            <translation>Belum ada apa-apa di sini</translation>
+        </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>Terjadi kesalahan</translation>
+        </message>
+        <message>
+            <source>Open browser check</source>
+            <translation>Buka pemeriksaan peramban</translation>
+        </message>
+        <message>
+            <source>Try again</source>
+            <translation>Coba lagi</translation>
+        </message>
+    </context>
+    <context>
+        <name>StorageSettings</name>
+        <message>
+            <source>Storage</source>
+            <translation>Penyimpanan</translation>
+        </message>
+        <message>
+            <source>Cache, downloads and backups</source>
+            <translation>Cache, unduhan, dan cadangan</translation>
+        </message>
+        <message>
+            <source>On this device</source>
+            <translation>Di perangkat ini</translation>
+        </message>
+        <message>
+            <source>Image cache</source>
+            <translation>Cache gambar</translation>
+        </message>
+        <message>
+            <source>Covers and pages you have viewed, kept so they load instantly next time. The oldest are removed first when it is full.</source>
+            <translation>Sampul dan halaman yang pernah dilihat, disimpan agar langsung tampil lain kali. Yang terlama dihapus dulu saat penuh.</translation>
+        </message>
+        <message>
+            <source>256 MB</source>
+            <translation>256 MB</translation>
+        </message>
+        <message>
+            <source>512 MB</source>
+            <translation>512 MB</translation>
+        </message>
+        <message>
+            <source>1 GB</source>
+            <translation>1 GB</translation>
+        </message>
+        <message>
+            <source>2 GB</source>
+            <translation>2 GB</translation>
+        </message>
+        <message>
+            <source>4 GB</source>
+            <translation>4 GB</translation>
+        </message>
+        <message>
+            <source>Clear</source>
+            <translation>Hapus</translation>
+        </message>
+        <message>
+            <source>Cache cleared</source>
+            <translation>Cache dibersihkan</translation>
+        </message>
+        <message>
+            <source>Measuring…</source>
+            <translation>Mengukur…</translation>
+        </message>
+        <message>
+            <source> of </source>
+            <translation> dari </translation>
+        </message>
+        <message>
+            <source>Downloaded chapters</source>
+            <translation>Bab yang diunduh</translation>
+        </message>
+        <message>
+            <source>Open folder</source>
+            <translation>Buka folder</translation>
+        </message>
+        <message>
+            <source>App data</source>
+            <translation>Data aplikasi</translation>
+        </message>
+        <message>
+            <source>Backup</source>
+            <translation>Cadangan</translation>
+        </message>
+        <message>
+            <source>Restoring replaces what is on this device when SCANCORE next starts.</source>
+            <translation>Memulihkan akan mengganti isi perangkat ini saat SCANCORE dimulai berikutnya.</translation>
+        </message>
+        <message>
+            <source>Back up everything</source>
+            <translation>Cadangkan semuanya</translation>
+        </message>
+        <message>
+            <source>Your library, history, reading positions and settings in one file.</source>
+            <translation>Pustaka, riwayat, posisi baca, dan pengaturan Anda dalam satu file.</translation>
+        </message>
+        <message>
+            <source>Export</source>
+            <translation>Ekspor</translation>
+        </message>
+        <message>
+            <source>Restore</source>
+            <translation>Pulihkan</translation>
+        </message>
+        <message>
+            <source>SCANCORE backup (*.scancore)</source>
+            <translation>Cadangan SCANCORE (*.scancore)</translation>
+        </message>
+        <message>
+            <source>Backup saved</source>
+            <translation>Cadangan disimpan</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>Semua file (*)</translation>
+        </message>
+    </context>
+    <context>
+        <name>TabBar</name>
+        <message>
+            <source>Home</source>
+            <translation>Beranda</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source>More</source>
+            <translation>Lainnya</translation>
+        </message>
+        <message>
+            <source>Search</source>
+            <translation>Cari</translation>
+        </message>
+        <message>
+            <source>History</source>
+            <translation>Riwayat</translation>
+        </message>
+        <message>
+            <source>Activity</source>
+            <translation>Aktivitas</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>Unduhan</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Pengaturan</translation>
+        </message>
+    </context>
+    <context>
+        <name>Theme</name>
+        <message>
+            <source>App</source>
+            <translation>Aplikasi</translation>
+        </message>
+        <message>
+            <source>Paper</source>
+            <translation>Kertas</translation>
+        </message>
+        <message>
+            <source>Sepia</source>
+            <translation>Sepia</translation>
+        </message>
+        <message>
+            <source>Dark</source>
+            <translation>Gelap</translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <translation>Hitam</translation>
+        </message>
+    </context>
+    <context>
+        <name>ThemeSettings</name>
+        <message>
+            <source>Theme</source>
+            <translation>Tema</translation>
+        </message>
+        <message>
+            <source>Colours, background and transparency</source>
+            <translation>Warna, latar, dan transparansi</translation>
+        </message>
+        <message>
+            <source>Midnight</source>
+            <translation>Tengah malam</translation>
+        </message>
+        <message>
+            <source>Ocean</source>
+            <translation>Samudra</translation>
+        </message>
+        <message>
+            <source>Forest</source>
+            <translation>Hutan</translation>
+        </message>
+        <message>
+            <source>Plum</source>
+            <translation>Plum</translation>
+        </message>
+        <message>
+            <source>Ember</source>
+            <translation>Bara</translation>
+        </message>
+        <message>
+            <source>Slate</source>
+            <translation>Batu tulis</translation>
+        </message>
+        <message>
+            <source>Paper</source>
+            <translation>Kertas</translation>
+        </message>
+        <message>
+            <source>Mist</source>
+            <translation>Kabut</translation>
+        </message>
+        <message>
+            <source>Blush</source>
+            <translation>Merah muda</translation>
+        </message>
+        <message>
+            <source>System</source>
+            <translation>Sistem</translation>
+        </message>
+        <message>
+            <source>Follows your device</source>
+            <translation>Mengikuti perangkat Anda</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Terang</translation>
+        </message>
+        <message>
+            <source>Dark</source>
+            <translation>Gelap</translation>
+        </message>
+        <message>
+            <source>Black</source>
+            <translation>Hitam</translation>
+        </message>
+        <message>
+            <source>For OLED screens</source>
+            <translation>Untuk layar OLED</translation>
+        </message>
+        <message>
+            <source>Custom</source>
+            <translation>Kustom</translation>
+        </message>
+        <message>
+            <source>Your colours</source>
+            <translation>Warna Anda</translation>
+        </message>
+        <message>
+            <source>Accent</source>
+            <translation>Aksen</translation>
+        </message>
+        <message>
+            <source>Mono matches the scancore.onl website. Custom takes any colour.</source>
+            <translation>Mono cocok dengan situs scancore.onl. Kustom bisa warna apa saja.</translation>
+        </message>
+        <message>
+            <source>Custom theme</source>
+            <translation>Tema kustom</translation>
+        </message>
+        <message>
+            <source>Window colour</source>
+            <translation>Warna jendela</translation>
+        </message>
+        <message>
+            <source> · dark</source>
+            <translation> · gelap</translation>
+        </message>
+        <message>
+            <source> · light</source>
+            <translation> · terang</translation>
+        </message>
+        <message>
+            <source>Change</source>
+            <translation>Ubah</translation>
+        </message>
+        <message>
+            <source>Panels</source>
+            <translation>Panel</translation>
+        </message>
+        <message>
+            <source>How solid the sidebar and cards are over a background picture or a see-through window.</source>
+            <translation>Seberapa padat bilah sisi dan kartu di atas gambar latar atau jendela tembus pandang.</translation>
+        </message>
+        <message>
+            <source>Window transparency</source>
+            <translation>Transparansi jendela</translation>
+        </message>
+        <message>
+            <source>See your desktop through the window.</source>
+            <translation>Lihat desktop Anda melalui jendela.</translation>
+        </message>
+        <message>
+            <source>Takes effect when SCANCORE restarts.</source>
+            <translation>Berlaku saat SCANCORE dimulai ulang.</translation>
+        </message>
+        <message>
+            <source>See your desktop through the window. Takes effect after a restart.</source>
+            <translation>Lihat desktop Anda melalui jendela. Berlaku setelah dimulai ulang.</translation>
+        </message>
+        <message>
+            <source>% solid</source>
+            <translation>% padat</translation>
+        </message>
+        <message>
+            <source>Restart</source>
+            <translation>Mulai ulang</translation>
+        </message>
+        <message>
+            <source>Background</source>
+            <translation>Latar</translation>
+        </message>
+        <message>
+            <source>PNG, JPEG, GIF or WebP, up to 40 MB. SCANCORE keeps its own copy. Animated backgrounds pause while a reader or the player is open.</source>
+            <translation>PNG, JPEG, GIF, atau WebP, hingga 40 MB. SCANCORE menyimpan salinannya sendiri. Latar animasi berhenti saat pembaca atau pemutar terbuka.</translation>
+        </message>
+        <message>
+            <source>Background picture</source>
+            <translation>Gambar latar</translation>
+        </message>
+        <message>
+            <source>No background picture</source>
+            <translation>Tanpa gambar latar</translation>
+        </message>
+        <message>
+            <source>Animated</source>
+            <translation>Animasi</translation>
+        </message>
+        <message>
+            <source>Picture</source>
+            <translation>Gambar</translation>
+        </message>
+        <message>
+            <source>Use a picture or GIF behind everything.</source>
+            <translation>Gunakan gambar atau GIF di belakang semuanya.</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>Pilih…</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Hapus</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Paskan</translation>
+        </message>
+        <message>
+            <source>Fill</source>
+            <translation>Isi</translation>
+        </message>
+        <message>
+            <source>Tile</source>
+            <translation>Ubin</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Regangkan</translation>
+        </message>
+        <message>
+            <source>Dim</source>
+            <translation>Redupkan</translation>
+        </message>
+        <message>
+            <source>Darkens (or lightens) the picture towards the window colour, for readable text.</source>
+            <translation>Menggelapkan (atau mencerahkan) gambar ke arah warna jendela agar teks mudah dibaca.</translation>
+        </message>
+        <message>
+            <source>Blur</source>
+            <translation>Buram</translation>
+        </message>
+        <message>
+            <source>Gallery</source>
+            <translation>Galeri</translation>
+        </message>
+        <message>
+            <source>the themes folder of the SCANCORE repository.</source>
+            <translation>folder themes di repositori SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Downloading…</source>
+            <translation>Mengunduh…</translation>
+        </message>
+        <message>
+            <source>by </source>
+            <translation>oleh </translation>
+        </message>
+        <message>
+            <source>Loading the gallery…</source>
+            <translation>Memuat galeri…</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Bagikan</translation>
+        </message>
+        <message>
+            <source>A .sct file holds the colours, transparency and background picture in one file that works on every system.</source>
+            <translation>File .sct menyimpan warna, transparansi, dan gambar latar dalam satu file yang berfungsi di semua sistem.</translation>
+        </message>
+        <message>
+            <source> You can also drop one on the window.</source>
+            <translation> Anda juga bisa menjatuhkannya ke jendela.</translation>
+        </message>
+        <message>
+            <source>Name</source>
+            <translation>Nama</translation>
+        </message>
+        <message>
+            <source>My theme</source>
+            <translation>Tema saya</translation>
+        </message>
+        <message>
+            <source>Theme file</source>
+            <translation>File tema</translation>
+        </message>
+        <message>
+            <source>Save this theme, or use one someone shared.</source>
+            <translation>Simpan tema ini, atau gunakan yang dibagikan orang lain.</translation>
+        </message>
+        <message>
+            <source>Use a theme someone shared.</source>
+            <translation>Gunakan tema yang dibagikan orang lain.</translation>
+        </message>
+        <message>
+            <source>Export…</source>
+            <translation>Ekspor…</translation>
+        </message>
+        <message>
+            <source>Import…</source>
+            <translation>Impor…</translation>
+        </message>
+        <message>
+            <source>Accent colour</source>
+            <translation>Warna aksen</translation>
+        </message>
+        <message>
+            <source>Pictures and GIFs (*.png *.jpg *.jpeg *.gif *.webp)</source>
+            <translation>Gambar dan GIF (*.png *.jpg *.jpeg *.gif *.webp)</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>Semua file (*)</translation>
+        </message>
+        <message>
+            <source>SCANCORE theme (*.sct)</source>
+            <translation>Tema SCANCORE (*.sct)</translation>
+        </message>
+        <message>
+            <source>Saved </source>
+            <translation>Disimpan </translation>
+        </message>
+    </context>
+    <context>
+        <name>TrackingDialog</name>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>Find it on </source>
+            <translation>Cari di </translation>
+        </message>
+        <message>
+            <source>Tracking</source>
+            <translation>Pelacakan</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Connect AniList, MyAnimeList or Comick in Settings → Connections to keep your lists there up to date.</source>
+            <translation>Hubungkan AniList, MyAnimeList, atau Comick di Pengaturan → Koneksi agar daftar Anda tetap terbaru.</translation>
+        </message>
+        <message>
+            <source>Open Connections</source>
+            <translation>Buka Koneksi</translation>
+        </message>
+        <message>
+            <source>Entry </source>
+            <translation>Entri </translation>
+        </message>
+        <message>
+            <source> · from this anime</source>
+            <translation> · dari anime ini</translation>
+        </message>
+        <message>
+            <source>Linked when you finish an episode</source>
+            <translation>Ditautkan saat Anda menyelesaikan episode</translation>
+        </message>
+        <message>
+            <source>Found by title when you finish a chapter</source>
+            <translation>Ditemukan lewat judul saat Anda menyelesaikan bab</translation>
+        </message>
+        <message>
+            <source>Open on </source>
+            <translation>Buka di </translation>
+        </message>
+        <message>
+            <source>Change</source>
+            <translation>Ubah</translation>
+        </message>
+        <message>
+            <source>Link</source>
+            <translation>Tautkan</translation>
+        </message>
+        <message>
+            <source>Unlink</source>
+            <translation>Lepas tautan</translation>
+        </message>
+        <message>
+            <source>Title</source>
+            <translation>Judul</translation>
+        </message>
+        <message>
+            <source>Nothing by that title</source>
+            <translation>Tidak ada dengan judul itu</translation>
+        </message>
+        <message>
+            <source>Linked to </source>
+            <translation>Ditautkan ke </translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> episode</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> bab</translation>
+        </message>
+    </context>
+    <context>
+        <name>UnitRow</name>
+        <message>
+            <source>Chapter </source>
+            <translation>Bab </translation>
+        </message>
+        <message>
+            <source>Read</source>
+            <translation>Baca</translation>
+        </message>
+        <message>
+            <source>Downloaded · click to remove</source>
+            <translation>Diunduh · klik untuk menghapus</translation>
+        </message>
+        <message>
+            <source>Download failed · click to retry</source>
+            <translation>Unduhan gagal · klik untuk mencoba lagi</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Unduh</translation>
+        </message>
+        <message>
+            <source>Mark unread</source>
+            <translation>Tandai belum dibaca</translation>
+        </message>
+        <message>
+            <source>Mark read</source>
+            <translation>Tandai dibaca</translation>
+        </message>
+    </context>
+    <context>
+        <name>UpdateBanner</name>
+        <message>
+            <source>SCANCORE </source>
+            <translation>SCANCORE </translation>
+        </message>
+        <message>
+            <source> is ready</source>
+            <translation> siap</translation>
+        </message>
+        <message>
+            <source> is out</source>
+            <translation> telah rilis</translation>
+        </message>
+        <message>
+            <source>Restart to finish updating.</source>
+            <translation>Mulai ulang untuk menyelesaikan pembaruan.</translation>
+        </message>
+        <message>
+            <source>Get it from the releases page.</source>
+            <translation>Unduh dari halaman rilis.</translation>
+        </message>
+        <message>
+            <source>Restart</source>
+            <translation>Mulai ulang</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Buka</translation>
+        </message>
+        <message>
+            <source>Later</source>
+            <translation>Nanti</translation>
+        </message>
+    </context>
+    <context>
+        <name>WatchPage</name>
+        <message>
+            <source>Skip ending</source>
+            <translation>Lewati ending</translation>
+        </message>
+        <message>
+            <source>Skip recap</source>
+            <translation>Lewati rekap</translation>
+        </message>
+        <message>
+            <source>Skip intro</source>
+            <translation>Lewati intro</translation>
+        </message>
+        <message>
+            <source>Episode </source>
+            <translation>Episode </translation>
+        </message>
+        <message>
+            <source>Resumed at </source>
+            <translation>Dilanjutkan pada </translation>
+        </message>
+        <message>
+            <source>This copy of SCANCORE cannot play this video</source>
+            <translation>Salinan SCANCORE ini tidak dapat memutar video ini</translation>
+        </message>
+        <message>
+            <source>Its built-in browser lacks the H.264 video codec. Watch this episode in your browser, or use </source>
+            <translation>Peramban bawaannya tidak punya codec video H.264. Tonton episode ini di peramban Anda, atau gunakan </translation>
+        </message>
+        <message>
+            <source>the SCANCORE Flatpak or your distribution's package, which include it.</source>
+            <translation>Flatpak SCANCORE atau paket distribusi Anda, yang menyertakannya.</translation>
+        </message>
+        <message>
+            <source>Open in browser</source>
+            <translation>Buka di peramban</translation>
+        </message>
+        <message>
+            <source>Get SCANCORE</source>
+            <translation>Dapatkan SCANCORE</translation>
+        </message>
+        <message>
+            <source>This build of SCANCORE has no embedded browser, which the ReAnime player needs.</source>
+            <translation>Build SCANCORE ini tidak punya peramban bawaan yang dibutuhkan pemutar ReAnime.</translation>
+        </message>
+        <message>
+            <source>Try again</source>
+            <translation>Coba lagi</translation>
+        </message>
+        <message>
+            <source>Next episode in </source>
+            <translation>Episode berikutnya dalam </translation>
+        </message>
+        <message>
+            <source>Play now</source>
+            <translation>Putar sekarang</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+        <message>
+            <source>Close player (Esc)</source>
+            <translation>Tutup pemutar (Esc)</translation>
+        </message>
+        <message>
+            <source>Next in </source>
+            <translation>Berikutnya dalam </translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>Episode sebelumnya</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Episode berikutnya</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>Episode</translation>
+        </message>
+        <message>
+            <source>Open in your browser</source>
+            <translation>Buka di peramban Anda</translation>
+        </message>
+        <message>
+            <source>Exit full screen</source>
+            <translation>Keluar dari layar penuh</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>Layar penuh</translation>
+        </message>
+        <message>
+            <source>EP </source>
+            <translation>EP </translation>
+        </message>
+    </context>
+    <context>
+        <name>YearReview</name>
+        <message>
+            <source>January</source>
+            <translation>Januari</translation>
+        </message>
+        <message>
+            <source>February</source>
+            <translation>Februari</translation>
+        </message>
+        <message>
+            <source>March</source>
+            <translation>Maret</translation>
+        </message>
+        <message>
+            <source>April</source>
+            <translation>April</translation>
+        </message>
+        <message>
+            <source>June</source>
+            <translation>Juni</translation>
+        </message>
+        <message>
+            <source>July</source>
+            <translation>Juli</translation>
+        </message>
+        <message>
+            <source>August</source>
+            <translation>Agustus</translation>
+        </message>
+        <message>
+            <source>September</source>
+            <translation>September</translation>
+        </message>
+        <message>
+            <source>October</source>
+            <translation>Oktober</translation>
+        </message>
+        <message>
+            <source>November</source>
+            <translation>November</translation>
+        </message>
+        <message>
+            <source>December</source>
+            <translation>Desember</translation>
+        </message>
+        <message>
+            <source>Mondays</source>
+            <translation>Senin</translation>
+        </message>
+        <message>
+            <source>Tuesdays</source>
+            <translation>Selasa</translation>
+        </message>
+        <message>
+            <source>Wednesdays</source>
+            <translation>Rabu</translation>
+        </message>
+        <message>
+            <source>Thursdays</source>
+            <translation>Kamis</translation>
+        </message>
+        <message>
+            <source>Fridays</source>
+            <translation>Jumat</translation>
+        </message>
+        <message>
+            <source>Saturdays</source>
+            <translation>Sabtu</translation>
+        </message>
+        <message>
+            <source>Sundays</source>
+            <translation>Minggu</translation>
+        </message>
+        <message>
+            <source>Your year</source>
+            <translation>Tahun Anda</translation>
+        </message>
+        <message>
+            <source>Time, chapters and episodes, on every device you sync</source>
+            <translation>Waktu, bab, dan episode, di setiap perangkat yang Anda sinkronkan</translation>
+        </message>
+        <message>
+            <source>Previous year</source>
+            <translation>Tahun sebelumnya</translation>
+        </message>
+        <message>
+            <source>Next year</source>
+            <translation>Tahun berikutnya</translation>
+        </message>
+        <message>
+            <source>Save picture</source>
+            <translation>Simpan gambar</translation>
+        </message>
+        <message>
+            <source>Nothing yet in </source>
+            <translation>Belum ada di </translation>
+        </message>
+        <message>
+            <source>Chapters you finish and time spent reading and watching show up here.</source>
+            <translation>Bab yang selesai dan waktu membaca serta menonton muncul di sini.</translation>
+        </message>
+        <message>
+            <source> in SCANCORE</source>
+            <translation> di SCANCORE</translation>
+        </message>
+        <message>
+            <source>You spent </source>
+            <translation>Anda menghabiskan </translation>
+        </message>
+        <message>
+            <source> here</source>
+            <translation> di sini</translation>
+        </message>
+        <message>
+            <source>, most of it on </source>
+            <translation>, sebagian besar di </translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>Bab</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>Episode</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>Waktu</translation>
+        </message>
+        <message>
+            <source>Days active</source>
+            <translation>Hari aktif</translation>
+        </message>
+        <message>
+            <source>Longest streak</source>
+            <translation>Rentetan terpanjang</translation>
+        </message>
+        <message>
+            <source>Busiest month</source>
+            <translation>Bulan tersibuk</translation>
+        </message>
+        <message>
+            <source>Read and watched most</source>
+            <translation>Paling banyak dibaca dan ditonton</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> episode</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> episode</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> bab</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> bab</translation>
+        </message>
+        <message>
+            <source>You read and watched most on </source>
+            <translation>Paling banyak dibaca dan ditonton di </translation>
+        </message>
+        <message>
+            <source>PNG picture (*.png)</source>
+            <translation>Gambar PNG (*.png)</translation>
+        </message>
+        <message>
+            <source>Picture saved</source>
+            <translation>Gambar disimpan</translation>
+        </message>
+        <message>
+            <source>Could not save the picture</source>
+            <translation>Gambar tidak dapat disimpan</translation>
+        </message>
+    </context>
+</TS>

@@ -12,6 +12,9 @@ add_library(scancore_core STATIC
     sources/comics/ComicSource.cpp
     sources/comics/PageEngines.cpp
     sources/comics/Registry.cpp
+    sources/local/Local.cpp
+    sources/local/LocalComics.cpp
+    sources/local/LocalNovels.cpp
     sources/novels/Engines.cpp
     sources/novels/LnCrawl.cpp
     sources/novels/Registry.cpp
@@ -20,7 +23,8 @@ add_library(scancore_core STATIC
 target_include_directories(scancore_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(scancore_core
     PUBLIC Qt6::Core Qt6::Network Qt6::Sql Qt6::Concurrent Qt6::Qml
-    PRIVATE scancore_lexbor)
+    # QZipReader, for CBZ and EPUB files.
+    PRIVATE scancore_lexbor Qt6::CorePrivate)
 
 set(SCANCORE_PLATFORM_SOURCES)
 if(WIN32)
@@ -39,8 +43,13 @@ set_target_properties(scancore PROPERTIES
     MACOSX_BUNDLE_BUNDLE_NAME SCANCORE
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
-    MACOSX_BUNDLE_ICON_FILE scancore.icns)
-target_compile_definitions(scancore PRIVATE SCANCORE_VERSION="${PROJECT_VERSION}")
+    MACOSX_BUNDLE_ICON_FILE scancore.icns
+    MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/packaging/macos/Info.plist.in)
+target_compile_definitions(scancore PRIVATE SCANCORE_VERSION="${PROJECT_VERSION}"
+    SCANCORE_DISCORD_APP_ID="${SCANCORE_DISCORD_APP_ID}"
+    SCANCORE_ANILIST_CLIENT_ID="${SCANCORE_ANILIST_CLIENT_ID}"
+    SCANCORE_MAL_CLIENT_ID="${SCANCORE_MAL_CLIENT_ID}"
+    SCANCORE_COMICK_CLIENT_ID="${SCANCORE_COMICK_CLIENT_ID}")
 if(NOT SCANCORE_WITH_NOVEL_PACK_INSTALLER)
     target_compile_definitions(scancore PRIVATE SCANCORE_DISABLE_NOVEL_PACK)
     target_compile_definitions(scancore_core PRIVATE SCANCORE_DISABLE_NOVEL_PACK)
@@ -63,6 +72,7 @@ qt_add_qml_module(scancore
     QML_FILES ${SCANCORE_QML}
     SOURCES
         app/Account.cpp app/Account.h
+        app/Activity.cpp app/Activity.h
         app/Anime.cpp app/Anime.h
         app/App.cpp app/App.h
         app/Comics.cpp app/Comics.h
@@ -70,13 +80,32 @@ qt_add_qml_module(scancore
         app/Downloads.cpp app/Downloads.h
         app/Extensions.cpp app/Extensions.h
         app/Images.cpp app/Images.h
+        app/Importer.cpp app/Importer.h
         app/SingleInstance.cpp app/SingleInstance.h
+        app/Trackers.cpp app/Trackers.h
+        app/Sync.cpp app/Sync.h
         app/Library.cpp app/Library.h
         app/Novels.cpp app/Novels.h
+        app/Presence.cpp app/Presence.h
         app/Updater.cpp app/Updater.h
         app/WebBridge.cpp app/WebBridge.h
         core/Task.cpp core/Task.h
 )
+
+# The interface in other languages. `cmake --build <dir> --target
+# update_translations` refreshes the .ts files from the code.
+if(TARGET Qt6::lupdate)
+    qt_add_translations(scancore
+        TS_FILES
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_es.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_fr.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_id.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_pt_BR.ts
+        RESOURCE_PREFIX /i18n
+        LUPDATE_OPTIONS -no-obsolete -locations none)
+else()
+    message(STATUS "Qt Linguist tools not found; building without translations")
+endif()
 
 file(GLOB SCANCORE_ICONS RELATIVE ${PROJECT_SOURCE_DIR} CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/resources/icons/*.svg)
 qt_add_resources(scancore assets
@@ -138,6 +167,10 @@ endif()
 if(SCANCORE_WITH_WEBENGINE)
     target_link_libraries(scancore PRIVATE Qt6::WebEngineQuick Qt6::WebEngineCore)
     target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_WEBENGINE)
+endif()
+if(TARGET Qt6::Pdf)
+    target_link_libraries(scancore PRIVATE Qt6::Pdf)
+    target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_PDF)
 endif()
 if(SCANCORE_HAVE_MPV)
     target_link_libraries(scancore PRIVATE scancore_mpv)

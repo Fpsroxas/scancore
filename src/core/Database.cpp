@@ -89,6 +89,22 @@ const char *const kMigrations[] = {
         UNIQUE (series_id, unit_key)
     );
     )",
+    // 2: activity per day (time and finished chapters or episodes, per
+    // device so synced devices add up), and what file sync needs to merge
+    // libraries: when an entry last changed, and removals.
+    R"(
+    CREATE TABLE activity (
+        day TEXT NOT NULL,
+        device TEXT NOT NULL,
+        media TEXT NOT NULL,
+        seconds INTEGER NOT NULL DEFAULT 0,
+        units INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (day, device, media)
+    );
+    ALTER TABLE library ADD COLUMN changed_at INTEGER;
+    UPDATE library SET changed_at = added_at;
+    CREATE TABLE library_removed (series_id TEXT PRIMARY KEY, removed_at INTEGER NOT NULL);
+    )",
 };
 
 QSqlDatabase connection() {

@@ -8,12 +8,17 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QKeySequence>
+#include <QLibraryInfo>
+#include <QLocale>
 #include <QProcess>
+#include <QQmlEngine>
 #include <QSaveFile>
 #include <QStandardPaths>
+#include <QTranslator>
 
 #include <algorithm>
 #include <cmath>
@@ -237,6 +242,45 @@ Task *Customize::exportTheme(const QVariantMap &theme, const QUrl &target) {
     });
 }
 
+namespace {
+
+// A .sct file's theme, with its background stored on this device.
+QVariantMap parseTheme(const QByteArray &bytes) {
+    QJsonParseError parseError{};
+    const auto root = QJsonDocument::fromJson(bytes, &parseError).object();
+    if (parseError.error != QJsonParseError::NoError || root.value("format").toString() != QLatin1String("scancore-theme"))
+        throw Error(QStringLiteral("That is not a SCANCORE theme."));
+    if (root.value("version").toInt() > 1)
+        throw Error(QStringLiteral("That theme was made by a newer SCANCORE. Update to use it."));
+
+    const auto colors = root.value("colors").toObject();
+    const auto window = root.value("window").toObject();
+    QVariantMap theme{{"name", root.value("name").toString().left(80)},
+                      {"base", colorOr(colors.value("window"), QStringLiteral("#14161c"))},
+                      {"accent", colorOr(colors.value("accent"), QString())},
+                      {"windowOpacity", clamped(window.value("opacity"), 0.3, 1.0, 1.0)},
+                      {"panelOpacity", clamped(window.value("panels"), 0.2, 1.0, 0.85)}};
+    const auto background = root.value("background").toObject();
+    if (!background.isEmpty()) {
+        const auto encoded = background.value("data").toString().toLatin1();
+        const auto data = QByteArray::fromBase64(encoded);
+        const auto type = imageType(data);
+        if (data.size() > kMaxBackground || type.isEmpty())
+            throw Error(QStringLiteral("The theme's background is not a usable image."));
+        const auto fit = background.value("fit").toString();
+        theme.insert("background", QUrl::fromLocalFile(storeBackground(data, type)).toString());
+        theme.insert("backgroundAnimated", type == QLatin1String("gif") || type == QLatin1String("webp"));
+        theme.insert("backgroundFit", QStringList{"cover", "contain", "tile", "stretch"}.contains(fit) ? fit : QStringLiteral("cover"));
+        theme.insert("backgroundDim", clamped(background.value("dim"), 0.0, 0.95, 0.45));
+        theme.insert("backgroundBlur", clamped(background.value("blur"), 0.0, 1.0, 0.0));
+    }
+    return theme;
+}
+
+const QString kGallery = QStringLiteral("https://raw.githubusercontent.com/medium-gh/scancore/main/themes/index.json");
+
+} // namespace
+
 Task *Customize::importTheme(const QUrl &source) {
     return Task::run([source]() -> QVariant {
         const auto path = source.isLocalFile() ? source.toLocalFile() : source.toString();
@@ -245,36 +289,124 @@ Task *Customize::importTheme(const QUrl &source) {
             throw Error(QStringLiteral("Could not open that theme file."));
         if (file.size() > kMaxThemeFile)
             throw Error(QStringLiteral("That theme file is too large."));
-        QJsonParseError parseError{};
-        const auto root = QJsonDocument::fromJson(file.readAll(), &parseError).object();
-        if (parseError.error != QJsonParseError::NoError || root.value("format").toString() != QLatin1String("scancore-theme"))
-            throw Error(QStringLiteral("That is not a SCANCORE theme."));
-        if (root.value("version").toInt() > 1)
-            throw Error(QStringLiteral("That theme was made by a newer SCANCORE. Update to use it."));
-
-        const auto colors = root.value("colors").toObject();
-        const auto window = root.value("window").toObject();
-        QVariantMap theme{{"name", root.value("name").toString().left(80)},
-                          {"base", colorOr(colors.value("window"), QStringLiteral("#14161c"))},
-                          {"accent", colorOr(colors.value("accent"), QString())},
-                          {"windowOpacity", clamped(window.value("opacity"), 0.3, 1.0, 1.0)},
-                          {"panelOpacity", clamped(window.value("panels"), 0.2, 1.0, 0.85)}};
-        const auto background = root.value("background").toObject();
-        if (!background.isEmpty()) {
-            const auto encoded = background.value("data").toString().toLatin1();
-            const auto data = QByteArray::fromBase64(encoded);
-            const auto type = imageType(data);
-            if (data.size() > kMaxBackground || type.isEmpty())
-                throw Error(QStringLiteral("The theme's background is not a usable image."));
-            const auto fit = background.value("fit").toString();
-            theme.insert("background", QUrl::fromLocalFile(storeBackground(data, type)).toString());
-            theme.insert("backgroundAnimated", type == QLatin1String("gif") || type == QLatin1String("webp"));
-            theme.insert("backgroundFit", QStringList{"cover", "contain", "tile", "stretch"}.contains(fit) ? fit : QStringLiteral("cover"));
-            theme.insert("backgroundDim", clamped(background.value("dim"), 0.0, 0.95, 0.45));
-            theme.insert("backgroundBlur", clamped(background.value("blur"), 0.0, 1.0, 0.0));
-        }
-        return theme;
+        return parseTheme(file.readAll());
     });
+}
+
+Task *Customize::gallery() {
+    return Task::run([]() -> QVariant {
+        const auto url = qEnvironmentVariable("SCANCORE_THEME_GALLERY", kGallery);
+        QByteArray body;
+        if (auto cached = Database::cacheGet(QStringLiteral("theme-gallery")))
+            body = *cached;
+        else {
+            try {
+                body = Http::getOk(QUrl(url)).body;
+                Database::cachePut(QStringLiteral("theme-gallery"), body, 3600);
+            } catch (const Error &) {
+                auto stale = Database::cacheGet(QStringLiteral("theme-gallery"), true);
+                if (!stale)
+                    throw Error(QStringLiteral("The theme gallery is unavailable right now."));
+                body = *stale;
+            }
+        }
+        QVariantList out;
+        const QUrl base(url);
+        for (const auto &value : QJsonDocument::fromJson(body).object().value("themes").toArray()) {
+            const auto t = value.toObject();
+            const auto file = base.resolved(QUrl(t.value("file").toString()));
+            if (t.value("name").toString().isEmpty() || !file.isValid())
+                continue;
+            out.append(QVariantMap{{"id", t.value("id").toString()},
+                                   {"name", t.value("name").toString().left(80)},
+                                   {"author", t.value("author").toString().left(80)},
+                                   {"description", t.value("description").toString().left(200)},
+                                   {"window", colorOr(t.value("window"), QStringLiteral("#14161c"))},
+                                   {"accent", colorOr(t.value("accent"), QStringLiteral("#f2f2f3"))},
+                                   {"preview", t.value("preview").toString().isEmpty() ? QString() : base.resolved(QUrl(t.value("preview").toString())).toString()},
+                                   {"background", t.value("background").toBool()},
+                                   {"file", file.toString()}});
+        }
+        return out;
+    });
+}
+
+Task *Customize::installTheme(const QString &url) {
+    return Task::run([url]() -> QVariant {
+        const QUrl address(url);
+        // HTTPS, or a local test server (SCANCORE_THEME_GALLERY).
+        if (address.scheme() != QLatin1String("https") && address.host() != QLatin1String("127.0.0.1"))
+            throw Error(QStringLiteral("Themes are downloaded over HTTPS only."));
+        const auto response = Http::get(address, {}, 60000);
+        if (!response.ok())
+            throw Error(QStringLiteral("Could not download that theme (%1).").arg(response.status));
+        if (response.body.size() > kMaxThemeFile)
+            throw Error(QStringLiteral("That theme file is too large."));
+        return parseTheme(response.body);
+    });
+}
+
+namespace {
+
+// Languages with a translation (i18n/scancore_<code>.ts), by their own names.
+const QList<QPair<QString, QString>> kLanguages{{"en", "English"},
+                                                {"es", "Español"},
+                                                {"fr", "Français"},
+                                                {"id", "Bahasa Indonesia"},
+                                                {"pt_BR", "Português (Brasil)"}};
+
+QTranslator *g_translator = nullptr;
+QTranslator *g_qtTranslator = nullptr;
+
+void loadTranslation(const QString &code) {
+    for (auto **slot : {&g_translator, &g_qtTranslator})
+        if (*slot) {
+            QCoreApplication::removeTranslator(*slot);
+            delete *slot;
+            *slot = nullptr;
+        }
+    const auto locale = code == QLatin1String("system") || code.isEmpty() ? QLocale::system() : QLocale(code);
+    if (code == QLatin1String("en"))
+        return;
+    auto *ours = new QTranslator;
+    // Finds scancore_pt_BR, then scancore_pt, for each of the locale's languages.
+    if (ours->load(locale, QStringLiteral("scancore"), QStringLiteral("_"), QStringLiteral(":/i18n"))) {
+        QCoreApplication::installTranslator(ours);
+        g_translator = ours;
+        // Qt's own words (file dialogs), when this Qt ships them.
+        auto *qt = new QTranslator;
+        if (qt->load(locale, QStringLiteral("qtbase"), QStringLiteral("_"), QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
+            QCoreApplication::installTranslator(qt);
+            g_qtTranslator = qt;
+        } else {
+            delete qt;
+        }
+    } else {
+        delete ours;
+    }
+}
+
+} // namespace
+
+void Customize::applyLanguage() { loadTranslation(Database::pref(QStringLiteral("language"), QStringLiteral("system")).toString()); }
+
+QString Customize::language() const { return Database::pref(QStringLiteral("language"), QStringLiteral("system")).toString(); }
+
+QVariantList Customize::languages() const {
+    QVariantList out;
+    for (const auto &[code, name] : kLanguages)
+        out.append(QVariantMap{{"value", code}, {"label", name}});
+    return out;
+}
+
+void Customize::setLanguage(const QString &code) {
+    if (code == language())
+        return;
+    Database::setPref(QStringLiteral("language"), code);
+    loadTranslation(code);
+    emit languageChanged();
+    if (m_engine)
+        m_engine->retranslate();
 }
 
 void Customize::restart() {

@@ -21,8 +21,43 @@ Rectangle {
     readonly property var panels: task && task.ok ? task.result.panels : []
     readonly property string referer: task && task.ok ? task.result.referer : ""
 
-    readonly property string mode: App.settings.readerMode === "paged" ? "paged" : "strip"
-    readonly property int stripWidth: Math.min(width, App.settings.readerWidth || 820)
+    // Settings chosen for this series alone (the reader's settings, "Only
+    // this series") win over the general ones.
+    readonly property var seriesPrefs: {
+        const all = App.settings.readerSeries || {}
+        return series.id && all[series.id] ? all[series.id] : null
+    }
+    function opt(name, fallback) {
+        if (seriesPrefs && seriesPrefs[name] !== undefined) return seriesPrefs[name]
+        const value = App.settings[name]
+        return value === undefined || value === null ? fallback : value
+    }
+    function setOpt(name, value) {
+        if (!seriesPrefs) {
+            App.setSetting(name, value)
+            return
+        }
+        const all = Object.assign({}, App.settings.readerSeries || {})
+        const mine = Object.assign({}, seriesPrefs)
+        mine[name] = value
+        all[series.id] = mine
+        App.setSetting("readerSeries", all)
+    }
+    function setSeriesOnly(on) {
+        const all = Object.assign({}, App.settings.readerSeries || {})
+        if (on)
+            all[series.id] = { readerMode: mode, readerDirection: direction, readerWidth: opt("readerWidth", 820),
+                               readerGap: gap, readerSpread: opt("readerSpread", "single"), readerCrop: crop }
+        else
+            delete all[series.id]
+        App.setSetting("readerSeries", all)
+    }
+
+    readonly property string mode: opt("readerMode", "strip") === "paged" ? "paged" : "strip"
+    readonly property string direction: opt("readerDirection", "ltr") === "rtl" ? "rtl" : "ltr"
+    readonly property int gap: opt("readerGap", 0)
+    readonly property bool crop: opt("readerCrop", false) === true
+    readonly property int stripWidth: Math.min(width, opt("readerWidth", 820))
     property int currentPanel: 0
     property bool controlsShown: true
     property bool finished: false
@@ -48,13 +83,22 @@ Rectangle {
         else task = Comics.panels(chapters[i].url, series.id, chapters[i].key)
         nextTask = null
         strip.contentY = strip.originY
+        pageView.resetZoom()
         pageView.page = 0
         showControls()
+        Presence.show("comic", series.title || "", chapters[i].title || "")
     }
     property int nextFor: -1
 
-    Component.onCompleted: load(index)
-    Component.onDestruction: saveProgress(true)
+    Component.onCompleted: {
+        load(index)
+        Activity.setMedia("comic")
+    }
+    Component.onDestruction: {
+        Activity.setMedia("")
+        Presence.clear()
+        saveProgress(true)
+    }
 
     Connections {
         target: reader.task
@@ -63,7 +107,7 @@ Rectangle {
                 if (reader.resumePosition && reader.resumePosition.panel > 0) {
                     const p = Math.min(reader.resumePosition.panel, reader.panels.length - 1)
                     if (reader.mode === "strip") strip.positionViewAtIndex(p, ListView.Beginning)
-                    else pageView.page = p
+                    else pageView.page = pageView.views[pageView.viewOf(p)][0]
                     reader.currentPanel = p
                 }
             })
@@ -157,8 +201,8 @@ Rectangle {
         else if (Keymap.matches("reader.up", event)) scrollBy(-height * 0.18)
         else if (Keymap.matches("reader.pageDown", event)) scrollBy(height * 0.85)
         else if (Keymap.matches("reader.pageUp", event)) scrollBy(-height * 0.85)
-        else if (event.key === Qt.Key_Right) mode === "paged" ? pageView.turn(App.settings.readerDirection === "rtl" ? -1 : 1) : (hasNext && load(index + 1))
-        else if (event.key === Qt.Key_Left) mode === "paged" ? pageView.turn(App.settings.readerDirection === "rtl" ? 1 : -1) : (hasPrev && load(index - 1))
+        else if (event.key === Qt.Key_Right) mode === "paged" ? pageView.turn(direction === "rtl" ? -1 : 1) : (hasNext && load(index + 1))
+        else if (event.key === Qt.Key_Left) mode === "paged" ? pageView.turn(direction === "rtl" ? 1 : -1) : (hasPrev && load(index - 1))
         else return
         event.accepted = true
     }
@@ -172,15 +216,15 @@ Rectangle {
     }
     Shortcut {
         sequences: Keymap.sequences("reader.last")
-        onActivated: reader.mode === "strip" ? strip.positionViewAtEnd() : (pageView.page = reader.panels.length - 1)
+        onActivated: reader.mode === "strip" ? strip.positionViewAtEnd() : (pageView.page = pageView.views[pageView.views.length - 1][0])
     }
     Shortcut {
         sequences: Keymap.sequences("reader.fullscreen")
         onActivated: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
     }
-    Shortcut { sequences: Keymap.sequences("reader.mode"); onActivated: App.setSetting("readerMode", reader.mode === "strip" ? "paged" : "strip") }
-    Shortcut { sequences: Keymap.sequences("reader.wider"); onActivated: App.setSetting("readerWidth", Math.min(2400, reader.stripWidth + 80)) }
-    Shortcut { sequences: Keymap.sequences("reader.narrower"); onActivated: App.setSetting("readerWidth", Math.max(360, reader.stripWidth - 80)) }
+    Shortcut { sequences: Keymap.sequences("reader.mode"); onActivated: reader.setOpt("readerMode", reader.mode === "strip" ? "paged" : "strip") }
+    Shortcut { sequences: Keymap.sequences("reader.wider"); onActivated: reader.setOpt("readerWidth", Math.min(2400, reader.stripWidth + 80)) }
+    Shortcut { sequences: Keymap.sequences("reader.narrower"); onActivated: reader.setOpt("readerWidth", Math.max(360, reader.stripWidth - 80)) }
 
     // ------------------------------------------------------------ strip
 
@@ -193,7 +237,7 @@ Rectangle {
         boundsBehavior: Flickable.StopAtBounds
         maximumFlickVelocity: 7000
         flickDeceleration: 2600
-        spacing: App.settings.readerGap || 0
+        spacing: reader.gap
         reuseItems: false
         ScrollBar.vertical: ScScrollBar { policy: reader.controlsShown ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded }
 
@@ -224,7 +268,7 @@ Rectangle {
             acceptedDevices: PointerDevice.Mouse
             onWheel: (event) => {
                 if (event.modifiers & Qt.ControlModifier) {
-                    App.setSetting("readerWidth", Math.max(360, Math.min(2400, reader.stripWidth + (event.angleDelta.y > 0 ? 60 : -60))))
+                    reader.setOpt("readerWidth", Math.max(360, Math.min(2400, reader.stripWidth + (event.angleDelta.y > 0 ? 60 : -60))))
                     return
                 }
                 reader.scrollBy(-event.angleDelta.y / 120 * 180)
@@ -263,7 +307,7 @@ Rectangle {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: image.status === PanelImage.Error
-                    text: "Page " + (panelItem.index + 1) + " did not load"
+                    text: qsTr("Page ") + (panelItem.index + 1) + qsTr(" did not load")
                     color: "#a0a0a8"
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -271,7 +315,7 @@ Rectangle {
                 ScButton {
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: image.status === PanelImage.Error
-                    text: "Retry"
+                    text: qsTr("Retry")
                     compact: true
                     onClicked: image.reload()
                 }
@@ -295,70 +339,200 @@ Rectangle {
         id: pageView
         anchors.fill: parent
         visible: reader.mode === "paged"
+        // The first page of the pages shown.
         property int page: 0
         property int direction: 1
-        readonly property bool rtl: App.settings.readerDirection === "rtl"
+        readonly property bool rtl: reader.direction === "rtl"
+
+        // Two pages side by side in a wide window, when chosen: the cover
+        // alone, then pairs, and a landscape page (already a spread) alone.
+        readonly property bool twoUp: reader.opt("readerSpread", "single") === "double" && width > height * 1.15
+        // Pages found to be landscape once loaded (many sources give no
+        // sizes up front); the pages ahead load early, so this is usually
+        // known before they are shown.
+        property var widePages: ({})
+        function noteShape(i, w, h) {
+            if (i < 0 || w <= 0 || h <= 0) return
+            const wide = w > h * 1.1
+            if (!!widePages[i] === wide) return
+            const next = Object.assign({}, widePages)
+            next[i] = wide
+            widePages = next
+        }
+        Connections {
+            target: reader
+            function onPanelsChanged() { pageView.widePages = {} }
+        }
+        readonly property var views: {
+            const out = []
+            const n = reader.panels.length
+            const wide = (i) => {
+                if (widePages[i] !== undefined) return widePages[i]
+                const p = reader.panels[i]
+                return p && p.width > 0 && p.height > 0 && p.width > p.height * 1.1
+            }
+            let i = 0
+            while (i < n) {
+                if (twoUp && i > 0 && i + 1 < n && !wide(i) && !wide(i + 1)) {
+                    out.push([i, i + 1])
+                    i += 2
+                } else {
+                    out.push([i])
+                    i += 1
+                }
+            }
+            return out.length ? out : [[0]]
+        }
+        function viewOf(p) {
+            for (let v = 0; v < views.length; ++v)
+                if (views[v].indexOf(p) >= 0) return v
+            return 0
+        }
+        readonly property int view: viewOf(page)
+        readonly property var shown: views[view] || [page]
+        // Turning to one or two pages keeps the same first page in view.
+        onTwoUpChanged: page = views[viewOf(page)][0]
 
         function turn(step) {
-            const next = page + step
+            const next = view + step
             if (next < 0) {
                 if (reader.hasPrev) reader.load(reader.index - 1)
                 return
             }
-            if (next >= reader.panels.length) {
+            if (next >= views.length) {
                 reader.markFinished()
                 if (reader.hasNext) reader.load(reader.index + 1)
                 return
             }
             direction = step
-            page = next
+            page = views[next][0]
         }
         onPageChanged: {
-            reader.currentPanel = page
-            if (page === reader.panels.length - 1) reader.markFinished()
+            resetZoom()
+            reader.currentPanel = shown[shown.length - 1]
+            if (view === views.length - 1) reader.markFinished()
             pageSwap.restart()
+        }
+
+        // ---- zoom: pinch, double-click the middle, or Ctrl + wheel
+        readonly property bool zoomed: zoomLayer.scale > 1.01
+        function clampPan() {
+            zoomLayer.x = Math.min(0, Math.max(pageHolder.width * (1 - zoomLayer.scale), zoomLayer.x))
+            zoomLayer.y = Math.min(0, Math.max(pageHolder.height * (1 - zoomLayer.scale), zoomLayer.y))
+        }
+        function zoomAt(px, py, target) {
+            const z = Math.max(1, Math.min(4, target))
+            const k = z / zoomLayer.scale
+            zoomLayer.x = px - (px - zoomLayer.x) * k
+            zoomLayer.y = py - (py - zoomLayer.y) * k
+            zoomLayer.scale = z
+            clampPan()
+        }
+        function resetZoom() {
+            zoomAnim.stop()
+            zoomLayer.scale = 1
+            zoomLayer.x = 0
+            zoomLayer.y = 0
+        }
+        function toggleZoom(px, py) {
+            const z = zoomed ? 1 : 2.2
+            const k = z / zoomLayer.scale
+            zoomAnim.toScale = z
+            zoomAnim.toX = z === 1 ? 0 : Math.min(0, Math.max(pageHolder.width * (1 - z), px - (px - zoomLayer.x) * k))
+            zoomAnim.toY = z === 1 ? 0 : Math.min(0, Math.max(pageHolder.height * (1 - z), py - (py - zoomLayer.y) * k))
+            zoomAnim.restart()
+        }
+        ParallelAnimation {
+            id: zoomAnim
+            property real toScale: 1
+            property real toX: 0
+            property real toY: 0
+            NumberAnimation { target: zoomLayer; property: "scale"; to: zoomAnim.toScale; duration: Motion.normal; easing.type: Easing.OutCubic }
+            NumberAnimation { target: zoomLayer; property: "x"; to: zoomAnim.toX; duration: Motion.normal; easing.type: Easing.OutCubic }
+            NumberAnimation { target: zoomLayer; property: "y"; to: zoomAnim.toY; duration: Motion.normal; easing.type: Easing.OutCubic }
         }
 
         Item {
             id: pageHolder
-            anchors.fill: parent
-            PanelImage {
-                id: pageImage
-                readonly property real ratio: sourceWidth > 0 ? sourceHeight / sourceWidth : 1.45
-                anchors.centerIn: parent
-                width: Math.min(parent.width, parent.height / ratio)
-                height: width * ratio
-                source: reader.mode === "paged" && reader.panels.length > 0 ? reader.panels[Math.min(pageView.page, reader.panels.length - 1)].url : ""
-                referer: reader.referer
-                maxDecodeWidth: 2400
+            width: parent.width
+            height: parent.height
+            Item {
+                id: zoomLayer
+                width: pageHolder.width
+                height: pageHolder.height
+                transformOrigin: Item.TopLeft
+                // One page centred, or two meeting in the middle (in reading
+                // order: right to left puts the first on the right).
+                Item {
+                    id: pages
+                    anchors.fill: parent
+                    readonly property bool two: pageView.shown.length > 1
+                    readonly property real slot: two ? width / 2 : width
+                    readonly property real total: pageImage.width + (two ? secondImage.width : 0)
+                    PanelImage {
+                        id: pageImage
+                        readonly property real ratio: sourceWidth > 0 ? sourceHeight / sourceWidth : 1.45
+                        width: Math.min(pages.slot, pages.height / ratio)
+                        height: width * ratio
+                        x: !pages.two ? (pages.width - width) / 2
+                            : pageView.rtl ? pages.width / 2 : pages.width / 2 - width
+                        y: (pages.height - height) / 2
+                        source: reader.mode === "paged" && reader.panels.length > 0 ? reader.panels[Math.min(pageView.shown[0], reader.panels.length - 1)].url : ""
+                        referer: reader.referer
+                        cropBorders: reader.crop
+                        maxDecodeWidth: 2400
+                        onLoaded: pageView.noteShape(pageView.shown[0], sourceWidth, sourceHeight)
+                    }
+                    PanelImage {
+                        id: secondImage
+                        readonly property real ratio: sourceWidth > 0 ? sourceHeight / sourceWidth : 1.45
+                        visible: pages.two
+                        width: Math.min(pages.slot, pages.height / ratio)
+                        height: width * ratio
+                        x: pageView.rtl ? pages.width / 2 - width : pages.width / 2
+                        y: (pages.height - height) / 2
+                        source: pages.two && reader.mode === "paged" ? reader.panels[pageView.shown[1]].url : ""
+                        referer: reader.referer
+                        cropBorders: reader.crop
+                        maxDecodeWidth: 2400
+                        onLoaded: pageView.noteShape(pageView.shown[1], sourceWidth, sourceHeight)
+                    }
+                }
             }
             Spinner {
                 anchors.centerIn: parent
-                visible: pageImage.status === PanelImage.Loading
+                visible: pageImage.status === PanelImage.Loading || secondImage.status === PanelImage.Loading
                 color: "#7a7a80"
             }
             Column {
                 anchors.centerIn: parent
                 spacing: 10
-                visible: pageImage.status === PanelImage.Error
+                visible: pageImage.status === PanelImage.Error || secondImage.status === PanelImage.Error
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Page " + (pageView.page + 1) + " did not load"
+                    text: qsTr("Page ") + (pageView.shown[pageImage.status === PanelImage.Error ? 0 : pageView.shown.length - 1] + 1) + qsTr(" did not load")
                     color: "#a0a0a8"
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
                 }
                 ScButton {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Retry"
+                    text: qsTr("Retry")
                     compact: true
-                    onClicked: pageImage.reload()
+                    onClicked: {
+                        if (pageImage.status === PanelImage.Error) pageImage.reload()
+                        if (secondImage.status === PanelImage.Error) secondImage.reload()
+                    }
                 }
             }
         }
-        // Preload neighbours.
+        // Preload the next pages and the one before.
         Repeater {
-            model: reader.mode === "paged" ? [pageView.page + 1, pageView.page + 2, pageView.page - 1] : []
+            model: {
+                if (reader.mode !== "paged") return []
+                const last = pageView.shown[pageView.shown.length - 1]
+                return [last + 1, last + 2, last + 3, pageView.shown[0] - 1]
+            }
             PanelImage {
                 required property var modelData
                 visible: false
@@ -366,7 +540,9 @@ Rectangle {
                 height: 1
                 source: modelData >= 0 && modelData < reader.panels.length ? reader.panels[modelData].url : ""
                 referer: reader.referer
+                cropBorders: reader.crop
                 maxDecodeWidth: 2400
+                onLoaded: pageView.noteShape(modelData, sourceWidth, sourceHeight)
             }
         }
         ParallelAnimation {
@@ -378,13 +554,50 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton
+            // Sides turn the page (unless zoomed in); the middle shows the
+            // controls, and a double click there zooms.
             onClicked: (mouse) => {
                 const third = width / 3
-                if (mouse.x < third) pageView.turn(pageView.rtl ? 1 : -1)
-                else if (mouse.x > third * 2) pageView.turn(pageView.rtl ? -1 : 1)
+                if (!pageView.zoomed && mouse.x < third) pageView.turn(pageView.rtl ? 1 : -1)
+                else if (!pageView.zoomed && mouse.x > third * 2) pageView.turn(pageView.rtl ? -1 : 1)
                 else reader.controlsShown ? (reader.controlsShown = false) : reader.showControls()
             }
-            onWheel: (wheel) => pageView.turn(wheel.angleDelta.y < 0 ? 1 : -1)
+            onDoubleClicked: (mouse) => {
+                if (pageView.zoomed || (mouse.x >= width / 3 && mouse.x <= width * 2 / 3)) pageView.toggleZoom(mouse.x, mouse.y)
+            }
+            onWheel: (wheel) => {
+                if (wheel.modifiers & Qt.ControlModifier) {
+                    pageView.zoomAt(wheel.x, wheel.y, zoomLayer.scale * (wheel.angleDelta.y > 0 ? 1.2 : 1 / 1.2))
+                } else if (pageView.zoomed) {
+                    zoomLayer.x += wheel.angleDelta.x / 120 * 90
+                    zoomLayer.y += wheel.angleDelta.y / 120 * 90
+                    pageView.clampPan()
+                } else {
+                    pageView.turn(wheel.angleDelta.y < 0 ? 1 : -1)
+                }
+            }
+
+            PinchHandler {
+                id: pinch
+                target: null
+                property real startScale: 1
+                onActiveChanged: if (active) startScale = zoomLayer.scale
+                onActiveScaleChanged: if (active) pageView.zoomAt(centroid.position.x, centroid.position.y, startScale * activeScale)
+            }
+
+            // Zoomed in: dragging moves around the page.
+            DragHandler {
+                id: pan
+                target: null
+                enabled: pageView.zoomed
+                property point start
+                onActiveChanged: if (active) start = Qt.point(zoomLayer.x, zoomLayer.y)
+                onTranslationChanged: if (active) {
+                    zoomLayer.x = start.x + translation.x
+                    zoomLayer.y = start.y + translation.y
+                    pageView.clampPan()
+                }
+            }
 
             // Swipe (or drag) sideways to turn the page; the page follows
             // and springs back from a short swipe. Inside the MouseArea, so it
@@ -392,6 +605,7 @@ Rectangle {
             DragHandler {
                 id: swipe
                 target: null
+                enabled: !pageView.zoomed && !pinch.active
                 yAxis.enabled: false
                 onTranslationChanged: if (active) pageHolder.x = translation.x * 0.7
                 onActiveChanged: {
@@ -444,7 +658,7 @@ Rectangle {
         ScButton {
             anchors.horizontalCenter: parent.horizontalCenter
             visible: reader.task !== null && !reader.task.loading && !reader.task.ok
-            text: "Try again"
+            text: qsTr("Try again")
             iconName: "refresh-cw"
             onClicked: reader.load(reader.index)
         }
@@ -506,7 +720,7 @@ Rectangle {
             IconButton {
                 iconName: "arrow-left"
                 iconColor: "white"
-                tip: "Close reader (Esc)"
+                tip: qsTr("Close reader (Esc)")
                 onClicked: reader.exit()
             }
             Column {
@@ -522,7 +736,7 @@ Rectangle {
                     elide: Text.ElideRight
                 }
                 Text {
-                    text: (reader.unit.title || "") + (reader.task && reader.task.ok && reader.task.result.offline ? "  ·  Downloaded" : "")
+                    text: (reader.unit.title || "") + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr("  ·  Downloaded") : "")
                     color: "#b4b4bb"
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -540,25 +754,25 @@ Rectangle {
             IconButton {
                 iconName: "list"
                 iconColor: "white"
-                tip: "Chapters"
+                tip: qsTr("Chapters")
                 onClicked: chapterPopup.open()
             }
             IconButton {
                 iconName: reader.mode === "strip" ? "move-vertical" : "layers"
                 iconColor: "white"
-                tip: (reader.mode === "strip" ? "Switch to pages" : "Switch to vertical strip") + reader.keyHint("reader.mode")
-                onClicked: App.setSetting("readerMode", reader.mode === "strip" ? "paged" : "strip")
+                tip: (reader.mode === "strip" ? qsTr("Switch to pages") : qsTr("Switch to vertical strip")) + reader.keyHint("reader.mode")
+                onClicked: reader.setOpt("readerMode", reader.mode === "strip" ? "paged" : "strip")
             }
             IconButton {
                 iconName: "sliders-horizontal"
                 iconColor: "white"
-                tip: "Reader settings"
+                tip: qsTr("Reader settings")
                 onClicked: settingsPopup.open()
             }
             IconButton {
                 iconName: Window.window && Window.window.visibility === Window.FullScreen ? "minimize" : "maximize"
                 iconColor: "white"
-                tip: "Full screen" + reader.keyHint("reader.fullscreen")
+                tip: qsTr("Full screen") + reader.keyHint("reader.fullscreen")
                 onClicked: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
             }
         }
@@ -601,7 +815,7 @@ Rectangle {
                 iconName: "skip-back"
                 iconColor: "white"
                 enabled: reader.hasPrev
-                tip: "Previous chapter" + reader.keyHint("reader.prev")
+                tip: qsTr("Previous chapter") + reader.keyHint("reader.prev")
                 onClicked: reader.load(reader.index - 1)
             }
             Text {
@@ -629,7 +843,7 @@ Rectangle {
                 value: reader.currentPanel
                 onMoved: {
                     if (reader.mode === "strip") strip.positionViewAtIndex(value, ListView.Beginning)
-                    else pageView.page = value
+                    else pageView.page = pageView.views[pageView.viewOf(value)][0]
                 }
             }
             IconButton {
@@ -640,7 +854,7 @@ Rectangle {
                 iconName: "skip-forward"
                 iconColor: "white"
                 enabled: reader.hasNext
-                tip: "Next chapter" + reader.keyHint("reader.next")
+                tip: qsTr("Next chapter") + reader.keyHint("reader.next")
                 onClicked: reader.load(reader.index + 1)
             }
         }
@@ -708,15 +922,30 @@ Rectangle {
             spacing: 16
             Text { text: "Layout"; color: "#9a9aa2"; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
             Segmented {
-                options: [{ value: "strip", label: "Vertical", icon: "move-vertical" }, { value: "paged", label: "Pages", icon: "layers" }]
+                options: [{ value: "strip", label: qsTr("Vertical"), icon: "move-vertical" }, { value: "paged", label: qsTr("Pages"), icon: "layers" }]
                 value: reader.mode
-                onPicked: (v) => App.setSetting("readerMode", v)
+                onPicked: (v) => reader.setOpt("readerMode", v)
             }
             Segmented {
                 visible: reader.mode === "paged"
-                options: [{ value: "ltr", label: "Left to right" }, { value: "rtl", label: "Right to left" }]
-                value: App.settings.readerDirection || "ltr"
-                onPicked: (v) => App.setSetting("readerDirection", v)
+                options: [{ value: "ltr", label: qsTr("Left to right") }, { value: "rtl", label: qsTr("Right to left") }]
+                value: reader.direction
+                onPicked: (v) => reader.setOpt("readerDirection", v)
+            }
+            Segmented {
+                visible: reader.mode === "paged" && App.platform !== "android"
+                options: [{ value: "single", label: qsTr("One page") }, { value: "double", label: qsTr("Two pages") }]
+                value: reader.opt("readerSpread", "single")
+                onPicked: (v) => reader.setOpt("readerSpread", v)
+            }
+            Row {
+                visible: reader.mode === "paged"
+                spacing: 10
+                Toggle {
+                    checked: reader.crop
+                    onToggled: reader.setOpt("readerCrop", checked)
+                }
+                Text { anchors.verticalCenter: parent.verticalCenter; text: "Trim white or black borders"; color: "#d4d4d8"; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
             }
             Text { visible: reader.mode === "strip"; text: "Width · " + reader.stripWidth + " px"; color: "#9a9aa2"; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
             ScSlider {
@@ -726,17 +955,17 @@ Rectangle {
                 to: 2000
                 stepSize: 20
                 value: reader.stripWidth
-                onMoved: App.setSetting("readerWidth", value)
+                onMoved: reader.setOpt("readerWidth", value)
             }
-            Text { visible: reader.mode === "strip"; text: "Gap between panels · " + (App.settings.readerGap || 0) + " px"; color: "#9a9aa2"; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
+            Text { visible: reader.mode === "strip"; text: "Gap between panels · " + reader.gap + " px"; color: "#9a9aa2"; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
             ScSlider {
                 visible: reader.mode === "strip"
                 width: parent.width
                 from: 0
                 to: 40
                 stepSize: 2
-                value: App.settings.readerGap || 0
-                onMoved: App.setSetting("readerGap", value)
+                value: reader.gap
+                onMoved: reader.setOpt("readerGap", value)
             }
             Row {
                 spacing: 10
@@ -745,6 +974,21 @@ Rectangle {
                     onToggled: App.setSetting("readerProgressBar", checked)
                 }
                 Text { anchors.verticalCenter: parent.verticalCenter; text: "Progress rail"; color: "#d4d4d8"; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+            }
+            Rectangle { width: parent.width; height: 1; color: "#2a2a30" }
+            Row {
+                visible: !!reader.series.id
+                spacing: 10
+                Toggle {
+                    checked: reader.seriesPrefs !== null
+                    onToggled: reader.setSeriesOnly(checked)
+                }
+                Column {
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 2
+                    Text { text: "Only for this series"; color: "#d4d4d8"; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                    Text { text: "Keeps these settings for " + (reader.series.title || "it") + " alone"; width: 230; elide: Text.ElideRight; color: "#8a8a92"; font.family: Theme.fontSans; font.pixelSize: Theme.textXs + 1 }
+                }
             }
         }
     }

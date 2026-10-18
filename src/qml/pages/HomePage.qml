@@ -41,7 +41,7 @@ Item {
 
     function greeting() {
         const h = new Date().getHours()
-        return h < 5 ? "Up late" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening"
+        return h < 5 ? qsTr("Up late") : h < 12 ? qsTr("Good morning") : h < 18 ? qsTr("Good afternoon") : qsTr("Good evening")
     }
 
     SmoothFlickable {
@@ -90,17 +90,17 @@ Item {
                     anchors.bottomMargin: 6
                     spacing: 10
                     ScButton {
-                        text: "Comics"
+                        text: qsTr("Comics")
                         iconName: "book-open"
                         onClicked: Router.go("comics")
                     }
                     ScButton {
-                        text: "Novels"
+                        text: qsTr("Novels")
                         iconName: "book-text"
                         onClicked: Router.go("novels")
                     }
                     ScButton {
-                        text: "Anime"
+                        text: qsTr("Anime")
                         iconName: "tv"
                         onClicked: Router.go("anime")
                     }
@@ -116,16 +116,16 @@ Item {
             }
 
             Shelf {
-                title: "Continue"
+                title: qsTr("Continue")
                 items: page.history.slice(1)
                 loading: page.historyTask ? page.historyTask.loading && page.history.length === 0 : false
-                subtitleFor: (it) => it.media === "anime" ? "Episode " + (it.unitNumber || it.unitKey) : (it.unitTitle || "")
+                subtitleFor: (it) => it.media === "anime" ? qsTr("Episode ") + (it.unitNumber || it.unitKey) : (it.unitTitle || "")
                 progressFor: (it) => it.completed ? 1 : (it.percent || 0)
                 onOpened: (it, cover) => Router.resume(it)
             }
 
             Shelf {
-                title: "New in your library"
+                title: qsTr("New in your library")
                 items: page.updates
                 badgeFor: (it) => "+" + it.newUnits
                 subtitleFor: (it) => it.latestTitle || ""
@@ -133,8 +133,8 @@ Item {
             }
 
             Shelf {
-                title: "Latest comic chapters"
-                actionText: "More"
+                title: qsTr("Latest comic chapters")
+                actionText: qsTr("More")
                 onAction: Router.go("comics")
                 items: page.latestTask && page.latestTask.ok ? page.latestTask.result.updates : []
                 loading: page.latestTask ? page.latestTask.loading : false
@@ -145,8 +145,8 @@ Item {
             }
 
             Shelf {
-                title: "Trending anime"
-                actionText: "Browse"
+                title: qsTr("Trending anime")
+                actionText: qsTr("Browse")
                 onAction: Router.go("anime")
                 items: page.animeTask && page.animeTask.ok ? page.animeTask.result.trending : []
                 loading: page.animeTask ? page.animeTask.loading : false
@@ -160,7 +160,7 @@ Item {
                 model: page.novelsTask && page.novelsTask.ok ? page.novelsTask.result.shelves.slice(0, 2) : []
                 delegate: Shelf {
                     required property var modelData
-                    title: modelData.title + " novels"
+                    title: modelData.title + qsTr(" novels")
                     subtitle: modelData.source
                     items: modelData.books
                     subtitleFor: (it) => it.author || it.genres.slice(0, 2).join(", ")
@@ -169,7 +169,7 @@ Item {
             }
             Shelf {
                 visible: page.novelsTask && (page.novelsTask.loading || page.novelsTask.error.length > 0)
-                title: "Novels"
+                title: qsTr("Novels")
                 loading: page.novelsTask ? page.novelsTask.loading : false
                 error: page.novelsTask && !page.novelsTask.loading ? page.novelsTask.error : ""
                 onRetry: page.novelsTask = Novels.discover()

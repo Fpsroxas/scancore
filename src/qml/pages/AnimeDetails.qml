@@ -37,17 +37,17 @@ Item {
 
     readonly property var resumeInfo: {
         Library.revision
-        if (episodes.length === 0) return { index: 0, label: "Watch", detail: "" }
+        if (episodes.length === 0) return { index: 0, label: qsTr("Watch"), detail: "" }
         const last = Library.lastProgress(seriesId)
         if (last && last.unitKey) {
             const i = episodes.findIndex(e => e.key === last.unitKey)
             if (i >= 0) {
                 if (last.completed && i + 1 < episodes.length)
-                    return { index: i + 1, label: "Watch episode " + (i + 2), detail: "" }
-                return { index: i, label: "Continue episode " + (i + 1), detail: last.percent > 0.02 ? Math.round(last.percent * 100) + "% watched" : "" }
+                    return { index: i + 1, label: qsTr("Watch episode ") + (i + 2), detail: "" }
+                return { index: i, label: qsTr("Continue episode ") + (i + 1), detail: last.percent > 0.02 ? Math.round(last.percent * 100) + qsTr("% watched") : "" }
             }
         }
-        return { index: 0, label: "Watch episode 1", detail: "" }
+        return { index: 0, label: qsTr("Watch episode 1"), detail: "" }
     }
 
     function watch(i) {
@@ -79,14 +79,14 @@ Item {
             DetailsHeader {
                 id: header
                 series: Object.assign({}, page.media, { author: (page.media.studios || []).join(", ") })
-                kicker: "Anime" + (page.media.format ? " · " + page.media.format : "")
+                kicker: qsTr("Anime") + (page.media.format ? " · " + page.media.format : "")
                 meta: [
                     page.media.status,
                     page.media.year,
-                    page.media.episodes ? page.media.episodes + " episodes" : (page.media.released ? page.media.released + " episodes so far" : ""),
-                    page.media.duration ? page.media.duration + " min" : "",
+                    page.media.episodes ? page.media.episodes + qsTr(" episodes") : (page.media.released ? page.media.released + qsTr(" episodes so far") : ""),
+                    page.media.duration ? page.media.duration + qsTr(" min") : "",
                     page.media.score ? "★ " + page.media.score + "%" : "",
-                    page.media.nextEpisode ? "Ep " + page.media.nextEpisode + " " + App.relativeTime(page.media.nextAiringAt) : ""
+                    page.media.nextEpisode ? qsTr("Ep ") + page.media.nextEpisode + " " + App.relativeTime(page.media.nextAiringAt) : ""
                 ]
                 primaryText: page.resumeInfo.label
                 primaryDetail: page.resumeInfo.detail
@@ -96,20 +96,27 @@ Item {
                 onToggleSaved: {
                     if (page.saved) Library.remove(page.seriesId)
                     else Library.save(page.series)
-                    Router.toast(page.saved ? "Added to your library" : "Removed from your library", page.saved ? "success" : "info")
+                    Router.toast(page.saved ? qsTr("Added to your library") : qsTr("Removed from your library"), page.saved ? "success" : "info")
                 }
                 IconButton {
                     visible: !!page.media.trailer
                     iconName: "circle-play"
                     filled: true
-                    tip: "Watch trailer"
+                    tip: qsTr("Watch trailer")
                     onClicked: App.openUrl(page.media.trailer)
                 }
                 IconButton {
                     iconName: "external-link"
                     filled: true
-                    tip: "Open on AniList"
+                    tip: qsTr("Open on AniList")
                     onClicked: App.openUrl("https://anilist.co/anime/" + page.anilistId)
+                }
+                IconButton {
+                    visible: !!Trackers.anilist.name || !!Trackers.mal.name || !!Trackers.comick.name
+                    iconName: "link"
+                    filled: true
+                    tip: qsTr("Tracking")
+                    onClicked: tracking.open()
                 }
                 Component.onCompleted: Qt.callLater(() => Router.shell.land(header.coverItem))
             }
@@ -121,7 +128,7 @@ Item {
                 Text {
                     x: Theme.gutter
                     anchors.verticalCenter: parent.verticalCenter
-                    text: "Episodes"
+                    text: qsTr("Episodes")
                     color: Theme.text
                     font.family: Theme.fontDisplay
                     font.pixelSize: Theme.textXl
@@ -133,13 +140,13 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     IconButton {
                         iconName: "check"
-                        tip: "Mark all as watched"
+                        tip: qsTr("Mark all as watched")
                         onClicked: Library.markUnits(page.series, page.episodes, true)
                     }
                     IconButton {
                         iconName: "arrow-down-wide-narrow"
                         rotation: page.descending ? 0 : 180
-                        tip: page.descending ? "Newest first" : "Oldest first"
+                        tip: page.descending ? qsTr("Newest first") : qsTr("Oldest first")
                         onClicked: page.descending = !page.descending
                         Behavior on rotation { NumberAnimation { duration: Motion.normal } }
                     }
@@ -265,20 +272,20 @@ Item {
                 height: visible ? 220 : 0
                 task: page.episodesTask
                 empty: page.episodesTask && page.episodesTask.ok && page.episodes.length === 0
-                emptyTitle: "No episodes yet"
-                emptyText: page.media.nextEpisode ? "Episode " + page.media.nextEpisode + " airs " + App.relativeTime(page.media.nextAiringAt) + "." : "This anime has not aired yet."
+                emptyTitle: qsTr("No episodes yet")
+                emptyText: page.media.nextEpisode ? qsTr("Episode ") + page.media.nextEpisode + qsTr(" airs ") + App.relativeTime(page.media.nextAiringAt) + "." : qsTr("This anime has not aired yet.")
                 emptyIcon: "calendar"
                 onRetry: page.episodesTask = Anime.episodes(page.anilistId)
             }
 
             Shelf {
-                title: "Related"
+                title: qsTr("Related")
                 items: (page.media.relations || []).map(r => Object.assign({ media: "anime", id: Anime.seriesId(r.anilistId) }, r))
                 subtitleFor: (it) => it.relation + (it.format ? " · " + it.format : "")
                 onOpened: (it, cover) => Router.openSeries(it, cover)
             }
             Shelf {
-                title: "You might also like"
+                title: qsTr("You might also like")
                 items: page.recsTask && page.recsTask.ok ? page.recsTask.result : []
                 subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
                 onOpened: (it, cover) => Router.openSeries(it, cover)
@@ -287,4 +294,11 @@ Item {
     }
 
     BackToTop { flick: flick }
+
+    TrackingDialog {
+        id: tracking
+        seriesId: page.seriesId
+        media: "anime"
+        seriesTitle: page.media.title || ""
+    }
 }

@@ -3,18 +3,18 @@ import ScanCore
 
 SettingsPane {
     id: pane
-    title: "About"
-    subtitle: "Version, updates and help"
+    title: qsTr("About")
+    subtitle: qsTr("Version, updates and help")
     iconName: "info"
 
-    readonly property string updateLine: Updater.managedByFlatpak ? "Updates come through Flatpak."
-        : Updater.state === "checking" ? "Checking for updates…"
-        : Updater.state === "current" ? "You have the latest version."
-        : Updater.state === "available" ? "Version " + Updater.version + " is available."
-        : Updater.state === "downloading" ? "Downloading " + Updater.version + " · " + Math.round(Updater.progress * 100) + "%"
-        : Updater.state === "ready" ? "Version " + Updater.version + " is ready to install."
+    readonly property string updateLine: Updater.managedByFlatpak ? qsTr("Updates come through Flatpak.")
+        : Updater.state === "checking" ? qsTr("Checking for updates…")
+        : Updater.state === "current" ? qsTr("You have the latest version.")
+        : Updater.state === "available" ? qsTr("Version ") + Updater.version + qsTr(" is available.")
+        : Updater.state === "downloading" ? qsTr("Downloading ") + Updater.version + " · " + Math.round(Updater.progress * 100) + "%"
+        : Updater.state === "ready" ? qsTr("Version ") + Updater.version + qsTr(" is ready to install.")
         : Updater.state === "error" ? Updater.error
-        : "Free and open source, by Medium Dev."
+        : qsTr("Free and open source, by Medium Dev.")
 
     // A key drawn as a keycap.
     component Key: Rectangle {
@@ -120,11 +120,11 @@ SettingsPane {
                 ScButton {
                     visible: Updater.state === "available" || Updater.state === "ready"
                     variant: "primary"
-                    text: Updater.state === "ready" ? "Restart to update" : Updater.canInstall ? "Update" : "Download"
+                    text: Updater.state === "ready" ? qsTr("Restart to update") : Updater.canInstall ? qsTr("Update") : qsTr("Download")
                     onClicked: Updater.canInstall ? (Updater.state === "ready" ? Updater.install() : Updater.download()) : App.openUrl(Updater.pageUrl)
                 }
                 ScButton {
-                    text: "Check for updates"
+                    text: qsTr("Check for updates")
                     iconName: "refresh-cw"
                     loading: Updater.state === "checking"
                     enabled: Updater.state !== "downloading"
@@ -136,30 +136,30 @@ SettingsPane {
 
     SettingsGroup {
         visible: !Updater.managedByFlatpak
-        title: "Updates"
+        title: qsTr("Updates")
         SettingRow {
-            title: "Check for app updates"
+            title: qsTr("Check for app updates")
             Toggle { checked: App.settings.checkAppUpdates !== false; onToggled: App.setSetting("checkAppUpdates", checked) }
         }
         SettingRow {
-            title: "Install updates automatically"
-            description: Updater.canInstall ? "New versions download in the background and install when you restart."
+            title: qsTr("Install updates automatically")
+            description: Updater.canInstall ? qsTr("New versions download in the background and install when you restart.")
                 : "This copy cannot update itself (for example a portable or source build); you will be told when a new version is out."
             Toggle { checked: App.settings.autoUpdate !== false; onToggled: App.setSetting("autoUpdate", checked) }
         }
     }
 
     SettingsGroup {
-        title: "Help and community"
-        SettingRow { iconName: "globe"; title: "scancore.onl"; description: "The SCANCORE website"; clickable: true; external: true; onClicked: App.openUrl("https://scancore.onl") }
-        SettingRow { iconName: "message-circle"; title: "Discord"; description: "Questions, feedback and updates"; clickable: true; external: true; onClicked: App.openUrl("https://scancore.onl/discord") }
-        SettingRow { iconName: "triangle-alert"; title: "Report a problem"; description: "Opens GitHub Issues"; clickable: true; external: true; onClicked: App.openUrl("https://github.com/medium-gh/scancore/issues/new/choose") }
-        SettingRow { iconName: "sparkles"; title: "Welcome tour"; description: "See the introduction again"; clickable: true; onClicked: Router.shell.showWelcome() }
+        title: qsTr("Help and community")
+        SettingRow { iconName: "globe"; title: "scancore.onl"; description: qsTr("The SCANCORE website"); clickable: true; external: true; onClicked: App.openUrl("https://scancore.onl") }
+        SettingRow { iconName: "message-circle"; title: qsTr("Discord"); description: qsTr("Questions, feedback and updates"); clickable: true; external: true; onClicked: App.openUrl("https://scancore.onl/discord") }
+        SettingRow { iconName: "triangle-alert"; title: qsTr("Report a problem"); description: qsTr("Opens GitHub Issues"); clickable: true; external: true; onClicked: App.openUrl("https://github.com/medium-gh/scancore/issues/new/choose") }
+        SettingRow { iconName: "sparkles"; title: qsTr("Welcome tour"); description: qsTr("See the introduction again"); clickable: true; onClicked: Router.shell.showWelcome() }
     }
 
     SettingsGroup {
         visible: !Theme.compact
-        title: "Keyboard shortcuts"
+        title: qsTr("Keyboard shortcuts")
         Grid {
             x: 16
             width: parent.width - 32
@@ -169,11 +169,11 @@ SettingsPane {
             columnSpacing: 28
             rowSpacing: 10
             Repeater {
-                model: [{ keys: ["Ctrl", "K"], label: "Search everything" }, { keys: ["Esc"], label: "Back, or close the reader" },
-                        { keys: ["Ctrl", "1–5"], label: "Switch section" }, { keys: ["Alt", "←"], label: "Back" },
-                        { keys: ["Ctrl", "B"], label: "Collapse the sidebar" }, { keys: ["F11"], label: "Full screen" },
-                        { keys: ["N", "P"], label: "Next or previous chapter" }, { keys: ["M"], label: "Strip or pages (comics)" },
-                        { keys: ["Space"], label: "Scroll a screen" }, { keys: ["+", "−"], label: "Width or text size" }]
+                model: [{ keys: ["Ctrl", "K"], label: qsTr("Search everything") }, { keys: ["Esc"], label: qsTr("Back, or close the reader") },
+                        { keys: ["Ctrl", "1–5"], label: qsTr("Switch section") }, { keys: ["Alt", "←"], label: qsTr("Back") },
+                        { keys: ["Ctrl", "B"], label: qsTr("Collapse the sidebar") }, { keys: ["F11"], label: qsTr("Full screen") },
+                        { keys: ["N", "P"], label: qsTr("Next or previous chapter") }, { keys: ["M"], label: qsTr("Strip or pages (comics)") },
+                        { keys: ["Space"], label: qsTr("Scroll a screen") }, { keys: ["+", "−"], label: qsTr("Width or text size") }]
                 Row {
                     required property var modelData
                     width: (parent.width - 28) / 2
@@ -204,7 +204,7 @@ SettingsPane {
         width: parent.width
         leftPadding: 4
         wrapMode: Text.Wrap
-        text: "MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0)."
+        text: qsTr("MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0).")
         color: Theme.textFaint
         font.family: Theme.fontSans
         font.pixelSize: Theme.textXs + 1

@@ -1,5 +1,7 @@
 #include "ImageCache.h"
 
+#include "sources/local/Local.h"
+
 #include "Http.h"
 
 #include <QCryptographicHash>
@@ -56,6 +58,8 @@ void ImageCache::init(const QString &dir, qint64 budgetBytes) {
 void ImageCache::setBudget(qint64 bytes) { g_budget = bytes; }
 
 QByteArray ImageCache::fetch(const QString &url, const QString &referer) {
+    if (url.startsWith(QLatin1String("pdfpage:")))
+        return local::renderPdfPage(url);
     if (url.startsWith(QLatin1String("file:")) || url.startsWith(QLatin1Char('/'))) {
         QFile file(url.startsWith(QLatin1String("file:")) ? QUrl(url).toLocalFile() : url);
         return file.open(QIODevice::ReadOnly) ? file.readAll() : QByteArray();

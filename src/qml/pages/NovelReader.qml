@@ -55,10 +55,18 @@ Rectangle {
         barsShown = true
         if (task.done) Qt.callLater(arrived)
         contentReveal.restart()
+        Presence.show("novel", series.title || "", chapters[i].title || "")
     }
 
-    Component.onCompleted: load(index)
-    Component.onDestruction: savePosition(true)
+    Component.onCompleted: {
+        load(index)
+        Activity.setMedia("novel")
+    }
+    Component.onDestruction: {
+        Activity.setMedia("")
+        Presence.clear()
+        savePosition(true)
+    }
 
     Connections {
         target: reader.task
@@ -256,14 +264,14 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 12
                 ScButton {
-                    text: "Previous"
+                    text: qsTr("Previous")
                     iconName: "chevron-left"
                     enabled: reader.hasPrev
                     onClicked: reader.load(reader.index - 1)
                 }
                 ScButton {
                     variant: "primary"
-                    text: reader.hasNext ? "Next chapter" : "Finished"
+                    text: reader.hasNext ? qsTr("Next chapter") : qsTr("Finished")
                     iconName: reader.hasNext ? "chevron-right" : "check"
                     onClicked: reader.hasNext ? reader.load(reader.index + 1) : reader.exit()
                 }
@@ -294,7 +302,7 @@ Rectangle {
             ScButton {
                 anchors.horizontalCenter: parent.horizontalCenter
                 visible: reader.task !== null && !reader.task.loading && !reader.task.ok
-                text: "Try again"
+                text: qsTr("Try again")
                 iconName: "refresh-cw"
                 onClicked: reader.load(reader.index)
             }
@@ -343,7 +351,7 @@ Rectangle {
             IconButton {
                 iconName: "arrow-left"
                 iconColor: reader.look.text
-                tip: "Close (Esc)"
+                tip: qsTr("Close (Esc)")
                 onClicked: reader.exit()
             }
             Column {
@@ -358,8 +366,8 @@ Rectangle {
                     elide: Text.ElideRight
                 }
                 Text {
-                    text: (reader.index + 1) + " of " + reader.chapters.length + " · " + (reader.unit.title || "")
-                        + (reader.task && reader.task.ok && reader.task.result.offline ? " · Downloaded" : "")
+                    text: (reader.index + 1) + qsTr(" of ") + reader.chapters.length + " · " + (reader.unit.title || "")
+                        + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr(" · Downloaded") : "")
                     color: reader.look.muted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -375,14 +383,14 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: reader.insetTop / 2
             spacing: 4
-            IconButton { iconName: "chevron-left"; iconColor: reader.look.text; enabled: reader.hasPrev; tip: "Previous chapter" + reader.keyHint("reader.prev"); onClicked: reader.load(reader.index - 1) }
-            IconButton { iconName: "chevron-right"; iconColor: reader.look.text; enabled: reader.hasNext; tip: "Next chapter" + reader.keyHint("reader.next"); onClicked: reader.load(reader.index + 1) }
-            IconButton { iconName: "list"; iconColor: reader.look.text; tip: "Chapters"; onClicked: chapterPopup.open() }
-            IconButton { iconName: "type"; iconColor: reader.look.text; tip: "Text settings"; onClicked: typePopup.open() }
+            IconButton { iconName: "chevron-left"; iconColor: reader.look.text; enabled: reader.hasPrev; tip: qsTr("Previous chapter") + reader.keyHint("reader.prev"); onClicked: reader.load(reader.index - 1) }
+            IconButton { iconName: "chevron-right"; iconColor: reader.look.text; enabled: reader.hasNext; tip: qsTr("Next chapter") + reader.keyHint("reader.next"); onClicked: reader.load(reader.index + 1) }
+            IconButton { iconName: "list"; iconColor: reader.look.text; tip: qsTr("Chapters"); onClicked: chapterPopup.open() }
+            IconButton { iconName: "type"; iconColor: reader.look.text; tip: qsTr("Text settings"); onClicked: typePopup.open() }
             IconButton {
                 iconName: Window.window && Window.window.visibility === Window.FullScreen ? "minimize" : "maximize"
                 iconColor: reader.look.text
-                tip: "Full screen" + reader.keyHint("reader.fullscreen")
+                tip: qsTr("Full screen") + reader.keyHint("reader.fullscreen")
                 onClicked: reader.toggleFullScreen()
             }
         }
@@ -466,7 +474,7 @@ Rectangle {
             }
             Text { text: "Font"; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
             Segmented {
-                options: [{ value: "Literata", label: "Serif" }, { value: "DM Sans", label: "Sans" }, { value: "Space Grotesk", label: "Grotesk" }]
+                options: [{ value: "Literata", label: qsTr("Serif") }, { value: "DM Sans", label: qsTr("Sans") }, { value: "Space Grotesk", label: qsTr("Grotesk") }]
                 value: reader.fontFamily
                 onPicked: (v) => App.setSetting("novelFont", v)
             }
