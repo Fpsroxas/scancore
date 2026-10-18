@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
 
 project(ScanCore
-    VERSION 1.2.0
+    VERSION 1.3.0
     DESCRIPTION "Read comics and novels and watch anime, entirely on your own machine"
     HOMEPAGE_URL "https://github.com/medium-gh/scancore"
     LANGUAGES C CXX)
@@ -20,9 +20,9 @@ option(SCANCORE_BUILD_TESTS "Build unit tests" ON)
 # PKCE or show a token, as every desktop and phone app must); features that
 # need one stay hidden without it.
 set(SCANCORE_DISCORD_APP_ID "" CACHE STRING "Discord application id, for Rich Presence")
-set(SCANCORE_ANILIST_CLIENT_ID "" CACHE STRING "AniList API client id, for tracking")
-set(SCANCORE_MAL_CLIENT_ID "" CACHE STRING "MyAnimeList API client id, for tracking")
-set(SCANCORE_COMICK_CLIENT_ID "" CACHE STRING "Comick public app client id, for tracking and imports")
+set(SCANCORE_ANILIST_CLIENT_ID "54204" CACHE STRING "AniList API client id, for tracking")
+set(SCANCORE_MAL_CLIENT_ID "d85f703db50aa4add685b1f65eb8ad94" CACHE STRING "MyAnimeList API client id, for tracking")
+set(SCANCORE_COMICK_CLIENT_ID "DKZVIvYfXDqpWlEEBNfXDMqFKlAPsfaz" CACHE STRING "Comick public app client id, for tracking and imports")
 
 find_package(Qt6 6.9 REQUIRED COMPONENTS
     Core Gui Network Sql Qml Quick QuickControls2 Svg Concurrent)

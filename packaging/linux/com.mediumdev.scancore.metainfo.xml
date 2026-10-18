@@ -51,6 +51,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.3.0" date="2026-10-18">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#130--2026-10-18</url>
+      <description>
+        <p>Adds an Activity page with your year in review, sync through your own server, WebDAV or a folder, comics and books from your own files, search through Comick's catalogue, AniList, MyAnimeList and Comick tracking, library imports from Mihon, AniList, MyAnimeList and Comick, two-page spreads, page trimming and zoom in the comic reader, a theme gallery, and Spanish, French, Brazilian Portuguese and Indonesian. Also fixes parts of the app working on separate copies of the library and account.</p>
+      </description>
+    </release>
     <release version="1.2.0" date="2026-10-18">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#120--2026-10-18</url>
       <description>
