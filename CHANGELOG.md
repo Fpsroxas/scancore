@@ -2,7 +2,19 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 1.4.0 — 2026-10-19
+
+Comments and reviews from scancore.onl in the app, comics from Comick's catalogue, chapter lists ten at a time, the page bar back at the reader's edge, and access codes for new scancore.onl accounts.
+
+- **Comments and reviews in the app**: comics, novels and anime have Reviews and Discussion tabs beside their chapters or episodes, and the readers and the player have a comments button for the chapter or episode you are on. They are the same threads as on scancore.onl, so a comment posted on the website shows in the app and the other way round. Anyone can read them; sign in to your scancore.onl account in Settings → Sync to post, reply, vote and rate.
+- **Comics keyed on Comick's catalogue**: the Comics page shows Comick's trending, most popular, new and recently completed comics, and a comic opened from the catalogue keeps its catalogue entry. That ties it to the same comments and reviews whichever source you read it on, and Comick tracking uses it instead of guessing by title. "Read from" also looks for a comic under every name the catalogue knows, so entries from the shelves are found on more sources.
+- **Chapter lists ten at a time**: a series page shows ten chapters per page with page numbers and a chapter search (on phones too, where the list used to be one long column), and opens on the page of the chapter you are on.
+- **The comic reader's page bar is back at the left edge**: one thin segment per page (read pages dark, unread grey, the page you are on white) that you can tap to jump to a page. The bottom bar with the page slider is gone; the page number is under the chapter title and the previous and next chapter buttons are at the top.
+- **Creating a scancore.onl account needs an access code**: the sign-up form shows six boxes for it when the site asks for one ("Contact logesh@mediumdev.com for access"). Existing accounts, signing in, your own SCANCORE sync server, WebDAV and folder sync are unchanged.
+
 ## 1.3.0 — 2026-10-18
+
+Activity stats, self-hosted/WebDAV/folder sync, local comics and EPUBs, Comick-powered search, AniList/MAL/Comick tracking, library imports, two-page and zoom in the comic reader, theme gallery, four new languages, and many fixes.
 
 - **Activity**: a new page (Ctrl+8) with the time you spent reading and watching, chapters and episodes finished, your streak, a calendar of active days coloured by what you did, and charts for the last 30 days, 12 weeks or 12 months, on every device you sync. **Your year** sums it up on one card you can save as a picture.
 - **Sync without scancore.onl**: Settings → Sync can use a SCANCORE sync server on your own computer, NAS or server ([scancore-web](https://github.com/medium-gh/scancore-web), one Docker command), any WebDAV folder (Nextcloud, ownCloud, a NAS) or a folder that Syncthing, Dropbox, OneDrive or iCloud Drive keeps in step. Each device keeps its own small file and reads the others', so the library, removals, progress and activity follow you without an account, and Settings lists the devices that sync together.

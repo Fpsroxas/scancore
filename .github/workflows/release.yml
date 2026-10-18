@@ -322,26 +322,27 @@ jobs:
         with:
           path: artifacts
           merge-multiple: true
-      # The release page shows this version's changelog and which file to
-      # download, above GitHub's list of commits.
+      # The release page stays short so the downloads stay in view: an optional
+      # one-line summary (a plain line right under the version's heading in
+      # CHANGELOG.md), a link to the full entry and which file to download.
       - name: Release notes
         run: |
           TAG="${{ github.event.inputs.tag || github.ref_name }}"
           VERSION="${TAG#v}"
-          awk -v v="$VERSION" '
+          HEADING=$(awk -v v="$VERSION" 'index($0, "## " v " ") == 1 || $0 == "## " v { print substr($0, 4); exit }' CHANGELOG.md)
+          ANCHOR=$(printf '%s' "$HEADING" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 -]//g; s/ /-/g')
+          SUMMARY=$(awk -v v="$VERSION" '
             index($0, "## " v " ") == 1 || $0 == "## " v { on = 1; next }
-            on && /^## / { exit }
-            on { print }' CHANGELOG.md > notes.md
-          cat >> notes.md <<EOF
-
-          ### Which file?
+            on && NF { if ($0 !~ /^[-*#]/) print; exit }' CHANGELOG.md)
+          cat > notes.md <<EOF
+          ${SUMMARY:+$SUMMARY }[Full changelog](https://github.com/${{ github.repository }}/blob/$TAG/CHANGELOG.md#$ANCHOR)
 
           | System | Download |
           | --- | --- |
-          | Windows | \`SCANCORE-$VERSION-windows-x64-setup.exe\` (installer, updates itself) or the portable \`.zip\` |
-          | macOS 13 or later | \`SCANCORE-$VERSION-macos-universal.dmg\` (Apple silicon and Intel) |
-          | Linux | \`SCANCORE-$VERSION-linux-x86_64.AppImage\` (updates itself) or the \`.flatpak\` bundle |
-          | Android 9 or later | \`SCANCORE-$VERSION-android-arm64.apk\` |
+          | Windows | \`windows-x64-setup.exe\` or portable \`.zip\` |
+          | macOS 13+ | \`macos-universal.dmg\` |
+          | Linux | \`linux-x86_64.AppImage\` or \`.flatpak\` |
+          | Android 9+ | \`android-arm64.apk\` |
           EOF
           cat notes.md
       - name: Publish release

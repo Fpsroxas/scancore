@@ -51,6 +51,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.4.0" date="2026-10-19">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#140--2026-10-19</url>
+      <description>
+        <p>Comics are found through Comick's catalogue, with its trending, popular and new shelves on the Comics page. Comments and reviews from scancore.onl now appear in the app for comics, novels and anime, and you can post them. Chapter lists show ten chapters at a time with a search, the comic reader's page bar is back at the left edge, and creating a scancore.onl account asks for an access code.</p>
+      </description>
+    </release>
     <release version="1.3.0" date="2026-10-18">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#130--2026-10-18</url>
       <description>
