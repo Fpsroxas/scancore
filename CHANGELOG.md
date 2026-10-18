@@ -4,6 +4,8 @@ Downloads for the current version are listed on the [releases page](https://gith
 
 ## Unreleased
 
+## 1.2.0 — 2026-10-18
+
 - **Your own theme.** Pick the window colour on a colour wheel, with a brightness slider that decides how dark it is, and the whole app follows it. Add a picture or animated GIF behind everything, fitted, dimmed and blurred to taste. Panels can be see-through, and so can the whole window, showing your desktop through it. Accents can be any colour too, and indigo, emerald and amber join the presets.
 - **Share themes** as .sct files: one file with the colours, transparency and background picture inside it, which works on every system. Import from Settings → Theme, or drop the file on the window.
 - **Settings shows one category at a time** on desktop, with a search box over the list of categories, instead of one long page to scroll through.

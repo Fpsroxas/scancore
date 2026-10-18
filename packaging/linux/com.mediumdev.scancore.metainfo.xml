@@ -42,6 +42,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.2.0" date="2026-10-18">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#120--2026-10-18</url>
+      <description>
+        <p>Anime plays on every desktop again, including in the Flatpak. Adds custom themes with a colour wheel, background pictures and GIFs, transparency and shareable .sct theme files, navigation styles, changeable shortcuts, a reorganised Settings, a Continue card on Home, library sorting and recent searches, with lighter sync and many fixes.</p>
+      </description>
+    </release>
     <release version="1.1.0" date="2026-10-17">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#110--2026-10-17</url>
       <description>
