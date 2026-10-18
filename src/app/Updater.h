@@ -34,7 +34,6 @@ class Updater : public QObject {
     Q_PROPERTY(qint64 size READ size NOTIFY changed)
 
 public:
-    explicit Updater(QObject *parent = nullptr);
     static Updater *instance();
     static Updater *create(QQmlEngine *, QJSEngine *) { return instance(); }
 
@@ -61,6 +60,11 @@ signals:
     void progressChanged();
 
 private:
+    // Private so QML uses create(): Qt builds its own instance of a
+    // singleton it can default-construct, and C++ and QML would then
+    // work on different objects.
+    explicit Updater(QObject *parent = nullptr);
+
     void setState(const QString &state, const QString &error = QString());
     QString assetSuffix() const;
     QString downloadPath() const;

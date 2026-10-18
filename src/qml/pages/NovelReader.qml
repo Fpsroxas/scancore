@@ -46,12 +46,14 @@ Rectangle {
         finished = false
         const p = Library.progressMap(series.id)[chapters[i].key]
         resumePosition = p && !p.completed && p.position ? p.position : null
-        task = (nextTask && nextFor === i && nextTask.ok) ? nextTask : Novels.chapter(chapters[i].url, series.id)
+        // The next chapter fetched ahead, finished or still on its way.
+        const ahead = nextTask && nextFor === i && (nextTask.loading || nextTask.ok)
+        task = ahead ? nextTask : Novels.chapter(chapters[i].url, series.id)
         nextTask = null
         nextFor = -1
         flick.scrollTo(0, false)
         barsShown = true
-        if (task.done) restore()
+        if (task.done) Qt.callLater(arrived)
         contentReveal.restart()
     }
 
@@ -60,14 +62,24 @@ Rectangle {
 
     Connections {
         target: reader.task
-        function onFinished() { Qt.callLater(reader.restore) }
+        function onFinished() { Qt.callLater(reader.arrived) }
     }
 
-    function restore() {
-        if (!resumePosition || resumePosition.block === undefined) return
-        const item = blockRepeater.itemAt(Math.min(resumePosition.block, blockRepeater.count - 1))
-        if (item) flick.scrollTo(item.y + body.y - 80, false)
+    // A chapter's text is in: go back to where reading stopped, and count a
+    // chapter that fits on one screen as read.
+    function arrived() {
+        if (blocks.length === 0) return
+        // The column places its blocks later; their positions are needed now.
+        body.forceLayout()
+        if (resumePosition && resumePosition.block !== undefined) {
+            const item = blockRepeater.itemAt(Math.min(resumePosition.block, blockRepeater.count - 1))
+            if (item) flick.scrollTo(item.y + body.y - 80, false)
+        }
         resumePosition = null
+        if (flick.contentHeight - flick.height <= 4) {
+            finished = true
+            savePosition(true)
+        }
     }
 
     function firstVisibleBlock() {
@@ -97,24 +109,35 @@ Rectangle {
         Router.back()
     }
 
+    function keyHint(action) {
+        const keys = Keymap.labels(action)
+        return keys.length ? " (" + keys[0] + ")" : ""
+    }
+
+    function toggleFullScreen() {
+        Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
+    }
+
+    // The keys come from Settings → Keyboard (see Keymap), as in the comic
+    // reader; scrolling keys only while the reader has focus.
     Keys.onPressed: (event) => {
-        switch (event.key) {
-        case Qt.Key_Escape: exit(); break
-        case Qt.Key_Down: case Qt.Key_J: flick.scrollTo(flick.target + 90); break
-        case Qt.Key_Up: case Qt.Key_K: flick.scrollTo(flick.target - 90); break
-        case Qt.Key_Space: case Qt.Key_PageDown: flick.scrollTo(flick.contentY + (event.modifiers & Qt.ShiftModifier ? -1 : 1) * flick.height * 0.85); break
-        case Qt.Key_PageUp: flick.scrollTo(flick.contentY - flick.height * 0.85); break
-        case Qt.Key_Right: case Qt.Key_N: if (hasNext) load(index + 1); break
-        case Qt.Key_Left: case Qt.Key_P: if (hasPrev) load(index - 1); break
-        case Qt.Key_Home: flick.scrollTo(0); break
-        case Qt.Key_End: flick.scrollTo(flick.contentHeight); break
-        case Qt.Key_F: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen(); break
-        case Qt.Key_Equal: case Qt.Key_Plus: App.setSetting("novelSize", Math.min(34, fontSize + 1)); break
-        case Qt.Key_Minus: App.setSetting("novelSize", Math.max(13, fontSize - 1)); break
-        default: return
-        }
+        if (event.key === Qt.Key_Escape) exit()
+        else if (Keymap.matches("reader.down", event)) flick.scrollTo(flick.target + 90)
+        else if (Keymap.matches("reader.up", event)) flick.scrollTo(flick.target - 90)
+        else if (Keymap.matches("reader.pageDown", event)) flick.scrollTo(flick.contentY + flick.height * 0.85)
+        else if (Keymap.matches("reader.pageUp", event)) flick.scrollTo(flick.contentY - flick.height * 0.85)
+        else if (event.key === Qt.Key_Right) { if (hasNext) load(index + 1) }
+        else if (event.key === Qt.Key_Left) { if (hasPrev) load(index - 1) }
+        else return
         event.accepted = true
     }
+    Shortcut { sequences: Keymap.sequences("reader.next"); onActivated: if (reader.hasNext) reader.load(reader.index + 1) }
+    Shortcut { sequences: Keymap.sequences("reader.prev"); onActivated: if (reader.hasPrev) reader.load(reader.index - 1) }
+    Shortcut { sequences: Keymap.sequences("reader.first"); onActivated: flick.scrollTo(0) }
+    Shortcut { sequences: Keymap.sequences("reader.last"); onActivated: flick.scrollTo(flick.contentHeight) }
+    Shortcut { sequences: Keymap.sequences("reader.fullscreen"); onActivated: reader.toggleFullScreen() }
+    Shortcut { sequences: Keymap.sequences("reader.wider"); onActivated: App.setSetting("novelSize", Math.min(34, reader.fontSize + 1)) }
+    Shortcut { sequences: Keymap.sequences("reader.narrower"); onActivated: App.setSetting("novelSize", Math.max(13, reader.fontSize - 1)) }
 
     SmoothFlickable {
         id: flick
@@ -259,7 +282,7 @@ Rectangle {
                 size: 28
             }
             Text {
-                width: 420
+                width: Math.min(420, reader.width - 48)
                 visible: reader.task !== null && !reader.task.loading && !reader.task.ok
                 text: reader.task ? reader.task.error : ""
                 color: reader.look.text
@@ -352,15 +375,15 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: reader.insetTop / 2
             spacing: 4
-            IconButton { iconName: "chevron-left"; iconColor: reader.look.text; enabled: reader.hasPrev; tip: "Previous chapter"; onClicked: reader.load(reader.index - 1) }
-            IconButton { iconName: "chevron-right"; iconColor: reader.look.text; enabled: reader.hasNext; tip: "Next chapter"; onClicked: reader.load(reader.index + 1) }
+            IconButton { iconName: "chevron-left"; iconColor: reader.look.text; enabled: reader.hasPrev; tip: "Previous chapter" + reader.keyHint("reader.prev"); onClicked: reader.load(reader.index - 1) }
+            IconButton { iconName: "chevron-right"; iconColor: reader.look.text; enabled: reader.hasNext; tip: "Next chapter" + reader.keyHint("reader.next"); onClicked: reader.load(reader.index + 1) }
             IconButton { iconName: "list"; iconColor: reader.look.text; tip: "Chapters"; onClicked: chapterPopup.open() }
             IconButton { iconName: "type"; iconColor: reader.look.text; tip: "Text settings"; onClicked: typePopup.open() }
             IconButton {
                 iconName: Window.window && Window.window.visibility === Window.FullScreen ? "minimize" : "maximize"
                 iconColor: reader.look.text
-                tip: "Full screen (F)"
-                onClicked: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
+                tip: "Full screen" + reader.keyHint("reader.fullscreen")
+                onClicked: reader.toggleFullScreen()
             }
         }
     }
@@ -369,7 +392,7 @@ Rectangle {
         id: chapterPopup
         x: parent.width - width - 16
         y: 70 + reader.insetTop
-        width: 360
+        width: Math.min(360, parent.width - 32)
         height: Math.min(parent.height - 120, 600)
         padding: 6
         onOpened: chapterList.positionViewAtIndex(reader.index, ListView.Center)
@@ -406,7 +429,7 @@ Rectangle {
         id: typePopup
         x: parent.width - width - 16
         y: 70 + reader.insetTop
-        width: 340
+        width: Math.min(340, parent.width - 32)
         padding: 20
         background: Rectangle { radius: Theme.radiusLg; color: Theme.surface; border.width: 1; border.color: Theme.borderStrong }
         enter: Transition {

@@ -4,8 +4,8 @@ import ScanCore
 
 // Keyboard shortcuts that can be changed in Settings → Keyboard. Each action
 // has default keys; the keybinds setting holds the ones changed, as
-// {action: ["Ctrl+K", …]} in Qt's portable notation. Escape, arrow keys and
-// scrolling keys are fixed and not listed.
+// {action: ["Ctrl+K", …]} in Qt's portable notation. Escape and the Left
+// and Right arrows (page and chapter turns) are fixed and not listed.
 QtObject {
     id: keymap
 
@@ -29,17 +29,21 @@ QtObject {
         { id: "reader.prev", scope: "reader", label: "Previous chapter", keys: ["P"] },
         { id: "reader.mode", scope: "reader", label: "Switch between strip and pages", keys: ["M"] },
         { id: "reader.fullscreen", scope: "reader", label: "Full screen", keys: ["F"] },
-        { id: "reader.wider", scope: "reader", label: "Wider strip", keys: ["+", "="] },
-        { id: "reader.narrower", scope: "reader", label: "Narrower strip", keys: ["-"] },
+        { id: "reader.wider", scope: "reader", label: "Wider strip, larger text", keys: ["+", "="] },
+        { id: "reader.narrower", scope: "reader", label: "Narrower strip, smaller text", keys: ["-"] },
         { id: "reader.first", scope: "reader", label: "First page", keys: ["Home"] },
         { id: "reader.last", scope: "reader", label: "Last page", keys: ["End"] },
+        { id: "reader.down", scope: "reader", label: "Scroll down", keys: ["Down", "J"] },
+        { id: "reader.up", scope: "reader", label: "Scroll up", keys: ["Up", "K"] },
+        { id: "reader.pageDown", scope: "reader", label: "Scroll down a screen", keys: ["Space", "PgDown"] },
+        { id: "reader.pageUp", scope: "reader", label: "Scroll up a screen", keys: ["Shift+Space", "PgUp"] },
         { id: "player.next", scope: "player", label: "Next episode", keys: ["N"] },
         { id: "player.prev", scope: "player", label: "Previous episode", keys: ["P"] },
         { id: "player.fullscreen", scope: "player", label: "Full screen", keys: ["F"] }
     ]
     readonly property var scopes: [
         { scope: "app", title: "Anywhere" },
-        { scope: "reader", title: "Comic reader" },
+        { scope: "reader", title: "Comic and novel readers" },
         { scope: "player", title: "Anime player" }
     ]
 
@@ -98,6 +102,13 @@ QtObject {
                 if (Customize.sameKeys(other, key)) return a
         }
         return null
+    }
+
+    // A key event (Keys.onPressed) matched against an action's keys, for
+    // keys that only count while one item has focus.
+    function matches(id, event) {
+        const typed = Customize.keySequence(event.key, event.modifiers)
+        return typed !== "" && sequences(id).some(s => Customize.sameKeys(s, typed))
     }
 
     // A key pressed inside a web page ({key, ctrl, alt, shift, meta} from the

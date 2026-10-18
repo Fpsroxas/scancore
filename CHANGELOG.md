@@ -4,6 +4,14 @@ Downloads for the current version are listed on the [releases page](https://gith
 
 ## Unreleased
 
+- **Fixed parts of SCANCORE working on separate copies of the library, account, downloads and updater**, a mix-up present since 1.0. Automatic update checks now show the update banner (only a check from Settings → About did before), saving or removing a series starts a sync and removals reach scancore.onl, signed-in users no longer sync twice at startup, and changes in Settings, such as how often to check for new chapters or app updates, apply without a restart.
+- Opening SCANCORE while it is already running, for example in the tray, brings its window back instead of starting a second copy on the same library.
+- Reading keys are yours to change as well: scrolling by a line or a screen (↓ ↑, J K, Space, Page Up/Down) is in Settings → Keyboard, and the novel reader now follows all your reader shortcuts; it ignored changed keys before.
+- The novel reader goes back to where you stopped in a chapter that was loaded ahead (it started at the top), counts a chapter that fits on one screen as read, and its menus and messages fit narrow phones.
+- The Ctrl+K palette groups its results under Search, Recent, Pages and Commands, and pointing at or clicking a result works again.
+- The anime player remembers the server you picked and starts the next episode on it.
+- Release pages list what changed and which file to download for each system.
+
 ## 1.2.0 — 2026-10-18
 
 - **Your own theme.** Pick the window colour on a colour wheel, with a brightness slider that decides how dark it is, and the whole app follows it. Add a picture or animated GIF behind everything, fitted, dimmed and blurred to taste. Panels can be see-through, and so can the whole window, showing your desktop through it. Accents can be any colour too, and indigo, emerald and amber join the presets.

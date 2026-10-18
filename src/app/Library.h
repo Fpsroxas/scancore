@@ -20,7 +20,6 @@ class Library : public QObject {
     Q_PROPERTY(int unreadUpdates READ unreadUpdates NOTIFY changed)
 
 public:
-    explicit Library(QObject *parent = nullptr);
     static Library *instance();
     static Library *create(QQmlEngine *, QJSEngine *) { return instance(); }
 
@@ -70,6 +69,11 @@ signals:
     void removed(const QString &seriesId);
 
 private:
+    // Private so QML uses create(): Qt builds its own instance of a
+    // singleton it can default-construct, and C++ and QML would then
+    // work on different objects.
+    explicit Library(QObject *parent = nullptr);
+
     int m_revision = 0;
 };
 

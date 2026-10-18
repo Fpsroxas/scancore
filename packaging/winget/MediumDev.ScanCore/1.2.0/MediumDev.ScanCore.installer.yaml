@@ -1,5 +1,5 @@
 PackageIdentifier: MediumDev.ScanCore
-PackageVersion: 1.0.0
+PackageVersion: 1.2.0
 InstallerLocale: en-US
 Platform:
   - Windows.Desktop
@@ -9,8 +9,8 @@ Scope: machine
 UpgradeBehavior: install
 Installers:
   - Architecture: x64
-    InstallerUrl: https://github.com/medium-gh/scancore/releases/download/v1.0.0/SCANCORE-1.0.0-windows-x64-setup.exe
-    InstallerSha256: e0317cbf49b6c41842294c45cc97cabbba4d622b608ea542da74338fe56d4c1e
+    InstallerUrl: https://github.com/medium-gh/scancore/releases/download/v1.2.0/SCANCORE-1.2.0-windows-x64-setup.exe
+    InstallerSha256: E2786113EFA516112EB4BA066DFB2C1418272BEECE5F6DB79C0349AB57D934CC
     InstallerSwitches:
       Silent: /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
       SilentWithProgress: /SILENT /SUPPRESSMSGBOXES /NORESTART /SP-

@@ -2,6 +2,7 @@
 #include "app/App.h"
 #include "app/Customize.h"
 #include "app/Images.h"
+#include "app/SingleInstance.h"
 #include "app/Updater.h"
 #include "app/WebBridge.h"
 #include "core/Cookies.h"
@@ -30,6 +31,8 @@
 #include <QQuickStyle>
 #include <QQuickWindow>
 #include <QStandardPaths>
+#include <QTimer>
+#include <QUrl>
 
 #ifdef SCANCORE_HAVE_WEBENGINE
 #include <QtWebEngineQuick/QtWebEngineQuick>
@@ -123,6 +126,20 @@ int main(int argc, char *argv[]) {
     QApplication::setQuitOnLastWindowClosed(false);
 #endif
 
+#ifndef Q_OS_ANDROID
+    // Files and links given on the command line (a theme, for example).
+    QStringList openArguments;
+    for (const auto &argument : QCoreApplication::arguments().mid(1))
+        if (!argument.startsWith(QLatin1Char('-')))
+            openArguments.append(QUrl::fromUserInput(argument, QDir::currentPath(), QUrl::AssumeLocalFile).toString());
+    // Launching again while SCANCORE runs (in the tray, say) brings that one
+    // back instead of starting a second copy on the same library.
+    SingleInstance instance;
+    if (instance.forwardToRunning(openArguments))
+        return 0;
+    instance.listen();
+#endif
+
     QQuickStyle::setStyle(QStringLiteral("Basic"));
     loadFonts();
 
@@ -150,19 +167,12 @@ int main(int argc, char *argv[]) {
     engine.addImageProvider(QStringLiteral("colorwheel"), new ColorWheelProvider);
     // Settings saved by Settings pages that App does not list among its
     // defaults (text and cover size, animation speed, start page and others)
-    // are restored as they were stored, in the object QML uses too.
-    const auto restoreSettings = [](App *app) {
-        if (!app)
-            return;
-        for (const auto &row : Database::query(QStringLiteral("SELECT key FROM prefs WHERE key LIKE 'setting.%'"))) {
-            const auto key = row.toMap().value(QStringLiteral("key")).toString().mid(8);
-            if (!key.isEmpty() && !app->settings().contains(key))
-                app->setSetting(key, Database::pref(QStringLiteral("setting.") + key));
-        }
-    };
-    restoreSettings(appState);
-    if (auto *qmlApp = engine.singletonInstance<App *>("ScanCore", "App"); qmlApp != appState)
-        restoreSettings(qmlApp);
+    // are restored as they were stored.
+    for (const auto &row : Database::query(QStringLiteral("SELECT key FROM prefs WHERE key LIKE 'setting.%'"))) {
+        const auto key = row.toMap().value(QStringLiteral("key")).toString().mid(8);
+        if (!key.isEmpty() && !appState->settings().contains(key))
+            appState->setSetting(key, Database::pref(QStringLiteral("setting.") + key));
+    }
 
 #ifndef Q_OS_ANDROID
     QSystemTrayIcon tray(QApplication::windowIcon());
@@ -198,6 +208,18 @@ int main(int argc, char *argv[]) {
     // The window decides whether closing hides to the tray; once it is gone
     // there is nothing left to show.
     QObject::connect(engine.rootObjects().first(), &QObject::destroyed, &app, &Application::quit);
+
+#ifndef Q_OS_ANDROID
+    QObject::connect(&instance, &SingleInstance::activated, appState, [appState](const QStringList &arguments) {
+        emit appState->activateRequested();
+        for (const auto &argument : arguments)
+            emit appState->openRequested(argument);
+    });
+    QTimer::singleShot(0, appState, [appState, openArguments] {
+        for (const auto &argument : openArguments)
+            emit appState->openRequested(argument);
+    });
+#endif
 
     appState->startBackgroundWork();
     Updater::instance()->startAutomatic();

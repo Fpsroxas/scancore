@@ -149,17 +149,17 @@ Rectangle {
         return keys.length ? " (" + keys[0] + ")" : ""
     }
 
+    // Scrolling keys come from Settings → Keyboard too, but only count
+    // while the reader has focus (not in its chapter list, say).
     Keys.onPressed: (event) => {
-        switch (event.key) {
-        case Qt.Key_Escape: exit(); break
-        case Qt.Key_Down: case Qt.Key_J: scrollBy(height * 0.18); break
-        case Qt.Key_Up: case Qt.Key_K: scrollBy(-height * 0.18); break
-        case Qt.Key_Space: case Qt.Key_PageDown: scrollBy((event.modifiers & Qt.ShiftModifier ? -1 : 1) * height * 0.85); break
-        case Qt.Key_PageUp: scrollBy(-height * 0.85); break
-        case Qt.Key_Right: mode === "paged" ? pageView.turn(App.settings.readerDirection === "rtl" ? -1 : 1) : (hasNext && load(index + 1)); break
-        case Qt.Key_Left: mode === "paged" ? pageView.turn(App.settings.readerDirection === "rtl" ? 1 : -1) : (hasPrev && load(index - 1)); break
-        default: return
-        }
+        if (event.key === Qt.Key_Escape) exit()
+        else if (Keymap.matches("reader.down", event)) scrollBy(height * 0.18)
+        else if (Keymap.matches("reader.up", event)) scrollBy(-height * 0.18)
+        else if (Keymap.matches("reader.pageDown", event)) scrollBy(height * 0.85)
+        else if (Keymap.matches("reader.pageUp", event)) scrollBy(-height * 0.85)
+        else if (event.key === Qt.Key_Right) mode === "paged" ? pageView.turn(App.settings.readerDirection === "rtl" ? -1 : 1) : (hasNext && load(index + 1))
+        else if (event.key === Qt.Key_Left) mode === "paged" ? pageView.turn(App.settings.readerDirection === "rtl" ? 1 : -1) : (hasPrev && load(index - 1))
+        else return
         event.accepted = true
     }
 
@@ -652,7 +652,7 @@ Rectangle {
         id: chapterPopup
         x: parent.width - width - 18
         y: 70 + reader.insetTop
-        width: 340
+        width: Math.min(340, parent.width - 36)
         height: Math.min(parent.height - 160 - reader.insetTop - reader.insetBottom, 560)
         padding: 6
         onOpened: chapterList.positionViewAtIndex(reader.index, ListView.Center)
@@ -694,7 +694,7 @@ Rectangle {
         id: settingsPopup
         x: parent.width - width - 18
         y: 70 + reader.insetTop
-        width: 320
+        width: Math.min(320, parent.width - 36)
         padding: 18
         background: Rectangle { radius: Theme.radiusLg; color: "#151517"; border.width: 1; border.color: "#2a2a30" }
         enter: Transition {

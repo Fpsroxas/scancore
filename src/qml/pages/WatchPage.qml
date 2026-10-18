@@ -109,8 +109,15 @@ Rectangle {
     Connections {
         target: watch.streamsTask
         function onFinished(result) {
-            if (result.streams.length > 0) watch.currentUrl = result.streams[0].url
+            // The server picked last time, when this episode has it.
+            const preferred = result.streams.find(s => s.quality === App.settings.animeServer)
+            if (result.streams.length > 0) watch.currentUrl = (preferred || result.streams[0]).url
         }
+    }
+
+    function pickServer(stream) {
+        currentUrl = stream.url
+        App.setSetting("animeServer", stream.quality)
     }
 
     property real lastSaved: 0
@@ -491,7 +498,7 @@ Rectangle {
                     required property var modelData
                     text: modelData.quality
                     selected: watch.currentUrl === modelData.url
-                    onClicked: watch.currentUrl = modelData.url
+                    onClicked: watch.pickServer(modelData)
                 }
             }
             Item { width: 8; height: 1 }
@@ -644,7 +651,7 @@ Rectangle {
                                 required property var modelData
                                 text: modelData.quality
                                 selected: watch.currentUrl === modelData.url
-                                onClicked: watch.currentUrl = modelData.url
+                                onClicked: watch.pickServer(modelData)
                             }
                         }
                     }

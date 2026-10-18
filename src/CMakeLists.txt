@@ -70,6 +70,7 @@ qt_add_qml_module(scancore
         app/Downloads.cpp app/Downloads.h
         app/Extensions.cpp app/Extensions.h
         app/Images.cpp app/Images.h
+        app/SingleInstance.cpp app/SingleInstance.h
         app/Library.cpp app/Library.h
         app/Novels.cpp app/Novels.h
         app/Updater.cpp app/Updater.h

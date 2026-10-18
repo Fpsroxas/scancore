@@ -313,14 +313,67 @@ jobs:
     # Pinned: ubuntu-latest moves to a new release from 19 October 2026.
     runs-on: ubuntu-24.04
     steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+          sparse-checkout: CHANGELOG.md
+          sparse-checkout-cone-mode: false
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
           merge-multiple: true
+      # The release page shows this version's changelog and which file to
+      # download, above GitHub's list of commits.
+      - name: Release notes
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          VERSION="${TAG#v}"
+          awk -v v="$VERSION" '
+            index($0, "## " v " ") == 1 || $0 == "## " v { on = 1; next }
+            on && /^## / { exit }
+            on { print }' CHANGELOG.md > notes.md
+          cat >> notes.md <<EOF
+
+          ### Which file?
+
+          | System | Download |
+          | --- | --- |
+          | Windows | \`SCANCORE-$VERSION-windows-x64-setup.exe\` (installer, updates itself) or the portable \`.zip\` |
+          | macOS 13 or later | \`SCANCORE-$VERSION-macos-universal.dmg\` (Apple silicon and Intel) |
+          | Linux | \`SCANCORE-$VERSION-linux-x86_64.AppImage\` (updates itself) or the \`.flatpak\` bundle |
+          | Android 9 or later | \`SCANCORE-$VERSION-android-arm64.apk\` |
+          EOF
+          cat notes.md
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           name: SCANCORE ${{ github.event.inputs.tag || github.ref_name }}
+          body_path: notes.md
           generate_release_notes: true
           files: artifacts/*
+
+  # AUR, Homebrew and winget manifests with this release's checksums, ready
+  # to submit (see packaging/update-manifests.py).
+  manifests:
+    name: Package manifests
+    needs: publish
+    if: ${{ !cancelled() && needs.publish.result == 'success' }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+      - name: Write and attach the manifests
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          VERSION="${TAG#v}"
+          if [ ! -f packaging/update-manifests.py ]; then
+            echo "::notice::$TAG predates packaging/update-manifests.py."
+            exit 0
+          fi
+          python3 packaging/update-manifests.py "$VERSION" --out "$RUNNER_TEMP/manifests"
+          (cd "$RUNNER_TEMP/manifests" && zip -qr "$RUNNER_TEMP/SCANCORE-$VERSION-package-manifests.zip" .)
+          gh release upload "$TAG" "$RUNNER_TEMP/SCANCORE-$VERSION-package-manifests.zip" --repo "$GITHUB_REPOSITORY" --clobber

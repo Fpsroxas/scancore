@@ -1,5 +1,5 @@
 PackageIdentifier: MediumDev.ScanCore
-PackageVersion: 1.0.0
+PackageVersion: 1.2.0
 PackageLocale: en-US
 Publisher: Medium Dev
 PackageName: SCANCORE
@@ -9,6 +9,7 @@ Description: Read manga, manhwa, webtoons and web novels, and watch anime from d
 PackageUrl: https://github.com/medium-gh/scancore
 PublisherUrl: https://mediumdev.com
 PublisherSupportUrl: https://github.com/medium-gh/scancore/issues
+ReleaseNotesUrl: https://github.com/medium-gh/scancore/releases/tag/v1.2.0
 Tags:
   - anime
   - comics

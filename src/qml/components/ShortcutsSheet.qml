@@ -17,8 +17,7 @@ Popup {
     // Keys that cannot be changed, listed with the ones that can.
     readonly property var fixed: ({
         app: [["Esc", "Back, or close the reader"]],
-        reader: [["↓  ↑", "Scroll (also J and K)"], ["Space", "Next screen (Shift: previous)"],
-                 ["←  →", "Previous or next page or chapter"]],
+        reader: [["←  →", "Previous or next page or chapter"]],
         player: [["Esc", "Leave full screen, then close"]]
     })
     readonly property var groups: Keymap.scopes.map(scope => ({

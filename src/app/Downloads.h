@@ -19,7 +19,6 @@ class Downloads : public QObject {
     Q_PROPERTY(int pending READ pending NOTIFY changed)
 
 public:
-    explicit Downloads(QObject *parent = nullptr);
     static Downloads *instance();
     static Downloads *create(QQmlEngine *, QJSEngine *) { return instance(); }
 
@@ -46,6 +45,11 @@ signals:
     void finished(const QString &title);
 
 private:
+    // Private so QML uses create(): Qt builds its own instance of a
+    // singleton it can default-construct, and C++ and QML would then
+    // work on different objects.
+    explicit Downloads(QObject *parent = nullptr);
+
     void pump();
     void runJob(const QVariantMap &row);
     void notify();

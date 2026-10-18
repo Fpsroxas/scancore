@@ -1,14 +1,14 @@
 # Maintainer: Logesh Senthil <logesh@mediumdev.com>
 pkgname=scancore
-pkgver=1.0.0
+pkgver=1.2.0
 pkgrel=1
 pkgdesc='Read comics and novels and watch anime in a native Qt app'
 arch=('x86_64')
 url='https://github.com/medium-gh/scancore'
 license=('MIT')
-depends=('gcc-libs' 'glibc' 'qt6-base' 'qt6-declarative' 'qt6-imageformats' 'qt6-svg')
+# Qt WebEngine (Arch's has the H.264 codec) is the anime player.
+depends=('gcc-libs' 'glibc' 'qt6-base' 'qt6-declarative' 'qt6-imageformats' 'qt6-svg' 'qt6-webengine')
 optdepends=(
-  'qt6-webengine: embedded anime player and site verification windows'
   'qt6-wayland: native Wayland platform integration'
 )
 makedepends=('cmake' 'ninja')
@@ -17,7 +17,7 @@ source=(
   'lexbor-2.7.0.tar.gz::https://github.com/lexbor/lexbor/archive/refs/tags/v2.7.0.tar.gz'
 )
 sha256sums=(
-  '427b25942a5bbc5570a3a3696cbeef6af95b93c2afee6547cf932842ac6a9bc9'
+  '1243f0d9e1106e954bc54230adea7706a5e92fdcdb84e9bb5a176fbf4bce07ee'
   'e2473ade7173f69c56731ba71291d2ba705675ede2bb4423dc939ed70bcb55b5'
 )
 

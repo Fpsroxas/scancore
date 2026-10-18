@@ -78,7 +78,7 @@ ApplicationWindow {
         if (first && first !== "home") shell.goSection(first)
         if (start.siteCheck) Qt.callLater(() => Router.openSiteCheck(start.siteCheck))
         if (start.toasts) for (const t of start.toasts) shell.toast(t.message, t.kind)
-        if (start.palette) Qt.callLater(() => palette.open())
+        if (start.palette) Qt.callLater(() => commandPalette.open())
         if (start.shortcuts) Qt.callLater(() => shortcutsSheet.open())
         if (start.push) Qt.callLater(() => shell.push(start.push.path, start.push.props || {}))
         if (start.installNovelPack) {
@@ -101,6 +101,16 @@ ApplicationWindow {
     Connections {
         target: Downloads
         function onFinished(title) { shell.toast("Downloaded " + title, "success") }
+    }
+    // A file or link given on the command line or by a second launch.
+    Connections {
+        target: App
+        function onOpenRequested(target) {
+            if (String(target).toLowerCase().endsWith(".sct")) {
+                window.pendingTheme = target
+                themeConfirm.open()
+            }
+        }
     }
 
     // On Android a Back that nothing else took can arrive as a close request.
@@ -201,7 +211,7 @@ ApplicationWindow {
             }
         }
 
-        function openPalette() { palette.open() }
+        function openPalette() { commandPalette.open() }
 
         function openShortcuts() { shortcutsSheet.open() }
 
@@ -243,7 +253,7 @@ ApplicationWindow {
             height: parent.height - 2 * window.navInset
             current: shell.section
             onNavigate: (name) => shell.goSection(name)
-            onOpenPalette: palette.open()
+            onOpenPalette: commandPalette.open()
         }
 
         Item {
@@ -311,7 +321,7 @@ ApplicationWindow {
         height: implicitHeight
         current: shell.section
         onNavigate: (name) => shell.goSection(name)
-        onOpenPalette: palette.open()
+        onOpenPalette: commandPalette.open()
     }
 
     // Phone layout: bottom tabs instead of the sidebar.
@@ -325,7 +335,7 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         current: shell.section
         onNavigate: (name) => shell.goSection(name)
-        onOpenPalette: palette.open()
+        onOpenPalette: commandPalette.open()
     }
 
     // Readers and the player cover the whole window.
@@ -378,7 +388,7 @@ ApplicationWindow {
     }
 
     CommandPalette {
-        id: palette
+        id: commandPalette
         z: 30
     }
 
@@ -429,7 +439,7 @@ ApplicationWindow {
     // ------------------------------------------------------------------ keys
 
     // The keys come from Settings → Keyboard (see Keymap).
-    Shortcut { sequences: Keymap.sequences("palette"); onActivated: palette.open() }
+    Shortcut { sequences: Keymap.sequences("palette"); onActivated: commandPalette.open() }
     Shortcut { sequences: Keymap.sequences("shortcuts"); enabled: App.platform !== "android"; onActivated: shortcutsSheet.open() }
     // StandardKey.Back is also Android's Back key.
     Shortcut { sequences: Keymap.sequences("back").concat([StandardKey.Back]); onActivated: shell.systemBack() }

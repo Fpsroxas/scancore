@@ -28,7 +28,6 @@ class App : public QObject {
     Q_PROPERTY(QVariantMap startAction READ startAction CONSTANT)
 
 public:
-    explicit App(QObject *parent = nullptr);
     static App *instance();
     static App *create(QQmlEngine *, QJSEngine *) { return instance(); }
 
@@ -71,8 +70,15 @@ signals:
     void manifestChanged();
     void updateAvailable(const QString &version, const QString &url);
     void activateRequested();
+    // A file or link to open, given on the command line or by a later launch.
+    void openRequested(const QString &target);
 
 private:
+    // Private so QML uses create(): Qt builds its own instance of a
+    // singleton it can default-construct, and C++ and QML would then
+    // work on different objects.
+    explicit App(QObject *parent = nullptr);
+
     void scheduleLibraryCheck();
 
     QVariantMap m_settings;

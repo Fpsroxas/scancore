@@ -27,7 +27,6 @@ class Account : public QObject {
     Q_PROPERTY(QString site READ site CONSTANT)
 
 public:
-    explicit Account(QObject *parent = nullptr);
     static Account *instance();
     static Account *create(QQmlEngine *, QJSEngine *) { return instance(); }
 
@@ -52,6 +51,11 @@ signals:
     void changed();
 
 private:
+    // Private so QML uses create(): Qt builds its own instance of a
+    // singleton it can default-construct, and C++ and QML would then
+    // work on different objects.
+    explicit Account(QObject *parent = nullptr);
+
     sc::Task *authenticate(const QString &path, const QJsonObject &body);
     void setUser(const QVariantMap &user);
     // A sync soon after a change in the library or progress, but not more

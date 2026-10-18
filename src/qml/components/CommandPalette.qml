@@ -5,7 +5,7 @@ import ScanCore
 // Ctrl+K: jump anywhere, search any media type, reopen something recent, or
 // run a quick command (theme, motion, update check, sync, shortcuts).
 Popup {
-    id: palette
+    id: root
     parent: Overlay.overlay
     anchors.centerIn: parent
     width: Math.min(640, parent.width - 80)
@@ -20,15 +20,15 @@ Popup {
         const q = input.text.trim()
         const out = []
         if (q.length > 0) {
-            out.push({ icon: "book-open", label: "Search comics for “" + q + "”", run: () => searchIn("comics", q) })
-            out.push({ icon: "book-text", label: "Search novels for “" + q + "”", run: () => searchIn("novels", q) })
-            out.push({ icon: "tv", label: "Search anime for “" + q + "”", run: () => searchIn("anime", q) })
+            out.push({ group: "Search", icon: "book-open", label: "Search comics for “" + q + "”", run: () => searchIn("comics", q) })
+            out.push({ group: "Search", icon: "book-text", label: "Search novels for “" + q + "”", run: () => searchIn("novels", q) })
+            out.push({ group: "Search", icon: "tv", label: "Search anime for “" + q + "”", run: () => searchIn("anime", q) })
         }
         const lower = q.toLowerCase()
         for (const entry of recent) {
             if (out.length > 14) break
             if (lower && !(entry.title || "").toLowerCase().includes(lower)) continue
-            out.push({ icon: entry.media === "anime" ? "tv" : entry.media === "novel" ? "book-text" : "book-open",
+            out.push({ group: "Recent", icon: entry.media === "anime" ? "tv" : entry.media === "novel" ? "book-text" : "book-open",
                        label: entry.title, detail: entry.unitTitle || "", cover: entry.cover, run: () => Router.resume(entry) })
         }
         const pages = [["home", "Home", "house"], ["comics", "Comics", "book-open"], ["novels", "Novels", "book-text"],
@@ -36,7 +36,7 @@ Popup {
                        ["downloads", "Downloads", "download"], ["settings", "Settings", "settings"]]
         for (const [key, label, icon] of pages)
             if (!lower || label.toLowerCase().includes(lower))
-                out.push({ icon: icon, label: "Go to " + label, run: () => Router.go(key) })
+                out.push({ group: "Pages", icon: icon, label: "Go to " + label, run: () => Router.go(key) })
         const commands = [
             { icon: Theme.dark ? "sun" : "moon", label: Theme.dark ? "Switch to the light theme" : "Switch to the dark theme",
               run: () => App.setSetting("theme", Theme.dark ? "light" : "dark") },
@@ -50,7 +50,7 @@ Popup {
             commands.push({ icon: "keyboard", label: "Keyboard shortcuts", detail: "?", run: () => Router.shell.openShortcuts() })
         for (const c of commands)
             if (!lower || c.label.toLowerCase().includes(lower))
-                out.push(c)
+                out.push(Object.assign({ group: "Commands" }, c))
         return out
     }
 
@@ -61,7 +61,7 @@ Popup {
         checkTask = Library.checkUpdates()
     }
     Connections {
-        target: palette.checkTask
+        target: root.checkTask
         function onFinished(result) {
             if (result.newUnits === 0) Router.toast("Everything is up to date")
         }
@@ -86,8 +86,8 @@ Popup {
     }
     property var historyTask: null
     Connections {
-        target: palette.historyTask
-        function onFinished(result) { palette.recent = result }
+        target: root.historyTask
+        function onFinished(result) { root.recent = result }
     }
 
     function runSelected() {
@@ -149,87 +149,113 @@ Popup {
                     color: Theme.border
                 }
             }
-            onTextChanged: palette.selected = 0
-            Keys.onDownPressed: palette.selected = Math.min(palette.actions.length - 1, palette.selected + 1)
-            Keys.onUpPressed: palette.selected = Math.max(0, palette.selected - 1)
-            Keys.onReturnPressed: palette.runSelected()
-            Keys.onEnterPressed: palette.runSelected()
-            Keys.onEscapePressed: palette.close()
+            onTextChanged: root.selected = 0
+            Keys.onDownPressed: root.selected = Math.min(root.actions.length - 1, root.selected + 1)
+            Keys.onUpPressed: root.selected = Math.max(0, root.selected - 1)
+            Keys.onReturnPressed: root.runSelected()
+            Keys.onEnterPressed: root.runSelected()
+            Keys.onEscapePressed: root.close()
         }
 
         ListView {
             id: list
             width: parent.width
-            height: palette.height - input.height
+            height: root.height - input.height
             clip: true
             topMargin: 8
             bottomMargin: 8
-            model: palette.actions
-            currentIndex: palette.selected
+            model: root.actions
+            currentIndex: root.selected
             highlightMoveDuration: Motion.fast
             highlightFollowsCurrentItem: true
-            highlight: Rectangle {
-                x: 8
-                width: list.width - 16
-                radius: Theme.radiusMd
-                color: Theme.surface3
+            // Sized to the whole row, header included; only the item part lights up.
+            highlight: Item {
+                Rectangle {
+                    x: 8
+                    anchors.bottom: parent.bottom
+                    width: list.width - 16
+                    height: 46
+                    radius: Theme.radiusMd
+                    color: Theme.surface3
+                }
             }
             delegate: Item {
+                id: row
                 required property var modelData
                 required property int index
+                // Each group (Search, Recent, Pages, Commands) starts with its name.
+                readonly property bool firstOfGroup: index === 0 || root.actions[index - 1].group !== modelData.group
                 width: list.width
-                height: 46
-                Row {
-                    x: 22
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 14
-                    Item {
-                        width: 28
-                        height: 28
-                        anchors.verticalCenter: parent.verticalCenter
-                        Cover {
-                            visible: !!modelData.cover
-                            anchors.fill: parent
-                            radius: 6
-                            source: modelData.cover || ""
-                        }
-                        Icon {
-                            visible: !modelData.cover
-                            anchors.centerIn: parent
-                            name: modelData.icon
-                            size: 17
-                            color: Theme.textMuted
-                        }
-                    }
-                    Text {
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: list.width - 160
-                        text: modelData.label
-                        color: Theme.text
-                        font.family: Theme.fontSans
-                        font.pixelSize: Theme.textMd
-                        elide: Text.ElideRight
-                    }
-                }
+                height: 46 + (firstOfGroup ? 30 : 0)
                 Text {
-                    anchors.right: parent.right
-                    anchors.rightMargin: 22
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 110
-                    horizontalAlignment: Text.AlignRight
-                    text: modelData.detail || ""
+                    visible: row.firstOfGroup
+                    x: 22
+                    y: row.index === 0 ? 6 : 10
+                    text: row.modelData.group || ""
                     color: Theme.textFaint
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textXs
-                    elide: Text.ElideRight
+                    font.weight: Font.DemiBold
+                    font.capitalization: Font.AllUppercase
+                    font.letterSpacing: 1.1
+                }
+                Item {
+                    id: line
+                    anchors.bottom: parent.bottom
+                    width: parent.width
+                    height: 46
+                    Row {
+                        x: 22
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 14
+                        Item {
+                            width: 28
+                            height: 28
+                            anchors.verticalCenter: parent.verticalCenter
+                            Cover {
+                                visible: !!modelData.cover
+                                anchors.fill: parent
+                                radius: 6
+                                source: modelData.cover || ""
+                            }
+                            Icon {
+                                visible: !modelData.cover
+                                anchors.centerIn: parent
+                                name: modelData.icon
+                                size: 17
+                                color: Theme.textMuted
+                            }
+                        }
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: list.width - 160
+                            text: modelData.label
+                            color: Theme.text
+                            font.family: Theme.fontSans
+                            font.pixelSize: Theme.textMd
+                            elide: Text.ElideRight
+                        }
+                    }
+                    Text {
+                        anchors.right: parent.right
+                        anchors.rightMargin: 22
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 110
+                        horizontalAlignment: Text.AlignRight
+                        text: modelData.detail || ""
+                        color: Theme.textFaint
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textXs
+                        elide: Text.ElideRight
+                    }
                 }
                 MouseArea {
-                    anchors.fill: parent
+                    anchors.fill: line
                     hoverEnabled: true
-                    onEntered: palette.selected = index
+                    onEntered: root.selected = index
                     onClicked: {
-                        palette.selected = index
-                        palette.runSelected()
+                        root.selected = index
+                        root.runSelected()
                     }
                 }
             }
