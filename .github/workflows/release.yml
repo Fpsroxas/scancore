@@ -50,8 +50,8 @@ jobs:
           fi
           echo "Tag $TAG matches CMakeLists.txt."
 
-  # Qt WebEngine with the H.264 codec for the AppImage (see qtwebengine.yml).
-  # Quick when it was built before; hours the first time for a Qt version.
+  # Build codecs while the other release targets build. Only the Linux
+  # AppImage needs this; other release artifacts can publish independently.
   webengine:
     needs: version
     uses: ./.github/workflows/qtwebengine.yml
@@ -60,18 +60,13 @@ jobs:
 
   build:
     name: ${{ matrix.name }}
-    needs: [version, webengine]
-    # Without the codec build the AppImage is still made; its player then
-    # explains that it cannot play the video and offers the browser.
+    needs: version
     if: ${{ !cancelled() && needs.version.result == 'success' }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - name: Linux
-            os: ubuntu-22.04
-            qt: ${{ needs.version.outputs.linuxQt }}
           - name: Windows
             os: windows-2022
             # aqtinstall cannot read the Windows 6.11 repository layout yet.
@@ -89,15 +84,6 @@ jobs:
           TAG="${{ github.event.inputs.tag || github.ref_name }}"
           echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
 
-      - name: Linux packages
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ninja-build libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-0 \
-            libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 \
-            libxcb-shape0 libxcb-xinerama0 libfontconfig1-dev libnss3 libxcomposite1 libxdamage1 \
-            libxrandr2 libxtst6 libfuse2 file
-
       - name: macOS packages
         if: runner.os == 'macOS'
         run: brew install ninja
@@ -113,21 +99,6 @@ jobs:
           modules: ${{ env.QT_MODULES }}
           cache: true
 
-      - name: Qt WebEngine with codecs
-        if: runner.os == 'Linux'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          QTV="${{ matrix.qt }}"
-          if [ "${{ needs.webengine.outputs.available }}" != "true" ]; then
-            echo "::warning::No Qt WebEngine with codecs for Qt $QTV; this AppImage cannot play anime episodes."
-            exit 0
-          fi
-          gh release download "qtwebengine-$QTV" --repo "$GITHUB_REPOSITORY" \
-            --pattern "qtwebengine-$QTV-codecs-linux-x86_64.tar.xz" --dir "$RUNNER_TEMP"
-          tar -xJf "$RUNNER_TEMP/qtwebengine-$QTV-codecs-linux-x86_64.tar.xz" -C "$QT_ROOT_DIR"
-          echo "Qt WebEngine with codecs laid over $QT_ROOT_DIR."
-
       - name: Build
         shell: bash
         run: |
@@ -136,61 +107,6 @@ jobs:
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DSCANCORE_BUILD_TESTS=OFF \
             -DCMAKE_INSTALL_PREFIX=/usr $EXTRA
           cmake --build build --parallel
-
-      # ---------------------------------------------------------------- Linux
-      - name: AppImage
-        if: runner.os == 'Linux'
-        run: |
-          DESTDIR=$PWD/AppDir cmake --install build
-          wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
-          wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
-          chmod +x linuxdeploy*.AppImage
-          # Only SQLite is used; other SQL drivers pull in client libraries
-          # that are not installed (linuxdeploy would fail on them).
-          find "$QT_ROOT_DIR/plugins/sqldrivers" -type f ! -name 'libqsqlite.so' -delete
-          # Drop any other plugin whose dependencies cannot be resolved on the
-          # build machine (for example NMEA positioning needs Qt SerialPort).
-          export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:${LD_LIBRARY_PATH:-}"
-          find "$QT_ROOT_DIR/plugins" -name '*.so' | while read -r plugin; do
-            if ldd "$plugin" | grep -q 'not found'; then
-              echo "Removing $plugin (unresolved: $(ldd "$plugin" | grep 'not found' | awk '{print $1}' | paste -sd' '))"
-              rm -f "$plugin"
-            fi
-          done
-          export QML_SOURCES_PATHS=$PWD/src/qml
-          export EXTRA_QT_MODULES="svg"
-          # Ship whichever Wayland platform plugins this Qt provides.
-          PLUGINS=$(ls "$QT_ROOT_DIR/plugins/platforms" | grep -i wayland | paste -sd ';' || true)
-          [ -n "$PLUGINS" ] && export EXTRA_PLATFORM_PLUGINS="$PLUGINS"
-          echo "Wayland plugins: $PLUGINS"
-          export LDAI_OUTPUT=SCANCORE-$VERSION-linux-x86_64.AppImage
-          ./linuxdeploy-x86_64.AppImage --appdir AppDir \
-            --desktop-file packaging/linux/com.mediumdev.scancore.desktop \
-            --icon-file packaging/linux/com.mediumdev.scancore.png \
-            --plugin qt
-          # The Qt plugin ships the Wayland platform plugin but not its
-          # graphics, shell and decoration integrations, without which the
-          # app cannot open a window on Wayland. Add them, then let
-          # linuxdeploy resolve their libraries while building the image.
-          for dir in "$QT_ROOT_DIR"/plugins/wayland-*; do
-            [ -d "$dir" ] && cp -r "$dir" AppDir/usr/plugins/
-          done
-          # Chromium (the anime player) loads the system's NSS modules, which must
-          # match the NSS libraries; bundled older copies crash it. Use the system's.
-          rm -f AppDir/usr/lib/libnss3.so AppDir/usr/lib/libnssutil3.so AppDir/usr/lib/libsmime3.so \
-                AppDir/usr/lib/libnspr4.so AppDir/usr/lib/libplc4.so AppDir/usr/lib/libplds4.so
-          LIBS=$(find AppDir/usr/plugins/wayland-* -name '*.so' -printf ' --library %p' 2>/dev/null || true)
-          # This pass resolves dependencies again, so keep it from re-bundling NSS.
-          NSS_EXCLUDES=""
-          for lib in libnss3 libnssutil3 libsmime3 libnspr4 libplc4 libplds4; do
-            NSS_EXCLUDES="$NSS_EXCLUDES --exclude-library $lib.so*"
-          done
-          ./linuxdeploy-x86_64.AppImage --appdir AppDir $LIBS $NSS_EXCLUDES --output appimage
-          if ls AppDir/usr/lib | grep -E '^lib(nss3|nssutil3|smime3|nspr4|plc4|plds4)\.so'; then
-            echo "NSS libraries were bundled; the anime player would crash on newer distributions" >&2
-            exit 1
-          fi
-          mkdir -p dist && mv SCANCORE-*.AppImage dist/
 
       # ---------------------------------------------------------------- Windows
       - name: Windows installer
@@ -226,11 +142,102 @@ jobs:
         with:
           name: scancore-${{ matrix.name }}
           path: |
-            dist/*.AppImage
             dist/*.zip
             dist/*setup.exe
             dist/*.dmg
           if-no-files-found: error
+
+  appimage:
+    name: Linux AppImage
+    needs: [version, webengine, publish]
+    if: ${{ !cancelled() && needs.version.result == 'success' && needs.webengine.result == 'success' && needs.webengine.outputs.available == 'true' && needs.publish.result == 'success' }}
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Version
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          echo "VERSION=${TAG#v}" >> "$GITHUB_ENV"
+          echo "LINUX_QT_VERSION=${{ needs.version.outputs.linuxQt }}" >> "$GITHUB_ENV"
+
+      - name: Linux packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-0 \
+            libxcb-cursor0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 \
+            libxcb-shape0 libxcb-xinerama0 libfontconfig1-dev libnss3 libxcomposite1 libxdamage1 \
+            libxrandr2 libxtst6 libfuse2 file
+
+      - name: Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ needs.version.outputs.linuxQt }}
+          modules: ${{ env.QT_MODULES }}
+          cache: true
+
+      - name: Qt WebEngine with codecs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download "qtwebengine-$LINUX_QT_VERSION" --repo "$GITHUB_REPOSITORY" \
+            --pattern "qtwebengine-$LINUX_QT_VERSION-codecs-linux-x86_64.tar.xz" --dir "$RUNNER_TEMP"
+          tar -xJf "$RUNNER_TEMP/qtwebengine-$LINUX_QT_VERSION-codecs-linux-x86_64.tar.xz" -C "$QT_ROOT_DIR"
+          echo "Qt WebEngine with codecs laid over $QT_ROOT_DIR."
+
+      - name: Build
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DSCANCORE_BUILD_TESTS=OFF \
+            -DCMAKE_INSTALL_PREFIX=/usr
+          cmake --build build --parallel
+
+      - name: AppImage
+        run: |
+          DESTDIR=$PWD/AppDir cmake --install build
+          wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+          wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+          chmod +x linuxdeploy*.AppImage
+          find "$QT_ROOT_DIR/plugins/sqldrivers" -type f ! -name 'libqsqlite.so' -delete
+          export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:${LD_LIBRARY_PATH:-}"
+          find "$QT_ROOT_DIR/plugins" -name '*.so' | while read -r plugin; do
+            if ldd "$plugin" | grep -q 'not found'; then
+              echo "Removing $plugin (unresolved: $(ldd "$plugin" | grep 'not found' | awk '{print $1}' | paste -sd' '))"
+              rm -f "$plugin"
+            fi
+          done
+          export QML_SOURCES_PATHS=$PWD/src/qml
+          export EXTRA_QT_MODULES="svg"
+          PLUGINS=$(ls "$QT_ROOT_DIR/plugins/platforms" | grep -i wayland | paste -sd ';' || true)
+          [ -n "$PLUGINS" ] && export EXTRA_PLATFORM_PLUGINS="$PLUGINS"
+          echo "Wayland plugins: $PLUGINS"
+          export LDAI_OUTPUT=SCANCORE-$VERSION-linux-x86_64.AppImage
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir \
+            --desktop-file packaging/linux/com.mediumdev.scancore.desktop \
+            --icon-file packaging/linux/com.mediumdev.scancore.png \
+            --plugin qt
+          for dir in "$QT_ROOT_DIR"/plugins/wayland-*; do
+            [ -d "$dir" ] && cp -r "$dir" AppDir/usr/plugins/
+          done
+          rm -f AppDir/usr/lib/libnss3.so AppDir/usr/lib/libnssutil3.so AppDir/usr/lib/libsmime3.so \
+                AppDir/usr/lib/libnspr4.so AppDir/usr/lib/libplc4.so AppDir/usr/lib/libplds4.so
+          LIBS=$(find AppDir/usr/plugins/wayland-* -name '*.so' -printf ' --library %p' 2>/dev/null || true)
+          NSS_EXCLUDES=""
+          for lib in libnss3 libnssutil3 libsmime3 libnspr4 libplc4 libplds4; do
+            NSS_EXCLUDES="$NSS_EXCLUDES --exclude-library $lib.so*"
+          done
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir $LIBS $NSS_EXCLUDES --output appimage
+          if ls AppDir/usr/lib | grep -E '^lib(nss3|nssutil3|smime3|nspr4|plc4|plds4)\.so'; then
+            echo "NSS libraries were bundled; the anime player would crash on newer distributions" >&2
+            exit 1
+          fi
+          mkdir -p dist && mv SCANCORE-*.AppImage dist/
+
+      - name: Add AppImage to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.inputs.tag || github.ref_name }}" dist/*.AppImage --repo "$GITHUB_REPOSITORY" --clobber
 
   android:
     name: Android
@@ -300,8 +307,8 @@ jobs:
 
   publish:
     needs: [build, android]
-    # Published even when the codec build failed (build runs regardless):
-    # GitHub otherwise skips a job when anything further up its chain failed.
+    # Publish the independent desktop and Android artifacts without waiting
+    # for the hours-long Linux codec build.
     if: ${{ !cancelled() && needs.build.result == 'success' && needs.android.result == 'success' }}
     # Pinned: ubuntu-latest moves to a new release from 19 October 2026.
     runs-on: ubuntu-24.04
