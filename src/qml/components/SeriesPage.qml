@@ -15,6 +15,11 @@ Item {
     property bool descending: true
     property string filter: ""
     property bool selecting: false
+    // Chapters, Reviews or Discussion.
+    property string tab: "chapters"
+    // Chapters are listed ten at a time.
+    readonly property int perPage: 10
+    property int pageIndex: 0
     // A comic or book file on this device: nothing to download or open online.
     readonly property bool local: String(url).startsWith("file:")
     property var selection: ({})
@@ -36,6 +41,9 @@ Item {
     readonly property var downloads: { Downloads.revision; return Downloads.states(seriesId) }
     readonly property bool saved: { Library.revision; return Library.isSaved(seriesId) }
     readonly property string coverReferer: media === "comic" ? Comics.imageReferer(url) : ""
+    // Comick's catalogue id when the comic was opened from the catalogue; it
+    // ties the series to its comments, reviews and tracking.
+    readonly property string catalogId: (series.extra && series.extra.hid) || summary.hid || ""
 
     readonly property var resumeInfo: {
         Library.revision
@@ -64,6 +72,20 @@ Item {
         }
         return descending ? out.reverse() : out
     }
+    readonly property int pageCount: Math.max(1, Math.ceil(rows.length / perPage))
+    readonly property var pageRows: rows.slice(pageIndex * perPage, (pageIndex + 1) * perPage)
+    // Opens on the page of the chapter you are on.
+    function showCurrentPage() {
+        if (!rows || !resumeInfo) return
+        // Nothing read yet: the first page.
+        const last = Library.lastProgress(seriesId)
+        const at = last && last.unitKey ? rows.findIndex(r => r.index === resumeInfo.index) : -1
+        pageIndex = filter.trim() || at < 0 ? 0 : Math.floor(at / perPage)
+    }
+    onFilterChanged: showCurrentPage()
+    onDescendingChanged: showCurrentPage()
+    onChaptersChanged: showCurrentPage()
+    onPageIndexChanged: if (list.contentY - list.originY > (list.headerItem ? list.headerItem.height : 0)) list.positionViewAtBeginning()
 
     function openAt(index) {
         if (index < 0 || index >= chapters.length) return
@@ -121,7 +143,7 @@ Item {
     ListView {
         id: list
         anchors.fill: parent
-        model: page.rows
+        model: page.tab === "chapters" ? page.pageRows : []
         clip: true
         boundsBehavior: Flickable.StopAtBounds
         maximumFlickVelocity: 5000
@@ -178,11 +200,51 @@ Item {
                 }
             }
 
+            Item {
+                width: list.width
+                height: 60
+                visible: !page.local
+                Segmented {
+                    x: Theme.gutter
+                    anchors.verticalCenter: parent.verticalCenter
+                    options: [{ value: "chapters", label: qsTr("Chapters") },
+                              { value: "reviews", label: qsTr("Reviews") },
+                              { value: "discussion", label: qsTr("Discussion") }]
+                    value: page.tab
+                    onPicked: (v) => page.tab = v
+                }
+            }
+
+            Loader {
+                x: Theme.gutter
+                width: list.width - 2 * Theme.gutter
+                active: page.tab === "reviews"
+                visible: active
+                sourceComponent: Reviews {
+                    media: page.media
+                    title: page.series.title || ""
+                    comickHid: page.catalogId
+                    url: page.url
+                }
+            }
+            Loader {
+                x: Theme.gutter
+                width: list.width - 2 * Theme.gutter
+                active: page.tab === "discussion"
+                visible: active
+                sourceComponent: Discussion {
+                    media: page.media
+                    title: page.series.title || ""
+                    comickHid: page.catalogId
+                    url: page.url
+                }
+            }
+
             // Toolbar
             Item {
                 width: list.width
                 height: 56
-                visible: page.chapters.length > 0 || (page.task && page.task.loading)
+                visible: page.tab === "chapters" && (page.chapters.length > 0 || (page.task && page.task.loading))
                 Rectangle {
                     x: Theme.gutter
                     width: parent.width - 2 * Theme.gutter
@@ -273,11 +335,26 @@ Item {
                 }
             }
 
+            // On phones the chapter search gets its own row.
+            Item {
+                visible: Theme.compact && page.tab === "chapters" && page.chapters.length > 10
+                width: list.width
+                height: visible ? 50 : 0
+                SearchField {
+                    x: Theme.gutter
+                    width: parent.width - 2 * Theme.gutter
+                    implicitHeight: 40
+                    placeholderText: qsTr("Find chapter")
+                    onTextChanged: page.filter = text
+                }
+            }
+
             StateView {
                 width: list.width
                 height: visible ? 220 : 0
-                task: page.task
-                empty: page.task && page.task.ok && page.chapters.length === 0
+                // Only on the chapters tab (StateView shows itself when needed).
+                task: page.tab === "chapters" ? page.task : null
+                empty: page.tab === "chapters" && page.task && page.task.ok && page.chapters.length === 0
                 emptyTitle: qsTr("No chapters available")
                 emptyText: qsTr("This source has not published readable chapters for this title.")
                 onRetry: page.task = page.load()
@@ -318,6 +395,68 @@ Item {
             onToggleRead: Library.markUnits(page.series, [modelData.unit], !(progress && progress.completed))
             onRequestDownload: page.download([modelData.unit])
             onRemoveDownload: Downloads.removeUnit(page.seriesId, modelData.unit.key)
+        }
+
+        footer: Item {
+            width: list.width
+            height: pager.visible ? 64 : 0
+            Row {
+                id: pager
+                visible: page.tab === "chapters" && page.pageCount > 1
+                anchors.centerIn: parent
+                spacing: 4
+                IconButton {
+                    iconName: "chevron-left"
+                    enabled: page.pageIndex > 0
+                    opacity: enabled ? 1 : 0.35
+                    tip: qsTr("Previous page")
+                    onClicked: page.pageIndex--
+                }
+                Repeater {
+                    // The first and last pages and those around the current one.
+                    model: {
+                        const n = page.pageCount, p = page.pageIndex
+                        const set = new Set([0, n - 1, p - 1, p, p + 1])
+                        if (!Theme.compact) { set.add(p - 2); set.add(p + 2) }
+                        const pages = [...set].filter(i => i >= 0 && i < n).sort((a, b) => a - b)
+                        const out = []
+                        for (let i = 0; i < pages.length; ++i) {
+                            if (i > 0 && pages[i] - pages[i - 1] > 1) out.push(-1)
+                            out.push(pages[i])
+                        }
+                        return out
+                    }
+                    Rectangle {
+                        required property int modelData
+                        width: modelData < 0 ? 20 : Math.max(34, label.implicitWidth + 16)
+                        height: 34
+                        radius: 17
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: modelData === page.pageIndex ? Theme.accent : pageHover.hovered ? Theme.surface2 : "transparent"
+                        Text {
+                            id: label
+                            anchors.centerIn: parent
+                            text: parent.modelData < 0 ? "…" : parent.modelData + 1
+                            color: parent.modelData === page.pageIndex ? Theme.accentInk : Theme.textMuted
+                            font.family: Theme.fontSans
+                            font.pixelSize: Theme.textSm
+                            font.features: { "tnum": 1 }
+                        }
+                        HoverHandler { id: pageHover; enabled: parent.modelData >= 0 }
+                        TapHandler {
+                            enabled: parent.modelData >= 0
+                            onTapped: page.pageIndex = parent.modelData
+                        }
+                    }
+                }
+                IconButton {
+                    iconName: "chevron-right"
+                    enabled: page.pageIndex < page.pageCount - 1
+                    opacity: enabled ? 1 : 0.35
+                    tip: qsTr("Next page")
+                    onClicked: page.pageIndex++
+                }
+            }
         }
 
         add: Transition {

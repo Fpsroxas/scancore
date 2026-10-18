@@ -164,7 +164,7 @@ Rectangle {
         onTriggered: {
             // Stay up while the pointer rests on the controls, a popup is
             // open, or there are no pages yet (loading, or an error to act on).
-            if (settingsPopup.opened || chapterPopup.opened || scrubber.pressed || topHover.hovered || bottomHover.hovered
+            if (settingsPopup.opened || chapterPopup.opened || comments.opened || topHover.hovered
                 || reader.panels.length === 0)
                 restart()
             else
@@ -669,19 +669,48 @@ Rectangle {
         onMoved: reader.showControls()
     }
 
-    // Thin progress rail on the right edge.
-    Rectangle {
+    // The page progress bar: one thin, flat segment per page flush with the
+    // left edge, as on scancore.onl: read pages dark, unread grey, the page
+    // you are on white. Tap one to go
+    // to that page.
+    function jumpTo(i) {
+        if (i < 0 || i >= reader.panels.length) return
+        if (reader.mode === "strip") strip.positionViewAtIndex(i, ListView.Beginning)
+        else pageView.page = pageView.views[pageView.viewOf(i)][0]
+    }
+    Item {
+        id: rail
+        // Above the controls' shading, so it reads the same with them shown.
+        z: 50
         visible: App.settings.readerProgressBar !== false && reader.panels.length > 0
-        anchors.right: parent.right
+        anchors.left: parent.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        width: 3
-        color: Qt.rgba(1, 1, 1, 0.06)
-        Rectangle {
-            width: parent.width
-            height: parent.height * (reader.finished ? 1 : (reader.currentPanel + 1) / Math.max(1, reader.panels.length))
-            color: Qt.rgba(1, 1, 1, 0.5)
-            Behavior on height { NumberAnimation { duration: Motion.normal; easing.type: Easing.OutCubic } }
+        anchors.topMargin: reader.insetTop
+        // Wider than what it paints, so the segments are easy to hit.
+        width: 12
+        readonly property int count: reader.panels.length
+        readonly property real gap: count > 0 && (height - (count - 1)) / count >= 3 ? 1 : 0
+        readonly property real segment: count > 0 ? (height - (count - 1) * gap) / count : 0
+        Repeater {
+            model: rail.count
+            Rectangle {
+                required property int index
+                // Whole pixels, so the 1 px gaps stay visible.
+                readonly property int startY: Math.round(index * (rail.segment + rail.gap))
+                readonly property int endY: Math.round((index + 1) * (rail.segment + rail.gap))
+                y: startY
+                width: 3
+                height: Math.max(1, endY - startY - rail.gap)
+                color: index === reader.currentPanel ? "#ffffff"
+                     : index < reader.currentPanel || reader.finished ? "#18181b" : "#71717a"
+                Behavior on color { ColorAnimation { duration: Motion.fast } }
+            }
+        }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: (mouse) => reader.jumpTo(Math.min(rail.count - 1, Math.floor(mouse.y / (rail.segment + rail.gap))))
         }
     }
 
@@ -736,7 +765,9 @@ Rectangle {
                     elide: Text.ElideRight
                 }
                 Text {
-                    text: (reader.unit.title || "") + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr("  ·  Downloaded") : "")
+                    text: (reader.unit.title || "")
+                          + (reader.panels.length ? "  ·  " + (reader.currentPanel + 1) + " / " + reader.panels.length : "")
+                          + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr("  ·  Downloaded") : "")
                     color: "#b4b4bb"
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -751,6 +782,23 @@ Rectangle {
             anchors.rightMargin: 18
             y: 16 + reader.insetTop
             spacing: 4
+            // Pages are on the progress bar at the left edge; chapters here.
+            IconButton {
+                iconName: "skip-back"
+                iconColor: "white"
+                enabled: reader.hasPrev
+                opacity: enabled ? 1 : 0.4
+                tip: qsTr("Previous chapter") + reader.keyHint("reader.prev")
+                onClicked: reader.load(reader.index - 1)
+            }
+            IconButton {
+                iconName: "skip-forward"
+                iconColor: "white"
+                enabled: reader.hasNext
+                opacity: enabled ? 1 : 0.4
+                tip: qsTr("Next chapter") + reader.keyHint("reader.next")
+                onClicked: reader.load(reader.index + 1)
+            }
             IconButton {
                 iconName: "list"
                 iconColor: "white"
@@ -764,6 +812,13 @@ Rectangle {
                 onClicked: reader.setOpt("readerMode", reader.mode === "strip" ? "paged" : "strip")
             }
             IconButton {
+                visible: !String(reader.series.sourceUrl || "").startsWith("file:")
+                iconName: "message-circle"
+                iconColor: "white"
+                tip: qsTr("Comments")
+                onClicked: comments.open()
+            }
+            IconButton {
                 iconName: "sliders-horizontal"
                 iconColor: "white"
                 tip: qsTr("Reader settings")
@@ -774,88 +829,6 @@ Rectangle {
                 iconColor: "white"
                 tip: qsTr("Full screen") + reader.keyHint("reader.fullscreen")
                 onClicked: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
-            }
-        }
-    }
-
-    // ------------------------------------------------------------ bottom bar
-
-    Item {
-        id: bottomBar
-        width: parent.width
-        height: 84 + reader.insetBottom
-        y: reader.controlsShown ? parent.height - height : parent.height
-        opacity: reader.controlsShown ? 1 : 0
-        Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
-        Behavior on opacity { NumberAnimation { duration: Motion.normal } }
-        HoverHandler { id: bottomHover; enabled: App.platform !== "android" }
-
-        Rectangle {
-            anchors.fill: parent
-            gradient: Gradient {
-                GradientStop { position: 0; color: Qt.rgba(0, 0, 0, 0) }
-                GradientStop { position: 1; color: Qt.rgba(0, 0, 0, 0.85) }
-            }
-        }
-        Rectangle {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 18 + reader.insetBottom
-            width: Math.min(parent.width - 40, 720)
-            height: 48
-            radius: 24
-            color: Qt.rgba(0.08, 0.08, 0.09, 0.92)
-            border.width: 1
-            border.color: Qt.rgba(1, 1, 1, 0.08)
-
-            IconButton {
-                id: prevButton
-                x: 8
-                anchors.verticalCenter: parent.verticalCenter
-                iconName: "skip-back"
-                iconColor: "white"
-                enabled: reader.hasPrev
-                tip: qsTr("Previous chapter") + reader.keyHint("reader.prev")
-                onClicked: reader.load(reader.index - 1)
-            }
-            Text {
-                id: counter
-                anchors.left: prevButton.right
-                anchors.leftMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                width: 64
-                text: reader.panels.length ? (reader.currentPanel + 1) + " / " + reader.panels.length : ""
-                color: "#d4d4d8"
-                font.family: Theme.fontSans
-                font.pixelSize: Theme.textSm
-                font.features: { "tnum": 1 }
-            }
-            ScSlider {
-                id: scrubber
-                anchors.left: counter.right
-                anchors.right: nextButton.left
-                anchors.rightMargin: 10
-                anchors.verticalCenter: parent.verticalCenter
-                from: 0
-                to: Math.max(1, reader.panels.length - 1)
-                stepSize: 1
-                snapMode: Slider.SnapAlways
-                value: reader.currentPanel
-                onMoved: {
-                    if (reader.mode === "strip") strip.positionViewAtIndex(value, ListView.Beginning)
-                    else pageView.page = pageView.views[pageView.viewOf(value)][0]
-                }
-            }
-            IconButton {
-                id: nextButton
-                anchors.right: parent.right
-                anchors.rightMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                iconName: "skip-forward"
-                iconColor: "white"
-                enabled: reader.hasNext
-                tip: qsTr("Next chapter") + reader.keyHint("reader.next")
-                onClicked: reader.load(reader.index + 1)
             }
         }
     }
@@ -902,6 +875,16 @@ Rectangle {
                 }
             }
         }
+    }
+
+    CommentsPanel {
+        id: comments
+        media: "comic"
+        title: (reader.series.extra && reader.series.extra.catalogTitle) || reader.series.title || ""
+        comickHid: (reader.series.extra && reader.series.extra.hid) || reader.series.hid || ""
+        url: reader.series.sourceUrl || ""
+        unit: String(reader.unit.number || "")
+        label: qsTr("Chapter ") + (reader.unit.number || "")
     }
 
     Popup {
@@ -973,7 +956,7 @@ Rectangle {
                     checked: App.settings.readerProgressBar !== false
                     onToggled: App.setSetting("readerProgressBar", checked)
                 }
-                Text { anchors.verticalCenter: parent.verticalCenter; text: "Progress rail"; color: "#d4d4d8"; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                Text { anchors.verticalCenter: parent.verticalCenter; text: qsTr("Page progress bar"); color: "#d4d4d8"; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
             }
             Rectangle { width: parent.width; height: 1; color: "#2a2a30" }
             Row {

@@ -386,6 +386,13 @@ Rectangle {
             IconButton { iconName: "chevron-left"; iconColor: reader.look.text; enabled: reader.hasPrev; tip: qsTr("Previous chapter") + reader.keyHint("reader.prev"); onClicked: reader.load(reader.index - 1) }
             IconButton { iconName: "chevron-right"; iconColor: reader.look.text; enabled: reader.hasNext; tip: qsTr("Next chapter") + reader.keyHint("reader.next"); onClicked: reader.load(reader.index + 1) }
             IconButton { iconName: "list"; iconColor: reader.look.text; tip: qsTr("Chapters"); onClicked: chapterPopup.open() }
+            IconButton {
+                visible: !String(reader.series.sourceUrl || "").startsWith("file:")
+                iconName: "message-circle"
+                iconColor: reader.look.text
+                tip: qsTr("Comments")
+                onClicked: comments.open()
+            }
             IconButton { iconName: "type"; iconColor: reader.look.text; tip: qsTr("Text settings"); onClicked: typePopup.open() }
             IconButton {
                 iconName: Window.window && Window.window.visibility === Window.FullScreen ? "minimize" : "maximize"
@@ -394,6 +401,15 @@ Rectangle {
                 onClicked: reader.toggleFullScreen()
             }
         }
+    }
+
+    CommentsPanel {
+        id: comments
+        media: "novel"
+        title: reader.series.title || ""
+        url: reader.series.sourceUrl || ""
+        unit: String(reader.unit.number || "")
+        label: qsTr("Chapter ") + (reader.unit.number || "")
     }
 
     Popup {

@@ -187,6 +187,45 @@ Task *Comics::search(const QString &query, const QString &only) {
     });
 }
 
+namespace {
+
+// One entry of Comick's catalogue, as the comic pages and "Read from" use it.
+QVariantMap catalogItem(const QJsonObject &c) {
+    static const QHash<QString, QString> kinds{{"kr", "Manhwa"}, {"cn", "Manhua"}, {"jp", "Manga"}};
+    static const QStringList statuses{QString(), QStringLiteral("Ongoing"), QStringLiteral("Completed"), QStringLiteral("Cancelled"),
+                                      QStringLiteral("Hiatus")};
+    QStringList titles{c.value("title").toString()};
+    for (const auto &t : c.value("md_titles").toArray())
+        titles.append(t.toObject().value("title").toString());
+    titles.removeAll(QString());
+    titles.removeDuplicates();
+    const auto covers = c.value("md_covers").toArray();
+    auto key = covers.isEmpty() ? QString() : covers.first().toObject().value("b2key").toString();
+    // The medium size ("-m", always JPEG); the original can be half a megabyte.
+    if (const auto dot = key.lastIndexOf(QLatin1Char('.')); dot > 0)
+        key = key.left(dot) + QStringLiteral("-m.jpg");
+    const auto lastChapter = c.value("last_chapter");
+    return QVariantMap{{"catalog", QStringLiteral("comick")},
+                       {"hid", c.value("hid").toString()},
+                       {"slug", c.value("slug").toString()},
+                       {"media", QStringLiteral("comic")},
+                       {"title", titles.value(0)},
+                       {"titles", titles},
+                       {"cover", key.isEmpty() ? QString() : QStringLiteral("https://meo.comick.pictures/") + key},
+                       {"type", kinds.value(c.value("country").toString())},
+                       {"status", statuses.value(c.value("status").toInt())},
+                       {"year", c.value("year").toInt()},
+                       {"lastChapter", lastChapter.isDouble() ? QString::number(lastChapter.toDouble()) : QString()},
+                       {"rating", c.value("bayesian_rating").toString()},
+                       {"description", c.value("desc").toString()},
+                       {"contentRating", c.value("content_rating").toString()},
+                       {"genres", QVariantList()}};
+}
+
+const Headers kComickHeaders{{"Accept", "application/json"}, {"Referer", "https://comick.dev/"}};
+
+} // namespace
+
 Task *Comics::catalog(const QString &query) {
     const auto q = query.simplified();
     const auto cacheKey = QStringLiteral("comick|") + q.toLower();
@@ -199,49 +238,58 @@ Task *Comics::catalog(const QString &query) {
     return Task::run([q, cacheKey]() -> QVariant {
         QUrl url(QStringLiteral("https://api.comick.dev/v1.0/search/"));
         url.setQuery(QUrlQuery{{"q", q.left(100)}, {"page", "1"}, {"limit", "40"}, {"showall", "false"}});
-        const auto response = Http::get(url, {{"Accept", "application/json"}, {"Referer", "https://comick.dev/"}});
+        const auto response = Http::get(url, kComickHeaders);
         if (!response.ok())
             throw Error(QStringLiteral("Comick's catalogue is unavailable right now (%1).").arg(response.status), response.status);
-        static const QHash<QString, QString> kinds{{"kr", "Manhwa"}, {"cn", "Manhua"}, {"jp", "Manga"}};
-        static const QStringList statuses{QString(), QStringLiteral("Ongoing"), QStringLiteral("Completed"), QStringLiteral("Cancelled"),
-                                          QStringLiteral("Hiatus")};
         QVariantList comics;
         for (const auto &value : response.json().array()) {
             const auto c = value.toObject();
-            if (c.value("media_type").toString() == QLatin1String("anime"))
-                continue;
-            QStringList titles{c.value("title").toString()};
-            for (const auto &t : c.value("md_titles").toArray())
-                titles.append(t.toObject().value("title").toString());
-            titles.removeAll(QString());
-            titles.removeDuplicates();
-            const auto covers = c.value("md_covers").toArray();
-            auto key = covers.isEmpty() ? QString() : covers.first().toObject().value("b2key").toString();
-            // The medium size ("-m"); the original can be half a megabyte.
-            if (const auto dot = key.lastIndexOf(QLatin1Char('.')); dot > 0)
-                key.insert(dot, QStringLiteral("-m"));
-            const auto lastChapter = c.value("last_chapter");
-            comics.append(QVariantMap{
-                {"catalog", QStringLiteral("comick")},
-                {"hid", c.value("hid").toString()},
-                {"slug", c.value("slug").toString()},
-                {"media", QStringLiteral("comic")},
-                {"title", titles.value(0)},
-                {"titles", titles},
-                {"cover", key.isEmpty() ? QString() : QStringLiteral("https://meo.comick.pictures/") + key},
-                {"type", kinds.value(c.value("country").toString(), QStringLiteral("Comic"))},
-                {"status", statuses.value(c.value("status").toInt())},
-                {"year", c.value("year").toInt()},
-                {"lastChapter", lastChapter.isDouble() ? QString::number(lastChapter.toDouble()) : QString()},
-                {"rating", c.value("bayesian_rating").toString()},
-                {"description", c.value("desc").toString()},
-                {"genres", QVariantList()}});
+            if (c.value("media_type").toString() != QLatin1String("anime"))
+                comics.append(catalogItem(c));
         }
         QVariantMap result{{"comics", comics}, {"providers", QVariantList()}};
         QMutexLocker lock(&g_searchMutex);
         g_searches.insert(cacheKey, new QVariantMap(result));
         g_searchTimes.insert(cacheKey, QDateTime::currentSecsSinceEpoch());
         return result;
+    });
+}
+
+Task *Comics::catalogFeeds(bool mature) {
+    return Task::run([mature]() -> QVariant {
+        const auto cacheKey = QStringLiteral("comick-top:") + (mature ? "all" : "sfw");
+        if (auto cached = Database::cacheGet(cacheKey))
+            return QJsonDocument::fromJson(*cached).toVariant();
+        const auto response = Http::get(QUrl(QStringLiteral("https://api.comick.dev/top?accept_mature_content=%1")
+                                                 .arg(mature ? "true" : "false")),
+                                        kComickHeaders);
+        if (!response.ok())
+            throw Error(QStringLiteral("Comick's catalogue is unavailable right now (%1).").arg(response.status), response.status);
+        const auto top = response.json().object();
+        const auto list = [mature](const QJsonValue &value) {
+            // Some feeds are by period ("7", "30", "90" days): the week's.
+            auto array = value.toArray();
+            if (value.isObject()) {
+                const auto byDays = value.toObject();
+                array = (byDays.contains("7") ? byDays.value("7") : byDays.value("30")).toArray();
+            }
+            QVariantList out;
+            for (const auto &item : array) {
+                const auto c = item.toObject();
+                if (!mature && c.value("content_rating").toString() == QLatin1String("erotica"))
+                    continue;
+                out.append(catalogItem(c));
+                if (out.size() >= 24)
+                    break;
+            }
+            return out;
+        };
+        const QVariantMap feeds{{"trending", list(top.value("trending"))},
+                                {"popular", list(top.value("rank"))},
+                                {"newest", list(top.value("news"))},
+                                {"completed", list(top.value("completions"))}};
+        Database::cachePut(cacheKey, QJsonDocument::fromVariant(feeds).toJson(QJsonDocument::Compact), 1800);
+        return feeds;
     });
 }
 
@@ -252,10 +300,21 @@ Task *Comics::resolve(const QVariantMap &item) {
         if (!hid.isEmpty())
             if (auto cached = Database::cacheGet(cacheKey))
                 return QJsonDocument::fromJson(*cached).toVariant();
+        // Feed entries carry one title; the catalogue knows every name.
+        auto known = item.value("titles").toStringList();
+        if (known.size() < 2 && !hid.isEmpty()) {
+            const auto details = Http::get(QUrl(QStringLiteral("https://api.comick.dev/v1.0/comic/%1/").arg(hid)), kComickHeaders);
+            if (details.ok()) {
+                const auto comic = details.json().object().value("comic").toObject();
+                known.append(comic.value("title").toString());
+                for (const auto &t : comic.value("md_titles").toArray())
+                    known.append(t.toObject().value("title").toString());
+            }
+        }
         // Every name it goes by, as sources write titles in Latin letters.
         QStringList names;
         QSet<QString> wanted;
-        for (const auto &title : item.value("titles").toStringList() + QStringList{item.value("title").toString()}) {
+        for (const auto &title : QStringList{item.value("title").toString()} + known) {
             const auto n = normalized(title);
             if (n.isEmpty() || wanted.contains(n))
                 continue;

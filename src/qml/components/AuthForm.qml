@@ -13,10 +13,28 @@ Column {
     readonly property var checks: Account.passwordChecks(password.text)
     readonly property bool passwordOk: checks.every(c => c.passed)
     readonly property bool emailOk: /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.text.trim())
+    // The site's sign-up rules (an access code on scancore.onl, or closed).
+    property var signupRules: ({ open: true, accessCode: false, codeLength: 6, help: "" })
+    property var rulesTask: null
+    readonly property bool needsCode: mode === "signup" && signupRules.accessCode === true
+    readonly property bool signupClosed: mode === "signup" && signupRules.open === false
     readonly property bool canSubmit: !busy && emailOk && (mode === "signin"
         ? password.text.length > 0
-        : passwordOk && username.text.trim().length >= 3 && !Account.usernameProblem(username.text))
+        : !signupClosed && passwordOk && username.text.trim().length >= 3 && !Account.usernameProblem(username.text)
+          && (!needsCode || code.complete))
     signal done()
+
+    function loadRules() {
+        rulesTask = Account.signupOptions()
+        rulesTask.finished.connect((rules) => form.signupRules = rules)
+    }
+    onModeChanged: if (mode === "signup") loadRules()
+    Component.onCompleted: if (mode === "signup") loadRules()
+    Connections {
+        target: Account
+        // The site can change in Settings → Sync while the form is open.
+        function onChanged() { if (form.mode === "signup" && !Account.signedIn) form.loadRules() }
+    }
 
     spacing: 16
     width: 380
@@ -25,7 +43,7 @@ Column {
         if (!canSubmit) return
         error = ""
         task = mode === "signin" ? Account.signIn(email.text, password.text)
-                                 : Account.signUp(email.text, username.text, password.text)
+                                 : Account.signUp(email.text, username.text, password.text, needsCode ? code.text : "")
         task.finished.connect(() => {
             password.text = ""
             form.done()
@@ -67,7 +85,7 @@ Column {
         label: qsTr("Password")
         placeholder: form.mode === "signin" ? qsTr("Your password") : qsTr("Choose a strong password")
         echoMode: TextInput.Password
-        onAccepted: form.submit()
+        onAccepted: form.needsCode && !code.complete ? code.focusInput() : form.submit()
     }
 
     // Live password requirements while creating an account.
@@ -104,6 +122,46 @@ Column {
                 }
             }
         }
+    }
+
+    Column {
+        visible: form.needsCode
+        width: parent.width
+        spacing: 6
+        Text {
+            text: qsTr("Access code")
+            color: Theme.textMuted
+            font.family: Theme.fontSans
+            font.pixelSize: Theme.textSm
+            font.weight: Font.Medium
+        }
+        CodeBoxes {
+            id: code
+            length: form.signupRules.codeLength || 6
+            enabled: !form.busy
+            onAccepted: form.submit()
+        }
+        Text {
+            width: parent.width
+            // scancore.onl's usual line is shown in the app's language.
+            readonly property string standard: "Contact logesh@mediumdev.com for access"
+            text: form.signupRules.help && form.signupRules.help !== standard ? form.signupRules.help
+                                                                              : qsTr("Contact logesh@mediumdev.com for access")
+            color: Theme.textFaint
+            font.family: Theme.fontSans
+            font.pixelSize: Theme.textXs + 1
+            elide: Text.ElideRight
+        }
+    }
+
+    Text {
+        visible: form.signupClosed
+        width: parent.width
+        wrapMode: Text.Wrap
+        text: qsTr("This server is not taking new accounts.")
+        color: Theme.textMuted
+        font.family: Theme.fontSans
+        font.pixelSize: Theme.textSm
     }
 
     Rectangle {

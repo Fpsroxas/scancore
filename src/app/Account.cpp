@@ -7,6 +7,8 @@
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
 
+#include <algorithm>
+
 #include <QDateTime>
 #include <QHash>
 #include <QSet>
@@ -532,9 +534,62 @@ Task *Account::signIn(const QString &email, const QString &password) {
     return authenticate(QStringLiteral("/api/auth/login"), {{"email", email.trimmed()}, {"password", password}});
 }
 
-Task *Account::signUp(const QString &email, const QString &username, const QString &password) {
-    return authenticate(QStringLiteral("/api/auth/signup"),
-                        {{"email", email.trimmed()}, {"username", username.trimmed()}, {"password", password}});
+Task *Account::signUp(const QString &email, const QString &username, const QString &password, const QString &accessCode) {
+    QJsonObject body{{"email", email.trimmed()}, {"username", username.trimmed()}, {"password", password}};
+    if (!accessCode.trimmed().isEmpty())
+        body.insert(QStringLiteral("accessCode"), accessCode.trimmed().toUpper());
+    return authenticate(QStringLiteral("/api/auth/signup"), body);
+}
+
+Task *Account::signupOptions() {
+    return Task::run([]() -> QVariant {
+        QVariantMap options{{"open", true}, {"accessCode", false}, {"codeLength", 6}, {"help", QString()}};
+        const auto response = Http::get(QUrl(siteUrl() + QStringLiteral("/api/capabilities")), apiHeaders(), 10000);
+        if (!response.ok())
+            return options;
+        // scancore.onl sends {open, accessCode, accessCodeLength, help}; a
+        // SCANCORE sync server sends true or false.
+        const auto signup = response.json().object().value("signup");
+        if (signup.isBool())
+            options.insert(QStringLiteral("open"), signup.toBool());
+        else if (signup.isObject()) {
+            const auto rules = signup.toObject();
+            options.insert(QStringLiteral("open"), rules.value("open").toBool(true));
+            options.insert(QStringLiteral("accessCode"), rules.value("accessCode").toBool());
+            options.insert(QStringLiteral("codeLength"), std::clamp(rules.value("accessCodeLength").toInt(6), 4, 12));
+            options.insert(QStringLiteral("help"), rules.value("help").toString());
+        }
+        return options;
+    });
+}
+
+Task *Account::request(const QString &method, const QString &path, const QVariantMap &body) {
+    return Task::run([method = method.toUpper().toUtf8(), path, body]() -> QVariant {
+        if (!path.startsWith(QLatin1String("/api/")))
+            throw Error(QStringLiteral("Not a site address."));
+        Request request;
+        request.url = QUrl(siteUrl() + path);
+        request.method = method;
+        request.headers = apiHeaders();
+        request.timeoutMs = 20000;
+        if (method != "GET" && method != "DELETE")
+            request.body = QJsonDocument(QJsonObject::fromVariantMap(body)).toJson(QJsonDocument::Compact);
+        const auto response = Http::send(request);
+        const auto json = response.json().object();
+        if (!response.ok()) {
+            auto message = json.value("error").toString();
+            if (message.isEmpty())
+                message = json.value("problem").toObject().value("message").toString();
+            if (response.status == 401)
+                message = QStringLiteral("Sign in to %1 to do that.").arg(siteName());
+            if (response.status == 429)
+                message = QStringLiteral("Too many attempts. Wait a few minutes and try again.");
+            throw Error(message.isEmpty() ? QStringLiteral("%1 responded with HTTP %2.").arg(siteName()).arg(response.status)
+                                          : message,
+                        response.status);
+        }
+        return json.toVariantMap();
+    });
 }
 
 QVariantList Account::passwordChecks(const QString &password) const {

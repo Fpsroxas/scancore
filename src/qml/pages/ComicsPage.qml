@@ -11,6 +11,9 @@ Item {
     property int latestLimit: 36
     property var latestTask: Comics.latest(latestLimit)
     property var historyTask: Library.history("comic", 16)
+    // Comick's ranked shelves, when search goes through its catalogue.
+    property var feedsTask: useCatalog ? Comics.catalogFeeds(App.settings.showNsfwSources === true) : null
+    readonly property var feeds: feedsTask && feedsTask.ok ? feedsTask.result : ({})
     property var history: []
     Connections {
         target: page.historyTask
@@ -222,6 +225,26 @@ Item {
                     subtitleFor: (it) => it.unitTitle || ""
                     progressFor: (it) => it.completed ? 1 : (it.percent || 0)
                     onOpened: (it, cover) => Router.resume(it)
+                }
+
+                Repeater {
+                    model: page.useCatalog ? [
+                        { key: "trending", title: qsTr("Trending this week") },
+                        { key: "popular", title: qsTr("Most popular") },
+                        { key: "newest", title: qsTr("New in the catalogue") },
+                        { key: "completed", title: qsTr("Recently completed") }
+                    ] : []
+                    Shelf {
+                        required property var modelData
+                        width: parent.width
+                        title: modelData.title
+                        items: page.feeds[modelData.key] || []
+                        loading: page.feedsTask ? page.feedsTask.loading : false
+                        error: page.feedsTask && !page.feedsTask.loading ? page.feedsTask.error : ""
+                        onRetry: page.feedsTask = Comics.catalogFeeds(App.settings.showNsfwSources === true)
+                        subtitleFor: (it) => [it.type, it.lastChapter ? qsTr("Ch. ") + it.lastChapter : ""].filter(s => s).join(" · ")
+                        onOpened: (it, cover) => readFrom.start(it)
+                    }
                 }
 
                 Column {

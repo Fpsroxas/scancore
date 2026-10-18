@@ -371,7 +371,7 @@
             <translation>Choisissez un dossier que Syncthing, Dropbox, OneDrive, iCloud Drive ou Nextcloud garde identique sur vos ordinateurs. </translation>
         </message>
         <message>
-            <source>SCANCORE keeps a small file for each device in it and reads the others'.</source>
+            <source>SCANCORE keeps a small file for each device in it and reads the others&apos;.</source>
             <translation>SCANCORE y garde un petit fichier par appareil et lit ceux des autres.</translation>
         </message>
         <message>
@@ -692,6 +692,14 @@
             <translation>Épisodes</translation>
         </message>
         <message>
+            <source>Reviews</source>
+            <translation>Avis</translation>
+        </message>
+        <message>
+            <source>Discussion</source>
+            <translation>Discussion</translation>
+        </message>
+        <message>
             <source>Mark all as watched</source>
             <translation>Tout marquer comme vu</translation>
         </message>
@@ -885,7 +893,7 @@
             <translation>Passer les génériques de fin automatiquement</translation>
         </message>
         <message>
-            <source>Goes straight to the next episode's countdown when the credits start.</source>
+            <source>Goes straight to the next episode&apos;s countdown when the credits start.</source>
             <translation>Passe directement au compte à rebours de l’épisode suivant quand le générique commence.</translation>
         </message>
     </context>
@@ -932,6 +940,18 @@
             <translation>Choisissez un mot de passe solide</translation>
         </message>
         <message>
+            <source>Access code</source>
+            <translation>Code d’accès</translation>
+        </message>
+        <message>
+            <source>Contact logesh@mediumdev.com for access</source>
+            <translation>Écrivez à logesh@mediumdev.com pour obtenir un accès</translation>
+        </message>
+        <message>
+            <source>This server is not taking new accounts.</source>
+            <translation>Ce serveur n’accepte pas de nouveaux comptes.</translation>
+        </message>
+        <message>
             <source>Your account lives on %1.</source>
             <translation>Votre compte est sur %1.</translation>
         </message>
@@ -949,6 +969,13 @@
         <message>
             <source>Back to top</source>
             <translation>Haut de page</translation>
+        </message>
+    </context>
+    <context>
+        <name>CodeBoxes</name>
+        <message>
+            <source>Access code</source>
+            <translation>Code d’accès</translation>
         </message>
     </context>
     <context>
@@ -1009,6 +1036,10 @@
             <translation>Passer en bande verticale</translation>
         </message>
         <message>
+            <source>Comments</source>
+            <translation>Commentaires</translation>
+        </message>
+        <message>
             <source>Reader settings</source>
             <translation>Réglages du lecteur</translation>
         </message>
@@ -1017,12 +1048,20 @@
             <translation>Plein écran</translation>
         </message>
         <message>
+            <source>Page progress bar</source>
+            <translation>Barre de progression des pages</translation>
+        </message>
+        <message>
             <source>Previous chapter</source>
             <translation>Chapitre précédent</translation>
         </message>
         <message>
             <source>Next chapter</source>
             <translation>Chapitre suivant</translation>
+        </message>
+        <message>
+            <source>Chapter </source>
+            <translation>Chapitre </translation>
         </message>
         <message>
             <source>Vertical</source>
@@ -1080,7 +1119,7 @@
             <translation> titres pour «</translation>
         </message>
         <message>
-            <source>” from Comick's catalogue</source>
+            <source>” from Comick&apos;s catalogue</source>
             <translation>» du catalogue Comick</translation>
         </message>
         <message>
@@ -1100,7 +1139,7 @@
             <translation>%1 sont indisponibles</translation>
         </message>
         <message>
-            <source>Pass %1's browser check</source>
+            <source>Pass %1&apos;s browser check</source>
             <translation>Passer la vérification du navigateur de %1</translation>
         </message>
         <message>
@@ -1130,6 +1169,22 @@
         <message>
             <source>Continue reading</source>
             <translation>Continuer la lecture</translation>
+        </message>
+        <message>
+            <source>Trending this week</source>
+            <translation>Tendances de la semaine</translation>
+        </message>
+        <message>
+            <source>Most popular</source>
+            <translation>Les plus populaires</translation>
+        </message>
+        <message>
+            <source>New in the catalogue</source>
+            <translation>Nouveautés du catalogue</translation>
+        </message>
+        <message>
+            <source>Recently completed</source>
+            <translation>Terminés récemment</translation>
         </message>
         <message>
             <source>Latest chapters</source>
@@ -1245,6 +1300,13 @@
         <message>
             <source>Search comics, novels, anime or jump to a page</source>
             <translation>Cherchez des BD, romans, anime ou allez à une page</translation>
+        </message>
+    </context>
+    <context>
+        <name>CommentsPanel</name>
+        <message>
+            <source>Close</source>
+            <translation>Fermer</translation>
         </message>
     </context>
     <context>
@@ -1445,7 +1507,7 @@
             <translation>Connectez Comick ci-dessus pour importer ce que vous y suivez.</translation>
         </message>
         <message>
-            <source>The anime or manga list file from MyAnimeList's export page.</source>
+            <source>The anime or manga list file from MyAnimeList&apos;s export page.</source>
             <translation>Le fichier de liste d’anime ou de manga de la page d’export de MyAnimeList.</translation>
         </message>
         <message>
@@ -1554,6 +1616,101 @@
         <message>
             <source>Add to library</source>
             <translation>Ajouter à la bibliothèque</translation>
+        </message>
+    </context>
+    <context>
+        <name>Discussion</name>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>Connectez-vous pour voter</translation>
+        </message>
+        <message>
+            <source> min ago</source>
+            <translation> min</translation>
+        </message>
+        <message>
+            <source> h ago</source>
+            <translation> h</translation>
+        </message>
+        <message>
+            <source> days ago</source>
+            <translation> j</translation>
+        </message>
+        <message>
+            <source> comment</source>
+            <translation> commentaire</translation>
+        </message>
+        <message>
+            <source> comments</source>
+            <translation> commentaires</translation>
+        </message>
+        <message>
+            <source>Comments</source>
+            <translation>Commentaires</translation>
+        </message>
+        <message>
+            <source>Top</source>
+            <translation>Meilleurs</translation>
+        </message>
+        <message>
+            <source>Newest</source>
+            <translation>Plus récents</translation>
+        </message>
+        <message>
+            <source>Sign in to your account in Settings → Sync to comment.</source>
+            <translation>Connectez-vous à votre compte dans Réglages → Synchronisation pour commenter.</translation>
+        </message>
+        <message>
+            <source>Write a reply</source>
+            <translation>Écrire une réponse</translation>
+        </message>
+        <message>
+            <source>Share your thoughts (no spoilers without a warning)</source>
+            <translation>Partagez votre avis (pas de spoilers sans prévenir)</translation>
+        </message>
+        <message>
+            <source>Reply</source>
+            <translation>Répondre</translation>
+        </message>
+        <message>
+            <source>Post</source>
+            <translation>Publier</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Annuler</translation>
+        </message>
+        <message>
+            <source>Loading comments…</source>
+            <translation>Chargement des commentaires…</translation>
+        </message>
+        <message>
+            <source>This server has no comments. They are on scancore.onl.</source>
+            <translation>Ce serveur n’a pas de commentaires. Ils sont sur scancore.onl.</translation>
+        </message>
+        <message>
+            <source>Comments could not be loaded. </source>
+            <translation>Impossible de charger les commentaires. </translation>
+        </message>
+        <message>
+            <source>No comments yet. Be the first.</source>
+            <translation>Pas encore de commentaires. Soyez le premier.</translation>
+        </message>
+        <message>
+            <source> · edited</source>
+            <translation> · modifié</translation>
+        </message>
+        <message>
+            <source>This comment is hidden.</source>
+            <translation>Ce commentaire est masqué.</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>Vote positif</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>Vote négatif</translation>
         </message>
     </context>
     <context>
@@ -2375,7 +2532,7 @@
             <translation>Fin de </translation>
         </message>
         <message>
-            <source>You're all caught up</source>
+            <source>You&apos;re all caught up</source>
             <translation>Vous êtes à jour</translation>
         </message>
         <message>
@@ -2430,12 +2587,20 @@
             <translation>Chapitres</translation>
         </message>
         <message>
+            <source>Comments</source>
+            <translation>Commentaires</translation>
+        </message>
+        <message>
             <source>Text settings</source>
             <translation>Réglages du texte</translation>
         </message>
         <message>
             <source>Full screen</source>
             <translation>Plein écran</translation>
+        </message>
+        <message>
+            <source>Chapter </source>
+            <translation>Chapitre </translation>
         </message>
         <message>
             <source>Serif</source>
@@ -2485,7 +2650,7 @@
             <translation> résultats pour «</translation>
         </message>
         <message>
-            <source>Pass %1's browser check</source>
+            <source>Pass %1&apos;s browser check</source>
             <translation>Passer la vérification du navigateur de %1</translation>
         </message>
         <message>
@@ -2501,7 +2666,7 @@
             <translation>Choisissez les dossiers contenant vos livres EPUB dans Réglages → Sources.</translation>
         </message>
         <message>
-            <source>Try fewer words, another source, or paste the book's link.</source>
+            <source>Try fewer words, another source, or paste the book&apos;s link.</source>
             <translation>Essayez moins de mots, une autre source, ou collez le lien du livre.</translation>
         </message>
         <message>
@@ -2624,7 +2789,7 @@
             <translation>Facultatif</translation>
         </message>
         <message>
-            <source>You're signed in</source>
+            <source>You&apos;re signed in</source>
             <translation>Vous êtes connecté</translation>
         </message>
         <message>
@@ -2644,7 +2809,7 @@
             <translation>Connectez-vous pour importer votre bibliothèque du site et votre historique de lecture, et les garder synchronisés. Tout fonctionne aussi sans compte.</translation>
         </message>
         <message>
-            <source>You're all set</source>
+            <source>You&apos;re all set</source>
             <translation>Tout est prêt</translation>
         </message>
         <message>
@@ -2713,7 +2878,7 @@
             <translation>Lecteur de BD</translation>
         </message>
         <message>
-            <source>While reading: M switches layout, Ctrl + scroll changes the strip width (or zooms a page), and F goes full screen. Each series can keep its own settings from the reader's settings button.</source>
+            <source>While reading: M switches layout, Ctrl + scroll changes the strip width (or zooms a page), and F goes full screen. Each series can keep its own settings from the reader&apos;s settings button.</source>
             <translation>En lecture : M change la mise en page, Ctrl + molette change la largeur de la bande (ou zoome une page) et F passe en plein écran. Chaque série peut garder ses propres réglages via le bouton de réglages du lecteur.</translation>
         </message>
         <message>
@@ -2880,6 +3045,61 @@
         </message>
     </context>
     <context>
+        <name>Reviews</name>
+        <message>
+            <source>Review saved</source>
+            <translation>Avis enregistré</translation>
+        </message>
+        <message>
+            <source> rating</source>
+            <translation> note</translation>
+        </message>
+        <message>
+            <source> ratings</source>
+            <translation> notes</translation>
+        </message>
+        <message>
+            <source>Your rating</source>
+            <translation>Votre note</translation>
+        </message>
+        <message>
+            <source> star</source>
+            <translation> étoile</translation>
+        </message>
+        <message>
+            <source> stars</source>
+            <translation> étoiles</translation>
+        </message>
+        <message>
+            <source>What did you think? At least 10 characters.</source>
+            <translation>Qu’en avez-vous pensé ? Au moins 10 caractères.</translation>
+        </message>
+        <message>
+            <source>Save review</source>
+            <translation>Enregistrer l’avis</translation>
+        </message>
+        <message>
+            <source>Sign in to your account in Settings → Sync to write a review.</source>
+            <translation>Connectez-vous à votre compte dans Réglages → Synchronisation pour écrire un avis.</translation>
+        </message>
+        <message>
+            <source>Loading reviews…</source>
+            <translation>Chargement des avis…</translation>
+        </message>
+        <message>
+            <source>This server has no reviews. They are on scancore.onl.</source>
+            <translation>Ce serveur n’a pas d’avis. Ils sont sur scancore.onl.</translation>
+        </message>
+        <message>
+            <source>Reviews could not be loaded. </source>
+            <translation>Impossible de charger les avis. </translation>
+        </message>
+        <message>
+            <source>No reviews yet.</source>
+            <translation>Pas encore d’avis.</translation>
+        </message>
+    </context>
+    <context>
         <name>Router</name>
         <message>
             <source>The theme</source>
@@ -2965,6 +3185,18 @@
             <translation>Actualiser</translation>
         </message>
         <message>
+            <source>Chapters</source>
+            <translation>Chapitres</translation>
+        </message>
+        <message>
+            <source>Reviews</source>
+            <translation>Avis</translation>
+        </message>
+        <message>
+            <source>Discussion</source>
+            <translation>Discussion</translation>
+        </message>
+        <message>
             <source>Find chapter</source>
             <translation>Chercher un chapitre</translation>
         </message>
@@ -3011,6 +3243,14 @@
         <message>
             <source>Showing the saved chapter list. </source>
             <translation>Affichage de la liste de chapitres enregistrée. </translation>
+        </message>
+        <message>
+            <source>Previous page</source>
+            <translation>Page précédente</translation>
+        </message>
+        <message>
+            <source>Next page</source>
+            <translation>Page suivante</translation>
         </message>
     </context>
     <context>
@@ -3496,7 +3736,7 @@
             <translation>Vérifier maintenant</translation>
         </message>
         <message>
-            <source>Search with Comick's catalogue</source>
+            <source>Search with Comick&apos;s catalogue</source>
             <translation>Chercher avec le catalogue Comick</translation>
         </message>
         <message>
@@ -4223,7 +4463,7 @@
             <translation>Son navigateur intégré n’a pas le codec vidéo H.264. Regardez cet épisode dans votre navigateur, ou utilisez </translation>
         </message>
         <message>
-            <source>the SCANCORE Flatpak or your distribution's package, which include it.</source>
+            <source>the SCANCORE Flatpak or your distribution&apos;s package, which include it.</source>
             <translation>le Flatpak de SCANCORE ou le paquet de votre distribution, qui l’incluent.</translation>
         </message>
         <message>
@@ -4273,6 +4513,10 @@
         <message>
             <source>Episodes</source>
             <translation>Épisodes</translation>
+        </message>
+        <message>
+            <source>Comments</source>
+            <translation>Commentaires</translation>
         </message>
         <message>
             <source>Open in your browser</source>

@@ -22,6 +22,8 @@ Item {
     readonly property var progress: { Library.revision; return Library.progressMap(seriesId) }
     readonly property bool saved: { Library.revision; return Library.isSaved(seriesId) }
     property bool descending: false
+    // Episodes, Reviews or Discussion.
+    property string tab: "episodes"
     // Long series are shown 100 episodes at a time.
     property int range: 0
     readonly property int rangeSize: 100
@@ -121,10 +123,41 @@ Item {
                 Component.onCompleted: Qt.callLater(() => Router.shell.land(header.coverItem))
             }
 
+            Segmented {
+                x: Theme.gutter
+                options: [{ value: "episodes", label: qsTr("Episodes") },
+                          { value: "reviews", label: qsTr("Reviews") },
+                          { value: "discussion", label: qsTr("Discussion") }]
+                value: page.tab
+                onPicked: (v) => page.tab = v
+            }
+            Loader {
+                x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
+                active: page.tab === "reviews"
+                visible: active
+                sourceComponent: Reviews {
+                    media: "anime"
+                    anilistId: page.anilistId
+                    title: page.media.title || ""
+                }
+            }
+            Loader {
+                x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
+                active: page.tab === "discussion"
+                visible: active
+                sourceComponent: Discussion {
+                    media: "anime"
+                    anilistId: page.anilistId
+                    title: page.media.title || ""
+                }
+            }
+
             Item {
                 width: parent.width
                 height: 34
-                visible: page.episodes.length > 0
+                visible: page.tab === "episodes" && page.episodes.length > 0
                 Text {
                     x: Theme.gutter
                     anchors.verticalCenter: parent.verticalCenter
@@ -157,7 +190,7 @@ Item {
                 x: Theme.gutter
                 width: parent.width - 2 * Theme.gutter
                 spacing: 8
-                visible: page.episodes.length > page.rangeSize
+                visible: page.tab === "episodes" && page.episodes.length > page.rangeSize
                 Repeater {
                     model: Math.ceil(page.episodes.length / page.rangeSize)
                     Chip {
@@ -173,6 +206,7 @@ Item {
 
             Flow {
                 id: episodeFlow
+                visible: page.tab === "episodes"
                 x: Theme.gutter
                 width: parent.width - 2 * Theme.gutter
                 spacing: 16
@@ -270,8 +304,9 @@ Item {
             StateView {
                 width: parent.width
                 height: visible ? 220 : 0
-                task: page.episodesTask
-                empty: page.episodesTask && page.episodesTask.ok && page.episodes.length === 0
+                // Only on the episodes tab (StateView shows itself when needed).
+                task: page.tab === "episodes" ? page.episodesTask : null
+                empty: page.tab === "episodes" && page.episodesTask && page.episodesTask.ok && page.episodes.length === 0
                 emptyTitle: qsTr("No episodes yet")
                 emptyText: page.media.nextEpisode ? qsTr("Episode ") + page.media.nextEpisode + qsTr(" airs ") + App.relativeTime(page.media.nextAiringAt) + "." : qsTr("This anime has not aired yet.")
                 emptyIcon: "calendar"

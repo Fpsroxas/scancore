@@ -18,8 +18,15 @@ Dialog {
 
     function show(match) {
         close()
+        // The catalogue entry travels with the series (and is stored with it),
+        // so comments, reviews and tracking know which comic this is.
+        const it = dialog.item
         Router.openSeries({ media: "comic", source: match.source, sourceUrl: match.url, title: match.title,
-                            cover: match.cover || dialog.item.cover, description: dialog.item.description || "" }, null)
+                            cover: match.cover || it.cover, description: it.description || "",
+                            status: it.status || "", type: it.type || "", rating: it.rating || "",
+                            hid: it.hid || "",
+                            extra: { catalog: "comick", hid: it.hid || "", catalogTitle: it.title || "",
+                                     titles: (it.titles || []).slice(0, 20), year: it.year || 0 } }, null)
     }
 
     Connections {

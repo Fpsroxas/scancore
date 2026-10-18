@@ -27,6 +27,8 @@ public:
     // other names) than any one site: {comics: [{hid, title, titles, cover,
     // type, status, year, ...}], providers: []}.
     Q_INVOKABLE sc::Task *catalog(const QString &query);
+    // Comick's ranked shelves: {trending, popular, newest, completed}.
+    Q_INVOKABLE sc::Task *catalogFeeds(bool mature = false);
     // Where a catalogue title can be read: the series on SCANCORE's sources
     // listed under any of its names. {matches: [{source, sourceLabel, url,
     // title, cover}]}

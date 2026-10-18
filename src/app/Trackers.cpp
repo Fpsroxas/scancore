@@ -408,6 +408,14 @@ void updateComick(const QString &seriesId, const QString &media, const QString &
         return;
     const auto links = allLinks().value(seriesId).toMap();
     auto hid = links.value("comick").toMap().value("id").toString();
+    // A comic opened from Comick's catalogue already knows its entry there.
+    if (hid.isEmpty() && media == QLatin1String("comic")) {
+        const auto extra = QJsonDocument::fromJson(
+            Database::scalar(QStringLiteral("SELECT extra FROM series WHERE id = ?"), {seriesId}).toString().toUtf8());
+        hid = extra.object().value("hid").toString();
+        if (!hid.isEmpty())
+            saveLink(seriesId, QStringLiteral("comick"), hid, extra.object().value("catalogTitle").toString());
+    }
     if (hid.isEmpty()) {
         int anilistId = links.value("anilist").toMap().value("id").toInt();
         if (anilistId <= 0 && media == QLatin1String("anime"))

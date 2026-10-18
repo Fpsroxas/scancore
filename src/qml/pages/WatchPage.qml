@@ -249,6 +249,9 @@ Rectangle {
         Loader {
             id: player
             anchors.fill: parent
+            // A system web view draws above everything in the window, so it
+            // steps aside while the comments panel is open.
+            visible: !(watch.systemView && comments.visible)
             active: Anime.playerEngine !== "" && watch.currentUrl.length > 0
             source: watch.systemView ? "../components/WebPlayerSystem.qml" : "../components/WebPlayer.qml"
             onLoaded: item.url = Qt.binding(() => watch.currentUrl)
@@ -512,6 +515,7 @@ Rectangle {
             IconButton { iconName: "skip-back"; iconColor: "white"; enabled: watch.hasPrev; tip: qsTr("Previous episode") + watch.keyHint("player.prev"); onClicked: watch.load(watch.index - 1) }
             IconButton { iconName: "skip-forward"; iconColor: "white"; enabled: watch.hasNext; tip: qsTr("Next episode") + watch.keyHint("player.next"); onClicked: watch.load(watch.index + 1) }
             IconButton { iconName: "list"; iconColor: "white"; active: watch.sideOpen; tip: qsTr("Episodes"); onClicked: watch.sideOpen = !watch.sideOpen }
+            IconButton { iconName: "message-circle"; iconColor: "white"; tip: qsTr("Comments"); onClicked: comments.open() }
             IconButton {
                 iconName: "external-link"
                 iconColor: "white"
@@ -739,5 +743,14 @@ Rectangle {
             }
             IconButton { iconName: "skip-forward"; iconColor: "white"; diameter: 44; enabled: watch.hasNext; onClicked: watch.nextEpisode() }
         }
+    }
+
+    CommentsPanel {
+        id: comments
+        media: "anime"
+        anilistId: watch.media.anilistId || 0
+        title: watch.media.title || watch.series.title || ""
+        unit: String(watch.episode.number || "")
+        label: qsTr("Episode ") + (watch.episode.number || "")
     }
 }
