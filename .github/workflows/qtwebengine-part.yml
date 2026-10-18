@@ -1,0 +1,160 @@
+name: Qt WebEngine with codecs (part)
+
+# One stretch of the Qt WebEngine build in qtwebengine.yml. A job may run for
+# six hours and the build can take longer, so each part builds for most of
+# its job and keeps what it compiled in a ccache cache; the next part starts
+# again from that cache and gets further. The part that finishes publishes.
+
+on:
+  workflow_call:
+    inputs:
+      qt:
+        required: true
+        type: string
+      part:
+        required: true
+        type: number
+      last:
+        type: boolean
+        default: false
+    outputs:
+      done:
+        description: "'true' when this part finished and published the build, 'false' when its time ran out"
+        value: ${{ jobs.build.outputs.done }}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Part ${{ inputs.part }}
+    # The AppImage is built on 22.04 too; a newer system would raise the
+    # glibc it needs.
+    runs-on: ubuntu-22.04
+    timeout-minutes: 355
+    outputs:
+      done: ${{ steps.build.outputs.done }}
+    env:
+      QT_VERSION: ${{ inputs.qt }}
+      TAG: qtwebengine-${{ inputs.qt }}
+      ASSET: qtwebengine-${{ inputs.qt }}-codecs-linux-x86_64.tar.xz
+      GH_TOKEN: ${{ github.token }}
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CCACHE_BASEDIR: ${{ github.workspace }}
+      CCACHE_COMPILERCHECK: content
+      CCACHE_SLOPPINESS: include_file_mtime,include_file_ctime,time_macros,pch_defines
+      CCACHE_MAXSIZE: 8G
+    steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
+          df -h /
+
+      - name: Build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build ccache gcc-12 g++-12 bison flex gperf python3-html5lib \
+            libgl1-mesa-dev libegl1-mesa-dev libgbm-dev libdrm-dev libxkbcommon-dev libxkbfile-dev libxshmfence-dev \
+            libx11-xcb-dev libxcb1-dev libxcb-dri3-dev libxcomposite-dev libxcursor-dev libxdamage-dev libxrandr-dev \
+            libxtst-dev libxss-dev libxi-dev libfontconfig1-dev libnss3-dev libdbus-1-dev libasound2-dev libpulse-dev \
+            libcups2-dev libpci-dev libudev-dev
+          # install-qt-action puts its own Python first on PATH; the build
+          # uses the system's, which has html5lib.
+          /usr/bin/python3 -c "import html5lib"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ inputs.qt }}
+          modules: qtwebchannel qtpositioning
+          cache: true
+
+      - name: Restore compiled objects
+        uses: actions/cache/restore@v4
+        with:
+          path: .ccache
+          key: qtwebengine-ccache-${{ inputs.qt }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ inputs.part }}
+          restore-keys: qtwebengine-ccache-${{ inputs.qt }}-
+
+      - name: Build Qt WebEngine
+        id: build
+        env:
+          CC: gcc-12
+          CXX: g++-12
+          # Read at configure time, for the ninja that builds Chromium.
+          NINJAFLAGS: -j4
+        run: |
+          MINOR="${QT_VERSION%.*}"
+          curl -fsSL -o src.tar.xz \
+            "https://download.qt.io/official_releases/qt/$MINOR/$QT_VERSION/submodules/qtwebengine-everywhere-src-$QT_VERSION.tar.xz"
+          tar -xf src.tar.xz
+          rm src.tar.xz
+          ccache -z
+          mkdir build
+          cd build
+          # Release: no debug symbols, which would make the build far larger
+          # and slower. Chromium's own FFmpeg with the codecs, rather than the
+          # system's, so the AppImage does not depend on a particular FFmpeg.
+          "$QT_ROOT_DIR/bin/qt-configure-module" "../qtwebengine-everywhere-src-$QT_VERSION" -- \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+            -DPython3_EXECUTABLE=/usr/bin/python3 \
+            -DFEATURE_webengine_proprietary_codecs=ON \
+            -DFEATURE_webengine_system_ffmpeg=OFF \
+            -DFEATURE_qtpdf_build=OFF \
+            -DFEATURE_webengine_kerberos=OFF \
+            -DQT_BUILD_EXAMPLES=OFF \
+            -DQT_BUILD_TESTS=OFF \
+            -DQT_SHOW_EXTRA_IDE_SOURCES=OFF
+          cat config.summary
+          grep -q "Proprietary Codecs .* yes" config.summary || { echo "::error::Configured without proprietary codecs."; exit 1; }
+          grep -q "Support X11 on qpa-xcb .* yes" config.summary || { echo "::error::Configured without X11 support."; exit 1; }
+          # Stop in time to keep what was compiled for the next part.
+          set +e
+          timeout 285m cmake --build . --parallel 4
+          status=$?
+          set -e
+          ccache -s
+          df -h /
+          if [ "$status" = 124 ]; then
+            if [ "${{ inputs.last }}" = "true" ]; then
+              echo "::error::Qt WebEngine did not finish in the last part. Run this workflow again: it continues from what was compiled."
+              exit 1
+            fi
+            echo "::notice::Part ${{ inputs.part }} ran out of time; the next part continues."
+            echo "done=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          [ "$status" = 0 ] || exit "$status"
+          DESTDIR="$PWD/stage" cmake --install .
+          # Packed relative to the Qt prefix, wherever the install put it.
+          CORE=$(find "$PWD/stage" -name 'libQt6WebEngineCore.so.6' -print -quit)
+          [ -n "$CORE" ] || { echo "Qt WebEngine was not installed" >&2; exit 1; }
+          PREFIX=$(dirname "$(dirname "$CORE")")
+          ls "$PREFIX"
+          tar -C "$PREFIX" -cf - . | xz -T0 -6 > "$GITHUB_WORKSPACE/$ASSET"
+          ls -lh "$GITHUB_WORKSPACE/$ASSET"
+          echo "done=true" >> "$GITHUB_OUTPUT"
+
+      - name: Keep compiled objects
+        if: ${{ always() && steps.build.outcome != 'skipped' }}
+        uses: actions/cache/save@v4
+        with:
+          path: .ccache
+          key: qtwebengine-ccache-${{ inputs.qt }}-${{ github.run_id }}-${{ github.run_attempt }}-${{ inputs.part }}
+
+      - name: Publish
+        if: steps.build.outputs.done == 'true'
+        run: |
+          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --prerelease \
+              --target "${{ github.event.repository.default_branch || github.sha }}" \
+              --title "Qt WebEngine $QT_VERSION with codecs (build dependency)" \
+              --notes "Qt WebEngine $QT_VERSION built with proprietary codecs, for the Linux AppImage. Not an app release."
+          fi
+          gh release upload "$TAG" "$ASSET" --repo "$GITHUB_REPOSITORY" --clobber

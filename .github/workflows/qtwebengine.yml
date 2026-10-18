@@ -8,14 +8,16 @@ name: Qt WebEngine with codecs
 # offered as app updates). The release workflow lays it over Qt before it
 # builds the AppImage.
 #
-# The build takes several hours, so it runs only when that asset does not
-# exist yet. Run it by hand ahead of a release that changes QT_VERSION.
+# The build takes longer than one job may run, so it runs in parts that
+# continue from each other (qtwebengine-part.yml), and only when that asset
+# does not exist yet. Run it by hand ahead of a release that changes the
+# AppImage's Qt (LINUX_QT_VERSION in release.yml).
 
 on:
   workflow_dispatch:
     inputs:
       qt:
-        description: Qt version, e.g. 6.11.3
+        description: Qt version, e.g. 6.11.2
         required: true
         type: string
   workflow_call:
@@ -26,108 +28,73 @@ on:
     outputs:
       available:
         description: "'true' when the asset exists (already, or now)"
-        value: ${{ jobs.build.outputs.available }}
+        value: ${{ jobs.result.outputs.available }}
 
 permissions:
   contents: write
 
 jobs:
-  build:
-    name: Qt WebEngine ${{ inputs.qt }} with codecs (Linux)
-    # The AppImage is built on 22.04 too; a newer system would raise the
-    # glibc it needs.
-    runs-on: ubuntu-22.04
-    timeout-minutes: 350
+  existing:
+    name: Already built?
+    runs-on: ubuntu-24.04
     outputs:
-      available: ${{ steps.done.outputs.available }}
-    env:
-      QT_VERSION: ${{ inputs.qt }}
-      TAG: qtwebengine-${{ inputs.qt }}
-      ASSET: qtwebengine-${{ inputs.qt }}-codecs-linux-x86_64.tar.xz
-      GH_TOKEN: ${{ github.token }}
+      found: ${{ steps.check.outputs.found }}
     steps:
-      - name: Already built?
-        id: existing
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: qtwebengine-${{ inputs.qt }}
+          ASSET: qtwebengine-${{ inputs.qt }}-codecs-linux-x86_64.tar.xz
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' 2>/dev/null | grep -qxF "$ASSET"; then
             echo "Found $ASSET in release $TAG."
             echo "found=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Free disk space
-        if: steps.existing.outputs.found != 'true'
-        run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost
-          df -h /
+  # Each part runs only when the one before ran out of time.
+  part1:
+    needs: existing
+    if: needs.existing.outputs.found != 'true'
+    uses: ./.github/workflows/qtwebengine-part.yml
+    with:
+      qt: ${{ inputs.qt }}
+      part: 1
+  part2:
+    needs: part1
+    if: needs.part1.outputs.done == 'false'
+    uses: ./.github/workflows/qtwebengine-part.yml
+    with:
+      qt: ${{ inputs.qt }}
+      part: 2
+  part3:
+    needs: part2
+    if: needs.part2.outputs.done == 'false'
+    uses: ./.github/workflows/qtwebengine-part.yml
+    with:
+      qt: ${{ inputs.qt }}
+      part: 3
+  part4:
+    needs: part3
+    if: needs.part3.outputs.done == 'false'
+    uses: ./.github/workflows/qtwebengine-part.yml
+    with:
+      qt: ${{ inputs.qt }}
+      part: 4
+      last: true
 
-      - name: Build dependencies
-        if: steps.existing.outputs.found != 'true'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ninja-build gcc-12 g++-12 bison flex gperf python3-html5lib \
-            libgl1-mesa-dev libegl1-mesa-dev libgbm-dev libdrm-dev libxkbcommon-dev libxkbfile-dev libxshmfence-dev \
-            libx11-xcb-dev libxcb1-dev libxcomposite-dev libxcursor-dev libxdamage-dev libxrandr-dev libxtst-dev \
-            libxss-dev libxi-dev libfontconfig1-dev libnss3-dev libdbus-1-dev libasound2-dev libpulse-dev \
-            libcups2-dev libpci-dev libudev-dev libkrb5-dev
-
-      - uses: actions/setup-node@v4
-        if: steps.existing.outputs.found != 'true'
-        with:
-          node-version: 20
-
-      - name: Qt
-        if: steps.existing.outputs.found != 'true'
-        uses: jurplel/install-qt-action@v4
-        with:
-          version: ${{ inputs.qt }}
-          modules: qtwebchannel qtpositioning
-          cache: true
-
-      - name: Build Qt WebEngine
-        if: steps.existing.outputs.found != 'true'
+  result:
+    name: Result
+    needs: [existing, part1, part2, part3, part4]
+    if: always()
+    runs-on: ubuntu-24.04
+    outputs:
+      available: ${{ steps.done.outputs.available }}
+    steps:
+      - id: done
         env:
-          CC: gcc-12
-          CXX: g++-12
-        run: |
-          MINOR="${QT_VERSION%.*}"
-          curl -fsSL -o src.tar.xz \
-            "https://download.qt.io/official_releases/qt/$MINOR/$QT_VERSION/submodules/qtwebengine-everywhere-src-$QT_VERSION.tar.xz"
-          tar -xf src.tar.xz
-          rm src.tar.xz
-          mkdir build
-          cd build
-          # Chromium's own FFmpeg with the codecs, rather than the system's,
-          # so the AppImage does not depend on a particular FFmpeg.
-          "$QT_ROOT_DIR/bin/qt-configure-module" "../qtwebengine-everywhere-src-$QT_VERSION" -- \
-            -DFEATURE_webengine_proprietary_codecs=ON \
-            -DFEATURE_webengine_system_ffmpeg=OFF \
-            -DFEATURE_qtpdf_build=OFF \
-            -DFEATURE_webengine_kerberos=OFF \
-            -DQT_BUILD_EXAMPLES=OFF \
-            -DQT_BUILD_TESTS=OFF
-          cmake --build . --parallel 4
-          DESTDIR="$PWD/stage" cmake --install .
-          # Packed relative to the Qt prefix, wherever the install put it.
-          CORE=$(find "$PWD/stage" -name 'libQt6WebEngineCore.so.6' -print -quit)
-          [ -n "$CORE" ] || { echo "Qt WebEngine was not installed" >&2; exit 1; }
-          PREFIX=$(dirname "$(dirname "$CORE")")
-          ls "$PREFIX"
-          tar -C "$PREFIX" -cJf "$GITHUB_WORKSPACE/$ASSET" .
-          ls -lh "$GITHUB_WORKSPACE/$ASSET"
-
-      - name: Publish
-        if: steps.existing.outputs.found != 'true'
-        run: |
-          if ! gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
-            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --prerelease --target "$GITHUB_SHA" \
-              --title "Qt WebEngine $QT_VERSION with codecs (build dependency)" \
-              --notes "Qt WebEngine $QT_VERSION built with proprietary codecs, for the Linux AppImage. Not an app release."
-          fi
-          gh release upload "$TAG" "$ASSET" --repo "$GITHUB_REPOSITORY" --clobber
-
-      - name: Result
-        id: done
-        if: always()
+          GH_TOKEN: ${{ github.token }}
+          TAG: qtwebengine-${{ inputs.qt }}
+          ASSET: qtwebengine-${{ inputs.qt }}-codecs-linux-x86_64.tar.xz
         run: |
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' 2>/dev/null | grep -qxF "$ASSET"; then
             echo "available=true" >> "$GITHUB_OUTPUT"
