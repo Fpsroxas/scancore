@@ -152,8 +152,8 @@
             <translation>Largeur ou taille du texte</translation>
         </message>
         <message>
-            <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0).</source>
-            <translation>Licence MIT · github.com/medium-gh/scancore. Polices : DM Sans, Space Grotesk, Literata (OFL). Icônes : Lucide (ISC). Analyse HTML : lexbor (Apache 2.0).</translation>
+            <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
+            <translation>Licence MIT · github.com/medium-gh/scancore. Polices : DM Sans, Space Grotesk, Literata (OFL). Icônes : Lucide (ISC). Analyse HTML : lexbor (Apache 2.0). Lecteur vidéo : mpv et FFmpeg (LGPL), compilés avec tools/libmpv/build.sh.</translation>
         </message>
     </context>
     <context>

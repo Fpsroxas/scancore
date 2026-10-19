@@ -152,8 +152,8 @@
             <translation>Lebar atau ukuran teks</translation>
         </message>
         <message>
-            <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0).</source>
-            <translation>Lisensi MIT · github.com/medium-gh/scancore. Fon: DM Sans, Space Grotesk, Literata (OFL). Ikon: Lucide (ISC). Penguraian HTML: lexbor (Apache 2.0).</translation>
+            <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
+            <translation>Lisensi MIT · github.com/medium-gh/scancore. Fon: DM Sans, Space Grotesk, Literata (OFL). Ikon: Lucide (ISC). Penguraian HTML: lexbor (Apache 2.0). Pemutar video: mpv dan FFmpeg (LGPL), dibangun dengan tools/libmpv/build.sh.</translation>
         </message>
     </context>
     <context>

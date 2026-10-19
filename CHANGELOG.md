@@ -2,6 +2,25 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.0.0-beta.1 — 2026-10-20
+
+A test version of 2.0: comics, novels and anime from the extensions you already use, SCANCORE's own video player, a library per media with categories, notifications, and a faster app everywhere. Export a backup before you install it (Settings → Storage → Back up everything).
+
+- **Extensions for all three media**: add a comic, novel or anime extension repository from Settings or the first-run screen, or with one tap on a repository link (scancore://, tachiyomi://, mihon://, aniyomi:// and lnreader:// links open in SCANCORE). The new Extensions page installs, updates and removes extensions, asks before trusting a new signing key, and has each source's own settings. Comic and anime extensions run inside the app on Android; on desktop, SCANCORE downloads a small Java runtime for them the first time. Novel plugins run in SCANCORE itself on every system.
+- **Browse any source**: its popular and latest lists and its own search filters, with covers and downloads through the extension. Search shows each source's results as soon as they arrive instead of waiting for the slowest, and "Read from" finds a series on your extension sources too, without being held up by a stuck one. Sites that ask for a browser check open in a browser window (on Android, the system's web view) and continue afterwards.
+- **SCANCORE's own video player** for anime from extensions: hardware decoding, HLS streams, subtitles, switching servers without losing your place, the next episode starting by itself, resuming where you stopped, skipping openings and endings that the video marks, and Space, arrow and M keys. **Watch from** plays an anime from the AniList catalogue on one of your anime sources: SCANCORE picks the source when only one in your language has it, and asks otherwise.
+- **Catalogues and trackers**: Comics, Novels and Anime each browse the catalogue you choose (AniList, MyAnimeList or Comick for comics; AniList or MyAnimeList for anime), chosen on first run or in Settings → Connections, where AniList, MyAnimeList and Comick connect too. A series page says when a tracker could not find the series and links it in one tap. "Read from" lists sources in your content language first.
+- **Library per media**, each with Reading, Planned, Paused, Completed and Dropped, favourites, and a grid, compact or list view.
+- **Notifications**: new chapters, extension and app updates and announcements from scancore.onl are kept in a notification area with an unread count, and reach the system's notifications when SCANCORE is not on screen.
+- **Full-screen reading** that is remembered, without the status bar or the page bar.
+- **Novels**: read aloud with your system's voices, and much more control over the page: fonts, weight, line and paragraph spacing, margins, indent, your own colours, dimming and auto-scroll. A built-in source for a machine-translated novel site (English).
+- **Faster**: SCANCORE starts about twice as fast, covers are drawn by one shader and grids create only what is on screen, sections no longer freeze the window the first time they open, and fitted comic pages shrink cleanly. Mouse wheels and touchpads scroll the same way everywhere, with a speed setting in Settings → Interface.
+- Covers and pages from servers that sent AVIF images show again: SCANCORE now asks only for formats it can show.
+- MangaDex says when every chapter of a series was taken down instead of showing an empty list.
+- Android: SCANCORE keeps running in the background for downloads, update checks and notifications, and offers to turn off battery restrictions for it.
+
+Not in this beta yet: Flatpak and package-manager builds (use the AppImage on Linux), restoring Mihon, Aniyomi and LNReader backups exactly, and the licences screen. The video player has been tested on Linux and in the Android emulator so far; on Windows, macOS and phones it is new in this beta.
+
 ## 1.5.0 — 2026-10-19
 
 Spanish comic sources, source languages, accent-proof title matching, episodes that open again from an anime's page, and search from the Android keyboard.

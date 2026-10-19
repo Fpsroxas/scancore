@@ -1,10 +1,19 @@
 cmake_minimum_required(VERSION 3.28)
 
 project(ScanCore
-    VERSION 1.5.0
+    VERSION 2.0.0
     DESCRIPTION "Read comics and novels and watch anime, entirely on your own machine"
     HOMEPAGE_URL "https://github.com/medium-gh/scancore"
     LANGUAGES C CXX)
+
+# A pre-release label ("beta.1") makes the app 2.0.0-beta.1, tagged
+# v2.0.0-beta.1 and published as a GitHub pre-release, which installed copies
+# never take as an update; empty for a release.
+set(SCANCORE_PRERELEASE "beta.1")
+set(SCANCORE_VERSION_FULL ${PROJECT_VERSION})
+if(SCANCORE_PRERELEASE)
+    string(APPEND SCANCORE_VERSION_FULL "-${SCANCORE_PRERELEASE}")
+endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -85,6 +94,10 @@ endif()
 # also keeps subsequent 1.0.x releases increasing monotonically.
 math(EXPR SCANCORE_ANDROID_VERSION_CODE
     "${PROJECT_VERSION_MAJOR} * 10000 + ${PROJECT_VERSION_MINOR} * 100 + ${PROJECT_VERSION_PATCH} + 105")
+# A pre-release sits just below its release, so the release installs over it.
+if(SCANCORE_PRERELEASE)
+    math(EXPR SCANCORE_ANDROID_VERSION_CODE "${SCANCORE_ANDROID_VERSION_CODE} - 1")
+endif()
 
 include(GNUInstallDirs)
 include(cmake/Dependencies.cmake)

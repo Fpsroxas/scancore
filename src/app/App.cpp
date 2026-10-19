@@ -305,8 +305,11 @@ Task *App::checkForUpdate() {
         if (tag.startsWith(QLatin1Char('v')))
             tag.remove(0, 1);
         const auto latest = QVersionNumber::fromString(tag);
-        const auto current = QVersionNumber::fromString(QCoreApplication::applicationVersion());
-        const bool available = !latest.isNull() && latest > current;
+        qsizetype suffix = 0;
+        const auto running = QCoreApplication::applicationVersion();
+        const auto current = QVersionNumber::fromString(running, &suffix);
+        // A pre-release (2.0.0-beta.1) is older than its release.
+        const bool available = !latest.isNull() && (latest > current || (latest == current && suffix < running.size()));
         const auto url = release.value("html_url").toString();
         if (available)
             QMetaObject::invokeMethod(this, [this, tag, url] { emit updateAvailable(tag, url); });

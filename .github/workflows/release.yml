@@ -1,7 +1,10 @@
 name: Release
 
 # Push a tag like v0.1.0 to build installers for Linux, Windows and macOS
-# and publish them as a GitHub release.
+# and publish them as a GitHub release. A tag with a pre-release label
+# (v2.0.0-beta.1, SCANCORE_PRERELEASE in CMakeLists.txt) is published as a
+# GitHub pre-release: installed copies never take it as an update, and the
+# package manifests and the Flatpak skip it.
 on:
   push:
     tags: ["v*"]
@@ -31,11 +34,13 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       linuxQt: ${{ env.LINUX_QT_VERSION }}
+      prerelease: ${{ steps.check.outputs.prerelease }}
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.inputs.tag || github.ref }}
       - name: Tag matches CMakeLists.txt
+        id: check
         run: |
           TAG="${{ github.event.inputs.tag || github.ref_name }}"
           VERSION="${TAG#v}"
@@ -44,8 +49,15 @@ jobs:
             echo "::error file=CMakeLists.txt::No VERSION found in project() in CMakeLists.txt."
             exit 1
           fi
+          PRERELEASE=$(sed -nE 's/^set\(SCANCORE_PRERELEASE "([^"]*)"\)/\1/p' CMakeLists.txt | head -1)
+          if [ -n "$PRERELEASE" ]; then
+            PROJECT_VERSION="$PROJECT_VERSION-$PRERELEASE"
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
           if [ "$PROJECT_VERSION" != "$VERSION" ]; then
-            echo "::error file=CMakeLists.txt::Tag $TAG does not match the app version $PROJECT_VERSION in CMakeLists.txt. Set VERSION $VERSION in project() and tag again, or tag v$PROJECT_VERSION."
+            echo "::error file=CMakeLists.txt::Tag $TAG does not match the app version $PROJECT_VERSION in CMakeLists.txt (VERSION in project() and SCANCORE_PRERELEASE). Change them and tag again, or tag v$PROJECT_VERSION."
             exit 1
           fi
           echo "Tag $TAG matches CMakeLists.txt."
@@ -58,9 +70,15 @@ jobs:
     with:
       qt: ${{ needs.version.outputs.linuxQt }}
 
+  # The video player's libmpv for each desktop system. A system whose
+  # libmpv fails still gets a release, playing anime in web players only.
+  libmpv:
+    needs: version
+    uses: ./.github/workflows/libmpv.yml
+
   build:
     name: ${{ matrix.name }}
-    needs: version
+    needs: [version, libmpv]
     if: ${{ !cancelled() && needs.version.result == 'success' }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -71,8 +89,10 @@ jobs:
             os: windows-2022
             # aqtinstall cannot read the Windows 6.11 repository layout yet.
             qt: 6.10.3
+            mpv: windows-x64
           - name: macOS
             os: macos-14
+            mpv: macos-universal
     steps:
       - uses: actions/checkout@v5
         with:
@@ -91,6 +111,27 @@ jobs:
       - name: MSVC
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
+
+      - name: libmpv
+        id: mpv
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: libmpv-${{ matrix.mpv }}
+          path: build/libmpv/${{ matrix.mpv }}
+
+      - name: Use libmpv
+        if: steps.mpv.outcome == 'success'
+        shell: bash
+        run: |
+          dir="$PWD/build/libmpv/${{ matrix.mpv }}"
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            # MSVC links through an import library made from mpv's exports.
+            lib /nologo /def:"$(cygpath -w "$dir/lib/mpv.def")" /machine:x64 /out:"$(cygpath -w "$dir/lib/mpv.lib")"
+          else
+            ln -sf libmpv.2.dylib "$dir/lib/libmpv.dylib"
+          fi
+          echo "MPV_DIR=$dir" >> "$GITHUB_ENV"
 
       - name: Qt
         uses: jurplel/install-qt-action@v4
@@ -115,6 +156,10 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force dist\windows | Out-Null
           Copy-Item build\bin\scancore.exe dist\windows\
+          if ($env:MPV_DIR) {
+            Copy-Item "$env:MPV_DIR\bin\libmpv-2.dll" dist\windows\
+            Copy-Item -Recurse "$env:MPV_DIR\licenses" dist\windows\licenses
+          }
           windeployqt --release --qmldir src\qml --no-translations --compiler-runtime dist\windows\scancore.exe
           # The anime player's WebView2 backend, which windeployqt may leave out.
           if (-not (Test-Path dist\windows\plugins\webview\qtwebview_webview2.dll)) {
@@ -130,6 +175,15 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           cp -R build/bin/scancore.app SCANCORE.app
+          if [ -n "${MPV_DIR:-}" ]; then
+            # The player's libmpv (@rpath/libmpv.2.dylib) beside Qt's frameworks.
+            mkdir -p SCANCORE.app/Contents/Frameworks
+            cp "$MPV_DIR/lib/libmpv.2.dylib" SCANCORE.app/Contents/Frameworks/
+            mkdir -p SCANCORE.app/Contents/Resources
+            cp -R "$MPV_DIR/licenses" SCANCORE.app/Contents/Resources/licenses
+            otool -l SCANCORE.app/Contents/MacOS/scancore | grep -q '@executable_path/../Frameworks' || \
+              install_name_tool -add_rpath @executable_path/../Frameworks SCANCORE.app/Contents/MacOS/scancore
+          fi
           # The anime player's WKWebView backend, in case macdeployqt leaves it
           # out; listed with -executable so its Qt references are rewritten.
           mkdir -p SCANCORE.app/Contents/PlugIns/webview
@@ -149,7 +203,7 @@ jobs:
 
   appimage:
     name: Linux AppImage
-    needs: [version, webengine, publish]
+    needs: [version, webengine, libmpv, publish]
     if: ${{ !cancelled() && needs.version.result == 'success' && needs.webengine.result == 'success' && needs.webengine.outputs.available == 'true' && needs.publish.result == 'success' }}
     runs-on: ubuntu-22.04
     steps:
@@ -187,8 +241,21 @@ jobs:
           tar -xJf "$RUNNER_TEMP/qtwebengine-$LINUX_QT_VERSION-codecs-linux-x86_64.tar.xz" -C "$QT_ROOT_DIR"
           echo "Qt WebEngine with codecs laid over $QT_ROOT_DIR."
 
+      - name: libmpv
+        id: mpv
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: libmpv-linux-x86_64
+          path: build/libmpv/linux-x86_64
+
       - name: Build
         run: |
+          if [ "${{ steps.mpv.outcome }}" = success ]; then
+            export MPV_DIR=$PWD/build/libmpv/linux-x86_64
+            ln -sf "$(ls "$MPV_DIR"/lib/libmpv.so.* | head -1 | xargs basename)" "$MPV_DIR/lib/libmpv.so"
+            echo "MPV_DIR=$MPV_DIR" >> "$GITHUB_ENV"
+          fi
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DSCANCORE_BUILD_TESTS=OFF \
             -DCMAKE_INSTALL_PREFIX=/usr
           cmake --build build --parallel
@@ -196,11 +263,16 @@ jobs:
       - name: AppImage
         run: |
           DESTDIR=$PWD/AppDir cmake --install build
+          if [ -n "${MPV_DIR:-}" ]; then
+            mkdir -p AppDir/usr/share/licenses
+            cp -r "$MPV_DIR/licenses" AppDir/usr/share/licenses/libmpv
+          fi
           wget -q https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
           wget -q https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
           chmod +x linuxdeploy*.AppImage
           find "$QT_ROOT_DIR/plugins/sqldrivers" -type f ! -name 'libqsqlite.so' -delete
-          export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib:${LD_LIBRARY_PATH:-}"
+          # linuxdeploy finds libmpv (outside the install) through this too.
+          export LD_LIBRARY_PATH="$QT_ROOT_DIR/lib${MPV_DIR:+:$MPV_DIR/lib}:${LD_LIBRARY_PATH:-}"
           find "$QT_ROOT_DIR/plugins" -name '*.so' | while read -r plugin; do
             if ldd "$plugin" | grep -q 'not found'; then
               echo "Removing $plugin (unresolved: $(ldd "$plugin" | grep 'not found' | awk '{print $1}' | paste -sd' '))"
@@ -323,7 +395,7 @@ jobs:
           if-no-files-found: error
 
   publish:
-    needs: [build, android]
+    needs: [version, build, android]
     # Publish the independent desktop and Android artifacts without waiting
     # for the hours-long Linux codec build.
     if: ${{ !cancelled() && needs.build.result == 'success' && needs.android.result == 'success' }}
@@ -351,8 +423,14 @@ jobs:
           SUMMARY=$(awk -v v="$VERSION" '
             index($0, "## " v " ") == 1 || $0 == "## " v { on = 1; next }
             on && NF { if ($0 !~ /^[-*#]/) print; exit }' CHANGELOG.md)
+          BETA=""
+          if [ "${{ needs.version.outputs.prerelease }}" = true ]; then
+            BETA="**Pre-release for testing.** Installed copies do not update to it by themselves, and it updates to the final release when that is out. Export a backup first (Settings → Storage → Back up everything), since this version changes the library database."
+          fi
           cat > notes.md <<EOF
-          ${SUMMARY:+$SUMMARY }[Full changelog](https://github.com/${{ github.repository }}/blob/$TAG/CHANGELOG.md#$ANCHOR)
+          ${BETA:+$BETA
+
+          }${SUMMARY:+$SUMMARY }[Full changelog](https://github.com/${{ github.repository }}/blob/$TAG/CHANGELOG.md#$ANCHOR)
 
           | System | Download |
           | --- | --- |
@@ -367,6 +445,7 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
           name: SCANCORE ${{ github.event.inputs.tag || github.ref_name }}
+          prerelease: ${{ needs.version.outputs.prerelease == 'true' }}
           body_path: notes.md
           generate_release_notes: true
           files: artifacts/*
@@ -375,8 +454,8 @@ jobs:
   # to submit (see packaging/update-manifests.py).
   manifests:
     name: Package manifests
-    needs: publish
-    if: ${{ !cancelled() && needs.publish.result == 'success' }}
+    needs: [version, publish]
+    if: ${{ !cancelled() && needs.publish.result == 'success' && needs.version.outputs.prerelease != 'true' }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5

@@ -52,7 +52,7 @@ qt_add_resources(scancore_core plugin_runtime
     BASE ${PROJECT_SOURCE_DIR}/resources
     FILES ${SCANCORE_PLUGIN_FILES})
 # Manifest entries can ask for a minimum app version.
-target_compile_definitions(scancore_core PRIVATE SCANCORE_VERSION="${PROJECT_VERSION}")
+target_compile_definitions(scancore_core PRIVATE SCANCORE_VERSION="${SCANCORE_VERSION_FULL}")
 target_link_libraries(scancore_core
     PUBLIC Qt6::Core Qt6::Network Qt6::Sql Qt6::Concurrent Qt6::Qml
     # QZipReader, for CBZ and EPUB files.
@@ -77,7 +77,7 @@ set_target_properties(scancore PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION}
     MACOSX_BUNDLE_ICON_FILE scancore.icns
     MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/packaging/macos/Info.plist.in)
-target_compile_definitions(scancore PRIVATE SCANCORE_VERSION="${PROJECT_VERSION}"
+target_compile_definitions(scancore PRIVATE SCANCORE_VERSION="${SCANCORE_VERSION_FULL}"
     SCANCORE_DISCORD_APP_ID="${SCANCORE_DISCORD_APP_ID}"
     SCANCORE_ANILIST_CLIENT_ID="${SCANCORE_ANILIST_CLIENT_ID}"
     SCANCORE_MAL_CLIENT_ID="${SCANCORE_MAL_CLIENT_ID}"
@@ -191,7 +191,7 @@ if(ANDROID)
     add_android_openssl_libraries(scancore)
     set_target_properties(scancore PROPERTIES
         QT_ANDROID_PACKAGE_SOURCE_DIR ${PROJECT_SOURCE_DIR}/packaging/android
-        QT_ANDROID_VERSION_NAME ${PROJECT_VERSION}
+        QT_ANDROID_VERSION_NAME ${SCANCORE_VERSION_FULL}
         QT_ANDROID_VERSION_CODE ${SCANCORE_ANDROID_VERSION_CODE}
         QT_ANDROID_MIN_SDK_VERSION 28
         QT_ANDROID_TARGET_SDK_VERSION 36)
