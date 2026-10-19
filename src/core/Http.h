@@ -86,6 +86,10 @@ public:
     static constexpr const char *BrowserUA =
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
         "(KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36";
+    // Accept header for images: only formats every build decodes (Qt and
+    // qtimageformats). Image servers that choose the format from it would
+    // otherwise send AVIF, which Qt cannot read.
+    static constexpr const char *ImageAccept = "image/webp,image/jpeg,image/png,image/gif,*/*;q=0.5";
 
     // Blocking; must run on a worker thread (Task or image loader).
     static Response send(const Request &request);

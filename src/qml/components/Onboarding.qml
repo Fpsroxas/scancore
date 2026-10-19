@@ -282,6 +282,7 @@ Rectangle {
     Component {
         id: mediaStep
         Flickable {
+            WheelScroll {}
             contentHeight: mediaColumn.height + 60
             clip: true
             Column {
@@ -351,6 +352,7 @@ Rectangle {
     Component {
         id: trackerStep
         Flickable {
+            WheelScroll {}
             contentHeight: trackerColumn.height + 60
             clip: true
             Column {

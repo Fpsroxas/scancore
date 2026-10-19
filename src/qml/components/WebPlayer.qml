@@ -38,6 +38,9 @@ Item {
             + "</script></body></html>"
     }
 
+    // Before the first url: shares cookies and the user agent.
+    Component.onCompleted: App.prepareWeb()
+
     onUrlChanged: {
         reportedUnsupported = false
         if (url) web.loadHtml(wrapper(url), "https://reanime.to/")

@@ -34,6 +34,7 @@ class NetworkHelper(
             .addInterceptor(UserAgentInterceptor(::defaultUserAgentProvider))
             .addInterceptor(BrotliInterceptor)
             .addInterceptor(BrowserCheckInterceptor())
+            .addNetworkInterceptor(ReadableImagesInterceptor())
             .build()
     }
 
@@ -60,4 +61,20 @@ class BrowserCheckInterceptor : Interceptor {
         }
         return response
     }
+}
+
+// SCANCORE shows images with Qt, which reads JPEG, PNG, GIF and WebP but not
+// AVIF, JPEG XL or HEIF. Image servers that pick the format from the Accept
+// header (many CDNs and image proxies do) then send one SCANCORE can show.
+// A network interceptor, so it also sees headers extensions add.
+class ReadableImagesInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+        val accept = request.header("Accept") ?: return chain.proceed(request)
+        val kept = accept.split(',').filterNot { part -> unreadable.any { part.trim().startsWith(it, ignoreCase = true) } }
+        if (kept.size == accept.split(',').size) return chain.proceed(request)
+        return chain.proceed(request.newBuilder().header("Accept", kept.joinToString(",").ifEmpty { "*/*" }).build())
+    }
+
+    private val unreadable = listOf("image/avif", "image/jxl", "image/heif", "image/heic")
 }

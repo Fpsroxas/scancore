@@ -9,6 +9,13 @@
     <!-- In-app updates: open the downloaded APK in the system installer. -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- %%INSERT_PERMISSIONS -->
+    <!-- Reading novels aloud: Android 11+ only lets apps see the
+         text-to-speech engines they declare they look for. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
     <!-- %%INSERT_FEATURES -->
     <supports-screens
         android:anyDensity="true"

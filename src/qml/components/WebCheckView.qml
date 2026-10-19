@@ -11,4 +11,6 @@ WebEngineView {
     url: startUrl
     settings.javascriptCanOpenWindows: false
     onNewWindowRequested: (request) => { /* stay in this view */ }
+    // Before startUrl is set: shares cookies and the user agent.
+    Component.onCompleted: App.prepareWeb()
 }

@@ -168,7 +168,7 @@ void Downloads::runJob(const QVariantMap &row) {
                 request.timeoutMs = 30000;
                 request.maxBytes = 40 * 1024 * 1024;
                 request.headers = {{"Referer", source->imageReferer().toUtf8()},
-                                   {"Accept", "image/avif,image/webp,image/*,*/*;q=0.8"}};
+                                   {"Accept", Http::ImageAccept}};
                 Response response;
                 for (int attempt = 0; attempt < 3; ++attempt) {
                     try {

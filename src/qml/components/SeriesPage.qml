@@ -141,6 +141,7 @@ Item {
     }
 
     ListView {
+        WheelScroll {}
         id: list
         anchors.fill: parent
         model: page.tab === "chapters" ? page.pageRows : []

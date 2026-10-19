@@ -4,7 +4,9 @@ import QtQuick.Window
 import ScanCore
 
 // Full-window novel reader with adjustable typography, reading themes,
-// remembered position and the next chapter loaded ahead.
+// remembered position and the next chapter loaded ahead. Reads aloud with the
+// system's voices (Speech), following the spoken paragraph, and can scroll
+// by itself.
 Rectangle {
     id: reader
     property var series: ({})
@@ -24,11 +26,23 @@ Rectangle {
     property bool finished: false
 
     readonly property var themes: Theme.readingThemes
-    readonly property var look: themes[App.settings.novelTheme] || themes.app
+    readonly property var look: Theme.readingLook(App.settings.novelTheme)
     readonly property int fontSize: App.settings.novelSize || 19
     readonly property real lineHeight: App.settings.novelLineHeight || 1.5
-    readonly property int columnWidth: Math.min(width - 64, App.settings.novelWidth || 720)
+    readonly property int margin: App.settings.novelMargin === undefined ? 32 : App.settings.novelMargin
+    readonly property int columnWidth: Math.min(width - 2 * margin, App.settings.novelWidth || 720)
     readonly property string fontFamily: App.settings.novelFont || Theme.fontSerif
+    readonly property int fontWeight: App.settings.novelWeight || Font.Normal
+    readonly property real paragraphSpacing: App.settings.novelParagraphSpacing === undefined ? 0.9 : App.settings.novelParagraphSpacing
+    readonly property bool indent: App.settings.novelIndent === true
+
+    // Reading aloud: the paragraph being spoken (-1 for the title), and
+    // whether the next chapter should carry on when this one ends.
+    property bool speaking: false
+    property int spokenBlock: -2
+    property bool speakNext: false
+    // Scrolling by itself, at novelAutoScrollSpeed pixels a second.
+    property bool autoScrolling: false
 
     // Drawn under the phone's status bar in the reading theme's colour; the
     // bars and text are padded by the inset instead.
@@ -42,6 +56,9 @@ Rectangle {
 
     function load(i) {
         savePosition(true)
+        // A chapter picked by hand stops the voice; the end of one read
+        // aloud carries on into the next (speakNext).
+        if (speaking) stopSpeaking()
         index = i
         finished = false
         const p = Library.progressMap(series.id)[chapters[i].key]
@@ -63,6 +80,7 @@ Rectangle {
         Activity.setMedia("novel")
     }
     Component.onDestruction: {
+        Speech.stop()
         Activity.setMedia("")
         Presence.clear()
         savePosition(true)
@@ -87,6 +105,82 @@ Rectangle {
         if (flick.contentHeight - flick.height <= 4) {
             finished = true
             savePosition(true)
+        }
+        if (speakNext) {
+            speakNext = false
+            startSpeaking(-1)
+        }
+    }
+
+    // Queues the chapter from block `from` (-1: from its title). The whole
+    // chapter goes at once, so a phone's engine reads on in the background.
+    function startSpeaking(from) {
+        Speech.stop()
+        Speech.configure(App.settings.ttsVoice || "", Number(App.settings.ttsRate) || 1, Number(App.settings.ttsPitch) || 1)
+        if (from < 0) {
+            const title = (task && task.ok && task.result.title) ? task.result.title : (unit.title || "")
+            if (title) Speech.enqueue(title, -1)
+            from = 0
+        }
+        for (let i = from; i < blocks.length; ++i)
+            if (blocks[i].kind !== "break" && blocks[i].text) Speech.enqueue(blocks[i].text, i)
+        speaking = true
+        autoScrolling = false
+    }
+    function stopSpeaking() {
+        speaking = false
+        speakNext = false
+        spokenBlock = -2
+        Speech.stop()
+    }
+    function lastSpokenBlock() {
+        for (let i = blocks.length - 1; i >= 0; --i)
+            if (blocks[i].kind !== "break" && blocks[i].text) return i
+        return -1
+    }
+
+    Connections {
+        target: Speech
+        function onStarted(tag) {
+            if (!reader.speaking) return
+            reader.spokenBlock = tag
+            if (tag >= 0 && App.settings.ttsFollow !== false) {
+                const item = blockRepeater.itemAt(tag)
+                if (!item) return
+                const top = item.y + body.y
+                // Keep it in the upper third, without jumping for every line.
+                if (top < flick.contentY + 80 || top + item.height > flick.contentY + flick.height - 80)
+                    flick.scrollTo(top - flick.height * 0.25)
+            }
+        }
+        function onFinished(tag) {
+            if (!reader.speaking || tag !== reader.lastSpokenBlock()) return
+            reader.speaking = false
+            reader.spokenBlock = -2
+            reader.finished = true
+            reader.savePosition(true)
+            if (App.settings.ttsContinue !== false && reader.hasNext) {
+                reader.load(reader.index + 1)
+                reader.speakNext = true
+                if (reader.task && reader.task.done) Qt.callLater(reader.arrived)
+            }
+        }
+        function onFailed(message) {
+            reader.speaking = false
+            reader.spokenBlock = -2
+            Router.toast(message, "error")
+        }
+    }
+
+    FrameAnimation {
+        running: reader.autoScrolling && !flick.moving && !flick.dragging
+        onTriggered: {
+            const max = flick.contentHeight - flick.height
+            if (flick.contentY >= max - 1) {
+                reader.autoScrolling = false
+                return
+            }
+            flick.contentY = Math.min(max, flick.contentY + (Number(App.settings.novelAutoScrollSpeed) || 40) * frameTime)
         }
     }
 
@@ -184,7 +278,7 @@ Rectangle {
             x: (flick.width - width) / 2
             y: 110 + reader.insetTop
             width: reader.columnWidth
-            spacing: reader.fontSize * 0.9
+            spacing: reader.fontSize * reader.paragraphSpacing
 
             opacity: 1
             transform: Translate { id: bodyShift; y: 0 }
@@ -221,19 +315,28 @@ Rectangle {
                 model: reader.blocks
                 delegate: Item {
                     required property var modelData
+                    required property int index
                     width: body.width
                     height: modelData.kind === "break" ? reader.fontSize * 1.6 : text.implicitHeight
+                    // The paragraph being read aloud.
+                    Rectangle {
+                        visible: reader.spokenBlock === index
+                        anchors.fill: parent
+                        anchors.margins: -Math.round(reader.fontSize * 0.35)
+                        radius: Theme.radiusSm
+                        color: Theme.alpha(String(reader.look.text).slice(0, 7), 0.08)
+                    }
                     Text {
                         id: text
                         visible: modelData.kind !== "break"
                         width: parent.width
                         leftPadding: modelData.kind === "quote" ? 22 : 0
-                        text: modelData.html
+                        text: (reader.indent && modelData.kind === "paragraph" ? "\u2003" : "") + modelData.html
                         textFormat: Text.StyledText
                         color: reader.look.text
                         font.family: modelData.kind === "heading" ? Theme.fontDisplay : reader.fontFamily
                         font.pixelSize: modelData.kind === "heading" ? Math.round(reader.fontSize * 1.2) : reader.fontSize
-                        font.weight: modelData.kind === "heading" ? Font.DemiBold : Font.Normal
+                        font.weight: modelData.kind === "heading" ? Font.DemiBold : reader.fontWeight
                         font.italic: modelData.kind === "quote"
                         lineHeight: reader.lineHeight
                         wrapMode: Text.Wrap
@@ -312,6 +415,53 @@ Rectangle {
     // Desktop: the bar returns when the mouse moves near the top.
     PointerMotion {
         onMoved: (position) => { if (position.y < 90 + reader.insetTop) reader.barsShown = true }
+    }
+
+    // Dimmer than the screen allows, for reading in the dark.
+    Rectangle {
+        anchors.fill: parent
+        color: "black"
+        opacity: Math.min(0.8, Number(App.settings.novelDim) || 0)
+        visible: opacity > 0
+    }
+
+    // While reading aloud: back a paragraph, stop, on a paragraph.
+    Rectangle {
+        z: 2
+        visible: reader.speaking
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 24 + reader.insetBottom
+        width: speechRow.width + 16
+        height: 52
+        radius: 26
+        color: Theme.alpha(String(reader.look.chrome).slice(0, 7), 0.96)
+        border.width: 1
+        border.color: Theme.alpha(String(reader.look.text).slice(0, 7), 0.12)
+        Row {
+            id: speechRow
+            anchors.centerIn: parent
+            spacing: 4
+            IconButton {
+                iconName: "skip-back"
+                iconColor: reader.look.text
+                tip: qsTr("Previous paragraph")
+                onClicked: reader.startSpeaking(Math.max(-1, reader.spokenBlock - 1))
+            }
+            IconButton {
+                iconName: "pause"
+                iconColor: reader.look.text
+                tip: qsTr("Stop reading aloud")
+                onClicked: reader.stopSpeaking()
+            }
+            IconButton {
+                iconName: "skip-forward"
+                iconColor: reader.look.text
+                tip: qsTr("Next paragraph")
+                enabled: reader.spokenBlock < reader.lastSpokenBlock()
+                onClicked: reader.startSpeaking(reader.spokenBlock + 1)
+            }
+        }
     }
 
     // The status bar area keeps the reading theme's colour.
@@ -393,6 +543,22 @@ Rectangle {
                 tip: qsTr("Comments")
                 onClicked: comments.open()
             }
+            IconButton {
+                iconName: reader.speaking ? "pause" : "volume-2"
+                iconColor: reader.speaking ? Theme.accent : reader.look.text
+                enabled: Speech.available && reader.blocks.length > 0
+                tip: !Speech.available ? qsTr("No voices are installed on this device")
+                    : reader.speaking ? qsTr("Stop reading aloud") : qsTr("Read aloud from here")
+                onClicked: reader.speaking ? reader.stopSpeaking()
+                    : reader.startSpeaking(flick.contentY < 40 ? -1 : reader.firstVisibleBlock())
+            }
+            IconButton {
+                iconName: "move-vertical"
+                iconColor: reader.autoScrolling ? Theme.accent : reader.look.text
+                enabled: reader.blocks.length > 0 && !reader.speaking
+                tip: reader.autoScrolling ? qsTr("Stop scrolling") : qsTr("Scroll by itself")
+                onClicked: reader.autoScrolling = !reader.autoScrolling
+            }
             IconButton { iconName: "type"; iconColor: reader.look.text; tip: qsTr("Text settings"); onClicked: typePopup.open() }
             IconButton {
                 iconName: Window.window && Window.window.visibility === Window.FullScreen ? "minimize" : "maximize"
@@ -462,49 +628,147 @@ Rectangle {
                 NumberAnimation { property: "y"; from: 58 + reader.insetTop; to: 70 + reader.insetTop; duration: Motion.normal; easing.type: Easing.OutCubic }
             }
         }
-        contentItem: Column {
-            spacing: 14
-            Text { text: "Theme"; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
-            Row {
-                spacing: 10
-                Repeater {
-                    model: ["app", "paper", "sepia", "dark", "black"]
-                    Rectangle {
-                        required property string modelData
-                        width: 48
-                        height: 48
-                        radius: 24
-                        color: reader.themes[modelData].bg
-                        border.width: (App.settings.novelTheme || "app") === modelData ? 2 : 1
-                        border.color: (App.settings.novelTheme || "app") === modelData ? Theme.accent : Theme.borderStrong
-                        Text {
-                            anchors.centerIn: parent
-                            text: "Aa"
-                            color: reader.themes[modelData].text
-                            font.family: Theme.fontSerif
-                            font.pixelSize: 15
-                        }
-                        MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: App.setSetting("novelTheme", modelData) }
-                    }
-                }
-            }
-            Text { text: "Font"; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
-            Segmented {
-                options: [{ value: "Literata", label: qsTr("Serif") }, { value: "DM Sans", label: qsTr("Sans") }, { value: "Space Grotesk", label: qsTr("Grotesk") }]
-                value: reader.fontFamily
-                onPicked: (v) => App.setSetting("novelFont", v)
-            }
-            Text { text: "Size · " + reader.fontSize; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
-            ScSlider { width: parent.width; from: 13; to: 34; stepSize: 1; value: reader.fontSize; onMoved: App.setSetting("novelSize", value) }
-            Text { text: "Line spacing · " + reader.lineHeight.toFixed(2); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
-            ScSlider { width: parent.width; from: 1.2; to: 2.4; stepSize: 0.05; value: reader.lineHeight; onMoved: App.setSetting("novelLineHeight", value) }
-            Text { text: "Width · " + reader.columnWidth; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
-            ScSlider { width: parent.width; from: 480; to: 1200; stepSize: 10; value: App.settings.novelWidth || 720; onMoved: App.setSetting("novelWidth", value) }
-            Row {
-                spacing: 10
-                Toggle { checked: App.settings.novelJustify === true; onToggled: App.setSetting("novelJustify", checked) }
-                Text { anchors.verticalCenter: parent.verticalCenter; text: "Justify text"; color: Theme.text; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+        contentItem: Flickable {
+            implicitHeight: Math.min(options.implicitHeight, reader.height - 140 - reader.insetTop)
+            contentHeight: options.implicitHeight
+            clip: true
+            boundsBehavior: Flickable.StopAtBounds
+            WheelScroll {}
+            ScrollBar.vertical: ScScrollBar {}
+            ReaderOptions {
+                id: options
+                width: parent.width
+                reader: reader
             }
         }
+    }
+
+    ColorPicker {
+        id: bgPicker
+        title: qsTr("Page colour")
+        onChanged: (c) => App.setSetting("novelCustomBg", String(c).slice(0, 7))
+    }
+    ColorPicker {
+        id: textPicker
+        title: qsTr("Text colour")
+        onChanged: (c) => App.setSetting("novelCustomText", String(c).slice(0, 7))
+    }
+
+    // Everything in the text panel, as a column of labelled controls.
+    component OptionLabel: Text {
+        color: Theme.textMuted
+        font.family: Theme.fontSans
+        font.pixelSize: Theme.textXs
+        font.capitalization: Font.AllUppercase
+        font.letterSpacing: 1
+    }
+    component OptionSwitch: Row {
+        property alias checked: toggle.checked
+        property alias text: label.text
+        signal toggled(bool checked)
+        spacing: 10
+        Toggle { id: toggle; onToggled: parent.toggled(checked) }
+        Text { id: label; anchors.verticalCenter: parent.verticalCenter; color: Theme.text; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+    }
+
+    component ReaderOptions: Column {
+        id: opts
+        property Item reader
+        spacing: 12
+
+        OptionLabel { text: qsTr("Theme") }
+        Flow {
+            width: parent.width
+            spacing: 10
+            Repeater {
+                model: ["app", "paper", "sepia", "dark", "black", "custom"]
+                Rectangle {
+                    required property string modelData
+                    readonly property var colors: Theme.readingLook(modelData)
+                    width: 44
+                    height: 44
+                    radius: 22
+                    color: colors.bg
+                    border.width: (App.settings.novelTheme || "app") === modelData ? 2 : 1
+                    border.color: (App.settings.novelTheme || "app") === modelData ? Theme.accent : Theme.borderStrong
+                    Text { anchors.centerIn: parent; text: "Aa"; color: parent.colors.text; font.family: Theme.fontSerif; font.pixelSize: 15 }
+                    MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: App.setSetting("novelTheme", parent.modelData) }
+                }
+            }
+        }
+        Row {
+            visible: App.settings.novelTheme === "custom"
+            spacing: 8
+            ScButton { compact: true; text: qsTr("Page colour"); onClicked: { bgPicker.edit(Theme.readingLook("custom").bg); bgPicker.open() } }
+            ScButton { compact: true; text: qsTr("Text colour"); onClicked: { textPicker.edit(Theme.readingLook("custom").text); textPicker.open() } }
+        }
+
+        OptionLabel { text: qsTr("Font") }
+        Select {
+            width: parent.width
+            // The app's own three first, then every font on this device.
+            model: [{ value: "Literata", label: qsTr("Literata (serif)") }, { value: "DM Sans", label: qsTr("DM Sans (sans)") },
+                    { value: "Space Grotesk", label: "Space Grotesk" }]
+                .concat(Qt.fontFamilies().filter(f => ["Literata", "DM Sans", "Space Grotesk"].indexOf(f) < 0 && !f.startsWith("."))
+                .map(f => ({ value: f, label: f })))
+            value: opts.reader.fontFamily
+            onPicked: (v) => App.setSetting("novelFont", v)
+        }
+        Segmented {
+            options: [{ value: 300, label: qsTr("Light") }, { value: 400, label: qsTr("Regular") }, { value: 500, label: qsTr("Medium") }, { value: 600, label: qsTr("Bold") }]
+            value: opts.reader.fontWeight
+            onPicked: (v) => App.setSetting("novelWeight", v)
+        }
+
+        OptionLabel { text: qsTr("Size · %1").arg(opts.reader.fontSize) }
+        ScSlider { width: parent.width; from: 13; to: 40; stepSize: 1; value: opts.reader.fontSize; onMoved: App.setSetting("novelSize", value) }
+        OptionLabel { text: qsTr("Line spacing · %1").arg(opts.reader.lineHeight.toFixed(2)) }
+        ScSlider { width: parent.width; from: 1.1; to: 2.6; stepSize: 0.05; value: opts.reader.lineHeight; onMoved: App.setSetting("novelLineHeight", Math.round(value * 100) / 100) }
+        OptionLabel { text: qsTr("Paragraph spacing · %1").arg(opts.reader.paragraphSpacing.toFixed(1)) }
+        ScSlider { width: parent.width; from: 0; to: 2.5; stepSize: 0.1; value: opts.reader.paragraphSpacing; onMoved: App.setSetting("novelParagraphSpacing", Math.round(value * 10) / 10) }
+        OptionLabel { text: qsTr("Width · %1").arg(opts.reader.columnWidth) }
+        ScSlider { width: parent.width; from: 400; to: 1400; stepSize: 10; value: App.settings.novelWidth || 720; onMoved: App.setSetting("novelWidth", value) }
+        OptionLabel { text: qsTr("Side margins · %1").arg(opts.reader.margin) }
+        ScSlider { width: parent.width; from: 8; to: 120; stepSize: 2; value: opts.reader.margin; onMoved: App.setSetting("novelMargin", value) }
+        OptionSwitch { text: qsTr("Justify text"); checked: App.settings.novelJustify === true; onToggled: (c) => App.setSetting("novelJustify", c) }
+        OptionSwitch { text: qsTr("Indent paragraphs"); checked: opts.reader.indent; onToggled: (c) => App.setSetting("novelIndent", c) }
+        OptionLabel { text: qsTr("Dim the page · %1%").arg(Math.round((Number(App.settings.novelDim) || 0) * 100)) }
+        ScSlider { width: parent.width; from: 0; to: 0.8; stepSize: 0.05; value: Number(App.settings.novelDim) || 0; onMoved: App.setSetting("novelDim", Math.round(value * 100) / 100) }
+        OptionLabel { text: qsTr("Auto-scroll speed · %1").arg(Number(App.settings.novelAutoScrollSpeed) || 40) }
+        ScSlider { width: parent.width; from: 10; to: 200; stepSize: 5; value: Number(App.settings.novelAutoScrollSpeed) || 40; onMoved: App.setSetting("novelAutoScrollSpeed", value) }
+
+        OptionLabel { text: qsTr("Read aloud") }
+        Text {
+            visible: !Speech.available
+            width: parent.width
+            text: qsTr("No voices are installed on this device. Add one in the system's text-to-speech settings.")
+            color: Theme.textMuted
+            wrapMode: Text.Wrap
+            font.family: Theme.fontSans
+            font.pixelSize: Theme.textSm
+        }
+        Select {
+            visible: Speech.available && Speech.voices.length > 0
+            width: parent.width
+            model: [{ value: "", label: qsTr("System voice") }].concat(Speech.voices.map(v => ({ value: v.id, label: v.name + " · " + v.language })))
+            value: App.settings.ttsVoice || ""
+            onPicked: (v) => { App.setSetting("ttsVoice", v); if (opts.reader.speaking) opts.reader.startSpeaking(opts.reader.spokenBlock) }
+        }
+        OptionLabel { visible: Speech.available; text: qsTr("Voice speed · %1×").arg(Number(App.settings.ttsRate || 1).toFixed(2)) }
+        ScSlider {
+            visible: Speech.available
+            width: parent.width; from: 0.5; to: 3; stepSize: 0.05; value: Number(App.settings.ttsRate) || 1
+            onMoved: App.setSetting("ttsRate", Math.round(value * 100) / 100)
+            onPressedChanged: if (!pressed && opts.reader.speaking) opts.reader.startSpeaking(opts.reader.spokenBlock)
+        }
+        OptionLabel { visible: Speech.available; text: qsTr("Voice pitch · %1×").arg(Number(App.settings.ttsPitch || 1).toFixed(2)) }
+        ScSlider {
+            visible: Speech.available
+            width: parent.width; from: 0.5; to: 2; stepSize: 0.05; value: Number(App.settings.ttsPitch) || 1
+            onMoved: App.setSetting("ttsPitch", Math.round(value * 100) / 100)
+            onPressedChanged: if (!pressed && opts.reader.speaking) opts.reader.startSpeaking(opts.reader.spokenBlock)
+        }
+        OptionSwitch { visible: Speech.available; text: qsTr("Go on to the next chapter"); checked: App.settings.ttsContinue !== false; onToggled: (c) => App.setSetting("ttsContinue", c) }
+        OptionSwitch { visible: Speech.available; text: qsTr("Keep the spoken paragraph on screen"); checked: App.settings.ttsFollow !== false; onToggled: (c) => App.setSetting("ttsFollow", c) }
     }
 }

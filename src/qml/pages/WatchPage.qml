@@ -601,6 +601,7 @@ Rectangle {
         HoverHandler { id: sideHover }
 
         ListView {
+            WheelScroll {}
             anchors.fill: parent
             anchors.margins: 8
             width: 324
@@ -706,6 +707,7 @@ Rectangle {
         }
 
         ListView {
+            WheelScroll {}
             id: phoneList
             anchors.top: phoneHead.bottom
             anchors.bottom: parent.bottom

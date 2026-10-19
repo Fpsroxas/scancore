@@ -174,10 +174,7 @@ Rectangle {
 
     function scrollBy(delta) {
         if (mode === "strip") {
-            const base = scrollAnim.running ? scrollAnim.to : strip.contentY
-            const target = Math.max(strip.originY, Math.min(strip.contentHeight + strip.originY - strip.height, base + delta))
-            scrollAnim.to = target
-            scrollAnim.restart()
+            stripWheel.scrollTo(stripWheel.ease.running ? stripWheel.target + delta : strip.contentY + delta)
         } else {
             pageView.turn(delta > 0 ? 1 : -1)
         }
@@ -245,15 +242,13 @@ Rectangle {
             const i = indexAt(width / 2, contentY + height * 0.35)
             if (i >= 0) reader.currentPanel = i
             if (atYEnd && reader.panels.length > 0) reader.markFinished()
-            if (moving || scrollAnim.running) reader.controlsShown = false
+            if (moving || stripWheel.ease.running) reader.controlsShown = false
         }
 
-        NumberAnimation {
-            id: scrollAnim
-            target: strip
-            property: "contentY"
-            duration: 300
-            easing.type: Easing.OutCubic
+        // Wheel, touchpad and keys (scrollBy) share one eased scroll.
+        WheelScroll {
+            id: stripWheel
+            wheelStep: 180
         }
 
         // Phone: a tap toggles the controls; on desktop single clicks are left
@@ -264,15 +259,11 @@ Rectangle {
             onDoubleTapped: if (App.platform !== "android") reader.toggleControls()
         }
 
+        // Ctrl+wheel: the strip's width.
         WheelHandler {
-            acceptedDevices: PointerDevice.Mouse
-            onWheel: (event) => {
-                if (event.modifiers & Qt.ControlModifier) {
-                    reader.setOpt("readerWidth", Math.max(360, Math.min(2400, reader.stripWidth + (event.angleDelta.y > 0 ? 60 : -60))))
-                    return
-                }
-                reader.scrollBy(-event.angleDelta.y / 120 * 180)
-            }
+            acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+            acceptedModifiers: Qt.ControlModifier
+            onWheel: (event) => reader.setOpt("readerWidth", Math.max(360, Math.min(2400, reader.stripWidth + (event.angleDelta.y > 0 ? 60 : -60))))
         }
 
         delegate: Item {
@@ -471,6 +462,8 @@ Rectangle {
                     readonly property real total: pageImage.width + (two ? secondImage.width : 0)
                     PanelImage {
                         id: pageImage
+                        // Fitted pages are shown smaller than decoded.
+                        mipmap: true
                         readonly property real ratio: sourceWidth > 0 ? sourceHeight / sourceWidth : 1.45
                         width: Math.min(pages.slot, pages.height / ratio)
                         height: width * ratio
@@ -485,6 +478,8 @@ Rectangle {
                     }
                     PanelImage {
                         id: secondImage
+                        // Fitted pages are shown smaller than decoded.
+                        mipmap: true
                         readonly property real ratio: sourceWidth > 0 ? sourceHeight / sourceWidth : 1.45
                         visible: pages.two
                         width: Math.min(pages.slot, pages.height / ratio)

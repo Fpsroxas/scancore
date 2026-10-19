@@ -8,6 +8,7 @@
 #include "sources/comics/Engines.h"
 #include "sources/comics/Registry.h"
 #include "sources/local/Local.h"
+#include "sources/novels/Engines.h"
 #include "sources/novels/NovelSource.h"
 #include "sources/novels/Registry.h"
 
@@ -289,6 +290,67 @@ private slots:
         QCOMPARE(chapters[1].url, QStringLiteral("https://manhwaweb.com/leer/comic-solo_leveling_169-1_01"));
         QCOMPARE(chapters[1].title, QString::fromUtf8("Capítulo 1"));
         QCOMPARE(chapters[1].released, QStringLiteral("2023-08-07T19:20:00Z"));
+    }
+
+    void wtrLab() {
+        // The site's JSON and page data, through a stand-in site.
+        Http::setTestHandler([](const Request &request) -> std::optional<Response> {
+            const auto path = request.url.path();
+            const char *name = path == QLatin1String("/api/search")             ? "wtrlab-search.json"
+                               : path.startsWith(QLatin1String("/api/chapters/")) ? "wtrlab-chapters.json"
+                               : path.startsWith(QLatin1String("/api/v2/reader/content/")) ? "wtrlab-content.json"
+                               : path == QLatin1String("/api/reader/get")
+                                   ? (request.body.contains("\"chapter_no\":2") ? "wtrlab-locked.json" : "wtrlab-reader.json")
+                               : path.startsWith(QLatin1String("/en/novel/")) ? "wtrlab-novel.html"
+                                                                               : nullptr;
+            Response response;
+            response.status = name ? 200 : 404;
+            response.body = name ? fixture(name) : QByteArray();
+            response.contentType = path.endsWith(QLatin1String("-path")) ? "text/html" : "application/json";
+            response.finalUrl = request.url;
+            return response;
+        });
+        novels::SourceConfig config;
+        config.key = QStringLiteral("wtrlab");
+        config.label = QStringLiteral("WTR-LAB");
+        config.engine = QStringLiteral("wtrlab");
+        config.base = QStringLiteral("https://wtrlab.test");
+        config.hosts = {QStringLiteral("wtrlab.test")};
+        auto source = novels::createSource(config);
+        QVERIFY(source);
+
+        const auto found = source->search(QStringLiteral("test"));
+        QCOMPARE(found.size(), 1);
+        QCOMPARE(found[0].title, QStringLiteral("Test Land: The Test Path"));
+        QCOMPARE(found[0].url, QStringLiteral("https://wtrlab.test/en/novel/42/the-test-path"));
+
+        QList<novels::ChapterRef> chapters;
+        const auto book = source->book(QStringLiteral("https://wtrlab.test/pt/novel/42/the-test-path/chapter-1"), chapters);
+        QCOMPARE(book.url, QStringLiteral("https://wtrlab.test/en/novel/42/the-test-path"));
+        QCOMPARE(book.description, QStringLiteral("A Hero walks."));
+        QCOMPARE(book.status, QStringLiteral("Completed"));
+        QCOMPARE(book.rating, QStringLiteral("4.3"));
+        QCOMPARE(chapters.size(), 2);
+        QCOMPARE(chapters[1].title, QStringLiteral("Chapter 2: Onward"));
+        QCOMPARE(chapters[1].url, QStringLiteral("https://wtrlab.test/en/novel/42/the-test-path/chapter-2"));
+
+        // Glossary terms filled in, empty lines dropped, unknown terms empty,
+        // text escaped for the reader.
+        QString title;
+        const auto blocks = source->chapter(chapters[0].url, title);
+        QCOMPARE(title, QStringLiteral("Chapter 1: A Start"));
+        QCOMPARE(blocks.size(), 2);
+        QCOMPARE(blocks[0].text, QStringLiteral("The young hero met the Sect Master."));
+        QCOMPARE(blocks[1].html, QStringLiteral("&lt;She&gt; said ."));
+
+        // A locked chapter stays locked.
+        try {
+            source->chapter(chapters[1].url, title);
+            QFAIL("a locked chapter loaded");
+        } catch (const Error &e) {
+            QVERIFY(e.message().contains(QStringLiteral("locked")));
+        }
+        Http::setTestHandler({});
     }
 
     void gunzip() {

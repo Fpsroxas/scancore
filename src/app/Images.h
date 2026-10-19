@@ -36,6 +36,10 @@ class PanelImage : public QQuickItem {
     Q_PROPERTY(int maxDecodeWidth READ maxDecodeWidth WRITE setMaxDecodeWidth NOTIFY sourceChanged)
     // Trims a scan's plain white or black margin.
     Q_PROPERTY(bool cropBorders READ cropBorders WRITE setCropBorders NOTIFY sourceChanged)
+    // Smooth shrinking (mipmaps) for pages shown smaller than they were
+    // decoded, as fitted pages are: fine lines and screentones stay clean
+    // instead of shimmering. A third more video memory.
+    Q_PROPERTY(bool mipmap READ mipmap WRITE setMipmap NOTIFY mipmapChanged)
     Q_PROPERTY(int sourceWidth READ sourceWidth NOTIFY loaded)
     Q_PROPERTY(int sourceHeight READ sourceHeight NOTIFY loaded)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
@@ -56,6 +60,8 @@ public:
     void setMaxDecodeWidth(int width);
     bool cropBorders() const { return m_cropBorders; }
     void setCropBorders(bool crop);
+    bool mipmap() const { return m_mipmap; }
+    void setMipmap(bool mipmap);
     int sourceWidth() const { return m_size.width(); }
     int sourceHeight() const { return m_size.height(); }
     Status status() const { return m_status; }
@@ -67,6 +73,7 @@ signals:
     void sourceChanged();
     void loaded();
     void statusChanged();
+    void mipmapChanged();
 
 protected:
     QSGNode *updatePaintNode(QSGNode *old, UpdatePaintNodeData *) override;
@@ -84,6 +91,7 @@ private:
     QString m_referer;
     int m_maxDecodeWidth = 1600;
     bool m_cropBorders = false;
+    bool m_mipmap = false;
     QSize m_size;
     Status m_status = Null;
     QString m_error;

@@ -146,6 +146,7 @@ Rectangle {
     // Scrolls when the window is too short for every section above the
     // Settings button.
     Flickable {
+        WheelScroll {}
         id: navArea
         y: searchButton.y + searchButton.height + 18
         width: parent.width

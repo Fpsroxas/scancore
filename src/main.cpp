@@ -8,7 +8,6 @@
 #include "app/SingleInstance.h"
 #include "app/Sync.h"
 #include "app/Updater.h"
-#include "app/WebBridge.h"
 #include "core/Cookies.h"
 #include "core/Database.h"
 #include "core/Http.h"
@@ -32,6 +31,7 @@
 #include <QSystemTrayIcon>
 #endif
 #include <QDir>
+#include <QElapsedTimer>
 #include <QFile>
 #include <QFontDatabase>
 #include <QIcon>
@@ -152,7 +152,17 @@ void watchExtensions() {
 
 } // namespace
 
+// Development hook: SCANCORE_PROFILE=1 logs how long start-up takes, step
+// by step, up to the first frame on screen.
+static QElapsedTimer g_startClock;
+static void startStep(const char *step) {
+    static const bool on = qEnvironmentVariableIsSet("SCANCORE_PROFILE");
+    if (on)
+        qInfo("start-up: %-22s %5lld ms", step, g_startClock.elapsed());
+}
+
 int main(int argc, char *argv[]) {
+    g_startClock.start();
 #ifdef SCANCORE_HAVE_WEBENGINE
 #ifdef Q_OS_LINUX
     // Chromium's GPU compositor shares textures with Qt Quick through GBM;
@@ -185,6 +195,7 @@ int main(int argc, char *argv[]) {
     using Application = QApplication;
 #endif
     Application app(argc, argv);
+    startStep("application");
 #ifdef Q_OS_MACOS
     app.installEventFilter(new FileOpenFilter(&app));
 #endif
@@ -218,9 +229,11 @@ int main(int argc, char *argv[]) {
 
     QQuickStyle::setStyle(QStringLiteral("Basic"));
     loadFonts();
+    startStep("fonts");
 
     try {
         openStorage();
+        startStep("storage and sources");
         watchExtensions();
         Extensions::instance()->startHost();
     } catch (const Error &e) {
@@ -236,7 +249,6 @@ int main(int argc, char *argv[]) {
     }
 #endif
 
-    installWebBridge();
     Account::instance();
     Activity::instance();
     Sync::instance();
@@ -254,7 +266,6 @@ int main(int argc, char *argv[]) {
         if (!key.isEmpty() && !appState->settings().contains(key))
             appState->setSetting(key, Database::pref(QStringLiteral("setting.") + key));
     }
-
 #ifndef Q_OS_ANDROID
     QSystemTrayIcon tray(QApplication::windowIcon());
     QMenu trayMenu;
@@ -274,10 +285,14 @@ int main(int argc, char *argv[]) {
 
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed, &app, [] { QCoreApplication::exit(1); },
                      Qt::QueuedConnection);
+    startStep("before the interface");
     engine.loadFromModule("ScanCore", "Main");
     if (engine.rootObjects().isEmpty())
         return 1;
+    startStep("interface created");
     if (auto *window = qobject_cast<QQuickWindow *>(engine.rootObjects().first())) {
+        QObject::connect(window, &QQuickWindow::frameSwapped, window, [] { startStep("first frame"); },
+                         Qt::SingleShotConnection);
         QObject::connect(appState, &App::activateRequested, window, [window] {
             if (window->visibility() == QWindow::Hidden || window->visibility() == QWindow::Minimized)
                 window->setVisibility(QWindow::Windowed);

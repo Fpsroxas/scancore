@@ -13,6 +13,10 @@ namespace sc {
 
 void installWebBridge() {
 #ifdef SCANCORE_HAVE_WEBENGINE
+    static bool installed = false;
+    if (installed)
+        return;
+    installed = true;
     auto *profile = QQuickWebEngineProfile::defaultProfile();
     if (!profile)
         return;

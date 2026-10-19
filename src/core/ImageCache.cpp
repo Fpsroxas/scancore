@@ -116,7 +116,7 @@ QByteArray ImageCache::fetch(const QString &url, const QString &referer) {
     request.lane = Lane::Images;
     request.timeoutMs = 30000;
     request.maxBytes = 48 * 1024 * 1024;
-    request.headers = {{"Accept", "image/avif,image/webp,image/apng,image/*,*/*;q=0.8"}};
+    request.headers = {{"Accept", Http::ImageAccept}};
     if (!referer.isEmpty())
         request.headers.append(QPair<QByteArray, QByteArray>("Referer", referer.toUtf8()));
     Response response;

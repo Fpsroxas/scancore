@@ -186,6 +186,18 @@ SettingsPane {
             }
         }
         SettingRow {
+            visible: App.platform !== "android"
+            iconName: "move-vertical"
+            title: qsTr("Scroll speed")
+            description: qsTr("How far the mouse wheel and touchpad move pages.")
+            Segmented {
+                options: [{ value: 0.7, label: qsTr("Slow") }, { value: 1, label: qsTr("Default") },
+                          { value: 1.5, label: qsTr("Fast") }, { value: 2.2, label: qsTr("Faster") }]
+                value: Number(App.settings.scrollSpeed) || 1
+                onPicked: (v) => App.setSetting("scrollSpeed", v)
+            }
+        }
+        SettingRow {
             iconName: "sparkles"
             title: qsTr("Reduce motion")
             description: qsTr("Turns off page transitions, hover lifts, animated backgrounds and other animations.")

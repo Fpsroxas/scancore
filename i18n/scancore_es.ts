@@ -2086,6 +2086,26 @@
             <translation>Ágil</translation>
         </message>
         <message>
+            <source>Scroll speed</source>
+            <translation>Velocidad de desplazamiento</translation>
+        </message>
+        <message>
+            <source>How far the mouse wheel and touchpad move pages.</source>
+            <translation>Cuánto mueven las páginas la rueda del ratón y el panel táctil.</translation>
+        </message>
+        <message>
+            <source>Slow</source>
+            <translation>Lenta</translation>
+        </message>
+        <message>
+            <source>Fast</source>
+            <translation>Rápida</translation>
+        </message>
+        <message>
+            <source>Faster</source>
+            <translation>Muy rápida</translation>
+        </message>
+        <message>
             <source>Reduce motion</source>
             <translation>Reducir movimiento</translation>
         </message>
@@ -2530,6 +2550,18 @@
             <translation>Intentar de nuevo</translation>
         </message>
         <message>
+            <source>Previous paragraph</source>
+            <translation>Párrafo anterior</translation>
+        </message>
+        <message>
+            <source>Stop reading aloud</source>
+            <translation>Dejar de leer en voz alta</translation>
+        </message>
+        <message>
+            <source>Next paragraph</source>
+            <translation>Párrafo siguiente</translation>
+        </message>
+        <message>
             <source>Close (Esc)</source>
             <translation>Cerrar (Esc)</translation>
         </message>
@@ -2554,6 +2586,22 @@
             <translation>Comentarios</translation>
         </message>
         <message>
+            <source>No voices are installed on this device</source>
+            <translation>No hay voces instaladas en este dispositivo</translation>
+        </message>
+        <message>
+            <source>Read aloud from here</source>
+            <translation>Leer en voz alta desde aquí</translation>
+        </message>
+        <message>
+            <source>Stop scrolling</source>
+            <translation>Detener el desplazamiento</translation>
+        </message>
+        <message>
+            <source>Scroll by itself</source>
+            <translation>Desplazamiento automático</translation>
+        </message>
+        <message>
             <source>Text settings</source>
             <translation>Ajustes de texto</translation>
         </message>
@@ -2566,16 +2614,108 @@
             <translation>Capítulo </translation>
         </message>
         <message>
-            <source>Serif</source>
-            <translation>Serif</translation>
+            <source>Page colour</source>
+            <translation>Color de la página</translation>
         </message>
         <message>
-            <source>Sans</source>
-            <translation>Sans</translation>
+            <source>Text colour</source>
+            <translation>Color del texto</translation>
         </message>
         <message>
-            <source>Grotesk</source>
-            <translation>Grotesca</translation>
+            <source>Theme</source>
+            <translation>Tema</translation>
+        </message>
+        <message>
+            <source>Font</source>
+            <translation>Fuente</translation>
+        </message>
+        <message>
+            <source>Literata (serif)</source>
+            <translation>Literata (con serifa)</translation>
+        </message>
+        <message>
+            <source>DM Sans (sans)</source>
+            <translation>DM Sans (sin serifa)</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Fina</translation>
+        </message>
+        <message>
+            <source>Regular</source>
+            <translation>Normal</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Media</translation>
+        </message>
+        <message>
+            <source>Bold</source>
+            <translation>Negrita</translation>
+        </message>
+        <message>
+            <source>Size · %1</source>
+            <translation>Tamaño · %1</translation>
+        </message>
+        <message>
+            <source>Line spacing · %1</source>
+            <translation>Interlineado · %1</translation>
+        </message>
+        <message>
+            <source>Paragraph spacing · %1</source>
+            <translation>Espacio entre párrafos · %1</translation>
+        </message>
+        <message>
+            <source>Width · %1</source>
+            <translation>Ancho · %1</translation>
+        </message>
+        <message>
+            <source>Side margins · %1</source>
+            <translation>Márgenes laterales · %1</translation>
+        </message>
+        <message>
+            <source>Justify text</source>
+            <translation>Justificar texto</translation>
+        </message>
+        <message>
+            <source>Indent paragraphs</source>
+            <translation>Sangrar párrafos</translation>
+        </message>
+        <message>
+            <source>Dim the page · %1%</source>
+            <translation>Oscurecer la página · %1%</translation>
+        </message>
+        <message>
+            <source>Auto-scroll speed · %1</source>
+            <translation>Velocidad del desplazamiento automático · %1</translation>
+        </message>
+        <message>
+            <source>Read aloud</source>
+            <translation>Leer en voz alta</translation>
+        </message>
+        <message>
+            <source>No voices are installed on this device. Add one in the system&apos;s text-to-speech settings.</source>
+            <translation>No hay voces instaladas en este dispositivo. Añade una en los ajustes de texto a voz del sistema.</translation>
+        </message>
+        <message>
+            <source>System voice</source>
+            <translation>Voz del sistema</translation>
+        </message>
+        <message>
+            <source>Voice speed · %1×</source>
+            <translation>Velocidad de la voz · %1×</translation>
+        </message>
+        <message>
+            <source>Voice pitch · %1×</source>
+            <translation>Tono de la voz · %1×</translation>
+        </message>
+        <message>
+            <source>Go on to the next chapter</source>
+            <translation>Seguir con el capítulo siguiente</translation>
+        </message>
+        <message>
+            <source>Keep the spoken paragraph on screen</source>
+            <translation>Mantener en pantalla el párrafo que se lee</translation>
         </message>
     </context>
     <context>
@@ -3023,6 +3163,86 @@
         <message>
             <source>Even right edges, like a printed book.</source>
             <translation>Bordes derechos uniformes, como un libro impreso.</translation>
+        </message>
+        <message>
+            <source>Font weight</source>
+            <translation>Grosor de la fuente</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Fina</translation>
+        </message>
+        <message>
+            <source>Regular</source>
+            <translation>Normal</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Media</translation>
+        </message>
+        <message>
+            <source>Bold</source>
+            <translation>Negrita</translation>
+        </message>
+        <message>
+            <source>Paragraph spacing</source>
+            <translation>Espacio entre párrafos</translation>
+        </message>
+        <message>
+            <source>Side margins</source>
+            <translation>Márgenes laterales</translation>
+        </message>
+        <message>
+            <source>Space beside the text on narrow screens.</source>
+            <translation>Espacio a los lados del texto en pantallas estrechas.</translation>
+        </message>
+        <message>
+            <source>Indent paragraphs</source>
+            <translation>Sangrar párrafos</translation>
+        </message>
+        <message>
+            <source>Dim the page</source>
+            <translation>Oscurecer la página</translation>
+        </message>
+        <message>
+            <source>Darker than the screen goes, for reading in the dark.</source>
+            <translation>Más oscuro de lo que permite la pantalla, para leer a oscuras.</translation>
+        </message>
+        <message>
+            <source>Read aloud</source>
+            <translation>Leer en voz alta</translation>
+        </message>
+        <message>
+            <source>No voices are installed on this device</source>
+            <translation>No hay voces instaladas en este dispositivo</translation>
+        </message>
+        <message>
+            <source>Add one in the system&apos;s text-to-speech settings.</source>
+            <translation>Añade una en los ajustes de texto a voz del sistema.</translation>
+        </message>
+        <message>
+            <source>Voice</source>
+            <translation>Voz</translation>
+        </message>
+        <message>
+            <source>System voice</source>
+            <translation>Voz del sistema</translation>
+        </message>
+        <message>
+            <source>Voice speed</source>
+            <translation>Velocidad de la voz</translation>
+        </message>
+        <message>
+            <source>Voice pitch</source>
+            <translation>Tono de la voz</translation>
+        </message>
+        <message>
+            <source>Go on to the next chapter</source>
+            <translation>Seguir con el capítulo siguiente</translation>
+        </message>
+        <message>
+            <source>Keep the spoken paragraph on screen</source>
+            <translation>Mantener en pantalla el párrafo que se lee</translation>
         </message>
     </context>
     <context>
@@ -4070,6 +4290,10 @@
             <source>Black</source>
             <translation>Negro</translation>
         </message>
+        <message>
+            <source>Custom</source>
+            <translation>Personalizado</translation>
+        </message>
     </context>
     <context>
         <name>ThemeSettings</name>
@@ -4834,6 +5058,13 @@
         <message>
             <source>Could not save the picture</source>
             <translation>No se pudo guardar la imagen</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Speech</name>
+        <message>
+            <source>The voice could not read this.</source>
+            <translation>La voz no pudo leer esto.</translation>
         </message>
     </context>
 </TS>

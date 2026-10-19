@@ -14,7 +14,8 @@ AbstractButton {
     property string subtitle: ""
     property string badge: ""
     property real progress: -1
-    property int index: 0
+    // Place in the entrance's stagger.
+    property int order: 0
     property bool animateIn: true
     property real coverRatio: 1.5
     readonly property alias coverItem: cover
@@ -28,7 +29,7 @@ AbstractButton {
 
     onClicked: opened(item, cover)
 
-    // Entrance: rise and fade in, staggered by index.
+    // Entrance: rise and fade in, staggered by order.
     opacity: 0
     transform: Translate { id: rise; y: 14 }
     Component.onCompleted: {
@@ -41,7 +42,7 @@ AbstractButton {
     }
     SequentialAnimation {
         id: entrance
-        PauseAnimation { duration: Motion.stagger(card.index % 24) }
+        PauseAnimation { duration: Motion.stagger(card.order % 24) }
         ParallelAnimation {
             NumberAnimation { target: card; property: "opacity"; to: 1; duration: Motion.slow; easing.type: Easing.OutCubic }
             NumberAnimation { target: rise; property: "y"; to: 0; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }

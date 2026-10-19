@@ -209,6 +209,7 @@ Dialog {
                 }
             }
             ListView {
+                WheelScroll {}
                 id: results
                 width: parent.width
                 height: Math.min(contentHeight, 380)

@@ -84,6 +84,16 @@ QtObject {
         dark: { label: qsTr("Dark"), bg: "#17171a", text: "#d9d9de", muted: "#8b8b93", chrome: "#1f1f23" },
         black: { label: qsTr("Black"), bg: "#000000", text: "#c9c9ce", muted: "#77777e", chrome: "#0d0d0f" }
     })
+    // A reading theme by name, "custom" being the colours chosen in the
+    // reader (novelCustomBg, novelCustomText).
+    function readingLook(name) {
+        if (name === "custom") {
+            const bg = hexOr(App.settings.novelCustomBg, "#1b1a17")
+            const fg = hexOr(App.settings.novelCustomText, "#e6dfd2")
+            return { label: qsTr("Custom"), bg: bg, text: fg, muted: Qt.tint(bg, alpha(fg, 0.6)), chrome: Qt.tint(bg, alpha(fg, 0.06)) }
+        }
+        return readingThemes[name] || readingThemes.app
+    }
 
     readonly property string fontSans: "DM Sans"
     readonly property string fontDisplay: "Space Grotesk"

@@ -1,5 +1,6 @@
 #include "App.h"
 
+#include "WebBridge.h"
 #include "Images.h"
 #include "Library.h"
 #include "core/Database.h"
@@ -50,6 +51,22 @@ const QVariantMap kDefaults{
     {"novelWidth", 720},
     {"novelTheme", "app"},
     {"novelJustify", false},
+    // More of the novel reader's typography and look.
+    {"novelWeight", 400},
+    {"novelParagraphSpacing", 0.9},
+    {"novelIndent", false},
+    {"novelMargin", 32},
+    {"novelDim", 0},
+    {"novelCustomBg", "#1b1a17"},
+    {"novelCustomText", "#e6dfd2"},
+    {"novelAutoScrollSpeed", 40},
+    // Reading aloud (Speech): voice id, speed and pitch multipliers, go on
+    // to the next chapter, keep the spoken paragraph on screen.
+    {"ttsVoice", ""},
+    {"ttsRate", 1},
+    {"ttsPitch", 1},
+    {"ttsContinue", true},
+    {"ttsFollow", true},
     {"autoNext", true},
     {"autoSkip", false},
     {"libraryCheckHours", 2},
@@ -71,6 +88,7 @@ const QVariantMap kDefaults{
     {"autoUpdate", true},
     // Extension updates signed with a trusted key install by themselves.
     {"autoUpdateExtensions", true},
+    {"scrollSpeed", 1},
     {"novelSource", "all"},
 };
 
@@ -120,6 +138,8 @@ bool App::webEngine() const {
     return false;
 #endif
 }
+
+void App::prepareWeb() const { installWebBridge(); }
 
 QVariantMap App::startAction() const {
     return QJsonDocument::fromJson(qgetenv("SCANCORE_START")).object().toVariantMap();

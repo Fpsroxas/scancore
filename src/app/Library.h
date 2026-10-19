@@ -69,6 +69,8 @@ signals:
     void removed(const QString &seriesId);
 
 private:
+    void saveProgress(const QVariantMap &series, const QVariantMap &unit, const QVariantMap &position, double percent,
+                      bool completed);
     // Private so QML uses create(): Qt builds its own instance of a
     // singleton it can default-construct, and C++ and QML would then
     // work on different objects.

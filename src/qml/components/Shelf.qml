@@ -144,7 +144,7 @@ Column {
                 width: shelf.cardWidth
                 height: list.height
                 item: modelData
-                index: list.scrolled ? 0 : index
+                order: list.scrolled ? 0 : index
                 animateIn: !shelf.settled
                 coverRatio: shelf.coverRatio
                 subtitle: shelf.subtitleFor(modelData)

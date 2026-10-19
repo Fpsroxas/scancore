@@ -43,6 +43,8 @@ public:
     Q_INVOKABLE QString image(const QString &url, const QString &referer = QString()) const;
     Q_INVOKABLE QString icon(const QString &name, const QString &color) const;
     Q_INVOKABLE void openUrl(const QString &url) const;
+    // Before an embedded browser view loads anything (see WebBridge.h).
+    Q_INVOKABLE void prepareWeb() const;
     // Android: send the app to the background, as Back on the first screen
     // does. Does nothing elsewhere.
     Q_INVOKABLE void moveToBackground() const;

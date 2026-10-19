@@ -64,6 +64,12 @@ endif()
 
 # PDF files on this device (Settings → Sources), drawn by Qt PDF.
 find_package(Qt6 6.9 QUIET COMPONENTS Pdf)
+# Reading novels aloud with the system's voices: Qt Speech on desktop. On
+# Android the app speaks through Android's own engine (Speech.java), which
+# spares the APK Qt Multimedia and its FFmpeg backend.
+if(NOT ANDROID)
+    find_package(Qt6 6.9 QUIET COMPONENTS TextToSpeech)
+endif()
 # Translations (i18n/); without Qt's Linguist tools the app is English only.
 find_package(Qt6 6.9 QUIET COMPONENTS LinguistTools)
 

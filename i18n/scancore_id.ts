@@ -2086,6 +2086,26 @@
             <translation>Gesit</translation>
         </message>
         <message>
+            <source>Scroll speed</source>
+            <translation>Kecepatan gulir</translation>
+        </message>
+        <message>
+            <source>How far the mouse wheel and touchpad move pages.</source>
+            <translation>Seberapa jauh roda mouse dan touchpad menggeser halaman.</translation>
+        </message>
+        <message>
+            <source>Slow</source>
+            <translation>Lambat</translation>
+        </message>
+        <message>
+            <source>Fast</source>
+            <translation>Cepat</translation>
+        </message>
+        <message>
+            <source>Faster</source>
+            <translation>Lebih cepat</translation>
+        </message>
+        <message>
             <source>Reduce motion</source>
             <translation>Kurangi gerakan</translation>
         </message>
@@ -2530,6 +2550,18 @@
             <translation>Coba lagi</translation>
         </message>
         <message>
+            <source>Previous paragraph</source>
+            <translation>Paragraf sebelumnya</translation>
+        </message>
+        <message>
+            <source>Stop reading aloud</source>
+            <translation>Berhenti membacakan</translation>
+        </message>
+        <message>
+            <source>Next paragraph</source>
+            <translation>Paragraf berikutnya</translation>
+        </message>
+        <message>
             <source>Close (Esc)</source>
             <translation>Tutup (Esc)</translation>
         </message>
@@ -2554,6 +2586,22 @@
             <translation>Komentar</translation>
         </message>
         <message>
+            <source>No voices are installed on this device</source>
+            <translation>Tidak ada suara yang terpasang di perangkat ini</translation>
+        </message>
+        <message>
+            <source>Read aloud from here</source>
+            <translation>Bacakan dari sini</translation>
+        </message>
+        <message>
+            <source>Stop scrolling</source>
+            <translation>Hentikan gulir</translation>
+        </message>
+        <message>
+            <source>Scroll by itself</source>
+            <translation>Gulir otomatis</translation>
+        </message>
+        <message>
             <source>Text settings</source>
             <translation>Pengaturan teks</translation>
         </message>
@@ -2566,16 +2614,108 @@
             <translation>Bab </translation>
         </message>
         <message>
-            <source>Serif</source>
-            <translation>Serif</translation>
+            <source>Page colour</source>
+            <translation>Warna halaman</translation>
         </message>
         <message>
-            <source>Sans</source>
-            <translation>Sans</translation>
+            <source>Text colour</source>
+            <translation>Warna teks</translation>
         </message>
         <message>
-            <source>Grotesk</source>
-            <translation>Grotesk</translation>
+            <source>Theme</source>
+            <translation>Tema</translation>
+        </message>
+        <message>
+            <source>Font</source>
+            <translation>Font</translation>
+        </message>
+        <message>
+            <source>Literata (serif)</source>
+            <translation>Literata (serif)</translation>
+        </message>
+        <message>
+            <source>DM Sans (sans)</source>
+            <translation>DM Sans (sans)</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Tipis</translation>
+        </message>
+        <message>
+            <source>Regular</source>
+            <translation>Biasa</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Sedang</translation>
+        </message>
+        <message>
+            <source>Bold</source>
+            <translation>Tebal</translation>
+        </message>
+        <message>
+            <source>Size · %1</source>
+            <translation>Ukuran · %1</translation>
+        </message>
+        <message>
+            <source>Line spacing · %1</source>
+            <translation>Spasi baris · %1</translation>
+        </message>
+        <message>
+            <source>Paragraph spacing · %1</source>
+            <translation>Jarak paragraf · %1</translation>
+        </message>
+        <message>
+            <source>Width · %1</source>
+            <translation>Lebar · %1</translation>
+        </message>
+        <message>
+            <source>Side margins · %1</source>
+            <translation>Margin samping · %1</translation>
+        </message>
+        <message>
+            <source>Justify text</source>
+            <translation>Rata kiri-kanan</translation>
+        </message>
+        <message>
+            <source>Indent paragraphs</source>
+            <translation>Inden paragraf</translation>
+        </message>
+        <message>
+            <source>Dim the page · %1%</source>
+            <translation>Redupkan halaman · %1%</translation>
+        </message>
+        <message>
+            <source>Auto-scroll speed · %1</source>
+            <translation>Kecepatan gulir otomatis · %1</translation>
+        </message>
+        <message>
+            <source>Read aloud</source>
+            <translation>Bacakan</translation>
+        </message>
+        <message>
+            <source>No voices are installed on this device. Add one in the system&apos;s text-to-speech settings.</source>
+            <translation>Tidak ada suara yang terpasang di perangkat ini. Tambahkan di pengaturan text-to-speech sistem.</translation>
+        </message>
+        <message>
+            <source>System voice</source>
+            <translation>Suara sistem</translation>
+        </message>
+        <message>
+            <source>Voice speed · %1×</source>
+            <translation>Kecepatan suara · %1×</translation>
+        </message>
+        <message>
+            <source>Voice pitch · %1×</source>
+            <translation>Nada suara · %1×</translation>
+        </message>
+        <message>
+            <source>Go on to the next chapter</source>
+            <translation>Lanjut ke bab berikutnya</translation>
+        </message>
+        <message>
+            <source>Keep the spoken paragraph on screen</source>
+            <translation>Tetap tampilkan paragraf yang dibacakan</translation>
         </message>
     </context>
     <context>
@@ -3023,6 +3163,86 @@
         <message>
             <source>Even right edges, like a printed book.</source>
             <translation>Tepi kanan rata, seperti buku cetak.</translation>
+        </message>
+        <message>
+            <source>Font weight</source>
+            <translation>Ketebalan font</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Tipis</translation>
+        </message>
+        <message>
+            <source>Regular</source>
+            <translation>Biasa</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Sedang</translation>
+        </message>
+        <message>
+            <source>Bold</source>
+            <translation>Tebal</translation>
+        </message>
+        <message>
+            <source>Paragraph spacing</source>
+            <translation>Jarak paragraf</translation>
+        </message>
+        <message>
+            <source>Side margins</source>
+            <translation>Margin samping</translation>
+        </message>
+        <message>
+            <source>Space beside the text on narrow screens.</source>
+            <translation>Ruang di samping teks pada layar sempit.</translation>
+        </message>
+        <message>
+            <source>Indent paragraphs</source>
+            <translation>Inden paragraf</translation>
+        </message>
+        <message>
+            <source>Dim the page</source>
+            <translation>Redupkan halaman</translation>
+        </message>
+        <message>
+            <source>Darker than the screen goes, for reading in the dark.</source>
+            <translation>Lebih gelap dari batas layar, untuk membaca dalam gelap.</translation>
+        </message>
+        <message>
+            <source>Read aloud</source>
+            <translation>Bacakan</translation>
+        </message>
+        <message>
+            <source>No voices are installed on this device</source>
+            <translation>Tidak ada suara yang terpasang di perangkat ini</translation>
+        </message>
+        <message>
+            <source>Add one in the system&apos;s text-to-speech settings.</source>
+            <translation>Tambahkan di pengaturan text-to-speech sistem.</translation>
+        </message>
+        <message>
+            <source>Voice</source>
+            <translation>Suara</translation>
+        </message>
+        <message>
+            <source>System voice</source>
+            <translation>Suara sistem</translation>
+        </message>
+        <message>
+            <source>Voice speed</source>
+            <translation>Kecepatan suara</translation>
+        </message>
+        <message>
+            <source>Voice pitch</source>
+            <translation>Nada suara</translation>
+        </message>
+        <message>
+            <source>Go on to the next chapter</source>
+            <translation>Lanjut ke bab berikutnya</translation>
+        </message>
+        <message>
+            <source>Keep the spoken paragraph on screen</source>
+            <translation>Tetap tampilkan paragraf yang dibacakan</translation>
         </message>
     </context>
     <context>
@@ -4070,6 +4290,10 @@
             <source>Black</source>
             <translation>Hitam</translation>
         </message>
+        <message>
+            <source>Custom</source>
+            <translation>Kustom</translation>
+        </message>
     </context>
     <context>
         <name>ThemeSettings</name>
@@ -4834,6 +5058,13 @@
         <message>
             <source>Could not save the picture</source>
             <translation>Gambar tidak dapat disimpan</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Speech</name>
+        <message>
+            <source>The voice could not read this.</source>
+            <translation>Suara tidak dapat membacakan ini.</translation>
         </message>
     </context>
 </TS>

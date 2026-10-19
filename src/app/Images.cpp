@@ -273,6 +273,16 @@ void PanelImage::setCropBorders(bool crop) {
     startSoon();
 }
 
+void PanelImage::setMipmap(bool mipmap) {
+    if (mipmap == m_mipmap)
+        return;
+    m_mipmap = mipmap;
+    emit mipmapChanged();
+    // Textures already uploaded are rebuilt from the decoded image.
+    if (m_status == Ready)
+        start();
+}
+
 void PanelImage::componentComplete() {
     QQuickItem::componentComplete();
     start();
@@ -362,10 +372,11 @@ QSGNode *PanelImage::updatePaintNode(QSGNode *old, UpdatePaintNodeData *) {
         }
         for (const auto &tile : std::as_const(m_pendingTiles)) {
             auto *node = window()->createImageNode();
-            node->setTexture(window()->createTextureFromImage(tile));
+            node->setTexture(window()->createTextureFromImage(
+                tile, m_mipmap ? QQuickWindow::TextureHasMipmaps : QQuickWindow::CreateTextureOptions()));
             node->setOwnsTexture(true);
             node->setFiltering(QSGTexture::Linear);
-            node->setMipmapFiltering(QSGTexture::None);
+            node->setMipmapFiltering(m_mipmap ? QSGTexture::Linear : QSGTexture::None);
             root->appendChildNode(node);
         }
         // Textures now live on the GPU; drop the CPU copies.

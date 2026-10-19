@@ -218,6 +218,15 @@
   ],
   "novels": [
     {
+      "key": "wtrlab",
+      "label": "WTR-LAB",
+      "engine": "wtrlab",
+      "base": "https://wtr-lab.com",
+      "hosts": [
+        "wtr-lab.com"
+      ]
+    },
+    {
       "key": "royalroad",
       "label": "Royal Road",
       "engine": "royalroad",

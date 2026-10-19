@@ -12,7 +12,7 @@ concurrency:
 env:
   QT_VERSION: 6.11.3
   # qtwebview: the anime player on Windows (WebView2) and macOS (WKWebView).
-  QT_MODULES: qtwebengine qtwebview qtwebchannel qtpositioning qtimageformats qtpdf
+  QT_MODULES: qtwebengine qtwebview qtwebchannel qtpositioning qtimageformats qtpdf qtspeech qtmultimedia
 
 jobs:
   build:

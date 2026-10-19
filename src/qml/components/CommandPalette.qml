@@ -160,6 +160,7 @@ Popup {
         }
 
         ListView {
+            WheelScroll {}
             id: list
             width: parent.width
             height: root.height - input.height

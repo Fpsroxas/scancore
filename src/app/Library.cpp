@@ -84,6 +84,13 @@ void Library::upsertSeries(const QVariantMap &s) {
     const auto id = s.value(QStringLiteral("id")).toString();
     if (id.isEmpty())
         return;
+    // Ids are "<media>:<source>:<link>", for summaries without those.
+    auto media = s.value(QStringLiteral("media")).toString();
+    if (media.isEmpty())
+        media = id.section(QLatin1Char(':'), 0, 0);
+    auto source = s.value(QStringLiteral("source")).toString();
+    if (source.isEmpty())
+        source = id.section(QLatin1Char(':'), 1, 1);
     auto genres = s.value(QStringLiteral("genres"));
     const auto genreText = genres.typeId() == QMetaType::QStringList || genres.typeId() == QMetaType::QVariantList
                                ? genres.toStringList().join(QStringLiteral(", "))
@@ -103,7 +110,7 @@ void Library::upsertSeries(const QVariantMap &s) {
             extra = COALESCE(NULLIF(excluded.extra, ''), series.extra),
             updated_at = excluded.updated_at
     )"),
-                   {id, s.value(QStringLiteral("media")).toString(), s.value(QStringLiteral("source")).toString(),
+                   {id, media, source,
                     s.value(QStringLiteral("sourceUrl")).toString(), s.value(QStringLiteral("title")).toString(),
                     s.value(QStringLiteral("cover")).toString(), s.value(QStringLiteral("description")).toString(),
                     s.value(QStringLiteral("author")).toString(), s.value(QStringLiteral("status")).toString(),
@@ -226,6 +233,19 @@ void Library::recordProgress(const QVariantMap &series, const QVariantMap &unit,
     const auto key = unit.value(QStringLiteral("key")).toString();
     if (seriesId.isEmpty() || key.isEmpty())
         return;
+    // Called while reading and watching: a storage failure must not end
+    // the app.
+    try {
+        saveProgress(series, unit, position, percent, completed);
+    } catch (const Error &e) {
+        qWarning() << "Progress not saved:" << e.message();
+    }
+}
+
+void Library::saveProgress(const QVariantMap &series, const QVariantMap &unit, const QVariantMap &position, double percent,
+                           bool completed) {
+    const auto seriesId = series.value(QStringLiteral("id")).toString();
+    const auto key = unit.value(QStringLiteral("key")).toString();
     upsertSeries(series);
     const bool wasCompleted =
         Database::scalar(QStringLiteral("SELECT completed FROM progress WHERE series_id = ? AND unit_key = ?"), {seriesId, key})

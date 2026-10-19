@@ -30,6 +30,7 @@ add_library(scancore_core STATIC
     sources/novels/LnCrawl.cpp
     sources/novels/Registry.cpp
     sources/novels/TextBlocks.cpp
+    sources/novels/WtrLab.cpp
 )
 if(ANDROID)
     target_sources(scancore_core PRIVATE extensions/JniHost.cpp)
@@ -98,6 +99,7 @@ qt_add_qml_module(scancore
         app/Images.cpp app/Images.h
         app/Importer.cpp app/Importer.h
         app/SingleInstance.cpp app/SingleInstance.h
+        app/Speech.cpp app/Speech.h
         app/Trackers.cpp app/Trackers.h
         app/Sync.cpp app/Sync.h
         app/Library.cpp app/Library.h
@@ -134,7 +136,8 @@ qt_add_resources(scancore assets
         ${PROJECT_SOURCE_DIR}/resources/fonts/Literata.ttf
         ${PROJECT_SOURCE_DIR}/resources/fonts/Literata-Italic.ttf
         ${PROJECT_SOURCE_DIR}/resources/branding/scancore.svg
-        ${PROJECT_SOURCE_DIR}/resources/branding/shadow.png)
+        ${PROJECT_SOURCE_DIR}/resources/branding/shadow.png
+        ${PROJECT_SOURCE_DIR}/resources/shaders/cover.frag.qsb)
 foreach(icon ${SCANCORE_ICONS})
     list(APPEND SCANCORE_ICON_PATHS ${PROJECT_SOURCE_DIR}/${icon})
 endforeach()
@@ -183,6 +186,10 @@ endif()
 if(SCANCORE_WITH_WEBENGINE)
     target_link_libraries(scancore PRIVATE Qt6::WebEngineQuick Qt6::WebEngineCore)
     target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_WEBENGINE)
+endif()
+if(TARGET Qt6::TextToSpeech)
+    target_link_libraries(scancore PRIVATE Qt6::TextToSpeech)
+    target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_TTS)
 endif()
 if(TARGET Qt6::Pdf)
     target_link_libraries(scancore PRIVATE Qt6::Pdf)

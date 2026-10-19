@@ -44,6 +44,7 @@ Item {
     readonly property int failedCount: items.filter(i => i.status === "failed").length
 
     ListView {
+        WheelScroll {}
         id: list
         anchors.fill: parent
         model: page.items

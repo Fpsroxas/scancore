@@ -32,6 +32,8 @@ std::unique_ptr<Source> createSource(const SourceConfig &config) {
         return std::make_unique<RoyalRoad>(config);
     if (config.engine == QLatin1String("novelfull") || config.engine == QLatin1String("freewebnovel"))
         return std::make_unique<NovelFull>(config);
+    if (config.engine == QLatin1String("wtrlab"))
+        return std::make_unique<WtrLab>(config);
     return nullptr;
 }
 
