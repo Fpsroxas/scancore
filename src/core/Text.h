@@ -17,4 +17,20 @@ QString titleKey(const QString &text);
 // "English", "es" -> "Español".
 QString languageName(const QString &code);
 
+// The code of a language written by name, in English or in itself
+// ("Español", "Spanish" -> "es"), as LNReader plugin lists write them; a
+// code stays a code. Empty when unknown.
+QString languageCode(const QString &name);
+
+// The base of a language code: "es-la" and "es_419" -> "es", "pt_BR" -> "pt".
+QString baseLanguage(const QString &code);
+
+// The language content should be in: the "Languages for All sources"
+// setting when set, else the interface language ("system" is the system
+// locale), else English. Short code ("es", "pt"). Orders "Read from" and
+// breaks ties in search; new repositories install extensions in it.
+QString contentLanguage(const QString &sourceLanguages, const QString &interfaceLanguage, const QString &systemLocale);
+// The same from the stored settings.
+QString contentLanguage();
+
 } // namespace sc

@@ -103,13 +103,6 @@ SettingsPane {
             }
         }
         SettingRow {
-            iconName: "search"
-            title: qsTr("Search with Comick's catalogue")
-            description: qsTr("“All sources” searches comick.dev, which knows almost every series under all its names, then opens ")
-                + qsTr("the one you pick from a source that has it. Off: each source is searched directly.")
-            Toggle { checked: App.settings.comickCatalog !== false; onToggled: App.setSetting("comickCatalog", checked) }
-        }
-        SettingRow {
             iconName: "languages"
             title: qsTr("Languages for “All sources”")
             description: qsTr("Which comic sources “All sources” searches and finds series on. Each source can still be picked on its own.")
@@ -127,6 +120,43 @@ SettingsPane {
         }
     }
 
+    // The Java runtime extensions run in on a computer (phones run them
+    // themselves).
+    SettingsGroup {
+        visible: App.platform !== "android" && Extensions.runtimeAvailable
+        title: qsTr("Extensions")
+        SettingRow {
+            iconName: "download"
+            title: qsTr("Extensions runtime")
+            description: Extensions.busyWith === "runtime" ? Extensions.status
+                : Extensions.runtimeInstalled ? qsTr("Installed. Extensions from the repositories you add run in it.")
+                : qsTr("About 100 MB. Needed to run extensions on this computer; SCANCORE downloads it into the app data folder.")
+            Row {
+                spacing: 8
+                ScButton {
+                    visible: !Extensions.runtimeInstalled
+                    variant: "primary"
+                    text: qsTr("Install")
+                    iconName: "download"
+                    loading: Extensions.busyWith === "runtime"
+                    enabled: !Extensions.busy
+                    onClicked: {
+                        const task = Extensions.installRuntime()
+                        task.finished.connect(() => Router.toast(qsTr("Extensions runtime installed"), "success"))
+                        task.failed.connect((error) => Router.toast(error, "error"))
+                    }
+                }
+                ScButton {
+                    visible: Extensions.runtimeInstalled
+                    text: qsTr("Remove")
+                    variant: "ghost"
+                    enabled: !Extensions.busy
+                    onClicked: Extensions.removeRuntime()
+                }
+            }
+        }
+    }
+
     SettingsGroup {
         visible: App.platform !== "android"
         title: qsTr("Extended novel sources")
@@ -136,7 +166,7 @@ SettingsPane {
                 : Extensions.novelPackInstalled ? pane.extendedCount + qsTr(" more novel sites installed")
                 : qsTr("About 260 more novel sites")
             description: !Extensions.novelPackAvailable ? qsTr("The downloadable Python novel-source pack is turned off in this build.")
-                : Extensions.busy ? Extensions.status
+                : Extensions.busyWith === "novels" ? Extensions.status
                 : Extensions.novelPackInstalled ? "From lightnovel-crawler. Pick them from “More sources” on the Novels page; pasted book links from any of them open directly."
                 : qsTr("Uses lightnovel-crawler. Downloads a private copy of Python and the crawler (about 400 MB) into the app data folder.")
                   + (Extensions.status ? qsTr(" Last attempt: ") + Extensions.status : "")
@@ -147,7 +177,7 @@ SettingsPane {
                     variant: "primary"
                     text: qsTr("Install")
                     iconName: "download"
-                    loading: Extensions.busy
+                    loading: Extensions.busyWith === "novels"
                     enabled: !Extensions.busy
                     onClicked: {
                         const task = Extensions.installNovelPack()

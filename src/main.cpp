@@ -2,6 +2,7 @@
 #include "app/Activity.h"
 #include "app/App.h"
 #include "app/Customize.h"
+#include "app/Extensions.h"
 #include "app/Images.h"
 #include "app/Presence.h"
 #include "app/SingleInstance.h"
@@ -12,7 +13,9 @@
 #include "core/Database.h"
 #include "core/Http.h"
 #include "core/ImageCache.h"
+#include "extensions/Manager.h"
 #include "sources/Manifest.h"
+#include "sources/catalogue/Catalogue.h"
 #include "sources/comics/Registry.h"
 #include "sources/local/Local.h"
 #include "sources/novels/Registry.h"
@@ -121,9 +124,30 @@ void openStorage() {
     const qint64 cacheMb = std::max<qint64>(128, Database::pref(QStringLiteral("setting.imageCacheMB"), 1024).toLongLong());
     ImageCache::init(cache + QStringLiteral("/images"), cacheMb * 1024 * 1024);
     registerPdf();
+#ifdef SCANCORE_MAL_CLIENT_ID
+    catalogue::setMalClientId(QStringLiteral(SCANCORE_MAL_CLIENT_ID));
+#endif
     Manifest::load(data + QStringLiteral("/manifest.json"));
+    ext::Manager::setStorage(data + QStringLiteral("/extensions"));
     comics::Registry::rebuild();
     novels::Registry::rebuild();
+}
+
+// Installed, removed, trusted or switched extensions change the sources:
+// the registries are rebuilt once a burst of changes settles.
+void watchExtensions() {
+    static QTimer *rebuild = [] {
+        auto *timer = new QTimer(App::instance());
+        timer->setSingleShot(true);
+        timer->setInterval(150);
+        QObject::connect(timer, &QTimer::timeout, App::instance(), [] {
+            comics::Registry::rebuild();
+            novels::Registry::rebuild();
+            emit App::instance()->manifestChanged();
+        });
+        return timer;
+    }();
+    ext::Manager::setChangedCallback([] { QMetaObject::invokeMethod(rebuild, qOverload<>(&QTimer::start)); });
 }
 
 } // namespace
@@ -197,6 +221,8 @@ int main(int argc, char *argv[]) {
 
     try {
         openStorage();
+        watchExtensions();
+        Extensions::instance()->startHost();
     } catch (const Error &e) {
         qCritical().noquote() << e.message();
         return 1;
@@ -281,6 +307,7 @@ int main(int argc, char *argv[]) {
     Updater::instance()->startAutomatic();
 
     QObject::connect(&app, &Application::aboutToQuit, [] {
+        Extensions::instance()->stopHost();
         CancelScope::cancelAll();
         CookieJar::shared().save();
     });

@@ -2,9 +2,13 @@
 // Searches each enabled source, opens the first result and reads its first
 // chapter (its newest with "latest"). Hits real sites, so it is not part of
 // ctest.
+//
+// scancore_probe catalogue [query] [comick|anilist|mal] checks the tracker
+// catalogues: comic and novel shelves and search.
 
 #include "core/Http.h"
 #include "sources/Manifest.h"
+#include "sources/catalogue/Catalogue.h"
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
 
@@ -49,7 +53,36 @@ int main(int argc, char **argv) {
     const bool newest = args.value(4) == QLatin1String("latest");
     int failures = 0;
 
-    if (kind == QLatin1String("comics")) {
+    if (kind == QLatin1String("catalogue")) {
+        catalogue::setMalClientId(QStringLiteral(SCANCORE_MAL_CLIENT_ID));
+        const auto query = args.value(2, QStringLiteral("solo leveling"));
+        for (const auto *key : {"comick", "anilist", "mal"}) {
+            auto catalogue = catalogue::byKey(QString::fromLatin1(key));
+            if (!catalogue || (!only.isEmpty() && catalogue->key() != only))
+                continue;
+            out << catalogue->label() << Qt::endl;
+            bool ok = true;
+            for (const auto *media : {"comic", "novel"}) {
+                const auto m = QString::fromLatin1(media);
+                if (!catalogue->supports(m))
+                    continue;
+                ok = step(m + QStringLiteral(" shelves"), [&] {
+                    QStringList parts;
+                    for (const auto &shelf : catalogue->shelves(m, false))
+                        parts.append(QStringLiteral("%1 %2").arg(shelf.key).arg(shelf.entries.size()));
+                    return parts.join(QStringLiteral(", "));
+                }) && ok;
+                ok = step(m + QStringLiteral(" search"), [&] {
+                    const auto entries = catalogue->search(m, query, false);
+                    if (entries.isEmpty())
+                        throw Error(QStringLiteral("no results"));
+                    const auto names = catalogue->names(entries.first());
+                    return QStringLiteral("%1 results, first: %2 (%3 names)").arg(entries.size()).arg(entries.first().title).arg(names.size());
+                }) && ok;
+            }
+            failures += ok ? 0 : 1;
+        }
+    } else if (kind == QLatin1String("comics")) {
         const auto query = args.value(2, QStringLiteral("solo leveling"));
         for (const auto &source : comics::Registry::all()) {
             if (!source->enabled() || (!only.isEmpty() && source->key() != only))

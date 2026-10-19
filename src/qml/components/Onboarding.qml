@@ -3,14 +3,17 @@ import QtQuick.Controls.Basic
 import QtQuick.Shapes
 import ScanCore
 
-// First-run welcome: what SCANCORE does, a quick look-and-feel choice, an
-// optional scancore.onl account, and a few tips. Shown until finished or
+// First-run welcome: the interface language, what SCANCORE does, the tracker
+// to keep, a quick look-and-feel choice, an optional scancore.onl account,
+// and a few tips. Shown until finished or
 // skipped; Settings can show it again.
 Rectangle {
     id: root
     property int step: App.startAction.onboardingStep || 0
     property int direction: 1
-    readonly property int steps: 5
+    readonly property int steps: 6
+    // The account step, which has its own Continue.
+    readonly property int accountIndex: 4
     signal finished()
 
     color: Theme.base
@@ -26,7 +29,7 @@ Rectangle {
         leave.start()
     }
 
-    Keys.onRightPressed: if (step < steps - 1 && step !== 3) go(step + 1)
+    Keys.onRightPressed: if (step < steps - 1 && step !== accountIndex) go(step + 1)
     Keys.onLeftPressed: go(step - 1)
     Keys.onEscapePressed: finish()
 
@@ -76,7 +79,7 @@ Rectangle {
 
         Repeater {
             id: pages
-            model: [welcomeStep, mediaStep, styleStep, accountStep, doneStep]
+            model: [welcomeStep, mediaStep, trackerStep, styleStep, accountStep, doneStep]
             delegate: Loader {
                 id: pageLoader
                 required property var modelData
@@ -137,8 +140,8 @@ Rectangle {
             anchors.rightMargin: Theme.gutter
             anchors.verticalCenter: parent.verticalCenter
             visible: root.step < root.steps - 1
-            variant: root.step === 3 ? "ghost" : "primary"
-            text: root.step === 0 ? qsTr("Get started") : root.step === 3 ? qsTr("Skip for now") : qsTr("Continue")
+            variant: root.step === root.accountIndex ? "ghost" : "primary"
+            text: root.step === 0 ? qsTr("Get started") : root.step === root.accountIndex ? qsTr("Skip for now") : qsTr("Continue")
             onClicked: root.go(root.step + 1)
         }
         Text {
@@ -289,7 +292,7 @@ Rectangle {
                 spacing: 28
                 Heading {
                     kicker: qsTr("Everything in one place")
-                    title: qsTr("Read and watch from dozens of sites at once")
+                    title: qsTr("Read and watch from the sources you choose")
                     body: qsTr("Search every source together, keep your place in every series, and download chapters for offline reading.")
                 }
                 Flow {
@@ -297,8 +300,8 @@ Rectangle {
                     spacing: 16
                     Repeater {
                         model: [
-                            { icon: "book-open", title: qsTr("Comics"), text: qsTr("Manhwa, manga and webtoons from Asura, Webtoon, MangaDex and more. Vertical strip or page by page.") },
-                            { icon: "book-text", title: qsTr("Novels"), text: qsTr("Royal Road and the big web-novel sites, with a reader you can tune: fonts, spacing, paper and sepia themes.") },
+                            { icon: "book-open", title: qsTr("Comics"), text: qsTr("Manhwa, manga and webtoons from Webtoon, MangaDex, your files and the sources you add. Vertical strip or page by page.") },
+                            { icon: "book-text", title: qsTr("Novels"), text: qsTr("Royal Road, your EPUB books and the sources you add, with a reader you can tune: fonts, spacing, paper and sepia themes.") },
                             { icon: "tv", title: qsTr("Anime"), text: qsTr("Trending, seasonal and top lists from AniList, a weekly schedule, and episodes that resume where you stopped.") }
                         ]
                         Rectangle {
@@ -343,7 +346,77 @@ Rectangle {
         }
     }
 
-    // 3. Look and feel, applied live.
+    // 3. Trackers: the catalogue each page browses, and the trackers to keep
+    // in step. Every connected tracker gets progress for every media.
+    Component {
+        id: trackerStep
+        Flickable {
+            contentHeight: trackerColumn.height + 60
+            clip: true
+            Column {
+                id: trackerColumn
+                x: Theme.gutter
+                y: Theme.compact ? 24 : Math.max(40, (root.height - footer.height - height) / 2 - 20)
+                width: Math.min(parent.width - 2 * Theme.gutter, 640)
+                spacing: 24
+                Heading {
+                    kicker: qsTr("Trackers")
+                    title: qsTr("Browse and track your way")
+                    body: qsTr("Pick the catalogue each page browses and searches. Connected trackers follow what you finish, whichever you browse with.")
+                }
+                Column {
+                    spacing: 10
+                    Text { text: qsTr("Comics"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                    CataloguePicker { media: "comic" }
+                }
+                Column {
+                    spacing: 10
+                    Text { text: qsTr("Novels"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                    CataloguePicker { media: "novel" }
+                }
+                Column {
+                    width: parent.width
+                    spacing: 4
+                    visible: Trackers.anilistAvailable || Trackers.malAvailable || Trackers.comickAvailable
+                    Text { text: qsTr("Keep your lists in step"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                    Repeater {
+                        model: [{ service: "anilist", available: Trackers.anilistAvailable },
+                                { service: "mal", available: Trackers.malAvailable },
+                                { service: "comick", available: Trackers.comickAvailable }].filter(t => t.available)
+                        Item {
+                            required property var modelData
+                            width: trackerColumn.width
+                            height: Math.max(48, connector.height + 12)
+                            Column {
+                                anchors.left: parent.left
+                                anchors.right: connector.left
+                                anchors.rightMargin: 12
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text { text: connector.label; color: Theme.text; font.family: Theme.fontSans; font.pixelSize: Theme.textMd; font.weight: Font.DemiBold }
+                                Text {
+                                    width: parent.width
+                                    visible: text.length > 0
+                                    text: connector.status
+                                    color: Theme.textMuted
+                                    font.family: Theme.fontSans
+                                    font.pixelSize: Theme.textSm
+                                    wrapMode: Text.Wrap
+                                }
+                            }
+                            TrackerConnect {
+                                id: connector
+                                anchors.right: parent.right
+                                anchors.verticalCenter: parent.verticalCenter
+                                service: modelData.service
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 4. Look and feel, applied live.
     Component {
         id: styleStep
         Flickable {
@@ -421,7 +494,7 @@ Rectangle {
         }
     }
 
-    // 4. Account.
+    // 5. Account.
     Component {
         id: accountStep
         Flickable {
@@ -448,7 +521,7 @@ Rectangle {
                     x: Theme.compact ? Theme.gutter : Math.max(accountIntro.x + accountIntro.width + 48, parent.width / 2)
                     y: Theme.compact ? accountIntro.height + 24 : 0
                     width: Theme.compact ? parent.width - 2 * Theme.gutter : Math.min(400, parent.width - x - Theme.gutter)
-                    onDone: root.go(4)
+                    onDone: root.go(root.accountIndex + 1)
                 }
                 ScButton {
                     visible: Account.signedIn
@@ -456,13 +529,13 @@ Rectangle {
                     y: accountIntro.height + 24
                     variant: "primary"
                     text: qsTr("Continue")
-                    onClicked: root.go(4)
+                    onClicked: root.go(root.accountIndex + 1)
                 }
             }
         }
     }
 
-    // 5. Done.
+    // 6. Done.
     Component {
         id: doneStep
         Item {

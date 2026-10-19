@@ -1,5 +1,7 @@
 #include "Registry.h"
 
+#include "extensions/ExtensionSource.h"
+#include "extensions/Host.h"
 #include "sources/Manifest.h"
 #include "sources/local/LocalSources.h"
 
@@ -38,6 +40,9 @@ void Registry::rebuild() {
         if (auto source = createSource(config))
             sources.append(std::shared_ptr<Source>(std::move(source)));
     }
+    // Sources of installed Mihon extensions.
+    for (const auto &entry : ext::Manager::sources(ext::Kind::Mihon))
+        sources.append(std::make_shared<ext::ExtensionSource>(entry));
     // Files on this device: opens any file, and lists the chosen folders.
     SourceConfig local;
     local.key = QStringLiteral("local");
@@ -61,6 +66,11 @@ std::shared_ptr<Source> Registry::byKey(const QString &key) {
     return nullptr;
 }
 
-std::shared_ptr<Source> Registry::forUrl(const QString &url) { return sourceForUrl(all(), url); }
+std::shared_ptr<Source> Registry::forUrl(const QString &url) {
+    // Extension links name their source ("mihon:<id>:<link>").
+    if (const auto wrapped = ext::unwrapUrl(url))
+        return byKey(wrapped->key);
+    return sourceForUrl(all(), url);
+}
 
 } // namespace sc::comics

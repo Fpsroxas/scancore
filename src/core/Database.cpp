@@ -105,6 +105,53 @@ const char *const kMigrations[] = {
     UPDATE library SET changed_at = added_at;
     CREATE TABLE library_removed (series_id TEXT PRIMARY KEY, removed_at INTEGER NOT NULL);
     )",
+    // 3: extensions (2.0). Repositories the user added, with the last index
+    // read from each; installed extensions and the key that signed them;
+    // extensions trusted by hand; each extension source's switch, health
+    // and settings.
+    R"(
+    CREATE TABLE ext_repos (
+        url TEXT PRIMARY KEY,
+        kind TEXT NOT NULL,
+        info TEXT NOT NULL,
+        packages TEXT,
+        etag TEXT,
+        modified TEXT,
+        refreshed_at INTEGER,
+        error TEXT,
+        added_at INTEGER NOT NULL
+    );
+    CREATE TABLE ext_installed (
+        kind TEXT NOT NULL,
+        pkg TEXT NOT NULL,
+        package TEXT NOT NULL,
+        repo_url TEXT,
+        signers TEXT,
+        path TEXT NOT NULL,
+        installed_at INTEGER NOT NULL,
+        PRIMARY KEY (kind, pkg)
+    );
+    CREATE TABLE ext_trust (
+        kind TEXT NOT NULL,
+        pkg TEXT NOT NULL,
+        version_code INTEGER NOT NULL,
+        signer TEXT NOT NULL,
+        PRIMARY KEY (kind, pkg)
+    );
+    CREATE TABLE ext_sources (
+        key TEXT PRIMARY KEY,
+        enabled INTEGER NOT NULL DEFAULT 1,
+        error TEXT,
+        error_at INTEGER,
+        ok_at INTEGER
+    );
+    CREATE TABLE ext_prefs (
+        source_key TEXT NOT NULL,
+        key TEXT NOT NULL,
+        value TEXT,
+        PRIMARY KEY (source_key, key)
+    );
+    )",
 };
 
 QSqlDatabase connection() {

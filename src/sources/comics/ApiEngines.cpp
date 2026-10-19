@@ -3,6 +3,7 @@
 
 #include "Engines.h"
 
+#include "core/Database.h"
 #include "core/Html.h"
 
 #include <QDateTime>
@@ -310,41 +311,81 @@ QList<Summary> MangaDexSource::search(const QString &query) {
     return out;
 }
 
+QList<Chapter> MangaDexSource::feedChapters(const QJsonArray &rows, QSet<QString> &seen, int *takenDown) const {
+    QList<Chapter> out;
+    for (const auto &row : rows) {
+        const auto c = row.toObject();
+        const auto attrs = c.value("attributes").toObject();
+        const auto cid = str(c.value("id"));
+        if (attrs.value("isUnavailable").toBool()) {
+            if (takenDown)
+                ++*takenDown;
+            continue;
+        }
+        if (!attrs.value("pages").toInt() || !str(attrs.value("externalUrl")).isEmpty() || seen.contains(cid))
+            continue;
+        seen.insert(cid);
+        Chapter ch;
+        ch.number = str(attrs.value("chapter"));
+        if (ch.number.isEmpty())
+            ch.number = QStringLiteral("0");
+        const auto title = str(attrs.value("title"));
+        ch.title = chapterLabel(ch.number, title);
+        ch.url = tagged(QStringLiteral("https://mangadex.org/chapter/%1").arg(cid));
+        ch.slug = cid;
+        ch.released = str(attrs.value("publishAt"));
+        out.append(ch);
+    }
+    return out;
+}
+
+namespace {
+
+QList<QPair<QString, QString>> feedParams(int offset, const QStringList &languages) {
+    QList<QPair<QString, QString>> params{{"offset", QString::number(offset)}, {"limit", "500"}};
+    for (const auto &language : languages)
+        params.append({"translatedLanguage[]", language});
+    params.append({{"order[chapter]", "asc"}, {"order[volume]", "asc"}, {"includeExternalUrl", "0"}, {"includeFuturePublishAt", "0"}});
+    return params;
+}
+
+const QString kTakenDown = QStringLiteral(
+    "MangaDex took these chapters down, usually because the series is licensed. Try another source.");
+
+} // namespace
+
 QList<Chapter> MangaDexSource::chapters(const QString &seriesUrl) {
     const auto id = dexId(seriesUrl, QStringLiteral("title"));
     const auto wanted = languages();
     QList<Chapter> out;
     QSet<QString> seen;
+    int takenDown = 0;
     for (int offset = 0; offset < 10000; offset += 500) {
-        QList<QPair<QString, QString>> params{{"offset", QString::number(offset)}, {"limit", "500"}};
-        for (const auto &language : wanted)
-            params.append({"translatedLanguage[]", language});
-        params.append({{"order[chapter]", "asc"}, {"order[volume]", "asc"}, {"includeExternalUrl", "0"}, {"includeFuturePublishAt", "0"}});
-        const auto doc = api(QStringLiteral("/manga/%1/feed").arg(id), params);
+        const auto doc = api(QStringLiteral("/manga/%1/feed").arg(id), feedParams(offset, wanted));
         const auto rows = arr(doc.object().value("data"));
-        for (const auto &row : rows) {
-            const auto c = row.toObject();
-            const auto attrs = c.value("attributes").toObject();
-            const auto cid = str(c.value("id"));
-            if (!attrs.value("pages").toInt() || !str(attrs.value("externalUrl")).isEmpty() ||
-                attrs.value("isUnavailable").toBool() || seen.contains(cid))
-                continue;
-            seen.insert(cid);
-            Chapter ch;
-            ch.number = str(attrs.value("chapter"));
-            if (ch.number.isEmpty())
-                ch.number = QStringLiteral("0");
-            const auto title = str(attrs.value("title"));
-            ch.title = chapterLabel(ch.number, title);
-            ch.url = tagged(QStringLiteral("https://mangadex.org/chapter/%1").arg(cid));
-            ch.slug = cid;
-            ch.released = str(attrs.value("publishAt"));
-            out.append(ch);
-        }
+        out.append(feedChapters(rows, seen, &takenDown));
         if (rows.isEmpty() || offset + rows.size() >= doc.object().value("total").toInt())
             break;
     }
+    // A feed of chapters none of which can be read is a takedown, not an
+    // empty series: say so instead of showing an empty page.
+    if (out.isEmpty() && takenDown > 0)
+        throw Error(kTakenDown, 451);
     return out;
+}
+
+bool MangaDexSource::readable(const QString &seriesUrl) {
+    const auto id = dexId(seriesUrl, QStringLiteral("title"));
+    const auto cacheKey = QStringLiteral("mangadex-readable:%1:%2").arg(id, languages().join(QLatin1Char(',')));
+    if (auto cached = Database::cacheGet(cacheKey))
+        return *cached == "1";
+    const auto doc = api(QStringLiteral("/manga/%1/feed").arg(id), feedParams(0, languages()));
+    const auto rows = arr(doc.object().value("data"));
+    QSet<QString> seen;
+    // Chapters beyond the first page may still be readable.
+    const bool ok = !feedChapters(rows, seen, nullptr).isEmpty() || doc.object().value("total").toInt() > rows.size();
+    Database::cachePut(cacheKey, ok ? "1" : "0", 86400);
+    return ok;
 }
 
 QList<Panel> MangaDexSource::panels(const QString &chapterUrl) {

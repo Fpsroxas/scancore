@@ -20,6 +20,12 @@ public:
 
     // {shelves: [{title, books}]}
     Q_INVOKABLE sc::Task *discover();
+    // Novels in the novel catalogue the user chose (AniList or MyAnimeList): {books: [{catalog, catalogId, title, titles, cover, ...}]}.
+    Q_INVOKABLE sc::Task *catalog(const QString &query);
+    // {catalog, label, shelves: [{key, items}]}
+    Q_INVOKABLE sc::Task *catalogFeeds(bool mature = false);
+    // Where a catalogue novel can be read, as Comics.resolve.
+    Q_INVOKABLE sc::Task *resolve(const QVariantMap &item);
     // {books, providers}
     Q_INVOKABLE sc::Task *search(const QString &query, const QString &source = QStringLiteral("all"));
     // {series, chapters, offline}

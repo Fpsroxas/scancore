@@ -1,7 +1,10 @@
 #include "Novels.h"
 
+#include "App.h"
+#include "Comics.h"
 #include "Downloads.h"
 #include "Library.h"
+#include "Resolve.h"
 #include "core/Database.h"
 #include "core/Parallel.h"
 #include "core/Text.h"
@@ -91,6 +94,29 @@ Task *Novels::discover() {
     });
 }
 
+Task *Novels::catalog(const QString &query) {
+    const auto q = query.simplified();
+    const bool mature = App::instance()->settings().value(QStringLiteral("showNsfwSources")).toBool();
+    return Task::run([q, mature]() -> QVariant { return Comics::catalogSearch(QStringLiteral("novel"), q, mature); });
+}
+
+Task *Novels::catalogFeeds(bool mature) {
+    return Task::run([mature]() -> QVariant { return Comics::catalogShelves(QStringLiteral("novel"), mature); });
+}
+
+Task *Novels::resolve(const QVariantMap &item) {
+    return Task::run([item]() -> QVariant {
+        const auto names = Comics::catalogNames(item);
+        QList<std::shared_ptr<Source>> sources;
+        for (const auto &s : Registry::all())
+            if (s->config().enabled && s->config().searchable && s->key() != QLatin1String("local") &&
+                !s->config().options.value("extended").toBool())
+                sources.append(s);
+        return QVariantMap{{"matches", resolveAcross<std::shared_ptr<Source>>(sources, names)},
+                           {"contentLanguage", contentLanguage()}};
+    });
+}
+
 Task *Novels::search(const QString &query, const QString &only) {
     return Task::run([query = query.simplified(), only]() -> QVariant {
         // Books on this device are listed without a search.
@@ -116,9 +142,11 @@ Task *Novels::search(const QString &query, const QString &only) {
         const auto words = q.split(QLatin1Char(' '), Qt::SkipEmptyParts);
         struct Ranked {
             int tier;
+            bool preferred;
             int order;
             QVariantMap book;
         };
+        const auto wantedLanguage = contentLanguage();
         QList<Ranked> ranked;
         QVariantList providers;
         bool anyOk = false;
@@ -142,13 +170,19 @@ Task *Novels::search(const QString &query, const QString &only) {
                 if (!matchesAll)
                     continue;
                 const int tier = t == q ? 0 : t.startsWith(q) ? 1 : 2;
-                ranked.append({tier, order++, bookMap(b, selected[i]->label())});
+                ranked.append({tier, baseLanguage(selected[i]->config().language) == wantedLanguage, order++,
+                               bookMap(b, selected[i]->label())});
             }
         }
         if (!anyOk && !selected.isEmpty())
             throw Error(QStringLiteral("Novel sources are unavailable right now. Check your connection and try again."));
+        // Equally good titles in the content language first.
         std::stable_sort(ranked.begin(), ranked.end(), [](const Ranked &a, const Ranked &b) {
-            return a.tier != b.tier ? a.tier < b.tier : a.order < b.order;
+            if (a.tier != b.tier)
+                return a.tier < b.tier;
+            if (a.preferred != b.preferred)
+                return a.preferred;
+            return a.order < b.order;
         });
         QVariantList books;
         for (const auto &r : ranked)

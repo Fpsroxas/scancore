@@ -972,6 +972,17 @@
         </message>
     </context>
     <context>
+        <name>CataloguePicker</name>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>Aucun</translation>
+        </message>
+    </context>
+    <context>
         <name>CodeBoxes</name>
         <message>
             <source>Access code</source>
@@ -1115,20 +1126,20 @@
             <translation> sur cet appareil</translation>
         </message>
         <message>
-            <source> titles for “</source>
-            <translation> titres pour «</translation>
-        </message>
-        <message>
-            <source>” from Comick&apos;s catalogue</source>
-            <translation>» du catalogue Comick</translation>
-        </message>
-        <message>
             <source> results for “</source>
             <translation> résultats pour «</translation>
         </message>
         <message>
-            <source> · Comick is unavailable, so your sources were searched</source>
-            <translation> · Comick est indisponible, vos sources ont donc été interrogées</translation>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>%1 titles for “%2” from %3&apos;s catalogue</source>
+            <translation>%1 titres pour « %2 » dans le catalogue de %3</translation>
+        </message>
+        <message>
+            <source> · %1 is unavailable, so your sources were searched</source>
+            <translation> · %1 est indisponible, vos sources ont donc été parcourues</translation>
         </message>
         <message>
             <source>%1 is unavailable</source>
@@ -1173,18 +1184,6 @@
         <message>
             <source>Trending this week</source>
             <translation>Tendances de la semaine</translation>
-        </message>
-        <message>
-            <source>Most popular</source>
-            <translation>Les plus populaires</translation>
-        </message>
-        <message>
-            <source>New in the catalogue</source>
-            <translation>Nouveautés du catalogue</translation>
-        </message>
-        <message>
-            <source>Recently completed</source>
-            <translation>Terminés récemment</translation>
         </message>
         <message>
             <source>Latest chapters</source>
@@ -1355,80 +1354,44 @@
             <translation>Suivi</translation>
         </message>
         <message>
-            <source>Finishing a chapter or episode moves the series forward on your list. Anime are matched by their AniList entry and </source>
-            <translation>Terminer un chapitre ou un épisode fait avancer la série dans votre liste. Les anime sont associés via leur fiche AniList et </translation>
-        </message>
-        <message>
             <source>This copy of SCANCORE was built without AniList, MyAnimeList and Comick ids, so tracking is off. Official downloads have them.</source>
             <translation>Cette copie de SCANCORE a été compilée sans les identifiants AniList, MyAnimeList et Comick : le suivi est désactivé. Les versions officielles les ont.</translation>
-        </message>
-        <message>
-            <source>Connected as </source>
-            <translation>Connecté en tant que </translation>
-        </message>
-        <message>
-            <source>Sign in on the page that opened, then paste the token it shows.</source>
-            <translation>Connectez-vous sur la page ouverte, puis collez le jeton affiché.</translation>
         </message>
         <message>
             <source>Keep your AniList lists up to date.</source>
             <translation>Gardez vos listes AniList à jour.</translation>
         </message>
         <message>
-            <source>Open again</source>
-            <translation>Rouvrir</translation>
-        </message>
-        <message>
-            <source>Connect</source>
-            <translation>Connecter</translation>
-        </message>
-        <message>
-            <source>Disconnect</source>
-            <translation>Déconnecter</translation>
-        </message>
-        <message>
-            <source>Paste the token</source>
-            <translation>Collez le jeton</translation>
-        </message>
-        <message>
-            <source>Use token</source>
-            <translation>Utiliser le jeton</translation>
-        </message>
-        <message>
-            <source>Connected to AniList as </source>
-            <translation>Connecté à AniList en tant que </translation>
-        </message>
-        <message>
-            <source>Waiting for you to sign in on the page that opened…</source>
-            <translation>En attente de votre connexion sur la page ouverte…</translation>
-        </message>
-        <message>
             <source>Keep your MyAnimeList lists up to date.</source>
             <translation>Gardez vos listes MyAnimeList à jour.</translation>
-        </message>
-        <message>
-            <source>Cancel</source>
-            <translation>Annuler</translation>
-        </message>
-        <message>
-            <source>Connected to MyAnimeList as </source>
-            <translation>Connecté à MyAnimeList en tant que </translation>
         </message>
         <message>
             <source>Comick</source>
             <translation>Comick</translation>
         </message>
         <message>
-            <source>Waiting for you to allow SCANCORE on the page that opened…</source>
-            <translation>En attente de votre autorisation pour SCANCORE sur la page ouverte…</translation>
-        </message>
-        <message>
             <source>Keep your Comick library up to date, and bring it into SCANCORE.</source>
             <translation>Gardez votre bibliothèque Comick à jour et importez-la dans SCANCORE.</translation>
         </message>
         <message>
-            <source>Connected to Comick as </source>
-            <translation>Connecté à Comick en tant que </translation>
+            <source>Comics catalogue</source>
+            <translation>Catalogue des BD</translation>
+        </message>
+        <message>
+            <source>Finishing a chapter or episode moves the series forward on every tracker you connect. Anime are matched by their AniList entry, comics and novels by their catalogue entry or title; link one by hand from its page.</source>
+            <translation>Terminer un chapitre ou un épisode fait avancer la série sur chaque service connecté. Les animes sont reconnus par leur fiche AniList, les BD et romans par leur fiche de catalogue ou leur titre ; liez-en un à la main depuis sa page.</translation>
+        </message>
+        <message>
+            <source>What the Comics page shows and searches. None searches your sources directly.</source>
+            <translation>Ce que la page BD affiche et recherche. Avec Aucun, vos sources sont interrogées directement.</translation>
+        </message>
+        <message>
+            <source>Novels catalogue</source>
+            <translation>Catalogue des romans</translation>
+        </message>
+        <message>
+            <source>What the Novels page shows and searches.</source>
+            <translation>Ce que la page Romans affiche et recherche.</translation>
         </message>
         <message>
             <source>Discord</source>
@@ -1467,8 +1430,8 @@
             <translation>Importez votre bibliothèque</translation>
         </message>
         <message>
-            <source>Anime come in with the episodes you watched. Comics and novels come in when one of your sources has them, </source>
-            <translation>Les anime arrivent avec les épisodes vus. Les BD et romans arrivent quand une de vos sources les propose, </translation>
+            <source>Anime come in with the episodes you watched. Comics and novels come in with the chapters you read when one of your sources has them; the others wait below until they are found.</source>
+            <translation>Les animes arrivent avec les épisodes vus. Les BD et romans arrivent avec les chapitres lus quand une de vos sources les a ; les autres attendent ci-dessous d&apos;être trouvés.</translation>
         </message>
         <message>
             <source>Mihon or Tachiyomi backup</source>
@@ -2646,8 +2609,16 @@
             <translation> sur cet appareil</translation>
         </message>
         <message>
+            <source>%1 titles for “%2” from %3&apos;s catalogue</source>
+            <translation>%1 titres pour « %2 » dans le catalogue de %3</translation>
+        </message>
+        <message>
             <source> results for “</source>
             <translation> résultats pour «</translation>
+        </message>
+        <message>
+            <source> · %1 is unavailable, so your sources were searched</source>
+            <translation> · %1 est indisponible, vos sources ont donc été parcourues</translation>
         </message>
         <message>
             <source>Pass %1&apos;s browser check</source>
@@ -2680,6 +2651,10 @@
         <message>
             <source>Saved novels</source>
             <translation>Romans enregistrés</translation>
+        </message>
+        <message>
+            <source>Trending this week</source>
+            <translation>Tendances de la semaine</translation>
         </message>
         <message>
             <source>Discover</source>
@@ -2721,10 +2696,6 @@
             <translation>Tout au même endroit</translation>
         </message>
         <message>
-            <source>Read and watch from dozens of sites at once</source>
-            <translation>Lisez et regardez depuis des dizaines de sites à la fois</translation>
-        </message>
-        <message>
             <source>Search every source together, keep your place in every series, and download chapters for offline reading.</source>
             <translation>Cherchez dans toutes les sources à la fois, gardez votre place dans chaque série et téléchargez des chapitres pour lire hors ligne.</translation>
         </message>
@@ -2733,16 +2704,8 @@
             <translation>BD</translation>
         </message>
         <message>
-            <source>Manhwa, manga and webtoons from Asura, Webtoon, MangaDex and more. Vertical strip or page by page.</source>
-            <translation>Manhwa, manga et webtoons d’Asura, Webtoon, MangaDex et d’autres. En bande verticale ou page par page.</translation>
-        </message>
-        <message>
             <source>Novels</source>
             <translation>Romans</translation>
-        </message>
-        <message>
-            <source>Royal Road and the big web-novel sites, with a reader you can tune: fonts, spacing, paper and sepia themes.</source>
-            <translation>Royal Road et les grands sites de romans en ligne, avec un lecteur réglable : polices, espacement, thèmes papier et sépia.</translation>
         </message>
         <message>
             <source>Anime</source>
@@ -2767,6 +2730,34 @@
         <message>
             <source>System</source>
             <translation>Système</translation>
+        </message>
+        <message>
+            <source>Read and watch from the sources you choose</source>
+            <translation>Lisez et regardez depuis les sources de votre choix</translation>
+        </message>
+        <message>
+            <source>Manhwa, manga and webtoons from Webtoon, MangaDex, your files and the sources you add. Vertical strip or page by page.</source>
+            <translation>Manhwa, mangas et webtoons de Webtoon, MangaDex, vos fichiers et les sources que vous ajoutez. En bande verticale ou page par page.</translation>
+        </message>
+        <message>
+            <source>Royal Road, your EPUB books and the sources you add, with a reader you can tune: fonts, spacing, paper and sepia themes.</source>
+            <translation>Royal Road, vos livres EPUB et les sources que vous ajoutez, avec un lecteur réglable : polices, espacement, thèmes papier et sépia.</translation>
+        </message>
+        <message>
+            <source>Trackers</source>
+            <translation>Suivi</translation>
+        </message>
+        <message>
+            <source>Browse and track your way</source>
+            <translation>Parcourez et suivez à votre façon</translation>
+        </message>
+        <message>
+            <source>Pick the catalogue each page browses and searches. Connected trackers follow what you finish, whichever you browse with.</source>
+            <translation>Choisissez le catalogue que chaque page parcourt et recherche. Les services connectés suivent ce que vous terminez, quel que soit le catalogue choisi.</translation>
+        </message>
+        <message>
+            <source>Keep your lists in step</source>
+            <translation>Gardez vos listes à jour</translation>
         </message>
         <message>
             <source>Theme</source>
@@ -3129,6 +3120,38 @@
     </context>
     <context>
         <name>Router</name>
+        <message>
+            <source>Trending this week</source>
+            <translation>Tendances de la semaine</translation>
+        </message>
+        <message>
+            <source>Most popular</source>
+            <translation>Les plus populaires</translation>
+        </message>
+        <message>
+            <source>Top rated</source>
+            <translation>Mieux notés</translation>
+        </message>
+        <message>
+            <source>New in the catalogue</source>
+            <translation>Nouveautés du catalogue</translation>
+        </message>
+        <message>
+            <source>Recently completed</source>
+            <translation>Terminés récemment</translation>
+        </message>
+        <message>
+            <source>Top manhwa</source>
+            <translation>Meilleurs manhwa</translation>
+        </message>
+        <message>
+            <source>Top manhua</source>
+            <translation>Meilleurs manhua</translation>
+        </message>
+        <message>
+            <source>Top light novels</source>
+            <translation>Meilleurs light novels</translation>
+        </message>
         <message>
             <source>The theme</source>
             <translation>Le thème</translation>
@@ -3764,18 +3787,6 @@
             <translation>Vérifier maintenant</translation>
         </message>
         <message>
-            <source>Search with Comick&apos;s catalogue</source>
-            <translation>Chercher avec le catalogue Comick</translation>
-        </message>
-        <message>
-            <source>“All sources” searches comick.dev, which knows almost every series under all its names, then opens </source>
-            <translation>« Toutes les sources » cherche sur comick.dev, qui connaît presque toutes les séries sous tous leurs noms, puis ouvre </translation>
-        </message>
-        <message>
-            <source>the one you pick from a source that has it. Off: each source is searched directly.</source>
-            <translation>celle que vous choisissez depuis une source qui l’a. Désactivé : chaque source est interrogée directement.</translation>
-        </message>
-        <message>
             <source>Languages for “All sources”</source>
             <translation>Langues de « Toutes les sources »</translation>
         </message>
@@ -3794,6 +3805,26 @@
         <message>
             <source>Lists sources marked 18+ in the comic source picker.</source>
             <translation>Affiche les sources marquées 18+ dans le choix des sources de BD.</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Extensions</translation>
+        </message>
+        <message>
+            <source>Extensions runtime</source>
+            <translation>Environnement des extensions</translation>
+        </message>
+        <message>
+            <source>Installed. Extensions from the repositories you add run in it.</source>
+            <translation>Installé. Les extensions des dépôts que vous ajoutez s&apos;y exécutent.</translation>
+        </message>
+        <message>
+            <source>About 100 MB. Needed to run extensions on this computer; SCANCORE downloads it into the app data folder.</source>
+            <translation>Environ 100 Mo. Nécessaire pour exécuter des extensions sur cet ordinateur ; SCANCORE le télécharge dans le dossier de données de l&apos;app.</translation>
+        </message>
+        <message>
+            <source>Extensions runtime installed</source>
+            <translation>Environnement des extensions installé</translation>
         </message>
         <message>
             <source>Extended novel sources</source>
@@ -4321,6 +4352,57 @@
         <message>
             <source>Saved </source>
             <translation>Enregistré </translation>
+        </message>
+    </context>
+    <context>
+        <name>TrackerConnect</name>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>Connected as </source>
+            <translation>Connecté en tant que </translation>
+        </message>
+        <message>
+            <source>Sign in on the page that opened, then paste the token it shows.</source>
+            <translation>Connectez-vous sur la page ouverte, puis collez le jeton affiché.</translation>
+        </message>
+        <message>
+            <source>Waiting for you to allow SCANCORE on the page that opened…</source>
+            <translation>En attente de votre autorisation pour SCANCORE sur la page ouverte…</translation>
+        </message>
+        <message>
+            <source>Waiting for you to sign in on the page that opened…</source>
+            <translation>En attente de votre connexion sur la page ouverte…</translation>
+        </message>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>Connecté à %1 en tant que %2</translation>
+        </message>
+        <message>
+            <source>Open again</source>
+            <translation>Rouvrir</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Annuler</translation>
+        </message>
+        <message>
+            <source>Connect</source>
+            <translation>Connecter</translation>
+        </message>
+        <message>
+            <source>Disconnect</source>
+            <translation>Déconnecter</translation>
+        </message>
+        <message>
+            <source>Paste the token</source>
+            <translation>Collez le jeton</translation>
+        </message>
+        <message>
+            <source>Use token</source>
+            <translation>Utiliser le jeton</translation>
         </message>
     </context>
     <context>

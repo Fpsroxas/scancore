@@ -9,12 +9,13 @@
     <name>Medium Dev</name>
   </developer>
   <description>
-    <p>SCANCORE brings comics, web novels and anime together in a native desktop app. Browse public sources, keep a personal library and reading history, and download chapters for offline reading.</p>
+    <p>SCANCORE brings comics, web novels and anime together in a native desktop app. Read from your files and the sources you choose, keep a personal library and reading history, and download chapters for offline reading.</p>
     <p>Your library and settings stay on your device. An optional account can sync library and reading progress with scancore.onl.</p>
     <p>SCANCORE is also available for Android, with a phone-focused interface and touch controls.</p>
     <ul>
       <li>Read manga, manhwa, webtoons and novels with adjustable reading controls.</li>
-      <li>Browse anime and play supported episodes inside the app.</li>
+      <li>Browse anime on AniList and play episodes from your sources inside the app.</li>
+      <li>Keep AniList, MyAnimeList and Comick up to date as you read and watch.</li>
       <li>Track series in one library, with history, progress and chapter downloads.</li>
       <li>Use light, dark and black themes, keyboard shortcuts and backup and restore.</li>
     </ul>

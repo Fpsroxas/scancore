@@ -1,6 +1,14 @@
 #include "Extensions.h"
 
+#include "App.h"
 #include "core/Http.h"
+#include "extensions/ExtensionSource.h"
+#ifdef SCANCORE_HAVE_ANDROID_HOST
+#include "extensions/JniHost.h"
+#endif
+#include "extensions/Manager.h"
+#include "extensions/ProcessHost.h"
+#include "extensions/Runtime.h"
 #include "sources/novels/LnCrawl.h"
 #include "sources/novels/Registry.h"
 
@@ -10,7 +18,9 @@
 #include <QFile>
 #include <QProcess>
 #include <QSaveFile>
+#include <QStandardPaths>
 #include <QSysInfo>
+#include <QCoreApplication>
 
 namespace sc {
 
@@ -60,6 +70,114 @@ QString findFile(const QString &dir, const QString &name) {
 
 } // namespace
 
+#ifndef SCANCORE_HOST_DEV_LIB
+#define SCANCORE_HOST_DEV_LIB ""
+#endif
+
+namespace {
+
+// The extension host's start-up: the installed runtime, else (development
+// builds) the host built from host/.
+ext::ProcessHost::Launch hostLaunch() {
+    const auto data = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    auto launch = ext::ProcessHost::find(ext::Runtime::dir(), QStringLiteral(SCANCORE_HOST_DEV_LIB));
+    launch.root = data + QStringLiteral("/extensions/host");
+    launch.userAgent = QString::fromUtf8(Http::userAgent());
+    launch.appVersion = QCoreApplication::applicationVersion();
+    return launch;
+}
+
+std::shared_ptr<ext::ProcessHost> processHost() { return std::dynamic_pointer_cast<ext::ProcessHost>(ext::host(ext::Kind::Mihon)); }
+
+} // namespace
+
+Extensions::Extensions(QObject *parent) : QObject(parent) {}
+
+Extensions *Extensions::instance() {
+    static auto *extensions = [] {
+        auto *created = new Extensions;
+        QJSEngine::setObjectOwnership(created, QJSEngine::CppOwnership);
+        return created;
+    }();
+    return extensions;
+}
+
+void Extensions::startHost() {
+#if defined(SCANCORE_HAVE_ANDROID_HOST)
+    // Built into the APK: nothing to download.
+    ext::setHost(ext::Kind::Mihon,
+                 ext::JniHost::create({QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/extensions/host"),
+                                       QString::fromUtf8(Http::userAgent()), QCoreApplication::applicationVersion()}));
+    ext::ExtensionSource::installImageWriter();
+#elif !defined(Q_OS_ANDROID)
+    ext::Runtime::setDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/extensions/runtime"));
+    ext::setHost(ext::Kind::Mihon, std::make_shared<ext::ProcessHost>(hostLaunch()));
+    ext::ExtensionSource::installImageWriter();
+#endif
+    // Development hook: SCANCORE_START {"extensions": {"repo": url,
+    // "install": [package, …]}} adds a repository and installs from it, for
+    // smoke tests against a local test repository.
+    const auto start = App::instance()->startAction().value(QStringLiteral("extensions")).toMap();
+    if (start.isEmpty())
+        return;
+    auto *task = Task::run([start]() -> QVariant {
+        ext::Manager::add(ext::Manager::preview(start.value(QStringLiteral("repo")).toString()));
+        for (const auto &pkg : start.value(QStringLiteral("install")).toStringList())
+            ext::Manager::install(ext::Kind::Mihon, pkg);
+        return true;
+    });
+    connect(task, &Task::changed, task, [task] {
+        if (!task->loading())
+            qInfo() << "Start extensions:" << (task->ok() ? QStringLiteral("installed") : task->error());
+    });
+}
+
+void Extensions::stopHost() {
+    if (auto host = processHost())
+        host->stop();
+    ext::setHost(ext::Kind::Mihon, nullptr);
+}
+
+bool Extensions::runtimeAvailable() const { return !ext::Runtime::platform().isEmpty(); }
+
+bool Extensions::runtimeInstalled() const {
+    auto host = ext::host(ext::Kind::Mihon);
+    return host && host->available();
+}
+
+Task *Extensions::installRuntime() {
+    m_busy = true;
+    m_busyWith = QStringLiteral("runtime");
+    m_status = QStringLiteral("Starting…");
+    emit changed();
+    auto *task = Task::run([this]() -> QVariant {
+        // The running host holds the old runtime's files.
+        if (auto host = processHost())
+            host->stop();
+        ext::Runtime::install([this](const QString &status) { setStatus(status); });
+        if (auto host = processHost())
+            host->setLaunch(hostLaunch());
+        return true;
+    });
+    connect(task, &Task::changed, this, [this, task] {
+        if (task->loading())
+            return;
+        m_busy = false;
+        m_status = task->ok() ? QString() : task->error();
+        emit changed();
+    });
+    return task;
+}
+
+void Extensions::removeRuntime() {
+    if (auto host = processHost())
+        host->stop();
+    ext::Runtime::remove();
+    if (auto host = processHost())
+        host->setLaunch(hostLaunch());
+    emit changed();
+}
+
 bool Extensions::novelPackAvailable() const {
 #ifdef SCANCORE_DISABLE_NOVEL_PACK
     return false;
@@ -83,6 +201,7 @@ Task *Extensions::installNovelPack() {
     if (!novelPackAvailable())
         return Task::run([]() -> QVariant { throw Error(QStringLiteral("The extended novel pack is disabled in this build.")); });
     m_busy = true;
+    m_busyWith = QStringLiteral("novels");
     m_status = QStringLiteral("Starting…");
     emit changed();
     auto *task = Task::run([this]() -> QVariant {

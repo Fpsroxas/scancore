@@ -8,7 +8,17 @@ add_library(scancore_core STATIC
     core/ImageCache.cpp
     core/Parallel.cpp
     core/Text.cpp
+    extensions/Apk.cpp
+    extensions/ExtensionSource.cpp
+    extensions/Host.cpp
+    extensions/Index.cpp
+    extensions/LineHost.cpp
+    extensions/Manager.cpp
+    extensions/Package.cpp
+    extensions/ProcessHost.cpp
+    extensions/Runtime.cpp
     sources/Manifest.cpp
+    sources/catalogue/Catalogue.cpp
     sources/comics/ApiEngines.cpp
     sources/comics/ComicSource.cpp
     sources/comics/PageEngines.cpp
@@ -21,6 +31,9 @@ add_library(scancore_core STATIC
     sources/novels/Registry.cpp
     sources/novels/TextBlocks.cpp
 )
+if(ANDROID)
+    target_sources(scancore_core PRIVATE extensions/JniHost.cpp)
+endif()
 target_include_directories(scancore_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 # Manifest entries can ask for a minimum app version.
 target_compile_definitions(scancore_core PRIVATE SCANCORE_VERSION="${PROJECT_VERSION}")
@@ -174,6 +187,26 @@ endif()
 if(TARGET Qt6::Pdf)
     target_link_libraries(scancore PRIVATE Qt6::Pdf)
     target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_PDF)
+endif()
+if(SCANCORE_HAVE_EXTENSION_HOST)
+    # A development build runs extensions with the host built from host/.
+    add_dependencies(scancore scancore_host)
+    target_compile_definitions(scancore PRIVATE SCANCORE_HOST_DEV_LIB="${SCANCORE_HOST_LIB_DIR}")
+endif()
+if(SCANCORE_HAVE_ANDROID_HOST)
+    # The APK's Gradle build takes the host from libs/ (build.gradle there).
+    target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_ANDROID_HOST)
+    set(SCANCORE_APK_LIBS ${CMAKE_CURRENT_BINARY_DIR}/android-build/libs)
+    add_custom_command(
+        OUTPUT ${SCANCORE_APK_LIBS}/scancore-host.aar ${SCANCORE_APK_LIBS}/scancore-host.deps
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${SCANCORE_APK_LIBS}
+        COMMAND ${CMAKE_COMMAND} -E copy ${SCANCORE_HOST_APP_DIR}/scancore-host.aar
+            ${SCANCORE_HOST_APP_DIR}/scancore-host.deps ${SCANCORE_APK_LIBS}/
+        DEPENDS ${CMAKE_BINARY_DIR}/scancore_host_android.stamp
+        VERBATIM)
+    add_custom_target(scancore_host_libs DEPENDS ${SCANCORE_APK_LIBS}/scancore-host.aar)
+    add_dependencies(scancore_host_libs scancore_host)
+    add_dependencies(scancore scancore_host_libs)
 endif()
 if(SCANCORE_HAVE_MPV)
     target_link_libraries(scancore PRIVATE scancore_mpv)

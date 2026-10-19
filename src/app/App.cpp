@@ -5,6 +5,7 @@
 #include "core/Database.h"
 #include "core/Http.h"
 #include "core/ImageCache.h"
+#include "extensions/Manager.h"
 #include "sources/Manifest.h"
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
@@ -60,10 +61,16 @@ const QVariantMap kDefaults{
     {"sidebarCollapsed", false},
     {"comicSource", "all"},
     {"comickCatalog", true},
+    // The tracker catalogue each page browses and searches: comick,
+    // anilist, mal or none (novels: anilist, mal or none).
+    {"catalogComic", "comick"},
+    {"catalogNovel", "anilist"},
     // Content language "All sources" searches; empty for every language.
     {"sourceLanguages", ""},
     {"onboarded", false},
     {"autoUpdate", true},
+    // Extension updates signed with a trusted key install by themselves.
+    {"autoUpdateExtensions", true},
     {"novelSource", "all"},
 };
 
@@ -73,6 +80,9 @@ App::App(QObject *parent) : QObject(parent) {
     m_settings = kDefaults;
     for (auto it = kDefaults.begin(); it != kDefaults.end(); ++it)
         m_settings.insert(it.key(), Database::pref(QStringLiteral("setting.") + it.key(), it.value()));
+    // Before 2.0 the only catalogue was Comick's, switched by comickCatalog.
+    if (!Database::pref(QStringLiteral("setting.catalogComic")).isValid() && m_settings.value("comickCatalog") == false)
+        m_settings.insert(QStringLiteral("catalogComic"), QStringLiteral("none"));
     m_libraryTimer.setSingleShot(false);
     connect(&m_libraryTimer, &QTimer::timeout, this, [] { Library::instance()->checkUpdates(); });
 }
@@ -315,6 +325,21 @@ void App::startBackgroundWork() {
             Database::cachePrune();
         });
     });
+    // Repositories are read again twice a day (a conditional request each,
+    // so usually a few bytes), and trusted updates installed.
+    const auto checkExtensions = [this] {
+        const bool install = m_settings.value(QStringLiteral("autoUpdateExtensions")).toBool();
+        runInBackground([install] {
+            ext::Manager::refreshAll();
+            if (install)
+                ext::Manager::installTrustedUpdates();
+        });
+    };
+    QTimer::singleShot(20000, this, checkExtensions);
+    auto *extensionTimer = new QTimer(this);
+    extensionTimer->setInterval(12 * 3600 * 1000);
+    connect(extensionTimer, &QTimer::timeout, this, checkExtensions);
+    extensionTimer->start();
 }
 
 } // namespace sc

@@ -31,6 +31,17 @@ QMutex g_inflightMutex;
 QWaitCondition g_inflightDone;
 QHash<QString, int> g_inflight;
 
+QMutex g_writersMutex;
+QHash<QString, ImageCache::Writer> g_writers;
+
+ImageCache::Writer writerFor(const QString &url) {
+    const auto colon = url.indexOf(QLatin1Char(':'));
+    if (colon <= 0)
+        return {};
+    QMutexLocker lock(&g_writersMutex);
+    return g_writers.value(url.left(colon));
+}
+
 QString pathFor(const QString &url) {
     const auto hash = QCryptographicHash::hash(url.toUtf8(), QCryptographicHash::Sha1).toHex();
     return QStringLiteral("%1/%2/%3").arg(g_dir, QString::fromLatin1(hash.left(2)), QString::fromLatin1(hash));
@@ -56,6 +67,11 @@ void ImageCache::init(const QString &dir, qint64 budgetBytes) {
 }
 
 void ImageCache::setBudget(qint64 bytes) { g_budget = bytes; }
+
+void ImageCache::setSchemeWriter(const QString &scheme, Writer writer) {
+    QMutexLocker lock(&g_writersMutex);
+    g_writers.insert(scheme, std::move(writer));
+}
 
 QByteArray ImageCache::fetch(const QString &url, const QString &referer) {
     if (url.startsWith(QLatin1String("pdfpage:")))
@@ -85,6 +101,15 @@ QByteArray ImageCache::fetch(const QString &url, const QString &referer) {
         g_inflight.remove(path);
         g_inflightDone.wakeAll();
     });
+
+    QDir().mkpath(QFileInfo(path).absolutePath());
+    if (const auto writer = writerFor(url)) {
+        writer(url, path);
+        auto data = readFile(path);
+        if (data.isEmpty())
+            throw Error(QStringLiteral("Image unavailable."), 502);
+        return data;
+    }
 
     Request request;
     request.url = QUrl(url);

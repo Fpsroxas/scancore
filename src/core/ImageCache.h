@@ -3,6 +3,8 @@
 #include <QByteArray>
 #include <QString>
 
+#include <functional>
+
 namespace sc {
 
 // Disk cache for remote images (covers and chapter pages), keyed by URL.
@@ -16,6 +18,12 @@ public:
     static qint64 sizeOnDisk();
     static void clear();
     static void trim();
+
+    // Images that are not plain links ("extimage:..." from extensions):
+    // `writer` puts the image for `url` into the cache file at `path`, or
+    // throws. Duplicate requests still share one fetch.
+    using Writer = std::function<void(const QString &url, const QString &path)>;
+    static void setSchemeWriter(const QString &scheme, Writer writer);
 };
 
 } // namespace sc

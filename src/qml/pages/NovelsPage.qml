@@ -2,13 +2,23 @@ import QtQuick
 import QtQuick.Controls.Basic
 import ScanCore
 
-// Novel discovery (Royal Road shelves) and search across novel sources.
+// Novel discovery (the chosen catalogue's and Royal Road's shelves) and
+// search, through the catalogue or across novel sources.
 Item {
     id: page
     property string query: ""
     property string source: App.settings.novelSource || "all"
     property var searchTask: null
     property var discoverTask: Novels.discover()
+    // "All sources" searches the chosen novel catalogue, then finds the pick
+    // on a source.
+    readonly property bool useCatalog: source === "all" && (App.settings.catalogNovel || "anilist") !== "none"
+        && (App.settings.catalogNovel !== "mal" || Trackers.malAvailable)
+    property var feedsTask: useCatalog ? Novels.catalogFeeds(App.settings.showNsfwSources === true) : null
+    readonly property var feeds: feedsTask && feedsTask.ok ? feedsTask.result : ({ shelves: [] })
+    readonly property string catalogLabel: feedsTask && feedsTask.ok && feedsTask.result.label ? feedsTask.result.label : "AniList"
+    property bool catalogFailed: false
+    readonly property bool catalogResults: !!searchTask && searchTask.ok && !catalogFailed && useCatalog && query.length > 0
     property var historyTask: Library.history("novel", 16)
     property var libraryTask: Library.entries("novel")
     // Books on this device are listed without a search.
@@ -51,9 +61,24 @@ Item {
     function run(text) {
         query = text.trim()
         if (query.length > 0) recent.remember(query)
-        searchTask = query.length > 0 || source === "local" ? Novels.search(query, source) : null
+        catalogFailed = false
+        // A pasted book link goes to the sources, which open it.
+        const link = /^https?:\/\//.test(query)
+        searchTask = query.length > 0 && useCatalog && !link ? Novels.catalog(query)
+            : query.length > 0 || source === "local" ? Novels.search(query, source) : null
         flick.scrollTo(0)
     }
+
+    Connections {
+        target: page.searchTask
+        function onFailed() {
+            if (!page.useCatalog || page.catalogFailed || page.query.length === 0) return
+            page.catalogFailed = true
+            page.searchTask = Novels.search(page.query, "all")
+        }
+    }
+
+    ReadFromDialog { id: readFrom }
 
     SmoothFlickable {
         id: flick
@@ -131,7 +156,9 @@ Item {
                     visible: page.searchTask && page.searchTask.ok
                     text: !page.searchTask || !page.searchTask.ok ? ""
                         : page.browsingLocal ? page.searchTask.result.books.length + qsTr(" on this device")
+                        : page.catalogResults ? qsTr("%1 titles for “%2” from %3's catalogue").arg(page.searchTask.result.books.length).arg(page.query).arg(page.catalogLabel)
                         : page.searchTask.result.books.length + qsTr(" results for “") + page.query + "”"
+                            + (page.catalogFailed ? qsTr(" · %1 is unavailable, so your sources were searched").arg(page.catalogLabel) : "")
                     color: Theme.textMuted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -154,8 +181,10 @@ Item {
 
                 CoverGrid {
                     items: page.searchTask && page.searchTask.ok ? page.searchTask.result.books : []
-                    subtitleFor: (it) => it.sourceLabel + (it.author ? " · " + it.author : "")
-                    onOpened: (it, cover) => Router.openSeries(it, cover)
+                    subtitleFor: (it) => it.catalog
+                        ? [it.type, it.status, it.year > 0 ? String(it.year) : ""].filter(s => s).join(" · ")
+                        : it.sourceLabel + (it.author ? " · " + it.author : "")
+                    onOpened: (it, cover) => it.catalog ? readFrom.start(it) : Router.openSeries(it, cover)
                 }
                 StateView {
                     width: parent.width
@@ -201,6 +230,26 @@ Item {
                     badgeFor: (it) => it.newUnits > 0 ? "+" + it.newUnits : ""
                     subtitleFor: (it) => it.author || ""
                     onOpened: (it, cover) => Router.openSeries(it, cover)
+                }
+                Repeater {
+                    model: page.useCatalog ? page.feeds.shelves : []
+                    Shelf {
+                        required property var modelData
+                        width: parent.width
+                        title: Router.shelfTitle(modelData.key)
+                        subtitle: page.catalogLabel
+                        items: modelData.items
+                        subtitleFor: (it) => [it.type, it.status].filter(s => s).join(" · ")
+                        badgeFor: (it) => it.rating ? "★ " + it.rating : ""
+                        onOpened: (it, cover) => readFrom.start(it)
+                    }
+                }
+                Shelf {
+                    visible: page.useCatalog && page.feedsTask !== null && !page.feedsTask.ok
+                    title: qsTr("Trending this week")
+                    loading: page.feedsTask ? page.feedsTask.loading : false
+                    error: page.feedsTask && !page.feedsTask.loading ? page.feedsTask.error : ""
+                    onRetry: page.feedsTask = Novels.catalogFeeds(App.settings.showNsfwSources === true)
                 }
                 Repeater {
                     model: page.discoverTask && page.discoverTask.ok ? page.discoverTask.result.shelves : []

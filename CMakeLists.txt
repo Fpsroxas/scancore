@@ -16,6 +16,7 @@ option(SCANCORE_WITH_SYSTEM_WEBVIEW "Play anime in the system web view (WebView2
 option(SCANCORE_WITH_MPV "Native video playback through libmpv (not used yet)" OFF)
 option(SCANCORE_WITH_NOVEL_PACK_INSTALLER "Allow downloading the optional Python novel-source pack" ON)
 option(SCANCORE_BUILD_TESTS "Build unit tests" ON)
+option(SCANCORE_WITH_EXTENSION_HOST "Build the Kotlin extension host: for development and tests on desktop, inside the APK on Android (needs JDK 17+)" ON)
 # Public ids of SCANCORE's registered apps (not secrets: the sign-ins use
 # PKCE or show a token, as every desktop and phone app must); features that
 # need one stay hidden without it.
@@ -82,6 +83,7 @@ math(EXPR SCANCORE_ANDROID_VERSION_CODE
 
 include(GNUInstallDirs)
 include(cmake/Dependencies.cmake)
+include(cmake/ExtensionHost.cmake)
 
 add_subdirectory(src)
 

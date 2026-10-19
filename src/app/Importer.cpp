@@ -6,6 +6,7 @@
 #include "Trackers.h"
 #include "core/Database.h"
 #include "core/Parallel.h"
+#include "core/Proto.h"
 #include "core/Text.h"
 #include "sources/comics/Registry.h"
 #include "sources/local/Local.h"
@@ -77,81 +78,6 @@ Item fromMap(const QVariantMap &map) {
     item.count = map.value("count").toInt();
     return item;
 }
-
-// ------------------------------------------------------------ protobuf
-
-// Just enough of protobuf's wire format for Mihon's backup.
-class Proto {
-public:
-    explicit Proto(QByteArrayView data) : m_data(data) {}
-
-    bool next() {
-        if (m_at >= m_data.size() || m_bad)
-            return false;
-        const auto tag = varint();
-        m_field = int(tag >> 3);
-        m_wire = int(tag & 7);
-        return !m_bad;
-    }
-    int field() const { return m_field; }
-
-    quint64 varint() {
-        quint64 value = 0;
-        for (int shift = 0; shift < 64 && m_at < m_data.size(); shift += 7) {
-            const auto byte = uchar(m_data[m_at++]);
-            value |= quint64(byte & 0x7f) << shift;
-            if (!(byte & 0x80))
-                return value;
-        }
-        m_bad = true;
-        return 0;
-    }
-    QByteArrayView bytes() {
-        const auto size = qsizetype(varint());
-        if (m_bad || size < 0 || size > m_data.size() - m_at) {
-            m_bad = true;
-            return {};
-        }
-        const auto out = m_data.sliced(m_at, size);
-        m_at += size;
-        return out;
-    }
-    QString text() { return QString::fromUtf8(bytes()); }
-    float fixed32() {
-        if (m_data.size() - m_at < 4) {
-            m_bad = true;
-            return 0;
-        }
-        quint32 raw = 0;
-        for (int i = 0; i < 4; ++i)
-            raw |= quint32(uchar(m_data[m_at + i])) << (8 * i);
-        m_at += 4;
-        float value;
-        std::memcpy(&value, &raw, sizeof value);
-        return value;
-    }
-    // A number in either encoding (floats are fixed32).
-    double number() { return m_wire == 5 ? fixed32() : m_wire == 0 ? double(varint()) : (skip(), 0.0); }
-    void skip() {
-        switch (m_wire) {
-        case 0: varint(); break;
-        case 1: m_at += 8; break;
-        case 2: bytes(); break;
-        case 5: m_at += 4; break;
-        default: m_bad = true;
-        }
-        if (m_at > m_data.size())
-            m_bad = true;
-    }
-    bool bad() const { return m_bad; }
-
-private:
-    QByteArrayView m_data;
-    qsizetype m_at = 0;
-    int m_field = 0;
-    int m_wire = 0;
-    bool m_bad = false;
-};
 
 // Mihon's Backup: manga (1) and the sources they come from (101).
 QList<Item> parseMihon(const QByteArray &data) {

@@ -2,6 +2,9 @@
 
 #include "ComicSource.h"
 
+#include <QJsonArray>
+#include <QSet>
+
 namespace sc::comics {
 
 class AsuraSource : public Source {
@@ -32,6 +35,11 @@ public:
     QList<Chapter> chapters(const QString &seriesUrl) override;
     QList<Panel> panels(const QString &chapterUrl) override;
     std::optional<Details> details(const QString &seriesUrl) override;
+    bool readable(const QString &seriesUrl) override;
+
+    // The readable chapters of one feed page. `takenDown` counts chapters
+    // MangaDex lists but no longer serves (licensed, "isUnavailable").
+    QList<Chapter> feedChapters(const QJsonArray &rows, QSet<QString> &seen, int *takenDown) const;
 
 private:
     // Translations to list (option "languages", default English).

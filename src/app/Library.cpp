@@ -61,6 +61,10 @@ void Library::notifyChanged() {
 }
 
 QString Library::idFor(const QString &media, const QString &source, const QString &key) {
+    // Extension links already start with their source key
+    // ("mihon:<id>:<link>"); the id is "comic:mihon:<id>:<link>".
+    if (!source.isEmpty() && key.startsWith(source) && key.size() > source.size() && key.at(source.size()) == QLatin1Char(':'))
+        return QStringLiteral("%1:%2").arg(media, key);
     return QStringLiteral("%1:%2:%3").arg(media, source, key);
 }
 

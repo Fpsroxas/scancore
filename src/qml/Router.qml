@@ -73,6 +73,21 @@ QtObject {
         return JSON.stringify(old) === JSON.stringify(fresh) ? old : fresh
     }
 
+    // A catalogue shelf's title by its key (Comics.catalogFeeds).
+    function shelfTitle(key) {
+        switch (key) {
+        case "trending": return qsTr("Trending this week")
+        case "popular": return qsTr("Most popular")
+        case "top": return qsTr("Top rated")
+        case "newest": return qsTr("New in the catalogue")
+        case "completed": return qsTr("Recently completed")
+        case "manhwa": return qsTr("Top manhwa")
+        case "manhua": return qsTr("Top manhua")
+        case "lightnovels": return qsTr("Top light novels")
+        }
+        return key
+    }
+
     // Switches to a theme read from a .sct file (Customize.importTheme).
     function applyTheme(theme) {
         const t = Object.assign({}, theme)

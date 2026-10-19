@@ -2,37 +2,45 @@ import QtQuick
 import QtQuick.Controls.Basic
 import ScanCore
 
-// Opens a title from Comick's catalogue: finds it on the sources (under any
-// of its names) and opens it there, or asks which one when several have it.
+// Opens a title from the chosen tracker's catalogue: finds it on the sources
+// (under any of its names) and opens it there. It opens straight away when
+// exactly one source in the content language has it, and otherwise asks,
+// content language first.
 Dialog {
     id: dialog
     property var item: ({})
     property var task: null
+    readonly property bool novel: item.media === "novel"
     readonly property var matches: task && task.ok ? task.result.matches : []
 
     function start(entry) {
         item = entry
-        task = Comics.resolve(entry)
+        task = entry.media === "novel" ? Novels.resolve(entry) : Comics.resolve(entry)
         open()
     }
 
     function show(match) {
         close()
         // The catalogue entry travels with the series (and is stored with it),
-        // so comments, reviews and tracking know which comic this is.
+        // so comments, reviews and tracking know which title this is.
         const it = dialog.item
-        Router.openSeries({ media: "comic", source: match.source, sourceUrl: match.url, title: match.title,
+        const ids = it.ids || {}
+        const extra = { catalog: it.catalog || "comick", catalogId: it.catalogId || it.hid || "", hid: it.hid || "",
+                        catalogTitle: it.title || "", titles: (it.titles || []).slice(0, 20), year: it.year || 0 }
+        if (ids.anilist) extra.anilist = ids.anilist
+        if (ids.mal) extra.mal = ids.mal
+        Router.openSeries({ media: dialog.novel ? "novel" : "comic", source: match.source, sourceUrl: match.url, title: match.title,
                             cover: match.cover || it.cover, description: it.description || "",
                             status: it.status || "", type: it.type || "", rating: it.rating || "",
-                            hid: it.hid || "",
-                            extra: { catalog: "comick", hid: it.hid || "", catalogTitle: it.title || "",
-                                     titles: (it.titles || []).slice(0, 20), year: it.year || 0 } }, null)
+                            hid: it.hid || "", extra: extra }, null)
     }
 
     Connections {
         target: dialog.task
         function onFinished(result) {
-            if (result.matches.length === 1) dialog.show(result.matches[0])
+            const preferred = result.matches.filter(m => m.preferred)
+            if (preferred.length === 1) dialog.show(preferred[0])
+            else if (result.matches.length === 1) dialog.show(result.matches[0])
         }
     }
 
@@ -138,7 +146,9 @@ Dialog {
                             anchors.verticalCenter: parent.verticalCenter
                             spacing: 2
                             Text {
-                                text: option.modelData.sourceLabel
+                                // The content language, when it is not English.
+                                text: option.modelData.sourceLabel + (option.modelData.language && option.modelData.language !== "en"
+                                    ? " · " + option.modelData.language.toUpperCase() : "")
                                 color: Theme.text
                                 font.family: Theme.fontSans
                                 font.pixelSize: Theme.textMd
@@ -170,11 +180,11 @@ Dialog {
             anchors.right: parent.right
             spacing: 8
             ScButton {
-                visible: !!dialog.item.slug
-                text: qsTr("Comick")
+                visible: !!dialog.item.catalogUrl
+                text: dialog.item.catalog === "anilist" ? "AniList" : dialog.item.catalog === "mal" ? "MyAnimeList" : qsTr("Comick")
                 iconName: "external-link"
                 variant: "ghost"
-                onClicked: App.openUrl("https://comick.dev/comic/" + dialog.item.slug)
+                onClicked: App.openUrl(dialog.item.catalogUrl)
             }
             ScButton {
                 text: qsTr("Close")

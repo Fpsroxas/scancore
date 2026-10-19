@@ -25,15 +25,17 @@ public:
 
     // {comics: [...], providers: [{source, label, ok, count, error}]}
     Q_INVOKABLE sc::Task *search(const QString &query, const QString &source = QStringLiteral("all"));
-    // Titles from Comick's catalogue, which knows far more series (and their
-    // other names) than any one site: {comics: [{hid, title, titles, cover,
-    // type, status, year, ...}], providers: []}.
+    // Titles from the comic catalogue the user chose (Comick, AniList or
+    // MyAnimeList), which knows far more series and their other
+    // names than any one source: {comics: [{catalog, catalogId, hid, title,
+    // titles, cover, type, status, year, ids, ...}], catalog, label}.
     Q_INVOKABLE sc::Task *catalog(const QString &query);
-    // Comick's ranked shelves: {trending, popular, newest, completed}.
+    // That catalogue's shelves: {catalog, label, shelves: [{key, items}]}.
     Q_INVOKABLE sc::Task *catalogFeeds(bool mature = false);
     // Where a catalogue title can be read: the series on SCANCORE's sources
-    // listed under any of its names. {matches: [{source, sourceLabel, url,
-    // title, cover}]}
+    // listed under any of its names, content language first, without
+    // taken-down ones. {matches: [{source, sourceLabel, language, preferred,
+    // url, title, cover}], contentLanguage}
     Q_INVOKABLE sc::Task *resolve(const QVariantMap &item);
     // {series: {...}, chapters: [...], offline: bool, error?: string}
     Q_INVOKABLE sc::Task *series(const QString &url, const QVariantMap &summary = {});
@@ -44,8 +46,15 @@ public:
     Q_INVOKABLE sc::Task *latest(int limit = 40);
 
     Q_INVOKABLE QString imageReferer(const QString &url) const;
+    // A browser check for `url` was passed: extensions get its cookies too.
+    Q_INVOKABLE void shareSiteCookies(const QString &url);
     // Warms the image cache for the first pages of an upcoming chapter.
     Q_INVOKABLE void prefetch(const QVariantList &panels, const QString &referer, int count = 6);
+
+    // Catalogue helpers shared with Novels (blocking).
+    static QVariantMap catalogShelves(const QString &media, bool mature);
+    static QVariantMap catalogSearch(const QString &media, const QString &query, bool mature);
+    static QStringList catalogNames(const QVariantMap &item);
 
     // Chapter list as library units ({key, number, title, url, released}).
     static QVariantList fetchUnits(const QString &url);

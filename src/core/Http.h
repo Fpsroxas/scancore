@@ -9,7 +9,9 @@
 #include <QUrlQuery>
 
 #include <atomic>
+#include <functional>
 #include <memory>
+#include <optional>
 #include <stdexcept>
 
 namespace sc {
@@ -67,6 +69,9 @@ struct Response {
     QByteArray body;
     QByteArray contentType;
     QUrl finalUrl;
+    QList<QPair<QByteArray, QByteArray>> headers;
+    // A response header by name (any case), or empty.
+    QByteArray header(const QByteArray &name) const;
 
     bool ok() const { return status >= 200 && status < 300; }
     QString text() const { return QString::fromUtf8(body); }
@@ -95,6 +100,12 @@ public:
 
     static void setUserAgent(const QByteArray &ua);
     static QByteArray userAgent();
+
+    // Offline tests answer requests themselves (fixture sites and
+    // repositories on *.test). A handler that returns nothing lets the
+    // request go to the network; an empty handler removes it.
+    using TestHandler = std::function<std::optional<Response>(const Request &)>;
+    static void setTestHandler(TestHandler handler);
 };
 
 QUrl withQuery(QUrl url, std::initializer_list<QPair<QString, QString>> params);

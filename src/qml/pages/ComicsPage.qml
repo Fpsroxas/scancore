@@ -11,9 +11,12 @@ Item {
     property int latestLimit: 36
     property var latestTask: Comics.latest(latestLimit)
     property var historyTask: Library.history("comic", 16)
-    // Comick's ranked shelves, when search goes through its catalogue.
+    // The shelves of the chosen comic catalogue, when search goes through it.
     property var feedsTask: useCatalog ? Comics.catalogFeeds(App.settings.showNsfwSources === true) : null
-    readonly property var feeds: feedsTask && feedsTask.ok ? feedsTask.result : ({})
+    readonly property var feeds: feedsTask && feedsTask.ok ? feedsTask.result : ({ shelves: [] })
+    // The catalogue's name, for messages.
+    readonly property string catalogLabel: feedsTask && feedsTask.ok && feedsTask.result.label ? feedsTask.result.label
+        : App.settings.catalogComic === "anilist" ? "AniList" : App.settings.catalogComic === "mal" ? "MyAnimeList" : qsTr("Comick")
     property var history: []
     Connections {
         target: page.historyTask
@@ -25,8 +28,10 @@ Item {
     }
     Timer { id: refreshHistory; interval: 500; onTriggered: page.historyTask = Library.history("comic", 16) }
     // Files on this device are listed without a search.
-    // "All sources" searches Comick's catalogue, then finds the pick on a source.
-    readonly property bool useCatalog: source === "all" && App.settings.comickCatalog !== false
+    // "All sources" searches the chosen comic catalogue, then finds the pick
+    // on a source.
+    readonly property bool useCatalog: source === "all" && (App.settings.catalogComic || "comick") !== "none"
+        && (App.settings.catalogComic !== "mal" || Trackers.malAvailable)
     // The catalogue could not be reached, so the sources were searched instead.
     property bool catalogFailed: false
     readonly property bool catalogResults: !!searchTask && searchTask.ok && !catalogFailed && useCatalog && query.length > 0
@@ -137,9 +142,9 @@ Item {
                         x: Theme.gutter
                         text: !page.searchTask || !page.searchTask.ok ? ""
                             : page.browsingLocal ? page.searchTask.result.comics.length + qsTr(" on this device")
-                            : page.catalogResults ? page.searchTask.result.comics.length + qsTr(" titles for “") + page.query + qsTr("” from Comick's catalogue")
+                            : page.catalogResults ? qsTr("%1 titles for “%2” from %3's catalogue").arg(page.searchTask.result.comics.length).arg(page.query).arg(page.catalogLabel)
                             : page.searchTask.result.comics.length + qsTr(" results for “") + page.query + "”"
-                                + (page.catalogFailed ? qsTr(" · Comick is unavailable, so your sources were searched") : "")
+                                + (page.catalogFailed ? qsTr(" · %1 is unavailable, so your sources were searched").arg(page.catalogLabel) : "")
                         color: Theme.textMuted
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm
@@ -228,21 +233,23 @@ Item {
                     onOpened: (it, cover) => Router.resume(it)
                 }
 
+                // While the catalogue loads (or fails), one shelf shows that.
+                Shelf {
+                    width: parent.width
+                    visible: page.useCatalog && !(page.feedsTask && page.feedsTask.ok)
+                    title: qsTr("Trending this week")
+                    items: []
+                    loading: page.feedsTask ? page.feedsTask.loading : false
+                    error: page.feedsTask && !page.feedsTask.loading ? page.feedsTask.error : ""
+                    onRetry: page.feedsTask = Comics.catalogFeeds(App.settings.showNsfwSources === true)
+                }
                 Repeater {
-                    model: page.useCatalog ? [
-                        { key: "trending", title: qsTr("Trending this week") },
-                        { key: "popular", title: qsTr("Most popular") },
-                        { key: "newest", title: qsTr("New in the catalogue") },
-                        { key: "completed", title: qsTr("Recently completed") }
-                    ] : []
+                    model: page.useCatalog ? page.feeds.shelves : []
                     Shelf {
                         required property var modelData
                         width: parent.width
-                        title: modelData.title
-                        items: page.feeds[modelData.key] || []
-                        loading: page.feedsTask ? page.feedsTask.loading : false
-                        error: page.feedsTask && !page.feedsTask.loading ? page.feedsTask.error : ""
-                        onRetry: page.feedsTask = Comics.catalogFeeds(App.settings.showNsfwSources === true)
+                        title: Router.shelfTitle(modelData.key)
+                        items: modelData.items
                         subtitleFor: (it) => [it.type, it.lastChapter ? qsTr("Ch. ") + it.lastChapter : ""].filter(s => s).join(" · ")
                         onOpened: (it, cover) => readFrom.start(it)
                     }

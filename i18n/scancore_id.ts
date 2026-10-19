@@ -972,6 +972,17 @@
         </message>
     </context>
     <context>
+        <name>CataloguePicker</name>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>Tidak ada</translation>
+        </message>
+    </context>
+    <context>
         <name>CodeBoxes</name>
         <message>
             <source>Access code</source>
@@ -1115,20 +1126,20 @@
             <translation> di perangkat ini</translation>
         </message>
         <message>
-            <source> titles for “</source>
-            <translation> judul untuk “</translation>
-        </message>
-        <message>
-            <source>” from Comick&apos;s catalogue</source>
-            <translation>” dari katalog Comick</translation>
-        </message>
-        <message>
             <source> results for “</source>
             <translation> hasil untuk “</translation>
         </message>
         <message>
-            <source> · Comick is unavailable, so your sources were searched</source>
-            <translation> · Comick tidak tersedia, jadi sumber Anda yang dicari</translation>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>%1 titles for “%2” from %3&apos;s catalogue</source>
+            <translation>%1 judul untuk “%2” dari katalog %3</translation>
+        </message>
+        <message>
+            <source> · %1 is unavailable, so your sources were searched</source>
+            <translation> · %1 tidak tersedia, jadi sumber Anda yang dicari</translation>
         </message>
         <message>
             <source>%1 is unavailable</source>
@@ -1173,18 +1184,6 @@
         <message>
             <source>Trending this week</source>
             <translation>Tren minggu ini</translation>
-        </message>
-        <message>
-            <source>Most popular</source>
-            <translation>Paling populer</translation>
-        </message>
-        <message>
-            <source>New in the catalogue</source>
-            <translation>Baru di katalog</translation>
-        </message>
-        <message>
-            <source>Recently completed</source>
-            <translation>Baru tamat</translation>
         </message>
         <message>
             <source>Latest chapters</source>
@@ -1355,80 +1354,44 @@
             <translation>Pelacakan</translation>
         </message>
         <message>
-            <source>Finishing a chapter or episode moves the series forward on your list. Anime are matched by their AniList entry and </source>
-            <translation>Menyelesaikan bab atau episode memajukan seri di daftar Anda. Anime dicocokkan lewat entri AniList-nya dan </translation>
-        </message>
-        <message>
             <source>This copy of SCANCORE was built without AniList, MyAnimeList and Comick ids, so tracking is off. Official downloads have them.</source>
             <translation>Salinan SCANCORE ini dibuat tanpa ID AniList, MyAnimeList, dan Comick, jadi pelacakan mati. Unduhan resmi memilikinya.</translation>
-        </message>
-        <message>
-            <source>Connected as </source>
-            <translation>Terhubung sebagai </translation>
-        </message>
-        <message>
-            <source>Sign in on the page that opened, then paste the token it shows.</source>
-            <translation>Masuk di halaman yang terbuka, lalu tempel token yang ditampilkan.</translation>
         </message>
         <message>
             <source>Keep your AniList lists up to date.</source>
             <translation>Jaga daftar AniList Anda tetap terbaru.</translation>
         </message>
         <message>
-            <source>Open again</source>
-            <translation>Buka lagi</translation>
-        </message>
-        <message>
-            <source>Connect</source>
-            <translation>Hubungkan</translation>
-        </message>
-        <message>
-            <source>Disconnect</source>
-            <translation>Putuskan</translation>
-        </message>
-        <message>
-            <source>Paste the token</source>
-            <translation>Tempel token</translation>
-        </message>
-        <message>
-            <source>Use token</source>
-            <translation>Gunakan token</translation>
-        </message>
-        <message>
-            <source>Connected to AniList as </source>
-            <translation>Terhubung ke AniList sebagai </translation>
-        </message>
-        <message>
-            <source>Waiting for you to sign in on the page that opened…</source>
-            <translation>Menunggu Anda masuk di halaman yang terbuka…</translation>
-        </message>
-        <message>
             <source>Keep your MyAnimeList lists up to date.</source>
             <translation>Jaga daftar MyAnimeList Anda tetap terbaru.</translation>
-        </message>
-        <message>
-            <source>Cancel</source>
-            <translation>Batal</translation>
-        </message>
-        <message>
-            <source>Connected to MyAnimeList as </source>
-            <translation>Terhubung ke MyAnimeList sebagai </translation>
         </message>
         <message>
             <source>Comick</source>
             <translation>Comick</translation>
         </message>
         <message>
-            <source>Waiting for you to allow SCANCORE on the page that opened…</source>
-            <translation>Menunggu Anda mengizinkan SCANCORE di halaman yang terbuka…</translation>
-        </message>
-        <message>
             <source>Keep your Comick library up to date, and bring it into SCANCORE.</source>
             <translation>Jaga pustaka Comick Anda tetap terbaru dan bawa ke SCANCORE.</translation>
         </message>
         <message>
-            <source>Connected to Comick as </source>
-            <translation>Terhubung ke Comick sebagai </translation>
+            <source>Comics catalogue</source>
+            <translation>Katalog komik</translation>
+        </message>
+        <message>
+            <source>Finishing a chapter or episode moves the series forward on every tracker you connect. Anime are matched by their AniList entry, comics and novels by their catalogue entry or title; link one by hand from its page.</source>
+            <translation>Menyelesaikan bab atau episode memajukan seri di setiap pelacak yang Anda hubungkan. Anime dicocokkan lewat entri AniList-nya, komik dan novel lewat entri katalog atau judulnya; tautkan secara manual dari halamannya.</translation>
+        </message>
+        <message>
+            <source>What the Comics page shows and searches. None searches your sources directly.</source>
+            <translation>Yang ditampilkan dan dicari halaman Komik. Tidak ada berarti sumber Anda dicari langsung.</translation>
+        </message>
+        <message>
+            <source>Novels catalogue</source>
+            <translation>Katalog novel</translation>
+        </message>
+        <message>
+            <source>What the Novels page shows and searches.</source>
+            <translation>Yang ditampilkan dan dicari halaman Novel.</translation>
         </message>
         <message>
             <source>Discord</source>
@@ -1467,8 +1430,8 @@
             <translation>Bawa pustaka Anda</translation>
         </message>
         <message>
-            <source>Anime come in with the episodes you watched. Comics and novels come in when one of your sources has them, </source>
-            <translation>Anime masuk beserta episode yang sudah ditonton. Komik dan novel masuk jika salah satu sumber Anda memilikinya, </translation>
+            <source>Anime come in with the episodes you watched. Comics and novels come in with the chapters you read when one of your sources has them; the others wait below until they are found.</source>
+            <translation>Anime masuk bersama episode yang sudah Anda tonton. Komik dan novel masuk bersama bab yang sudah dibaca jika salah satu sumber Anda memilikinya; sisanya menunggu di bawah sampai ditemukan.</translation>
         </message>
         <message>
             <source>Mihon or Tachiyomi backup</source>
@@ -2646,8 +2609,16 @@
             <translation> di perangkat ini</translation>
         </message>
         <message>
+            <source>%1 titles for “%2” from %3&apos;s catalogue</source>
+            <translation>%1 judul untuk “%2” dari katalog %3</translation>
+        </message>
+        <message>
             <source> results for “</source>
             <translation> hasil untuk “</translation>
+        </message>
+        <message>
+            <source> · %1 is unavailable, so your sources were searched</source>
+            <translation> · %1 tidak tersedia, jadi sumber Anda yang dicari</translation>
         </message>
         <message>
             <source>Pass %1&apos;s browser check</source>
@@ -2680,6 +2651,10 @@
         <message>
             <source>Saved novels</source>
             <translation>Novel tersimpan</translation>
+        </message>
+        <message>
+            <source>Trending this week</source>
+            <translation>Tren minggu ini</translation>
         </message>
         <message>
             <source>Discover</source>
@@ -2721,10 +2696,6 @@
             <translation>Semuanya di satu tempat</translation>
         </message>
         <message>
-            <source>Read and watch from dozens of sites at once</source>
-            <translation>Baca dan tonton dari puluhan situs sekaligus</translation>
-        </message>
-        <message>
             <source>Search every source together, keep your place in every series, and download chapters for offline reading.</source>
             <translation>Cari di semua sumber sekaligus, simpan posisi di setiap seri, dan unduh bab untuk dibaca luring.</translation>
         </message>
@@ -2733,16 +2704,8 @@
             <translation>Komik</translation>
         </message>
         <message>
-            <source>Manhwa, manga and webtoons from Asura, Webtoon, MangaDex and more. Vertical strip or page by page.</source>
-            <translation>Manhwa, manga, dan webtoon dari Asura, Webtoon, MangaDex, dan lainnya. Strip vertikal atau per halaman.</translation>
-        </message>
-        <message>
             <source>Novels</source>
             <translation>Novel</translation>
-        </message>
-        <message>
-            <source>Royal Road and the big web-novel sites, with a reader you can tune: fonts, spacing, paper and sepia themes.</source>
-            <translation>Royal Road dan situs novel web besar, dengan pembaca yang bisa diatur: fon, spasi, tema kertas dan sepia.</translation>
         </message>
         <message>
             <source>Anime</source>
@@ -2767,6 +2730,34 @@
         <message>
             <source>System</source>
             <translation>Sistem</translation>
+        </message>
+        <message>
+            <source>Read and watch from the sources you choose</source>
+            <translation>Baca dan tonton dari sumber pilihan Anda</translation>
+        </message>
+        <message>
+            <source>Manhwa, manga and webtoons from Webtoon, MangaDex, your files and the sources you add. Vertical strip or page by page.</source>
+            <translation>Manhwa, manga, dan webtoon dari Webtoon, MangaDex, berkas Anda, dan sumber yang Anda tambahkan. Strip vertikal atau per halaman.</translation>
+        </message>
+        <message>
+            <source>Royal Road, your EPUB books and the sources you add, with a reader you can tune: fonts, spacing, paper and sepia themes.</source>
+            <translation>Royal Road, buku EPUB Anda, dan sumber yang Anda tambahkan, dengan pembaca yang bisa diatur: font, spasi, tema kertas dan sepia.</translation>
+        </message>
+        <message>
+            <source>Trackers</source>
+            <translation>Pelacak</translation>
+        </message>
+        <message>
+            <source>Browse and track your way</source>
+            <translation>Jelajahi dan lacak sesuka Anda</translation>
+        </message>
+        <message>
+            <source>Pick the catalogue each page browses and searches. Connected trackers follow what you finish, whichever you browse with.</source>
+            <translation>Pilih katalog yang dijelajahi dan dicari tiap halaman. Pelacak yang terhubung mencatat yang Anda selesaikan, katalog mana pun yang Anda pakai.</translation>
+        </message>
+        <message>
+            <source>Keep your lists in step</source>
+            <translation>Jaga daftar Anda tetap sinkron</translation>
         </message>
         <message>
             <source>Theme</source>
@@ -3129,6 +3120,38 @@
     </context>
     <context>
         <name>Router</name>
+        <message>
+            <source>Trending this week</source>
+            <translation>Tren minggu ini</translation>
+        </message>
+        <message>
+            <source>Most popular</source>
+            <translation>Paling populer</translation>
+        </message>
+        <message>
+            <source>Top rated</source>
+            <translation>Rating teratas</translation>
+        </message>
+        <message>
+            <source>New in the catalogue</source>
+            <translation>Baru di katalog</translation>
+        </message>
+        <message>
+            <source>Recently completed</source>
+            <translation>Baru tamat</translation>
+        </message>
+        <message>
+            <source>Top manhwa</source>
+            <translation>Manhwa teratas</translation>
+        </message>
+        <message>
+            <source>Top manhua</source>
+            <translation>Manhua teratas</translation>
+        </message>
+        <message>
+            <source>Top light novels</source>
+            <translation>Light novel teratas</translation>
+        </message>
         <message>
             <source>The theme</source>
             <translation>Tema itu</translation>
@@ -3764,18 +3787,6 @@
             <translation>Periksa sekarang</translation>
         </message>
         <message>
-            <source>Search with Comick&apos;s catalogue</source>
-            <translation>Cari dengan katalog Comick</translation>
-        </message>
-        <message>
-            <source>“All sources” searches comick.dev, which knows almost every series under all its names, then opens </source>
-            <translation>“Semua sumber” mencari di comick.dev, yang mengenal hampir semua seri dengan semua namanya, lalu membuka </translation>
-        </message>
-        <message>
-            <source>the one you pick from a source that has it. Off: each source is searched directly.</source>
-            <translation>yang Anda pilih dari sumber yang memilikinya. Mati: setiap sumber dicari langsung.</translation>
-        </message>
-        <message>
             <source>Languages for “All sources”</source>
             <translation>Bahasa untuk “Semua sumber”</translation>
         </message>
@@ -3794,6 +3805,26 @@
         <message>
             <source>Lists sources marked 18+ in the comic source picker.</source>
             <translation>Menampilkan sumber bertanda 18+ di pemilih sumber komik.</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Ekstensi</translation>
+        </message>
+        <message>
+            <source>Extensions runtime</source>
+            <translation>Runtime ekstensi</translation>
+        </message>
+        <message>
+            <source>Installed. Extensions from the repositories you add run in it.</source>
+            <translation>Terpasang. Ekstensi dari repositori yang Anda tambahkan berjalan di dalamnya.</translation>
+        </message>
+        <message>
+            <source>About 100 MB. Needed to run extensions on this computer; SCANCORE downloads it into the app data folder.</source>
+            <translation>Sekitar 100 MB. Diperlukan untuk menjalankan ekstensi di komputer ini; SCANCORE mengunduhnya ke folder data aplikasi.</translation>
+        </message>
+        <message>
+            <source>Extensions runtime installed</source>
+            <translation>Runtime ekstensi terpasang</translation>
         </message>
         <message>
             <source>Extended novel sources</source>
@@ -4321,6 +4352,57 @@
         <message>
             <source>Saved </source>
             <translation>Disimpan </translation>
+        </message>
+    </context>
+    <context>
+        <name>TrackerConnect</name>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>Connected as </source>
+            <translation>Terhubung sebagai </translation>
+        </message>
+        <message>
+            <source>Sign in on the page that opened, then paste the token it shows.</source>
+            <translation>Masuk di halaman yang terbuka, lalu tempel token yang ditampilkan.</translation>
+        </message>
+        <message>
+            <source>Waiting for you to allow SCANCORE on the page that opened…</source>
+            <translation>Menunggu Anda mengizinkan SCANCORE di halaman yang terbuka…</translation>
+        </message>
+        <message>
+            <source>Waiting for you to sign in on the page that opened…</source>
+            <translation>Menunggu Anda masuk di halaman yang terbuka…</translation>
+        </message>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>Terhubung ke %1 sebagai %2</translation>
+        </message>
+        <message>
+            <source>Open again</source>
+            <translation>Buka lagi</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+        <message>
+            <source>Connect</source>
+            <translation>Hubungkan</translation>
+        </message>
+        <message>
+            <source>Disconnect</source>
+            <translation>Putuskan</translation>
+        </message>
+        <message>
+            <source>Paste the token</source>
+            <translation>Tempel token</translation>
+        </message>
+        <message>
+            <source>Use token</source>
+            <translation>Gunakan token</translation>
         </message>
     </context>
     <context>

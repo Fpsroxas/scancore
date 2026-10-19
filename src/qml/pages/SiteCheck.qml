@@ -52,6 +52,8 @@ Rectangle {
                 text: qsTr("Done")
                 iconName: "check"
                 onClicked: {
+                    // Extensions that read this site get the cookies too.
+                    Comics.shareSiteCookies(page.url)
                     Router.toast("Try again now; " + page.host + qsTr(" should load."), "success")
                     Router.back()
                 }

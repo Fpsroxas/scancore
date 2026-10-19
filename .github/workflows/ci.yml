@@ -48,6 +48,12 @@ jobs:
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@v1
 
+      # The extension host (host/) and its tests.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
       - name: Qt
         uses: jurplel/install-qt-action@v4
         with:
