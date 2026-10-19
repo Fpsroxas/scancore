@@ -47,6 +47,15 @@ Parser tests are offline (`tests/tst_parsing.cpp`). To check every built-in sour
 | Interface | `src/qml` (pages in `pages/`, shared pieces in `components/`, colours and sizes in `theme/`) |
 | Networking, database, image cache | `src/core` |
 
+Optional manifest fields for comic and novel entries:
+
+| Field | Meaning |
+| --- | --- |
+| `language` | The content's language as a short code (`"es"`, `"pt"`); default `"en"`. Shown in Settings → Sources and on the comic source chips, and used by the "All sources" language setting. |
+| `urlTag` | For a source that shares a host with another (MangaDex in English and in Spanish): its links carry `#<urlTag>`, so a link opens on the source that made it. Leave it out otherwise; adding it to an existing source changes its ids. |
+| `minVersion` | The oldest app version that may load the entry, for entries that need new code. Older apps that know this field skip the entry; 1.4.0 and older do not know it. |
+| `options` | Engine options, such as `"languages": ["es", "es-la"]` for `mangadex`. |
+
 For a source change, include the URL of a series that shows the problem and what you expected to see.
 
 ## Pull requests

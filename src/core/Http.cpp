@@ -122,8 +122,12 @@ bool Response::isChallenge() const {
         QStringLiteral(R"(<title[^>]*>\s*(Just a moment|Attention Required|Access denied|DDoS-Guard))"),
         QRegularExpression::CaseInsensitiveOption);
     const auto head = QString::fromUtf8(body.left(8192));
-    return title.match(head).hasMatch() || head.contains(QLatin1String("cf-mitigated")) ||
-           head.contains(QLatin1String("challenge-platform"));
+    if (title.match(head).hasMatch())
+        return true;
+    // Cloudflare adds its challenge-platform script to ordinary pages too, so
+    // it only marks a check on a refused request.
+    const bool refused = status == 403 || status == 503 || status == 429;
+    return refused && (head.contains(QLatin1String("cf-mitigated")) || head.contains(QLatin1String("challenge-platform")));
 }
 
 void Http::setUserAgent(const QByteArray &ua) {

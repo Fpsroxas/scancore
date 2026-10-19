@@ -162,7 +162,7 @@ Site addresses, availability and template options live in [`sources/manifest.jso
 
 | Kind | Built in | Optional |
 | --- | --- | --- |
-| Comics | Asura Scans, Webtoon, MangaDex, Flame Comics, HiveToons, Vortex Scans, Qi Manga, ThunderScans, MangaRead | — |
+| Comics | Asura Scans, Webtoon, MangaDex, Flame Comics, HiveToons, Vortex Scans, Qi Manga, ThunderScans, MangaRead; in Spanish: MangaDex (Español), ManhwaWeb, InManga, LeerCapitulo, MangaOni | — |
 | Novels | Royal Road, NovelFull, NovelFull.com, AllNovelFull, ReadNovelFull, FreeWebNovel, LibRead | About 130 more sites via the extended pack (desktop) |
 | Anime | AniList metadata, ani.zip episode details, AniSkip, ReAnime player | — |
 
@@ -267,6 +267,12 @@ On your device, in the app data folder (`~/.local/share/Medium Dev/ScanCore` on 
 <summary><b>A source shows "asked for a browser check".</b></summary>
 
 On desktop, use the **Open browser check** button (or the globe next to the source in Settings → Sources), complete the site's check and press **Done**. SCANCORE then reuses the clearance.
+</details>
+
+<details>
+<summary><b>Can I read in Spanish or another language?</b></summary>
+
+The interface is in English, Spanish, French, Brazilian Portuguese and Indonesian (Settings → Interface → Language, or the first screen). For content, comics come in Spanish from MangaDex (Español), ManhwaWeb, InManga, LeerCapitulo and MangaOni, and the extended novel pack adds Spanish, French, Portuguese, Indonesian and other novel sites. Settings → Sources shows each source's language and can keep "All sources" to one language. More languages need sites that work with SCANCORE's engines; suggestions are welcome in [Discussions](https://github.com/medium-gh/scancore/discussions).
 </details>
 
 <details>

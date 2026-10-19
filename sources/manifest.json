@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "updated": "2026-10-19",
   "comics": [
     {
@@ -117,6 +117,58 @@
       "hosts": [
         "mangaread.org"
       ]
+    },
+    {
+      "key": "manhwaweb",
+      "label": "ManhwaWeb",
+      "engine": "manhwaweb",
+      "base": "https://manhwaweb.com",
+      "api": "https://api.manhwaweb.com",
+      "hosts": [
+        "manhwaweb.com"
+      ],
+      "language": "es",
+      "minVersion": "1.5.0"
+    },
+    {
+      "key": "inmanga",
+      "label": "InManga",
+      "engine": "inmanga",
+      "base": "https://inmanga.com",
+      "hosts": [
+        "inmanga.com"
+      ],
+      "language": "es",
+      "minVersion": "1.5.0",
+      "options": {
+        "imageHost": "https://cdn1.intomanga.com"
+      }
+    },
+    {
+      "key": "leercapitulo",
+      "label": "LeerCapitulo",
+      "engine": "leercapitulo",
+      "base": "https://www.leercapitulo.co",
+      "hosts": [
+        "leercapitulo.co",
+        "leercapitulo.com"
+      ],
+      "language": "es",
+      "minVersion": "1.5.0"
+    },
+    {
+      "key": "mangaoni-es",
+      "label": "MangaOni",
+      "engine": "mangaverse",
+      "base": "https://www.mangaoni.com/es",
+      "hosts": [
+        "mangaoni.com"
+      ],
+      "language": "es",
+      "minVersion": "1.5.0",
+      "options": {
+        "titleSuffix": "ES"
+      }
     },
     {
       "key": "rizzcomic",

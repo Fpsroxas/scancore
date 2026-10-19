@@ -1,15 +1,17 @@
 // Comic sources that publish a JSON API: Asura, MangaDex, Iken (Vortex),
-// HiveToons and Qi Manga.
+// HiveToons, Qi Manga and ManhwaWeb.
 
 #include "Engines.h"
 
 #include "core/Html.h"
 
 #include <QDateTime>
+#include <QHash>
 #include <QJsonArray>
 #include <QRegularExpression>
 #include <QSet>
 #include <QThread>
+#include <QTimeZone>
 
 #include <mutex>
 
@@ -770,6 +772,135 @@ QList<LatestItem> QiMangaSource::latest(int limit) {
             break;
     }
     return out;
+}
+
+// ---------------------------------------------------------------- ManhwaWeb
+
+namespace {
+// Series: https://manhwaweb.com/manhwa/<id>; chapters:
+// https://manhwaweb.com/leer/<id>-<number>_<version>.
+QString manhwaWebId(const QString &url) { return pathSegment(QUrl(url), -1); }
+
+QString manhwaWebStatus(const QString &status) {
+    static const QHash<QString, QString> names{{"publicandose", QString::fromUtf8("En publicación")},
+                                               {"finalizado", "Finalizado"},
+                                               {"pausado", "Pausado"},
+                                               {"cancelado", "Cancelado"}};
+    return names.value(status, status);
+}
+} // namespace
+
+QList<Summary> ManhwaWebSource::search(const QString &query) {
+    const auto doc = Http::getJson(apiUrl(m_config.api, QStringLiteral("/manhwa/library"),
+                                          {{"buscar", query},
+                                           {"estado", ""},
+                                           {"tipo", ""},
+                                           {"erotico", ""},
+                                           {"demografia", ""},
+                                           {"order_item", "alfabetico"},
+                                           {"order_dir", "desc"},
+                                           {"page", "0"},
+                                           {"generes", ""}}),
+                                   jsonHeaders());
+    // Adult titles stay out unless the manifest asks for them.
+    const bool adult = m_config.options.value("adult").toBool(false);
+    QList<Summary> out;
+    for (const auto &row : arr(doc.object().value("data"))) {
+        const auto m = row.toObject();
+        if (!adult && str(m.value("_erotico")) == QLatin1String("si"))
+            continue;
+        auto id = str(m.value("real_id"));
+        if (id.isEmpty())
+            id = str(m.value("_id"));
+        Summary item;
+        item.title = str(m.value("name_esp"));
+        if (item.title.isEmpty())
+            item.title = str(m.value("the_real_name"));
+        if (id.isEmpty() || item.title.isEmpty())
+            continue;
+        item.url = QStringLiteral("%1/manhwa/%2").arg(m_config.base, id);
+        item.cover = str(m.value("_imagen"));
+        const auto type = str(m.value("_tipo"));
+        item.type = type.isEmpty() ? QString() : type.left(1).toUpper() + type.mid(1);
+        item.source = key();
+        out.append(item);
+    }
+    return out;
+}
+
+QJsonObject ManhwaWebSource::series(const QString &seriesUrl) {
+    const auto id = manhwaWebId(seriesUrl);
+    if (id.isEmpty())
+        throw Error(QStringLiteral("That is not a ManhwaWeb series link."));
+    return Http::getJson(apiUrl(m_config.api, QStringLiteral("/manhwa/see/") + QString::fromUtf8(QUrl::toPercentEncoding(id))),
+                         jsonHeaders())
+        .object();
+}
+
+QList<Chapter> ManhwaWebSource::parseChapters(const QJsonObject &series, const QString &id, const QString &base,
+                                              const QString &language) {
+    QList<Chapter> out;
+    QSet<QString> seen;
+    for (const auto &row : arr(series.value("chapters"))) {
+        const auto c = row.toObject();
+        const auto number = str(c.value("chapter"));
+        // The link names the upload ("…-12_01"); its series part can be an
+        // older id the API no longer answers to, so the id is the series'.
+        const auto version = str(c.value("link")).section(QLatin1Char('-'), -1);
+        if (number.isEmpty() || !version.contains(QLatin1Char('_')))
+            continue;
+        const auto chapterId = id + QLatin1Char('-') + version;
+        if (seen.contains(chapterId))
+            continue;
+        seen.insert(chapterId);
+        Chapter ch;
+        ch.number = number;
+        ch.title = comics::chapterLabel(language, number);
+        ch.url = QStringLiteral("%1/leer/%2").arg(base, chapterId);
+        ch.slug = chapterId;
+        if (const auto created = c.value("create").toDouble(); created > 0)
+            ch.released = QDateTime::fromMSecsSinceEpoch(qint64(created), QTimeZone::UTC).toString(Qt::ISODate);
+        out.append(ch);
+    }
+    sortChapters(out);
+    return out;
+}
+
+QList<Chapter> ManhwaWebSource::chapters(const QString &seriesUrl) {
+    return parseChapters(series(seriesUrl), manhwaWebId(seriesUrl), m_config.base, m_config.language);
+}
+
+QList<Panel> ManhwaWebSource::panels(const QString &chapterUrl) {
+    const auto id = manhwaWebId(chapterUrl);
+    const auto doc = Http::getJson(
+        apiUrl(m_config.api, QStringLiteral("/chapters/see/") + QString::fromUtf8(QUrl::toPercentEncoding(id))), jsonHeaders());
+    QList<Panel> out;
+    for (const auto &image : arr(doc.object().value("chapter").toObject().value("img")))
+        if (const auto url = str(image); url.startsWith(QLatin1String("https://")))
+            out.append({url});
+    return out;
+}
+
+std::optional<Details> ManhwaWebSource::details(const QString &seriesUrl) {
+    const auto data = series(seriesUrl);
+    Details d;
+    d.title = str(data.value("name_esp"));
+    if (d.title.isEmpty())
+        d.title = str(data.value("the_real_name"));
+    d.cover = str(data.value("_imagen"));
+    d.description = str(data.value("_sinopsis")).trimmed();
+    d.status = manhwaWebStatus(str(data.value("_status")));
+    for (const auto &value : arr(data.value("_categoris")))
+        for (const auto &name : value.toObject())
+            if (const auto genre = str(name); !genre.isEmpty())
+                d.genres.append(genre);
+    QStringList authors;
+    for (const auto &value : arr(data.value("autor")))
+        authors.append(str(value.toObject().value("name")).trimmed());
+    authors.removeAll(QString());
+    authors.removeDuplicates();
+    d.author = authors.join(QStringLiteral(", "));
+    return d;
 }
 
 } // namespace sc::comics

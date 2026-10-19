@@ -1,6 +1,7 @@
-// Live source check: scancore_probe [comics|novels] [query] [source-key]
+// Live source check: scancore_probe [comics|novels] [query] [source-key] [latest]
 // Searches each enabled source, opens the first result and reads its first
-// chapter. Hits real sites, so it is not part of ctest.
+// chapter (its newest with "latest"). Hits real sites, so it is not part of
+// ctest.
 
 #include "core/Http.h"
 #include "sources/Manifest.h"
@@ -45,6 +46,7 @@ int main(int argc, char **argv) {
     const auto args = app.arguments();
     const auto kind = args.value(1, QStringLiteral("comics"));
     const auto only = args.value(3);
+    const bool newest = args.value(4) == QLatin1String("latest");
     int failures = 0;
 
     if (kind == QLatin1String("comics")) {
@@ -86,11 +88,20 @@ int main(int argc, char **argv) {
                     .arg(!d->cover.isEmpty())
                     .arg(ids.isEmpty() ? QString() : QStringLiteral(", ") + ids.join(QLatin1Char(' ')));
             });
+            QList<comics::Panel> panels;
             ok = ok && step("panels", [&] {
-                const auto panels = source->panels(chapters.first().url);
+                panels = source->panels(newest ? chapters.last().url : chapters.first().url);
                 if (panels.isEmpty())
                     throw Error(QStringLiteral("no panels"));
                 return QStringLiteral("%1 panels, first: %2").arg(panels.size()).arg(panels.first().url.left(90));
+            });
+            // The first page, fetched as the reader does.
+            ok = ok && step("image", [&] {
+                const auto image = Http::get(QUrl(panels.first().url), {{"Referer", source->imageReferer().toUtf8()}}, 20000);
+                const auto &type = image.contentType;
+                if (!image.ok() || !(type.startsWith("image/") || type.startsWith("application/octet-stream")))
+                    throw Error(QStringLiteral("HTTP %1, %2").arg(image.status).arg(QString::fromUtf8(type)));
+                return QStringLiteral("%1 KB %2").arg(image.body.size() / 1024).arg(QString::fromUtf8(type));
             });
             if (source->hasLatest())
                 ok = step("latest", [&] { return QStringLiteral("%1 items").arg(source->latest(10).size()); }) && ok;

@@ -72,6 +72,14 @@ std::unique_ptr<Source> createSource(const SourceConfig &config) {
         return std::make_unique<MadaraSource>(config);
     if (e == QLatin1String("wp"))
         return std::make_unique<WpSource>(config);
+    if (e == QLatin1String("mangaverse"))
+        return std::make_unique<MangaverseSource>(config);
+    if (e == QLatin1String("manhwaweb"))
+        return std::make_unique<ManhwaWebSource>(config);
+    if (e == QLatin1String("inmanga"))
+        return std::make_unique<InMangaSource>(config);
+    if (e == QLatin1String("leercapitulo"))
+        return std::make_unique<LeerCapituloSource>(config);
     return nullptr;
 }
 

@@ -5,6 +5,7 @@
 #include "core/Text.h"
 #include "sources/Manifest.h"
 #include "sources/comics/ComicSource.h"
+#include "sources/comics/Engines.h"
 #include "sources/comics/Registry.h"
 #include "sources/local/Local.h"
 #include "sources/novels/NovelSource.h"
@@ -19,6 +20,12 @@
 #include <QtTest>
 
 using namespace sc;
+
+// Markup and data shaped like each site's, in tests/fixtures.
+static QByteArray fixture(const char *name) {
+    QFile file(QStringLiteral(SCANCORE_SOURCE_DIR "/tests/fixtures/") + QLatin1String(name));
+    return file.open(QIODevice::ReadOnly) ? file.readAll() : QByteArray();
+}
 
 class Parsing : public QObject {
     Q_OBJECT
@@ -201,6 +208,87 @@ private slots:
         QCOMPARE(keyFor(QStringLiteral("https://vortexscans.org/series/some-title#es")), QString());
         QCOMPARE(keyFor(QStringLiteral("https://unknown.test/x")), QString());
         QCOMPARE(novels::Registry::forUrl(QStringLiteral("https://novelas.test/libro"))->key(), QStringLiteral("novelas"));
+    }
+
+    void challengeDetection() {
+        Response page;
+        page.status = 200;
+        page.contentType = "text/html; charset=UTF-8";
+        // Cloudflare's beacon on an ordinary page is not a check.
+        page.body = "<html><head><title>Solo Leveling - M440</title>"
+                    "<script src=\"/cdn-cgi/challenge-platform/scripts/jsd/main.js\"></script></head></html>";
+        QVERIFY(!page.isChallenge());
+        page.status = 403;
+        QVERIFY(page.isChallenge());
+        page.status = 200;
+        page.body = "<!DOCTYPE html><html><head><title>Just a moment...</title></head></html>";
+        QVERIFY(page.isChallenge());
+    }
+
+    void leerCapitulo() {
+        const QString base = QStringLiteral("https://www.leercapitulo.co");
+        const auto results = comics::LeerCapituloSource::parseSearch(fixture("leercapitulo-search.html"), base);
+        QCOMPARE(results.size(), 1);
+        QCOMPARE(results[0].title, QStringLiteral("Level Up Alone"));
+        QCOMPARE(results[0].url, QStringLiteral("https://www.leercapitulo.co/manga/0wdem0o1jg/level-up-alone/"));
+        QCOMPARE(results[0].cover, QStringLiteral("https://www.leercapitulo.co/covers/95/be.jpg?v1"));
+        QCOMPARE(results[0].type, QStringLiteral("Manhwa"));
+
+        const QString series = base + QStringLiteral("/manga/0rradr8n/fin/");
+        const auto chapters = comics::LeerCapituloSource::parseChapters(fixture("leercapitulo-chapters.html"), series);
+        QCOMPARE(chapters.size(), 3);
+        QCOMPARE(chapters[0].number, QStringLiteral("1"));
+        QCOMPARE(chapters[1].number, QStringLiteral("53.5"));
+        QCOMPARE(chapters[2].url, QStringLiteral("https://www.leercapitulo.co/leer/0rradr8n/fin/54/"));
+        QCOMPARE(chapters[2].released, QStringLiteral("2026-10-19"));
+
+        const auto panels = comics::LeerCapituloSource::parsePanels(fixture("leercapitulo-pages.html"), base + QStringLiteral("/leer/x/y/1/"));
+        QCOMPARE(panels.size(), 2);
+        QCOMPARE(panels[1].url, QStringLiteral("https://img.test/a/2.webp"));
+    }
+
+    void mangaverse() {
+        const QString base = QStringLiteral("https://www.mangaoni.com/es");
+        const auto cards = comics::MangaverseSource::parseCards(fixture("mangaverse-search.html"), base, QStringLiteral("ES"));
+        QCOMPARE(cards.size(), 1);
+        QCOMPARE(cards[0].title, QStringLiteral("Solo Leveling"));
+        QCOMPARE(cards[0].cover, QStringLiteral("https://www.mangaoni.com/wp-content/uploads/c.jpg"));
+        QCOMPARE(comics::MangaverseSource::cleanTitle(QStringLiteral("Wind Breaker ES"), QStringLiteral("ES")), QStringLiteral("Wind Breaker"));
+        QCOMPARE(comics::MangaverseSource::cleanTitle(QStringLiteral("Hades"), QStringLiteral("ES")), QStringLiteral("Hades"));
+
+        const auto chapters = comics::MangaverseSource::parseChapters(fixture("mangaverse-chapters.html"), base + QStringLiteral("/manga/sl.html"));
+        QCOMPARE(chapters.size(), 2);
+        QCOMPARE(chapters[0].title, QStringLiteral("Capitulo 201"));
+        QCOMPARE(chapters[0].number, QStringLiteral("201"));
+        QCOMPARE(chapters[1].number, QStringLiteral("200.5"));
+    }
+
+    void inManga() {
+        const auto results = comics::InMangaSource::parseSearch(fixture("inmanga-search.html"), QStringLiteral("https://inmanga.com"));
+        QCOMPARE(results.size(), 1);
+        QCOMPARE(results[0].title, QStringLiteral("One Piece"));
+        QCOMPARE(results[0].url, QStringLiteral("https://inmanga.com/ver/manga/One-Piece/dfc7ecb5-e9b3-4aa5-a61b-a498993cd935"));
+        QCOMPARE(results[0].cover, QStringLiteral("https://cdn1.intomanga.com/i/m/dfc7ecb5/t/o/dfc7ecb5.jpg"));
+
+        // The page picker appears twice; ids are lower-cased into the path.
+        const QByteArray controls = fixture("inmanga-pages.html");
+        const auto pages = comics::InMangaSource::parsePages(controls, QStringLiteral("https://cdn1.intomanga.com"),
+                                                             QStringLiteral("DDAB755F-B5A2"));
+        QCOMPARE(pages.size(), 2);
+        QCOMPARE(pages[0].url, QStringLiteral("https://cdn1.intomanga.com/i/m/dfc7ecb5-aaaa/c/ddab755f-b5a2/o/32dfc965-0001.jpg"));
+        QVERIFY(comics::InMangaSource::parsePages("<select id=\"PageList\"></select>", QStringLiteral("https://x"), QStringLiteral("y")).isEmpty());
+    }
+
+    void manhwaWeb() {
+        // Links can name an older id of the series; chapters use the current one.
+        const auto series = QJsonDocument::fromJson(fixture("manhwaweb-series.json")).object();
+        const auto chapters = comics::ManhwaWebSource::parseChapters(series, QStringLiteral("comic-solo_leveling_169"),
+                                                                     QStringLiteral("https://manhwaweb.com"), QStringLiteral("es"));
+        QCOMPARE(chapters.size(), 2);
+        QCOMPARE(chapters[0].number, QStringLiteral("0.01"));
+        QCOMPARE(chapters[1].url, QStringLiteral("https://manhwaweb.com/leer/comic-solo_leveling_169-1_01"));
+        QCOMPARE(chapters[1].title, QString::fromUtf8("Capítulo 1"));
+        QCOMPARE(chapters[1].released, QStringLiteral("2023-08-07T19:20:00Z"));
     }
 
     void gunzip() {
