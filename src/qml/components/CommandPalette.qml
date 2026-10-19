@@ -153,6 +153,7 @@ Popup {
             onTextChanged: root.selected = 0
             Keys.onDownPressed: root.selected = Math.min(root.actions.length - 1, root.selected + 1)
             Keys.onUpPressed: root.selected = Math.max(0, root.selected - 1)
+            EnterKey.type: Qt.EnterKeyGo
             Keys.onReturnPressed: root.runSelected()
             Keys.onEnterPressed: root.runSelected()
             Keys.onEscapePressed: root.close()

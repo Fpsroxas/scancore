@@ -726,8 +726,10 @@ Rectangle {
 
     Item {
         id: topBar
+        // Phones: right under the status bar, as in the novel reader.
+        readonly property int pad: Theme.compact ? 8 : 16
         width: parent.width
-        height: 76 + reader.insetTop
+        height: (Theme.compact ? 64 : 76) + reader.insetTop
         y: reader.controlsShown ? 0 : -height
         opacity: reader.controlsShown ? 1 : 0
         Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
@@ -738,13 +740,15 @@ Rectangle {
             anchors.fill: parent
             gradient: Gradient {
                 GradientStop { position: 0; color: Qt.rgba(0, 0, 0, 0.85) }
-                GradientStop { position: reader.insetTop / topBar.height; color: Qt.rgba(0, 0, 0, 0.8) }
+                // Dark through the buttons, so the bar reads as one piece
+                // with the status bar, then fading into the page.
+                GradientStop { position: (reader.insetTop + topBar.pad + 36) / topBar.height; color: Qt.rgba(0, 0, 0, 0.7) }
                 GradientStop { position: 1; color: Qt.rgba(0, 0, 0, 0) }
             }
         }
         Row {
             x: 18
-            y: 16 + reader.insetTop
+            y: topBar.pad + reader.insetTop
             spacing: 12
             IconButton {
                 iconName: "arrow-left"
@@ -780,7 +784,7 @@ Rectangle {
             id: topActions
             anchors.right: parent.right
             anchors.rightMargin: 18
-            y: 16 + reader.insetTop
+            y: topBar.pad + reader.insetTop
             spacing: 4
             // Pages are on the progress bar at the left edge; chapters here.
             IconButton {

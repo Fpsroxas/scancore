@@ -222,7 +222,9 @@ Item {
                         width: episodeFlow.cardWidth
                         height: width * 9 / 16 + 54
                         hoverEnabled: true
-                        onClicked: page.watch(page.episodes.indexOf(modelData))
+                        // By key: a Repeater hands its delegates copies of the
+                        // model's objects, so indexOf(modelData) is always -1.
+                        onClicked: page.watch(page.episodes.findIndex(e => e.key === modelData.key))
                         background: null
                         contentItem: Column {
                             spacing: 8

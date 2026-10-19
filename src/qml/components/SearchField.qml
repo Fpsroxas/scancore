@@ -20,7 +20,13 @@ TextField {
     selectByMouse: true
     verticalAlignment: TextInput.AlignVCenter
 
-    onAccepted: submitted(text.trim())
+    // Android keyboards otherwise show "Next", which moves focus to the
+    // clear button instead of searching.
+    EnterKey.type: Qt.EnterKeySearch
+    onAccepted: {
+        submitted(text.trim())
+        if (Theme.touch) Qt.inputMethod.hide()
+    }
     Keys.onEscapePressed: {
         if (text.length > 0) clear()
         else focus = false

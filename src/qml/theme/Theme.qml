@@ -117,7 +117,9 @@ QtObject {
     readonly property int gutter: compact ? 16 : 32
 
     function alpha(c, a) {
-        return Qt.rgba(c.r, c.g, c.b, a)
+        // "#rrggbb" strings have no r, g, b until they are made colours.
+        const k = typeof c === "string" ? Qt.color(c) : c
+        return Qt.rgba(k.r, k.g, k.b, a)
     }
 
     function mix(a, b, t) {
