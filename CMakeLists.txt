@@ -13,7 +13,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(SCANCORE_WITH_WEBENGINE "Embedded web players (ReAnime) and site verification windows" ON)
 option(SCANCORE_WITH_SYSTEM_WEBVIEW "Play anime in the system web view (WebView2 on Windows, WKWebView on macOS)" ON)
-option(SCANCORE_WITH_MPV "Native video playback through libmpv (not used yet)" OFF)
+option(SCANCORE_WITH_MPV "Native video playback through libmpv (anime extensions; off: web players only)" ON)
 option(SCANCORE_WITH_NOVEL_PACK_INSTALLER "Allow downloading the optional Python novel-source pack" ON)
 option(SCANCORE_BUILD_TESTS "Build unit tests" ON)
 option(SCANCORE_WITH_EXTENSION_HOST "Build the Kotlin extension host: for development and tests on desktop, inside the APK on Android (needs JDK 17+)" ON)
@@ -26,7 +26,7 @@ set(SCANCORE_MAL_CLIENT_ID "d85f703db50aa4add685b1f65eb8ad94" CACHE STRING "MyAn
 set(SCANCORE_COMICK_CLIENT_ID "DKZVIvYfXDqpWlEEBNfXDMqFKlAPsfaz" CACHE STRING "Comick public app client id, for tracking and imports")
 
 find_package(Qt6 6.9 REQUIRED COMPONENTS
-    Core Gui Network Sql Qml Quick QuickControls2 Svg Concurrent)
+    Core Gui Network Sql Qml Quick QuickControls2 Svg Concurrent OpenGL)
 # QZipReader (CBZ and EPUB files) lives in Qt Core's private API. Every
 # package ships the Qt it was built with, so the version tie is no risk.
 set(QT_NO_PRIVATE_MODULE_WARNING ON)
@@ -34,10 +34,9 @@ find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
 qt_standard_project_setup(REQUIRES 6.8)
 
 if(ANDROID)
-    # Phones: the anime player uses the system WebView instead of Qt
-    # WebEngine, and there is no tray icon or Widgets.
+    # Phones: the built-in anime servers use the system WebView instead of
+    # Qt WebEngine, and there is no tray icon or Widgets.
     set(SCANCORE_WITH_WEBENGINE OFF)
-    set(SCANCORE_WITH_MPV OFF)
     set(SCANCORE_BUILD_TESTS OFF)
     find_package(Qt6 REQUIRED COMPONENTS WebView)
     set(SCANCORE_WITH_SYSTEM_WEBVIEW ON)

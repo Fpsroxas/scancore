@@ -2,16 +2,20 @@
 // fixture repository on repo.test lists the test extension (host/testext,
 // signed by its build), the app installs and trusts it, the registry makes
 // it a source, the host runs as a helper process, and the extension reads a
-// fixture site on fixture.test served from this test.
+// fixture site on fixture.test served from this test. A second repository
+// lists the test anime extension (Aniyomi), run by the same host.
 
 #include "core/Database.h"
 #include "core/Http.h"
 #include "core/ImageCache.h"
 #include "core/Parallel.h"
+#include "extensions/AnimeSource.h"
 #include "extensions/ExtensionSource.h"
 #include "extensions/Manager.h"
 #include "extensions/ProcessHost.h"
 #include "extensions/Runtime.h"
+#include "sources/anime/Playback.h"
+#include "sources/anime/Registry.h"
 #include "sources/comics/Registry.h"
 
 #include <QCryptographicHash>
@@ -112,6 +116,8 @@ private:
             body = site(QStringLiteral("pages.json"));
         else if (path == "/page/2")
             body = site(QStringLiteral("page-2.json"));
+        else if (const auto anime = animeFixture(path); !anime.isEmpty())
+            body = site(QStringLiteral("anime/") + anime);
         else if (path.startsWith("/img/") && ownClient) {
             body = site(QStringLiteral("image.png"));
             type = "image/png";
@@ -120,6 +126,18 @@ private:
         socket->write("HTTP/1.1 " + status + "\r\nContent-Type: " + type + "\r\nContent-Length: " + QByteArray::number(body.size()) +
                       "\r\nConnection: close\r\n\r\n" + body);
         socket->disconnectFromHost();
+    }
+
+    // The test anime extension's pages (tests/fixtures/host/anime).
+    static QString animeFixture(const QByteArray &path) {
+        static const QHash<QByteArray, QString> files{
+            {"/anime/popular", "popular.json"},          {"/anime/search", "search.json"},
+            {"/anime/1", "anime-1.json"},                {"/anime/1/episodes", "episodes.json"},
+            {"/anime/2/seasons", "seasons.json"},        {"/episode/1/hosters", "hosters.json"},
+            {"/hoster/alpha", "videos-alpha.json"},      {"/hoster/beta", "videos-beta.json"},
+            {"/resolve", "resolve.json"},                {"/episode/1/videos", "videos-classic.json"},
+            {"/videopage/1", "videopage-1.json"}};
+        return files.value(path);
     }
 
     QThread m_thread;
@@ -138,6 +156,8 @@ class HostTests : public QObject {
     std::unique_ptr<FixtureSite> m_site;
     std::shared_ptr<ext::ProcessHost> m_host;
     QString m_sourceKey;
+    QString m_animeKey;
+    QString m_classicKey;
 
 private slots:
     void initTestCase() {
@@ -159,6 +179,7 @@ private slots:
         launch.jvmArgs << QStringLiteral("-Dscancore.testext.base=http://fixture.test:%1").arg(m_site->port());
         m_host = std::make_shared<ext::ProcessHost>(launch);
         ext::setHost(ext::Kind::Mihon, m_host);
+        ext::setHost(ext::Kind::Aniyomi, m_host);
 
         // The repository, signed by the key the test extension was signed with.
         const auto signer = QString::fromLatin1(read(QFileInfo(apk).absolutePath() + QStringLiteral("/signer.txt"))).trimmed();
@@ -178,15 +199,41 @@ private slots:
                                                                           {"signingKeyFingerprint", signer}}}})
                               .toJson();
         const auto apkBytes = read(apk);
+
+        // The anime repository (repo.test/anime), signed by the key its
+        // extension was signed with.
+        const QString animeApk = QStringLiteral(SCANCORE_TESTANIME_APK);
+        const auto animeSigner = QString::fromLatin1(read(QFileInfo(animeApk).absolutePath() + QStringLiteral("/signer.txt"))).trimmed();
+        const auto animeId = mihonId(QStringLiteral("Test Anime"), QStringLiteral("en"));
+        const auto classicId = mihonId(QStringLiteral("Test Anime Classic"), QStringLiteral("en"));
+        m_animeKey = QStringLiteral("aniyomi:") + animeId;
+        m_classicKey = QStringLiteral("aniyomi:") + classicId;
+        const auto animeIndex =
+            QJsonDocument(QJsonArray{QJsonObject{
+                              {"name", "Aniyomi: Test Anime"},
+                              {"pkg", "com.mediumdev.scancore.testanime"},
+                              {"apk", "testanime.apk"},
+                              {"lang", "en"},
+                              {"code", 2},
+                              {"version", "16.2"},
+                              {"nsfw", 0},
+                              {"sources", QJsonArray{QJsonObject{{"name", "Test Anime"}, {"lang", "en"}, {"id", animeId}, {"baseUrl", "http://fixture.test"}},
+                                                     QJsonObject{{"name", "Test Anime Classic"}, {"lang", "en"}, {"id", classicId}, {"baseUrl", "http://fixture.test"}}}}}})
+                .toJson();
+        const auto animeRepo = QJsonDocument(QJsonObject{{"meta", QJsonObject{{"name", "Test Anime Repository"}, {"website", "https://repo.test"},
+                                                                               {"signingKeyFingerprint", animeSigner}}}})
+                                   .toJson();
+        const auto animeBytes = read(animeApk);
         Http::setTestHandler([=](const Request &request) -> std::optional<Response> {
             if (request.url.host() != QLatin1String("repo.test"))
                 return std::nullopt;
             Response r;
             r.status = 200;
             const auto path = request.url.path();
-            r.body = path.endsWith(QLatin1String("index.min.json")) ? index
-                     : path.endsWith(QLatin1String("repo.json"))      ? repo
-                     : path.endsWith(QLatin1String(".apk"))           ? apkBytes
+            const bool anime = path.startsWith(QLatin1String("/anime/"));
+            r.body = path.endsWith(QLatin1String("index.min.json")) ? (anime ? animeIndex : index)
+                     : path.endsWith(QLatin1String("repo.json"))      ? (anime ? animeRepo : repo)
+                     : path.endsWith(QLatin1String(".apk"))           ? (anime ? animeBytes : apkBytes)
                                                                       : QByteArray();
             if (r.body.isEmpty())
                 r.status = 404;
@@ -284,6 +331,73 @@ private slots:
         m_host->stop();
         QCOMPARE(source->search(QStringLiteral("one")).size(), 1);
         QVERIFY(ext::Manager::sourceError(m_sourceKey).isEmpty());
+    }
+
+    // An Aniyomi extension through the same host: installed from its own
+    // repository, listed by the anime registry, its covers through its own
+    // client, and an episode's hosters, videos and a resolved address.
+    void animeThroughTheHost() {
+        if (!QFileInfo::exists(QStringLiteral(SCANCORE_TESTANIME_APK)))
+            QSKIP("No test anime extension APK.");
+        const auto preview = ext::Manager::preview(QStringLiteral("https://repo.test/anime/index.min.json"));
+        QCOMPARE(preview.repo.kind, ext::Kind::Aniyomi);
+        ext::Manager::add(preview);
+        QVERIFY(ext::Manager::install(ext::Kind::Aniyomi, QStringLiteral("com.mediumdev.scancore.testanime")).trusted);
+        anime::Registry::rebuild();
+        auto source = anime::Registry::byKey(m_animeKey);
+        QVERIFY(source);
+        QVERIFY(source->enabled());
+
+        QElapsedTimer timer;
+        timer.start();
+        const auto popular = source->browse(QStringLiteral("popular"), 1);
+        qInfo("first anime call (load, verify, convert): %lld ms", timer.elapsed());
+        QCOMPARE(popular.items.size(), 2);
+        QCOMPARE(popular.items[0].url, m_animeKey + QStringLiteral(":/anime/1"));
+        QVERIFY(popular.items[1].seasons);
+        QCOMPARE(ImageCache::fetch(popular.items[0].cover, source->imageReferer()), site(QStringLiteral("image.png")));
+
+        const auto details = source->details(popular.items[0].url, popular.items[0].title);
+        QCOMPARE(details.value("author").toString(), QStringLiteral("A. Studio"));
+        // Oldest first, numbered, with links wrapped.
+        const auto episodes = source->episodes(popular.items[0].url);
+        QCOMPARE(episodes.size(), 2);
+        QCOMPARE(episodes[0].toObject().value("url").toString(), m_animeKey + QStringLiteral(":/episode/1"));
+        QCOMPARE(episodes[1].toObject().value("number").toDouble(), 2.0);
+        QCOMPARE(anime::episodeNumbered(episodes, 1), m_animeKey + QStringLiteral(":/episode/1"));
+        const auto seasons = source->seasons(popular.items[1].url);
+        QCOMPARE(seasons.size(), 2);
+        QCOMPARE(seasons[1].season, 2.0);
+
+        timer.restart();
+        const auto hosters = source->hosters(episodes[0].toObject().value("url").toString());
+        QCOMPARE(hosters.size(), 3);
+        const auto alpha = anime::videoList(source->hosterVideos(hosters[0].toObject().value("id").toString()));
+        qInfo("hosters and one hoster's videos: %lld ms", timer.elapsed());
+        QCOMPARE(alpha.size(), 2);
+        const auto best = alpha[0].toMap();
+        QVERIFY(best.value("preferred").toBool());
+        QVERIFY(best.value("headers").toMap().value("Referer").toString().startsWith(QLatin1String("http://fixture.test")));
+        const auto resolved = source->resolveVideo(alpha[1].toMap().value("id").toString());
+        QVERIFY(resolved.value("url").toString().endsWith(QLatin1String("/video/alpha-720.m3u8")));
+
+        // The extension written before hosters: one unnamed hoster.
+        auto classic = anime::Registry::byKey(m_classicKey);
+        QVERIFY(classic);
+        const auto old = classic->hosters(m_classicKey + QStringLiteral(":/episode/1"));
+        QCOMPARE(old.size(), 1);
+        QVERIFY(old[0].toObject().value("videos").toArray()[0].toObject().value("url").toString().endsWith(QLatin1String("/video/classic.mp4")));
+
+        // After a restart the host has forgotten the episode's hosters: the
+        // app is told to ask again, and the source is not marked broken.
+        m_host->stop();
+        try {
+            source->hosterVideos(hosters[1].toObject().value("id").toString());
+            QFAIL("a hoster id outlived the host");
+        } catch (const Error &e) {
+            QCOMPARE(e.status(), 410);
+        }
+        QVERIFY(ext::Manager::sourceError(m_animeKey).isEmpty());
     }
 
     // The runtime zip the release workflow publishes (when it was built

@@ -74,6 +74,9 @@ const QVariantMap kDefaults{
     {"ttsContinue", true},
     {"ttsFollow", true},
     {"autoNext", true},
+    // The video player's volume (0-130) and speed, kept between episodes.
+    {"playerVolume", 100},
+    {"playerSpeed", 1},
     {"autoSkip", false},
     {"libraryCheckHours", 2},
     {"notifyUpdates", true},
@@ -99,6 +102,8 @@ const QVariantMap kDefaults{
     // anilist, mal or none (novels: anilist, mal or none).
     {"catalogComic", "comick"},
     {"catalogNovel", "anilist"},
+    // Anime: anilist or mal (the Anime page's shelves).
+    {"catalogAnime", "anilist"},
     // Content language "All sources" searches; empty for every language.
     {"sourceLanguages", ""},
     {"onboarded", false},

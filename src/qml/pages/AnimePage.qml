@@ -4,14 +4,21 @@ import QtQuick.Controls.Basic
 import ScanCore
 
 // Anime home: rotating spotlight, continue watching, today's schedule and
-// AniList's trending, seasonal, popular and top lists.
+// the anime catalogue's lists: AniList's trending, seasonal, popular and
+// top, or MyAnimeList's top airing, seasonal, popular and top rated.
 Item {
     id: page
     property var homeTask: Anime.home()
+    // Settings → Connections: whose lists these are.
+    readonly property string catalog: App.settings.catalogAnime || "anilist"
+    onCatalogChanged: homeTask = Anime.home()
+    readonly property bool mal: !!home && home.catalog === "mal"
     property var historyTask: Library.history("anime", 16)
     property var todayTask: Anime.schedule(Math.floor(new Date().setHours(0, 0, 0, 0) / 1000), Math.floor(new Date().setHours(23, 59, 59, 999) / 1000))
     readonly property var home: homeTask && homeTask.ok ? homeTask.result : null
-    readonly property var spotlight: home ? home.trending.filter(m => m.banner).slice(0, 6) : []
+    readonly property var spotlight: home ? (home.spotlight || home.trending).filter(m => m.banner).slice(0, 6) : []
+    // Installed anime sources (extensions), each browsable by itself.
+    readonly property var sources: { Extensions.revision; return Anime.sources().filter(s => s.enabled) }
     property int spot: 0
 
     function search(text) { Router.openAnimeBrowse({ q: text }) }
@@ -249,6 +256,7 @@ Item {
                     ScButton { text: qsTr("Browse"); iconName: "compass"; compact: true; onClicked: Router.openAnimeBrowse({}) }
                     ScButton { text: qsTr("Schedule"); iconName: "calendar"; compact: true; onClicked: Router.openAnimeSchedule() }
                     ScButton { visible: Theme.compact; text: qsTr("Search"); iconName: "search"; compact: true; onClicked: Router.openAnimeBrowse({}) }
+                    ScButton { text: qsTr("Extensions"); iconName: "puzzle"; compact: true; onClicked: Router.openExtensions() }
                 }
 
                 StateView {
@@ -265,6 +273,31 @@ Item {
                 progressFor: (it) => it.completed ? 1 : (it.percent || 0)
                 onOpened: (it, cover) => Router.resume(it)
             }
+            Column {
+                visible: page.sources.length > 0
+                x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
+                spacing: 12
+                Text {
+                    text: qsTr("Your anime sources")
+                    color: Theme.text
+                    font.family: Theme.fontDisplay
+                    font.pixelSize: Theme.textXl
+                    font.weight: Font.DemiBold
+                }
+                Flow {
+                    width: parent.width
+                    spacing: 8
+                    Repeater {
+                        model: page.sources
+                        Chip {
+                            required property var modelData
+                            text: modelData.label + (modelData.language && modelData.language !== "en" ? " · " + modelData.language.toUpperCase() : "")
+                            onClicked: Router.openSource(modelData.key)
+                        }
+                    }
+                }
+            }
             Shelf {
                 title: qsTr("Airing today")
                 actionText: qsTr("Full schedule")
@@ -275,7 +308,7 @@ Item {
                 onOpened: (it, cover) => Router.openSeries(it, cover)
             }
             Shelf {
-                title: qsTr("Trending now")
+                title: page.mal ? qsTr("Top airing") : qsTr("Trending now")
                 items: page.home ? page.home.trending : []
                 loading: page.homeTask ? page.homeTask.loading : false
                 subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
@@ -289,7 +322,7 @@ Item {
                 onOpened: (it, cover) => Router.openSeries(it, cover)
             }
             Shelf {
-                title: qsTr("All-time popular")
+                title: page.mal ? qsTr("Most popular") : qsTr("All-time popular")
                 items: page.home ? page.home.popular : []
                 subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
                 onOpened: (it, cover) => Router.openSeries(it, cover)

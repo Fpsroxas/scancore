@@ -53,7 +53,9 @@ QtObject {
     // item: a search/library map with id, media, sourceUrl, title, cover.
     function openSeries(item, fromCover) {
         if (!shell || !item) return
-        if (item.media === "anime")
+        if (item.media === "anime" && String(item.source || "").startsWith("aniyomi:"))
+            shell.push("pages/AnimeDetails.qml", { sourceUrl: item.sourceUrl || item.url, summary: item }, fromCover, item.cover)
+        else if (item.media === "anime")
             shell.push("pages/AnimeDetails.qml", { anilistId: item.anilistId || item.extra?.anilistId || 0, summary: item }, fromCover, item.cover)
         else if (item.media === "novel")
             shell.push("pages/NovelDetails.qml", { url: item.sourceUrl || item.url, summary: item }, fromCover, item.cover)

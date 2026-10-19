@@ -31,6 +31,8 @@ public:
     QList<comics::Panel> panels(const QString &chapterUrl) override;
     std::optional<comics::Details> details(const QString &seriesUrl) override;
     QString imageReferer() const override;
+    // A series' page on its site: the source's base joined with the path.
+    QString webUrl(const QString &url) const;
 
     bool canBrowse() const override { return true; }
     bool hasLatestListing() const override { return true; }

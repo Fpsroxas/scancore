@@ -783,6 +783,10 @@
             <translation> episode</translation>
         </message>
         <message>
+            <source> seasons</source>
+            <translation> musim</translation>
+        </message>
+        <message>
             <source> episodes so far</source>
             <translation> episode sejauh ini</translation>
         </message>
@@ -805,6 +809,10 @@
         <message>
             <source>Watch trailer</source>
             <translation>Tonton trailer</translation>
+        </message>
+        <message>
+            <source>Watch from</source>
+            <translation>Tonton dari</translation>
         </message>
         <message>
             <source>Open on AniList</source>
@@ -839,8 +847,16 @@
             <translation>Terlama dulu</translation>
         </message>
         <message>
+            <source>Filler</source>
+            <translation>Filler</translation>
+        </message>
+        <message>
             <source>No episodes yet</source>
             <translation>Belum ada episode</translation>
+        </message>
+        <message>
+            <source>The source lists no episodes for it.</source>
+            <translation>Sumber ini tidak mencantumkan episode untuknya.</translation>
         </message>
         <message>
             <source>Episode </source>
@@ -853,6 +869,14 @@
         <message>
             <source>This anime has not aired yet.</source>
             <translation>Anime ini belum tayang.</translation>
+        </message>
+        <message>
+            <source>Seasons</source>
+            <translation>Musim</translation>
+        </message>
+        <message>
+            <source>Season %1</source>
+            <translation>Musim %1</translation>
         </message>
         <message>
             <source>Related</source>
@@ -902,12 +926,20 @@
             <translation>Cari</translation>
         </message>
         <message>
+            <source>Extensions</source>
+            <translation>Ekstensi</translation>
+        </message>
+        <message>
             <source>Continue watching</source>
             <translation>Lanjutkan menonton</translation>
         </message>
         <message>
             <source>Episode </source>
             <translation>Episode </translation>
+        </message>
+        <message>
+            <source>Your anime sources</source>
+            <translation>Sumber anime Anda</translation>
         </message>
         <message>
             <source>Airing today</source>
@@ -926,12 +958,20 @@
             <translation>Sedang tren</translation>
         </message>
         <message>
+            <source>Top airing</source>
+            <translation>Teratas yang sedang tayang</translation>
+        </message>
+        <message>
             <source>This season</source>
             <translation>Musim ini</translation>
         </message>
         <message>
             <source>All-time popular</source>
             <translation>Populer sepanjang masa</translation>
+        </message>
+        <message>
+            <source>Most popular</source>
+            <translation>Paling populer</translation>
         </message>
         <message>
             <source>Top rated</source>
@@ -1531,6 +1571,14 @@
         <message>
             <source>What the Novels page shows and searches.</source>
             <translation>Yang ditampilkan dan dicari halaman Novel.</translation>
+        </message>
+        <message>
+            <source>Anime catalogue</source>
+            <translation>Katalog anime</translation>
+        </message>
+        <message>
+            <source>Whose lists the Anime page shows. Episodes, the schedule and search come from AniList either way.</source>
+            <translation>Daftar dari mana yang ditampilkan halaman Anime. Episode, jadwal, dan pencarian tetap dari AniList.</translation>
         </message>
         <message>
             <source>Discord</source>
@@ -2720,6 +2768,30 @@
             <translation>Episode sebelumnya</translation>
         </message>
         <message>
+            <source>Play or pause</source>
+            <translation>Putar atau jeda</translation>
+        </message>
+        <message>
+            <source>Forward 10 seconds</source>
+            <translation>Maju 10 detik</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>Mundur 10 detik</translation>
+        </message>
+        <message>
+            <source>Volume up</source>
+            <translation>Naikkan volume</translation>
+        </message>
+        <message>
+            <source>Volume down</source>
+            <translation>Turunkan volume</translation>
+        </message>
+        <message>
+            <source>Mute</source>
+            <translation>Bisukan</translation>
+        </message>
+        <message>
             <source>Anywhere</source>
             <translation>Di mana saja</translation>
         </message>
@@ -2982,6 +3054,53 @@
         </message>
     </context>
     <context>
+        <name>NativePlayer</name>
+        <message>
+            <source>This copy of SCANCORE has no video player for anime from extensions.</source>
+            <translation>Salinan SCANCORE ini tidak memiliki pemutar video untuk anime dari ekstensi.</translation>
+        </message>
+        <message>
+            <source>Play</source>
+            <translation>Putar</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>Jeda</translation>
+        </message>
+        <message>
+            <source>Unmute</source>
+            <translation>Bunyikan</translation>
+        </message>
+        <message>
+            <source>Mute</source>
+            <translation>Bisukan</translation>
+        </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>Subtitle</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Mati</translation>
+        </message>
+        <message>
+            <source>Track </source>
+            <translation>Trek </translation>
+        </message>
+        <message>
+            <source>Audio</source>
+            <translation>Audio</translation>
+        </message>
+        <message>
+            <source>Speed</source>
+            <translation>Kecepatan</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>Normal</translation>
+        </message>
+    </context>
+    <context>
         <name>NextChapterCard</name>
         <message>
             <source>End of </source>
@@ -3238,6 +3357,10 @@
         <message>
             <source> sources</source>
             <translation> sumber</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Ekstensi</translation>
         </message>
         <message>
             <source>Search by title, or paste a book link</source>
@@ -5484,7 +5607,54 @@
         </message>
     </context>
     <context>
+        <name>WatchFromDialog</name>
+        <message>
+            <source>Which season?</source>
+            <translation>Musim yang mana?</translation>
+        </message>
+        <message>
+            <source>Watch from</source>
+            <translation>Tonton dari</translation>
+        </message>
+        <message>
+            <source>Looking for %1 on your anime sources…</source>
+            <translation>Mencari %1 di sumber anime Anda…</translation>
+        </message>
+        <message>
+            <source>None of your anime sources has %1 yet.</source>
+            <translation>Belum ada sumber anime Anda yang memiliki %1.</translation>
+        </message>
+        <message>
+            <source>Season %1</source>
+            <translation>Musim %1</translation>
+        </message>
+        <message>
+            <source>in seasons</source>
+            <translation>per musim</translation>
+        </message>
+        <message>
+            <source>Built-in servers</source>
+            <translation>Server bawaan</translation>
+        </message>
+        <message>
+            <source>The player SCANCORE has without extensions</source>
+            <translation>Pemutar bawaan SCANCORE tanpa ekstensi</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+    </context>
+    <context>
         <name>WatchPage</name>
+        <message>
+            <source>Video</source>
+            <translation>Video</translation>
+        </message>
         <message>
             <source>Skip ending</source>
             <translation>Lewati ending</translation>
@@ -5500,6 +5670,10 @@
         <message>
             <source>Episode </source>
             <translation>Episode </translation>
+        </message>
+        <message>
+            <source>Trying another server: </source>
+            <translation>Mencoba server lain: </translation>
         </message>
         <message>
             <source>Resumed at </source>
@@ -5526,12 +5700,20 @@
             <translation>Dapatkan SCANCORE</translation>
         </message>
         <message>
+            <source>Looking for %1 on your anime sources…</source>
+            <translation>Mencari %1 di sumber anime Anda…</translation>
+        </message>
+        <message>
             <source>This build of SCANCORE has no embedded browser, which the ReAnime player needs.</source>
             <translation>Build SCANCORE ini tidak punya peramban bawaan yang dibutuhkan pemutar ReAnime.</translation>
         </message>
         <message>
             <source>Try again</source>
             <translation>Coba lagi</translation>
+        </message>
+        <message>
+            <source>Watch from…</source>
+            <translation>Tonton dari…</translation>
         </message>
         <message>
             <source>Next episode in </source>
@@ -5564,6 +5746,10 @@
         <message>
             <source>Episodes</source>
             <translation>Episode</translation>
+        </message>
+        <message>
+            <source>Watch from</source>
+            <translation>Tonton dari</translation>
         </message>
         <message>
             <source>Comments</source>

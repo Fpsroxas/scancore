@@ -19,6 +19,13 @@ public:
     Q_INVOKABLE QString seriesId(const QString &url) const;
 
     // {shelves: [{title, books}]}
+    // One source by itself (plugins), as Comics.browse and Comics.filters.
+    Q_INVOKABLE sc::Task *browse(const QString &source, const QString &listing, int page,
+                                 const QString &query = QString(), const QVariantList &filters = {});
+    Q_INVOKABLE sc::Task *filters(const QString &source);
+    Q_INVOKABLE QString imageReferer(const QString &url) const;
+    // The book's page on its site, for "Open on the website".
+    Q_INVOKABLE sc::Task *webUrl(const QString &url);
     Q_INVOKABLE sc::Task *discover();
     // Novels in the novel catalogue the user chose (AniList or MyAnimeList): {books: [{catalog, catalogId, title, titles, cover, ...}]}.
     Q_INVOKABLE sc::Task *catalog(const QString &query);

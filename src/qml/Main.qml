@@ -228,7 +228,9 @@ ApplicationWindow {
 
         function resume(entry) {
             const props = { url: entry.sourceUrl, summary: entry, autoResume: true }
-            if (entry.media === "anime") {
+            if (entry.media === "anime" && String(entry.source || "").startsWith("aniyomi:")) {
+                push("pages/AnimeDetails.qml", { sourceUrl: entry.sourceUrl, summary: entry, autoResume: true })
+            } else if (entry.media === "anime") {
                 const extra = entry.extra || {}
                 push("pages/AnimeDetails.qml", { anilistId: extra.anilistId || 0, summary: entry, autoResume: true })
             } else if (entry.media === "novel") {

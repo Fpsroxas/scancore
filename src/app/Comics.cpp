@@ -129,6 +129,16 @@ void Comics::shareSiteCookies(const QString &url) {
     });
 }
 
+Task *Comics::webUrl(const QString &url) {
+    return Task::run([url]() -> QVariant {
+        if (url.startsWith(QLatin1String("http")))
+            return url;
+        if (auto extension = std::dynamic_pointer_cast<ext::ExtensionSource>(Registry::forUrl(url)))
+            return extension->webUrl(url);
+        throw Error(QStringLiteral("This series has no page on the web."));
+    });
+}
+
 QString Comics::imageReferer(const QString &url) const {
     auto source = Registry::forUrl(url);
     return source ? source->imageReferer() : QString();

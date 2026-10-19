@@ -98,6 +98,12 @@ Item {
             PageHeader {
                 title: qsTr("Novels")
                 subtitle: qsTr("Web novels and light novels from ") + page.sources.length + qsTr(" sources")
+                // Plugins, beside comics' extensions.
+                ScButton {
+                    text: qsTr("Extensions")
+                    iconName: "puzzle"
+                    onClicked: Router.openExtensions()
+                }
             }
 
             SearchField {

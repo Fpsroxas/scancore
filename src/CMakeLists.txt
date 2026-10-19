@@ -8,6 +8,7 @@ add_library(scancore_core STATIC
     core/ImageCache.cpp
     core/Parallel.cpp
     core/Text.cpp
+    extensions/AnimeSource.cpp
     extensions/Apk.cpp
     extensions/ExtensionSource.cpp
     extensions/Host.cpp
@@ -17,7 +18,12 @@ add_library(scancore_core STATIC
     extensions/Package.cpp
     extensions/ProcessHost.cpp
     extensions/Runtime.cpp
+    plugins/Engine.h
+    plugins/PluginSource.cpp
+    plugins/Runtime.cpp
     sources/Manifest.cpp
+    sources/anime/Playback.cpp
+    sources/anime/Registry.cpp
     sources/catalogue/Catalogue.cpp
     sources/comics/ApiEngines.cpp
     sources/comics/ComicSource.cpp
@@ -36,6 +42,15 @@ if(ANDROID)
     target_sources(scancore_core PRIVATE extensions/JniHost.cpp)
 endif()
 target_include_directories(scancore_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+# LNReader plugins: SCANCORE's shims, and the bundled libraries when present.
+set(SCANCORE_PLUGIN_FILES ${PROJECT_SOURCE_DIR}/resources/plugins/prelude.js ${PROJECT_SOURCE_DIR}/resources/plugins/runtime.js)
+if(EXISTS ${PROJECT_SOURCE_DIR}/resources/plugins/vendor.js)
+    list(APPEND SCANCORE_PLUGIN_FILES ${PROJECT_SOURCE_DIR}/resources/plugins/vendor.js)
+endif()
+qt_add_resources(scancore_core plugin_runtime
+    PREFIX /
+    BASE ${PROJECT_SOURCE_DIR}/resources
+    FILES ${SCANCORE_PLUGIN_FILES})
 # Manifest entries can ask for a minimum app version.
 target_compile_definitions(scancore_core PRIVATE SCANCORE_VERSION="${PROJECT_VERSION}")
 target_link_libraries(scancore_core
@@ -107,6 +122,7 @@ qt_add_qml_module(scancore
         app/Trackers.cpp app/Trackers.h
         app/Sync.cpp app/Sync.h
         app/Library.cpp app/Library.h
+        app/MpvPlayer.cpp app/MpvPlayer.h
         app/Novels.cpp app/Novels.h
         app/Presence.cpp app/Presence.h
         app/Updater.cpp app/Updater.h
@@ -163,7 +179,7 @@ qt_add_resources(scancore manifest
 target_include_directories(scancore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/app ${CMAKE_CURRENT_SOURCE_DIR}/core)
 
 target_link_libraries(scancore PRIVATE
-    scancore_core Qt6::Gui Qt6::Quick Qt6::QuickControls2 Qt6::Svg)
+    scancore_core Qt6::Gui Qt6::OpenGL Qt6::Quick Qt6::QuickControls2 Qt6::Svg)
 if(ANDROID)
     # Qt's network stack on Android needs OpenSSL shipped inside the APK.
     include(FetchContent)
@@ -222,6 +238,10 @@ endif()
 if(SCANCORE_HAVE_MPV)
     target_link_libraries(scancore PRIVATE scancore_mpv)
     target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_MPV)
+    if(ANDROID)
+        # libmpv and FFmpeg's libraries, packaged beside the app's.
+        set_property(TARGET scancore APPEND PROPERTY QT_ANDROID_EXTRA_LIBS ${SCANCORE_MPV_ANDROID_LIBS})
+    endif()
 endif()
 
 if(NOT ANDROID)

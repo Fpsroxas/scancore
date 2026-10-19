@@ -1,5 +1,10 @@
 package com.mediumdev.scancore.host
 
+import android.content.SharedPreferences
+import androidx.preference.PreferenceScreen
+import eu.kanade.tachiyomi.animesource.AnimeSource
+import eu.kanade.tachiyomi.animesource.ConfigurableAnimeSource
+import eu.kanade.tachiyomi.animesource.online.AnimeHttpSource
 import eu.kanade.tachiyomi.network.HostNetwork
 import eu.kanade.tachiyomi.network.MemoryCookieJar
 import eu.kanade.tachiyomi.source.CatalogueSource
@@ -22,8 +27,16 @@ import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import okhttp3.Cookie
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.Response
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
+
+// What one extension holds: Mihon sources (comics) or Aniyomi sources
+// (anime).
+class LoadedExtension(
+    val sources: List<Source> = emptyList(),
+    val anime: List<AnimeSource> = emptyList(),
+)
 
 // Loads extensions on first use (desktop: converted APKs; Android: the
 // package manager) and reports what they contain.
@@ -34,23 +47,27 @@ interface ExtensionLoader {
         pkg: String,
         path: String,
         signer: String?,
-    ): List<Source>
+    ): LoadedExtension
 
-    // Lib versions this host runs (e.g. "1.4", "1.5", "1.6").
+    // Lib versions this host runs: Mihon's (e.g. "1.4", "1.5", "1.6") and
+    // Aniyomi's ("14", "16", "17").
     val libs: List<String>
+    val animeLibs: List<String>
 }
 
-// Answers SCANCORE's calls for Mihon extensions. Every call names its
-// extension (pkg, apk, signer) so the host can load it on demand, and its
-// source by id.
+// Answers SCANCORE's calls for Mihon and Aniyomi extensions. Every call
+// names its extension (pkg, apk, signer) so the host can load it on demand,
+// and its source by id. Anime sources' calls are in AnimeCalls.
 class ExtensionHost(
     private val loader: ExtensionLoader,
     private val memos: MemoStore,
     private val version: String,
     private val settings: SettingsBridge,
 ) {
-    private val loaded = ConcurrentHashMap<String, Map<Long, Source>>()
+    // By package: each source id's Source or AnimeSource.
+    private val loaded = ConcurrentHashMap<String, Map<Long, Any>>()
     private val locks = ConcurrentHashMap<String, Mutex>()
+    private val anime = AnimeCalls(memos, settings)
 
     suspend fun handle(
         method: String,
@@ -61,6 +78,7 @@ class ExtensionHost(
                 buildJsonObject {
                     put("version", version)
                     put("libs", buildJsonArray { loader.libs.forEach { add(JsonPrimitive(it)) } })
+                    put("animeLibs", buildJsonArray { loader.animeLibs.forEach { add(JsonPrimitive(it)) } })
                 }
             "load" -> describe(sources(params))
             "unload" -> {
@@ -75,35 +93,49 @@ class ExtensionHost(
             else -> call(method, params)
         }
 
-    private suspend fun sources(params: JsonObject): Map<Long, Source> {
+    private suspend fun sources(params: JsonObject): Map<Long, Any> {
         val pkg = params.string("pkg")
         loaded[pkg]?.let { return it }
         val lock = locks.getOrPut(pkg) { Mutex() }
         return lock.withLock {
             loaded[pkg] ?: loader
                 .load(pkg, params.string("apk"), params.optString("signer"))
-                .associateBy { it.id }
+                .let { it.sources.associateBy { s -> s.id } + it.anime.associateBy { s -> s.id } }
                 .also { loaded[pkg] = it }
         }
     }
 
-    private fun describe(sources: Map<Long, Source>) =
+    private fun describe(sources: Map<Long, Any>) =
         buildJsonArray {
             for (source in sources.values) {
                 add(
-                    buildJsonObject {
-                        put("id", source.id.toString())
-                        put("name", source.name)
-                        put("lang", source.lang)
-                        put("baseUrl", (source as? HttpSource)?.baseUrl)
-                        put("supportsLatest", (source as? CatalogueSource)?.supportsLatest ?: false)
-                        put("configurable", source is ConfigurableSource)
+                    when (source) {
+                        is AnimeSource ->
+                            buildJsonObject {
+                                put("id", source.id.toString())
+                                put("name", source.name)
+                                put("lang", source.lang)
+                                put("baseUrl", (source as? AnimeHttpSource)?.baseUrl)
+                                put("supportsLatest", source.supportsLatest)
+                                put("configurable", source is ConfigurableAnimeSource)
+                                put("anime", true)
+                            }
+                        else ->
+                            buildJsonObject {
+                                source as Source
+                                put("id", source.id.toString())
+                                put("name", source.name)
+                                put("lang", source.lang)
+                                put("baseUrl", (source as? HttpSource)?.baseUrl)
+                                put("supportsLatest", (source as? CatalogueSource)?.supportsLatest ?: false)
+                                put("configurable", source is ConfigurableSource)
+                            }
                     },
                 )
             }
         }
 
-    private suspend fun source(params: JsonObject): Source {
+    private suspend fun source(params: JsonObject): Any {
         val id = params.string("source").toLongOrNull() ?: throw HostError("That is not a source id.", 400)
         return sources(params)[id] ?: throw HostError("The extension has no source $id. It may need updating.", 404)
     }
@@ -134,7 +166,11 @@ class ExtensionHost(
         method: String,
         params: JsonObject,
     ): JsonElement {
-        val source = source(params)
+        val source =
+            when (val found = source(params)) {
+                is AnimeSource -> return anime.call(method, found, params)
+                else -> found as Source
+            }
         val page = params.int("page", 1)
         return when (method) {
             "popular" -> Codec.mangas(catalogue(source).getPopularManga(page).also { remember(source, it.mangas) }, base(source))
@@ -183,23 +219,11 @@ class ExtensionHost(
         val target = File(params.string("target"))
         var page = Codec.page(params["page"]?.jsonObject ?: JsonObject(emptyMap()))
         if (page.imageUrl.isNullOrEmpty()) page.imageUrl = http.getImageUrl(page)
-        http.getImage(page).use { response ->
-            if (!response.isSuccessful) throw HostError("The site answered HTTP ${response.code} for an image.", response.code)
-            target.parentFile?.mkdirs()
-            val temp = File(target.path + ".part")
-            response.body.byteStream().use { input -> temp.outputStream().use { input.copyTo(it) } }
-            if (!temp.renameTo(target)) {
-                target.delete()
-                temp.renameTo(target)
-            }
-            return buildJsonObject {
-                put("contentType", response.header("Content-Type"))
-                put("size", target.length())
-            }
-        }
+        return http.getImage(page).use { writeImage(it, target) }
     }
 
-    private fun configurable(source: Source) = source as? ConfigurableSource ?: throw HostError("${source.name} has no settings.", 501)
+    private fun configurable(source: Source) =
+        (source as? ConfigurableSource)?.let(Configurable::of) ?: throw HostError("${source.name} has no settings.", 501)
 
     private fun remember(
         source: Source,
@@ -218,15 +242,54 @@ class ExtensionHost(
     }
 }
 
+// An image response straight into the file SCANCORE's image cache names.
+fun writeImage(
+    response: Response,
+    target: File,
+): JsonElement {
+    if (!response.isSuccessful) throw HostError("The site answered HTTP ${response.code} for an image.", response.code)
+    target.parentFile?.mkdirs()
+    val temp = File(target.path + ".part")
+    response.body.byteStream().use { input -> temp.outputStream().use { input.copyTo(it) } }
+    if (!temp.renameTo(target)) {
+        target.delete()
+        temp.renameTo(target)
+    }
+    return buildJsonObject {
+        put("contentType", response.header("Content-Type"))
+        put("size", target.length())
+    }
+}
+
+// A source's settings screen, from either API: Mihon's ConfigurableSource or
+// Aniyomi's ConfigurableAnimeSource. Both keep their values in the
+// SharedPreferences named by `preferenceKey` ("source_<id>").
+class Configurable(
+    val name: String,
+    val preferenceKey: String,
+    val preferences: () -> SharedPreferences,
+    val setup: (PreferenceScreen) -> Unit,
+) {
+    companion object {
+        fun of(source: ConfigurableSource) =
+            Configurable(source.name, "source_${source.id}", { source.getSourcePreferences() }, source::setupPreferenceScreen)
+
+        // Through the host's own default: extensions are compiled against an
+        // interface without getSourcePreferences.
+        fun of(source: ConfigurableAnimeSource) =
+            Configurable(source.name, "source_${source.id}", { source.getSourcePreferences() }, source::setupPreferenceScreen)
+    }
+}
+
 // A source's settings screen as JSON, and changes to it, with the platform's
 // preference classes (AndroidCompat's on desktop, androidx on Android).
 //   [{key, title, summary, enabled, type: switch|list|multiselect|text|info,
 //     entries, values, value}]
 interface SettingsBridge {
-    fun describe(source: ConfigurableSource): JsonArray
+    fun describe(source: Configurable): JsonArray
 
     fun set(
-        source: ConfigurableSource,
+        source: Configurable,
         key: String,
         value: JsonElement,
     )

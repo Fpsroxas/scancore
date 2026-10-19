@@ -55,6 +55,8 @@ public:
     Q_INVOKABLE sc::Task *latest(int limit = 40);
 
     Q_INVOKABLE QString imageReferer(const QString &url) const;
+    // The series' page on its site, for "Open on the website".
+    Q_INVOKABLE sc::Task *webUrl(const QString &url);
     // A browser check for `url` was passed: extensions get its cookies too.
     Q_INVOKABLE void shareSiteCookies(const QString &url);
     // Warms the image cache for the first pages of an upcoming chapter.

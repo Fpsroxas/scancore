@@ -12,6 +12,7 @@
 #include "core/Parallel.h"
 #include "core/Text.h"
 #include "extensions/Runtime.h"
+#include "sources/anime/Registry.h"
 #include "sources/comics/Registry.h"
 #include "sources/novels/LnCrawl.h"
 #include "sources/novels/Registry.h"
@@ -110,27 +111,35 @@ Extensions *Extensions::instance() {
 }
 
 void Extensions::startHost() {
+    // One host runs comic (Mihon) and anime (Aniyomi) extensions.
 #if defined(SCANCORE_HAVE_ANDROID_HOST)
     // Built into the APK: nothing to download.
-    ext::setHost(ext::Kind::Mihon,
-                 ext::JniHost::create({QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/extensions/host"),
-                                       QString::fromUtf8(Http::userAgent()), QCoreApplication::applicationVersion()}));
+    const std::shared_ptr<ext::Host> host =
+        ext::JniHost::create({QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/extensions/host"),
+                              QString::fromUtf8(Http::userAgent()), QCoreApplication::applicationVersion()});
+    ext::setHost(ext::Kind::Mihon, host);
+    ext::setHost(ext::Kind::Aniyomi, host);
     ext::ExtensionSource::installImageWriter();
 #elif !defined(Q_OS_ANDROID)
     ext::Runtime::setDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/extensions/runtime"));
-    ext::setHost(ext::Kind::Mihon, std::make_shared<ext::ProcessHost>(hostLaunch()));
+    const auto host = std::make_shared<ext::ProcessHost>(hostLaunch());
+    ext::setHost(ext::Kind::Mihon, host);
+    ext::setHost(ext::Kind::Aniyomi, host);
     ext::ExtensionSource::installImageWriter();
 #endif
     // Development hook: SCANCORE_START {"extensions": {"repo": url,
-    // "install": [package, …]}} adds a repository and installs from it, for
-    // smoke tests against a local test repository.
+    // "install": [package or "lnreader:<id>", …]}} adds a repository and
+    // installs from it, for smoke tests against a local test repository.
     const auto start = App::instance()->startAction().value(QStringLiteral("extensions")).toMap();
     if (start.isEmpty())
         return;
     auto *task = Task::run([start]() -> QVariant {
         ext::Manager::add(ext::Manager::preview(start.value(QStringLiteral("repo")).toString()));
-        for (const auto &pkg : start.value(QStringLiteral("install")).toStringList())
-            ext::Manager::install(ext::Kind::Mihon, pkg);
+        // "pkg" (a Mihon extension) or "<kind>:pkg" ("lnreader:fixture").
+        for (const auto &pkg : start.value(QStringLiteral("install")).toStringList()) {
+            const auto kind = pkg.contains(QLatin1Char(':')) ? ext::kindFrom(pkg.section(QLatin1Char(':'), 0, 0)) : std::nullopt;
+            ext::Manager::install(kind.value_or(ext::Kind::Mihon), kind ? pkg.section(QLatin1Char(':'), 1) : pkg);
+        }
         return true;
     });
     connect(task, &Task::changed, task, [task] {
@@ -143,6 +152,7 @@ void Extensions::stopHost() {
     if (auto host = processHost())
         host->stop();
     ext::setHost(ext::Kind::Mihon, nullptr);
+    ext::setHost(ext::Kind::Aniyomi, nullptr);
 }
 
 bool Extensions::runtimeAvailable() const { return !ext::Runtime::platform().isEmpty(); }
@@ -655,6 +665,10 @@ void Extensions::setSourceEnabled(const QString &key, bool enabled) { ext::Manag
 
 Task *Extensions::sourceSettings(const QString &key) {
     return Task::run([key]() -> QVariant {
+        if (auto novel = novels::Registry::byKey(key))
+            return novel->preferences().toVariantList();
+        if (auto show = anime::Registry::byKey(key))
+            return show->preferences().toVariantList();
         auto source = comics::Registry::byKey(key);
         if (!source)
             throw Error(QStringLiteral("That source is not installed."));
@@ -664,6 +678,14 @@ Task *Extensions::sourceSettings(const QString &key) {
 
 Task *Extensions::setSourceSetting(const QString &key, const QString &setting, const QVariant &value) {
     return Task::run([key, setting, value]() -> QVariant {
+        if (auto novel = novels::Registry::byKey(key)) {
+            novel->setPreference(setting, QJsonValue::fromVariant(value));
+            return novel->preferences().toVariantList();
+        }
+        if (auto show = anime::Registry::byKey(key)) {
+            show->setPreference(setting, QJsonValue::fromVariant(value));
+            return show->preferences().toVariantList();
+        }
         auto source = comics::Registry::byKey(key);
         if (!source)
             throw Error(QStringLiteral("That source is not installed."));

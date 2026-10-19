@@ -38,7 +38,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build libgl1-mesa-dev libxkbcommon-dev libxkbcommon-x11-0 \
-            libxcb-cursor0 libfontconfig1-dev libnss3 libxcomposite1 libxdamage1 libxrandr2 libxtst6
+            libxcb-cursor0 libfontconfig1-dev libnss3 libxcomposite1 libxdamage1 libxrandr2 libxtst6 libmpv-dev
 
       - name: macOS packages
         if: runner.os == 'macOS'

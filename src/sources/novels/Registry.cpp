@@ -1,6 +1,9 @@
 #include "Registry.h"
 
 #include "LnCrawl.h"
+#include "extensions/Host.h"
+#include "extensions/Manager.h"
+#include "plugins/PluginSource.h"
 #include "sources/Manifest.h"
 #include "sources/local/LocalSources.h"
 
@@ -72,6 +75,9 @@ void Registry::rebuild() {
             }
         }
     }
+    // Sources of installed LNReader plugins.
+    for (const auto &entry : ext::Manager::sources(ext::Kind::LNReader))
+        sources.append(std::make_shared<plugins::PluginSource>(entry));
     // EPUB books on this device.
     SourceConfig local;
     local.key = QStringLiteral("local");
@@ -95,6 +101,11 @@ std::shared_ptr<Source> Registry::byKey(const QString &key) {
     return nullptr;
 }
 
-std::shared_ptr<Source> Registry::forUrl(const QString &url) { return sourceForUrl(all(), url); }
+std::shared_ptr<Source> Registry::forUrl(const QString &url) {
+    // Plugin links name their source ("lnreader:<id>:<path>").
+    if (const auto wrapped = ext::unwrapUrl(url))
+        return byKey(wrapped->key);
+    return sourceForUrl(all(), url);
+}
 
 } // namespace sc::novels

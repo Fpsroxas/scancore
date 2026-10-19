@@ -12,7 +12,8 @@ AbstractButton {
     // Comics from extensions (library, history) fetch covers through their
     // extension even when the list did not say so.
     property string referer: item.referer
-        || (item.media === "comic" && item.sourceUrl && !item.sourceUrl.startsWith("http") ? Comics.imageReferer(item.sourceUrl) : "")
+        || (item.sourceUrl && !item.sourceUrl.startsWith("http")
+            ? (item.media === "comic" ? Comics.imageReferer(item.sourceUrl) : item.media === "novel" ? Novels.imageReferer(item.sourceUrl) : "") : "")
     property string title: item.title || ""
     property string subtitle: ""
     property string badge: ""

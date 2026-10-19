@@ -183,8 +183,16 @@ Item {
                     iconName: page.local ? "folder-open" : "external-link"
                     filled: true
                     tip: page.local ? qsTr("Show in its folder") : qsTr("Open on the website")
-                    onClicked: page.local ? App.openFolder(App.localPath(String(page.url).replace(/\/[^\/]*$/, "")))
-                                          : App.openUrl(page.url)
+                    onClicked: {
+                        if (page.local) App.openFolder(App.localPath(String(page.url).replace(/\/[^\/]*$/, "")))
+                        else if (/^https?:/.test(page.url)) App.openUrl(page.url)
+                        else {
+                            // Extensions' and plugins' links are their own paths.
+                            const task = page.media === "novel" ? Novels.webUrl(page.url) : Comics.webUrl(page.url)
+                            task.finished.connect((link) => App.openUrl(link))
+                            task.failed.connect((error) => Router.toast(error, "error"))
+                        }
+                    }
                 }
                 IconButton {
                     visible: !page.local && (!!Trackers.anilist.name || !!Trackers.mal.name || !!Trackers.comick.name)

@@ -5,14 +5,22 @@
 //
 // scancore_probe catalogue [query] [comick|anilist|mal] checks the tracker
 // catalogues: comic and novel shelves and search.
+//
+// scancore_probe plugins <folder> [limit] runs LNReader plugin files from a
+// folder you give it: each one's popular list, its first book and that
+// book's first chapter.
 
+#include "core/Database.h"
 #include "core/Http.h"
+#include "plugins/Runtime.h"
 #include "sources/Manifest.h"
 #include "sources/catalogue/Catalogue.h"
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
 
 #include <QCoreApplication>
+#include <QDirIterator>
+#include <QTemporaryDir>
 #include <QElapsedTimer>
 #include <QFile>
 #include <QTextStream>
@@ -52,6 +60,54 @@ int main(int argc, char **argv) {
     const auto only = args.value(3);
     const bool newest = args.value(4) == QLatin1String("latest");
     int failures = 0;
+
+    if (kind == QLatin1String("plugins")) {
+        QTemporaryDir dir;
+        Database::open(dir.filePath(QStringLiteral("probe.db")));
+        QDirIterator it(args.value(2), {QStringLiteral("*.js")}, QDir::Files, QDirIterator::Subdirectories);
+        const int limit = args.value(3, QStringLiteral("1000")).toInt();
+        int count = 0, loaded = 0, listed = 0, opened = 0, read = 0;
+        while (it.hasNext() && count < limit) {
+            const auto path = it.next();
+            ++count;
+            const plugins::PluginRef plugin{QStringLiteral("lnreader:") + QFileInfo(path).completeBaseName(), QString(), path};
+            out << QFileInfo(path).completeBaseName() << Qt::endl;
+            QJsonArray novels;
+            QJsonArray chapters;
+            if (!step(QStringLiteral("load"), [&] { return plugins::Runtime::info(plugin).value("name").toString(); }))
+                continue;
+            ++loaded;
+            if (!step(QStringLiteral("popular"), [&] {
+                    novels = plugins::Runtime::call(plugin, QStringLiteral("popularNovels"),
+                                                    {1, QJsonObject{{"showLatestNovels", false},
+                                                                    {"filters", plugins::Runtime::info(plugin).value("filters")}}})
+                                 .toArray();
+                    if (novels.isEmpty())
+                        throw Error(QStringLiteral("empty"));
+                    return QStringLiteral("%1 · %2").arg(novels.size()).arg(novels[0].toObject().value("name").toString());
+                }))
+                continue;
+            ++listed;
+            if (!step(QStringLiteral("book"), [&] {
+                    const auto book = plugins::Runtime::call(plugin, QStringLiteral("parseNovel"), {novels[0].toObject().value("path")}).toObject();
+                    chapters = book.value("chapters").toArray();
+                    if (chapters.isEmpty())
+                        throw Error(QStringLiteral("no chapters"));
+                    return QStringLiteral("%1 chapters").arg(chapters.size());
+                }))
+                continue;
+            ++opened;
+            if (step(QStringLiteral("chapter"), [&] {
+                    const auto html = plugins::Runtime::call(plugin, QStringLiteral("parseChapter"), {chapters[0].toObject().value("path")}).toString();
+                    if (html.trimmed().size() < 50)
+                        throw Error(QStringLiteral("no text"));
+                    return QStringLiteral("%1 characters").arg(html.size());
+                }))
+                ++read;
+        }
+        out << "plugins " << count << ", loaded " << loaded << ", listed " << listed << ", opened " << opened << ", read " << read << Qt::endl;
+        return 0;
+    }
 
     if (kind == QLatin1String("catalogue")) {
         catalogue::setMalClientId(QStringLiteral(SCANCORE_MAL_CLIENT_ID));

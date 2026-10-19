@@ -783,6 +783,10 @@
             <translation> épisodes</translation>
         </message>
         <message>
+            <source> seasons</source>
+            <translation> saisons</translation>
+        </message>
+        <message>
             <source> episodes so far</source>
             <translation> épisodes à ce jour</translation>
         </message>
@@ -805,6 +809,10 @@
         <message>
             <source>Watch trailer</source>
             <translation>Voir la bande-annonce</translation>
+        </message>
+        <message>
+            <source>Watch from</source>
+            <translation>Regarder sur</translation>
         </message>
         <message>
             <source>Open on AniList</source>
@@ -839,8 +847,16 @@
             <translation>Plus anciens d’abord</translation>
         </message>
         <message>
+            <source>Filler</source>
+            <translation>Hors-série</translation>
+        </message>
+        <message>
             <source>No episodes yet</source>
             <translation>Pas encore d’épisodes</translation>
+        </message>
+        <message>
+            <source>The source lists no episodes for it.</source>
+            <translation>La source ne propose aucun épisode pour cet anime.</translation>
         </message>
         <message>
             <source>Episode </source>
@@ -853,6 +869,14 @@
         <message>
             <source>This anime has not aired yet.</source>
             <translation>Cet anime n’a pas encore été diffusé.</translation>
+        </message>
+        <message>
+            <source>Seasons</source>
+            <translation>Saisons</translation>
+        </message>
+        <message>
+            <source>Season %1</source>
+            <translation>Saison %1</translation>
         </message>
         <message>
             <source>Related</source>
@@ -902,12 +926,20 @@
             <translation>Rechercher</translation>
         </message>
         <message>
+            <source>Extensions</source>
+            <translation>Extensions</translation>
+        </message>
+        <message>
             <source>Continue watching</source>
             <translation>Continuer à regarder</translation>
         </message>
         <message>
             <source>Episode </source>
             <translation>Épisode </translation>
+        </message>
+        <message>
+            <source>Your anime sources</source>
+            <translation>Vos sources d&apos;anime</translation>
         </message>
         <message>
             <source>Airing today</source>
@@ -926,11 +958,19 @@
             <translation>Tendance du moment</translation>
         </message>
         <message>
+            <source>Top airing</source>
+            <translation>Meilleurs en diffusion</translation>
+        </message>
+        <message>
             <source>This season</source>
             <translation>Cette saison</translation>
         </message>
         <message>
             <source>All-time popular</source>
+            <translation>Les plus populaires</translation>
+        </message>
+        <message>
+            <source>Most popular</source>
             <translation>Les plus populaires</translation>
         </message>
         <message>
@@ -1531,6 +1571,14 @@
         <message>
             <source>What the Novels page shows and searches.</source>
             <translation>Ce que la page Romans affiche et recherche.</translation>
+        </message>
+        <message>
+            <source>Anime catalogue</source>
+            <translation>Catalogue d&apos;anime</translation>
+        </message>
+        <message>
+            <source>Whose lists the Anime page shows. Episodes, the schedule and search come from AniList either way.</source>
+            <translation>Les listes qu&apos;affiche la page Anime. Les épisodes, le calendrier et la recherche viennent d&apos;AniList dans tous les cas.</translation>
         </message>
         <message>
             <source>Discord</source>
@@ -2720,6 +2768,30 @@
             <translation>Épisode précédent</translation>
         </message>
         <message>
+            <source>Play or pause</source>
+            <translation>Lecture ou pause</translation>
+        </message>
+        <message>
+            <source>Forward 10 seconds</source>
+            <translation>Avancer de 10 secondes</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>Reculer de 10 secondes</translation>
+        </message>
+        <message>
+            <source>Volume up</source>
+            <translation>Augmenter le volume</translation>
+        </message>
+        <message>
+            <source>Volume down</source>
+            <translation>Baisser le volume</translation>
+        </message>
+        <message>
+            <source>Mute</source>
+            <translation>Couper le son</translation>
+        </message>
+        <message>
             <source>Anywhere</source>
             <translation>Partout</translation>
         </message>
@@ -2982,6 +3054,53 @@
         </message>
     </context>
     <context>
+        <name>NativePlayer</name>
+        <message>
+            <source>This copy of SCANCORE has no video player for anime from extensions.</source>
+            <translation>Cette copie de SCANCORE n&apos;a pas de lecteur vidéo pour les animes des extensions.</translation>
+        </message>
+        <message>
+            <source>Play</source>
+            <translation>Lecture</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>Pause</translation>
+        </message>
+        <message>
+            <source>Unmute</source>
+            <translation>Rétablir le son</translation>
+        </message>
+        <message>
+            <source>Mute</source>
+            <translation>Couper le son</translation>
+        </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>Sous-titres</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Désactivés</translation>
+        </message>
+        <message>
+            <source>Track </source>
+            <translation>Piste </translation>
+        </message>
+        <message>
+            <source>Audio</source>
+            <translation>Audio</translation>
+        </message>
+        <message>
+            <source>Speed</source>
+            <translation>Vitesse</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>Normale</translation>
+        </message>
+    </context>
+    <context>
         <name>NextChapterCard</name>
         <message>
             <source>End of </source>
@@ -3238,6 +3357,10 @@
         <message>
             <source> sources</source>
             <translation> sources</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Extensions</translation>
         </message>
         <message>
             <source>Search by title, or paste a book link</source>
@@ -5484,7 +5607,54 @@
         </message>
     </context>
     <context>
+        <name>WatchFromDialog</name>
+        <message>
+            <source>Which season?</source>
+            <translation>Quelle saison ?</translation>
+        </message>
+        <message>
+            <source>Watch from</source>
+            <translation>Regarder sur</translation>
+        </message>
+        <message>
+            <source>Looking for %1 on your anime sources…</source>
+            <translation>Recherche de %1 dans vos sources d&apos;anime…</translation>
+        </message>
+        <message>
+            <source>None of your anime sources has %1 yet.</source>
+            <translation>Aucune de vos sources d&apos;anime n&apos;a encore %1.</translation>
+        </message>
+        <message>
+            <source>Season %1</source>
+            <translation>Saison %1</translation>
+        </message>
+        <message>
+            <source>in seasons</source>
+            <translation>en saisons</translation>
+        </message>
+        <message>
+            <source>Built-in servers</source>
+            <translation>Serveurs intégrés</translation>
+        </message>
+        <message>
+            <source>The player SCANCORE has without extensions</source>
+            <translation>Le lecteur de SCANCORE sans extensions</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Retour</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Fermer</translation>
+        </message>
+    </context>
+    <context>
         <name>WatchPage</name>
+        <message>
+            <source>Video</source>
+            <translation>Vidéo</translation>
+        </message>
         <message>
             <source>Skip ending</source>
             <translation>Passer le générique de fin</translation>
@@ -5500,6 +5670,10 @@
         <message>
             <source>Episode </source>
             <translation>Épisode </translation>
+        </message>
+        <message>
+            <source>Trying another server: </source>
+            <translation>Essai d&apos;un autre serveur : </translation>
         </message>
         <message>
             <source>Resumed at </source>
@@ -5526,12 +5700,20 @@
             <translation>Obtenir SCANCORE</translation>
         </message>
         <message>
+            <source>Looking for %1 on your anime sources…</source>
+            <translation>Recherche de %1 dans vos sources d&apos;anime…</translation>
+        </message>
+        <message>
             <source>This build of SCANCORE has no embedded browser, which the ReAnime player needs.</source>
             <translation>Cette version de SCANCORE n’a pas le navigateur intégré dont le lecteur ReAnime a besoin.</translation>
         </message>
         <message>
             <source>Try again</source>
             <translation>Réessayer</translation>
+        </message>
+        <message>
+            <source>Watch from…</source>
+            <translation>Regarder sur…</translation>
         </message>
         <message>
             <source>Next episode in </source>
@@ -5564,6 +5746,10 @@
         <message>
             <source>Episodes</source>
             <translation>Épisodes</translation>
+        </message>
+        <message>
+            <source>Watch from</source>
+            <translation>Regarder sur</translation>
         </message>
         <message>
             <source>Comments</source>
