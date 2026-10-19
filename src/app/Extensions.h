@@ -4,6 +4,7 @@
 
 #include <QObject>
 #include <QQmlEngine>
+#include <QSet>
 
 namespace sc {
 
@@ -26,6 +27,12 @@ class Extensions : public QObject {
     // What is being installed: "runtime" or "novels".
     Q_PROPERTY(QString busyWith READ busyWith NOTIFY changed)
     Q_PROPERTY(QString status READ status NOTIFY changed)
+    // Bumped whenever repositories, extensions or their sources change, so
+    // bindings that list them read again.
+    Q_PROPERTY(int revision READ revision NOTIFY extensionsChanged)
+    // Extensions being installed or updated right now ("<kind>:<pkg>").
+    Q_PROPERTY(QStringList installing READ installing NOTIFY extensionsChanged)
+    Q_PROPERTY(int updateCount READ updateCount NOTIFY extensionsChanged)
 
 public:
     static Extensions *instance();
@@ -45,12 +52,59 @@ public:
     Q_INVOKABLE sc::Task *installRuntime();
     Q_INVOKABLE void removeRuntime();
 
+    int revision() const { return m_revision; }
+    QStringList installing() const;
+    int updateCount() const;
+
+    // ---- repositories and extensions (the Extensions page)
+    // [{url, name, kind, media, website, domain, count, error}]
+    Q_INVOKABLE QVariantList repositories() const;
+    // The repository a link names: a one-tap link (scancore://, tachiyomi://,
+    // mihon://, aniyomi://, lnreader://) or a plain address. {url, kind}, or
+    // an empty map when `text` is no link at all.
+    Q_INVOKABLE QVariantMap repositoryLink(const QString &text) const;
+    // Reads a repository without adding it: {url, name, domain, kind, media,
+    // count, languages: [{value, label, count}], autoInstall: [names],
+    // language, languageName}.
+    Q_INVOKABLE sc::Task *previewRepository(const QString &link, const QString &kind = QString());
+    // Adds a previewed repository and installs its extensions in the content
+    // language: {name, installed, failed: [messages]}.
+    Q_INVOKABLE sc::Task *addRepository(const QString &url);
+    Q_INVOKABLE void removeRepository(const QString &url);
+    Q_INVOKABLE sc::Task *refreshRepositories();
+
+    // Installed extensions of one kind ("mihon", "aniyomi", "lnreader"; empty
+    // for all): [{id, kind, media, pkg, name, version, lang, languageName,
+    // icon, nsfw, trusted, problem, update, repo, signer, sources: [{key,
+    // name, lang, languageName, baseUrl, enabled, error}]}]
+    Q_INVOKABLE QVariantList installed(const QString &kind = QString()) const;
+    // Extensions the repositories list that are not installed, content
+    // language first: [{id, kind, media, pkg, name, version, lang,
+    // languageName, icon, nsfw, problem, preferred}]
+    Q_INVOKABLE QVariantList available(const QString &kind = QString()) const;
+    Q_INVOKABLE sc::Task *install(const QString &kind, const QString &pkg);
+    Q_INVOKABLE void uninstall(const QString &kind, const QString &pkg);
+    Q_INVOKABLE void trust(const QString &kind, const QString &pkg);
+    // Installs every update (trusted signers only): {installed}.
+    Q_INVOKABLE sc::Task *updateAll();
+
+    Q_INVOKABLE void setSourceEnabled(const QString &key, bool enabled);
+    // A source's own settings, as its extension describes them: [{key,
+    // title, summary, type (switch, list, multiselect, text, info), entries,
+    // values, value, enabled}]
+    Q_INVOKABLE sc::Task *sourceSettings(const QString &key);
+    Q_INVOKABLE sc::Task *setSourceSetting(const QString &key, const QString &setting, const QVariant &value);
+
+    // The registries were rebuilt after extensions changed (main()).
+    void notifyExtensionsChanged();
+
     // Sets up the extension host at start-up (main()); stopHost() at exit.
     void startHost();
     void stopHost();
 
 signals:
     void changed();
+    void extensionsChanged();
     void statusChanged(const QString &status);
 
 private:
@@ -60,6 +114,9 @@ private:
     explicit Extensions(QObject *parent = nullptr);
 
     void setStatus(const QString &status);
+    void setInstalling(const QString &id, bool on);
+    QSet<QString> m_installing;
+    int m_revision = 0;
     bool m_busy = false;
     QString m_busyWith;
     QString m_status;

@@ -152,6 +152,27 @@ const char *const kMigrations[] = {
         PRIMARY KEY (source_key, key)
     );
     )",
+    // 4: favourites in the library (2.0), beside its categories (reading,
+    // planned, paused, completed, dropped).
+    R"(
+    ALTER TABLE library ADD COLUMN favourite INTEGER NOT NULL DEFAULT 0;
+    )",
+    // 5: the notification area (2.0): new chapters, announcements, updates.
+    // action is JSON ({seriesId} | {url} | {page}); key replaces an earlier
+    // notification about the same thing.
+    R"(
+    CREATE TABLE notifications (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        kind TEXT NOT NULL,
+        key TEXT UNIQUE,
+        title TEXT NOT NULL,
+        body TEXT,
+        action TEXT,
+        created_at INTEGER NOT NULL,
+        read_at INTEGER
+    );
+    CREATE INDEX notifications_created ON notifications(created_at);
+    )",
 };
 
 QSqlDatabase connection() {

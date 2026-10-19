@@ -221,6 +221,11 @@ private slots:
         QCOMPARE(popular.items.size(), 2);
         QVERIFY(popular.hasNextPage);
         QCOMPARE(popular.items[0].url, m_sourceKey + QStringLiteral(":/series/1"));
+        // Covers come back as full links (the site gives them relative) and
+        // are fetched through the extension, which adds the header the site
+        // wants.
+        QCOMPARE(popular.items[0].cover, QStringLiteral("http://fixture.test:%1/img/cover-1.png").arg(m_site->port()));
+        QCOMPARE(ImageCache::fetch(popular.items[0].cover, source->imageReferer()), site(QStringLiteral("image.png")));
 
         timer.restart();
         const auto found = source->search(QStringLiteral("one"));

@@ -201,6 +201,34 @@ void saveLink(const QString &seriesId, const QString &service, const QVariant &i
     Database::setPref(QStringLiteral("tracker.links"), links);
 }
 
+// Services that could not find a series by its titles, so the series page
+// can ask the reader to pick the entry: {seriesId: {service: when}}.
+QVariantMap allMisses() { return Database::pref(QStringLiteral("tracker.misses")).toMap(); }
+
+void saveMiss(const QString &seriesId, const QString &service, bool missed) {
+    QMutexLocker lock(&g_linksMutex);
+    auto misses = allMisses();
+    auto entry = misses.value(seriesId).toMap();
+    if (missed == entry.contains(service))
+        return;
+    if (missed)
+        entry.insert(service, Database::now());
+    else
+        entry.remove(service);
+    if (entry.isEmpty())
+        misses.remove(seriesId);
+    else
+        misses.insert(seriesId, entry);
+    Database::setPref(QStringLiteral("tracker.misses"), misses);
+}
+
+// A search that found nothing is not repeated for a day (every finished
+// chapter would ask again); linking by hand clears it.
+bool missedRecently(const QString &seriesId, const QString &service) {
+    const auto when = allMisses().value(seriesId).toMap().value(service);
+    return when.isValid() && Database::now() - when.toLongLong() < 86400;
+}
+
 // AniList titles: [{id, idMal, title, titles: [...], detail, cover, total}].
 QVariantList anilistSearch(const QString &media, const QString &title) {
     const auto data = anilistQuery(QStringLiteral(R"(
@@ -322,6 +350,39 @@ QJsonObject seriesExtra(const QString &seriesId) {
         .object();
 }
 
+// The names to look a series up by: its source's title, then the
+// catalogue's (when it was opened from one) and one of the catalogue's
+// other names; three at most, each searched only if the ones before found
+// nothing.
+QStringList lookupTitles(const QString &seriesId, const QString &title) {
+    const auto extra = seriesExtra(seriesId);
+    QStringList names{title, extra.value("catalogTitle").toString()};
+    const auto others = extra.value("titles").toArray();
+    if (!others.isEmpty())
+        names.append(others.first().toString());
+    QStringList out;
+    QSet<QString> seen;
+    for (const auto &name : names) {
+        const auto key = titleKey(name);
+        if (key.isEmpty() || seen.contains(key))
+            continue;
+        seen.insert(key);
+        out.append(name);
+    }
+    return out.mid(0, 3);
+}
+
+// The first candidate that has one of the names, searching name by name.
+QVariantMap matchByTitles(const std::function<QVariantList(const QString &)> &search, const QStringList &names) {
+    for (const auto &name : names) {
+        const auto candidates = search(name);
+        for (const auto &wanted : names)
+            if (auto match = exactMatch(candidates, wanted); !match.isEmpty())
+                return match;
+    }
+    return {};
+}
+
 // How far the series is: the highest chapter or episode number finished.
 int progressOf(const QString &seriesId) {
     int best = 0;
@@ -354,7 +415,10 @@ void updateAniList(const QString &seriesId, const QString &media, const QString 
             saveLink(seriesId, QStringLiteral("anilist"), id, title);
     }
     if (id <= 0) {
-        const auto match = exactMatch(anilistSearch(media, title), title);
+        if (missedRecently(seriesId, QStringLiteral("anilist")))
+            return;
+        const auto match = matchByTitles([&](const QString &t) { return anilistSearch(media, t); }, lookupTitles(seriesId, title));
+        saveMiss(seriesId, QStringLiteral("anilist"), match.isEmpty());
         if (match.isEmpty())
             return;
         id = match.value("id").toInt();
@@ -394,7 +458,10 @@ void updateMal(const QString &seriesId, const QString &media, const QString &tit
             id = anilistQuery(QStringLiteral("query ($id: Int) { Media(id: $id) { idMal } }"), {{"id", anilistId}})
                      .value("Media").toObject().value("idMal").toInt();
         if (id <= 0) {
-            const auto match = exactMatch(malSearch(media, title), title);
+            if (missedRecently(seriesId, QStringLiteral("mal")))
+                return;
+            const auto match = matchByTitles([&](const QString &t) { return malSearch(media, t); }, lookupTitles(seriesId, title));
+            saveMiss(seriesId, QStringLiteral("mal"), match.isEmpty());
             if (match.isEmpty())
                 return;
             id = match.value("id").toInt();
@@ -436,14 +503,20 @@ void updateComick(const QString &seriesId, const QString &media, const QString &
             anilistId = seriesId.section(QLatin1Char(':'), 2).toInt();
         if (anilistId <= 0)
             anilistId = extra.value("anilist").toInt();
+        if (missedRecently(seriesId, QStringLiteral("comick")))
+            return;
         const auto candidates = comickSearch(media, title);
         QVariantMap match;
         // By AniList entry when both know it, else by title.
         for (const auto &value : candidates)
             if (anilistId > 0 && value.toMap().value("anilist").toInt() == anilistId)
                 match = value.toMap();
-        if (match.isEmpty())
-            match = exactMatch(candidates, title);
+        const auto names = lookupTitles(seriesId, title);
+        for (int i = 0; match.isEmpty() && i < names.size(); ++i)
+            match = exactMatch(candidates, names[i]);
+        if (match.isEmpty() && names.size() > 1)
+            match = matchByTitles([&](const QString &t) { return comickSearch(media, t); }, names.mid(1));
+        saveMiss(seriesId, QStringLiteral("comick"), match.isEmpty());
         if (match.isEmpty())
             return;
         hid = match.value("id").toString();
@@ -692,8 +765,25 @@ QVariantMap Trackers::links(const QString &seriesId) const {
     return entry;
 }
 
+QStringList Trackers::misses(const QString &seriesId) const {
+    QStringList out;
+    const auto entry = allMisses().value(seriesId).toMap();
+    const auto services = links(seriesId);
+    for (auto it = entry.begin(); it != entry.end(); ++it)
+        if (!services.contains(it.key()))
+            out.append(it.key());
+    return out;
+}
+
+QString Trackers::lookupTitle(const QString &seriesId, const QString &title) const {
+    const auto extra = seriesExtra(seriesId);
+    const auto catalogue = extra.value("catalogTitle").toString();
+    return catalogue.isEmpty() ? title : catalogue;
+}
+
 void Trackers::link(const QString &seriesId, const QString &service, const QVariant &remoteId, const QString &title) {
     saveLink(seriesId, service, remoteId, title);
+    saveMiss(seriesId, service, false);
     emit changed();
     unitFinished(seriesId);
 }

@@ -527,6 +527,133 @@
         </message>
     </context>
     <context>
+        <name>AddRepositoryDialog</name>
+        <message>
+            <source>That is not a repository link.</source>
+            <translation>Itu bukan tautan repositori.</translation>
+        </message>
+        <message>
+            <source>anime extension</source>
+            <translation>ekstensi anime</translation>
+        </message>
+        <message>
+            <source>anime extensions</source>
+            <translation>ekstensi anime</translation>
+        </message>
+        <message>
+            <source>novel plugin</source>
+            <translation>plugin novel</translation>
+        </message>
+        <message>
+            <source>novel plugins</source>
+            <translation>plugin novel</translation>
+        </message>
+        <message>
+            <source>comic extension</source>
+            <translation>ekstensi komik</translation>
+        </message>
+        <message>
+            <source>comic extensions</source>
+            <translation>ekstensi komik</translation>
+        </message>
+        <message>
+            <source> added</source>
+            <translation> ditambahkan</translation>
+        </message>
+        <message>
+            <source>, </source>
+            <translation>, </translation>
+        </message>
+        <message>
+            <source> extension installed</source>
+            <translation> ekstensi terpasang</translation>
+        </message>
+        <message>
+            <source> extensions installed</source>
+            <translation> ekstensi terpasang</translation>
+        </message>
+        <message>
+            <source>Add “</source>
+            <translation>Tambahkan “</translation>
+        </message>
+        <message>
+            <source>” from </source>
+            <translation>” dari </translation>
+        </message>
+        <message>
+            <source>Add a repository</source>
+            <translation>Tambahkan repositori</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository&apos;s page. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>Tempel tautan dari halaman repositori. SCANCORE membaca repositori Mihon, Tachiyomi, Aniyomi, dan LNReader.</translation>
+        </message>
+        <message>
+            <source>Repository link</source>
+            <translation>Tautan repositori</translation>
+        </message>
+        <message>
+            <source>Reading the repository…</source>
+            <translation>Membaca repositori…</translation>
+        </message>
+        <message>
+            <source> in </source>
+            <translation> dalam </translation>
+        </message>
+        <message>
+            <source> languages</source>
+            <translation> bahasa</translation>
+        </message>
+        <message>
+            <source>It is already added. Adding it again reads it afresh.</source>
+            <translation>Sudah ditambahkan. Menambahkannya lagi akan membacanya ulang.</translation>
+        </message>
+        <message>
+            <source>Extensions in </source>
+            <translation>Ekstensi dalam bahasa </translation>
+        </message>
+        <message>
+            <source> will be installed (</source>
+            <translation> akan dipasang (</translation>
+        </message>
+        <message>
+            <source> The rest are listed under Available.</source>
+            <translation> Sisanya ada di Tersedia.</translation>
+        </message>
+        <message>
+            <source>None of them is in </source>
+            <translation>Tidak ada yang dalam bahasa </translation>
+        </message>
+        <message>
+            <source>, so nothing is installed yet. Pick extensions under Available.</source>
+            <translation>, jadi belum ada yang dipasang. Pilih ekstensi di Tersedia.</translation>
+        </message>
+        <message>
+            <source>Extensions are other people&apos;s code. Add repositories you trust.</source>
+            <translation>Ekstensi adalah kode buatan orang lain. Tambahkan repositori yang Anda percayai.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Lanjut</translation>
+        </message>
+        <message>
+            <source>Try again</source>
+            <translation>Coba lagi</translation>
+        </message>
+        <message>
+            <source>Installing…</source>
+            <translation>Memasang…</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Tambah</translation>
+        </message>
+    </context>
+    <context>
         <name>AnimeBrowse</name>
         <message>
             <source>Any</source>
@@ -1134,12 +1261,24 @@
             <translation>Comick</translation>
         </message>
         <message>
+            <source>Extensions</source>
+            <translation>Ekstensi</translation>
+        </message>
+        <message>
             <source>%1 titles for “%2” from %3&apos;s catalogue</source>
             <translation>%1 judul untuk “%2” dari katalog %3</translation>
         </message>
         <message>
             <source> · %1 is unavailable, so your sources were searched</source>
             <translation> · %1 tidak tersedia, jadi sumber Anda yang dicari</translation>
+        </message>
+        <message>
+            <source> · 1 source still searching</source>
+            <translation> · 1 sumber masih mencari</translation>
+        </message>
+        <message>
+            <source> · %1 sources still searching</source>
+            <translation> · %1 sumber masih mencari</translation>
         </message>
         <message>
             <source>%1 is unavailable</source>
@@ -1580,6 +1719,14 @@
             <source>Add to library</source>
             <translation>Tambah ke pustaka</translation>
         </message>
+        <message>
+            <source>Remove from favourites</source>
+            <translation>Hapus dari favorit</translation>
+        </message>
+        <message>
+            <source>Add to favourites</source>
+            <translation>Tambahkan ke favorit</translation>
+        </message>
     </context>
     <context>
         <name>Discussion</name>
@@ -1715,6 +1862,10 @@
             <translation>Unduhan</translation>
         </message>
         <message>
+            <source>Notifications</source>
+            <translation>Notifikasi</translation>
+        </message>
+        <message>
             <source>Settings</source>
             <translation>Pengaturan</translation>
         </message>
@@ -1740,6 +1891,14 @@
         <message>
             <source>Open folder</source>
             <translation>Buka folder</translation>
+        </message>
+        <message>
+            <source>Battery optimisation pauses downloads when you leave SCANCORE.</source>
+            <translation>Pengoptimalan baterai menjeda unduhan saat Anda meninggalkan SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Allow</source>
+            <translation>Izinkan</translation>
         </message>
         <message>
             <source>No downloads yet</source>
@@ -1780,6 +1939,248 @@
         <message>
             <source>Open series</source>
             <translation>Buka seri</translation>
+        </message>
+    </context>
+    <context>
+        <name>ExtensionsPage</name>
+        <message>
+            <source>All languages</source>
+            <translation>Semua bahasa</translation>
+        </message>
+        <message>
+            <source> installed</source>
+            <translation> terpasang</translation>
+        </message>
+        <message>
+            <source> installed. Trust it under Installed to use it.</source>
+            <translation> terpasang. Percayai di Terpasang untuk memakainya.</translation>
+        </message>
+        <message>
+            <source>Remove </source>
+            <translation>Hapus </translation>
+        </message>
+        <message>
+            <source>Its sources disappear from SCANCORE. Series in your library stay, and come back when you install it again.</source>
+            <translation>Sumbernya hilang dari SCANCORE. Seri di pustaka Anda tetap ada dan kembali saat Anda memasangnya lagi.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Hapus</translation>
+        </message>
+        <message>
+            <source>Remove “</source>
+            <translation>Hapus “</translation>
+        </message>
+        <message>
+            <source>”?</source>
+            <translation>”?</translation>
+        </message>
+        <message>
+            <source>Installed extensions stay installed, but they no longer get updates from it, and SCANCORE asks before trusting them again.</source>
+            <translation>Ekstensi yang terpasang tetap ada, tetapi tidak lagi mendapat pembaruan darinya, dan SCANCORE bertanya sebelum memercayainya lagi.</translation>
+        </message>
+        <message>
+            <source>Trust </source>
+            <translation>Percayai </translation>
+        </message>
+        <message>
+            <source>It is not signed by a repository you added (key </source>
+            <translation>Ini tidak ditandatangani oleh repositori yang Anda tambahkan (kunci </translation>
+        </message>
+        <message>
+            <source>…). Extensions run code from the internet on this device; trust only ones you know.</source>
+            <translation>…). Ekstensi menjalankan kode dari internet di perangkat ini; percayai hanya yang Anda kenal.</translation>
+        </message>
+        <message>
+            <source>Trust</source>
+            <translation>Percayai</translation>
+        </message>
+        <message>
+            <source> extension updated</source>
+            <translation> ekstensi diperbarui</translation>
+        </message>
+        <message>
+            <source> extensions updated</source>
+            <translation> ekstensi diperbarui</translation>
+        </message>
+        <message>
+            <source> update available</source>
+            <translation> pembaruan tersedia</translation>
+        </message>
+        <message>
+            <source> updates available</source>
+            <translation> pembaruan tersedia</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Semua sudah terbaru</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Ekstensi</translation>
+        </message>
+        <message>
+            <source> repository</source>
+            <translation> repositori</translation>
+        </message>
+        <message>
+            <source> repositories</source>
+            <translation> repositori</translation>
+        </message>
+        <message>
+            <source>Update all (</source>
+            <translation>Perbarui semua (</translation>
+        </message>
+        <message>
+            <source>Check repositories for updates</source>
+            <translation>Periksa pembaruan di repositori</translation>
+        </message>
+        <message>
+            <source>Add repository</source>
+            <translation>Tambah repositori</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, a separate download of about 100 MB.</source>
+            <translation>Ekstensi berjalan di runtime Ekstensi, unduhan terpisah sekitar 100 MB.</translation>
+        </message>
+        <message>
+            <source>Install</source>
+            <translation>Pasang</translation>
+        </message>
+        <message>
+            <source>Installed</source>
+            <translation>Terpasang</translation>
+        </message>
+        <message>
+            <source>Available</source>
+            <translation>Tersedia</translation>
+        </message>
+        <message>
+            <source>Repositories</source>
+            <translation>Repositori</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Cari ekstensi</translation>
+        </message>
+        <message>
+            <source>No repositories yet</source>
+            <translation>Belum ada repositori</translation>
+        </message>
+        <message>
+            <source>Extensions come from repositories that other people run. Have a repository link? Paste it here, or open it from the repository&apos;s page with SCANCORE.</source>
+            <translation>Ekstensi berasal dari repositori yang dikelola orang lain. Punya tautan repositori? Tempel di sini, atau buka dengan SCANCORE dari halaman repositori.</translation>
+        </message>
+        <message>
+            <source>Repository link</source>
+            <translation>Tautan repositori</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Tambah</translation>
+        </message>
+        <message>
+            <source>Nothing installed yet. Pick extensions under Available.</source>
+            <translation>Belum ada yang dipasang. Pilih ekstensi di Tersedia.</translation>
+        </message>
+        <message>
+            <source>No extension matches.</source>
+            <translation>Tidak ada ekstensi yang cocok.</translation>
+        </message>
+        <message>
+            <source>Every extension the repositories list is installed.</source>
+            <translation>Semua ekstensi dari repositori sudah dipasang.</translation>
+        </message>
+        <message>
+            <source>Not trusted</source>
+            <translation>Belum dipercaya</translation>
+        </message>
+        <message>
+            <source>Error</source>
+            <translation>Galat</translation>
+        </message>
+        <message>
+            <source> sources</source>
+            <translation> sumber</translation>
+        </message>
+        <message>
+            <source>Update</source>
+            <translation>Perbarui</translation>
+        </message>
+        <message>
+            <source>Hide sources</source>
+            <translation>Sembunyikan sumber</translation>
+        </message>
+        <message>
+            <source>Show sources</source>
+            <translation>Tampilkan sumber</translation>
+        </message>
+        <message>
+            <source>Pass a browser check for this site</source>
+            <translation>Lewati pemeriksaan peramban untuk situs ini</translation>
+        </message>
+        <message>
+            <source>Browse this source</source>
+            <translation>Jelajahi sumber ini</translation>
+        </message>
+        <message>
+            <source>Source settings</source>
+            <translation>Pengaturan sumber</translation>
+        </message>
+        <message>
+            <source> extension</source>
+            <translation> ekstensi</translation>
+        </message>
+        <message>
+            <source> extensions</source>
+            <translation> ekstensi</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>Salin tautan</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>Tautan disalin</translation>
+        </message>
+    </context>
+    <context>
+        <name>FilterSheet</name>
+        <message>
+            <source>Filters</source>
+            <translation>Filter</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Reset</source>
+            <translation>Atur ulang</translation>
+        </message>
+        <message>
+            <source>Apply</source>
+            <translation>Terapkan</translation>
+        </message>
+        <message>
+            <source>Any</source>
+            <translation>Apa saja</translation>
+        </message>
+        <message>
+            <source>Include</source>
+            <translation>Sertakan</translation>
+        </message>
+        <message>
+            <source>Exclude</source>
+            <translation>Kecualikan</translation>
+        </message>
+        <message>
+            <source>Ascending</source>
+            <translation>Naik</translation>
+        </message>
+        <message>
+            <source>Descending</source>
+            <translation>Turun</translation>
         </message>
     </context>
     <context>
@@ -2362,8 +2763,20 @@
             <translation>Periksa pembaruan</translation>
         </message>
         <message>
+            <source>Recently watched</source>
+            <translation>Baru ditonton</translation>
+        </message>
+        <message>
             <source>All</source>
             <translation>Semua</translation>
+        </message>
+        <message>
+            <source>Tap the heart on a saved series to keep it here.</source>
+            <translation>Ketuk ikon hati pada seri tersimpan untuk menyimpannya di sini.</translation>
+        </message>
+        <message>
+            <source>Choose a category on a saved series&apos; page to move it here.</source>
+            <translation>Pilih kategori di halaman seri tersimpan untuk memindahkannya ke sini.</translation>
         </message>
         <message>
             <source>Comics</source>
@@ -2376,6 +2789,10 @@
         <message>
             <source>Anime</source>
             <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Favourites</source>
+            <translation>Favorit</translation>
         </message>
         <message>
             <source>Filter library</source>
@@ -2418,6 +2835,14 @@
             <translation>Pustaka Anda kosong</translation>
         </message>
         <message>
+            <source>Nothing saved here yet</source>
+            <translation>Belum ada yang disimpan di sini</translation>
+        </message>
+        <message>
+            <source>Nothing in %1</source>
+            <translation>Tidak ada di %1</translation>
+        </message>
+        <message>
             <source>Open any comic, novel or anime and choose “Add to library” to keep it here. SCANCORE checks saved series for new chapters in the background.</source>
             <translation>Buka komik, novel, atau anime apa pun lalu pilih “Tambah ke pustaka” untuk menyimpannya di sini. SCANCORE memeriksa bab baru dari seri tersimpan di latar belakang.</translation>
         </message>
@@ -2429,8 +2854,8 @@
             <translation>Pustaka</translation>
         </message>
         <message>
-            <source>New chapters and notifications</source>
-            <translation>Bab baru dan notifikasi</translation>
+            <source>New chapters, notifications and background work</source>
+            <translation>Bab baru, notifikasi, dan pekerjaan di latar belakang</translation>
         </message>
         <message>
             <source>Updates</source>
@@ -2469,6 +2894,18 @@
             <translation>Beri tahu saya tentang bab baru</translation>
         </message>
         <message>
+            <source>They are always listed under Notifications; this also shows them in the system&apos;s notifications.</source>
+            <translation>Selalu tercantum di Notifikasi; ini juga menampilkannya di notifikasi sistem.</translation>
+        </message>
+        <message>
+            <source>Announcements from SCANCORE</source>
+            <translation>Pengumuman dari SCANCORE</translation>
+        </message>
+        <message>
+            <source>News about SCANCORE from scancore.onl, in Notifications as soon as they are posted.</source>
+            <translation>Kabar tentang SCANCORE dari scancore.onl, di Notifikasi segera setelah diterbitkan.</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>Latar</translation>
         </message>
@@ -2479,6 +2916,26 @@
         <message>
             <source>Lets update checks and downloads continue in the background.</source>
             <translation>Membiarkan pemeriksaan pembaruan dan unduhan tetap berjalan di latar belakang.</translation>
+        </message>
+        <message>
+            <source>Battery optimisation stops SCANCORE in the background</source>
+            <translation>Pengoptimalan baterai menghentikan SCANCORE di latar belakang</translation>
+        </message>
+        <message>
+            <source>SCANCORE can run in the background</source>
+            <translation>SCANCORE dapat berjalan di latar belakang</translation>
+        </message>
+        <message>
+            <source>Android closes it soon after you leave it, so new chapters are not checked, downloads pause and reading aloud stops.</source>
+            <translation>Android menutupnya tak lama setelah Anda meninggalkannya, sehingga bab baru tidak diperiksa, unduhan dijeda, dan pembacaan suara berhenti.</translation>
+        </message>
+        <message>
+            <source>Update checks, downloads and reading aloud carry on when you leave the app.</source>
+            <translation>Pemeriksaan pembaruan, unduhan, dan pembacaan suara tetap berjalan saat Anda meninggalkan aplikasi.</translation>
+        </message>
+        <message>
+            <source>Allow</source>
+            <translation>Izinkan</translation>
         </message>
     </context>
     <context>
@@ -2496,6 +2953,10 @@
             <translation>Diunduh </translation>
         </message>
         <message>
+            <source>Try again now; %1 should load.</source>
+            <translation>Coba lagi sekarang; %1 seharusnya dapat dimuat.</translation>
+        </message>
+        <message>
             <source>Use this theme?</source>
             <translation>Gunakan tema ini?</translation>
         </message>
@@ -2506,6 +2967,18 @@
         <message>
             <source>Use theme</source>
             <translation>Gunakan tema</translation>
+        </message>
+        <message>
+            <source>Let SCANCORE run in the background?</source>
+            <translation>Izinkan SCANCORE berjalan di latar belakang?</translation>
+        </message>
+        <message>
+            <source>Android&apos;s battery optimisation closes SCANCORE soon after you leave it, so new chapters are not checked, downloads pause and reading aloud stops. Android will ask you to allow it; you can change it later in Settings → Library.</source>
+            <translation>Pengoptimalan baterai Android menutup SCANCORE tak lama setelah Anda meninggalkannya, sehingga bab baru tidak diperiksa, unduhan dijeda, dan pembacaan suara berhenti. Android akan meminta Anda mengizinkannya; Anda dapat mengubahnya nanti di Pengaturan → Pustaka.</translation>
+        </message>
+        <message>
+            <source>Allow</source>
+            <translation>Izinkan</translation>
         </message>
     </context>
     <context>
@@ -2529,6 +3002,40 @@
         <message>
             <source>Back to details</source>
             <translation>Kembali ke detail</translation>
+        </message>
+    </context>
+    <context>
+        <name>Notifications</name>
+        <message>
+            <source>Updates and announcements</source>
+            <translation>Pembaruan dan pengumuman</translation>
+        </message>
+    </context>
+    <context>
+        <name>NotificationsPanel</name>
+        <message>
+            <source>Notifications</source>
+            <translation>Notifikasi</translation>
+        </message>
+        <message>
+            <source>Mark all as read</source>
+            <translation>Tandai semua sudah dibaca</translation>
+        </message>
+        <message>
+            <source>Clear all</source>
+            <translation>Hapus semua</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Nothing new</source>
+            <translation>Tidak ada yang baru</translation>
+        </message>
+        <message>
+            <source>New chapters in your library, announcements and updates show up here.</source>
+            <translation>Bab baru di pustaka Anda, pengumuman, dan pembaruan muncul di sini.</translation>
         </message>
     </context>
     <context>
@@ -2761,6 +3268,14 @@
             <translation> · %1 tidak tersedia, jadi sumber Anda yang dicari</translation>
         </message>
         <message>
+            <source> · 1 source still searching</source>
+            <translation> · 1 sumber masih mencari</translation>
+        </message>
+        <message>
+            <source> · %1 sources still searching</source>
+            <translation> · %1 sumber masih mencari</translation>
+        </message>
+        <message>
             <source>Pass %1&apos;s browser check</source>
             <translation>Lewati pemeriksaan peramban %1</translation>
         </message>
@@ -2898,6 +3413,34 @@
         <message>
             <source>Keep your lists in step</source>
             <translation>Jaga daftar Anda tetap sinkron</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Ekstensi</translation>
+        </message>
+        <message>
+            <source>Have a repository link?</source>
+            <translation>Punya tautan repositori?</translation>
+        </message>
+        <message>
+            <source>SCANCORE runs extensions made for Mihon and Tachiyomi. Paste a repository link and SCANCORE shows what it holds before adding anything. Extensions are other people&apos;s code, so you choose whether to trust each one.</source>
+            <translation>SCANCORE menjalankan ekstensi yang dibuat untuk Mihon dan Tachiyomi. Tempel tautan repositori dan SCANCORE menampilkan isinya sebelum menambahkan apa pun. Ekstensi adalah kode buatan orang lain, jadi Anda yang memutuskan apakah memercayai masing-masing.</translation>
+        </message>
+        <message>
+            <source>Repository link</source>
+            <translation>Tautan repositori</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Tambah</translation>
+        </message>
+        <message>
+            <source>Added: %1</source>
+            <translation>Ditambahkan: %1</translation>
+        </message>
+        <message>
+            <source>No link? Continue; the Extensions page on the Comics tab takes one any time.</source>
+            <translation>Tidak punya tautan? Lanjutkan; halaman Ekstensi di tab Komik bisa menerimanya kapan saja.</translation>
         </message>
         <message>
             <source>Theme</source>
@@ -3341,6 +3884,42 @@
     <context>
         <name>Router</name>
         <message>
+            <source>Watching</source>
+            <translation>Menonton</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Membaca</translation>
+        </message>
+        <message>
+            <source>Plan to watch</source>
+            <translation>Rencana ditonton</translation>
+        </message>
+        <message>
+            <source>Plan to read</source>
+            <translation>Rencana dibaca</translation>
+        </message>
+        <message>
+            <source>On hold</source>
+            <translation>Ditunda</translation>
+        </message>
+        <message>
+            <source>Completed</source>
+            <translation>Selesai</translation>
+        </message>
+        <message>
+            <source>Dropped</source>
+            <translation>Dihentikan</translation>
+        </message>
+        <message>
+            <source>Browser check for %1. Complete any check the site shows, then press Done.</source>
+            <translation>Pemeriksaan browser untuk %1. Selesaikan pemeriksaan yang ditampilkan situs, lalu tekan Selesai.</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Selesai</translation>
+        </message>
+        <message>
             <source>Trending this week</source>
             <translation>Tren minggu ini</translation>
         </message>
@@ -3454,6 +4033,18 @@
         <message>
             <source>Refresh</source>
             <translation>Segarkan</translation>
+        </message>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>%1 could not find this by its title, so progress is not sent there.</source>
+            <translation>%1 tidak dapat menemukan seri ini lewat judulnya, jadi progres tidak dikirim ke sana.</translation>
+        </message>
+        <message>
+            <source>Pick the entry</source>
+            <translation>Pilih entri</translation>
         </message>
         <message>
             <source>Chapters</source>
@@ -3861,6 +4452,10 @@
             <translation>Unduhan</translation>
         </message>
         <message>
+            <source>Notifications</source>
+            <translation>Notifikasi</translation>
+        </message>
+        <message>
             <source>Search everything</source>
             <translation>Cari semuanya</translation>
         </message>
@@ -3900,8 +4495,8 @@
             <translation>Selesai</translation>
         </message>
         <message>
-            <source> should load.</source>
-            <translation> seharusnya dimuat.</translation>
+            <source>Try again now; %1 should load.</source>
+            <translation>Coba lagi sekarang; %1 seharusnya dapat dimuat.</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>
@@ -3910,6 +4505,68 @@
         <message>
             <source> in your browser instead.</source>
             <translation> di peramban Anda.</translation>
+        </message>
+    </context>
+    <context>
+        <name>SourcePage</name>
+        <message>
+            <source>Source settings</source>
+            <translation>Pengaturan sumber</translation>
+        </message>
+        <message>
+            <source>Open site</source>
+            <translation>Buka situs</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>Populer</translation>
+        </message>
+        <message>
+            <source>Latest</source>
+            <translation>Terbaru</translation>
+        </message>
+        <message>
+            <source>Search </source>
+            <translation>Cari di </translation>
+        </message>
+        <message>
+            <source>Filters (</source>
+            <translation>Filter (</translation>
+        </message>
+        <message>
+            <source>Filters</source>
+            <translation>Filter</translation>
+        </message>
+        <message>
+            <source>Nothing here</source>
+            <translation>Tidak ada apa-apa</translation>
+        </message>
+        <message>
+            <source>Try other words or fewer filters.</source>
+            <translation>Coba kata lain atau lebih sedikit filter.</translation>
+        </message>
+        <message>
+            <source>The source listed nothing.</source>
+            <translation>Sumber tidak menampilkan apa pun.</translation>
+        </message>
+        <message>
+            <source>Try again</source>
+            <translation>Coba lagi</translation>
+        </message>
+    </context>
+    <context>
+        <name>SourceSettingsDialog</name>
+        <message>
+            <source> settings</source>
+            <translation>: pengaturan</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>This source has no settings.</source>
+            <translation>Sumber ini tidak punya pengaturan.</translation>
         </message>
     </context>
     <context>
@@ -3937,6 +4594,46 @@
         <message>
             <source>Open site</source>
             <translation>Buka situs</translation>
+        </message>
+        <message>
+            <source>SCANCORE runs Mihon, Tachiyomi, Aniyomi and LNReader extensions from repositories you add. It has no repository of its own.</source>
+            <translation>SCANCORE menjalankan ekstensi Mihon, Tachiyomi, Aniyomi, dan LNReader dari repositori yang Anda tambahkan. SCANCORE tidak punya repositori sendiri.</translation>
+        </message>
+        <message>
+            <source> installed from </source>
+            <translation> terpasang dari </translation>
+        </message>
+        <message>
+            <source> repository</source>
+            <translation> repositori</translation>
+        </message>
+        <message>
+            <source> repositories</source>
+            <translation> repositori</translation>
+        </message>
+        <message>
+            <source> updates</source>
+            <translation> pembaruan</translation>
+        </message>
+        <message>
+            <source>Add a repository</source>
+            <translation>Tambahkan repositori</translation>
+        </message>
+        <message>
+            <source>Paste a repository link, or open one from a repository&apos;s page with SCANCORE.</source>
+            <translation>Tempel tautan repositori, atau buka dengan SCANCORE dari halaman repositori.</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Tambah</translation>
+        </message>
+        <message>
+            <source>Update extensions automatically</source>
+            <translation>Perbarui ekstensi otomatis</translation>
+        </message>
+        <message>
+            <source>Installs updates signed by keys you already trust when SCANCORE checks its repositories.</source>
+            <translation>Memasang pembaruan yang ditandatangani kunci yang sudah Anda percayai saat SCANCORE memeriksa repositorinya.</translation>
         </message>
         <message>
             <source>On this device</source>
@@ -4250,6 +4947,10 @@
         <message>
             <source>Search</source>
             <translation>Cari</translation>
+        </message>
+        <message>
+            <source>Notifications</source>
+            <translation>Notifikasi</translation>
         </message>
         <message>
             <source>History</source>
@@ -4668,6 +5369,10 @@
             <translation> · dari anime ini</translation>
         </message>
         <message>
+            <source>Not found by its title; pick the entry</source>
+            <translation>Tidak ditemukan lewat judulnya; pilih entri</translation>
+        </message>
+        <message>
             <source>Linked when you finish an episode</source>
             <translation>Ditautkan saat Anda menyelesaikan episode</translation>
         </message>
@@ -5058,6 +5763,40 @@
         <message>
             <source>Could not save the picture</source>
             <translation>Gambar tidak dapat disimpan</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::App</name>
+        <message>
+            <source>SCANCORE %1 is available</source>
+            <translation>SCANCORE %1 tersedia</translation>
+        </message>
+        <message>
+            <source>See what is new and update.</source>
+            <translation>Lihat yang baru dan perbarui.</translation>
+        </message>
+        <message>
+            <source>An extension update is ready</source>
+            <translation>Pembaruan ekstensi siap</translation>
+        </message>
+        <message>
+            <source>%1 extension updates are ready</source>
+            <translation>%1 pembaruan ekstensi siap</translation>
+        </message>
+        <message>
+            <source>Open Extensions to update them.</source>
+            <translation>Buka Ekstensi untuk memperbaruinya.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Library</name>
+        <message>
+            <source>1 new chapter</source>
+            <translation>1 bab baru</translation>
+        </message>
+        <message>
+            <source>%1 new chapters</source>
+            <translation>%1 bab baru</translation>
         </message>
     </context>
     <context>

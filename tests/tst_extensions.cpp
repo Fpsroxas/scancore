@@ -239,6 +239,28 @@ private slots:
         QCOMPARE(libSupport(Kind::Aniyomi, QStringLiteral("12")), LibSupport::TooOld);
     }
 
+    // One-tap links: SCANCORE's own and the schemes community repository
+    // pages already use.
+    void repositoryLinks() {
+        const auto target = QStringLiteral("https://repo.test/mihon/index.min.json");
+        const auto encoded = QString::fromLatin1(QUrl::toPercentEncoding(target));
+        for (const auto &link : {QStringLiteral("tachiyomi://add-repo?url=") + encoded, QStringLiteral("mihon://add-repo?url=") + target,
+                                 QStringLiteral("scancore://repos/add?url=") + encoded}) {
+            const auto parsed = Manager::parseLink(link);
+            QVERIFY2(parsed, qPrintable(link));
+            QCOMPARE(parsed->url, target);
+        }
+        QCOMPARE(Manager::parseLink(QStringLiteral("mihon://add-repo?url=") + target)->kind, std::optional(Kind::Mihon));
+        QCOMPARE(Manager::parseLink(QStringLiteral("aniyomi://add-repo?url=") + target)->kind, std::optional(Kind::Aniyomi));
+        QCOMPARE(Manager::parseLink(QStringLiteral("lnreader://repo/add?url=") + target)->kind, std::optional(Kind::LNReader));
+        QCOMPARE(Manager::parseLink(QStringLiteral("scancore://repos/add?kind=aniyomi&url=") + encoded)->kind, std::optional(Kind::Aniyomi));
+        QVERIFY(!Manager::parseLink(QStringLiteral("scancore://repos/add?url=") + encoded)->kind);
+        // Not repository links.
+        QVERIFY(!Manager::parseLink(target));
+        QVERIFY(!Manager::parseLink(QStringLiteral("tachiyomi://add-repo")));
+        QVERIFY(!Manager::parseLink(QStringLiteral("mihon://something-else?url=") + encoded));
+    }
+
     void autoInstallInContentLanguage() {
         const auto packages = parseIndex(fixture(QStringLiteral("mihon/index.min.json")),
                                          QUrl(QStringLiteral("https://repo.test/mihon/index.min.json")))

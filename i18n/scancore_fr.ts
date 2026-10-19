@@ -527,6 +527,133 @@
         </message>
     </context>
     <context>
+        <name>AddRepositoryDialog</name>
+        <message>
+            <source>That is not a repository link.</source>
+            <translation>Ce n&apos;est pas un lien de dépôt.</translation>
+        </message>
+        <message>
+            <source>anime extension</source>
+            <translation>extension d&apos;anime</translation>
+        </message>
+        <message>
+            <source>anime extensions</source>
+            <translation>extensions d&apos;anime</translation>
+        </message>
+        <message>
+            <source>novel plugin</source>
+            <translation>plugin de romans</translation>
+        </message>
+        <message>
+            <source>novel plugins</source>
+            <translation>plugins de romans</translation>
+        </message>
+        <message>
+            <source>comic extension</source>
+            <translation>extension de BD</translation>
+        </message>
+        <message>
+            <source>comic extensions</source>
+            <translation>extensions de BD</translation>
+        </message>
+        <message>
+            <source> added</source>
+            <translation> ajouté</translation>
+        </message>
+        <message>
+            <source>, </source>
+            <translation>, </translation>
+        </message>
+        <message>
+            <source> extension installed</source>
+            <translation> extension installée</translation>
+        </message>
+        <message>
+            <source> extensions installed</source>
+            <translation> extensions installées</translation>
+        </message>
+        <message>
+            <source>Add “</source>
+            <translation>Ajouter « </translation>
+        </message>
+        <message>
+            <source>” from </source>
+            <translation> » depuis </translation>
+        </message>
+        <message>
+            <source>Add a repository</source>
+            <translation>Ajouter un dépôt</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository&apos;s page. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>Collez le lien depuis la page du dépôt. SCANCORE lit les dépôts Mihon, Tachiyomi, Aniyomi et LNReader.</translation>
+        </message>
+        <message>
+            <source>Repository link</source>
+            <translation>Lien du dépôt</translation>
+        </message>
+        <message>
+            <source>Reading the repository…</source>
+            <translation>Lecture du dépôt…</translation>
+        </message>
+        <message>
+            <source> in </source>
+            <translation> en </translation>
+        </message>
+        <message>
+            <source> languages</source>
+            <translation> langues</translation>
+        </message>
+        <message>
+            <source>It is already added. Adding it again reads it afresh.</source>
+            <translation>Il est déjà ajouté. L&apos;ajouter à nouveau le relit.</translation>
+        </message>
+        <message>
+            <source>Extensions in </source>
+            <translation>Les extensions en </translation>
+        </message>
+        <message>
+            <source> will be installed (</source>
+            <translation> seront installées (</translation>
+        </message>
+        <message>
+            <source> The rest are listed under Available.</source>
+            <translation> Les autres sont listées dans Disponibles.</translation>
+        </message>
+        <message>
+            <source>None of them is in </source>
+            <translation>Aucune n&apos;est en </translation>
+        </message>
+        <message>
+            <source>, so nothing is installed yet. Pick extensions under Available.</source>
+            <translation>, donc rien n&apos;est installé pour l&apos;instant. Choisissez des extensions dans Disponibles.</translation>
+        </message>
+        <message>
+            <source>Extensions are other people&apos;s code. Add repositories you trust.</source>
+            <translation>Les extensions sont du code écrit par d&apos;autres. Ajoutez des dépôts de confiance.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Annuler</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Continuer</translation>
+        </message>
+        <message>
+            <source>Try again</source>
+            <translation>Réessayer</translation>
+        </message>
+        <message>
+            <source>Installing…</source>
+            <translation>Installation…</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ajouter</translation>
+        </message>
+    </context>
+    <context>
         <name>AnimeBrowse</name>
         <message>
             <source>Any</source>
@@ -1134,12 +1261,24 @@
             <translation>Comick</translation>
         </message>
         <message>
+            <source>Extensions</source>
+            <translation>Extensions</translation>
+        </message>
+        <message>
             <source>%1 titles for “%2” from %3&apos;s catalogue</source>
             <translation>%1 titres pour « %2 » dans le catalogue de %3</translation>
         </message>
         <message>
             <source> · %1 is unavailable, so your sources were searched</source>
             <translation> · %1 est indisponible, vos sources ont donc été parcourues</translation>
+        </message>
+        <message>
+            <source> · 1 source still searching</source>
+            <translation> · 1 source cherche encore</translation>
+        </message>
+        <message>
+            <source> · %1 sources still searching</source>
+            <translation> · %1 sources cherchent encore</translation>
         </message>
         <message>
             <source>%1 is unavailable</source>
@@ -1580,6 +1719,14 @@
             <source>Add to library</source>
             <translation>Ajouter à la bibliothèque</translation>
         </message>
+        <message>
+            <source>Remove from favourites</source>
+            <translation>Retirer des favoris</translation>
+        </message>
+        <message>
+            <source>Add to favourites</source>
+            <translation>Ajouter aux favoris</translation>
+        </message>
     </context>
     <context>
         <name>Discussion</name>
@@ -1715,6 +1862,10 @@
             <translation>Téléchargements</translation>
         </message>
         <message>
+            <source>Notifications</source>
+            <translation>Notifications</translation>
+        </message>
+        <message>
             <source>Settings</source>
             <translation>Réglages</translation>
         </message>
@@ -1740,6 +1891,14 @@
         <message>
             <source>Open folder</source>
             <translation>Ouvrir le dossier</translation>
+        </message>
+        <message>
+            <source>Battery optimisation pauses downloads when you leave SCANCORE.</source>
+            <translation>L’optimisation de la batterie met les téléchargements en pause quand vous quittez SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Allow</source>
+            <translation>Autoriser</translation>
         </message>
         <message>
             <source>No downloads yet</source>
@@ -1780,6 +1939,248 @@
         <message>
             <source>Open series</source>
             <translation>Ouvrir la série</translation>
+        </message>
+    </context>
+    <context>
+        <name>ExtensionsPage</name>
+        <message>
+            <source>All languages</source>
+            <translation>Toutes les langues</translation>
+        </message>
+        <message>
+            <source> installed</source>
+            <translation> installées</translation>
+        </message>
+        <message>
+            <source> installed. Trust it under Installed to use it.</source>
+            <translation> installée. Faites-lui confiance dans Installées pour l&apos;utiliser.</translation>
+        </message>
+        <message>
+            <source>Remove </source>
+            <translation>Supprimer </translation>
+        </message>
+        <message>
+            <source>Its sources disappear from SCANCORE. Series in your library stay, and come back when you install it again.</source>
+            <translation>Ses sources disparaissent de SCANCORE. Les séries de votre bibliothèque restent et reviennent quand vous la réinstallez.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Supprimer</translation>
+        </message>
+        <message>
+            <source>Remove “</source>
+            <translation>Supprimer « </translation>
+        </message>
+        <message>
+            <source>”?</source>
+            <translation> » ?</translation>
+        </message>
+        <message>
+            <source>Installed extensions stay installed, but they no longer get updates from it, and SCANCORE asks before trusting them again.</source>
+            <translation>Les extensions installées restent, mais ne reçoivent plus ses mises à jour, et SCANCORE demande avant de leur refaire confiance.</translation>
+        </message>
+        <message>
+            <source>Trust </source>
+            <translation>Faire confiance à </translation>
+        </message>
+        <message>
+            <source>It is not signed by a repository you added (key </source>
+            <translation>Elle n&apos;est pas signée par un dépôt que vous avez ajouté (clé </translation>
+        </message>
+        <message>
+            <source>…). Extensions run code from the internet on this device; trust only ones you know.</source>
+            <translation>…). Les extensions exécutent du code d&apos;internet sur cet appareil ; ne faites confiance qu&apos;à celles que vous connaissez.</translation>
+        </message>
+        <message>
+            <source>Trust</source>
+            <translation>Faire confiance</translation>
+        </message>
+        <message>
+            <source> extension updated</source>
+            <translation> extension mise à jour</translation>
+        </message>
+        <message>
+            <source> extensions updated</source>
+            <translation> extensions mises à jour</translation>
+        </message>
+        <message>
+            <source> update available</source>
+            <translation> mise à jour disponible</translation>
+        </message>
+        <message>
+            <source> updates available</source>
+            <translation> mises à jour disponibles</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Tout est à jour</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Extensions</translation>
+        </message>
+        <message>
+            <source> repository</source>
+            <translation> dépôt</translation>
+        </message>
+        <message>
+            <source> repositories</source>
+            <translation> dépôts</translation>
+        </message>
+        <message>
+            <source>Update all (</source>
+            <translation>Tout mettre à jour (</translation>
+        </message>
+        <message>
+            <source>Check repositories for updates</source>
+            <translation>Chercher des mises à jour dans les dépôts</translation>
+        </message>
+        <message>
+            <source>Add repository</source>
+            <translation>Ajouter un dépôt</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, a separate download of about 100 MB.</source>
+            <translation>Les extensions tournent dans l&apos;environnement des extensions, un téléchargement séparé d&apos;environ 100 Mo.</translation>
+        </message>
+        <message>
+            <source>Install</source>
+            <translation>Installer</translation>
+        </message>
+        <message>
+            <source>Installed</source>
+            <translation>Installées</translation>
+        </message>
+        <message>
+            <source>Available</source>
+            <translation>Disponibles</translation>
+        </message>
+        <message>
+            <source>Repositories</source>
+            <translation>Dépôts</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Chercher une extension</translation>
+        </message>
+        <message>
+            <source>No repositories yet</source>
+            <translation>Aucun dépôt pour l&apos;instant</translation>
+        </message>
+        <message>
+            <source>Extensions come from repositories that other people run. Have a repository link? Paste it here, or open it from the repository&apos;s page with SCANCORE.</source>
+            <translation>Les extensions viennent de dépôts tenus par d&apos;autres personnes. Vous avez un lien de dépôt ? Collez-le ici, ou ouvrez-le avec SCANCORE depuis la page du dépôt.</translation>
+        </message>
+        <message>
+            <source>Repository link</source>
+            <translation>Lien du dépôt</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ajouter</translation>
+        </message>
+        <message>
+            <source>Nothing installed yet. Pick extensions under Available.</source>
+            <translation>Rien n&apos;est installé pour l&apos;instant. Choisissez des extensions dans Disponibles.</translation>
+        </message>
+        <message>
+            <source>No extension matches.</source>
+            <translation>Aucune extension ne correspond.</translation>
+        </message>
+        <message>
+            <source>Every extension the repositories list is installed.</source>
+            <translation>Toutes les extensions des dépôts sont installées.</translation>
+        </message>
+        <message>
+            <source>Not trusted</source>
+            <translation>Non approuvée</translation>
+        </message>
+        <message>
+            <source>Error</source>
+            <translation>Erreur</translation>
+        </message>
+        <message>
+            <source> sources</source>
+            <translation> sources</translation>
+        </message>
+        <message>
+            <source>Update</source>
+            <translation>Mettre à jour</translation>
+        </message>
+        <message>
+            <source>Hide sources</source>
+            <translation>Masquer les sources</translation>
+        </message>
+        <message>
+            <source>Show sources</source>
+            <translation>Afficher les sources</translation>
+        </message>
+        <message>
+            <source>Pass a browser check for this site</source>
+            <translation>Passer la vérification du navigateur pour ce site</translation>
+        </message>
+        <message>
+            <source>Browse this source</source>
+            <translation>Parcourir cette source</translation>
+        </message>
+        <message>
+            <source>Source settings</source>
+            <translation>Réglages de la source</translation>
+        </message>
+        <message>
+            <source> extension</source>
+            <translation> extension</translation>
+        </message>
+        <message>
+            <source> extensions</source>
+            <translation> extensions</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>Copier le lien</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>Lien copié</translation>
+        </message>
+    </context>
+    <context>
+        <name>FilterSheet</name>
+        <message>
+            <source>Filters</source>
+            <translation>Filtres</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Fermer</translation>
+        </message>
+        <message>
+            <source>Reset</source>
+            <translation>Réinitialiser</translation>
+        </message>
+        <message>
+            <source>Apply</source>
+            <translation>Appliquer</translation>
+        </message>
+        <message>
+            <source>Any</source>
+            <translation>Indifférent</translation>
+        </message>
+        <message>
+            <source>Include</source>
+            <translation>Inclure</translation>
+        </message>
+        <message>
+            <source>Exclude</source>
+            <translation>Exclure</translation>
+        </message>
+        <message>
+            <source>Ascending</source>
+            <translation>Croissant</translation>
+        </message>
+        <message>
+            <source>Descending</source>
+            <translation>Décroissant</translation>
         </message>
     </context>
     <context>
@@ -2362,8 +2763,20 @@
             <translation>Rechercher des mises à jour</translation>
         </message>
         <message>
+            <source>Recently watched</source>
+            <translation>Regardé récemment</translation>
+        </message>
+        <message>
             <source>All</source>
             <translation>Tout</translation>
+        </message>
+        <message>
+            <source>Tap the heart on a saved series to keep it here.</source>
+            <translation>Touchez le cœur d’une série enregistrée pour la garder ici.</translation>
+        </message>
+        <message>
+            <source>Choose a category on a saved series&apos; page to move it here.</source>
+            <translation>Choisissez une catégorie sur la page d’une série enregistrée pour la déplacer ici.</translation>
         </message>
         <message>
             <source>Comics</source>
@@ -2376,6 +2789,10 @@
         <message>
             <source>Anime</source>
             <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Favourites</source>
+            <translation>Favoris</translation>
         </message>
         <message>
             <source>Filter library</source>
@@ -2418,6 +2835,14 @@
             <translation>Votre bibliothèque est vide</translation>
         </message>
         <message>
+            <source>Nothing saved here yet</source>
+            <translation>Rien d’enregistré ici pour l’instant</translation>
+        </message>
+        <message>
+            <source>Nothing in %1</source>
+            <translation>Rien dans %1</translation>
+        </message>
+        <message>
             <source>Open any comic, novel or anime and choose “Add to library” to keep it here. SCANCORE checks saved series for new chapters in the background.</source>
             <translation>Ouvrez une BD, un roman ou un anime et choisissez « Ajouter à la bibliothèque » pour le garder ici. SCANCORE cherche les nouveaux chapitres des séries enregistrées en arrière-plan.</translation>
         </message>
@@ -2429,8 +2854,8 @@
             <translation>Bibliothèque</translation>
         </message>
         <message>
-            <source>New chapters and notifications</source>
-            <translation>Nouveaux chapitres et notifications</translation>
+            <source>New chapters, notifications and background work</source>
+            <translation>Nouveaux chapitres, notifications et tâches en arrière-plan</translation>
         </message>
         <message>
             <source>Updates</source>
@@ -2469,6 +2894,18 @@
             <translation>M’avertir des nouveaux chapitres</translation>
         </message>
         <message>
+            <source>They are always listed under Notifications; this also shows them in the system&apos;s notifications.</source>
+            <translation>Ils sont toujours listés dans Notifications ; ceci les affiche aussi dans les notifications du système.</translation>
+        </message>
+        <message>
+            <source>Announcements from SCANCORE</source>
+            <translation>Annonces de SCANCORE</translation>
+        </message>
+        <message>
+            <source>News about SCANCORE from scancore.onl, in Notifications as soon as they are posted.</source>
+            <translation>Les nouvelles de SCANCORE depuis scancore.onl, dans Notifications dès leur publication.</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>Arrière-plan</translation>
         </message>
@@ -2479,6 +2916,26 @@
         <message>
             <source>Lets update checks and downloads continue in the background.</source>
             <translation>Laisse les vérifications et téléchargements continuer en arrière-plan.</translation>
+        </message>
+        <message>
+            <source>Battery optimisation stops SCANCORE in the background</source>
+            <translation>L’optimisation de la batterie arrête SCANCORE en arrière-plan</translation>
+        </message>
+        <message>
+            <source>SCANCORE can run in the background</source>
+            <translation>SCANCORE peut fonctionner en arrière-plan</translation>
+        </message>
+        <message>
+            <source>Android closes it soon after you leave it, so new chapters are not checked, downloads pause and reading aloud stops.</source>
+            <translation>Android le ferme peu après que vous l’avez quitté : les nouveaux chapitres ne sont plus vérifiés, les téléchargements s’interrompent et la lecture à voix haute s’arrête.</translation>
+        </message>
+        <message>
+            <source>Update checks, downloads and reading aloud carry on when you leave the app.</source>
+            <translation>Les vérifications de mises à jour, les téléchargements et la lecture à voix haute continuent quand vous quittez l’application.</translation>
+        </message>
+        <message>
+            <source>Allow</source>
+            <translation>Autoriser</translation>
         </message>
     </context>
     <context>
@@ -2496,6 +2953,10 @@
             <translation>Téléchargé </translation>
         </message>
         <message>
+            <source>Try again now; %1 should load.</source>
+            <translation>Réessayez maintenant ; %1 devrait se charger.</translation>
+        </message>
+        <message>
             <source>Use this theme?</source>
             <translation>Utiliser ce thème ?</translation>
         </message>
@@ -2506,6 +2967,18 @@
         <message>
             <source>Use theme</source>
             <translation>Utiliser le thème</translation>
+        </message>
+        <message>
+            <source>Let SCANCORE run in the background?</source>
+            <translation>Laisser SCANCORE fonctionner en arrière-plan ?</translation>
+        </message>
+        <message>
+            <source>Android&apos;s battery optimisation closes SCANCORE soon after you leave it, so new chapters are not checked, downloads pause and reading aloud stops. Android will ask you to allow it; you can change it later in Settings → Library.</source>
+            <translation>L’optimisation de la batterie d’Android ferme SCANCORE peu après que vous l’avez quitté : les nouveaux chapitres ne sont plus vérifiés, les téléchargements s’interrompent et la lecture à voix haute s’arrête. Android vous demandera de l’autoriser ; vous pourrez le modifier plus tard dans Réglages → Bibliothèque.</translation>
+        </message>
+        <message>
+            <source>Allow</source>
+            <translation>Autoriser</translation>
         </message>
     </context>
     <context>
@@ -2529,6 +3002,40 @@
         <message>
             <source>Back to details</source>
             <translation>Retour aux détails</translation>
+        </message>
+    </context>
+    <context>
+        <name>Notifications</name>
+        <message>
+            <source>Updates and announcements</source>
+            <translation>Nouveautés et annonces</translation>
+        </message>
+    </context>
+    <context>
+        <name>NotificationsPanel</name>
+        <message>
+            <source>Notifications</source>
+            <translation>Notifications</translation>
+        </message>
+        <message>
+            <source>Mark all as read</source>
+            <translation>Tout marquer comme lu</translation>
+        </message>
+        <message>
+            <source>Clear all</source>
+            <translation>Tout effacer</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Fermer</translation>
+        </message>
+        <message>
+            <source>Nothing new</source>
+            <translation>Rien de nouveau</translation>
+        </message>
+        <message>
+            <source>New chapters in your library, announcements and updates show up here.</source>
+            <translation>Les nouveaux chapitres de votre bibliothèque, les annonces et les mises à jour apparaissent ici.</translation>
         </message>
     </context>
     <context>
@@ -2761,6 +3268,14 @@
             <translation> · %1 est indisponible, vos sources ont donc été parcourues</translation>
         </message>
         <message>
+            <source> · 1 source still searching</source>
+            <translation> · 1 source cherche encore</translation>
+        </message>
+        <message>
+            <source> · %1 sources still searching</source>
+            <translation> · %1 sources cherchent encore</translation>
+        </message>
+        <message>
             <source>Pass %1&apos;s browser check</source>
             <translation>Passer la vérification du navigateur de %1</translation>
         </message>
@@ -2898,6 +3413,34 @@
         <message>
             <source>Keep your lists in step</source>
             <translation>Gardez vos listes à jour</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Extensions</translation>
+        </message>
+        <message>
+            <source>Have a repository link?</source>
+            <translation>Vous avez un lien de dépôt ?</translation>
+        </message>
+        <message>
+            <source>SCANCORE runs extensions made for Mihon and Tachiyomi. Paste a repository link and SCANCORE shows what it holds before adding anything. Extensions are other people&apos;s code, so you choose whether to trust each one.</source>
+            <translation>SCANCORE exécute les extensions conçues pour Mihon et Tachiyomi. Collez un lien de dépôt : SCANCORE montre ce qu’il contient avant d’ajouter quoi que ce soit. Les extensions sont le code d’autres personnes, c’est donc vous qui décidez de faire confiance à chacune.</translation>
+        </message>
+        <message>
+            <source>Repository link</source>
+            <translation>Lien du dépôt</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ajouter</translation>
+        </message>
+        <message>
+            <source>Added: %1</source>
+            <translation>Ajouté : %1</translation>
+        </message>
+        <message>
+            <source>No link? Continue; the Extensions page on the Comics tab takes one any time.</source>
+            <translation>Pas de lien ? Continuez ; la page Extensions de l’onglet BD en accepte un à tout moment.</translation>
         </message>
         <message>
             <source>Theme</source>
@@ -3341,6 +3884,42 @@
     <context>
         <name>Router</name>
         <message>
+            <source>Watching</source>
+            <translation>En visionnage</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>En lecture</translation>
+        </message>
+        <message>
+            <source>Plan to watch</source>
+            <translation>À regarder</translation>
+        </message>
+        <message>
+            <source>Plan to read</source>
+            <translation>À lire</translation>
+        </message>
+        <message>
+            <source>On hold</source>
+            <translation>En pause</translation>
+        </message>
+        <message>
+            <source>Completed</source>
+            <translation>Terminé</translation>
+        </message>
+        <message>
+            <source>Dropped</source>
+            <translation>Abandonné</translation>
+        </message>
+        <message>
+            <source>Browser check for %1. Complete any check the site shows, then press Done.</source>
+            <translation>Vérification du navigateur pour %1. Effectuez la vérification affichée par le site, puis appuyez sur Terminé.</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Terminé</translation>
+        </message>
+        <message>
             <source>Trending this week</source>
             <translation>Tendances de la semaine</translation>
         </message>
@@ -3454,6 +4033,18 @@
         <message>
             <source>Refresh</source>
             <translation>Actualiser</translation>
+        </message>
+        <message>
+            <source>Comick</source>
+            <translation>Comick</translation>
+        </message>
+        <message>
+            <source>%1 could not find this by its title, so progress is not sent there.</source>
+            <translation>%1 n’a pas trouvé cette série par son titre : la progression n’y est donc pas envoyée.</translation>
+        </message>
+        <message>
+            <source>Pick the entry</source>
+            <translation>Choisir l’entrée</translation>
         </message>
         <message>
             <source>Chapters</source>
@@ -3861,6 +4452,10 @@
             <translation>Téléchargements</translation>
         </message>
         <message>
+            <source>Notifications</source>
+            <translation>Notifications</translation>
+        </message>
+        <message>
             <source>Search everything</source>
             <translation>Tout rechercher</translation>
         </message>
@@ -3900,8 +4495,8 @@
             <translation>Terminé</translation>
         </message>
         <message>
-            <source> should load.</source>
-            <translation> devrait se charger.</translation>
+            <source>Try again now; %1 should load.</source>
+            <translation>Réessayez maintenant ; %1 devrait se charger.</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>
@@ -3910,6 +4505,68 @@
         <message>
             <source> in your browser instead.</source>
             <translation> dans votre navigateur.</translation>
+        </message>
+    </context>
+    <context>
+        <name>SourcePage</name>
+        <message>
+            <source>Source settings</source>
+            <translation>Réglages de la source</translation>
+        </message>
+        <message>
+            <source>Open site</source>
+            <translation>Ouvrir le site</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>Populaires</translation>
+        </message>
+        <message>
+            <source>Latest</source>
+            <translation>Récents</translation>
+        </message>
+        <message>
+            <source>Search </source>
+            <translation>Rechercher dans </translation>
+        </message>
+        <message>
+            <source>Filters (</source>
+            <translation>Filtres (</translation>
+        </message>
+        <message>
+            <source>Filters</source>
+            <translation>Filtres</translation>
+        </message>
+        <message>
+            <source>Nothing here</source>
+            <translation>Rien ici</translation>
+        </message>
+        <message>
+            <source>Try other words or fewer filters.</source>
+            <translation>Essayez d&apos;autres mots ou moins de filtres.</translation>
+        </message>
+        <message>
+            <source>The source listed nothing.</source>
+            <translation>La source n&apos;a rien listé.</translation>
+        </message>
+        <message>
+            <source>Try again</source>
+            <translation>Réessayer</translation>
+        </message>
+    </context>
+    <context>
+        <name>SourceSettingsDialog</name>
+        <message>
+            <source> settings</source>
+            <translation> : réglages</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Fermer</translation>
+        </message>
+        <message>
+            <source>This source has no settings.</source>
+            <translation>Cette source n&apos;a pas de réglages.</translation>
         </message>
     </context>
     <context>
@@ -3937,6 +4594,46 @@
         <message>
             <source>Open site</source>
             <translation>Ouvrir le site</translation>
+        </message>
+        <message>
+            <source>SCANCORE runs Mihon, Tachiyomi, Aniyomi and LNReader extensions from repositories you add. It has no repository of its own.</source>
+            <translation>SCANCORE exécute les extensions Mihon, Tachiyomi, Aniyomi et LNReader des dépôts que vous ajoutez. Il n&apos;a pas de dépôt à lui.</translation>
+        </message>
+        <message>
+            <source> installed from </source>
+            <translation> installées depuis </translation>
+        </message>
+        <message>
+            <source> repository</source>
+            <translation> dépôt</translation>
+        </message>
+        <message>
+            <source> repositories</source>
+            <translation> dépôts</translation>
+        </message>
+        <message>
+            <source> updates</source>
+            <translation> mises à jour</translation>
+        </message>
+        <message>
+            <source>Add a repository</source>
+            <translation>Ajouter un dépôt</translation>
+        </message>
+        <message>
+            <source>Paste a repository link, or open one from a repository&apos;s page with SCANCORE.</source>
+            <translation>Collez un lien de dépôt, ou ouvrez-le avec SCANCORE depuis la page du dépôt.</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ajouter</translation>
+        </message>
+        <message>
+            <source>Update extensions automatically</source>
+            <translation>Mettre à jour les extensions automatiquement</translation>
+        </message>
+        <message>
+            <source>Installs updates signed by keys you already trust when SCANCORE checks its repositories.</source>
+            <translation>Installe les mises à jour signées par des clés que vous approuvez déjà quand SCANCORE vérifie ses dépôts.</translation>
         </message>
         <message>
             <source>On this device</source>
@@ -4250,6 +4947,10 @@
         <message>
             <source>Search</source>
             <translation>Rechercher</translation>
+        </message>
+        <message>
+            <source>Notifications</source>
+            <translation>Notifications</translation>
         </message>
         <message>
             <source>History</source>
@@ -4668,6 +5369,10 @@
             <translation> · depuis cet anime</translation>
         </message>
         <message>
+            <source>Not found by its title; pick the entry</source>
+            <translation>Introuvable par son titre ; choisissez l’entrée</translation>
+        </message>
+        <message>
             <source>Linked when you finish an episode</source>
             <translation>Lié quand vous finissez un épisode</translation>
         </message>
@@ -5058,6 +5763,40 @@
         <message>
             <source>Could not save the picture</source>
             <translation>Impossible d’enregistrer l’image</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::App</name>
+        <message>
+            <source>SCANCORE %1 is available</source>
+            <translation>SCANCORE %1 est disponible</translation>
+        </message>
+        <message>
+            <source>See what is new and update.</source>
+            <translation>Découvrez les nouveautés et mettez à jour.</translation>
+        </message>
+        <message>
+            <source>An extension update is ready</source>
+            <translation>Une mise à jour d’extension est prête</translation>
+        </message>
+        <message>
+            <source>%1 extension updates are ready</source>
+            <translation>%1 mises à jour d’extensions sont prêtes</translation>
+        </message>
+        <message>
+            <source>Open Extensions to update them.</source>
+            <translation>Ouvrez Extensions pour les mettre à jour.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Library</name>
+        <message>
+            <source>1 new chapter</source>
+            <translation>1 nouveau chapitre</translation>
+        </message>
+        <message>
+            <source>%1 new chapters</source>
+            <translation>%1 nouveaux chapitres</translation>
         </message>
     </context>
     <context>

@@ -24,6 +24,30 @@ QtObject {
         App.setSetting("settingsCategory", category)
         go("settings")
     }
+    // The "Add repository" sheet, for a link or (empty) to paste one.
+    function addRepository(link) { if (shell) shell.addRepository(link || "") }
+    // A repository link pasted into a search box opens the "Add repository"
+    // sheet instead of searching for it. Returns whether it did.
+    function takeRepositoryLink(text) {
+        const t = String(text).trim()
+        if (!/^(scancore|tachiyomi|mihon|aniyomi|lnreader):\/\//i.test(t)
+                && !/^https?:\/\/\S+\/(index\.min\.json|repo\.json|plugins\.min\.json)$/i.test(t))
+            return false
+        addRepository(t)
+        return true
+    }
+    // The library's categories, as anime or reading media call them.
+    function libraryCategories(media) {
+        const anime = media === "anime"
+        return [{ value: "reading", label: anime ? qsTr("Watching") : qsTr("Reading") },
+                { value: "planned", label: anime ? qsTr("Plan to watch") : qsTr("Plan to read") },
+                { value: "paused", label: qsTr("On hold") },
+                { value: "completed", label: qsTr("Completed") },
+                { value: "dropped", label: qsTr("Dropped") }]
+    }
+    // One source's own popular, latest and filtered lists.
+    function openSource(key) { push("pages/SourcePage.qml", { sourceKey: key }) }
+    function openExtensions() { push("pages/ExtensionsPage.qml", {}) }
     function toast(message, kind) { if (shell) shell.toast(message, kind || "info") }
 
     // item: a search/library map with id, media, sourceUrl, title, cover.
@@ -52,7 +76,10 @@ QtObject {
     // Lets the reader pass a site's browser check (see SiteCheck.qml).
     function openSiteCheck(url) {
         if (App.platform === "android") {
-            App.openUrl(url)
+            // Android's own web view; its cookies come back to SCANCORE.
+            const host = url.replace(/^https?:\/\//, "").replace(/\/.*$/, "")
+            if (!App.openSiteCheck(url, qsTr("Browser check for %1. Complete any check the site shows, then press Done.").arg(host), qsTr("Done")))
+                App.openUrl(url)
             return
         }
         if (shell && url) shell.openImmersive("pages/SiteCheck.qml", { url: url })

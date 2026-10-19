@@ -24,6 +24,12 @@ public:
     // throws. Duplicate requests still share one fetch.
     using Writer = std::function<void(const QString &url, const QString &path)>;
     static void setSchemeWriter(const QString &scheme, Writer writer);
+    // Plain links whose "referer" names a scheme instead of a page
+    // ("extsource:<key>"): the writer fetches them its own way (an
+    // extension's client, with its headers). They are cached under the
+    // link, so a later plain request for it finds the file.
+    using RefererWriter = std::function<void(const QString &url, const QString &referer, const QString &path)>;
+    static void setRefererWriter(const QString &scheme, RefererWriter writer);
 };
 
 } // namespace sc

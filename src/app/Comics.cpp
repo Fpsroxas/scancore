@@ -14,7 +14,9 @@
 #include "sources/comics/Registry.h"
 
 #include <QCache>
+#include <QCryptographicHash>
 #include <QDateTime>
+#include <QElapsedTimer>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QMutex>
@@ -85,7 +87,10 @@ QVariantList Comics::sources() const {
                                {"language", source->language()},
                                {"languageName", languageName(source->language())},
                                {"base", source->config().base},
-                               {"hasLatest", source->hasLatest()}});
+                               {"hasLatest", source->hasLatest()},
+                               {"canBrowse", source->canBrowse()},
+                               {"browseLatest", source->hasLatestListing()},
+                               {"extension", source->key().contains(QLatin1Char(':'))}});
     return out;
 }
 
@@ -167,7 +172,6 @@ Task *Comics::search(const QString &query, const QString &only) {
         QList<std::function<QList<Summary>()>> jobs;
         for (const auto &source : selected)
             jobs.append([source, q] { return source->search(q); });
-        const auto results = parallel(jobs);
 
         struct Ranked {
             int tier;
@@ -177,50 +181,77 @@ Task *Comics::search(const QString &query, const QString &only) {
         };
         const auto wantedLanguage = contentLanguage();
         QList<Ranked> ranked;
-        QVariantList providers;
+        QList<QVariantMap> providerAt(selected.size());
         QSet<QString> seen;
         bool anyOk = false;
-        for (int i = 0; i < results.size(); ++i) {
-            const auto &r = results[i];
-            providers.append(QVariantMap{{"source", selected[i]->key()},
-                                         {"label", selected[i]->label()},
-                                         {"ok", r.ok()},
-                                         {"count", r.ok() ? r.value->size() : 0},
-                                         {"error", r.error},
-                                         {"verifyUrl", r.verifyUrl}});
-            if (!r.ok())
-                continue;
-            anyOk = true;
-            int order = 0;
-            for (const auto &item : *r.value) {
-                if (item.title.isEmpty() || item.url.isEmpty() || seen.contains(item.url))
-                    continue;
-                seen.insert(item.url);
-                ranked.append({relevance(item.title, q), baseLanguage(selected[i]->language()) == wantedLanguage, order++, item});
+        // Equally good titles in the content language first.
+        const auto snapshot = [&] {
+            auto order = ranked;
+            std::stable_sort(order.begin(), order.end(), [](const Ranked &a, const Ranked &b) {
+                if (a.tier != b.tier)
+                    return a.tier < b.tier;
+                if (a.preferred != b.preferred)
+                    return a.preferred;
+                return a.order < b.order;
+            });
+            QVariantList comics;
+            comics.reserve(order.size());
+            for (const auto &r : order) {
+                auto map = r.item.toMap();
+                map.insert(QStringLiteral("id"), Library::idFor(QStringLiteral("comic"), r.item.source, r.item.url));
+                map.insert(QStringLiteral("media"), QStringLiteral("comic"));
+                map.insert(QStringLiteral("sourceUrl"), r.item.url);
+                if (const auto source = Registry::byKey(r.item.source)) {
+                    map.insert(QStringLiteral("sourceLabel"), source->label());
+                    map.insert(QStringLiteral("referer"), source->imageReferer());
+                } else {
+                    map.insert(QStringLiteral("sourceLabel"), r.item.source);
+                }
+                comics.append(map);
             }
-        }
+            QVariantList providers;
+            int pending = 0;
+            for (int i = 0; i < selected.size(); ++i) {
+                if (providerAt[i].isEmpty()) {
+                    ++pending;
+                    providers.append(QVariantMap{{"source", selected[i]->key()}, {"label", selected[i]->label()}, {"pending", true}});
+                } else {
+                    providers.append(providerAt[i]);
+                }
+            }
+            return QVariantMap{{"comics", comics}, {"providers", providers}, {"pending", pending}};
+        };
+        // Results show source by source as they come in, a few times a
+        // second at most so the grid is not rebuilt for every answer.
+        QElapsedTimer sinceReport;
+        sinceReport.start();
+        int answered = 0;
+        parallelEach<QList<Summary>>(jobs, 20000, [&](int i, const Outcome<QList<Summary>> &r) {
+            ++answered;
+            providerAt[i] = QVariantMap{{"source", selected[i]->key()},
+                                        {"label", selected[i]->label()},
+                                        {"ok", r.ok()},
+                                        {"count", r.ok() ? r.value->size() : 0},
+                                        {"error", r.error},
+                                        {"verifyUrl", r.verifyUrl}};
+            if (r.ok()) {
+                anyOk = true;
+                int order = 0;
+                for (const auto &item : *r.value) {
+                    if (item.title.isEmpty() || item.url.isEmpty() || seen.contains(item.url))
+                        continue;
+                    seen.insert(item.url);
+                    ranked.append({relevance(item.title, q), baseLanguage(selected[i]->language()) == wantedLanguage, order++, item});
+                }
+            }
+            if (answered < selected.size() && r.ok() && !r.value->isEmpty() && (answered == 1 || sinceReport.elapsed() > 250)) {
+                Task::report(snapshot());
+                sinceReport.restart();
+            }
+        });
         if (!anyOk)
             throw Error(QStringLiteral("Comic sources are unavailable right now. Check your connection and try again."));
-        // Equally good titles in the content language first.
-        std::stable_sort(ranked.begin(), ranked.end(), [](const Ranked &a, const Ranked &b) {
-            if (a.tier != b.tier)
-                return a.tier < b.tier;
-            if (a.preferred != b.preferred)
-                return a.preferred;
-            return a.order < b.order;
-        });
-        QVariantList comics;
-        for (const auto &r : ranked) {
-            auto map = r.item.toMap();
-            map.insert(QStringLiteral("id"), Library::idFor(QStringLiteral("comic"), r.item.source, r.item.url));
-            map.insert(QStringLiteral("media"), QStringLiteral("comic"));
-            map.insert(QStringLiteral("sourceUrl"), r.item.url);
-            map.insert(QStringLiteral("sourceLabel"), Registry::byKey(r.item.source)
-                                                          ? Registry::byKey(r.item.source)->label()
-                                                          : r.item.source);
-            comics.append(map);
-        }
-        QVariantMap result{{"comics", comics}, {"providers", providers}};
+        const auto result = snapshot();
         QMutexLocker lock(&g_searchMutex);
         g_searches.insert(cacheKey, new QVariantMap(result));
         g_searchTimes.insert(cacheKey, QDateTime::currentSecsSinceEpoch());
@@ -311,22 +342,34 @@ Task *Comics::resolve(const QVariantMap &item) {
         const auto id = item.value("catalogId").toString().isEmpty() ? item.value("hid").toString()
                                                                        : item.value("catalogId").toString();
         const auto language = searchLanguage();
-        // Matches depend on the source list and the language settings.
-        const auto cacheKey = QStringLiteral("resolve:comic:%1:%2:%3:%4:%5")
+        QList<std::shared_ptr<Source>> sources;
+        QStringList keys;
+        for (const auto &source : Registry::all())
+            if (source->enabled() && source->key() != QLatin1String("local") && inSearchLanguage(*source, language)) {
+                sources.append(source);
+                keys.append(source->key());
+            }
+        // Matches depend on the sources switched on (extensions come and go)
+        // and the language settings.
+        const auto sourcesHash = QCryptographicHash::hash(keys.join(QLatin1Char(',')).toUtf8(), QCryptographicHash::Md5).toHex().left(12);
+        const auto cacheKey = QStringLiteral("resolve:comic:%1:%2:%3:%4:%5:%6")
                                   .arg(Manifest::version())
-                                  .arg(language, contentLanguage(), item.value("catalog").toString(), id);
+                                  .arg(QString::fromLatin1(sourcesHash), language, contentLanguage(), item.value("catalog").toString(), id);
         if (!id.isEmpty())
             if (auto cached = Database::cacheGet(cacheKey))
                 return QJsonDocument::fromJson(*cached).toVariant();
         const auto names = catalogNames(item);
         if (std::all_of(names.begin(), names.end(), [](const QString &n) { return normalizedTitle(n).isEmpty(); }))
             throw Error(QStringLiteral("This title has no name SCANCORE's sources could list it under."));
-        QList<std::shared_ptr<Source>> sources;
-        for (const auto &source : Registry::all())
-            if (source->enabled() && source->key() != QLatin1String("local") && inSearchLanguage(*source, language))
-                sources.append(source);
-        const auto matches = resolveAcross<std::shared_ptr<Source>>(
+        auto matches = resolveAcross<std::shared_ptr<Source>>(
             sources, names, [](const std::shared_ptr<Source> &source, const QString &url) { return source->readable(url); });
+        // Covers some sites only send to their own pages (or extensions).
+        for (auto &match : matches) {
+            auto map = match.toMap();
+            if (const auto source = Registry::byKey(map.value("source").toString()))
+                map.insert(QStringLiteral("referer"), source->imageReferer());
+            match = map;
+        }
         const QVariantMap result{{"matches", matches}, {"contentLanguage", contentLanguage()}};
         if (!id.isEmpty() && !matches.isEmpty())
             Database::cachePut(cacheKey, QJsonDocument::fromVariant(result).toJson(QJsonDocument::Compact), 86400);
@@ -443,6 +486,48 @@ Task *Comics::panels(const QString &chapterUrl, const QString &seriesId, const Q
         for (const auto &p : panels)
             list.append(QVariantMap{{"url", p.url}, {"width", p.width}, {"height", p.height}});
         return QVariantMap{{"panels", list}, {"referer", source->imageReferer()}, {"offline", false}};
+    });
+}
+
+Task *Comics::browse(const QString &key, const QString &listing, int page, const QString &query, const QVariantList &filters) {
+    return Task::run([key, listing, page, query, filters]() -> QVariant {
+        auto source = Registry::byKey(key);
+        if (!source || !source->canBrowse())
+            throw Error(QStringLiteral("That source cannot be browsed."));
+        if (!source->enabled())
+            throw Error(source->config().disabledReason.isEmpty() ? QStringLiteral("That source is switched off.")
+                                                                  : source->config().disabledReason);
+        // Popular and latest pages change slowly; a search with filters is
+        // asked afresh.
+        const bool cached = listing != QLatin1String("search");
+        const auto cacheKey = QStringLiteral("browse:%1:%2:%3").arg(key, listing).arg(page);
+        if (cached)
+            if (auto hit = Database::cacheGet(cacheKey))
+                return QJsonDocument::fromJson(*hit).toVariant();
+        const auto result = source->browse(listing, page, query, QJsonArray::fromVariantList(filters));
+        QVariantList items;
+        for (const auto &item : result.items) {
+            auto map = item.toMap();
+            map.insert(QStringLiteral("id"), Library::idFor(QStringLiteral("comic"), key, item.url));
+            map.insert(QStringLiteral("media"), QStringLiteral("comic"));
+            map.insert(QStringLiteral("sourceUrl"), item.url);
+            map.insert(QStringLiteral("sourceLabel"), source->label());
+            map.insert(QStringLiteral("referer"), source->imageReferer());
+            items.append(map);
+        }
+        const QVariantMap out{{"items", items}, {"hasNextPage", result.hasNextPage}};
+        if (cached && !items.isEmpty())
+            Database::cachePut(cacheKey, QJsonDocument::fromVariant(out).toJson(QJsonDocument::Compact), 900);
+        return out;
+    });
+}
+
+Task *Comics::filters(const QString &key) {
+    return Task::run([key]() -> QVariant {
+        auto source = Registry::byKey(key);
+        if (!source)
+            throw Error(QStringLiteral("That source is not installed."));
+        return source->filters().toVariantList();
     });
 }
 

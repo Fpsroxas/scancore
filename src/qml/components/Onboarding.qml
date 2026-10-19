@@ -4,16 +4,16 @@ import QtQuick.Shapes
 import ScanCore
 
 // First-run welcome: the interface language, what SCANCORE does, the tracker
-// to keep, a quick look-and-feel choice, an optional scancore.onl account,
-// and a few tips. Shown until finished or
+// to keep, extensions (a repository link, if the reader has one), a quick
+// look-and-feel choice, an optional scancore.onl account, and a few tips. Shown until finished or
 // skipped; Settings can show it again.
 Rectangle {
     id: root
     property int step: App.startAction.onboardingStep || 0
     property int direction: 1
-    readonly property int steps: 6
+    readonly property int steps: 7
     // The account step, which has its own Continue.
-    readonly property int accountIndex: 4
+    readonly property int accountIndex: 5
     signal finished()
 
     color: Theme.base
@@ -79,7 +79,7 @@ Rectangle {
 
         Repeater {
             id: pages
-            model: [welcomeStep, mediaStep, trackerStep, styleStep, accountStep, doneStep]
+            model: [welcomeStep, mediaStep, trackerStep, extensionsStep, styleStep, accountStep, doneStep]
             delegate: Loader {
                 id: pageLoader
                 required property var modelData
@@ -418,7 +418,60 @@ Rectangle {
         }
     }
 
-    // 4. Look and feel, applied live.
+    // 4. Extensions: other people's sources, from a repository the reader
+    // already has a link to. Nothing is suggested.
+    Component {
+        id: extensionsStep
+        Flickable {
+            id: extensionsPage
+            WheelScroll {}
+            contentHeight: extensionsColumn.height + 60
+            clip: true
+            readonly property var repositories: { Extensions.revision; return Extensions.repositories() }
+            Column {
+                id: extensionsColumn
+                x: Theme.gutter
+                y: Theme.compact ? 24 : Math.max(40, (root.height - footer.height - height) / 2 - 20)
+                width: Math.min(parent.width - 2 * Theme.gutter, 640)
+                spacing: 22
+                Heading {
+                    kicker: qsTr("Extensions")
+                    title: qsTr("Have a repository link?")
+                    body: qsTr("SCANCORE runs extensions made for Mihon and Tachiyomi. Paste a repository link and SCANCORE shows what it holds before adding anything. Extensions are other people's code, so you choose whether to trust each one.")
+                }
+                Row {
+                    width: parent.width
+                    spacing: 10
+                    SearchField {
+                        id: linkField
+                        width: parent.width - addLink.width - 10
+                        placeholderText: qsTr("Repository link")
+                        onSubmitted: (text) => { if (text.trim()) Router.addRepository(text.trim()) }
+                    }
+                    ScButton {
+                        id: addLink
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr("Add")
+                        iconName: "plus"
+                        enabled: linkField.text.trim().length > 0
+                        onClicked: Router.addRepository(linkField.text.trim())
+                    }
+                }
+                Text {
+                    width: parent.width
+                    text: extensionsPage.repositories.length
+                        ? qsTr("Added: %1").arg(extensionsPage.repositories.map(r => r.name).join(", "))
+                        : qsTr("No link? Continue; the Extensions page on the Comics tab takes one any time.")
+                    color: extensionsPage.repositories.length ? Theme.success : Theme.textMuted
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textSm
+                    wrapMode: Text.Wrap
+                }
+            }
+        }
+    }
+
+    // 5. Look and feel, applied live.
     Component {
         id: styleStep
         Flickable {
@@ -496,7 +549,7 @@ Rectangle {
         }
     }
 
-    // 5. Account.
+    // 6. Account.
     Component {
         id: accountStep
         Flickable {
@@ -537,7 +590,7 @@ Rectangle {
         }
     }
 
-    // 6. Done.
+    // 7. Done.
     Component {
         id: doneStep
         Item {

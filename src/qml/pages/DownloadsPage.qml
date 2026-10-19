@@ -66,6 +66,36 @@ Item {
                     ScButton { visible: App.platform !== "android"; text: qsTr("Open folder"); iconName: "folder-open"; onClicked: App.openFolder(Downloads.folder()) }
                 }
             }
+            // Android pauses downloads soon after the app leaves the screen
+            // while battery optimisation is on.
+            Rectangle {
+                visible: App.platform === "android" && App.batteryRestricted
+                x: Theme.gutter
+                width: list.width - 2 * Theme.gutter
+                height: visible ? batteryRow.implicitHeight + 24 : 0
+                radius: Theme.radiusLg
+                color: Theme.surface
+                border.width: 1
+                border.color: Theme.border
+                Row {
+                    id: batteryRow
+                    x: 14
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width - 28
+                    spacing: 12
+                    Icon { anchors.verticalCenter: parent.verticalCenter; name: "battery-warning"; color: Theme.warning; size: 20 }
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width - 32 - allowBattery.width - 24
+                        text: qsTr("Battery optimisation pauses downloads when you leave SCANCORE.")
+                        color: Theme.textMuted
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textSm
+                        wrapMode: Text.Wrap
+                    }
+                    ScButton { id: allowBattery; anchors.verticalCenter: parent.verticalCenter; compact: true; text: qsTr("Allow"); onClicked: App.askBatteryUnrestricted() }
+                }
+            }
             StateView {
                 width: list.width
                 height: visible ? 320 : 0

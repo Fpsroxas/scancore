@@ -26,12 +26,14 @@ Item {
     // Phones are narrower than a full-size toast plus its margin.
     readonly property int margin: Theme.compact ? 16 : 24
     readonly property real toastWidth: Math.min(360, width - 2 * margin)
+    // Room kept for a bar along the bottom (the phone's tab bar).
+    property real bottomInset: 0
 
     Column {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: root.margin
-        anchors.bottomMargin: root.margin + root.SafeArea.margins.bottom
+        anchors.bottomMargin: root.margin + root.SafeArea.margins.bottom + root.bottomInset
         spacing: 10
         width: root.toastWidth
 

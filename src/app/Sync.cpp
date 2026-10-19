@@ -232,11 +232,14 @@ QJsonObject Sync::snapshot() {
     }
     QJsonObject library;
     for (const auto &value : Database::query(
-             QStringLiteral("SELECT series_id, category, added_at, COALESCE(changed_at, added_at) AS changed FROM library "
+             QStringLiteral("SELECT series_id, category, added_at, COALESCE(changed_at, added_at) AS changed, favourite FROM library "
                             "WHERE series_id NOT LIKE '%:local:%'"))) {
         const auto row = value.toMap();
+        // [category, added, changed, favourite]; apps before 2.0 read the
+        // first three.
         library.insert(row.value("series_id").toString(),
-                       QJsonArray{row.value("category").toString(), row.value("added_at").toLongLong(), row.value("changed").toLongLong()});
+                       QJsonArray{row.value("category").toString(), row.value("added_at").toLongLong(), row.value("changed").toLongLong(),
+                                  row.value("favourite").toInt()});
     }
     QJsonObject removed;
     for (const auto &value : Database::query(QStringLiteral("SELECT series_id, removed_at FROM library_removed WHERE removed_at > ?"),
@@ -325,10 +328,14 @@ int Sync::merge(const QJsonObject &s) {
             if (savedAt >= removedAt) {
                 if (!ensureSeries(id))
                     continue;
-                Database::query(QStringLiteral("INSERT INTO library(series_id, category, added_at, changed_at) VALUES(?, ?, ?, ?) "
+                // An older app sends no favourite; the one here stays.
+                const bool hasFavourite = entry.size() > 3;
+                Database::query(QStringLiteral("INSERT INTO library(series_id, category, added_at, changed_at, favourite) VALUES(?, ?, ?, ?, ?) "
                                                "ON CONFLICT(series_id) DO UPDATE SET category = excluded.category, "
-                                               "changed_at = excluded.changed_at"),
-                                {id, entry.at(0).toString(QStringLiteral("reading")), entry.at(1).toInteger(), savedAt});
+                                               "changed_at = excluded.changed_at%1")
+                                    .arg(hasFavourite ? QStringLiteral(", favourite = excluded.favourite") : QString()),
+                                {id, entry.at(0).toString(QStringLiteral("reading")), entry.at(1).toInteger(), savedAt,
+                                 hasFavourite ? entry.at(3).toInt() : 0});
                 Database::query(QStringLiteral("DELETE FROM library_removed WHERE series_id = ?"), {id});
             } else {
                 Database::query(QStringLiteral("DELETE FROM library WHERE series_id = ?"), {id});

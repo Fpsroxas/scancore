@@ -44,6 +44,35 @@ SettingsPane {
         }
     }
 
+    // Extensions from the repositories the user added.
+    readonly property var extensionRepos: { Extensions.revision; return Extensions.repositories() }
+    readonly property int extensionCount: { Extensions.revision; return Extensions.installed().length }
+    SettingsGroup {
+        title: qsTr("Extensions")
+        note: qsTr("SCANCORE runs Mihon, Tachiyomi, Aniyomi and LNReader extensions from repositories you add. It has no repository of its own.")
+        SettingRow {
+            iconName: "puzzle"
+            title: qsTr("Extensions")
+            description: pane.extensionCount + qsTr(" installed from ") + pane.extensionRepos.length
+                + (pane.extensionRepos.length === 1 ? qsTr(" repository") : qsTr(" repositories"))
+                + (Extensions.updateCount > 0 ? " · " + Extensions.updateCount + qsTr(" updates") : "")
+            clickable: true
+            onClicked: Router.openExtensions()
+        }
+        SettingRow {
+            iconName: "plus"
+            title: qsTr("Add a repository")
+            description: qsTr("Paste a repository link, or open one from a repository's page with SCANCORE.")
+            ScButton { text: qsTr("Add"); onClicked: Router.addRepository("") }
+        }
+        SettingRow {
+            iconName: "refresh-cw"
+            title: qsTr("Update extensions automatically")
+            description: qsTr("Installs updates signed by keys you already trust when SCANCORE checks its repositories.")
+            Toggle { checked: App.settings.autoUpdateExtensions !== false; onToggled: App.setSetting("autoUpdateExtensions", checked) }
+        }
+    }
+
     // Comics and books on this device: the folders listed and searched.
     readonly property var folders: Array.from(App.settings.localFolders || [])
     SettingsGroup {

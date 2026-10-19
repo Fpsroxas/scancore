@@ -21,10 +21,23 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 // Mihon's models as the JSON SCANCORE reads (see ExtensionSource.h).
 object Codec {
-    fun mangas(page: MangasPage): JsonObject =
+    // Covers as full links: a few sources give them relative to the site.
+    private fun cover(
+        url: String?,
+        base: String?,
+    ): String? {
+        if (url.isNullOrEmpty() || base.isNullOrEmpty() || url.contains("://")) return url
+        return base.toHttpUrlOrNull()?.resolve(url)?.toString() ?: url
+    }
+
+    fun mangas(
+        page: MangasPage,
+        base: String? = null,
+    ): JsonObject =
         buildJsonObject {
             put(
                 "items",
@@ -34,7 +47,7 @@ object Codec {
                             buildJsonObject {
                                 put("url", manga.url)
                                 put("title", manga.title)
-                                put("cover", manga.thumbnail_url)
+                                put("cover", cover(manga.thumbnail_url, base))
                             },
                         )
                     }
@@ -43,10 +56,13 @@ object Codec {
             put("hasNextPage", page.hasNextPage)
         }
 
-    fun details(manga: SManga): JsonObject =
+    fun details(
+        manga: SManga,
+        base: String? = null,
+    ): JsonObject =
         buildJsonObject {
             put("title", manga.title)
-            put("cover", manga.thumbnail_url)
+            put("cover", cover(manga.thumbnail_url, base))
             put("description", manga.description)
             put("author", manga.author)
             put("artist", manga.artist)

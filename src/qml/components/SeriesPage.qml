@@ -201,6 +201,46 @@ Item {
                 }
             }
 
+            // A connected tracker that could not find this series by its
+            // titles: one tap to pick the entry.
+            Rectangle {
+                id: missNotice
+                readonly property var misses: { Trackers.anilist; Library.revision; return page.local ? [] : Trackers.misses(page.seriesId) }
+                readonly property var names: misses.map(k => k === "anilist" ? "AniList" : k === "mal" ? "MyAnimeList" : qsTr("Comick"))
+                visible: misses.length > 0
+                x: Theme.gutter
+                width: list.width - 2 * Theme.gutter
+                height: visible ? missRow.implicitHeight + 24 : 0
+                radius: Theme.radiusLg
+                color: Theme.surface
+                border.width: 1
+                border.color: Theme.border
+                Row {
+                    id: missRow
+                    x: 14
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.width - 28
+                    spacing: 12
+                    Icon { anchors.verticalCenter: parent.verticalCenter; name: "link-2"; color: Theme.warning; size: 18 }
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width - 30 - pickButton.width - 24
+                        text: qsTr("%1 could not find this by its title, so progress is not sent there.").arg(missNotice.names.join(", "))
+                        color: Theme.textMuted
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textSm
+                        wrapMode: Text.Wrap
+                    }
+                    ScButton {
+                        id: pickButton
+                        anchors.verticalCenter: parent.verticalCenter
+                        compact: true
+                        text: qsTr("Pick the entry")
+                        onClicked: tracking.pick(missNotice.misses[0])
+                    }
+                }
+            }
+
             Item {
                 width: list.width
                 height: 60

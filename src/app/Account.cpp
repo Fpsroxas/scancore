@@ -483,6 +483,8 @@ void Account::scheduleSync() {
     m_soon.start(int(std::clamp(kMinGap - sinceLast, kQuiet, kMinGap)));
 }
 
+QString Account::siteBase() { return siteUrl(); }
+
 Account *Account::instance() {
     static auto *account = [] {
         auto *created = new Account;

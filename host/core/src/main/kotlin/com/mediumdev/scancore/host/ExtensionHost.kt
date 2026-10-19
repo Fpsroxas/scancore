@@ -108,6 +108,8 @@ class ExtensionHost(
         return sources(params)[id] ?: throw HostError("The extension has no source $id. It may need updating.", 404)
     }
 
+    private fun base(source: Source) = (source as? HttpSource)?.baseUrl
+
     private fun catalogue(source: Source) = source as? CatalogueSource ?: throw HostError("${source.name} cannot be browsed.", 501)
 
     private fun manga(
@@ -135,16 +137,19 @@ class ExtensionHost(
         val source = source(params)
         val page = params.int("page", 1)
         return when (method) {
-            "popular" -> Codec.mangas(catalogue(source).getPopularManga(page).also { remember(source, it.mangas) })
-            "latest" -> Codec.mangas(catalogue(source).getLatestUpdates(page).also { remember(source, it.mangas) })
+            "popular" -> Codec.mangas(catalogue(source).getPopularManga(page).also { remember(source, it.mangas) }, base(source))
+            "latest" -> Codec.mangas(catalogue(source).getLatestUpdates(page).also { remember(source, it.mangas) }, base(source))
             "search" -> {
                 val filters = Codec.applyFilters(source.getFilterList(), params["filters"] as? JsonArray ?: JsonArray(emptyList()))
-                Codec.mangas(catalogue(source).getSearchManga(page, params.optString("query").orEmpty(), filters).also { remember(source, it.mangas) })
+                Codec.mangas(
+                    catalogue(source).getSearchManga(page, params.optString("query").orEmpty(), filters).also { remember(source, it.mangas) },
+                    base(source),
+                )
             }
             "details" -> {
                 val update = source.getMangaUpdate(manga(source, params.string("url")), emptyList(), fetchDetails = true, fetchChapters = false)
                 remember(source, listOf(update.manga))
-                Codec.details(update.manga)
+                Codec.details(update.manga, base(source))
             }
             "chapters" -> {
                 val update = source.getMangaUpdate(manga(source, params.string("url")), emptyList(), fetchDetails = false, fetchChapters = true)

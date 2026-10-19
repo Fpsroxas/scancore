@@ -17,6 +17,7 @@
 #include <QReadWriteLock>
 #include <QSaveFile>
 #include <QSet>
+#include <QUrlQuery>
 #include <QWaitCondition>
 
 namespace sc::ext {
@@ -381,6 +382,42 @@ QList<Repository> Manager::repositories() {
             out.append(r.repo);
         return out;
     });
+}
+
+QList<RepositoryStatus> Manager::repositoryStatus() {
+    return reading([](const State &s) {
+        QList<RepositoryStatus> out;
+        for (const auto &r : s.repos)
+            out.append({r.repo, int(r.packages.size()), r.error});
+        return out;
+    });
+}
+
+std::optional<RepositoryLink> Manager::parseLink(const QString &link) {
+    const QUrl url(link.trimmed());
+    const auto scheme = url.scheme().toLower();
+    // The action is the host and path together ("add-repo", "repos/add").
+    const auto action = (url.host() + url.path()).toLower().remove(QLatin1Char('/'));
+    std::optional<Kind> kind;
+    if (scheme == QLatin1String("tachiyomi") || scheme == QLatin1String("mihon"))
+        kind = Kind::Mihon;
+    else if (scheme == QLatin1String("aniyomi"))
+        kind = Kind::Aniyomi;
+    else if (scheme == QLatin1String("lnreader"))
+        kind = Kind::LNReader;
+    else if (scheme != QLatin1String("scancore"))
+        return std::nullopt;
+    const bool adds = action == QLatin1String("add-repo") || action == QLatin1String("addrepo") ||
+                      action == QLatin1String("reposadd") || action == QLatin1String("repoadd") ||
+                      action == QLatin1String("extension-store") || action == QLatin1String("add-extension-store");
+    if (!adds)
+        return std::nullopt;
+    const auto target = QUrlQuery(url).queryItemValue(QStringLiteral("url"), QUrl::FullyDecoded).trimmed();
+    if (target.isEmpty())
+        return std::nullopt;
+    if (scheme == QLatin1String("scancore"))
+        kind = kindFrom(QUrlQuery(url).queryItemValue(QStringLiteral("kind")));
+    return RepositoryLink{target, kind};
 }
 
 bool Manager::refresh(const QString &url) {

@@ -8,7 +8,11 @@
 #endif
 #include "extensions/Manager.h"
 #include "extensions/ProcessHost.h"
+#include "core/Database.h"
+#include "core/Parallel.h"
+#include "core/Text.h"
 #include "extensions/Runtime.h"
+#include "sources/comics/Registry.h"
 #include "sources/novels/LnCrawl.h"
 #include "sources/novels/Registry.h"
 
@@ -21,6 +25,9 @@
 #include <QStandardPaths>
 #include <QSysInfo>
 #include <QCoreApplication>
+#include <QJsonArray>
+#include <QLocale>
+#include <QMutex>
 
 namespace sc {
 
@@ -292,6 +299,378 @@ void Extensions::removeNovelPack() {
     QDir(novels::LnCrawlRuntime::root()).removeRecursively();
     novels::Registry::rebuild();
     emit changed();
+}
+
+// ---------------------------------------------------------------- the Extensions page
+
+namespace {
+
+QMutex g_previewMutex;
+QHash<QString, ext::RepositoryPreview> g_previews;
+
+std::optional<ext::Kind> kindOf(const QString &name) { return name.isEmpty() ? std::nullopt : ext::kindFrom(name); }
+
+ext::Kind requireKind(const QString &name) {
+    const auto kind = ext::kindFrom(name);
+    if (!kind)
+        throw Error(QStringLiteral("Unknown kind of extension."));
+    return *kind;
+}
+
+// Language names as the extension lists show them: "Português (Brasil)",
+// "Multi" for extensions with sources in several languages.
+QString extensionLanguage(const QString &code) {
+    const auto lower = code.toLower();
+    if (lower.isEmpty() || lower == QLatin1String("all") || lower == QLatin1String("multi"))
+        return QStringLiteral("Multi");
+    QString name = languageName(code);
+    if (name == code) {
+        const QLocale locale(code);
+        if (locale.language() != QLocale::C)
+            name = locale.nativeLanguageName();
+    }
+    if (!name.isEmpty())
+        name[0] = name[0].toUpper();
+    if (code.contains(QLatin1Char('-')) && name != code) {
+        const QLocale locale(QString(code).replace(QLatin1Char('-'), QLatin1Char('_')));
+        const auto region = code.section(QLatin1Char('-'), 1);
+        const auto territory = region == QLatin1String("419") ? QStringLiteral("Latinoamérica")
+                               : locale.territory() != QLocale::AnyTerritory ? locale.nativeTerritoryName()
+                                                                            : region;
+        name += QStringLiteral(" (%1)").arg(territory);
+    }
+    return name;
+}
+
+QString warningOf(const ext::Package &p) { return p.warning == ext::ContentWarning::Nsfw ? QStringLiteral("nsfw") : QString(); }
+
+QString libProblemText(const ext::Package &p) {
+    switch (ext::libSupport(p.kind, p.lib)) {
+    case ext::LibSupport::Supported:
+        return p.torrent ? QStringLiteral("Needs a torrent client") : QString();
+    case ext::LibSupport::TooNew: return QStringLiteral("Needs a newer SCANCORE");
+    case ext::LibSupport::TooOld: return QStringLiteral("Too old for SCANCORE");
+    case ext::LibSupport::Unknown: return QStringLiteral("Unknown extension version");
+    }
+    return {};
+}
+
+QVariantMap packageMap(const ext::Package &p) {
+    return QVariantMap{{"id", ext::kindName(p.kind) + QLatin1Char(':') + p.pkg},
+                       {"kind", ext::kindName(p.kind)},
+                       {"media", ext::kindMedia(p.kind)},
+                       {"pkg", p.pkg},
+                       {"name", p.name},
+                       {"version", p.versionName},
+                       {"lang", p.lang},
+                       {"languageName", extensionLanguage(p.lang)},
+                       {"icon", p.iconUrl},
+                       {"nsfw", p.warning == ext::ContentWarning::Nsfw},
+                       {"problem", libProblemText(p)}};
+}
+
+QString domainOf(const QString &url) {
+    auto host = QUrl(url).host();
+    if (host.startsWith(QLatin1String("www.")))
+        host = host.mid(4);
+    return host;
+}
+
+} // namespace
+
+void Extensions::notifyExtensionsChanged() {
+    ++m_revision;
+    emit extensionsChanged();
+}
+
+QStringList Extensions::installing() const { return QStringList(m_installing.begin(), m_installing.end()); }
+
+int Extensions::updateCount() const { return int(ext::Manager::updates().size()); }
+
+void Extensions::setInstalling(const QString &id, bool on) {
+    QMetaObject::invokeMethod(this, [this, id, on] {
+        if (on)
+            m_installing.insert(id);
+        else
+            m_installing.remove(id);
+        emit extensionsChanged();
+    });
+}
+
+QVariantList Extensions::repositories() const {
+    QVariantList out;
+    for (const auto &r : ext::Manager::repositoryStatus())
+        out.append(QVariantMap{{"url", r.repo.url},
+                               {"name", r.repo.name.isEmpty() ? domainOf(r.repo.url) : r.repo.name},
+                               {"kind", ext::kindName(r.repo.kind)},
+                               {"media", ext::kindMedia(r.repo.kind)},
+                               {"website", r.repo.website},
+                               {"domain", domainOf(r.repo.url)},
+                               {"count", r.count},
+                               {"error", r.error}});
+    return out;
+}
+
+QVariantMap Extensions::repositoryLink(const QString &text) const {
+    const auto trimmed = text.trimmed();
+    if (const auto link = ext::Manager::parseLink(trimmed))
+        return QVariantMap{{"url", link->url}, {"kind", link->kind ? ext::kindName(*link->kind) : QString()}};
+    // A plain address: an index, a repo.json, a store or a plugin list.
+    const QUrl url = QUrl::fromUserInput(trimmed);
+    if (trimmed.contains(QLatin1Char(' ')) || !url.isValid() || url.host().isEmpty() || !url.host().contains(QLatin1Char('.')) ||
+        (url.scheme() != QLatin1String("https") && url.scheme() != QLatin1String("http")))
+        return {};
+    return QVariantMap{{"url", trimmed}, {"kind", QString()}};
+}
+
+Task *Extensions::previewRepository(const QString &link, const QString &kind) {
+    return Task::run([link, kind]() -> QVariant {
+        auto target = link.trimmed();
+        auto hint = kindOf(kind);
+        if (const auto parsed = ext::Manager::parseLink(target)) {
+            target = parsed->url;
+            if (!hint)
+                hint = parsed->kind;
+        }
+        const auto preview = ext::Manager::preview(target, hint);
+        {
+            QMutexLocker lock(&g_previewMutex);
+            g_previews.insert(preview.repo.url, preview);
+        }
+        // Languages by how many extensions each has, content language first.
+        const auto language = contentLanguage();
+        QHash<QString, int> counts;
+        for (const auto &p : preview.packages)
+            counts[baseLanguage(p.lang)] += 1;
+        QStringList codes = counts.keys();
+        std::sort(codes.begin(), codes.end(), [&](const QString &a, const QString &b) {
+            if ((a == language) != (b == language))
+                return a == language;
+            return counts.value(a) > counts.value(b);
+        });
+        QVariantList languages;
+        for (const auto &code : codes)
+            languages.append(QVariantMap{{"value", code}, {"label", extensionLanguage(code)}, {"count", counts.value(code)}});
+        QStringList autoNames;
+        for (const auto &p : preview.autoInstall)
+            autoNames.append(p.name);
+        return QVariantMap{{"url", preview.repo.url},
+                           {"name", preview.repo.name.isEmpty() ? domainOf(preview.repo.url) : preview.repo.name},
+                           {"domain", domainOf(preview.repo.url)},
+                           {"website", preview.repo.website},
+                           {"kind", ext::kindName(preview.repo.kind)},
+                           {"media", ext::kindMedia(preview.repo.kind)},
+                           {"count", preview.packages.size()},
+                           {"languages", languages},
+                           {"autoInstall", autoNames},
+                           {"language", language},
+                           {"languageName", extensionLanguage(language)},
+                           {"added", std::any_of(ext::Manager::repositories().cbegin(), ext::Manager::repositories().cend(),
+                                                 [&](const ext::Repository &r) { return r.url == preview.repo.url; })}};
+    });
+}
+
+Task *Extensions::addRepository(const QString &url) {
+    return Task::run([this, url]() -> QVariant {
+        std::optional<ext::RepositoryPreview> preview;
+        {
+            QMutexLocker lock(&g_previewMutex);
+            if (g_previews.contains(url))
+                preview = g_previews.take(url);
+        }
+        if (!preview)
+            preview = ext::Manager::preview(url);
+        const auto repo = ext::Manager::add(*preview);
+        // Extensions in the content language, a few at a time.
+        QList<std::function<bool()>> jobs;
+        for (const auto &p : preview->autoInstall) {
+            if (ext::Manager::installedPackage(p.kind, p.pkg))
+                continue;
+            jobs.append([this, p] {
+                const auto id = ext::kindName(p.kind) + QLatin1Char(':') + p.pkg;
+                setInstalling(id, true);
+                try {
+                    ext::Manager::install(p.kind, p.pkg);
+                } catch (...) {
+                    setInstalling(id, false);
+                    throw;
+                }
+                setInstalling(id, false);
+                return true;
+            });
+        }
+        const auto results = parallel(jobs);
+        int installed = 0;
+        QStringList failed;
+        for (const auto &r : results)
+            if (r.ok())
+                ++installed;
+            else
+                failed.append(r.error);
+        return QVariantMap{{"name", repo.name.isEmpty() ? domainOf(repo.url) : repo.name},
+                           {"media", ext::kindMedia(repo.kind)},
+                           {"installed", installed},
+                           {"failed", failed}};
+    });
+}
+
+void Extensions::removeRepository(const QString &url) { ext::Manager::removeRepository(url); }
+
+Task *Extensions::refreshRepositories() {
+    return Task::run([]() -> QVariant {
+        ext::Manager::refreshAll();
+        return int(ext::Manager::updates().size());
+    });
+}
+
+QVariantList Extensions::installed(const QString &kind) const {
+    const auto sources = ext::Manager::sources(kindOf(kind));
+    QVariantList out;
+    auto list = ext::Manager::installed(kindOf(kind));
+    std::sort(list.begin(), list.end(), [](const ext::Installed &a, const ext::Installed &b) {
+        // Updates and extensions waiting for trust first.
+        const bool aNeeds = a.update || !a.trusted, bNeeds = b.update || !b.trusted;
+        if (aNeeds != bNeeds)
+            return aNeeds;
+        return QString::localeAwareCompare(a.package.name, b.package.name) < 0;
+    });
+    for (const auto &i : list) {
+        auto map = packageMap(i.package);
+        map.insert(QStringLiteral("trusted"), i.trusted);
+        map.insert(QStringLiteral("update"), i.update ? i.update->versionName : QString());
+        map.insert(QStringLiteral("repo"), i.repoUrl);
+        map.insert(QStringLiteral("signer"), i.signers.isEmpty() ? QString() : i.signers.last().left(16));
+        if (map.value(QStringLiteral("problem")).toString().isEmpty() && i.lib != ext::LibSupport::Supported)
+            map.insert(QStringLiteral("problem"), libProblemText(i.package));
+        QVariantList own;
+        for (const auto &s : sources)
+            if (s.kind == i.package.kind && s.pkg == i.package.pkg)
+                own.append(QVariantMap{{"key", s.key},
+                                       {"name", s.name},
+                                       {"lang", s.lang},
+                                       {"languageName", extensionLanguage(s.lang)},
+                                       {"baseUrl", s.baseUrl},
+                                       {"enabled", s.enabled},
+                                       {"blocked", s.blocked},
+                                       {"error", ext::Manager::sourceError(s.key)}});
+        map.insert(QStringLiteral("sources"), own);
+        out.append(map);
+    }
+    return out;
+}
+
+QVariantList Extensions::available(const QString &kind) const {
+    const auto language = contentLanguage();
+    const bool adult = Database::pref(QStringLiteral("setting.showNsfwSources"), false).toBool();
+    QSet<QString> have;
+    for (const auto &i : ext::Manager::installed(kindOf(kind)))
+        have.insert(ext::kindName(i.package.kind) + QLatin1Char(':') + i.package.pkg);
+    struct Row {
+        bool preferred;
+        QString language;
+        QString name;
+        QVariantMap map;
+    };
+    QList<Row> rows;
+    for (const auto &p : ext::Manager::available(kindOf(kind))) {
+        const auto map = packageMap(p);
+        if (have.contains(map.value(QStringLiteral("id")).toString()) || (!adult && p.warning == ext::ContentWarning::Nsfw))
+            continue;
+        const auto base = baseLanguage(p.lang);
+        rows.append({base == language, map.value(QStringLiteral("languageName")).toString(), p.name, map});
+    }
+    std::sort(rows.begin(), rows.end(), [](const Row &a, const Row &b) {
+        if (a.preferred != b.preferred)
+            return a.preferred;
+        if (a.language != b.language)
+            return QString::localeAwareCompare(a.language, b.language) < 0;
+        return QString::localeAwareCompare(a.name, b.name) < 0;
+    });
+    QVariantList out;
+    out.reserve(rows.size());
+    for (auto &r : rows) {
+        r.map.insert(QStringLiteral("preferred"), r.preferred);
+        out.append(r.map);
+    }
+    return out;
+}
+
+Task *Extensions::install(const QString &kind, const QString &pkg) {
+    return Task::run([this, kind, pkg]() -> QVariant {
+        const auto k = requireKind(kind);
+        const auto id = kind + QLatin1Char(':') + pkg;
+        setInstalling(id, true);
+        try {
+            const auto installed = ext::Manager::install(k, pkg);
+            setInstalling(id, false);
+            return QVariantMap{{"name", installed.package.name}, {"trusted", installed.trusted}};
+        } catch (...) {
+            setInstalling(id, false);
+            throw;
+        }
+    });
+}
+
+void Extensions::uninstall(const QString &kind, const QString &pkg) {
+    if (const auto k = ext::kindFrom(kind))
+        ext::Manager::uninstall(*k, pkg);
+}
+
+void Extensions::trust(const QString &kind, const QString &pkg) {
+    if (const auto k = ext::kindFrom(kind))
+        ext::Manager::trust(*k, pkg);
+}
+
+Task *Extensions::updateAll() {
+    return Task::run([this]() -> QVariant {
+        QList<std::function<bool()>> jobs;
+        for (const auto &i : ext::Manager::updates())
+            jobs.append([this, i] {
+                const auto id = ext::kindName(i.package.kind) + QLatin1Char(':') + i.package.pkg;
+                setInstalling(id, true);
+                try {
+                    ext::Manager::install(i.package.kind, i.package.pkg);
+                } catch (...) {
+                    setInstalling(id, false);
+                    throw;
+                }
+                setInstalling(id, false);
+                return true;
+            });
+        const auto results = parallel(jobs);
+        int installed = 0;
+        QString error;
+        for (const auto &r : results)
+            if (r.ok())
+                ++installed;
+            else if (error.isEmpty())
+                error = r.error;
+        if (installed == 0 && !error.isEmpty())
+            throw Error(error);
+        return QVariantMap{{"installed", installed}};
+    });
+}
+
+void Extensions::setSourceEnabled(const QString &key, bool enabled) { ext::Manager::setSourceEnabled(key, enabled); }
+
+Task *Extensions::sourceSettings(const QString &key) {
+    return Task::run([key]() -> QVariant {
+        auto source = comics::Registry::byKey(key);
+        if (!source)
+            throw Error(QStringLiteral("That source is not installed."));
+        return source->preferences().toVariantList();
+    });
+}
+
+Task *Extensions::setSourceSetting(const QString &key, const QString &setting, const QVariant &value) {
+    return Task::run([key, setting, value]() -> QVariant {
+        auto source = comics::Registry::byKey(key);
+        if (!source)
+            throw Error(QStringLiteral("That source is not installed."));
+        source->setPreference(setting, QJsonValue::fromVariant(value));
+        // The source may list other settings now (one switch shows more).
+        return source->preferences().toVariantList();
+    });
 }
 
 } // namespace sc

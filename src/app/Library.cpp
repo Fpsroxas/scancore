@@ -2,6 +2,7 @@
 
 #include "Activity.h"
 #include "Comics.h"
+#include "Notifications.h"
 #include "Novels.h"
 #include "Trackers.h"
 #include "core/Database.h"
@@ -36,7 +37,7 @@ QVariantMap shapeEntry(QVariantMap row) {
 const QString kEntrySelect = QStringLiteral(R"(
     SELECT s.id, s.media, s.source, s.source_url AS sourceUrl, s.title, s.cover, s.description,
            s.author, s.status, s.genres, s.extra,
-           l.category, l.added_at AS addedAt, l.new_units AS newUnits, l.known_units AS knownUnits,
+           l.category, l.favourite, l.added_at AS addedAt, l.new_units AS newUnits, l.known_units AS knownUnits,
            l.latest_title AS latestTitle,
            p.unit_key AS unitKey, p.unit_title AS unitTitle, p.unit_number AS unitNumber, p.unit_url AS unitUrl,
            p.position, p.percent, p.completed, p.updated_at AS progressAt
@@ -172,6 +173,16 @@ void Library::setCategory(const QString &seriesId, const QString &category) {
     notifyChanged();
 }
 
+bool Library::isFavourite(const QString &seriesId) const {
+    return Database::scalar(QStringLiteral("SELECT favourite FROM library WHERE series_id = ?"), {seriesId}).toBool();
+}
+
+void Library::setFavourite(const QString &seriesId, bool favourite) {
+    Database::exec(QStringLiteral("UPDATE library SET favourite = ?, changed_at = ? WHERE series_id = ?"),
+                   {favourite ? 1 : 0, Database::now(), seriesId});
+    notifyChanged();
+}
+
 void Library::markSeen(const QString &seriesId) {
     Database::exec(QStringLiteral("UPDATE library SET new_units = 0, known_units = "
                                   "(SELECT COUNT(*) FROM units WHERE series_id = ?) WHERE series_id = ? AND new_units > 0"),
@@ -179,9 +190,18 @@ void Library::markSeen(const QString &seriesId) {
     notifyChanged();
 }
 
-Task *Library::entries(const QString &media) {
-    return Task::run([media]() -> QVariant {
-        const auto rows = Database::query(kEntrySelect + QStringLiteral(R"(
+// The library page's fields only: a few hundred full rows (descriptions,
+// genres, extra) take long to hand to QML, on its thread.
+const QString kBriefSelect = QStringLiteral(R"(
+    SELECT s.id, s.media, s.source, s.source_url AS sourceUrl, s.title, s.cover,
+           l.category, l.favourite, l.added_at AS addedAt, l.new_units AS newUnits,
+           p.unit_key AS unitKey, p.unit_title AS unitTitle, p.unit_number AS unitNumber,
+           p.percent, p.completed, p.updated_at AS progressAt
+)");
+
+Task *Library::entries(const QString &media, bool brief) {
+    return Task::run([media, brief]() -> QVariant {
+        const auto rows = Database::query((brief ? kBriefSelect : kEntrySelect) + QStringLiteral(R"(
             FROM library l JOIN series s ON s.id = l.series_id
             LEFT JOIN progress p ON p.series_id = s.id AND p.updated_at =
                 (SELECT MAX(updated_at) FROM progress WHERE series_id = s.id)
@@ -190,6 +210,8 @@ Task *Library::entries(const QString &media) {
             ORDER BY l.new_units > 0 DESC, COALESCE(p.updated_at, l.added_at) DESC
         )"),
                                           {media, media});
+        if (brief)
+            return rows;
         QVariantList out;
         for (const auto &row : rows)
             out.append(shapeEntry(row.toMap()));
@@ -362,7 +384,15 @@ Task *Library::checkUpdates() {
                            {Database::now(), fresh, units.size(), units.last().toMap().value(QStringLiteral("title")), id});
             if (fresh > 0) {
                 total += fresh;
-                updated.append(row.value(QStringLiteral("title")).toString());
+                const auto title = row.value(QStringLiteral("title")).toString();
+                updated.append(title);
+                // One per series; more chapters later replace it.
+                const auto latest = units.last().toMap().value(QStringLiteral("title")).toString();
+                Notifications::post({QStringLiteral("chapters"), QStringLiteral("chapters:") + id, title,
+                                     (fresh == 1 ? tr("1 new chapter") : tr("%1 new chapters").arg(fresh))
+                                         + (latest.isEmpty() ? QString() : QStringLiteral(" · ") + latest),
+                                     QVariantMap{{"seriesId", id}},
+                                     Database::pref(QStringLiteral("setting.notifyUpdates"), true).toBool()});
             }
         }
         QMetaObject::invokeMethod(this, [this, total, updated] {

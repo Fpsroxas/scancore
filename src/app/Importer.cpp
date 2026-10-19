@@ -225,6 +225,8 @@ QString categoryFor(const QString &status) {
         return QStringLiteral("dropped");
     if (s == QLatin1String("PLANNING") || s.startsWith(QLatin1String("PLANTO")) || s == QLatin1String("6"))
         return QStringLiteral("planned");
+    if (s == QLatin1String("PAUSED") || s == QLatin1String("ONHOLD") || s == QLatin1String("3"))
+        return QStringLiteral("paused");
     return QStringLiteral("reading");
 }
 
@@ -641,7 +643,7 @@ Task *Importer::importComick() {
             throw Error(QStringLiteral("Your Comick library is empty."));
         Tally outcome;
         QList<Item> anime;
-        static const QStringList categories{QString(), QStringLiteral("reading"), QStringLiteral("completed"), QStringLiteral("reading"),
+        static const QStringList categories{QString(), QStringLiteral("reading"), QStringLiteral("completed"), QStringLiteral("paused"),
                                             QStringLiteral("dropped"), QStringLiteral("planned")};
         for (const auto &value : entries) {
             const auto entry = value.toMap();

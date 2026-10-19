@@ -217,8 +217,9 @@ Rectangle {
     }
     Shortcut {
         sequences: Keymap.sequences("reader.fullscreen")
-        onActivated: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
+        onActivated: fullScreen.toggle()
     }
+    ReaderWindow { id: fullScreen }
     Shortcut { sequences: Keymap.sequences("reader.mode"); onActivated: reader.setOpt("readerMode", reader.mode === "strip" ? "paged" : "strip") }
     Shortcut { sequences: Keymap.sequences("reader.wider"); onActivated: reader.setOpt("readerWidth", Math.min(2400, reader.stripWidth + 80)) }
     Shortcut { sequences: Keymap.sequences("reader.narrower"); onActivated: reader.setOpt("readerWidth", Math.max(360, reader.stripWidth - 80)) }
@@ -677,7 +678,8 @@ Rectangle {
         id: rail
         // Above the controls' shading, so it reads the same with them shown.
         z: 50
-        visible: App.settings.readerProgressBar !== false && reader.panels.length > 0
+        // Full screen keeps it out of the way until the controls come up.
+        visible: App.settings.readerProgressBar !== false && reader.panels.length > 0 && (!fullScreen.fullScreen || reader.controlsShown)
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -824,10 +826,10 @@ Rectangle {
                 onClicked: settingsPopup.open()
             }
             IconButton {
-                iconName: Window.window && Window.window.visibility === Window.FullScreen ? "minimize" : "maximize"
+                iconName: fullScreen.fullScreen ? "minimize" : "maximize"
                 iconColor: "white"
                 tip: qsTr("Full screen") + reader.keyHint("reader.fullscreen")
-                onClicked: Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
+                onClicked: fullScreen.toggle()
             }
         }
     }
@@ -956,6 +958,14 @@ Rectangle {
                     onToggled: App.setSetting("readerProgressBar", checked)
                 }
                 Text { anchors.verticalCenter: parent.verticalCenter; text: qsTr("Page progress bar"); color: "#d4d4d8"; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+            }
+            Row {
+                spacing: 10
+                Toggle {
+                    checked: fullScreen.fullScreen
+                    onToggled: if (checked !== fullScreen.fullScreen) fullScreen.toggle()
+                }
+                Text { anchors.verticalCenter: parent.verticalCenter; text: qsTr("Full screen"); color: "#d4d4d8"; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
             }
             Rectangle { width: parent.width; height: 1; color: "#2a2a30" }
             Row {

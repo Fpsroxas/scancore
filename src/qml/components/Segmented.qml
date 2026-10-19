@@ -46,7 +46,8 @@ Rectangle {
             delegate: Item {
                 required property var modelData
                 required property int index
-                width: label.implicitWidth + (glyph.visible ? 24 : 0) + 26
+                // Icon-only options ({value, icon, tip}) are square-ish.
+                width: (label.visible ? label.implicitWidth + (glyph.visible ? 21 : 0) : glyph.width) + 26
                 height: root.height - 8
                 Row {
                     anchors.centerIn: parent
@@ -61,7 +62,8 @@ Rectangle {
                     }
                     Text {
                         id: label
-                        text: modelData.label
+                        visible: text.length > 0
+                        text: modelData.label || ""
                         color: index === root.currentIndex ? Theme.text : Theme.textMuted
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm

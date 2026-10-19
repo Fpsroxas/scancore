@@ -156,6 +156,13 @@ void ExtensionSource::installImageWriter() {
             throw Error(QStringLiteral("The extension for this page is not installed."), 404);
         source->fetchImage(page, path);
     });
+    // A cover (any plain image link) through the source's own client.
+    ImageCache::setRefererWriter(QStringLiteral("extsource"), [](const QString &url, const QString &referer, const QString &path) {
+        auto source = std::dynamic_pointer_cast<ExtensionSource>(comics::Registry::byKey(referer.mid(int(qstrlen("extsource:")))));
+        if (!source)
+            throw Error(QStringLiteral("The extension for this image is not installed."), 404);
+        source->fetchImage(QJsonObject{{"index", 0}, {"url", QString()}, {"imageUrl", url}}, path);
+    });
 }
 
 void ExtensionSource::shareCookies(const QString &url) {
@@ -203,9 +210,9 @@ std::optional<comics::Details> ExtensionSource::details(const QString &seriesUrl
     return d;
 }
 
-QString ExtensionSource::imageReferer() const {
-    return m_config.base.isEmpty() ? QString() : m_config.base + QLatin1Char('/');
-}
+// Covers go through the extension too, with the headers its site wants
+// (ImageCache's referer writer below).
+QString ExtensionSource::imageReferer() const { return QStringLiteral("extsource:") + key(); }
 
 QJsonArray ExtensionSource::filters() { return call(QStringLiteral("filters"), {}).toArray(); }
 

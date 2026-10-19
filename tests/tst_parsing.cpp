@@ -2,6 +2,7 @@
 // separate, opt-in run because sites change and CI must stay deterministic.
 
 #include "core/Html.h"
+#include "core/Parallel.h"
 #include "core/Text.h"
 #include "sources/Manifest.h"
 #include "sources/comics/ComicSource.h"
@@ -351,6 +352,40 @@ private slots:
             QVERIFY(e.message().contains(QStringLiteral("locked")));
         }
         Http::setTestHandler({});
+    }
+
+    // Search fans out to every source and shows each answer as it arrives;
+    // one that hangs is cut off at the deadline instead of holding the rest.
+    void fanOutStreamsAndTimesOut() {
+        const auto stuck = std::make_shared<std::atomic_bool>(false);
+        QList<std::function<int()>> jobs{
+            [] {
+                QThread::msleep(150);
+                return 2;
+            },
+            [] { return 1; },
+            [stuck] {
+                while (!CancelScope::cancelled())
+                    QThread::msleep(5);
+                stuck->store(true);
+                return 3;
+            },
+        };
+        QList<int> order;
+        QList<int> statuses(3, 0);
+        QElapsedTimer timer;
+        timer.start();
+        qint64 firstAt = -1;
+        parallelEach<int>(jobs, 400, [&](int i, const Outcome<int> &r) {
+            if (firstAt < 0)
+                firstAt = timer.elapsed();
+            order.append(i);
+            statuses[i] = r.ok() ? 200 : r.status;
+        });
+        QCOMPARE(order, (QList<int>{1, 0, 2}));
+        QVERIFY2(firstAt < 100, qPrintable(QStringLiteral("first answer after %1 ms").arg(firstAt)));
+        QCOMPARE(statuses, (QList<int>{200, 200, 504}));
+        QTRY_VERIFY_WITH_TIMEOUT(stuck->load(), 1000);
     }
 
     void gunzip() {

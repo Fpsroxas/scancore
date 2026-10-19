@@ -55,6 +55,12 @@ public:
     // {anilist: {id, title}, mal: {id, title}, comick: {id, title}} for a
     // series. Comick's ids are short text.
     Q_INVOKABLE QVariantMap links(const QString &seriesId) const;
+    // Connected services that could not find the series by its titles the
+    // last time progress was sent ("anilist", "mal", "comick").
+    Q_INVOKABLE QStringList misses(const QString &seriesId) const;
+    // The best name to search the trackers with: the catalogue's title when
+    // the series was opened from one, else its own.
+    Q_INVOKABLE QString lookupTitle(const QString &seriesId, const QString &title) const;
     Q_INVOKABLE void link(const QString &seriesId, const QString &service, const QVariant &remoteId, const QString &title);
     Q_INVOKABLE void unlink(const QString &seriesId, const QString &service);
 

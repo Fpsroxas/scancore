@@ -54,7 +54,7 @@ Rectangle {
                 onClicked: {
                     // Extensions that read this site get the cookies too.
                     Comics.shareSiteCookies(page.url)
-                    Router.toast("Try again now; " + page.host + qsTr(" should load."), "success")
+                    Router.toast(qsTr("Try again now; %1 should load.").arg(page.host), "success")
                     Router.back()
                 }
             }

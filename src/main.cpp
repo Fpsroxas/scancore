@@ -1,6 +1,7 @@
 #include "app/Account.h"
 #include "app/Activity.h"
 #include "app/App.h"
+#include "app/Profiler.h"
 #include "app/Customize.h"
 #include "app/Extensions.h"
 #include "app/Images.h"
@@ -64,15 +65,18 @@ void loadFonts() {
     QGuiApplication::setFont(font);
 }
 
-#ifdef Q_OS_MACOS
-// Finder opens files (a .sct theme, a comic) with an event, not arguments.
+#if defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
+// Finder opens files (a .sct theme, a comic) with an event, not arguments;
+// links SCANCORE answers (scancore://, a repository's one-tap link) come the
+// same way on macOS and Android.
 class FileOpenFilter : public QObject {
 public:
     using QObject::QObject;
     bool eventFilter(QObject *watched, QEvent *event) override {
         if (event->type() != QEvent::FileOpen)
             return QObject::eventFilter(watched, event);
-        const auto target = static_cast<QFileOpenEvent *>(event)->file();
+        const auto *open = static_cast<QFileOpenEvent *>(event);
+        const auto target = open->file().isEmpty() ? open->url().toString() : open->file();
         QTimer::singleShot(0, App::instance(), [target] { emit App::instance()->openRequested(target); });
         return true;
     }
@@ -144,6 +148,7 @@ void watchExtensions() {
             comics::Registry::rebuild();
             novels::Registry::rebuild();
             emit App::instance()->manifestChanged();
+            Extensions::instance()->notifyExtensionsChanged();
         });
         return timer;
     }();
@@ -196,7 +201,7 @@ int main(int argc, char *argv[]) {
 #endif
     Application app(argc, argv);
     startStep("application");
-#ifdef Q_OS_MACOS
+#if defined(Q_OS_MACOS) || defined(Q_OS_ANDROID)
     app.installEventFilter(new FileOpenFilter(&app));
 #endif
     Application::setOrganizationName(QStringLiteral("Medium Dev"));
@@ -293,6 +298,7 @@ int main(int argc, char *argv[]) {
     if (auto *window = qobject_cast<QQuickWindow *>(engine.rootObjects().first())) {
         QObject::connect(window, &QQuickWindow::frameSwapped, window, [] { startStep("first frame"); },
                          Qt::SingleShotConnection);
+        Profiler::instance()->attach(window);
         QObject::connect(appState, &App::activateRequested, window, [window] {
             if (window->visibility() == QWindow::Hidden || window->visibility() == QWindow::Minimized)
                 window->setVisibility(QWindow::Windowed);

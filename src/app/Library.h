@@ -32,10 +32,16 @@ public:
     Q_INVOKABLE QString category(const QString &seriesId) const;
     Q_INVOKABLE void save(const QVariantMap &series, const QString &category = QStringLiteral("reading"));
     Q_INVOKABLE void remove(const QString &seriesId);
+    // reading (watching, for anime), planned, paused (on hold), completed,
+    // dropped.
     Q_INVOKABLE void setCategory(const QString &seriesId, const QString &category);
+    Q_INVOKABLE bool isFavourite(const QString &seriesId) const;
+    Q_INVOKABLE void setFavourite(const QString &seriesId, bool favourite);
     Q_INVOKABLE void markSeen(const QString &seriesId);
 
-    Q_INVOKABLE sc::Task *entries(const QString &media = QString());
+    // brief: only what the library page shows (no description, genres,
+    // extra or reading position).
+    Q_INVOKABLE sc::Task *entries(const QString &media = QString(), bool brief = false);
     Q_INVOKABLE sc::Task *history(const QString &media = QString(), int limit = 60);
     Q_INVOKABLE sc::Task *continueItems(const QString &media, int limit = 12);
     Q_INVOKABLE void forget(const QString &seriesId);

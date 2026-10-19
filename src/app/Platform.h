@@ -1,0 +1,30 @@
+#pragma once
+
+#include <QString>
+
+#include <functional>
+
+namespace sc::platform {
+
+// Android only (everything here answers false or does nothing elsewhere).
+
+// Opens `url` in a browser check screen of Android's web view, with
+// SCANCORE's user agent. When the reader leaves it, the site's cookies go
+// into SCANCORE's cookie jar and to extensions that read the site, and
+// `done(url)` runs on the GUI thread. False when there is no such screen.
+bool openSiteCheck(const QString &url, const QString &title, const QString &doneLabel);
+void setSiteCheckDone(std::function<void(const QString &url)> done);
+
+// Battery optimisation stops the app soon after it leaves the screen
+// (library update checks, downloads, reading aloud).
+bool batteryRestricted();
+// The system's question to let SCANCORE run unrestricted.
+void askBatteryUnrestricted();
+
+// A system notification (Android); false where there is none here, so the
+// caller can use the tray instead. `tag` replaces an earlier one with it.
+bool notify(const QString &title, const QString &body, const QString &tag);
+// Android 13 and later: ask once to allow notifications.
+void askNotificationPermission();
+
+} // namespace sc::platform

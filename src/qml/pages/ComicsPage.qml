@@ -8,6 +8,10 @@ Item {
     property string query: ""
     property string source: App.settings.comicSource || "all"
     property var searchTask: null
+    // The results so far: sources answer one by one, so the grid fills
+    // while the slower ones are still searching.
+    readonly property var found: !searchTask ? null : searchTask.ok ? searchTask.result : searchTask.loading ? (searchTask.partial || null) : null
+    readonly property int stillSearching: found && searchTask.loading ? (found.pending || 0) : 0
     property int latestLimit: 36
     property var latestTask: Comics.latest(latestLimit)
     property var historyTask: Library.history("comic", 16)
@@ -46,6 +50,7 @@ Item {
 
     function run(text) {
         const trimmed = text.trim()
+        if (Router.takeRepositoryLink(trimmed)) return
         // A pasted series link opens that series directly.
         if (/^https?:\/\//.test(trimmed) && Comics.sourceForUrl(trimmed)) {
             Router.openSeries({ media: "comic", sourceUrl: trimmed, title: "", source: Comics.sourceForUrl(trimmed) }, null)
@@ -85,6 +90,22 @@ Item {
             PageHeader {
                 title: qsTr("Comics")
                 subtitle: page.sources.length + qsTr(" sources · manhwa, manga and webtoons")
+                ScButton {
+                    text: qsTr("Extensions")
+                    iconName: "puzzle"
+                    onClicked: Router.openExtensions()
+                    // A dot when updates wait.
+                    Rectangle {
+                        visible: Extensions.updateCount > 0
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.margins: 4
+                        width: 8
+                        height: 8
+                        radius: 4
+                        color: Theme.accent
+                    }
+                }
             }
 
             SearchField {
@@ -115,9 +136,9 @@ Item {
                         text: modelData.label + (modelData.language && modelData.language !== "en" ? " · " + modelData.language.toUpperCase() : "")
                         selected: page.source === modelData.key
                         detail: {
-                            if (!page.searchTask || !page.searchTask.ok) return ""
-                            const p = page.searchTask.result.providers.find(x => x.source === modelData.key)
-                            return p ? (p.ok ? String(p.count) : "!") : ""
+                            if (!page.found) return ""
+                            const p = page.found.providers.find(x => x.source === modelData.key)
+                            return !p ? "" : p.pending ? "…" : p.ok ? String(p.count) : "!"
                         }
                         onClicked: {
                             page.source = modelData.key
@@ -137,14 +158,15 @@ Item {
                 Item {
                     width: parent.width
                     height: 24
-                    visible: page.searchTask && page.searchTask.ok
+                    visible: !!page.found
                     Text {
                         x: Theme.gutter
-                        text: !page.searchTask || !page.searchTask.ok ? ""
-                            : page.browsingLocal ? page.searchTask.result.comics.length + qsTr(" on this device")
-                            : page.catalogResults ? qsTr("%1 titles for “%2” from %3's catalogue").arg(page.searchTask.result.comics.length).arg(page.query).arg(page.catalogLabel)
-                            : page.searchTask.result.comics.length + qsTr(" results for “") + page.query + "”"
+                        text: !page.found ? ""
+                            : page.browsingLocal ? page.found.comics.length + qsTr(" on this device")
+                            : page.catalogResults ? qsTr("%1 titles for “%2” from %3's catalogue").arg(page.found.comics.length).arg(page.query).arg(page.catalogLabel)
+                            : page.found.comics.length + qsTr(" results for “") + page.query + "”"
                                 + (page.catalogFailed ? qsTr(" · %1 is unavailable, so your sources were searched").arg(page.catalogLabel) : "")
+                                + (page.stillSearching ? (page.stillSearching === 1 ? qsTr(" · 1 source still searching") : qsTr(" · %1 sources still searching").arg(page.stillSearching)) : "")
                         color: Theme.textMuted
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm
@@ -152,8 +174,7 @@ Item {
                     Text {
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.gutter
-                        readonly property var failed: page.searchTask && page.searchTask.ok
-                            ? page.searchTask.result.providers.filter(p => !p.ok) : []
+                        readonly property var failed: page.found ? page.found.providers.filter(p => !p.ok && !p.pending) : []
                         visible: failed.length > 0
                         text: (failed.length === 1 ? qsTr("%1 is unavailable") : qsTr("%1 are unavailable")).arg(failed.map(p => p.label).join(", "))
                         color: Theme.warning
@@ -174,7 +195,7 @@ Item {
                     width: parent.width - 2 * Theme.gutter
                     spacing: 8
                     Repeater {
-                        model: page.searchTask && page.searchTask.ok ? page.searchTask.result.providers.filter(p => p.verifyUrl) : []
+                        model: page.found ? page.found.providers.filter(p => p.verifyUrl) : []
                         ScButton {
                             required property var modelData
                             compact: true
@@ -186,7 +207,7 @@ Item {
                 }
 
                 CoverGrid {
-                    items: page.searchTask && page.searchTask.ok ? page.searchTask.result.comics : []
+                    items: page.found ? page.found.comics : []
                     subtitleFor: (it) => it.catalog
                         ? [it.type, it.status, it.lastChapter ? qsTr("Ch. ") + it.lastChapter : ""].filter(s => s).join(" · ")
                         : it.sourceLabel + (it.type ? " · " + it.type : "")
@@ -196,7 +217,7 @@ Item {
                 StateView {
                     width: parent.width
                     task: page.searchTask
-                    empty: page.searchTask && page.searchTask.ok && page.searchTask.result.comics.length === 0
+                    empty: page.searchTask && page.searchTask.ok && page.found.comics.length === 0
                     emptyTitle: page.browsingLocal ? qsTr("No comics on this device yet") : qsTr("No comics found")
                     emptyText: page.browsingLocal
                         ? qsTr("Choose the folders that hold your comics in Settings → Sources. Folders of images, CBZ, CBR and PDF files all work.")
@@ -206,7 +227,7 @@ Item {
                 }
                 ScButton {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    visible: page.browsingLocal && page.searchTask && page.searchTask.ok && page.searchTask.result.comics.length === 0
+                    visible: page.browsingLocal && page.searchTask && page.searchTask.ok && page.found.comics.length === 0
                     text: qsTr("Choose folders")
                     iconName: "folder-open"
                     onClicked: Router.openSettings("sources")

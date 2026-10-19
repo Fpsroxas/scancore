@@ -31,6 +31,20 @@ struct Installed {
     std::optional<Package> update;
 };
 
+// A repository with what its last read found.
+struct RepositoryStatus {
+    Repository repo;
+    int count = 0;         // extensions it lists
+    QString error;         // why the last refresh failed; empty when it worked
+};
+
+// A one-tap "add repository" link: SCANCORE's own and the schemes the
+// community's links already use (Mihon, Tachiyomi, Aniyomi, LNReader).
+struct RepositoryLink {
+    QString url;
+    std::optional<Kind> kind;
+};
+
 // One source of an installed extension, as the source registries list it.
 struct SourceEntry {
     QString key;           // mihon:<id>, aniyomi:<id>, lnreader:<id>
@@ -66,6 +80,12 @@ public:
     static Repository add(const RepositoryPreview &preview);
     static void removeRepository(const QString &url);
     static QList<Repository> repositories();
+    static QList<RepositoryStatus> repositoryStatus();
+    // The repository a one-tap link names, or nothing when `link` is not
+    // one (scancore://repos/add?url=…, tachiyomi://add-repo?url=…,
+    // mihon://add-repo?url=…, aniyomi://add-repo?url=…,
+    // lnreader://repo/add?url=…).
+    static std::optional<RepositoryLink> parseLink(const QString &link);
     // Reads a repository's index again (conditional request); returns
     // whether anything changed.
     static bool refresh(const QString &url);

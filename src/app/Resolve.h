@@ -53,16 +53,16 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
                     return hits;
                 });
             }
-        const auto results = parallel(jobs);
-        for (int i = 0; i < results.size(); ++i) {
-            if (!results[i].ok())
-                continue;
-            for (const auto &hit : *results[i].value)
+        // A source that hangs is left out of this round, not waited for.
+        parallelEach<Hit>(jobs, 15000, [&](int i, const Outcome<Hit> &result) {
+            if (!result.ok())
+                return;
+            for (const auto &hit : *result.value)
                 if (wanted.contains(normalizedTitle(hit[0])) && !done.contains(asked[i]->key())) {
                     done.insert(asked[i]->key());
                     found.append({asked[i], hit[1], hit[0], hit[2], int(sources.indexOf(asked[i]))});
                 }
-        }
+        });
     }
     // Taken-down series are left out (one request per match, in parallel).
     if (readable && !found.isEmpty()) {

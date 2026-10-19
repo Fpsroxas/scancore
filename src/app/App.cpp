@@ -2,7 +2,11 @@
 
 #include "WebBridge.h"
 #include "Images.h"
+#include "Announcements.h"
 #include "Library.h"
+#include "Notifications.h"
+#include "Platform.h"
+#include "Profiler.h"
 #include "core/Database.h"
 #include "core/Http.h"
 #include "core/ImageCache.h"
@@ -45,6 +49,8 @@ const QVariantMap kDefaults{
     {"readerSpread", "single"},
     {"readerCrop", false},
     {"readerProgressBar", true},
+    // Readers open in full screen (their full screen button sets it).
+    {"readerFullscreen", false},
     {"novelFont", "Literata"},
     {"novelSize", 19},
     {"novelLineHeight", 1.5},
@@ -74,9 +80,20 @@ const QVariantMap kDefaults{
     {"showNsfwSources", false},
     {"imageCacheMB", 1024},
     {"closeToTray", false},
+    // Android: the one-time question about battery optimisation was asked.
+    {"batteryAsked", false},
+    {"notificationsAsked", false},
+    // Announcements from scancore.onl in the notification area.
+    {"announcements", true},
     {"checkAppUpdates", true},
     {"sidebarCollapsed", false},
     {"comicSource", "all"},
+    // The library: which media, category ("all", "favourites" or one of
+    // Router.libraryCategories) and view (grid, compact, list).
+    {"libraryMedia", "comic"},
+    {"libraryCategory", "all"},
+    {"libraryView", "grid"},
+    {"librarySort", "updates"},
     {"comickCatalog", true},
     // The tracker catalogue each page browses and searches: comick,
     // anilist, mal or none (novels: anilist, mal or none).
@@ -103,6 +120,20 @@ App::App(QObject *parent) : QObject(parent) {
         m_settings.insert(QStringLiteral("catalogComic"), QStringLiteral("none"));
     m_libraryTimer.setSingleShot(false);
     connect(&m_libraryTimer, &QTimer::timeout, this, [] { Library::instance()->checkUpdates(); });
+    platform::setSiteCheckDone([this](const QString &url) { emit siteChecked(url); });
+#ifdef Q_OS_ANDROID
+    // The reader may change it in the system's settings while away.
+    m_batteryRestricted = platform::batteryRestricted();
+    connect(qGuiApp, &QGuiApplication::applicationStateChanged, this, [this](Qt::ApplicationState state) {
+        if (state != Qt::ApplicationActive)
+            return;
+        const bool restricted = platform::batteryRestricted();
+        if (restricted != m_batteryRestricted) {
+            m_batteryRestricted = restricted;
+            emit batteryChanged();
+        }
+    });
+#endif
 }
 
 App *App::instance() {
@@ -152,6 +183,12 @@ void App::setSetting(const QString &key, const QVariant &value) {
     Database::setPref(QStringLiteral("setting.") + key, value);
     if (key == QLatin1String("libraryCheckHours"))
         scheduleLibraryCheck();
+    if (key == QLatin1String("announcements")) {
+        if (value.toBool())
+            QMetaObject::invokeMethod(this, [] { Announcements::instance()->start(); }, Qt::QueuedConnection);
+        else
+            Announcements::instance()->stop();
+    }
     if (key == QLatin1String("imageCacheMB")) {
         ImageCache::setBudget(std::max<qint64>(128, value.toLongLong()) * 1024 * 1024);
         // A smaller limit takes effect now, not at the next start.
@@ -191,6 +228,16 @@ void App::moveToBackground() const {
     });
 #endif
 }
+
+bool App::openSiteCheck(const QString &url, const QString &title, const QString &doneLabel) {
+    return platform::openSiteCheck(url, title, doneLabel);
+}
+
+void App::askBatteryUnrestricted() const { platform::askBatteryUnrestricted(); }
+
+bool App::profiling() const { return Profiler::enabled(); }
+
+void App::profilePlace(const QString &place) const { Profiler::instance()->setPlace(place); }
 
 void App::openFolder(const QString &path) const {
     QDir().mkpath(path);
@@ -327,14 +374,15 @@ void App::scheduleLibraryCheck() {
 }
 
 void App::startBackgroundWork() {
-    connect(Library::instance(), &Library::updatesFound, this, [this](int count, const QStringList &titles) {
-        if (!m_settings.value(QStringLiteral("notifyUpdates")).toBool())
-            return;
-        const auto body = titles.size() == 1
-                              ? QStringLiteral("%1 has %2 new chapter%3.").arg(titles.first()).arg(count).arg(count == 1 ? "" : "s")
-                              : QStringLiteral("%1 new chapters in %2 series.").arg(count).arg(titles.size());
-        notify(QStringLiteral("New chapters"), body);
+    // New chapters reach the notification area (and the system's
+    // notifications) from Library::checkUpdates itself; a new SCANCORE
+    // from here.
+    connect(this, &App::updateAvailable, this, [](const QString &version, const QString &url) {
+        Notifications::post({QStringLiteral("app"), QStringLiteral("app:") + version, tr("SCANCORE %1 is available").arg(version),
+                             tr("See what is new and update."), QVariantMap{{"url", url}}, true});
     });
+    // Announcements from scancore.onl, live while online.
+    QTimer::singleShot(6000, this, [] { Announcements::instance()->start(); });
     scheduleLibraryCheck();
     QTimer::singleShot(4000, this, [this] {
         refreshSources();
@@ -353,6 +401,13 @@ void App::startBackgroundWork() {
             ext::Manager::refreshAll();
             if (install)
                 ext::Manager::installTrustedUpdates();
+            // What is still waiting (new signing keys, or automatic
+            // updates off).
+            const int waiting = int(ext::Manager::updates().size());
+            if (waiting > 0)
+                Notifications::post({QStringLiteral("extensions"), QStringLiteral("extensions:updates"),
+                                     waiting == 1 ? tr("An extension update is ready") : tr("%1 extension updates are ready").arg(waiting),
+                                     tr("Open Extensions to update them."), QVariantMap{{"page", "extensions"}}, false});
         });
     };
     QTimer::singleShot(20000, this, checkExtensions);

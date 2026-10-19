@@ -23,6 +23,9 @@ class App : public QObject {
     Q_PROPERTY(QString dataFolder READ dataFolder CONSTANT)
     Q_PROPERTY(int manifestVersion READ manifestVersion NOTIFY manifestChanged)
     Q_PROPERTY(bool webEngine READ webEngine CONSTANT)
+    // Android: battery optimisation is on for SCANCORE, so the system stops
+    // it soon after it leaves the screen. Checked again on every return.
+    Q_PROPERTY(bool batteryRestricted READ batteryRestricted NOTIFY batteryChanged)
     // Development hook: SCANCORE_START='{"open": {...}, "autoResume": true}'
     // opens a page at startup for smoke tests and screenshots.
     Q_PROPERTY(QVariantMap startAction READ startAction CONSTANT)
@@ -37,6 +40,7 @@ public:
     QString dataFolder() const;
     int manifestVersion() const;
     bool webEngine() const;
+    bool batteryRestricted() const { return m_batteryRestricted; }
     QVariantMap startAction() const;
 
     Q_INVOKABLE void setSetting(const QString &key, const QVariant &value);
@@ -48,6 +52,14 @@ public:
     // Android: send the app to the background, as Back on the first screen
     // does. Does nothing elsewhere.
     Q_INVOKABLE void moveToBackground() const;
+    // Android: a site's browser check in the system web view (see
+    // Platform.h); siteChecked(url) follows. False where there is none.
+    Q_INVOKABLE bool openSiteCheck(const QString &url, const QString &title, const QString &doneLabel);
+    Q_INVOKABLE void askBatteryUnrestricted() const;
+    // SCANCORE_PROFILE: the page now on screen, for the profiler's log.
+    Q_PROPERTY(bool profiling READ profiling CONSTANT)
+    bool profiling() const;
+    Q_INVOKABLE void profilePlace(const QString &place) const;
     Q_INVOKABLE void openFolder(const QString &path) const;
     // A file dialog's address as a path to show or store.
     Q_INVOKABLE QString localPath(const QUrl &url) const { return url.isLocalFile() ? url.toLocalFile() : url.toString(); }
@@ -76,6 +88,8 @@ signals:
     void activateRequested();
     // A file or link to open, given on the command line or by a later launch.
     void openRequested(const QString &target);
+    void siteChecked(const QString &url);
+    void batteryChanged();
 
 private:
     // Private so QML uses create(): Qt builds its own instance of a
@@ -87,6 +101,7 @@ private:
 
     QVariantMap m_settings;
     QTimer m_libraryTimer;
+    bool m_batteryRestricted = false;
     QSystemTrayIcon *m_tray = nullptr;
 };
 

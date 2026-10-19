@@ -78,6 +78,10 @@ ApplicationWindow {
         if (first && first !== "home") shell.goSection(first)
         if (start.siteCheck) Qt.callLater(() => Router.openSiteCheck(start.siteCheck))
         if (start.toasts) for (const t of start.toasts) shell.toast(t.message, t.kind)
+        // {"notify": {title, body, delay}}: one in the notification area and
+        // the system's (after `delay` ms, e.g. once the app is in the
+        // background).
+        if (start.notify) notifyHook.start()
         if (start.palette) Qt.callLater(() => commandPalette.open())
         if (start.shortcuts) Qt.callLater(() => shortcutsSheet.open())
         if (start.push) Qt.callLater(() => shell.push(start.push.path, start.push.props || {}))
@@ -112,7 +116,14 @@ ApplicationWindow {
                 themeConfirm.open()
             } else if (/\.(cbz|zip|cbr|rar|cb7|7z|cbt|pdf|epub)$/.test(lower)) {
                 Router.openFile(target)
+            } else if (Extensions.repositoryLink(target).url && !/^https?:/.test(lower)) {
+                // A one-tap "add repository" link from a repository's page.
+                Router.addRepository(target)
             }
+        }
+        // A browser check in Android's web view has been left.
+        function onSiteChecked(url) {
+            shell.toast(qsTr("Try again now; %1 should load.").arg(url.replace(/^https?:\/\//, "").replace(/\/.*$/, "")), "success")
         }
     }
 
@@ -135,6 +146,10 @@ ApplicationWindow {
         id: shell
         property string section: "home"
         property var visited: ({ home: true })
+        // After the first page is up, the others are built over several
+        // frames instead of in one go, so a first visit (and the press that
+        // led there) never freezes the window; slow phones gain most.
+        property bool settled: false
 
         function stackFor(name) {
             for (let i = 0; i < sectionRepeater.count; ++i) {
@@ -145,6 +160,11 @@ ApplicationWindow {
         }
 
         function goSection(name) {
+            // Not a page: the notification area opens over the current one.
+            if (name === "notifications") {
+                notificationsPanel.open()
+                return
+            }
             if (immersive.depth > 0) immersive.clear()
             if (name === section) {
                 const stack = stackFor(name)
@@ -156,6 +176,7 @@ ApplicationWindow {
             v[name] = true
             visited = v
             section = name
+            if (App.profiling) App.profilePlace(name)
             Router.section = name
         }
 
@@ -165,10 +186,12 @@ ApplicationWindow {
             if (!stack) return
             if (fromCover && coverSource) hero.launch(fromCover, coverSource)
             stack.push(Qt.resolvedUrl(path), props)
+            if (App.profiling) App.profilePlace(path)
         }
 
         function openImmersive(path, props) {
             immersive.push(Qt.resolvedUrl(path), props)
+            if (App.profiling) App.profilePlace(path)
         }
 
         // Closes the reader or player, or pops the current page. Returns
@@ -198,6 +221,7 @@ ApplicationWindow {
             else App.moveToBackground()
         }
 
+        function addRepository(link) { repositorySheet.start(link) }
         function toast(message, kind) { toasts.show(message, kind) }
 
         function land(target) { hero.land(target) }
@@ -279,6 +303,7 @@ ApplicationWindow {
                     readonly property bool current: shell.section === key
                     anchors.fill: parent
                     active: shell.visited[key] === true
+                    asynchronous: shell.settled
                     visible: opacity > 0.001
                     opacity: current ? 1 : 0
                     z: current ? 1 : 0
@@ -425,9 +450,51 @@ ApplicationWindow {
         confirmText: qsTr("Use theme")
         onConfirmed: window.importTheme(window.pendingTheme)
     }
+    AddRepositoryDialog { id: repositorySheet }
+    NotificationsPanel { id: notificationsPanel }
+    Timer { interval: 1500; running: true; onTriggered: shell.settled = true }
+    Timer {
+        id: notifyHook
+        interval: App.startAction.notify ? (App.startAction.notify.delay || 0) : 0
+        onTriggered: Notifications.add("app", App.startAction.notify.title || "Test", App.startAction.notify.body || "", true)
+    }
+
+    // Android 13 and later: ask once, after the welcome, to allow
+    // notifications (new chapters, announcements, updates).
+    Timer {
+        interval: 1200
+        running: App.platform === "android" && App.settings.onboarded === true && App.settings.notificationsAsked !== true && !onboarding.active
+        onTriggered: {
+            App.setSetting("notificationsAsked", true)
+            Notifications.askPermission()
+        }
+    }
+
+    // Android: once, after the welcome, ask to be let off battery
+    // optimisation, which stops update checks, downloads and reading aloud
+    // soon after the app leaves the screen. Settings → Library has it later.
+    ConfirmDialog {
+        id: batteryAsk
+        heading: qsTr("Let SCANCORE run in the background?")
+        message: qsTr("Android's battery optimisation closes SCANCORE soon after you leave it, so new chapters are not checked, downloads pause and reading aloud stops. Android will ask you to allow it; you can change it later in Settings → Library.")
+        confirmText: qsTr("Allow")
+        onConfirmed: App.askBatteryUnrestricted()
+    }
+    Timer {
+        interval: 2500
+        running: App.platform === "android" && App.batteryRestricted && App.settings.onboarded === true
+            && App.settings.batteryAsked !== true && !onboarding.active
+            && App.settings.notificationsAsked === true && Qt.application.state === Qt.ApplicationActive
+        onTriggered: {
+            App.setSetting("batteryAsked", true)
+            batteryAsk.open()
+        }
+    }
     Toasts {
         id: toasts
         z: 40
+        // Above the phone's tab bar, not over it.
+        bottomInset: tabBar.visible ? tabBar.height : 0
     }
 
     // Development hook: SCANCORE_START {"screenshot": "/path.png", "delay": ms}

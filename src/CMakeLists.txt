@@ -99,6 +99,10 @@ qt_add_qml_module(scancore
         app/Images.cpp app/Images.h
         app/Importer.cpp app/Importer.h
         app/SingleInstance.cpp app/SingleInstance.h
+        app/Announcements.cpp app/Announcements.h
+        app/Notifications.cpp app/Notifications.h
+        app/Platform.cpp app/Platform.h
+        app/Profiler.cpp app/Profiler.h
         app/Speech.cpp app/Speech.h
         app/Trackers.cpp app/Trackers.h
         app/Sync.cpp app/Sync.h

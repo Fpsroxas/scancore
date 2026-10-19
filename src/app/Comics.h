@@ -42,6 +42,15 @@ public:
     // {panels: [{url, width, height}], referer, offline}
     Q_INVOKABLE sc::Task *panels(const QString &chapterUrl, const QString &seriesId = QString(),
                                  const QString &unitKey = QString());
+    // One source by itself, a page at a time: "popular", "latest" or
+    // "search" (with `query` and the states of its filters).
+    // {items: [...], hasNextPage}
+    Q_INVOKABLE sc::Task *browse(const QString &source, const QString &listing, int page,
+                                 const QString &query = QString(), const QVariantList &filters = {});
+    // Its search filters as its extension describes them: [{type, name,
+    // values, state, filters}] (header, separator, select, text, checkbox,
+    // tristate, sort, group).
+    Q_INVOKABLE sc::Task *filters(const QString &source);
     // {updates: [...], providers: [...]}
     Q_INVOKABLE sc::Task *latest(int limit = 40);
 

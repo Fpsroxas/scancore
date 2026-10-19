@@ -10,6 +10,7 @@
 #include "core/Text.h"
 #include "sources/novels/Registry.h"
 
+#include <QElapsedTimer>
 #include <QJsonDocument>
 
 namespace sc {
@@ -137,7 +138,6 @@ Task *Novels::search(const QString &query, const QString &only) {
         QList<std::function<QList<Book>()>> jobs;
         for (const auto &s : selected)
             jobs.append([s, query] { return s->search(query); });
-        const auto results = parallel(jobs);
         const auto q = normalizedTitle(query);
         const auto words = q.split(QLatin1Char(' '), Qt::SkipEmptyParts);
         struct Ranked {
@@ -148,20 +148,52 @@ Task *Novels::search(const QString &query, const QString &only) {
         };
         const auto wantedLanguage = contentLanguage();
         QList<Ranked> ranked;
-        QVariantList providers;
+        QList<QVariantMap> providerAt(selected.size());
         bool anyOk = false;
-        for (int i = 0; i < results.size(); ++i) {
-            providers.append(QVariantMap{{"source", selected[i]->key()},
-                                         {"label", selected[i]->label()},
-                                         {"ok", results[i].ok()},
-                                         {"count", results[i].ok() ? results[i].value->size() : 0},
-                                         {"error", results[i].error},
-                                         {"verifyUrl", results[i].verifyUrl}});
-            if (!results[i].ok())
-                continue;
+        // Equally good titles in the content language first.
+        const auto snapshot = [&] {
+            auto order = ranked;
+            std::stable_sort(order.begin(), order.end(), [](const Ranked &a, const Ranked &b) {
+                if (a.tier != b.tier)
+                    return a.tier < b.tier;
+                if (a.preferred != b.preferred)
+                    return a.preferred;
+                return a.order < b.order;
+            });
+            QVariantList books;
+            books.reserve(order.size());
+            for (const auto &r : order)
+                books.append(r.book);
+            QVariantList providers;
+            int pending = 0;
+            for (int i = 0; i < selected.size(); ++i) {
+                if (providerAt[i].isEmpty()) {
+                    ++pending;
+                    providers.append(QVariantMap{{"source", selected[i]->key()}, {"label", selected[i]->label()}, {"pending", true}});
+                } else {
+                    providers.append(providerAt[i]);
+                }
+            }
+            return QVariantMap{{"books", books}, {"providers", providers}, {"pending", pending}};
+        };
+        // Results show source by source as they come in, a few times a
+        // second at most.
+        QElapsedTimer sinceReport;
+        sinceReport.start();
+        int answered = 0;
+        parallelEach<QList<Book>>(jobs, 20000, [&](int i, const Outcome<QList<Book>> &r) {
+            ++answered;
+            providerAt[i] = QVariantMap{{"source", selected[i]->key()},
+                                        {"label", selected[i]->label()},
+                                        {"ok", r.ok()},
+                                        {"count", r.ok() ? r.value->size() : 0},
+                                        {"error", r.error},
+                                        {"verifyUrl", r.verifyUrl}};
+            if (!r.ok())
+                return;
             anyOk = true;
             int order = 0;
-            for (const auto &b : *results[i].value) {
+            for (const auto &b : *r.value) {
                 const auto t = normalizedTitle(b.title);
                 // Sites that ignore the query return their default ranking;
                 // keep only titles that mention every searched word.
@@ -173,21 +205,14 @@ Task *Novels::search(const QString &query, const QString &only) {
                 ranked.append({tier, baseLanguage(selected[i]->config().language) == wantedLanguage, order++,
                                bookMap(b, selected[i]->label())});
             }
-        }
+            if (answered < selected.size() && order > 0 && (answered == 1 || sinceReport.elapsed() > 250)) {
+                Task::report(snapshot());
+                sinceReport.restart();
+            }
+        });
         if (!anyOk && !selected.isEmpty())
             throw Error(QStringLiteral("Novel sources are unavailable right now. Check your connection and try again."));
-        // Equally good titles in the content language first.
-        std::stable_sort(ranked.begin(), ranked.end(), [](const Ranked &a, const Ranked &b) {
-            if (a.tier != b.tier)
-                return a.tier < b.tier;
-            if (a.preferred != b.preferred)
-                return a.preferred;
-            return a.order < b.order;
-        });
-        QVariantList books;
-        for (const auto &r : ranked)
-            books.append(r.book);
-        return QVariantMap{{"books", books}, {"providers", providers}};
+        return snapshot();
     });
 }
 

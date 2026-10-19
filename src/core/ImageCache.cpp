@@ -33,6 +33,15 @@ QHash<QString, int> g_inflight;
 
 QMutex g_writersMutex;
 QHash<QString, ImageCache::Writer> g_writers;
+QHash<QString, ImageCache::RefererWriter> g_refererWriters;
+
+ImageCache::RefererWriter refererWriterFor(const QString &referer) {
+    const auto colon = referer.indexOf(QLatin1Char(':'));
+    if (colon <= 0 || referer.startsWith(QLatin1String("http")))
+        return {};
+    QMutexLocker lock(&g_writersMutex);
+    return g_refererWriters.value(referer.left(colon));
+}
 
 ImageCache::Writer writerFor(const QString &url) {
     const auto colon = url.indexOf(QLatin1Char(':'));
@@ -73,6 +82,11 @@ void ImageCache::setSchemeWriter(const QString &scheme, Writer writer) {
     g_writers.insert(scheme, std::move(writer));
 }
 
+void ImageCache::setRefererWriter(const QString &scheme, RefererWriter writer) {
+    QMutexLocker lock(&g_writersMutex);
+    g_refererWriters.insert(scheme, std::move(writer));
+}
+
 QByteArray ImageCache::fetch(const QString &url, const QString &referer) {
     if (url.startsWith(QLatin1String("pdfpage:")))
         return local::renderPdfPage(url);
@@ -105,6 +119,13 @@ QByteArray ImageCache::fetch(const QString &url, const QString &referer) {
     QDir().mkpath(QFileInfo(path).absolutePath());
     if (const auto writer = writerFor(url)) {
         writer(url, path);
+        auto data = readFile(path);
+        if (data.isEmpty())
+            throw Error(QStringLiteral("Image unavailable."), 502);
+        return data;
+    }
+    if (const auto writer = refererWriterFor(referer)) {
+        writer(url, referer, path);
         auto data = readFile(path);
         if (data.isEmpty())
             throw Error(QStringLiteral("Image unavailable."), 502);

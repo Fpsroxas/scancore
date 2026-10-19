@@ -9,6 +9,10 @@ Item {
     property string query: ""
     property string source: App.settings.novelSource || "all"
     property var searchTask: null
+    // The results so far: sources answer one by one, so the grid fills
+    // while the slower ones are still searching.
+    readonly property var found: !searchTask ? null : searchTask.ok ? searchTask.result : searchTask.loading ? (searchTask.partial || null) : null
+    readonly property int stillSearching: found && searchTask.loading ? (found.pending || 0) : 0
     property var discoverTask: Novels.discover()
     // "All sources" searches the chosen novel catalogue, then finds the pick
     // on a source.
@@ -59,6 +63,7 @@ Item {
     }
 
     function run(text) {
+        if (Router.takeRepositoryLink(text)) return
         query = text.trim()
         if (query.length > 0) recent.remember(query)
         catalogFailed = false
@@ -134,9 +139,9 @@ Item {
                         text: modelData.label
                         selected: page.source === modelData.key
                         detail: {
-                            if (!page.searchTask || !page.searchTask.ok) return ""
-                            const p = page.searchTask.result.providers.find(x => x.source === modelData.key)
-                            return p ? (p.ok ? String(p.count) : "!") : ""
+                            if (!page.found) return ""
+                            const p = page.found.providers.find(x => x.source === modelData.key)
+                            return !p ? "" : p.pending ? "…" : p.ok ? String(p.count) : "!"
                         }
                         onClicked: {
                             page.source = modelData.key
@@ -153,12 +158,13 @@ Item {
                 spacing: 18
                 Text {
                     x: Theme.gutter
-                    visible: page.searchTask && page.searchTask.ok
-                    text: !page.searchTask || !page.searchTask.ok ? ""
-                        : page.browsingLocal ? page.searchTask.result.books.length + qsTr(" on this device")
-                        : page.catalogResults ? qsTr("%1 titles for “%2” from %3's catalogue").arg(page.searchTask.result.books.length).arg(page.query).arg(page.catalogLabel)
-                        : page.searchTask.result.books.length + qsTr(" results for “") + page.query + "”"
+                    visible: !!page.found
+                    text: !page.found ? ""
+                        : page.browsingLocal ? page.found.books.length + qsTr(" on this device")
+                        : page.catalogResults ? qsTr("%1 titles for “%2” from %3's catalogue").arg(page.found.books.length).arg(page.query).arg(page.catalogLabel)
+                        : page.found.books.length + qsTr(" results for “") + page.query + "”"
                             + (page.catalogFailed ? qsTr(" · %1 is unavailable, so your sources were searched").arg(page.catalogLabel) : "")
+                                + (page.stillSearching ? (page.stillSearching === 1 ? qsTr(" · 1 source still searching") : qsTr(" · %1 sources still searching").arg(page.stillSearching)) : "")
                     color: Theme.textMuted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
@@ -168,7 +174,7 @@ Item {
                     width: parent.width - 2 * Theme.gutter
                     spacing: 8
                     Repeater {
-                        model: page.searchTask && page.searchTask.ok ? page.searchTask.result.providers.filter(p => p.verifyUrl) : []
+                        model: page.found ? page.found.providers.filter(p => p.verifyUrl) : []
                         ScButton {
                             required property var modelData
                             compact: true
@@ -180,7 +186,7 @@ Item {
                 }
 
                 CoverGrid {
-                    items: page.searchTask && page.searchTask.ok ? page.searchTask.result.books : []
+                    items: page.found ? page.found.books : []
                     subtitleFor: (it) => it.catalog
                         ? [it.type, it.status, it.year > 0 ? String(it.year) : ""].filter(s => s).join(" · ")
                         : it.sourceLabel + (it.author ? " · " + it.author : "")
@@ -189,7 +195,7 @@ Item {
                 StateView {
                     width: parent.width
                     task: page.searchTask
-                    empty: page.searchTask && page.searchTask.ok && page.searchTask.result.books.length === 0
+                    empty: page.searchTask && page.searchTask.ok && page.found.books.length === 0
                     emptyTitle: page.browsingLocal ? qsTr("No books on this device yet") : qsTr("No novels found")
                     emptyText: page.browsingLocal
                         ? qsTr("Choose the folders that hold your EPUB books in Settings → Sources.")
@@ -199,7 +205,7 @@ Item {
                 }
                 ScButton {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    visible: page.browsingLocal && page.searchTask && page.searchTask.ok && page.searchTask.result.books.length === 0
+                    visible: page.browsingLocal && page.searchTask && page.searchTask.ok && page.found.books.length === 0
                     text: qsTr("Choose folders")
                     iconName: "folder-open"
                     onClicked: Router.openSettings("sources")

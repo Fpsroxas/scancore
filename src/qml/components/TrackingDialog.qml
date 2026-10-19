@@ -25,12 +25,28 @@ Dialog {
           site: "https://comick.dev/" }
     ].filter(s => s.connected)
 
+    // The name to search by: the catalogue's title when the series came
+    // from one, which trackers know better than a site's.
+    readonly property string lookupTitle: Trackers.lookupTitle(seriesId, seriesTitle)
+    readonly property var misses: { Trackers.anilist; return Trackers.misses(seriesId) }
+    property string pendingPick: ""
+
     function search(service, text) {
         picking = service
+        query.text = text
         searchTask = Trackers.search(service, media, text)
     }
+    // Opens straight on one service's search.
+    function pick(service) {
+        pendingPick = service
+        open()
+    }
 
-    onOpened: picking = ""
+    onOpened: {
+        picking = ""
+        if (pendingPick) search(pendingPick, lookupTitle)
+        pendingPick = ""
+    }
 
     parent: Overlay.overlay
     anchors.centerIn: parent
@@ -142,9 +158,11 @@ Dialog {
                             }
                             Text {
                                 width: parent.width
+                                readonly property bool missed: !card.link && dialog.misses.indexOf(card.modelData.key) >= 0
                                 text: card.link ? (card.link.title || qsTr("Entry ") + card.link.id) + (card.link.auto ? qsTr(" · from this anime") : "")
+                                    : missed ? qsTr("Not found by its title; pick the entry")
                                     : dialog.media === "anime" ? qsTr("Linked when you finish an episode") : qsTr("Found by title when you finish a chapter")
-                                color: Theme.textMuted
+                                color: missed ? Theme.warning : Theme.textMuted
                                 font.family: Theme.fontSans
                                 font.pixelSize: Theme.textSm
                                 elide: Text.ElideRight
@@ -164,7 +182,8 @@ Dialog {
                             ScButton {
                                 compact: true
                                 text: card.link ? qsTr("Change") : qsTr("Link")
-                                onClicked: dialog.search(card.modelData.key, dialog.seriesTitle)
+                                variant: !card.link && dialog.misses.indexOf(card.modelData.key) >= 0 ? "primary" : "secondary"
+                                onClicked: dialog.search(card.modelData.key, dialog.lookupTitle)
                             }
                             ScButton {
                                 visible: !!card.link && !card.link.auto
@@ -187,7 +206,7 @@ Dialog {
             SearchField {
                 id: query
                 width: parent.width
-                text: dialog.seriesTitle
+                text: dialog.lookupTitle
                 placeholderText: qsTr("Title")
                 onSubmitted: (text) => dialog.search(dialog.picking, text)
             }

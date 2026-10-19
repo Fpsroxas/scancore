@@ -216,9 +216,8 @@ Rectangle {
         return keys.length ? " (" + keys[0] + ")" : ""
     }
 
-    function toggleFullScreen() {
-        Window.window.visibility === Window.FullScreen ? Window.window.showNormal() : Window.window.showFullScreen()
-    }
+    function toggleFullScreen() { fullScreen.toggle() }
+    ReaderWindow { id: fullScreen }
 
     // The keys come from Settings → Keyboard (see Keymap), as in the comic
     // reader; scrolling keys only while the reader has focus.
@@ -561,7 +560,7 @@ Rectangle {
             }
             IconButton { iconName: "type"; iconColor: reader.look.text; tip: qsTr("Text settings"); onClicked: typePopup.open() }
             IconButton {
-                iconName: Window.window && Window.window.visibility === Window.FullScreen ? "minimize" : "maximize"
+                iconName: fullScreen.fullScreen ? "minimize" : "maximize"
                 iconColor: reader.look.text
                 tip: qsTr("Full screen") + reader.keyHint("reader.fullscreen")
                 onClicked: reader.toggleFullScreen()

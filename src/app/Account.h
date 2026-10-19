@@ -30,6 +30,9 @@ class Account : public QObject {
 
 public:
     static Account *instance();
+    // The website the app talks to: scancore.onl, the user's own, or
+    // SCANCORE_SITE (development).
+    static QString siteBase();
     static Account *create(QQmlEngine *, QJSEngine *) { return instance(); }
 
     bool signedIn() const { return !m_user.isEmpty(); }

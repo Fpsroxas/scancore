@@ -2,6 +2,7 @@
 
 #include "Novels.h"
 #include "core/Database.h"
+#include "core/ImageCache.h"
 #include "core/Http.h"
 #include "sources/comics/Registry.h"
 
@@ -162,15 +163,30 @@ void Downloads::runJob(const QVariantMap &row) {
             for (int i = 0; i < panels.size(); ++i) {
                 if (CancelScope::cancelled())
                     throw Error(QStringLiteral("Cancelled"), 499);
+                const auto referer = source->imageReferer();
+                Response response;
+                // Extension pages ("extimage:") and images an extension
+                // fetches itself come through the image cache's writers.
+                if (!panels[i].url.startsWith(QLatin1String("http")) || !referer.startsWith(QLatin1String("http"))) {
+                    for (int attempt = 0; attempt < 3 && !response.ok(); ++attempt) {
+                        try {
+                            response.body = ImageCache::fetch(panels[i].url, referer);
+                            response.status = 200;
+                            response.contentType = QMimeDatabase().mimeTypeForData(response.body).name().toLatin1();
+                        } catch (const Error &e) {
+                            if (attempt == 2 || e.status() == 499)
+                                throw;
+                        }
+                    }
+                }
                 Request request;
                 request.url = QUrl(panels[i].url);
                 request.lane = Lane::Images;
                 request.timeoutMs = 30000;
                 request.maxBytes = 40 * 1024 * 1024;
-                request.headers = {{"Referer", source->imageReferer().toUtf8()},
+                request.headers = {{"Referer", referer.toUtf8()},
                                    {"Accept", Http::ImageAccept}};
-                Response response;
-                for (int attempt = 0; attempt < 3; ++attempt) {
+                for (int attempt = 0; attempt < 3 && !response.ok(); ++attempt) {
                     try {
                         response = Http::send(request);
                         if (response.ok())
