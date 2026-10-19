@@ -6,6 +6,7 @@
 #include "Trackers.h"
 #include "core/Database.h"
 #include "core/Parallel.h"
+#include "core/Text.h"
 #include "sources/comics/Registry.h"
 #include "sources/local/Local.h"
 #include "sources/novels/Registry.h"
@@ -48,11 +49,6 @@ struct Item {
 
     QString title() const { return titles.value(0); }
 };
-
-QString normalized(const QString &text) {
-    static const QRegularExpression nonWord(QStringLiteral("[^\\p{L}\\p{N}]+"));
-    return text.toLower().replace(nonWord, QString());
-}
 
 QVariantMap toMap(const Item &item) {
     QVariantList numbers;
@@ -458,8 +454,8 @@ void storeAnime(const Item &item, Tally &outcome) {
 
 template <typename SourcePtr>
 bool sameSource(const SourcePtr &source, const QString &name) {
-    const auto a = normalized(source->label());
-    const auto b = normalized(name);
+    const auto a = titleKey(source->label());
+    const auto b = titleKey(name);
     return !a.isEmpty() && !b.isEmpty() && (a == b || a.startsWith(b) || b.startsWith(a));
 }
 
@@ -469,8 +465,8 @@ bool storeFound(const Item &item, Tally &outcome, bool searchEverywhere) {
     const bool novel = item.media == QLatin1String("novel");
     QStringList wanted;
     for (const auto &t : item.titles)
-        if (!normalized(t).isEmpty())
-            wanted.append(normalized(t));
+        if (!titleKey(t).isEmpty())
+            wanted.append(titleKey(t));
     QVariantMap series;
     QVariantList units;
 
@@ -510,7 +506,7 @@ bool storeFound(const Item &item, Tally &outcome, bool searchEverywhere) {
             }
             bool done = false;
             for (const auto &summary : found)
-                if (wanted.contains(normalized(summary.title)) && tryUrl(summary.url, source->key(), summary.title, summary.cover)) {
+                if (wanted.contains(titleKey(summary.title)) && tryUrl(summary.url, source->key(), summary.title, summary.cover)) {
                     done = true;
                     break;
                 }
@@ -531,7 +527,7 @@ bool storeFound(const Item &item, Tally &outcome, bool searchEverywhere) {
             }
             bool done = false;
             for (const auto &book : found)
-                if (wanted.contains(normalized(book.title)) && tryUrl(book.url, source->key(), book.title, book.cover)) {
+                if (wanted.contains(titleKey(book.title)) && tryUrl(book.url, source->key(), book.title, book.cover)) {
                     done = true;
                     break;
                 }
@@ -576,11 +572,11 @@ void addUnmatched(const QList<Item> &items) {
     auto list = Database::pref(kUnmatched).toList();
     QSet<QString> known;
     for (const auto &value : list)
-        known.insert(value.toMap().value("media").toString() + normalized(value.toMap().value("title").toString()));
+        known.insert(value.toMap().value("media").toString() + titleKey(value.toMap().value("title").toString()));
     for (const auto &item : items)
-        if (!known.contains(item.media + normalized(item.title()))) {
+        if (!known.contains(item.media + titleKey(item.title()))) {
             list.append(toMap(item));
-            known.insert(item.media + normalized(item.title()));
+            known.insert(item.media + titleKey(item.title()));
         }
     Database::setPref(kUnmatched, list);
 }
@@ -781,10 +777,10 @@ Task *Importer::matchAll() {
             QMutexLocker lock(&g_unmatchedMutex);
             QSet<QString> tried;
             for (const auto &item : waiting)
-                tried.insert(item.media + normalized(item.title()));
+                tried.insert(item.media + titleKey(item.title()));
             QVariantList left;
             for (const auto &value : Database::pref(kUnmatched).toList())
-                if (!tried.contains(value.toMap().value("media").toString() + normalized(value.toMap().value("title").toString())))
+                if (!tried.contains(value.toMap().value("media").toString() + titleKey(value.toMap().value("title").toString())))
                     left.append(value);
             for (const auto &item : outcome.unmatched)
                 left.append(toMap(item));

@@ -309,7 +309,7 @@ QList<Chapter> FlameSource::chapters(const QString &seriesUrl) {
         ch.number = QString::number(number);
         ch.title = str(c.value("title"));
         if (ch.title.isEmpty())
-            ch.title = QStringLiteral("Chapter %1").arg(ch.number);
+            ch.title = chapterLabel(ch.number);
         ch.url = QStringLiteral("%1/series/%2/%3").arg(m_config.base, str(c.value("series_id")), token);
         ch.slug = token;
         const auto released = c.value("release_date").toDouble();

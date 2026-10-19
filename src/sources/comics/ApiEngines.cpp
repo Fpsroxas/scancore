@@ -105,8 +105,7 @@ QList<Chapter> AsuraSource::chapters(const QString &seriesUrl) {
         ch.number = str(c.value("number"));
         ch.slug = str(c.value("slug"));
         const auto title = str(c.value("title"));
-        ch.title = title.isEmpty() ? QStringLiteral("Chapter %1").arg(ch.number)
-                                   : QStringLiteral("Chapter %1: %2").arg(ch.number, title);
+        ch.title = chapterLabel(ch.number, title);
         ch.url = QStringLiteral("%1/api/series/%2/chapters/%3").arg(m_config.api, slug, ch.slug);
         for (const char *field : {"created_at", "published_at", "createdAt", "publishedAt"})
             if (ch.released.isEmpty())
@@ -179,7 +178,7 @@ QList<LatestItem> AsuraSource::latest(int limit) {
                 item.cover = str(s.value("cover_url"));
             item.chapterNumber = str(chapter.value("number"));
             if (!item.chapterNumber.isEmpty())
-                item.chapterTitle = QStringLiteral("Chapter %1").arg(item.chapterNumber);
+                item.chapterTitle = chapterLabel(item.chapterNumber);
             if (!str(chapter.value("slug")).isEmpty() && !str(s.value("slug")).isEmpty())
                 item.chapterUrl = QStringLiteral("%1/api/series/%2/chapters/%3")
                                       .arg(m_config.api, str(s.value("slug")), str(chapter.value("slug")));
@@ -212,7 +211,44 @@ QString dexId(const QString &value, const QString &type) {
         throw Error(QStringLiteral("That is not a MangaDex %1 link.").arg(type));
     return pathSegment(url, 1);
 }
+
+// The name in the first wanted language that has one (other languages'
+// names are mostly among the alternative titles), then English, then any.
+QString dexTitle(const QJsonObject &attrs, const QStringList &languages) {
+    const auto titles = attrs.value("title").toObject();
+    for (const auto &language : languages) {
+        if (const auto title = str(titles.value(language)); !title.isEmpty())
+            return title;
+        // English keeps the main title, as before languages were added.
+        if (language == QLatin1String("en"))
+            continue;
+        for (const auto &alt : arr(attrs.value("altTitles")))
+            if (const auto title = str(alt.toObject().value(language)); !title.isEmpty())
+                return title;
+    }
+    if (const auto title = str(titles.value("en")); !title.isEmpty())
+        return title;
+    return titles.isEmpty() ? QString() : str(titles.begin().value());
+}
+
+QString dexText(const QJsonObject &texts, const QStringList &languages) {
+    for (const auto &language : languages + QStringList{QStringLiteral("en")})
+        if (const auto text = str(texts.value(language)); !text.isEmpty())
+            return text;
+    for (const auto &text : texts)
+        if (!str(text).isEmpty())
+            return str(text);
+    return {};
+}
 } // namespace
+
+QStringList MangaDexSource::languages() const {
+    QStringList out;
+    for (const auto &value : m_config.options.value("languages").toArray())
+        if (const auto language = str(value).trimmed(); !language.isEmpty() && !out.contains(language))
+            out.append(language);
+    return out.isEmpty() ? QStringList{QStringLiteral("en")} : out;
+}
 
 QJsonDocument MangaDexSource::api(const QString &path, const QList<QPair<QString, QString>> &params, bool atHome) {
     // MangaDex asks clients to stay under ~5 requests a second, and far fewer
@@ -237,24 +273,20 @@ QJsonDocument MangaDexSource::api(const QString &path, const QList<QPair<QString
 }
 
 QList<Summary> MangaDexSource::search(const QString &query) {
-    const auto doc = api(QStringLiteral("/manga"), {{"title", query},
-                                                    {"limit", "24"},
-                                                    {"includes[]", "cover_art"},
-                                                    {"availableTranslatedLanguage[]", "en"},
-                                                    {"contentRating[]", "safe"},
-                                                    {"contentRating[]", "suggestive"},
-                                                    {"order[relevance]", "desc"}});
+    const auto wanted = languages();
+    QList<QPair<QString, QString>> params{{"title", query}, {"limit", "24"}, {"includes[]", "cover_art"}};
+    for (const auto &language : wanted)
+        params.append({"availableTranslatedLanguage[]", language});
+    params.append({{"contentRating[]", "safe"}, {"contentRating[]", "suggestive"}, {"order[relevance]", "desc"}});
+    const auto doc = api(QStringLiteral("/manga"), params);
     QList<Summary> out;
     for (const auto &row : arr(doc.object().value("data"))) {
         const auto manga = row.toObject();
         const auto attrs = manga.value("attributes").toObject();
-        const auto titles = attrs.value("title").toObject();
         Summary item;
-        item.title = str(titles.value("en"));
-        if (item.title.isEmpty() && !titles.isEmpty())
-            item.title = str(titles.begin().value());
+        item.title = dexTitle(attrs, wanted);
         const auto id = str(manga.value("id"));
-        item.url = QStringLiteral("https://mangadex.org/title/%1").arg(id);
+        item.url = tagged(QStringLiteral("https://mangadex.org/title/%1").arg(id));
         for (const auto &rel : arr(manga.value("relationships"))) {
             const auto r = rel.toObject();
             if (str(r.value("type")) == QLatin1String("cover_art")) {
@@ -278,16 +310,15 @@ QList<Summary> MangaDexSource::search(const QString &query) {
 
 QList<Chapter> MangaDexSource::chapters(const QString &seriesUrl) {
     const auto id = dexId(seriesUrl, QStringLiteral("title"));
+    const auto wanted = languages();
     QList<Chapter> out;
     QSet<QString> seen;
     for (int offset = 0; offset < 10000; offset += 500) {
-        const auto doc = api(QStringLiteral("/manga/%1/feed").arg(id), {{"offset", QString::number(offset)},
-                                                                        {"limit", "500"},
-                                                                        {"translatedLanguage[]", "en"},
-                                                                        {"order[chapter]", "asc"},
-                                                                        {"order[volume]", "asc"},
-                                                                        {"includeExternalUrl", "0"},
-                                                                        {"includeFuturePublishAt", "0"}});
+        QList<QPair<QString, QString>> params{{"offset", QString::number(offset)}, {"limit", "500"}};
+        for (const auto &language : wanted)
+            params.append({"translatedLanguage[]", language});
+        params.append({{"order[chapter]", "asc"}, {"order[volume]", "asc"}, {"includeExternalUrl", "0"}, {"includeFuturePublishAt", "0"}});
+        const auto doc = api(QStringLiteral("/manga/%1/feed").arg(id), params);
         const auto rows = arr(doc.object().value("data"));
         for (const auto &row : rows) {
             const auto c = row.toObject();
@@ -302,9 +333,8 @@ QList<Chapter> MangaDexSource::chapters(const QString &seriesUrl) {
             if (ch.number.isEmpty())
                 ch.number = QStringLiteral("0");
             const auto title = str(attrs.value("title"));
-            ch.title = title.isEmpty() ? QStringLiteral("Chapter %1").arg(ch.number)
-                                       : QStringLiteral("Chapter %1: %2").arg(ch.number, title);
-            ch.url = QStringLiteral("https://mangadex.org/chapter/%1").arg(cid);
+            ch.title = chapterLabel(ch.number, title);
+            ch.url = tagged(QStringLiteral("https://mangadex.org/chapter/%1").arg(cid));
             ch.slug = cid;
             ch.released = str(attrs.value("publishAt"));
             out.append(ch);
@@ -337,13 +367,18 @@ std::optional<Details> MangaDexSource::details(const QString &seriesUrl) {
     const auto doc = api(QStringLiteral("/manga/%1").arg(id), {{"includes[]", "cover_art"}, {"includes[]", "author"}});
     const auto manga = doc.object().value("data").toObject();
     const auto attrs = manga.value("attributes").toObject();
+    const auto wanted = languages();
     Details d;
-    const auto titles = attrs.value("title").toObject();
-    d.title = str(titles.value("en"));
-    if (d.title.isEmpty() && !titles.isEmpty())
-        d.title = str(titles.begin().value());
-    d.description = str(attrs.value("description").toObject().value("en"));
+    d.title = dexTitle(attrs, wanted);
+    d.description = dexText(attrs.value("description").toObject(), wanted);
     d.status = str(attrs.value("status"));
+    // The same title on AniList ("al") and MyAnimeList ("mal"), when
+    // MangaDex knows it; trackers use these before searching by name.
+    const auto links = attrs.value("links").toObject();
+    if (const auto anilist = str(links.value("al")).toInt(); anilist > 0)
+        d.trackerIds.insert(QStringLiteral("anilist"), anilist);
+    if (const auto mal = str(links.value("mal")).toInt(); mal > 0)
+        d.trackerIds.insert(QStringLiteral("mal"), mal);
     for (const auto &tag : arr(attrs.value("tags")))
         d.genres.append(str(obj(obj(tag.toObject().value("attributes")).value("name")).value("en")));
     QStringList authors;
@@ -413,8 +448,7 @@ QList<Chapter> IkenSource::chapters(const QString &seriesUrl) {
         Chapter ch;
         ch.number = str(c.value("number"));
         const auto title = str(c.value("title"));
-        ch.title = title.isEmpty() ? QStringLiteral("Chapter %1").arg(ch.number)
-                                   : QStringLiteral("Chapter %1: %2").arg(ch.number, title);
+        ch.title = chapterLabel(ch.number, title);
         ch.url = QStringLiteral("%1/api/chapter?chapterId=%2").arg(m_config.api, str(c.value("id")));
         ch.slug = str(c.value("slug"));
         if (ch.slug.isEmpty())
@@ -497,7 +531,7 @@ QList<LatestItem> IkenSource::latest(int limit) {
             item.chapterNumber = str(newest.value("number"));
             item.chapterTitle = str(newest.value("title"));
             if (item.chapterTitle.isEmpty() && !item.chapterNumber.isEmpty())
-                item.chapterTitle = QStringLiteral("Chapter %1").arg(item.chapterNumber);
+                item.chapterTitle = chapterLabel(item.chapterNumber);
             if (!str(newest.value("id")).isEmpty())
                 item.chapterUrl = QStringLiteral("%1/api/chapter?chapterId=%2").arg(m_config.api, str(newest.value("id")));
             for (const auto &value : {newest.value("createdAt"), p.value("lastChapterAddedAt"), p.value("updatedAt")})
@@ -569,7 +603,7 @@ QList<Chapter> HiveSource::chapters(const QString &seriesUrl) {
         ch.number = str(c.value("number"));
         ch.title = str(c.value("title"));
         if (ch.title.isEmpty())
-            ch.title = QStringLiteral("Chapter %1").arg(ch.number);
+            ch.title = chapterLabel(ch.number);
         ch.slug = str(c.value("slug"));
         ch.url = QStringLiteral("%1/series/%2/%3").arg(m_config.base, slug, ch.slug);
         ch.thumbnail = str(c.value("featuredImage"));
@@ -639,7 +673,7 @@ QList<Chapter> QiMangaSource::chapters(const QString &seriesUrl) {
             ch.number = str(c.value("number"));
             ch.title = str(c.value("title"));
             if (ch.title.isEmpty())
-                ch.title = QStringLiteral("Chapter %1").arg(ch.number);
+                ch.title = chapterLabel(ch.number);
             ch.url = QStringLiteral("%1/series/%2/%3").arg(m_config.base, slug, ch.slug);
             ch.thumbnail = str(c.value("cover"));
             ch.released = str(c.value("createdAt"));
@@ -723,7 +757,7 @@ QList<LatestItem> QiMangaSource::latest(int limit) {
             item.chapterNumber = str(newest.value("number"));
             item.chapterTitle = str(newest.value("title"));
             if (item.chapterTitle.isEmpty() && !item.chapterNumber.isEmpty())
-                item.chapterTitle = QStringLiteral("Chapter %1").arg(item.chapterNumber);
+                item.chapterTitle = chapterLabel(item.chapterNumber);
             if (!str(newest.value("slug")).isEmpty())
                 item.chapterUrl = QStringLiteral("%1/series/%2/%3").arg(m_config.base, str(p.value("slug")), str(newest.value("slug")));
             for (const auto &value : {newest.value("createdAt"), p.value("updatedAt")})

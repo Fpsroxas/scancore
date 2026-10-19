@@ -2,14 +2,20 @@
 // separate, opt-in run because sites change and CI must stay deterministic.
 
 #include "core/Html.h"
+#include "core/Text.h"
+#include "sources/Manifest.h"
 #include "sources/comics/ComicSource.h"
+#include "sources/comics/Registry.h"
 #include "sources/local/Local.h"
 #include "sources/novels/NovelSource.h"
+#include "sources/novels/Registry.h"
 
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QRegularExpression>
+#include <QVersionNumber>
 #include <QtTest>
 
 using namespace sc;
@@ -65,10 +71,136 @@ private slots:
         QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Chapter 12.5 - The end")), QStringLiteral("12.5"));
         QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Ep. 7")), QStringLiteral("7"));
         QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Prologue")), QStringLiteral("0"));
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Season 2 Chapter 14")), QStringLiteral("14"));
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Ch.5")), QStringLiteral("5"));
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Vol. 3 Chap 21")), QStringLiteral("21"));
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Episode 40")), QStringLiteral("40"));
+        // Spanish labels.
+        QCOMPARE(comics::chapterNumberFrom(QString::fromUtf8("Capítulo 12")), QStringLiteral("12"));
+        QCOMPARE(comics::chapterNumberFrom(QString::fromUtf8("CAPÍTULO 7.5")), QStringLiteral("7.5"));
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Capitulo 3")), QStringLiteral("3"));
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Cap. 12")), QStringLiteral("12"));
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Cap 9: El regreso")), QStringLiteral("9"));
+        QCOMPARE(comics::chapterNumberFrom(QString::fromUtf8("Temporada 2 Capítulo 12")), QStringLiteral("12"));
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Episodio 4")), QStringLiteral("4"));
+        // Decomposed accents (NFD) read the same.
+        QCOMPARE(comics::chapterNumberFrom(QString::fromUtf8("Capi\xcc\x81tulo 30")), QStringLiteral("30"));
+        // A label has to start a word: "Batch" and "Match" are not "ch".
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Match 2 Chapter 10")), QStringLiteral("10"));
+        QCOMPARE(comics::chapterNumberFrom(QStringLiteral("Captain 3")), QStringLiteral("3"));
         QList<comics::Chapter> list{{QStringLiteral("10")}, {QStringLiteral("2")}, {QStringLiteral("2.5")}};
         comics::sortChapters(list);
         QCOMPARE(list[0].number, QStringLiteral("2"));
         QCOMPARE(list[2].number, QStringLiteral("10"));
+    }
+
+    void titleNormalizer() {
+        // Plain English titles: as before, words split on anything else.
+        QCOMPARE(normalizedTitle(QStringLiteral("Solo Leveling: Ragnarok")), QStringLiteral("solo leveling ragnarok"));
+        QCOMPARE(normalizedTitle(QStringLiteral("  The  Beginning-After_the END! ")), QStringLiteral("the beginning after the end"));
+        QCOMPARE(normalizedTitle(QStringLiteral("Re:Zero (2nd Season)")), QStringLiteral("re zero 2nd season"));
+        QCOMPARE(titleKey(QStringLiteral("Re:Zero (2nd Season)")), QStringLiteral("rezero2ndseason"));
+        // Accents and the tilde fold away; Spanish punctuation separates.
+        QCOMPARE(normalizedTitle(QString::fromUtf8("Año 2")), QStringLiteral("ano 2"));
+        QCOMPARE(normalizedTitle(QString::fromUtf8("¿Quién es él?")), QStringLiteral("quien es el"));
+        QCOMPARE(normalizedTitle(QString::fromUtf8("¡La Pequeña Señorita!")), QStringLiteral("la pequena senorita"));
+        QCOMPARE(titleKey(QString::fromUtf8("Pequeña")), titleKey(QStringLiteral("pequena")));
+        QCOMPARE(titleKey(QString::fromUtf8("PINGÜINO")), QStringLiteral("pinguino"));
+        // Decomposed input folds the same as composed input.
+        QCOMPARE(normalizedTitle(QString::fromUtf8("Pequen\xcc\x83" "a")), QStringLiteral("pequena"));
+        // Letters with no accent to drop are kept, not split.
+        QCOMPARE(normalizedTitle(QString::fromUtf8("Ørsted Æon")), QString::fromUtf8("ørsted æon"));
+        // Other scripts stay whole and distinct.
+        QCOMPARE(normalizedTitle(QString::fromUtf8("俺だけレベルアップな件")), QString::fromUtf8("俺だけレベルアップな件"));
+        QCOMPARE(normalizedTitle(QString::fromUtf8("나 혼자만 레벨업")), QString::fromUtf8("나 혼자만 레벨업"));
+        QCOMPARE(titleKey(QString::fromUtf8("全职法师 2")), QString::fromUtf8("全职法师2"));
+        QVERIFY(!normalizedTitle(QString::fromUtf8("進撃の巨人")).isEmpty());
+        // Japanese voicing marks change the word, so they are not dropped.
+        QVERIFY(titleKey(QString::fromUtf8("がっこう")) != titleKey(QString::fromUtf8("かっこう")));
+        QCOMPARE(normalizedTitle(QString::fromUtf8("Только я")), QString::fromUtf8("только я"));
+        QVERIFY(normalizedTitle(QStringLiteral("?!... --")).isEmpty());
+    }
+
+    void languageNames() {
+        QCOMPARE(languageName(QStringLiteral("en")), QStringLiteral("English"));
+        QCOMPARE(languageName(QStringLiteral("es")), QString::fromUtf8("Español"));
+        QCOMPARE(languageName(QStringLiteral("es-la")), QString::fromUtf8("Español"));
+        QCOMPARE(languageName(QStringLiteral("zz")), QStringLiteral("zz"));
+    }
+
+    void chapterLabels() {
+        QCOMPARE(comics::chapterLabel(QStringLiteral("en"), QStringLiteral("3")), QStringLiteral("Chapter 3"));
+        QCOMPARE(comics::chapterLabel(QStringLiteral("en"), QStringLiteral("3"), QStringLiteral("Start")), QStringLiteral("Chapter 3: Start"));
+        QCOMPARE(comics::chapterLabel(QStringLiteral("es"), QStringLiteral("3")), QString::fromUtf8("Capítulo 3"));
+        QCOMPARE(comics::chapterLabel(QStringLiteral("es-la"), QStringLiteral("4.5"), QStringLiteral("Fin")), QString::fromUtf8("Capítulo 4.5: Fin"));
+        // Unknown languages fall back to English.
+        QCOMPARE(comics::chapterLabel(QStringLiteral("xx"), QStringLiteral("1")), QStringLiteral("Chapter 1"));
+    }
+
+    void minVersion() {
+        QVERIFY(!Manifest::appVersion().isEmpty());
+        QVERIFY(Manifest::supports(QJsonObject{}));
+        QVERIFY(Manifest::supports(QJsonObject{{"minVersion", "1.0.0"}}));
+        QVERIFY(Manifest::supports(QJsonObject{{"minVersion", Manifest::appVersion()}}));
+        QVERIFY(!Manifest::supports(QJsonObject{{"minVersion", "999.0"}}));
+        // A version this build cannot read counts as newer.
+        QVERIFY(!Manifest::supports(QJsonObject{{"minVersion", "soon"}}));
+    }
+
+    void registriesReadNewFields() {
+        const auto manifest = QJsonDocument(QJsonObject{
+            {"version", 1000000},
+            {"comics", QJsonArray{
+                QJsonObject{{"key", "dex"}, {"engine", "mangadex"}, {"base", "https://mangadex.org"}, {"hosts", QJsonArray{"mangadex.org"}}},
+                QJsonObject{{"key", "dex-es"}, {"label", QString::fromUtf8("MangaDex (Español)")}, {"engine", "mangadex"},
+                            {"base", "https://mangadex.org"}, {"hosts", QJsonArray{"mangadex.org"}}, {"language", "es"},
+                            {"urlTag", "es"}, {"minVersion", "1.0.0"}, {"options", QJsonObject{{"languages", QJsonArray{"es", "es-la"}}}}},
+                QJsonObject{{"key", "future"}, {"engine", "madara"}, {"base", "https://future.test"},
+                            {"hosts", QJsonArray{"future.test"}}, {"minVersion", "999.0"}},
+                QJsonObject{{"key", "vortex"}, {"engine", "iken"}, {"base", "https://vortexscans.org"}, {"hosts", QJsonArray{"vortexscans.org"}}},
+                QJsonObject{{"key", "lector"}, {"engine", "madara"}, {"base", "https://lector.test"},
+                            {"hosts", QJsonArray{"lector.test"}}, {"language", "es"}, {"nsfw", false}}}},
+            {"novels", QJsonArray{
+                QJsonObject{{"key", "novelas"}, {"engine", "novelfull"}, {"base", "https://novelas.test"},
+                            {"hosts", QJsonArray{"novelas.test"}}, {"language", "es"}},
+                QJsonObject{{"key", "later"}, {"engine", "novelfull"}, {"base", "https://later.test"},
+                            {"hosts", QJsonArray{"later.test"}}, {"minVersion", "999.0"}}}}});
+        QVERIFY(Manifest::loadData(manifest.toJson()));
+        comics::Registry::rebuild();
+        novels::Registry::rebuild();
+
+        // Fields and defaults.
+        const auto dex = comics::Registry::byKey(QStringLiteral("dex"));
+        const auto dexEs = comics::Registry::byKey(QStringLiteral("dex-es"));
+        QVERIFY(dex && dexEs);
+        QCOMPARE(dex->language(), QStringLiteral("en"));
+        QVERIFY(dex->config().urlTag.isEmpty());
+        QCOMPARE(dexEs->language(), QStringLiteral("es"));
+        QCOMPARE(dexEs->config().urlTag, QStringLiteral("es"));
+        QCOMPARE(dexEs->config().options.value("languages").toArray().size(), 2);
+        QCOMPARE(comics::Registry::byKey(QStringLiteral("lector"))->language(), QStringLiteral("es"));
+        QCOMPARE(novels::Registry::byKey(QStringLiteral("novelas"))->config().language, QStringLiteral("es"));
+
+        // Entries for a newer app are skipped.
+        QVERIFY(!comics::Registry::byKey(QStringLiteral("future")));
+        QVERIFY(!novels::Registry::byKey(QStringLiteral("later")));
+
+        // Links: the tag picks the tagged source; untagged links (and every
+        // id already in a library) stay with the untagged one.
+        const auto keyFor = [](const QString &url) {
+            const auto source = comics::Registry::forUrl(url);
+            return source ? source->key() : QString();
+        };
+        QCOMPARE(keyFor(QStringLiteral("https://mangadex.org/title/0b1c-x")), QStringLiteral("dex"));
+        QCOMPARE(keyFor(QStringLiteral("https://mangadex.org/chapter/9f-y")), QStringLiteral("dex"));
+        QCOMPARE(keyFor(QStringLiteral("https://mangadex.org/title/0b1c-x#es")), QStringLiteral("dex-es"));
+        QCOMPARE(keyFor(QStringLiteral("https://mangadex.org/chapter/9f-y#es")), QStringLiteral("dex-es"));
+        // Iken keeps its numeric post id in the fragment.
+        QCOMPARE(keyFor(QStringLiteral("https://vortexscans.org/series/some-title#1234")), QStringLiteral("vortex"));
+        // A tag on a host its source does not own is nobody's.
+        QCOMPARE(keyFor(QStringLiteral("https://vortexscans.org/series/some-title#es")), QString());
+        QCOMPARE(keyFor(QStringLiteral("https://unknown.test/x")), QString());
+        QCOMPARE(novels::Registry::forUrl(QStringLiteral("https://novelas.test/libro"))->key(), QStringLiteral("novelas"));
     }
 
     void gunzip() {
@@ -93,6 +225,14 @@ private slots:
                 keys.insert(key);
                 QVERIFY(o.value("base").toString().startsWith(QLatin1String("https://")));
                 QVERIFY(!o.value("hosts").toArray().isEmpty());
+                // Optional fields: a short language code, a tag, an app version.
+                static const QRegularExpression code(QStringLiteral("^[a-z]{2,3}(-[a-z0-9]{2,8})?$"));
+                if (o.contains("language"))
+                    QVERIFY2(code.match(o.value("language").toString()).hasMatch(), qPrintable(key));
+                if (o.contains("urlTag"))
+                    QVERIFY2(!o.value("urlTag").toString().isEmpty(), qPrintable(key));
+                if (o.contains("minVersion"))
+                    QVERIFY2(!QVersionNumber::fromString(o.value("minVersion").toString()).isNull(), qPrintable(key));
                 if (section == QLatin1String("comics")) {
                     comics::SourceConfig config;
                     config.engine = o.value("engine").toString();

@@ -258,6 +258,19 @@ Rectangle {
                     font.pixelSize: Theme.textLg
                     lineHeight: 1.35
                 }
+                // The interface language comes first, so the rest of the
+                // intro is in it. It switches right away.
+                Row {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    spacing: 10
+                    Icon { anchors.verticalCenter: parent.verticalCenter; name: "languages"; size: 18; color: Theme.textMuted }
+                    Select {
+                        Accessible.name: qsTr("Language")
+                        model: [{ value: "system", label: qsTr("System") }].concat(Customize.languages)
+                        value: Customize.language
+                        onPicked: (v) => Customize.setLanguage(v)
+                    }
+                }
             }
         }
     }
@@ -349,7 +362,7 @@ Rectangle {
                 }
                 Column {
                     spacing: 10
-                    Text { text: "Theme"; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                    Text { text: qsTr("Theme"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
                     Segmented {
                         options: [{ value: "system", label: qsTr("System"), icon: "monitor" }, { value: "light", label: qsTr("Light"), icon: "sun" },
                                   { value: "dark", label: qsTr("Dark"), icon: "moon" }, { value: "black", label: qsTr("Black") }]
@@ -359,7 +372,7 @@ Rectangle {
                 }
                 Column {
                     spacing: 10
-                    Text { text: "Accent"; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                    Text { text: qsTr("Accent"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
                     Row {
                         spacing: 14
                         Repeater {
@@ -382,17 +395,27 @@ Rectangle {
                 }
                 Column {
                     spacing: 10
-                    Text { text: "Comics open as"; color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                    Text { text: qsTr("Comics open as"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
                     Segmented {
                         options: [{ value: "strip", label: qsTr("Vertical strip"), icon: "move-vertical" }, { value: "paged", label: qsTr("Pages"), icon: "layers" }]
                         value: App.settings.readerMode
                         onPicked: (v) => App.setSetting("readerMode", v)
                     }
                 }
+                Column {
+                    spacing: 10
+                    Text { text: qsTr("Comic sources in"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                    Select {
+                        Accessible.name: qsTr("Comic sources in")
+                        model: [{ value: "", label: qsTr("All languages") }].concat(Comics.languages())
+                        value: App.settings.sourceLanguages || ""
+                        onPicked: (v) => App.setSetting("sourceLanguages", v)
+                    }
+                }
                 Row {
                     spacing: 12
                     Toggle { checked: App.settings.reducedMotion === true; onToggled: App.setSetting("reducedMotion", checked) }
-                    Text { anchors.verticalCenter: parent.verticalCenter; text: "Reduce motion"; color: Theme.text; font.family: Theme.fontSans; font.pixelSize: Theme.textMd }
+                    Text { anchors.verticalCenter: parent.verticalCenter; text: qsTr("Reduce motion"); color: Theme.text; font.family: Theme.fontSans; font.pixelSize: Theme.textMd }
                 }
             }
         }

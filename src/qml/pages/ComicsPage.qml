@@ -106,7 +106,8 @@ Item {
                     model: page.sources
                     Chip {
                         required property var modelData
-                        text: modelData.label
+                        // The content language, when it is not English.
+                        text: modelData.label + (modelData.language && modelData.language !== "en" ? " · " + modelData.language.toUpperCase() : "")
                         selected: page.source === modelData.key
                         detail: {
                             if (!page.searchTask || !page.searchTask.ok) return ""

@@ -5,6 +5,8 @@
 #include "core/Database.h"
 #include "core/ImageCache.h"
 #include "core/Parallel.h"
+#include "core/Text.h"
+#include "sources/Manifest.h"
 #include "sources/comics/Registry.h"
 
 #include <QCache>
@@ -12,7 +14,6 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QMutex>
-#include <QRegularExpression>
 #include <QUrlQuery>
 
 namespace sc {
@@ -32,16 +33,11 @@ std::shared_ptr<Source> requireSource(const QString &url) {
     return source;
 }
 
-QString normalized(const QString &text) {
-    static const QRegularExpression nonWord(QStringLiteral("[^a-z0-9]+"));
-    return text.toLower().replace(nonWord, QStringLiteral(" ")).simplified();
-}
-
 // Exact title, then prefix, then all words, then the rest, preserving each
 // source's own order within a tier.
 int relevance(const QString &title, const QString &query) {
-    const auto t = normalized(title);
-    const auto q = normalized(query);
+    const auto t = normalizedTitle(title);
+    const auto q = normalizedTitle(query);
     if (t == q)
         return 0;
     if (t.startsWith(q))
@@ -50,6 +46,16 @@ int relevance(const QString &title, const QString &query) {
     if (std::all_of(words.begin(), words.end(), [&](const QString &w) { return t.contains(w); }))
         return 2;
     return 3;
+}
+
+// Settings → Sources can limit "All sources" to one content language;
+// empty (the default) searches every language. Files on this device are
+// always searched.
+QString searchLanguage() { return Database::pref(QStringLiteral("setting.sourceLanguages")).toString(); }
+
+bool inSearchLanguage(const Source &source, const QString &language) {
+    return language.isEmpty() || source.key() == QLatin1String("local") ||
+           source.language().section(QLatin1Char('-'), 0, 0) == language;
 }
 
 QVariantList chaptersToUnits(const QList<Chapter> &chapters) {
@@ -72,8 +78,21 @@ QVariantList Comics::sources() const {
                                {"enabled", source->enabled()},
                                {"disabledReason", source->config().disabledReason},
                                {"nsfw", source->config().nsfw},
+                               {"language", source->language()},
+                               {"languageName", languageName(source->language())},
                                {"base", source->config().base},
                                {"hasLatest", source->hasLatest()}});
+    return out;
+}
+
+QVariantList Comics::languages() const {
+    QVariantList out;
+    QSet<QString> seen;
+    for (const auto &source : Registry::all())
+        if (source->enabled() && source->key() != QLatin1String("local") && !seen.contains(source->language())) {
+            seen.insert(source->language());
+            out.append(QVariantMap{{"value", source->language()}, {"label", languageName(source->language())}});
+        }
     return out;
 }
 
@@ -112,20 +131,21 @@ void Comics::prefetch(const QVariantList &panels, const QString &referer, int co
 
 Task *Comics::search(const QString &query, const QString &only) {
     const auto q = query.simplified();
-    const auto cacheKey = q.toLower() + QLatin1Char('|') + only;
+    const auto language = only == QLatin1String("all") ? searchLanguage() : QString();
+    const auto cacheKey = q.toLower() + QLatin1Char('|') + only + QLatin1Char('|') + language;
     {
         QMutexLocker lock(&g_searchMutex);
         if (auto *hit = g_searches.object(cacheKey);
             hit && QDateTime::currentSecsSinceEpoch() - g_searchTimes.value(cacheKey) < 180)
             return Task::resolved(*hit);
     }
-    return Task::run([q, only, cacheKey]() -> QVariant {
+    return Task::run([q, only, language, cacheKey]() -> QVariant {
         // Files on this device are listed without a search.
         if (q.isEmpty() && only != QLatin1String("local"))
             return QVariantMap{{"comics", QVariantList()}, {"providers", QVariantList()}};
         QList<std::shared_ptr<Source>> selected;
         for (const auto &source : Registry::all())
-            if (source->enabled() && (only == QLatin1String("all") || source->key() == only))
+            if (source->enabled() && (only == QLatin1String("all") ? inSearchLanguage(*source, language) : source->key() == only))
                 selected.append(source);
         if (selected.isEmpty())
             throw Error(QStringLiteral("That source is unavailable."));
@@ -296,7 +316,9 @@ Task *Comics::catalogFeeds(bool mature) {
 Task *Comics::resolve(const QVariantMap &item) {
     return Task::run([item]() -> QVariant {
         const auto hid = item.value("hid").toString();
-        const auto cacheKey = QStringLiteral("comick-resolve:") + hid;
+        const auto language = searchLanguage();
+        // Matches depend on the source list and the language setting.
+        const auto cacheKey = QStringLiteral("comick-resolve:%1:%2:%3").arg(Manifest::version()).arg(language, hid);
         if (!hid.isEmpty())
             if (auto cached = Database::cacheGet(cacheKey))
                 return QJsonDocument::fromJson(*cached).toVariant();
@@ -315,7 +337,7 @@ Task *Comics::resolve(const QVariantMap &item) {
         QStringList names;
         QSet<QString> wanted;
         for (const auto &title : QStringList{item.value("title").toString()} + known) {
-            const auto n = normalized(title);
+            const auto n = normalizedTitle(title);
             if (n.isEmpty() || wanted.contains(n))
                 continue;
             wanted.insert(n);
@@ -325,7 +347,7 @@ Task *Comics::resolve(const QVariantMap &item) {
             throw Error(QStringLiteral("This title has no name SCANCORE's sources could list it under."));
         QList<std::shared_ptr<Source>> sources;
         for (const auto &source : Registry::all())
-            if (source->enabled() && source->key() != QLatin1String("local"))
+            if (source->enabled() && source->key() != QLatin1String("local") && inSearchLanguage(*source, language))
                 sources.append(source);
         // The main title first; other names only for sources that missed.
         QVariantList matches;
@@ -343,7 +365,7 @@ Task *Comics::resolve(const QVariantMap &item) {
                 if (!results[i].ok())
                     continue;
                 for (const auto &summary : *results[i].value)
-                    if (wanted.contains(normalized(summary.title)) && !found.contains(asked[i]->key())) {
+                    if (wanted.contains(normalizedTitle(summary.title)) && !found.contains(asked[i]->key())) {
                         found.insert(asked[i]->key());
                         matches.append(QVariantMap{{"source", asked[i]->key()},
                                                    {"sourceLabel", asked[i]->label()},
@@ -387,9 +409,10 @@ Task *Comics::series(const QString &url, const QVariantMap &summary) {
         std::optional<Details> cachedDetails;
         if (auto cached = Database::cacheGet(detailsKey)) {
             const auto o = QJsonDocument::fromJson(*cached).object();
-            cachedDetails = Details{o.value("title").toString(), o.value("cover").toString(),
+            cachedDetails = Details{o.value("title").toString(),  o.value("cover").toString(),
                                     o.value("description").toString(), o.value("author").toString(),
-                                    o.value("status").toString(), o.value("genres").toVariant().toStringList()};
+                                    o.value("status").toString(), o.value("genres").toVariant().toStringList(),
+                                    o.value("trackerIds").toObject().toVariantMap()};
         }
 
         QList<std::function<QVariant()>> jobs;
@@ -400,7 +423,8 @@ Task *Comics::series(const QString &url, const QVariantMap &summary) {
                 if (!d)
                     return {};
                 return QVariantMap{{"title", d->title},   {"cover", d->cover},   {"description", d->description},
-                                   {"author", d->author}, {"status", d->status}, {"genres", d->genres}};
+                                   {"author", d->author}, {"status", d->status}, {"genres", d->genres},
+                                   {"trackerIds", d->trackerIds}};
             });
         const auto results = parallel(jobs);
 
@@ -408,10 +432,22 @@ Task *Comics::series(const QString &url, const QVariantMap &summary) {
         if (cachedDetails)
             details = QVariantMap{{"title", cachedDetails->title},       {"cover", cachedDetails->cover},
                                   {"description", cachedDetails->description}, {"author", cachedDetails->author},
-                                  {"status", cachedDetails->status},     {"genres", cachedDetails->genres}};
+                                  {"status", cachedDetails->status},     {"genres", cachedDetails->genres},
+                                  {"trackerIds", cachedDetails->trackerIds}};
         else if (results.size() > 1 && results[1].ok() && results[1].value->isValid()) {
             details = results[1].value->toMap();
             Database::cachePut(detailsKey, QJsonDocument::fromVariant(details).toJson(QJsonDocument::Compact), 86400);
+        }
+        // AniList and MyAnimeList ids the source knows go with the series
+        // (series.extra), next to a Comick catalogue entry if it has one;
+        // tracking uses them before searching by title.
+        if (const auto trackerIds = details.take(QStringLiteral("trackerIds")).toMap(); !trackerIds.isEmpty()) {
+            auto extra = series.value(QStringLiteral("extra")).toMap();
+            if (extra.isEmpty())
+                extra = stored.value(QStringLiteral("extra")).toMap();
+            for (auto it = trackerIds.begin(); it != trackerIds.end(); ++it)
+                extra.insert(it.key(), it.value());
+            series.insert(QStringLiteral("extra"), extra);
         }
         for (auto it = details.begin(); it != details.end(); ++it) {
             const bool empty = it.value().typeId() == QMetaType::QStringList ? it.value().toStringList().isEmpty()

@@ -2,6 +2,7 @@
 
 #include "App.h"
 #include "core/Database.h"
+#include "core/Text.h"
 
 #include <QCryptographicHash>
 #include <QDateTime>
@@ -11,7 +12,6 @@
 #include <QJsonObject>
 #include <QMutex>
 #include <QRandomGenerator>
-#include <QRegularExpression>
 #include <QTcpSocket>
 #include <QUrlQuery>
 #include <QUuid>
@@ -72,11 +72,6 @@ QString randomText(int length) {
     for (int i = 0; i < length; ++i)
         out += alphabet.at(QRandomGenerator::system()->bounded(alphabet.size()));
     return out;
-}
-
-QString normalized(const QString &text) {
-    static const QRegularExpression nonWord(QStringLiteral("[^\\p{L}\\p{N}]+"));
-    return text.toLower().replace(nonWord, QString());
 }
 
 QJsonObject anilistQuery(const QString &query, const QJsonObject &variables, const QString &token = {}) {
@@ -306,16 +301,25 @@ QVariantList comickSearch(const QString &media, const QString &title) {
 
 // The one candidate whose title is the series' title, or none.
 QVariantMap exactMatch(const QVariantList &candidates, const QString &title) {
-    const auto wanted = normalized(title);
+    const auto wanted = titleKey(title);
     if (wanted.isEmpty())
         return {};
     for (const auto &value : candidates) {
         const auto candidate = value.toMap();
         for (const auto &t : candidate.value("titles").toStringList())
-            if (normalized(t) == wanted)
+            if (titleKey(t) == wanted)
                 return candidate;
     }
     return {};
+}
+
+// What the series' source stored about it: a Comick catalogue entry
+// ("hid", "catalogTitle") and AniList and MyAnimeList ids ("anilist",
+// "mal") from sites that link them, such as MangaDex.
+QJsonObject seriesExtra(const QString &seriesId) {
+    return QJsonDocument::fromJson(
+               Database::scalar(QStringLiteral("SELECT extra FROM series WHERE id = ?"), {seriesId}).toString().toUtf8())
+        .object();
 }
 
 // How far the series is: the highest chapter or episode number finished.
@@ -344,6 +348,11 @@ void updateAniList(const QString &seriesId, const QString &media, const QString 
     int id = allLinks().value(seriesId).toMap().value("anilist").toMap().value("id").toInt();
     if (id <= 0 && media == QLatin1String("anime"))
         id = seriesId.section(QLatin1Char(':'), 2).toInt();
+    if (id <= 0 && media == QLatin1String("comic")) {
+        id = seriesExtra(seriesId).value("anilist").toInt();
+        if (id > 0)
+            saveLink(seriesId, QStringLiteral("anilist"), id, title);
+    }
     if (id <= 0) {
         const auto match = exactMatch(anilistSearch(media, title), title);
         if (match.isEmpty())
@@ -371,11 +380,16 @@ void updateMal(const QString &seriesId, const QString &media, const QString &tit
     const bool anime = media == QLatin1String("anime");
     const auto links = allLinks().value(seriesId).toMap();
     int id = links.value("mal").toMap().value("id").toInt();
+    const auto extra = media == QLatin1String("comic") ? seriesExtra(seriesId) : QJsonObject();
+    if (id <= 0)
+        id = extra.value("mal").toInt();
     if (id <= 0) {
         // Through AniList, which knows MyAnimeList's ids.
         int anilistId = links.value("anilist").toMap().value("id").toInt();
         if (anilistId <= 0 && anime)
             anilistId = seriesId.section(QLatin1Char(':'), 2).toInt();
+        if (anilistId <= 0)
+            anilistId = extra.value("anilist").toInt();
         if (anilistId > 0)
             id = anilistQuery(QStringLiteral("query ($id: Int) { Media(id: $id) { idMal } }"), {{"id", anilistId}})
                      .value("Media").toObject().value("idMal").toInt();
@@ -385,8 +399,9 @@ void updateMal(const QString &seriesId, const QString &media, const QString &tit
                 return;
             id = match.value("id").toInt();
         }
-        saveLink(seriesId, QStringLiteral("mal"), id, title);
     }
+    if (!links.contains(QStringLiteral("mal")))
+        saveLink(seriesId, QStringLiteral("mal"), id, title);
     const auto kind = anime ? QStringLiteral("anime") : QStringLiteral("manga");
     const auto info = malCall("GET", QStringLiteral("/%1/%2?fields=my_list_status,%3").arg(kind).arg(id).arg(anime ? "num_episodes" : "num_chapters"));
     if (!info.ok())
@@ -409,17 +424,18 @@ void updateComick(const QString &seriesId, const QString &media, const QString &
     const auto links = allLinks().value(seriesId).toMap();
     auto hid = links.value("comick").toMap().value("id").toString();
     // A comic opened from Comick's catalogue already knows its entry there.
+    const auto extra = media == QLatin1String("comic") ? seriesExtra(seriesId) : QJsonObject();
     if (hid.isEmpty() && media == QLatin1String("comic")) {
-        const auto extra = QJsonDocument::fromJson(
-            Database::scalar(QStringLiteral("SELECT extra FROM series WHERE id = ?"), {seriesId}).toString().toUtf8());
-        hid = extra.object().value("hid").toString();
+        hid = extra.value("hid").toString();
         if (!hid.isEmpty())
-            saveLink(seriesId, QStringLiteral("comick"), hid, extra.object().value("catalogTitle").toString());
+            saveLink(seriesId, QStringLiteral("comick"), hid, extra.value("catalogTitle").toString());
     }
     if (hid.isEmpty()) {
         int anilistId = links.value("anilist").toMap().value("id").toInt();
         if (anilistId <= 0 && media == QLatin1String("anime"))
             anilistId = seriesId.section(QLatin1Char(':'), 2).toInt();
+        if (anilistId <= 0)
+            anilistId = extra.value("anilist").toInt();
         const auto candidates = comickSearch(media, title);
         QVariantMap match;
         // By AniList entry when both know it, else by title.

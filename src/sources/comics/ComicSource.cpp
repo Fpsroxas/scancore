@@ -42,6 +42,16 @@ Headers Source::htmlHeaders() const {
             {"Referer", (m_config.base + QLatin1Char('/')).toUtf8()}};
 }
 
+QString Source::tagged(const QString &url) const {
+    if (m_config.urlTag.isEmpty() || url.isEmpty())
+        return url;
+    return url.section(QLatin1Char('#'), 0, 0) + QLatin1Char('#') + m_config.urlTag;
+}
+
+QString Source::chapterLabel(const QString &number, const QString &title) const {
+    return comics::chapterLabel(m_config.language, number, title);
+}
+
 std::unique_ptr<Source> createSource(const SourceConfig &config) {
     const auto &e = config.engine;
     if (e == QLatin1String("asura"))
@@ -80,14 +90,23 @@ QString str(const QJsonValue &value) {
 }
 
 QString chapterNumberFrom(const QString &text) {
-    static const QRegularExpression labelled(QStringLiteral(R"((?:chapter|ch\.?|episode|ep\.?)\s*([\d.]+))"),
-                                             QRegularExpression::CaseInsensitiveOption);
+    // English and Spanish labels ("Chapter", "Ch.", "Capítulo", "Cap.",
+    // "Episodio"), starting a word, so "Temporada 2 Capítulo 12" is 12.
+    static const QRegularExpression labelled(
+        QStringLiteral(R"((?<![\p{L}\p{N}])(?:chap(?:ter)?|ch|cap[ií]tulo|cap|episod(?:e|io)|ep)\.?\s*(\d+(?:\.\d+)?))"),
+        QRegularExpression::CaseInsensitiveOption);
     static const QRegularExpression bare(QStringLiteral(R"(([\d]+(?:\.\d+)?))"));
-    if (auto m = labelled.match(text); m.hasMatch())
+    if (auto m = labelled.match(text.normalized(QString::NormalizationForm_C)); m.hasMatch())
         return m.captured(1);
     if (auto m = bare.match(text); m.hasMatch())
         return m.captured(1);
     return QStringLiteral("0");
+}
+
+QString chapterLabel(const QString &language, const QString &number, const QString &title) {
+    const bool spanish = language == QLatin1String("es") || language.startsWith(QLatin1String("es-"));
+    const auto word = spanish ? QString::fromUtf8("Capítulo") : QStringLiteral("Chapter");
+    return title.isEmpty() ? QStringLiteral("%1 %2").arg(word, number) : QStringLiteral("%1 %2: %3").arg(word, number, title);
 }
 
 void sortChapters(QList<Chapter> &chapters) {

@@ -7,6 +7,7 @@ add_library(scancore_core STATIC
     core/Http.cpp
     core/ImageCache.cpp
     core/Parallel.cpp
+    core/Text.cpp
     sources/Manifest.cpp
     sources/comics/ApiEngines.cpp
     sources/comics/ComicSource.cpp
@@ -21,6 +22,8 @@ add_library(scancore_core STATIC
     sources/novels/TextBlocks.cpp
 )
 target_include_directories(scancore_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+# Manifest entries can ask for a minimum app version.
+target_compile_definitions(scancore_core PRIVATE SCANCORE_VERSION="${PROJECT_VERSION}")
 target_link_libraries(scancore_core
     PUBLIC Qt6::Core Qt6::Network Qt6::Sql Qt6::Concurrent Qt6::Qml
     # QZipReader, for CBZ and EPUB files.

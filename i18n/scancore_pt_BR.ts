@@ -2713,6 +2713,10 @@
             <translation>Quadrinhos, romances e animes em um app rápido. Tudo roda e fica no seu dispositivo.</translation>
         </message>
         <message>
+            <source>Language</source>
+            <translation>Idioma</translation>
+        </message>
+        <message>
             <source>Everything in one place</source>
             <translation>Tudo em um só lugar</translation>
         </message>
@@ -2765,6 +2769,10 @@
             <translation>Sistema</translation>
         </message>
         <message>
+            <source>Theme</source>
+            <translation>Tema</translation>
+        </message>
+        <message>
             <source>Light</source>
             <translation>Claro</translation>
         </message>
@@ -2777,12 +2785,32 @@
             <translation>Preto</translation>
         </message>
         <message>
+            <source>Accent</source>
+            <translation>Destaque</translation>
+        </message>
+        <message>
+            <source>Comics open as</source>
+            <translation>Abrir quadrinhos como</translation>
+        </message>
+        <message>
             <source>Vertical strip</source>
             <translation>Tira vertical</translation>
         </message>
         <message>
             <source>Pages</source>
             <translation>Páginas</translation>
+        </message>
+        <message>
+            <source>Comic sources in</source>
+            <translation>Fontes de quadrinhos em</translation>
+        </message>
+        <message>
+            <source>All languages</source>
+            <translation>Todos os idiomas</translation>
+        </message>
+        <message>
+            <source>Reduce motion</source>
+            <translation>Reduzir movimento</translation>
         </message>
         <message>
             <source>Optional</source>
@@ -3746,6 +3774,18 @@
         <message>
             <source>the one you pick from a source that has it. Off: each source is searched directly.</source>
             <translation>a que você escolher a partir de uma fonte que a tenha. Desligado: cada fonte é pesquisada diretamente.</translation>
+        </message>
+        <message>
+            <source>Languages for “All sources”</source>
+            <translation>Idiomas de “Todas as fontes”</translation>
+        </message>
+        <message>
+            <source>Which comic sources “All sources” searches and finds series on. Each source can still be picked on its own.</source>
+            <translation>Em quais fontes de quadrinhos “Todas as fontes” pesquisa e encontra séries. Cada fonte ainda pode ser escolhida sozinha.</translation>
+        </message>
+        <message>
+            <source>All languages</source>
+            <translation>Todos os idiomas</translation>
         </message>
         <message>
             <source>Show adult sources</source>

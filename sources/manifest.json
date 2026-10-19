@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "updated": "2026-10-13",
+  "version": 2,
+  "updated": "2026-10-19",
   "comics": [
     {
       "key": "asura",
@@ -31,6 +31,25 @@
       "hosts": [
         "mangadex.org"
       ]
+    },
+    {
+      "key": "mangadex-es",
+      "label": "MangaDex (Español)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "es",
+      "urlTag": "es",
+      "minVersion": "1.5.0",
+      "options": {
+        "languages": [
+          "es",
+          "es-la"
+        ]
+      }
     },
     {
       "key": "flame",

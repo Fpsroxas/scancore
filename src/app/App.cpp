@@ -60,6 +60,8 @@ const QVariantMap kDefaults{
     {"sidebarCollapsed", false},
     {"comicSource", "all"},
     {"comickCatalog", true},
+    // Content language "All sources" searches; empty for every language.
+    {"sourceLanguages", ""},
     {"onboarded", false},
     {"autoUpdate", true},
     {"novelSource", "all"},

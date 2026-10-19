@@ -17,6 +17,8 @@ public:
 
     // [{key, label, enabled, disabledReason, nsfw, hasLatest}]
     Q_INVOKABLE QVariantList sources() const;
+    // The content languages of the enabled sources: [{value, label}].
+    Q_INVOKABLE QVariantList languages() const;
     Q_INVOKABLE QString sourceLabel(const QString &key) const;
     Q_INVOKABLE QString sourceForUrl(const QString &url) const;
     Q_INVOKABLE QString seriesId(const QString &url) const;

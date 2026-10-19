@@ -2713,6 +2713,10 @@
             <translation>BD, romans et anime dans une app rapide. Tout fonctionne et reste sur votre appareil.</translation>
         </message>
         <message>
+            <source>Language</source>
+            <translation>Langue</translation>
+        </message>
+        <message>
             <source>Everything in one place</source>
             <translation>Tout au même endroit</translation>
         </message>
@@ -2765,6 +2769,10 @@
             <translation>Système</translation>
         </message>
         <message>
+            <source>Theme</source>
+            <translation>Thème</translation>
+        </message>
+        <message>
             <source>Light</source>
             <translation>Clair</translation>
         </message>
@@ -2777,12 +2785,32 @@
             <translation>Noir</translation>
         </message>
         <message>
+            <source>Accent</source>
+            <translation>Accent</translation>
+        </message>
+        <message>
+            <source>Comics open as</source>
+            <translation>Ouvrir les BD en</translation>
+        </message>
+        <message>
             <source>Vertical strip</source>
             <translation>Bande verticale</translation>
         </message>
         <message>
             <source>Pages</source>
             <translation>Pages</translation>
+        </message>
+        <message>
+            <source>Comic sources in</source>
+            <translation>Sources de BD en</translation>
+        </message>
+        <message>
+            <source>All languages</source>
+            <translation>Toutes les langues</translation>
+        </message>
+        <message>
+            <source>Reduce motion</source>
+            <translation>Réduire les animations</translation>
         </message>
         <message>
             <source>Optional</source>
@@ -3746,6 +3774,18 @@
         <message>
             <source>the one you pick from a source that has it. Off: each source is searched directly.</source>
             <translation>celle que vous choisissez depuis une source qui l’a. Désactivé : chaque source est interrogée directement.</translation>
+        </message>
+        <message>
+            <source>Languages for “All sources”</source>
+            <translation>Langues de « Toutes les sources »</translation>
+        </message>
+        <message>
+            <source>Which comic sources “All sources” searches and finds series on. Each source can still be picked on its own.</source>
+            <translation>Les sources de BD dans lesquelles « Toutes les sources » cherche et trouve les séries. Chaque source reste disponible séparément.</translation>
+        </message>
+        <message>
+            <source>All languages</source>
+            <translation>Toutes les langues</translation>
         </message>
         <message>
             <source>Show adult sources</source>

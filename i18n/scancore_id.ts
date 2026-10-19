@@ -2713,6 +2713,10 @@
             <translation>Komik, novel, dan anime dalam satu aplikasi cepat. Semua berjalan dan tersimpan di perangkat Anda.</translation>
         </message>
         <message>
+            <source>Language</source>
+            <translation>Bahasa</translation>
+        </message>
+        <message>
             <source>Everything in one place</source>
             <translation>Semuanya di satu tempat</translation>
         </message>
@@ -2765,6 +2769,10 @@
             <translation>Sistem</translation>
         </message>
         <message>
+            <source>Theme</source>
+            <translation>Tema</translation>
+        </message>
+        <message>
             <source>Light</source>
             <translation>Terang</translation>
         </message>
@@ -2777,12 +2785,32 @@
             <translation>Hitam</translation>
         </message>
         <message>
+            <source>Accent</source>
+            <translation>Aksen</translation>
+        </message>
+        <message>
+            <source>Comics open as</source>
+            <translation>Komik dibuka sebagai</translation>
+        </message>
+        <message>
             <source>Vertical strip</source>
             <translation>Strip vertikal</translation>
         </message>
         <message>
             <source>Pages</source>
             <translation>Halaman</translation>
+        </message>
+        <message>
+            <source>Comic sources in</source>
+            <translation>Sumber komik dalam</translation>
+        </message>
+        <message>
+            <source>All languages</source>
+            <translation>Semua bahasa</translation>
+        </message>
+        <message>
+            <source>Reduce motion</source>
+            <translation>Kurangi gerakan</translation>
         </message>
         <message>
             <source>Optional</source>
@@ -3746,6 +3774,18 @@
         <message>
             <source>the one you pick from a source that has it. Off: each source is searched directly.</source>
             <translation>yang Anda pilih dari sumber yang memilikinya. Mati: setiap sumber dicari langsung.</translation>
+        </message>
+        <message>
+            <source>Languages for “All sources”</source>
+            <translation>Bahasa untuk “Semua sumber”</translation>
+        </message>
+        <message>
+            <source>Which comic sources “All sources” searches and finds series on. Each source can still be picked on its own.</source>
+            <translation>Sumber komik yang dicari dan dipakai “Semua sumber” untuk menemukan seri. Setiap sumber tetap bisa dipilih sendiri.</translation>
+        </message>
+        <message>
+            <source>All languages</source>
+            <translation>Semua bahasa</translation>
         </message>
         <message>
             <source>Show adult sources</source>

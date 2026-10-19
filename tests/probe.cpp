@@ -59,7 +59,14 @@ int main(int argc, char **argv) {
                 results = source->search(query);
                 if (results.isEmpty())
                     throw Error(QStringLiteral("no results"));
-                return QStringLiteral("%1 results, first: %2").arg(results.size()).arg(results.first().title);
+                return QStringLiteral("%1 results, first: %2 (%3)").arg(results.size()).arg(results.first().title, results.first().url);
+            });
+            // Links must lead back to the source that made them.
+            ok = ok && step("link", [&] {
+                const auto owner = comics::Registry::forUrl(results.first().url);
+                if (!owner || owner->key() != source->key())
+                    throw Error(QStringLiteral("opens on %1").arg(owner ? owner->key() : QStringLiteral("no source")));
+                return source->language();
             });
             ok = ok && step("chapters", [&] {
                 chapters = source->chapters(results.first().url);
@@ -69,8 +76,15 @@ int main(int argc, char **argv) {
             });
             ok = ok && step("details", [&] {
                 const auto d = source->details(results.first().url);
-                return d ? QStringLiteral("%1 chars of description, cover %2").arg(d->description.size()).arg(!d->cover.isEmpty())
-                         : QStringLiteral("none");
+                if (!d)
+                    return QStringLiteral("none");
+                QStringList ids;
+                for (auto it = d->trackerIds.begin(); it != d->trackerIds.end(); ++it)
+                    ids.append(it.key() + QLatin1Char('=') + it.value().toString());
+                return QStringLiteral("%1 chars of description, cover %2%3")
+                    .arg(d->description.size())
+                    .arg(!d->cover.isEmpty())
+                    .arg(ids.isEmpty() ? QString() : QStringLiteral(", ") + ids.join(QLatin1Char(' ')));
             });
             ok = ok && step("panels", [&] {
                 const auto panels = source->panels(chapters.first().url);

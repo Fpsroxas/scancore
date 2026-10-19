@@ -48,6 +48,9 @@ struct Details {
     QString author;
     QString status;
     QStringList genres;
+    // Ids of the same title on trackers, when the site links them
+    // ("anilist", "mal").
+    QVariantMap trackerIds;
 };
 
 struct LatestItem {
@@ -77,6 +80,11 @@ struct SourceConfig {
     bool nsfw = false;
     QString disabledReason;
     QJsonObject options;
+    // Language of the content (short BCP 47 code: "en", "es").
+    QString language = QStringLiteral("en");
+    // Set when another source shares the host: this source's links end in
+    // "#<urlTag>" so Registry::forUrl can tell them apart.
+    QString urlTag;
 };
 
 class Source {
@@ -87,6 +95,7 @@ public:
     const SourceConfig &config() const { return m_config; }
     QString key() const { return m_config.key; }
     QString label() const { return m_config.label; }
+    QString language() const { return m_config.language; }
     bool enabled() const { return m_config.enabled; }
     virtual bool owns(const QUrl &url) const;
 
@@ -102,6 +111,11 @@ public:
 protected:
     Headers jsonHeaders() const;
     Headers htmlHeaders() const;
+    // A series or chapter link as this source hands it out, with its tag.
+    QString tagged(const QString &url) const;
+    // "Chapter 12: Title" in the source's language, for adapters that have
+    // only a number. Titles the site writes are used as they are.
+    QString chapterLabel(const QString &number, const QString &title = {}) const;
 
     SourceConfig m_config;
 };
@@ -111,6 +125,7 @@ std::unique_ptr<Source> createSource(const SourceConfig &config);
 // Shared helpers for adapters.
 QString str(const QJsonValue &value);
 QString chapterNumberFrom(const QString &text);
+QString chapterLabel(const QString &language, const QString &number, const QString &title = {});
 void sortChapters(QList<Chapter> &chapters);
 QString pathSegment(const QUrl &url, int index);
 

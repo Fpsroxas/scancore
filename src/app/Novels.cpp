@@ -4,10 +4,10 @@
 #include "Library.h"
 #include "core/Database.h"
 #include "core/Parallel.h"
+#include "core/Text.h"
 #include "sources/novels/Registry.h"
 
 #include <QJsonDocument>
-#include <QRegularExpression>
 
 namespace sc {
 
@@ -37,11 +37,6 @@ QVariantList unitsFrom(const QList<ChapterRef> &chapters) {
     return units;
 }
 
-QString normalized(const QString &text) {
-    static const QRegularExpression nonWord(QStringLiteral("[^a-z0-9]+"));
-    return text.toLower().replace(nonWord, QStringLiteral(" ")).simplified();
-}
-
 } // namespace
 
 QVariantList Novels::sources() const {
@@ -54,7 +49,8 @@ QVariantList Novels::sources() const {
                                {"disabledReason", s->config().disabledReason},
                                {"base", s->config().base},
                                {"extended", s->config().options.value("extended").toBool()},
-                               {"language", s->config().options.value("language").toString(QStringLiteral("en"))}});
+                               {"language", s->config().language},
+                               {"languageName", languageName(s->config().language)}});
     return out;
 }
 
@@ -116,7 +112,7 @@ Task *Novels::search(const QString &query, const QString &only) {
         for (const auto &s : selected)
             jobs.append([s, query] { return s->search(query); });
         const auto results = parallel(jobs);
-        const auto q = normalized(query);
+        const auto q = normalizedTitle(query);
         const auto words = q.split(QLatin1Char(' '), Qt::SkipEmptyParts);
         struct Ranked {
             int tier;
@@ -138,7 +134,7 @@ Task *Novels::search(const QString &query, const QString &only) {
             anyOk = true;
             int order = 0;
             for (const auto &b : *results[i].value) {
-                const auto t = normalized(b.title);
+                const auto t = normalizedTitle(b.title);
                 // Sites that ignore the query return their default ranking;
                 // keep only titles that mention every searched word.
                 const bool matchesAll =

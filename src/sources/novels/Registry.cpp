@@ -21,6 +21,8 @@ void Registry::rebuild() {
     QList<std::shared_ptr<Source>> sources;
     for (const auto &value : Manifest::current().value(QStringLiteral("novels")).toArray()) {
         const auto o = value.toObject();
+        if (!Manifest::supports(o))
+            continue;
         SourceConfig config;
         config.key = o.value(QStringLiteral("key")).toString();
         config.label = o.value(QStringLiteral("label")).toString(config.key);
@@ -32,6 +34,8 @@ void Registry::rebuild() {
         config.searchable = o.value(QStringLiteral("searchable")).toBool(true);
         config.disabledReason = o.value(QStringLiteral("disabledReason")).toString();
         config.options = o.value(QStringLiteral("options")).toObject();
+        config.language = o.value(QStringLiteral("language")).toString(QStringLiteral("en"));
+        config.urlTag = o.value(QStringLiteral("urlTag")).toString();
         if (config.key.isEmpty() || config.base.isEmpty())
             continue;
         if (auto source = createSource(config))
@@ -59,6 +63,7 @@ void Registry::rebuild() {
                     config.base.chop(1);
                 config.searchable = entry.value("search").toBool();
                 config.options = QJsonObject{{"extended", true}, {"language", entry.value("language")}};
+                config.language = entry.value("language").toString(QStringLiteral("en"));
                 const QUrl probe(config.base);
                 const bool native = std::any_of(sources.begin(), sources.end(),
                                                 [&](const std::shared_ptr<Source> &s) { return s->owns(probe); });
@@ -90,12 +95,6 @@ std::shared_ptr<Source> Registry::byKey(const QString &key) {
     return nullptr;
 }
 
-std::shared_ptr<Source> Registry::forUrl(const QString &url) {
-    const QUrl parsed(url);
-    for (const auto &source : all())
-        if (source->owns(parsed))
-            return source;
-    return nullptr;
-}
+std::shared_ptr<Source> Registry::forUrl(const QString &url) { return sourceForUrl(all(), url); }
 
 } // namespace sc::novels

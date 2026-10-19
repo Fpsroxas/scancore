@@ -22,7 +22,8 @@ SettingsPane {
     component SourceRow: SettingRow {
         required property var modelData
         title: modelData.label + (modelData.nsfw ? "  · 18+" : "")
-        description: modelData.base.replace("https://", "") + (modelData.enabled ? "" : " · " + modelData.disabledReason)
+        description: modelData.base.replace("https://", "") + (modelData.languageName ? " · " + modelData.languageName : "")
+            + (modelData.enabled ? "" : " · " + modelData.disabledReason)
         Row {
             spacing: 4
             Rectangle {
@@ -107,6 +108,16 @@ SettingsPane {
             description: qsTr("“All sources” searches comick.dev, which knows almost every series under all its names, then opens ")
                 + qsTr("the one you pick from a source that has it. Off: each source is searched directly.")
             Toggle { checked: App.settings.comickCatalog !== false; onToggled: App.setSetting("comickCatalog", checked) }
+        }
+        SettingRow {
+            iconName: "languages"
+            title: qsTr("Languages for “All sources”")
+            description: qsTr("Which comic sources “All sources” searches and finds series on. Each source can still be picked on its own.")
+            Select {
+                model: [{ value: "", label: qsTr("All languages") }].concat(Comics.languages())
+                value: App.settings.sourceLanguages || ""
+                onPicked: (v) => App.setSetting("sourceLanguages", v)
+            }
         }
         SettingRow {
             iconName: "eye"

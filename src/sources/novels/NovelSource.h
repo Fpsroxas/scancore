@@ -55,6 +55,10 @@ struct SourceConfig {
     bool searchable = true;
     QString disabledReason;
     QJsonObject options;
+    // Language of the content and the tag that tells this source's links
+    // apart from another source on the same host (see comics::SourceConfig).
+    QString language = QStringLiteral("en");
+    QString urlTag;
 };
 
 class Source {

@@ -34,6 +34,8 @@ public:
     std::optional<Details> details(const QString &seriesUrl) override;
 
 private:
+    // Translations to list (option "languages", default English).
+    QStringList languages() const;
     QJsonDocument api(const QString &path, const QList<QPair<QString, QString>> &params, bool atHome = false);
 };
 

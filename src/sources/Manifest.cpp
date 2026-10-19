@@ -2,10 +2,12 @@
 
 #include "core/Http.h"
 
+#include <QCoreApplication>
 #include <QFile>
 #include <QJsonDocument>
 #include <QReadWriteLock>
 #include <QSaveFile>
+#include <QVersionNumber>
 
 namespace sc {
 
@@ -31,6 +33,20 @@ QJsonObject Manifest::current() {
 }
 
 int Manifest::version() { return current().value(QStringLiteral("version")).toInt(); }
+
+QString Manifest::appVersion() {
+    const auto running = QCoreApplication::applicationVersion();
+    return running.isEmpty() ? QStringLiteral(SCANCORE_VERSION) : running;
+}
+
+bool Manifest::supports(const QJsonObject &entry) {
+    const auto wanted = entry.value(QStringLiteral("minVersion")).toString();
+    if (wanted.isEmpty())
+        return true;
+    const auto needed = QVersionNumber::fromString(wanted);
+    // A requirement this build cannot read is one it does not meet.
+    return !needed.isNull() && QVersionNumber::fromString(appVersion()) >= needed;
+}
 
 bool Manifest::apply(const QByteArray &json, bool persist) {
     const auto doc = QJsonDocument::fromJson(json);
