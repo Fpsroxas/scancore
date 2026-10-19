@@ -51,6 +51,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.5.0" date="2026-10-19">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#150--2026-10-19</url>
+      <description>
+        <p>Comics in Spanish from MangaDex (Español), ManhwaWeb, InManga, LeerCapitulo and MangaOni. Settings shows each source's language and can keep "All sources" to one, and the welcome screen starts with the interface language. Titles match with or without accents, Spanish chapter numbers are read correctly, and MangaDex comics are tracked on AniList and MyAnimeList by the ids MangaDex gives. Episodes open again from an anime's page, and on Android the keyboard's Enter key searches.</p>
+      </description>
+    </release>
     <release version="1.4.0" date="2026-10-19">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#140--2026-10-19</url>
       <description>

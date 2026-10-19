@@ -2,6 +2,21 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 1.5.0 — 2026-10-19
+
+Spanish comic sources, source languages, accent-proof title matching, episodes that open again from an anime's page, and search from the Android keyboard.
+
+- **Comics in Spanish**: five new sources. MangaDex (Español) lists Spanish and Latin American Spanish translations, with Spanish titles and descriptions where MangaDex has them; ManhwaWeb, InManga, LeerCapitulo and MangaOni are Spanish sites. A series read in Spanish is its own library entry, separate from the same series in English. InManga has lost the pages of many older chapters, and SCANCORE says so when you open one.
+- **Source languages**: Settings → Sources shows each source's language, and comic source chips show it when it is not English. A new setting keeps "All sources" (and "Read from" for Comick's catalogue) to one language; it searches every language unless you change it.
+- **Language on the first screen**: the welcome screen starts with the interface language, so the rest of the intro is in it, and its look step can pick the comic source language. Its Theme, Accent, Comics open as and Reduce motion labels are translated now.
+- **Titles match with or without accents**: "Pequeña" and "pequena" are the same title in search, "Read from" and AniList, MyAnimeList and Comick matching. Japanese, Korean and Chinese titles take part in comic search ranking too; they were ignored before.
+- **Tracking by MangaDex's links**: comics from MangaDex (either language) are matched on AniList and MyAnimeList by the ids MangaDex gives, not only by title.
+- **Spanish chapter numbers**: "Capítulo 12", "Cap. 12" and "Episodio 12" are read as chapter 12, and "Temporada 2 Capítulo 12" no longer counts as chapter 2. Chapter names SCANCORE makes up are in the source's language.
+- Tapping or clicking an episode on an anime's page plays it again; it did nothing since 1.4.0. The play button on episode thumbnails is white again instead of a black disc.
+- Sites behind Cloudflare that work normally are no longer reported as asking for a browser check.
+- Android: pressing Enter on the keyboard in a search field searches, instead of moving to the clear button.
+- Android: the comic reader's top bar sits right under the status bar instead of a gap below it.
+
 ## 1.4.0 — 2026-10-19
 
 Comments and reviews from scancore.onl in the app, comics from Comick's catalogue, chapter lists ten at a time, the page bar back at the reader's edge, and access codes for new scancore.onl accounts.

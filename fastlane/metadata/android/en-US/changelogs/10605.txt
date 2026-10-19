@@ -1,0 +1,5 @@
+• Comics in Spanish: MangaDex (Español), ManhwaWeb, InManga, LeerCapitulo and MangaOni
+• Each source's language in Settings, and "All sources" can keep to one language
+• Titles match with or without accents, and Spanish chapter numbers are read right
+• Episodes open again from an anime's page
+• Enter on the keyboard searches; the reader's top bar sits under the status bar
