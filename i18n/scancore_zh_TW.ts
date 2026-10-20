@@ -1230,6 +1230,58 @@
             <translation>  ·  已下載</translation>
         </message>
         <message>
+            <source>Tap zones: left and right</source>
+            <translation>點按區域：左右</translation>
+        </message>
+        <message>
+            <source>Tap zones: L shape</source>
+            <translation>點按區域：L 形</translation>
+        </message>
+        <message>
+            <source>Tap zones: Kindle</source>
+            <translation>點按區域：Kindle 式</translation>
+        </message>
+        <message>
+            <source>Tap zones: edges</source>
+            <translation>點按區域：邊緣</translation>
+        </message>
+        <message>
+            <source>Tap zones: off</source>
+            <translation>點按區域：關閉</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>不翻轉</translation>
+        </message>
+        <message>
+            <source>Flipped left and right</source>
+            <translation>左右翻轉</translation>
+        </message>
+        <message>
+            <source>Flipped top and bottom</source>
+            <translation>上下翻轉</translation>
+        </message>
+        <message>
+            <source>Flipped both ways</source>
+            <translation>上下左右翻轉</translation>
+        </message>
+        <message>
+            <source>Next</source>
+            <translation>下一頁</translation>
+        </message>
+        <message>
+            <source>Previous</source>
+            <translation>上一頁</translation>
+        </message>
+        <message>
+            <source>Menu</source>
+            <translation>選單</translation>
+        </message>
+        <message>
+            <source>  ·  Incognito</source>
+            <translation>  ·  無痕</translation>
+        </message>
+        <message>
             <source>Previous chapter</source>
             <translation>上一章</translation>
         </message>
@@ -1266,6 +1318,10 @@
             <translation>章節 </translation>
         </message>
         <message>
+            <source>Layout</source>
+            <translation>版面</translation>
+        </message>
+        <message>
             <source>Vertical</source>
             <translation>豎向</translation>
         </message>
@@ -1288,6 +1344,58 @@
         <message>
             <source>Two pages</source>
             <translation>雙頁</translation>
+        </message>
+        <message>
+            <source>Trim white or black borders</source>
+            <translation>裁掉白色或黑色邊框</translation>
+        </message>
+        <message>
+            <source>Split wide pages in two</source>
+            <translation>把寬頁面分成兩半</translation>
+        </message>
+        <message>
+            <source>Width · %1 px</source>
+            <translation>寬度 · %1 px</translation>
+        </message>
+        <message>
+            <source>Gap between panels · %1 px</source>
+            <translation>分格間距 · %1 px</translation>
+        </message>
+        <message>
+            <source>Colour · brightness %1%</source>
+            <translation>顏色 · 亮度 %1%</translation>
+        </message>
+        <message>
+            <source>Warmth · %1%</source>
+            <translation>暖色 · %1%</translation>
+        </message>
+        <message>
+            <source>Greyscale</source>
+            <translation>灰階</translation>
+        </message>
+        <message>
+            <source>Invert colours</source>
+            <translation>反轉顏色</translation>
+        </message>
+        <message>
+            <source>Taps</source>
+            <translation>點按</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>點按區域</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>翻轉點按區域</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>直向捲動時也使用點按區域</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>音量鍵翻頁</translation>
         </message>
         <message>
             <source>Page progress bar</source>
@@ -1316,6 +1424,18 @@
         <message>
             <source>Thick</source>
             <translation>粗</translation>
+        </message>
+        <message>
+            <source>Only for this series</source>
+            <translation>僅此系列</translation>
+        </message>
+        <message>
+            <source>Keeps these settings for %1 alone</source>
+            <translation>這些設定只用於%1</translation>
+        </message>
+        <message>
+            <source>it</source>
+            <translation>此系列</translation>
         </message>
     </context>
     <context>
@@ -1524,6 +1644,18 @@
             <translation>檢查書庫中的新章節</translation>
         </message>
         <message>
+            <source>Turn incognito off</source>
+            <translation>關閉無痕模式</translation>
+        </message>
+        <message>
+            <source>Turn incognito on</source>
+            <translation>開啟無痕模式</translation>
+        </message>
+        <message>
+            <source>Lock SCANCORE</source>
+            <translation>鎖定 SCANCORE</translation>
+        </message>
+        <message>
             <source>Sync with scancore.onl</source>
             <translation>與 scancore.onl 同步</translation>
         </message>
@@ -1689,14 +1821,6 @@
             <translation>動畫會連同你看過的劇集一起匯入。漫畫和小說如果在你的來源中能找到，會連同讀過的章節一起匯入；其餘的會在下方等待被找到。</translation>
         </message>
         <message>
-            <source>Mihon or Tachiyomi backup</source>
-            <translation>Mihon 或 Tachiyomi 備份</translation>
-        </message>
-        <message>
-            <source>A .tachibk file from More → Backup and restore.</source>
-            <translation>來自“更多 → 備份與恢復”的 .tachibk 檔案。</translation>
-        </message>
-        <message>
             <source>Choose file</source>
             <translation>選擇檔案</translation>
         </message>
@@ -1751,6 +1875,30 @@
         <message>
             <source>All files (*)</source>
             <translation>所有檔案 (*)</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup</source>
+            <translation>Mihon、Tachiyomi 或 Aniyomi 備份</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.</source>
+            <translation>來自「更多 → 備份與還原」的 .tachibk 檔案。來自你在這裡已有擴充功能的系列會原樣還原。</translation>
+        </message>
+        <message>
+            <source>LNReader backup</source>
+            <translation>LNReader 備份</translation>
+        </message>
+        <message>
+            <source>A backup .zip from LNReader&apos;s More → Backup. Novels from a plugin you have here come back exactly as they were.</source>
+            <translation>來自 LNReader「更多 → 備份」的 .zip 備份。來自你在這裡已有外掛的小說會原樣還原。</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Mihon、Tachiyomi 或 Aniyomi 備份 (*.tachibk *.proto.gz)</translation>
+        </message>
+        <message>
+            <source>LNReader backup (*.zip)</source>
+            <translation>LNReader 備份 (*.zip)</translation>
         </message>
         <message>
             <source>Saved %1 series</source>
@@ -3062,8 +3210,76 @@
             <translation>標題 A–Z</translation>
         </message>
         <message>
+            <source>Grid</source>
+            <translation>格狀</translation>
+        </message>
+        <message>
+            <source>Compact grid</source>
+            <translation>緊湊格狀</translation>
+        </message>
+        <message>
+            <source>List</source>
+            <translation>清單</translation>
+        </message>
+        <message>
+            <source>Files on this device stay where they are.</source>
+            <translation>此裝置上的檔案會留在原處。</translation>
+        </message>
+        <message>
+            <source>Remove 1 series from your library?</source>
+            <translation>要從書庫移除 1 個系列嗎？</translation>
+        </message>
+        <message>
+            <source>Remove %1 series from your library?</source>
+            <translation>要從書庫移除 %1 個系列嗎？</translation>
+        </message>
+        <message>
+            <source>Your reading history and downloads are kept.</source>
+            <translation>你的閱讀紀錄和下載會保留。</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>移除</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>完成</translation>
+        </message>
+        <message>
+            <source>Select</source>
+            <translation>選取</translation>
+        </message>
+        <message>
+            <source>Sort</source>
+            <translation>排序</translation>
+        </message>
+        <message>
+            <source>View</source>
+            <translation>檢視</translation>
+        </message>
+        <message>
             <source>All</source>
             <translation>全部</translation>
+        </message>
+        <message>
+            <source>Tap series to pick them</source>
+            <translation>點按系列以選取</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>已選 %1 個</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>遷移到其他來源</translation>
+        </message>
+        <message>
+            <source>Move to list…</source>
+            <translation>移到清單…</translation>
+        </message>
+        <message>
+            <source>Moved to %1</source>
+            <translation>已移到%1</translation>
         </message>
         <message>
             <source>Nothing matches</source>
@@ -3153,6 +3369,74 @@
             <translation>來自 scancore.onl 的 SCANCORE 訊息，一發布就會出現在“通知”中。</translation>
         </message>
         <message>
+            <source>Which series are checked</source>
+            <translation>檢查哪些系列</translation>
+        </message>
+        <message>
+            <source>Lists</source>
+            <translation>清單</translation>
+        </message>
+        <message>
+            <source>Only series on these lists of your library are checked for new chapters.</source>
+            <translation>只檢查書庫中這些清單裡的系列是否有新章節。</translation>
+        </message>
+        <message>
+            <source>Skip finished series</source>
+            <translation>略過已完結的系列</translation>
+        </message>
+        <message>
+            <source>Series their site marks as completed.</source>
+            <translation>其網站標示為已完結的系列。</translation>
+        </message>
+        <message>
+            <source>Skip series with chapters left to read</source>
+            <translation>略過還有未讀章節的系列</translation>
+        </message>
+        <message>
+            <source>Checked again once you catch up.</source>
+            <translation>你追上後會再次檢查。</translation>
+        </message>
+        <message>
+            <source>Skip series you have not started</source>
+            <translation>略過還沒開始看的系列</translation>
+        </message>
+        <message>
+            <source>Check by itself only on Wi-Fi</source>
+            <translation>僅在 Wi-Fi 下自動檢查</translation>
+        </message>
+        <message>
+            <source>Not on mobile data or a metered connection. Checking by hand always works.</source>
+            <translation>不使用行動數據或計量付費的連線。手動檢查一律可用。</translation>
+        </message>
+        <message>
+            <source>Check by itself only while charging</source>
+            <translation>僅在充電時自動檢查</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>下載</translation>
+        </message>
+        <message>
+            <source>Download new chapters</source>
+            <translation>下載新章節</translation>
+        </message>
+        <message>
+            <source>New chapters of series on these lists download as soon as they are found.</source>
+            <translation>這些清單中系列的新章節一找到就會下載。</translation>
+        </message>
+        <message>
+            <source>Pick lists whose new chapters download as soon as they are found.</source>
+            <translation>選擇新章節一找到就下載的清單。</translation>
+        </message>
+        <message>
+            <source>Delete chapters once read</source>
+            <translation>讀完後刪除章節</translation>
+        </message>
+        <message>
+            <source>A downloaded chapter goes when you finish the next one.</source>
+            <translation>讀完下一章時，已下載的章節會被刪除。</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>後臺</translation>
         </message>
@@ -3205,6 +3489,29 @@
         </message>
     </context>
     <context>
+        <name>LockScreen</name>
+        <message>
+            <source>SCANCORE is locked</source>
+            <translation>SCANCORE 已鎖定</translation>
+        </message>
+        <message>
+            <source>Too many tries. Try again in %1 s.</source>
+            <translation>嘗試次數過多。請在 %1 秒後再試。</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>PIN 錯誤</translation>
+        </message>
+        <message>
+            <source>Enter your PIN</source>
+            <translation>輸入你的 PIN</translation>
+        </message>
+        <message>
+            <source>Use fingerprint or face</source>
+            <translation>使用指紋或臉孔</translation>
+        </message>
+    </context>
+    <context>
         <name>Main</name>
         <message>
             <source> new chapter</source>
@@ -3221,6 +3528,18 @@
         <message>
             <source>Try again now; %1 should load.</source>
             <translation>現在再試一次，%1 應該可以載入了。</translation>
+        </message>
+        <message>
+            <source>Incognito is on. Turn it off</source>
+            <translation>無痕模式已開啟。關閉</translation>
+        </message>
+        <message>
+            <source>Nothing you read or watch is recorded. Click to turn off.</source>
+            <translation>你閱讀或觀看的內容都不會被記錄。按一下即可關閉。</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>無痕</translation>
         </message>
         <message>
             <source>Use this theme?</source>
@@ -3245,6 +3564,121 @@
         <message>
             <source>Allow</source>
             <translation>允許</translation>
+        </message>
+    </context>
+    <context>
+        <name>MigrateDialog</name>
+        <message>
+            <source>The new source lists no chapters for this series.</source>
+            <translation>新來源沒有此系列的章節。</translation>
+        </message>
+        <message>
+            <source>Moved 1 series</source>
+            <translation>已遷移 1 個系列</translation>
+        </message>
+        <message>
+            <source>Moved %1 series</source>
+            <translation>已遷移 %1 個系列</translation>
+        </message>
+        <message>
+            <source>Move %1 series to other sources</source>
+            <translation>將 %1 個系列遷移到其他來源</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>遷移到其他來源</translation>
+        </message>
+        <message>
+            <source>Each one goes to the best match on your other sources. Change any of them before moving.</source>
+            <translation>每個系列都會遷移到你其他來源中最相符的結果。遷移前可以變更任何一個。</translation>
+        </message>
+        <message>
+            <source>Your progress, library list and tracking go with it.</source>
+            <translation>你的進度、書庫清單和追蹤都會一起遷移。</translation>
+        </message>
+        <message>
+            <source>Loading its chapters…</source>
+            <translation>正在載入章節…</translation>
+        </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 章</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 章</translation>
+        </message>
+        <message>
+            <source>, newest %1</source>
+            <translation>，最新 %1</translation>
+        </message>
+        <message>
+            <source>%1 will count as read.</source>
+            <translation>%1 章將算作已讀。</translation>
+        </message>
+        <message>
+            <source>Looking for it on your other sources…</source>
+            <translation>正在其他來源中尋找…</translation>
+        </message>
+        <message>
+            <source>None of your other sources has it.</source>
+            <translation>你的其他來源都沒有它。</translation>
+        </message>
+        <message>
+            <source>Move it to</source>
+            <translation>遷移到</translation>
+        </message>
+        <message>
+            <source>Looking…</source>
+            <translation>尋找中…</translation>
+        </message>
+        <message>
+            <source>Not found on your other sources</source>
+            <translation>在你的其他來源中找不到</translation>
+        </message>
+        <message>
+            <source>Moving…</source>
+            <translation>遷移中…</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>已遷移</translation>
+        </message>
+        <message>
+            <source>Bring my progress</source>
+            <translation>帶上我的進度</translation>
+        </message>
+        <message>
+            <source>Chapters up to the furthest one you read count as read.</source>
+            <translation>讀到最遠一章之前的章節都算作已讀。</translation>
+        </message>
+        <message>
+            <source>Keep the old one too</source>
+            <translation>也保留舊的</translation>
+        </message>
+        <message>
+            <source>Copy instead of move: both stay in your library.</source>
+            <translation>複製而不是遷移：兩個都會留在書庫中。</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>返回</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>取消</translation>
+        </message>
+        <message>
+            <source>Move %1</source>
+            <translation>遷移 %1 個</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>遷移</translation>
         </message>
     </context>
     <context>
@@ -3392,6 +3826,10 @@
         <message>
             <source> · Downloaded</source>
             <translation> · 已下載</translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · 無痕</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -3951,6 +4389,156 @@
         </message>
     </context>
     <context>
+        <name>PinPad</name>
+        <message>
+            <source>Delete</source>
+            <translation>刪除</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>完成</translation>
+        </message>
+    </context>
+    <context>
+        <name>PrivacySettings</name>
+        <message>
+            <source>Privacy</source>
+            <translation>隱私</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>無痕模式和應用程式鎖</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>無痕</translation>
+        </message>
+        <message>
+            <source>Incognito reading and watching leaves nothing behind: no history, no place kept, no reading time, no tracker updates and no Discord status. Saving series and downloads still work.</source>
+            <translation>在無痕模式下閱讀和觀看不會留下任何痕跡：沒有紀錄、不儲存位置、不計閱讀時間、不更新追蹤服務，也不顯示 Discord 狀態。儲存系列和下載照常可用。</translation>
+        </message>
+        <message>
+            <source>Incognito mode</source>
+            <translation>無痕模式</translation>
+        </message>
+        <message>
+            <source>A badge shows while it is on.</source>
+            <translation>開啟時會顯示一個標記。</translation>
+        </message>
+        <message>
+            <source>App lock</source>
+            <translation>應用程式鎖</translation>
+        </message>
+        <message>
+            <source>Ask for a PIN when SCANCORE starts and after it has been away for a while.</source>
+            <translation>SCANCORE 啟動時以及離開一段時間後要求輸入 PIN。</translation>
+        </message>
+        <message>
+            <source> Fingerprint or face can unlock it too.</source>
+            <translation> 也可以用指紋或臉孔解鎖。</translation>
+        </message>
+        <message>
+            <source>Lock with a PIN</source>
+            <translation>用 PIN 鎖定</translation>
+        </message>
+        <message>
+            <source>On · %1 digits</source>
+            <translation>已開啟 · %1 位數</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Change PIN</source>
+            <translation>變更 PIN</translation>
+        </message>
+        <message>
+            <source>Set a PIN</source>
+            <translation>設定 PIN</translation>
+        </message>
+        <message>
+            <source>Turn off</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Lock again</source>
+            <translation>再次鎖定</translation>
+        </message>
+        <message>
+            <source>After SCANCORE has been in the background this long.</source>
+            <translation>SCANCORE 在背景停留這麼久之後。</translation>
+        </message>
+        <message>
+            <source>Only when it starts</source>
+            <translation>僅在啟動時</translation>
+        </message>
+        <message>
+            <source>Right away</source>
+            <translation>立即</translation>
+        </message>
+        <message>
+            <source>After 1 minute</source>
+            <translation>1 分鐘後</translation>
+        </message>
+        <message>
+            <source>After 5 minutes</source>
+            <translation>5 分鐘後</translation>
+        </message>
+        <message>
+            <source>After 15 minutes</source>
+            <translation>15 分鐘後</translation>
+        </message>
+        <message>
+            <source>Unlock with fingerprint or face</source>
+            <translation>用指紋或臉孔解鎖</translation>
+        </message>
+        <message>
+            <source>The phone&apos;s screen lock works there too, if you forget the PIN.</source>
+            <translation>如果忘了 PIN，那裡也可以用手機的螢幕鎖定。</translation>
+        </message>
+        <message>
+            <source>Lock now</source>
+            <translation>立即鎖定</translation>
+        </message>
+        <message>
+            <source>The PINs do not match. Start again.</source>
+            <translation>兩次 PIN 不一致。請重新開始。</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>PIN 錯誤</translation>
+        </message>
+        <message>
+            <source>App lock is off</source>
+            <translation>應用程式鎖已關閉</translation>
+        </message>
+        <message>
+            <source>App lock is on</source>
+            <translation>應用程式鎖已開啟</translation>
+        </message>
+        <message>
+            <source>Enter your current PIN</source>
+            <translation>輸入目前的 PIN</translation>
+        </message>
+        <message>
+            <source>Choose a PIN</source>
+            <translation>設定一個 PIN</translation>
+        </message>
+        <message>
+            <source>Enter it again</source>
+            <translation>再輸入一次</translation>
+        </message>
+        <message>
+            <source>4 to 8 digits, then the tick.</source>
+            <translation>4 到 8 位數字，然後點勾號。</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>取消</translation>
+        </message>
+    </context>
+    <context>
         <name>ReadFromDialog</name>
         <message>
             <source>Looking for it on your sources…</source>
@@ -3994,6 +4582,18 @@
         <message>
             <source>Comic and novel readers</source>
             <translation>漫畫和小說閱讀器</translation>
+        </message>
+        <message>
+            <source>Not read yet</source>
+            <translation>未讀</translation>
+        </message>
+        <message>
+            <source>Read</source>
+            <translation>已讀</translation>
+        </message>
+        <message>
+            <source>Current page</source>
+            <translation>目前頁面</translation>
         </message>
         <message>
             <source>Comic reader</source>
@@ -4052,6 +4652,74 @@
             <translation>在分頁佈局中裁掉掃描頁面四周的純白或純黑邊。</translation>
         </message>
         <message>
+            <source>Split wide pages</source>
+            <translation>分割寬頁面</translation>
+        </message>
+        <message>
+            <source>Shows a two-page spread as its two halves, one after the other, in the Pages layout.</source>
+            <translation>在分頁版面中，把跨頁按左右兩半依序顯示。</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>點按區域</translation>
+        </message>
+        <message>
+            <source>Where a tap turns the page back or forward, or shows the controls. The reader shows them when you change them.</source>
+            <translation>點按哪裡會向前或向後翻頁，或顯示控制項。變更時閱讀器會顯示出來。</translation>
+        </message>
+        <message>
+            <source>Left and right</source>
+            <translation>左右</translation>
+        </message>
+        <message>
+            <source>L shape</source>
+            <translation>L 形</translation>
+        </message>
+        <message>
+            <source>Kindle</source>
+            <translation>Kindle 式</translation>
+        </message>
+        <message>
+            <source>Edges</source>
+            <translation>邊緣</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>翻轉點按區域</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>不翻轉</translation>
+        </message>
+        <message>
+            <source>Top and bottom</source>
+            <translation>上下</translation>
+        </message>
+        <message>
+            <source>Both ways</source>
+            <translation>上下左右</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>直向捲動時也使用點按區域</translation>
+        </message>
+        <message>
+            <source>A tap scrolls a screen up or down instead of showing the controls.</source>
+            <translation>點按會向上或向下捲動一個畫面，而不是顯示控制項。</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>音量鍵翻頁</translation>
+        </message>
+        <message>
+            <source>Volume down goes forward, volume up back, while a comic is open.</source>
+            <translation>開著漫畫時，音量減翻到下一頁，音量加翻回上一頁。</translation>
+        </message>
+        <message>
             <source>Strip width</source>
             <translation>條漫寬度</translation>
         </message>
@@ -4072,8 +4740,20 @@
             <translation>進度線</translation>
         </message>
         <message>
-            <source>A thin line on the right edge showing how far through the chapter you are.</source>
-            <translation>右側邊緣的一條細線，顯示你讀到章節的哪裡。</translation>
+            <source>A thin line on the left edge showing how far through the chapter you are.</source>
+            <translation>左邊緣的一條細線，顯示你讀到章節的哪裡。</translation>
+        </message>
+        <message>
+            <source>Progress rail colours</source>
+            <translation>進度列顏色</translation>
+        </message>
+        <message>
+            <source>Pages not read yet, pages read, and the page you are on.</source>
+            <translation>未讀頁面、已讀頁面以及你所在的頁面。</translation>
+        </message>
+        <message>
+            <source>Reset colours</source>
+            <translation>重設顏色</translation>
         </message>
         <message>
             <source>Novel reader</source>
@@ -4372,6 +5052,14 @@
             <translation>熱門輕小說</translation>
         </message>
         <message>
+            <source>Incognito is on: nothing you read or watch is recorded</source>
+            <translation>無痕模式已開啟：你閱讀或觀看的內容都不會被記錄</translation>
+        </message>
+        <message>
+            <source>Incognito is off</source>
+            <translation>無痕模式已關閉</translation>
+        </message>
+        <message>
             <source>The theme</source>
             <translation>主題</translation>
         </message>
@@ -4415,6 +5103,42 @@
             <translation>已加入書庫</translation>
         </message>
         <message>
+            <source>Remove bookmark</source>
+            <translation>移除書籤</translation>
+        </message>
+        <message>
+            <source>Bookmark</source>
+            <translation>書籤</translation>
+        </message>
+        <message>
+            <source>Mark unread</source>
+            <translation>標為未讀</translation>
+        </message>
+        <message>
+            <source>Mark read</source>
+            <translation>標為已讀</translation>
+        </message>
+        <message>
+            <source>Mark previous as read</source>
+            <translation>將之前的標為已讀</translation>
+        </message>
+        <message>
+            <source>Mark previous as unread</source>
+            <translation>將之前的標為未讀</translation>
+        </message>
+        <message>
+            <source>Remove download</source>
+            <translation>刪除下載</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>下載</translation>
+        </message>
+        <message>
+            <source>Download from here on</source>
+            <translation>從這裡開始下載</translation>
+        </message>
+        <message>
             <source>Downloading </source>
             <translation>正在下載 </translation>
         </message>
@@ -4425,6 +5149,30 @@
         <message>
             <source> chapters</source>
             <translation> 章</translation>
+        </message>
+        <message>
+            <source>Unread only</source>
+            <translation>僅未讀</translation>
+        </message>
+        <message>
+            <source>Downloaded only</source>
+            <translation>僅已下載</translation>
+        </message>
+        <message>
+            <source>Bookmarked only</source>
+            <translation>僅書籤</translation>
+        </message>
+        <message>
+            <source>Translated by</source>
+            <translation>翻譯組</translation>
+        </message>
+        <message>
+            <source>Every group</source>
+            <translation>所有組</translation>
+        </message>
+        <message>
+            <source>Clear filters</source>
+            <translation>清除篩選</translation>
         </message>
         <message>
             <source> · Novel</source>
@@ -4449,6 +5197,10 @@
         <message>
             <source>Tracking</source>
             <translation>追蹤</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>遷移到其他來源</translation>
         </message>
         <message>
             <source>Refresh</source>
@@ -4483,8 +5235,8 @@
             <translation>查詢章節</translation>
         </message>
         <message>
-            <source>Download </source>
-            <translation>下載 </translation>
+            <source>Select chapters</source>
+            <translation>選取章節</translation>
         </message>
         <message>
             <source>Unread</source>
@@ -4495,12 +5247,16 @@
             <translation>全部</translation>
         </message>
         <message>
-            <source>Cancel</source>
-            <translation>取消</translation>
+            <source>Filters (%1 on)</source>
+            <translation>篩選（已開 %1 個）</translation>
         </message>
         <message>
-            <source>Select chapters to download</source>
-            <translation>選擇要下載的章節</translation>
+            <source>Filter chapters</source>
+            <translation>篩選章節</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>取消</translation>
         </message>
         <message>
             <source>Mark all as read</source>
@@ -4515,8 +5271,32 @@
             <translation>最早在前</translation>
         </message>
         <message>
+            <source>Tap chapters to pick them</source>
+            <translation>點按章節以選取</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>已選 %1 個</translation>
+        </message>
+        <message>
+            <source>Remove downloads</source>
+            <translation>刪除下載</translation>
+        </message>
+        <message>
             <source>No chapters available</source>
             <translation>沒有可用章節</translation>
+        </message>
+        <message>
+            <source>No chapters match</source>
+            <translation>沒有符合的章節</translation>
+        </message>
+        <message>
+            <source>Your filters hide every chapter. Clear them with the funnel above.</source>
+            <translation>你的篩選隱藏了所有章節。用上方的漏斗清除篩選。</translation>
+        </message>
+        <message>
+            <source>Nothing matches that search.</source>
+            <translation>沒有符合該搜尋的內容。</translation>
         </message>
         <message>
             <source>This source has not published readable chapters for this title.</source>
@@ -4600,6 +5380,14 @@
         <message>
             <source>New chapters and notifications</source>
             <translation>新章節和通知</translation>
+        </message>
+        <message>
+            <source>Privacy</source>
+            <translation>隱私</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>無痕模式和應用程式鎖</translation>
         </message>
         <message>
             <source>Sources</source>
@@ -4716,6 +5504,22 @@
         <message>
             <source> · Auto-skip </source>
             <translation> · 自動跳過 </translation>
+        </message>
+        <message>
+            <source>Incognito on</source>
+            <translation>無痕已開啟</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>無痕已關閉</translation>
+        </message>
+        <message>
+            <source>locked with a PIN</source>
+            <translation>已用 PIN 鎖定</translation>
+        </message>
+        <message>
+            <source>no app lock</source>
+            <translation>無應用程式鎖</translation>
         </message>
         <message>
             <source>Checks for new chapters every </source>
@@ -5008,6 +5812,10 @@
             <translation>來源已是最新</translation>
         </message>
         <message>
+            <source>Move %1</source>
+            <translation>遷移 %1 個</translation>
+        </message>
+        <message>
             <source>Pass a browser check for this site</source>
             <translation>通過此網站的瀏覽器驗證</translation>
         </message>
@@ -5212,12 +6020,32 @@
             <translation>擴充功能小說來源已安裝</translation>
         </message>
         <message>
+            <source>No longer available</source>
+            <translation>已無法使用</translation>
+        </message>
+        <message>
+            <source>Your progress on these series is kept. Move them to a source you have to read new chapters.</source>
+            <translation>這些系列的進度會保留。把它們遷移到你已有的來源即可閱讀新章節。</translation>
+        </message>
+        <message>
             <source>Comics</source>
             <translation>漫畫</translation>
         </message>
         <message>
             <source>Novels</source>
             <translation>小說</translation>
+        </message>
+        <message>
+            <source>1 series</source>
+            <translation>1 個系列</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 個系列</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>遷移</translation>
         </message>
     </context>
     <context>
@@ -5671,12 +6499,8 @@
             <translation>主題檔案</translation>
         </message>
         <message>
-            <source>Save this theme, or use one someone shared.</source>
-            <translation>儲存這個主題，或使用別人分享的主題。</translation>
-        </message>
-        <message>
-            <source>Use a theme someone shared.</source>
-            <translation>使用別人分享的主題。</translation>
+            <source>Save your whole look (colours, background, layout, arranged pages and reader colours) to share, or use a theme someone shared.</source>
+            <translation>儲存你的整體外觀（顏色、背景、版面、排列的頁面和閱讀器顏色）以便分享，或使用別人分享的主題。</translation>
         </message>
         <message>
             <source>Export…</source>
@@ -5975,6 +6799,10 @@
         <message>
             <source>Episode </source>
             <translation>劇集 </translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · 無痕</translation>
         </message>
         <message>
             <source>Trying another server: </source>
@@ -6288,6 +7116,17 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 個新章節</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Lock</name>
+        <message>
+            <source>Unlock SCANCORE</source>
+            <translation>解鎖 SCANCORE</translation>
+        </message>
+        <message>
+            <source>Use PIN</source>
+            <translation>使用 PIN</translation>
         </message>
     </context>
     <context>

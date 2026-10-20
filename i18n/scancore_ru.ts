@@ -1230,6 +1230,58 @@
             <translation>  ·  Скачано</translation>
         </message>
         <message>
+            <source>Tap zones: left and right</source>
+            <translation>Зоны касания: слева и справа</translation>
+        </message>
+        <message>
+            <source>Tap zones: L shape</source>
+            <translation>Зоны касания: буквой L</translation>
+        </message>
+        <message>
+            <source>Tap zones: Kindle</source>
+            <translation>Зоны касания: как в Kindle</translation>
+        </message>
+        <message>
+            <source>Tap zones: edges</source>
+            <translation>Зоны касания: по краям</translation>
+        </message>
+        <message>
+            <source>Tap zones: off</source>
+            <translation>Зоны касания: выключены</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Без отражения</translation>
+        </message>
+        <message>
+            <source>Flipped left and right</source>
+            <translation>Отражены слева направо</translation>
+        </message>
+        <message>
+            <source>Flipped top and bottom</source>
+            <translation>Отражены сверху вниз</translation>
+        </message>
+        <message>
+            <source>Flipped both ways</source>
+            <translation>Отражены в обе стороны</translation>
+        </message>
+        <message>
+            <source>Next</source>
+            <translation>Дальше</translation>
+        </message>
+        <message>
+            <source>Previous</source>
+            <translation>Назад</translation>
+        </message>
+        <message>
+            <source>Menu</source>
+            <translation>Меню</translation>
+        </message>
+        <message>
+            <source>  ·  Incognito</source>
+            <translation>  ·  Инкогнито</translation>
+        </message>
+        <message>
             <source>Previous chapter</source>
             <translation>Предыдущая глава</translation>
         </message>
@@ -1266,6 +1318,10 @@
             <translation>Глава </translation>
         </message>
         <message>
+            <source>Layout</source>
+            <translation>Раскладка</translation>
+        </message>
+        <message>
             <source>Vertical</source>
             <translation>Вертикально</translation>
         </message>
@@ -1288,6 +1344,58 @@
         <message>
             <source>Two pages</source>
             <translation>Две страницы</translation>
+        </message>
+        <message>
+            <source>Trim white or black borders</source>
+            <translation>Обрезать белые или чёрные поля</translation>
+        </message>
+        <message>
+            <source>Split wide pages in two</source>
+            <translation>Делить широкие страницы пополам</translation>
+        </message>
+        <message>
+            <source>Width · %1 px</source>
+            <translation>Ширина · %1 px</translation>
+        </message>
+        <message>
+            <source>Gap between panels · %1 px</source>
+            <translation>Отступ между кадрами · %1 px</translation>
+        </message>
+        <message>
+            <source>Colour · brightness %1%</source>
+            <translation>Цвет · яркость %1%</translation>
+        </message>
+        <message>
+            <source>Warmth · %1%</source>
+            <translation>Теплота · %1%</translation>
+        </message>
+        <message>
+            <source>Greyscale</source>
+            <translation>Оттенки серого</translation>
+        </message>
+        <message>
+            <source>Invert colours</source>
+            <translation>Инвертировать цвета</translation>
+        </message>
+        <message>
+            <source>Taps</source>
+            <translation>Касания</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Зоны касания</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Отразить зоны касания</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Зоны касания в вертикальной ленте</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Кнопки громкости листают страницы</translation>
         </message>
         <message>
             <source>Page progress bar</source>
@@ -1316,6 +1424,18 @@
         <message>
             <source>Thick</source>
             <translation>Толстая</translation>
+        </message>
+        <message>
+            <source>Only for this series</source>
+            <translation>Только для этой серии</translation>
+        </message>
+        <message>
+            <source>Keeps these settings for %1 alone</source>
+            <translation>Сохраняет эти настройки только для %1</translation>
+        </message>
+        <message>
+            <source>it</source>
+            <translation>неё</translation>
         </message>
     </context>
     <context>
@@ -1524,6 +1644,18 @@
             <translation>Проверить библиотеку на новые главы</translation>
         </message>
         <message>
+            <source>Turn incognito off</source>
+            <translation>Выключить инкогнито</translation>
+        </message>
+        <message>
+            <source>Turn incognito on</source>
+            <translation>Включить инкогнито</translation>
+        </message>
+        <message>
+            <source>Lock SCANCORE</source>
+            <translation>Заблокировать SCANCORE</translation>
+        </message>
+        <message>
             <source>Sync with scancore.onl</source>
             <translation>Синхронизировать с scancore.onl</translation>
         </message>
@@ -1689,14 +1821,6 @@
             <translation>Аниме переносятся с просмотренными эпизодами. Комиксы и новеллы — с прочитанными главами, если они есть в одном из ваших источников; остальные ждут ниже, пока их не найдут.</translation>
         </message>
         <message>
-            <source>Mihon or Tachiyomi backup</source>
-            <translation>Резервная копия Mihon или Tachiyomi</translation>
-        </message>
-        <message>
-            <source>A .tachibk file from More → Backup and restore.</source>
-            <translation>Файл .tachibk из Ещё → Резервное копирование.</translation>
-        </message>
-        <message>
             <source>Choose file</source>
             <translation>Выбрать файл</translation>
         </message>
@@ -1751,6 +1875,30 @@
         <message>
             <source>All files (*)</source>
             <translation>Все файлы (*)</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup</source>
+            <translation>Резервная копия Mihon, Tachiyomi или Aniyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.</source>
+            <translation>Файл .tachibk из Ещё → Резервное копирование и восстановление. Серии из расширения, которое у вас здесь есть, вернутся точно такими, как были.</translation>
+        </message>
+        <message>
+            <source>LNReader backup</source>
+            <translation>Резервная копия LNReader</translation>
+        </message>
+        <message>
+            <source>A backup .zip from LNReader&apos;s More → Backup. Novels from a plugin you have here come back exactly as they were.</source>
+            <translation>Архив .zip из Ещё → Резервная копия в LNReader. Романы из плагина, который у вас здесь есть, вернутся точно такими, как были.</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Резервная копия Mihon, Tachiyomi или Aniyomi (*.tachibk *.proto.gz)</translation>
+        </message>
+        <message>
+            <source>LNReader backup (*.zip)</source>
+            <translation>Резервная копия LNReader (*.zip)</translation>
         </message>
         <message>
             <source>Saved %1 series</source>
@@ -3062,8 +3210,76 @@
             <translation>Название А–Я</translation>
         </message>
         <message>
+            <source>Grid</source>
+            <translation>Сетка</translation>
+        </message>
+        <message>
+            <source>Compact grid</source>
+            <translation>Компактная сетка</translation>
+        </message>
+        <message>
+            <source>List</source>
+            <translation>Список</translation>
+        </message>
+        <message>
+            <source>Files on this device stay where they are.</source>
+            <translation>Файлы на этом устройстве остаются на месте.</translation>
+        </message>
+        <message>
+            <source>Remove 1 series from your library?</source>
+            <translation>Убрать 1 серию из библиотеки?</translation>
+        </message>
+        <message>
+            <source>Remove %1 series from your library?</source>
+            <translation>Убрать серии (%1) из библиотеки?</translation>
+        </message>
+        <message>
+            <source>Your reading history and downloads are kept.</source>
+            <translation>История чтения и загрузки сохранятся.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Убрать</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Готово</translation>
+        </message>
+        <message>
+            <source>Select</source>
+            <translation>Выбрать</translation>
+        </message>
+        <message>
+            <source>Sort</source>
+            <translation>Сортировка</translation>
+        </message>
+        <message>
+            <source>View</source>
+            <translation>Вид</translation>
+        </message>
+        <message>
             <source>All</source>
             <translation>Все</translation>
+        </message>
+        <message>
+            <source>Tap series to pick them</source>
+            <translation>Нажимайте на серии, чтобы выбрать их</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>Выбрано: %1</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Перенести в другой источник</translation>
+        </message>
+        <message>
+            <source>Move to list…</source>
+            <translation>Переместить в список…</translation>
+        </message>
+        <message>
+            <source>Moved to %1</source>
+            <translation>Перемещено в «%1»</translation>
         </message>
         <message>
             <source>Nothing matches</source>
@@ -3153,6 +3369,74 @@
             <translation>Новости о SCANCORE с scancore.onl появляются в «Уведомлениях» сразу после публикации.</translation>
         </message>
         <message>
+            <source>Which series are checked</source>
+            <translation>Какие серии проверять</translation>
+        </message>
+        <message>
+            <source>Lists</source>
+            <translation>Списки</translation>
+        </message>
+        <message>
+            <source>Only series on these lists of your library are checked for new chapters.</source>
+            <translation>Новые главы ищутся только у серий из этих списков вашей библиотеки.</translation>
+        </message>
+        <message>
+            <source>Skip finished series</source>
+            <translation>Пропускать завершённые серии</translation>
+        </message>
+        <message>
+            <source>Series their site marks as completed.</source>
+            <translation>Серии, которые сайт отмечает как завершённые.</translation>
+        </message>
+        <message>
+            <source>Skip series with chapters left to read</source>
+            <translation>Пропускать серии с непрочитанными главами</translation>
+        </message>
+        <message>
+            <source>Checked again once you catch up.</source>
+            <translation>Проверяются снова, когда вы догоните.</translation>
+        </message>
+        <message>
+            <source>Skip series you have not started</source>
+            <translation>Пропускать серии, которые вы не начинали</translation>
+        </message>
+        <message>
+            <source>Check by itself only on Wi-Fi</source>
+            <translation>Проверять самостоятельно только по Wi-Fi</translation>
+        </message>
+        <message>
+            <source>Not on mobile data or a metered connection. Checking by hand always works.</source>
+            <translation>Не через мобильные данные и не через лимитное подключение. Проверка вручную работает всегда.</translation>
+        </message>
+        <message>
+            <source>Check by itself only while charging</source>
+            <translation>Проверять самостоятельно только при зарядке</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>Загрузки</translation>
+        </message>
+        <message>
+            <source>Download new chapters</source>
+            <translation>Скачивать новые главы</translation>
+        </message>
+        <message>
+            <source>New chapters of series on these lists download as soon as they are found.</source>
+            <translation>Новые главы серий из этих списков скачиваются сразу, как только найдены.</translation>
+        </message>
+        <message>
+            <source>Pick lists whose new chapters download as soon as they are found.</source>
+            <translation>Выберите списки, новые главы которых скачиваются сразу, как только найдены.</translation>
+        </message>
+        <message>
+            <source>Delete chapters once read</source>
+            <translation>Удалять главы после прочтения</translation>
+        </message>
+        <message>
+            <source>A downloaded chapter goes when you finish the next one.</source>
+            <translation>Скачанная глава удаляется, когда вы дочитаете следующую.</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>Фон</translation>
         </message>
@@ -3205,6 +3489,29 @@
         </message>
     </context>
     <context>
+        <name>LockScreen</name>
+        <message>
+            <source>SCANCORE is locked</source>
+            <translation>SCANCORE заблокирован</translation>
+        </message>
+        <message>
+            <source>Too many tries. Try again in %1 s.</source>
+            <translation>Слишком много попыток. Попробуйте снова через %1 с.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>Неверный PIN-код</translation>
+        </message>
+        <message>
+            <source>Enter your PIN</source>
+            <translation>Введите PIN-код</translation>
+        </message>
+        <message>
+            <source>Use fingerprint or face</source>
+            <translation>Отпечаток пальца или лицо</translation>
+        </message>
+    </context>
+    <context>
         <name>Main</name>
         <message>
             <source> new chapter</source>
@@ -3221,6 +3528,18 @@
         <message>
             <source>Try again now; %1 should load.</source>
             <translation>Попробуйте ещё раз сейчас; %1 должен загрузиться.</translation>
+        </message>
+        <message>
+            <source>Incognito is on. Turn it off</source>
+            <translation>Инкогнито включён. Выключить</translation>
+        </message>
+        <message>
+            <source>Nothing you read or watch is recorded. Click to turn off.</source>
+            <translation>Ничто из прочитанного или просмотренного не сохраняется. Нажмите, чтобы выключить.</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Инкогнито</translation>
         </message>
         <message>
             <source>Use this theme?</source>
@@ -3245,6 +3564,121 @@
         <message>
             <source>Allow</source>
             <translation>Разрешить</translation>
+        </message>
+    </context>
+    <context>
+        <name>MigrateDialog</name>
+        <message>
+            <source>The new source lists no chapters for this series.</source>
+            <translation>В новом источнике у этой серии нет глав.</translation>
+        </message>
+        <message>
+            <source>Moved 1 series</source>
+            <translation>Перенесена 1 серия</translation>
+        </message>
+        <message>
+            <source>Moved %1 series</source>
+            <translation>Перенесено серий: %1</translation>
+        </message>
+        <message>
+            <source>Move %1 series to other sources</source>
+            <translation>Перенести серии (%1) в другие источники</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Перенести в другой источник</translation>
+        </message>
+        <message>
+            <source>Each one goes to the best match on your other sources. Change any of them before moving.</source>
+            <translation>Каждая уйдёт к лучшему совпадению среди ваших других источников. Любое можно поменять перед переносом.</translation>
+        </message>
+        <message>
+            <source>Your progress, library list and tracking go with it.</source>
+            <translation>Ваш прогресс, список в библиотеке и отслеживание переносятся вместе с ней.</translation>
+        </message>
+        <message>
+            <source>Loading its chapters…</source>
+            <translation>Загружаются главы…</translation>
+        </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 глава</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>Глав: %1</translation>
+        </message>
+        <message>
+            <source>, newest %1</source>
+            <translation>, последняя %1</translation>
+        </message>
+        <message>
+            <source>%1 will count as read.</source>
+            <translation>Прочитанными будут считаться: %1.</translation>
+        </message>
+        <message>
+            <source>Looking for it on your other sources…</source>
+            <translation>Ищем в ваших других источниках…</translation>
+        </message>
+        <message>
+            <source>None of your other sources has it.</source>
+            <translation>Её нет ни в одном из ваших других источников.</translation>
+        </message>
+        <message>
+            <source>Move it to</source>
+            <translation>Перенести в</translation>
+        </message>
+        <message>
+            <source>Looking…</source>
+            <translation>Поиск…</translation>
+        </message>
+        <message>
+            <source>Not found on your other sources</source>
+            <translation>Не найдена в ваших других источниках</translation>
+        </message>
+        <message>
+            <source>Moving…</source>
+            <translation>Перенос…</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Перенесено</translation>
+        </message>
+        <message>
+            <source>Bring my progress</source>
+            <translation>Перенести мой прогресс</translation>
+        </message>
+        <message>
+            <source>Chapters up to the furthest one you read count as read.</source>
+            <translation>Главы до самой дальней прочитанной считаются прочитанными.</translation>
+        </message>
+        <message>
+            <source>Keep the old one too</source>
+            <translation>Оставить и старую</translation>
+        </message>
+        <message>
+            <source>Copy instead of move: both stay in your library.</source>
+            <translation>Копировать вместо переноса: обе останутся в библиотеке.</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Назад</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Закрыть</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Отмена</translation>
+        </message>
+        <message>
+            <source>Move %1</source>
+            <translation>Перенести %1</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Перенести</translation>
         </message>
     </context>
     <context>
@@ -3392,6 +3826,10 @@
         <message>
             <source> · Downloaded</source>
             <translation> · Скачано</translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Инкогнито</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -3951,6 +4389,156 @@
         </message>
     </context>
     <context>
+        <name>PinPad</name>
+        <message>
+            <source>Delete</source>
+            <translation>Удалить</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Готово</translation>
+        </message>
+    </context>
+    <context>
+        <name>PrivacySettings</name>
+        <message>
+            <source>Privacy</source>
+            <translation>Конфиденциальность</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Режим инкогнито и блокировка приложения</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Инкогнито</translation>
+        </message>
+        <message>
+            <source>Incognito reading and watching leaves nothing behind: no history, no place kept, no reading time, no tracker updates and no Discord status. Saving series and downloads still work.</source>
+            <translation>Чтение и просмотр в режиме инкогнито не оставляют следов: ни истории, ни сохранённого места, ни времени чтения, ни обновлений трекеров, ни статуса в Discord. Сохранять серии и скачивать по-прежнему можно.</translation>
+        </message>
+        <message>
+            <source>Incognito mode</source>
+            <translation>Режим инкогнито</translation>
+        </message>
+        <message>
+            <source>A badge shows while it is on.</source>
+            <translation>Пока он включён, показывается значок.</translation>
+        </message>
+        <message>
+            <source>App lock</source>
+            <translation>Блокировка приложения</translation>
+        </message>
+        <message>
+            <source>Ask for a PIN when SCANCORE starts and after it has been away for a while.</source>
+            <translation>Запрашивать PIN-код при запуске SCANCORE и после того, как оно какое-то время было свёрнуто.</translation>
+        </message>
+        <message>
+            <source> Fingerprint or face can unlock it too.</source>
+            <translation> Разблокировать можно и отпечатком пальца или лицом.</translation>
+        </message>
+        <message>
+            <source>Lock with a PIN</source>
+            <translation>Блокировать PIN-кодом</translation>
+        </message>
+        <message>
+            <source>On · %1 digits</source>
+            <translation>Включено · цифр: %1</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Выключено</translation>
+        </message>
+        <message>
+            <source>Change PIN</source>
+            <translation>Изменить PIN-код</translation>
+        </message>
+        <message>
+            <source>Set a PIN</source>
+            <translation>Задать PIN-код</translation>
+        </message>
+        <message>
+            <source>Turn off</source>
+            <translation>Выключить</translation>
+        </message>
+        <message>
+            <source>Lock again</source>
+            <translation>Блокировать снова</translation>
+        </message>
+        <message>
+            <source>After SCANCORE has been in the background this long.</source>
+            <translation>После того как SCANCORE пробыло в фоне столько времени.</translation>
+        </message>
+        <message>
+            <source>Only when it starts</source>
+            <translation>Только при запуске</translation>
+        </message>
+        <message>
+            <source>Right away</source>
+            <translation>Сразу</translation>
+        </message>
+        <message>
+            <source>After 1 minute</source>
+            <translation>Через 1 минуту</translation>
+        </message>
+        <message>
+            <source>After 5 minutes</source>
+            <translation>Через 5 минут</translation>
+        </message>
+        <message>
+            <source>After 15 minutes</source>
+            <translation>Через 15 минут</translation>
+        </message>
+        <message>
+            <source>Unlock with fingerprint or face</source>
+            <translation>Разблокировка отпечатком пальца или лицом</translation>
+        </message>
+        <message>
+            <source>The phone&apos;s screen lock works there too, if you forget the PIN.</source>
+            <translation>Там же работает блокировка экрана телефона, если вы забудете PIN-код.</translation>
+        </message>
+        <message>
+            <source>Lock now</source>
+            <translation>Заблокировать сейчас</translation>
+        </message>
+        <message>
+            <source>The PINs do not match. Start again.</source>
+            <translation>PIN-коды не совпадают. Начните заново.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>Неверный PIN-код</translation>
+        </message>
+        <message>
+            <source>App lock is off</source>
+            <translation>Блокировка приложения выключена</translation>
+        </message>
+        <message>
+            <source>App lock is on</source>
+            <translation>Блокировка приложения включена</translation>
+        </message>
+        <message>
+            <source>Enter your current PIN</source>
+            <translation>Введите текущий PIN-код</translation>
+        </message>
+        <message>
+            <source>Choose a PIN</source>
+            <translation>Придумайте PIN-код</translation>
+        </message>
+        <message>
+            <source>Enter it again</source>
+            <translation>Введите его ещё раз</translation>
+        </message>
+        <message>
+            <source>4 to 8 digits, then the tick.</source>
+            <translation>От 4 до 8 цифр, затем галочка.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Отмена</translation>
+        </message>
+    </context>
+    <context>
         <name>ReadFromDialog</name>
         <message>
             <source>Looking for it on your sources…</source>
@@ -3994,6 +4582,18 @@
         <message>
             <source>Comic and novel readers</source>
             <translation>Читалки комиксов и новелл</translation>
+        </message>
+        <message>
+            <source>Not read yet</source>
+            <translation>Ещё не прочитаны</translation>
+        </message>
+        <message>
+            <source>Read</source>
+            <translation>Прочитаны</translation>
+        </message>
+        <message>
+            <source>Current page</source>
+            <translation>Текущая страница</translation>
         </message>
         <message>
             <source>Comic reader</source>
@@ -4052,6 +4652,74 @@
             <translation>Срезает однотонные белые или чёрные поля вокруг сканов в режиме страниц.</translation>
         </message>
         <message>
+            <source>Split wide pages</source>
+            <translation>Делить широкие страницы</translation>
+        </message>
+        <message>
+            <source>Shows a two-page spread as its two halves, one after the other, in the Pages layout.</source>
+            <translation>Показывает разворот как две его половины, одну за другой, в постраничном режиме.</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Зоны касания</translation>
+        </message>
+        <message>
+            <source>Where a tap turns the page back or forward, or shows the controls. The reader shows them when you change them.</source>
+            <translation>Где касание листает назад или вперёд или показывает элементы управления. Читалка показывает их, когда вы их меняете.</translation>
+        </message>
+        <message>
+            <source>Left and right</source>
+            <translation>Слева и справа</translation>
+        </message>
+        <message>
+            <source>L shape</source>
+            <translation>Буквой L</translation>
+        </message>
+        <message>
+            <source>Kindle</source>
+            <translation>Как в Kindle</translation>
+        </message>
+        <message>
+            <source>Edges</source>
+            <translation>По краям</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Выключено</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Отразить зоны касания</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Без отражения</translation>
+        </message>
+        <message>
+            <source>Top and bottom</source>
+            <translation>Сверху и снизу</translation>
+        </message>
+        <message>
+            <source>Both ways</source>
+            <translation>В обе стороны</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Зоны касания в вертикальной ленте</translation>
+        </message>
+        <message>
+            <source>A tap scrolls a screen up or down instead of showing the controls.</source>
+            <translation>Касание прокручивает на экран вверх или вниз вместо показа элементов управления.</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Кнопки громкости листают страницы</translation>
+        </message>
+        <message>
+            <source>Volume down goes forward, volume up back, while a comic is open.</source>
+            <translation>Тише — вперёд, громче — назад, пока открыт комикс.</translation>
+        </message>
+        <message>
             <source>Strip width</source>
             <translation>Ширина ленты</translation>
         </message>
@@ -4072,8 +4740,20 @@
             <translation>Полоса прогресса</translation>
         </message>
         <message>
-            <source>A thin line on the right edge showing how far through the chapter you are.</source>
-            <translation>Тонкая линия у правого края, показывающая, сколько главы прочитано.</translation>
+            <source>A thin line on the left edge showing how far through the chapter you are.</source>
+            <translation>Тонкая линия у левого края, показывающая, сколько главы вы прочитали.</translation>
+        </message>
+        <message>
+            <source>Progress rail colours</source>
+            <translation>Цвета полосы прогресса</translation>
+        </message>
+        <message>
+            <source>Pages not read yet, pages read, and the page you are on.</source>
+            <translation>Непрочитанные страницы, прочитанные и та, на которой вы сейчас.</translation>
+        </message>
+        <message>
+            <source>Reset colours</source>
+            <translation>Сбросить цвета</translation>
         </message>
         <message>
             <source>Novel reader</source>
@@ -4372,6 +5052,14 @@
             <translation>Топ ранобэ</translation>
         </message>
         <message>
+            <source>Incognito is on: nothing you read or watch is recorded</source>
+            <translation>Инкогнито включён: ничто из прочитанного или просмотренного не сохраняется</translation>
+        </message>
+        <message>
+            <source>Incognito is off</source>
+            <translation>Инкогнито выключен</translation>
+        </message>
+        <message>
             <source>The theme</source>
             <translation>Тема</translation>
         </message>
@@ -4415,6 +5103,42 @@
             <translation>Добавлено в библиотеку</translation>
         </message>
         <message>
+            <source>Remove bookmark</source>
+            <translation>Убрать закладку</translation>
+        </message>
+        <message>
+            <source>Bookmark</source>
+            <translation>Закладка</translation>
+        </message>
+        <message>
+            <source>Mark unread</source>
+            <translation>Отметить непрочитанным</translation>
+        </message>
+        <message>
+            <source>Mark read</source>
+            <translation>Отметить прочитанным</translation>
+        </message>
+        <message>
+            <source>Mark previous as read</source>
+            <translation>Отметить предыдущие прочитанными</translation>
+        </message>
+        <message>
+            <source>Mark previous as unread</source>
+            <translation>Отметить предыдущие непрочитанными</translation>
+        </message>
+        <message>
+            <source>Remove download</source>
+            <translation>Удалить загрузку</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Скачать</translation>
+        </message>
+        <message>
+            <source>Download from here on</source>
+            <translation>Скачать отсюда и дальше</translation>
+        </message>
+        <message>
             <source>Downloading </source>
             <translation>Загрузка </translation>
         </message>
@@ -4425,6 +5149,30 @@
         <message>
             <source> chapters</source>
             <translation> глав</translation>
+        </message>
+        <message>
+            <source>Unread only</source>
+            <translation>Только непрочитанные</translation>
+        </message>
+        <message>
+            <source>Downloaded only</source>
+            <translation>Только скачанные</translation>
+        </message>
+        <message>
+            <source>Bookmarked only</source>
+            <translation>Только с закладкой</translation>
+        </message>
+        <message>
+            <source>Translated by</source>
+            <translation>Перевод</translation>
+        </message>
+        <message>
+            <source>Every group</source>
+            <translation>Все группы</translation>
+        </message>
+        <message>
+            <source>Clear filters</source>
+            <translation>Сбросить фильтры</translation>
         </message>
         <message>
             <source> · Novel</source>
@@ -4449,6 +5197,10 @@
         <message>
             <source>Tracking</source>
             <translation>Отслеживание</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Перенести в другой источник</translation>
         </message>
         <message>
             <source>Refresh</source>
@@ -4483,8 +5235,8 @@
             <translation>Найти главу</translation>
         </message>
         <message>
-            <source>Download </source>
-            <translation>Скачать </translation>
+            <source>Select chapters</source>
+            <translation>Выбрать главы</translation>
         </message>
         <message>
             <source>Unread</source>
@@ -4495,12 +5247,16 @@
             <translation>Все</translation>
         </message>
         <message>
-            <source>Cancel</source>
-            <translation>Отмена</translation>
+            <source>Filters (%1 on)</source>
+            <translation>Фильтры (включено: %1)</translation>
         </message>
         <message>
-            <source>Select chapters to download</source>
-            <translation>Выберите главы для загрузки</translation>
+            <source>Filter chapters</source>
+            <translation>Фильтровать главы</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Отмена</translation>
         </message>
         <message>
             <source>Mark all as read</source>
@@ -4515,8 +5271,32 @@
             <translation>Сначала старые</translation>
         </message>
         <message>
+            <source>Tap chapters to pick them</source>
+            <translation>Нажимайте на главы, чтобы выбрать их</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>Выбрано: %1</translation>
+        </message>
+        <message>
+            <source>Remove downloads</source>
+            <translation>Удалить загрузки</translation>
+        </message>
+        <message>
             <source>No chapters available</source>
             <translation>Нет доступных глав</translation>
+        </message>
+        <message>
+            <source>No chapters match</source>
+            <translation>Нет подходящих глав</translation>
+        </message>
+        <message>
+            <source>Your filters hide every chapter. Clear them with the funnel above.</source>
+            <translation>Фильтры скрывают все главы. Сбросьте их воронкой вверху.</translation>
+        </message>
+        <message>
+            <source>Nothing matches that search.</source>
+            <translation>По этому запросу ничего нет.</translation>
         </message>
         <message>
             <source>This source has not published readable chapters for this title.</source>
@@ -4600,6 +5380,14 @@
         <message>
             <source>New chapters and notifications</source>
             <translation>Новые главы и уведомления</translation>
+        </message>
+        <message>
+            <source>Privacy</source>
+            <translation>Конфиденциальность</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Режим инкогнито и блокировка приложения</translation>
         </message>
         <message>
             <source>Sources</source>
@@ -4716,6 +5504,22 @@
         <message>
             <source> · Auto-skip </source>
             <translation> · Автопропуск </translation>
+        </message>
+        <message>
+            <source>Incognito on</source>
+            <translation>Инкогнито включён</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Инкогнито выключен</translation>
+        </message>
+        <message>
+            <source>locked with a PIN</source>
+            <translation>заблокировано PIN-кодом</translation>
+        </message>
+        <message>
+            <source>no app lock</source>
+            <translation>без блокировки</translation>
         </message>
         <message>
             <source>Checks for new chapters every </source>
@@ -5008,6 +5812,10 @@
             <translation>Источники актуальны</translation>
         </message>
         <message>
+            <source>Move %1</source>
+            <translation>Перенести %1</translation>
+        </message>
+        <message>
             <source>Pass a browser check for this site</source>
             <translation>Пройти проверку браузера для этого сайта</translation>
         </message>
@@ -5212,12 +6020,32 @@
             <translation>Расширенные источники новелл установлены</translation>
         </message>
         <message>
+            <source>No longer available</source>
+            <translation>Больше недоступны</translation>
+        </message>
+        <message>
+            <source>Your progress on these series is kept. Move them to a source you have to read new chapters.</source>
+            <translation>Ваш прогресс по этим сериям сохранён. Перенесите их в источник, который у вас есть, чтобы читать новые главы.</translation>
+        </message>
+        <message>
             <source>Comics</source>
             <translation>Комиксы</translation>
         </message>
         <message>
             <source>Novels</source>
             <translation>Новеллы</translation>
+        </message>
+        <message>
+            <source>1 series</source>
+            <translation>1 серия</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>Серий: %1</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Перенести</translation>
         </message>
     </context>
     <context>
@@ -5671,12 +6499,8 @@
             <translation>Файл темы</translation>
         </message>
         <message>
-            <source>Save this theme, or use one someone shared.</source>
-            <translation>Сохраните эту тему или используйте чужую.</translation>
-        </message>
-        <message>
-            <source>Use a theme someone shared.</source>
-            <translation>Используйте тему, которой кто-то поделился.</translation>
+            <source>Save your whole look (colours, background, layout, arranged pages and reader colours) to share, or use a theme someone shared.</source>
+            <translation>Сохраните весь свой стиль (цвета, фон, раскладку, расположение страниц и цвета читалки), чтобы поделиться им, или используйте тему, которой поделились с вами.</translation>
         </message>
         <message>
             <source>Export…</source>
@@ -5975,6 +6799,10 @@
         <message>
             <source>Episode </source>
             <translation>Эпизод </translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Инкогнито</translation>
         </message>
         <message>
             <source>Trying another server: </source>
@@ -6288,6 +7116,17 @@
         <message>
             <source>%1 new chapters</source>
             <translation>Новых глав: %1</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Lock</name>
+        <message>
+            <source>Unlock SCANCORE</source>
+            <translation>Разблокировать SCANCORE</translation>
+        </message>
+        <message>
+            <source>Use PIN</source>
+            <translation>Ввести PIN-код</translation>
         </message>
     </context>
     <context>

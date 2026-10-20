@@ -29,6 +29,13 @@ Rectangle {
         leave.start()
     }
 
+    // Nothing behind the welcome (the tabs, the page) takes taps or wheels.
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.AllButtons
+        onWheel: (wheel) => wheel.accepted = true
+    }
+
     Keys.onRightPressed: if (step < steps - 1 && step !== accountIndex) go(step + 1)
     Keys.onLeftPressed: go(step - 1)
     Keys.onEscapePressed: finish()
@@ -108,13 +115,13 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.SafeArea.margins.bottom
-        height: Theme.compact ? 100 : 88
+        height: Theme.compact ? 112 : 88
 
-        // Phones put the dots above the buttons so a long label never meets them.
+        // Phones give the dots a row of their own, well above the buttons;
+        // beside them the buttons would cover the last dots.
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: Theme.compact ? undefined : parent.verticalCenter
-            y: 8
+            y: Theme.compact ? 14 : (parent.height - height) / 2
             spacing: 8
             Repeater {
                 model: root.steps
@@ -132,8 +139,8 @@ Rectangle {
         ScButton {
             anchors.left: parent.left
             anchors.leftMargin: Theme.gutter - (Theme.compact ? 12 : 0)
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: Theme.compact ? 14 : 0
+            // Centred on the same line as the 36 px button opposite.
+            y: Theme.compact ? parent.height - 18 - 36 + (36 - height) / 2 : (parent.height - height) / 2
             visible: root.step < root.steps - 1
             variant: Theme.compact ? "plain" : "ghost"
             compact: Theme.compact
@@ -143,8 +150,7 @@ Rectangle {
         ScButton {
             anchors.right: parent.right
             anchors.rightMargin: Theme.gutter
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: Theme.compact ? 14 : 0
+            y: Theme.compact ? parent.height - height - 18 : (parent.height - height) / 2
             visible: root.step < root.steps - 1
             variant: root.step === root.accountIndex ? "ghost" : "primary"
             compact: Theme.compact

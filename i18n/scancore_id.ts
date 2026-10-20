@@ -1230,6 +1230,58 @@
             <translation>  ·  Diunduh</translation>
         </message>
         <message>
+            <source>Tap zones: left and right</source>
+            <translation>Zona ketuk: kiri dan kanan</translation>
+        </message>
+        <message>
+            <source>Tap zones: L shape</source>
+            <translation>Zona ketuk: bentuk L</translation>
+        </message>
+        <message>
+            <source>Tap zones: Kindle</source>
+            <translation>Zona ketuk: Kindle</translation>
+        </message>
+        <message>
+            <source>Tap zones: edges</source>
+            <translation>Zona ketuk: tepi</translation>
+        </message>
+        <message>
+            <source>Tap zones: off</source>
+            <translation>Zona ketuk: mati</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Tidak dibalik</translation>
+        </message>
+        <message>
+            <source>Flipped left and right</source>
+            <translation>Dibalik kiri dan kanan</translation>
+        </message>
+        <message>
+            <source>Flipped top and bottom</source>
+            <translation>Dibalik atas dan bawah</translation>
+        </message>
+        <message>
+            <source>Flipped both ways</source>
+            <translation>Dibalik dua arah</translation>
+        </message>
+        <message>
+            <source>Next</source>
+            <translation>Berikutnya</translation>
+        </message>
+        <message>
+            <source>Previous</source>
+            <translation>Sebelumnya</translation>
+        </message>
+        <message>
+            <source>Menu</source>
+            <translation>Menu</translation>
+        </message>
+        <message>
+            <source>  ·  Incognito</source>
+            <translation>  ·  Penyamaran</translation>
+        </message>
+        <message>
             <source>Chapters</source>
             <translation>Bab</translation>
         </message>
@@ -1252,6 +1304,62 @@
         <message>
             <source>Full screen</source>
             <translation>Layar penuh</translation>
+        </message>
+        <message>
+            <source>Layout</source>
+            <translation>Tata letak</translation>
+        </message>
+        <message>
+            <source>Trim white or black borders</source>
+            <translation>Pangkas tepi putih atau hitam</translation>
+        </message>
+        <message>
+            <source>Split wide pages in two</source>
+            <translation>Bagi halaman lebar menjadi dua</translation>
+        </message>
+        <message>
+            <source>Width · %1 px</source>
+            <translation>Lebar · %1 px</translation>
+        </message>
+        <message>
+            <source>Gap between panels · %1 px</source>
+            <translation>Jarak antarpanel · %1 px</translation>
+        </message>
+        <message>
+            <source>Colour · brightness %1%</source>
+            <translation>Warna · kecerahan %1%</translation>
+        </message>
+        <message>
+            <source>Warmth · %1%</source>
+            <translation>Kehangatan · %1%</translation>
+        </message>
+        <message>
+            <source>Greyscale</source>
+            <translation>Skala abu-abu</translation>
+        </message>
+        <message>
+            <source>Invert colours</source>
+            <translation>Balik warna</translation>
+        </message>
+        <message>
+            <source>Taps</source>
+            <translation>Ketukan</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Zona ketuk</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Balik zona ketuk</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Zona ketuk di strip vertikal</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Tombol volume membalik halaman</translation>
         </message>
         <message>
             <source>Page progress bar</source>
@@ -1280,6 +1388,18 @@
         <message>
             <source>Thick</source>
             <translation>Tebal</translation>
+        </message>
+        <message>
+            <source>Only for this series</source>
+            <translation>Hanya untuk seri ini</translation>
+        </message>
+        <message>
+            <source>Keeps these settings for %1 alone</source>
+            <translation>Simpan pengaturan ini khusus untuk %1</translation>
+        </message>
+        <message>
+            <source>it</source>
+            <translation>seri ini</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -1524,6 +1644,18 @@
             <translation>Periksa bab baru di pustaka</translation>
         </message>
         <message>
+            <source>Turn incognito off</source>
+            <translation>Matikan mode penyamaran</translation>
+        </message>
+        <message>
+            <source>Turn incognito on</source>
+            <translation>Nyalakan mode penyamaran</translation>
+        </message>
+        <message>
+            <source>Lock SCANCORE</source>
+            <translation>Kunci SCANCORE</translation>
+        </message>
+        <message>
             <source>Sync with scancore.onl</source>
             <translation>Sinkronkan dengan scancore.onl</translation>
         </message>
@@ -1689,14 +1821,6 @@
             <translation>Anime masuk bersama episode yang sudah Anda tonton. Komik dan novel masuk bersama bab yang sudah dibaca jika salah satu sumber Anda memilikinya; sisanya menunggu di bawah sampai ditemukan.</translation>
         </message>
         <message>
-            <source>Mihon or Tachiyomi backup</source>
-            <translation>Cadangan Mihon atau Tachiyomi</translation>
-        </message>
-        <message>
-            <source>A .tachibk file from More → Backup and restore.</source>
-            <translation>File .tachibk dari Lainnya → Cadangkan dan pulihkan.</translation>
-        </message>
-        <message>
             <source>Choose file</source>
             <translation>Pilih file</translation>
         </message>
@@ -1751,6 +1875,30 @@
         <message>
             <source>All files (*)</source>
             <translation>Semua file (*)</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup</source>
+            <translation>Cadangan Mihon, Tachiyomi, atau Aniyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.</source>
+            <translation>File .tachibk dari Lainnya → Cadangkan dan pulihkan. Seri dari ekstensi yang Anda miliki di sini kembali persis seperti semula.</translation>
+        </message>
+        <message>
+            <source>LNReader backup</source>
+            <translation>Cadangan LNReader</translation>
+        </message>
+        <message>
+            <source>A backup .zip from LNReader&apos;s More → Backup. Novels from a plugin you have here come back exactly as they were.</source>
+            <translation>File cadangan .zip dari Lainnya → Cadangkan di LNReader. Novel dari plugin yang Anda miliki di sini kembali persis seperti semula.</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Cadangan Mihon, Tachiyomi, atau Aniyomi (*.tachibk *.proto.gz)</translation>
+        </message>
+        <message>
+            <source>LNReader backup (*.zip)</source>
+            <translation>Cadangan LNReader (*.zip)</translation>
         </message>
         <message>
             <source>Saved %1 series</source>
@@ -3062,6 +3210,22 @@
             <translation>Judul A–Z</translation>
         </message>
         <message>
+            <source>Grid</source>
+            <translation>Kisi</translation>
+        </message>
+        <message>
+            <source>Compact grid</source>
+            <translation>Kisi ringkas</translation>
+        </message>
+        <message>
+            <source>List</source>
+            <translation>Daftar</translation>
+        </message>
+        <message>
+            <source>Files on this device stay where they are.</source>
+            <translation>File di perangkat ini tetap di tempatnya.</translation>
+        </message>
+        <message>
             <source>Episode </source>
             <translation>Episode </translation>
         </message>
@@ -3072,6 +3236,58 @@
         <message>
             <source>Comic</source>
             <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Remove 1 series from your library?</source>
+            <translation>Hapus 1 seri dari pustaka Anda?</translation>
+        </message>
+        <message>
+            <source>Remove %1 series from your library?</source>
+            <translation>Hapus %1 seri dari pustaka Anda?</translation>
+        </message>
+        <message>
+            <source>Your reading history and downloads are kept.</source>
+            <translation>Riwayat baca dan unduhan Anda tetap disimpan.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Hapus</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Selesai</translation>
+        </message>
+        <message>
+            <source>Select</source>
+            <translation>Pilih</translation>
+        </message>
+        <message>
+            <source>Sort</source>
+            <translation>Urutkan</translation>
+        </message>
+        <message>
+            <source>View</source>
+            <translation>Tampilan</translation>
+        </message>
+        <message>
+            <source>Tap series to pick them</source>
+            <translation>Ketuk seri untuk memilihnya</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1 dipilih</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Pindahkan ke sumber lain</translation>
+        </message>
+        <message>
+            <source>Move to list…</source>
+            <translation>Pindahkan ke daftar…</translation>
+        </message>
+        <message>
+            <source>Moved to %1</source>
+            <translation>Dipindahkan ke %1</translation>
         </message>
         <message>
             <source>Nothing matches</source>
@@ -3153,6 +3369,74 @@
             <translation>Kabar tentang SCANCORE dari scancore.onl, di Notifikasi segera setelah diterbitkan.</translation>
         </message>
         <message>
+            <source>Which series are checked</source>
+            <translation>Seri yang diperiksa</translation>
+        </message>
+        <message>
+            <source>Lists</source>
+            <translation>Daftar</translation>
+        </message>
+        <message>
+            <source>Only series on these lists of your library are checked for new chapters.</source>
+            <translation>Hanya seri di daftar pustaka ini yang diperiksa untuk bab baru.</translation>
+        </message>
+        <message>
+            <source>Skip finished series</source>
+            <translation>Lewati seri yang tamat</translation>
+        </message>
+        <message>
+            <source>Series their site marks as completed.</source>
+            <translation>Seri yang ditandai tamat oleh situsnya.</translation>
+        </message>
+        <message>
+            <source>Skip series with chapters left to read</source>
+            <translation>Lewati seri yang masih punya bab belum dibaca</translation>
+        </message>
+        <message>
+            <source>Checked again once you catch up.</source>
+            <translation>Diperiksa lagi setelah Anda menyusul.</translation>
+        </message>
+        <message>
+            <source>Skip series you have not started</source>
+            <translation>Lewati seri yang belum Anda mulai</translation>
+        </message>
+        <message>
+            <source>Check by itself only on Wi-Fi</source>
+            <translation>Periksa otomatis hanya lewat Wi-Fi</translation>
+        </message>
+        <message>
+            <source>Not on mobile data or a metered connection. Checking by hand always works.</source>
+            <translation>Tidak lewat data seluler atau koneksi terukur. Memeriksa manual selalu bisa.</translation>
+        </message>
+        <message>
+            <source>Check by itself only while charging</source>
+            <translation>Periksa otomatis hanya saat mengisi daya</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>Unduhan</translation>
+        </message>
+        <message>
+            <source>Download new chapters</source>
+            <translation>Unduh bab baru</translation>
+        </message>
+        <message>
+            <source>New chapters of series on these lists download as soon as they are found.</source>
+            <translation>Bab baru dari seri di daftar ini langsung diunduh begitu ditemukan.</translation>
+        </message>
+        <message>
+            <source>Pick lists whose new chapters download as soon as they are found.</source>
+            <translation>Pilih daftar yang bab barunya langsung diunduh begitu ditemukan.</translation>
+        </message>
+        <message>
+            <source>Delete chapters once read</source>
+            <translation>Hapus bab setelah dibaca</translation>
+        </message>
+        <message>
+            <source>A downloaded chapter goes when you finish the next one.</source>
+            <translation>Bab yang diunduh dihapus saat Anda menyelesaikan bab berikutnya.</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>Latar</translation>
         </message>
@@ -3205,6 +3489,29 @@
         </message>
     </context>
     <context>
+        <name>LockScreen</name>
+        <message>
+            <source>SCANCORE is locked</source>
+            <translation>SCANCORE terkunci</translation>
+        </message>
+        <message>
+            <source>Too many tries. Try again in %1 s.</source>
+            <translation>Terlalu banyak percobaan. Coba lagi dalam %1 dtk.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>PIN salah</translation>
+        </message>
+        <message>
+            <source>Enter your PIN</source>
+            <translation>Masukkan PIN Anda</translation>
+        </message>
+        <message>
+            <source>Use fingerprint or face</source>
+            <translation>Gunakan sidik jari atau wajah</translation>
+        </message>
+    </context>
+    <context>
         <name>Main</name>
         <message>
             <source> new chapter</source>
@@ -3221,6 +3528,18 @@
         <message>
             <source>Try again now; %1 should load.</source>
             <translation>Coba lagi sekarang; %1 seharusnya dapat dimuat.</translation>
+        </message>
+        <message>
+            <source>Incognito is on. Turn it off</source>
+            <translation>Mode penyamaran aktif. Matikan</translation>
+        </message>
+        <message>
+            <source>Nothing you read or watch is recorded. Click to turn off.</source>
+            <translation>Tidak ada yang Anda baca atau tonton yang dicatat. Klik untuk mematikan.</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Penyamaran</translation>
         </message>
         <message>
             <source>Use this theme?</source>
@@ -3245,6 +3564,121 @@
         <message>
             <source>Allow</source>
             <translation>Izinkan</translation>
+        </message>
+    </context>
+    <context>
+        <name>MigrateDialog</name>
+        <message>
+            <source>The new source lists no chapters for this series.</source>
+            <translation>Sumber baru tidak punya bab untuk seri ini.</translation>
+        </message>
+        <message>
+            <source>Moved 1 series</source>
+            <translation>1 seri dipindahkan</translation>
+        </message>
+        <message>
+            <source>Moved %1 series</source>
+            <translation>%1 seri dipindahkan</translation>
+        </message>
+        <message>
+            <source>Move %1 series to other sources</source>
+            <translation>Pindahkan %1 seri ke sumber lain</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Pindahkan ke sumber lain</translation>
+        </message>
+        <message>
+            <source>Each one goes to the best match on your other sources. Change any of them before moving.</source>
+            <translation>Masing-masing pindah ke kecocokan terbaik di sumber Anda yang lain. Ubah mana saja sebelum memindahkan.</translation>
+        </message>
+        <message>
+            <source>Your progress, library list and tracking go with it.</source>
+            <translation>Progres, daftar pustaka, dan pelacakan Anda ikut pindah.</translation>
+        </message>
+        <message>
+            <source>Loading its chapters…</source>
+            <translation>Memuat babnya…</translation>
+        </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 bab</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 bab</translation>
+        </message>
+        <message>
+            <source>, newest %1</source>
+            <translation>, terbaru %1</translation>
+        </message>
+        <message>
+            <source>%1 will count as read.</source>
+            <translation>%1 akan dihitung sudah dibaca.</translation>
+        </message>
+        <message>
+            <source>Looking for it on your other sources…</source>
+            <translation>Mencarinya di sumber Anda yang lain…</translation>
+        </message>
+        <message>
+            <source>None of your other sources has it.</source>
+            <translation>Tidak ada sumber Anda yang lain yang memilikinya.</translation>
+        </message>
+        <message>
+            <source>Move it to</source>
+            <translation>Pindahkan ke</translation>
+        </message>
+        <message>
+            <source>Looking…</source>
+            <translation>Mencari…</translation>
+        </message>
+        <message>
+            <source>Not found on your other sources</source>
+            <translation>Tidak ditemukan di sumber Anda yang lain</translation>
+        </message>
+        <message>
+            <source>Moving…</source>
+            <translation>Memindahkan…</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Dipindahkan</translation>
+        </message>
+        <message>
+            <source>Bring my progress</source>
+            <translation>Bawa progres saya</translation>
+        </message>
+        <message>
+            <source>Chapters up to the furthest one you read count as read.</source>
+            <translation>Bab hingga yang terjauh Anda baca dihitung sudah dibaca.</translation>
+        </message>
+        <message>
+            <source>Keep the old one too</source>
+            <translation>Simpan juga yang lama</translation>
+        </message>
+        <message>
+            <source>Copy instead of move: both stay in your library.</source>
+            <translation>Salin, bukan pindahkan: keduanya tetap di pustaka Anda.</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+        <message>
+            <source>Move %1</source>
+            <translation>Pindahkan %1</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Pindahkan</translation>
         </message>
     </context>
     <context>
@@ -3392,6 +3826,10 @@
         <message>
             <source> · Downloaded</source>
             <translation> · Diunduh</translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Penyamaran</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -3951,6 +4389,156 @@
         </message>
     </context>
     <context>
+        <name>PinPad</name>
+        <message>
+            <source>Delete</source>
+            <translation>Hapus</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Selesai</translation>
+        </message>
+    </context>
+    <context>
+        <name>PrivacySettings</name>
+        <message>
+            <source>Privacy</source>
+            <translation>Privasi</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Mode penyamaran dan kunci aplikasi</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Penyamaran</translation>
+        </message>
+        <message>
+            <source>Incognito reading and watching leaves nothing behind: no history, no place kept, no reading time, no tracker updates and no Discord status. Saving series and downloads still work.</source>
+            <translation>Membaca dan menonton dalam mode penyamaran tidak meninggalkan jejak: tanpa riwayat, tanpa posisi tersimpan, tanpa waktu baca, tanpa pembaruan pelacak, dan tanpa status Discord. Menyimpan seri dan mengunduh tetap berfungsi.</translation>
+        </message>
+        <message>
+            <source>Incognito mode</source>
+            <translation>Mode penyamaran</translation>
+        </message>
+        <message>
+            <source>A badge shows while it is on.</source>
+            <translation>Lencana tampil selama mode ini aktif.</translation>
+        </message>
+        <message>
+            <source>App lock</source>
+            <translation>Kunci aplikasi</translation>
+        </message>
+        <message>
+            <source>Ask for a PIN when SCANCORE starts and after it has been away for a while.</source>
+            <translation>Minta PIN saat SCANCORE dibuka dan setelah ditinggal beberapa saat.</translation>
+        </message>
+        <message>
+            <source> Fingerprint or face can unlock it too.</source>
+            <translation> Sidik jari atau wajah juga bisa membukanya.</translation>
+        </message>
+        <message>
+            <source>Lock with a PIN</source>
+            <translation>Kunci dengan PIN</translation>
+        </message>
+        <message>
+            <source>On · %1 digits</source>
+            <translation>Aktif · %1 digit</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Mati</translation>
+        </message>
+        <message>
+            <source>Change PIN</source>
+            <translation>Ubah PIN</translation>
+        </message>
+        <message>
+            <source>Set a PIN</source>
+            <translation>Atur PIN</translation>
+        </message>
+        <message>
+            <source>Turn off</source>
+            <translation>Matikan</translation>
+        </message>
+        <message>
+            <source>Lock again</source>
+            <translation>Kunci lagi</translation>
+        </message>
+        <message>
+            <source>After SCANCORE has been in the background this long.</source>
+            <translation>Setelah SCANCORE berada di latar belakang selama ini.</translation>
+        </message>
+        <message>
+            <source>Only when it starts</source>
+            <translation>Hanya saat dibuka</translation>
+        </message>
+        <message>
+            <source>Right away</source>
+            <translation>Langsung</translation>
+        </message>
+        <message>
+            <source>After 1 minute</source>
+            <translation>Setelah 1 menit</translation>
+        </message>
+        <message>
+            <source>After 5 minutes</source>
+            <translation>Setelah 5 menit</translation>
+        </message>
+        <message>
+            <source>After 15 minutes</source>
+            <translation>Setelah 15 menit</translation>
+        </message>
+        <message>
+            <source>Unlock with fingerprint or face</source>
+            <translation>Buka dengan sidik jari atau wajah</translation>
+        </message>
+        <message>
+            <source>The phone&apos;s screen lock works there too, if you forget the PIN.</source>
+            <translation>Kunci layar ponsel juga bisa dipakai di sana, kalau Anda lupa PIN.</translation>
+        </message>
+        <message>
+            <source>Lock now</source>
+            <translation>Kunci sekarang</translation>
+        </message>
+        <message>
+            <source>The PINs do not match. Start again.</source>
+            <translation>PIN tidak cocok. Mulai lagi.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>PIN salah</translation>
+        </message>
+        <message>
+            <source>App lock is off</source>
+            <translation>Kunci aplikasi mati</translation>
+        </message>
+        <message>
+            <source>App lock is on</source>
+            <translation>Kunci aplikasi aktif</translation>
+        </message>
+        <message>
+            <source>Enter your current PIN</source>
+            <translation>Masukkan PIN Anda saat ini</translation>
+        </message>
+        <message>
+            <source>Choose a PIN</source>
+            <translation>Pilih PIN</translation>
+        </message>
+        <message>
+            <source>Enter it again</source>
+            <translation>Masukkan sekali lagi</translation>
+        </message>
+        <message>
+            <source>4 to 8 digits, then the tick.</source>
+            <translation>4 sampai 8 digit, lalu tanda centang.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+    </context>
+    <context>
         <name>ReadFromDialog</name>
         <message>
             <source>Looking for it on your sources…</source>
@@ -3994,6 +4582,18 @@
         <message>
             <source>Comic and novel readers</source>
             <translation>Pembaca komik dan novel</translation>
+        </message>
+        <message>
+            <source>Not read yet</source>
+            <translation>Belum dibaca</translation>
+        </message>
+        <message>
+            <source>Read</source>
+            <translation>Sudah dibaca</translation>
+        </message>
+        <message>
+            <source>Current page</source>
+            <translation>Halaman saat ini</translation>
         </message>
         <message>
             <source>Comic reader</source>
@@ -4052,6 +4652,74 @@
             <translation>Memotong margin putih atau hitam polos pada halaman pindaian di tata letak Halaman.</translation>
         </message>
         <message>
+            <source>Split wide pages</source>
+            <translation>Bagi halaman lebar</translation>
+        </message>
+        <message>
+            <source>Shows a two-page spread as its two halves, one after the other, in the Pages layout.</source>
+            <translation>Menampilkan halaman ganda sebagai dua bagiannya, satu per satu, di tata letak Halaman.</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Zona ketuk</translation>
+        </message>
+        <message>
+            <source>Where a tap turns the page back or forward, or shows the controls. The reader shows them when you change them.</source>
+            <translation>Tempat ketukan membalik halaman mundur atau maju, atau menampilkan kontrol. Pembaca menampilkannya saat Anda mengubahnya.</translation>
+        </message>
+        <message>
+            <source>Left and right</source>
+            <translation>Kiri dan kanan</translation>
+        </message>
+        <message>
+            <source>L shape</source>
+            <translation>Bentuk L</translation>
+        </message>
+        <message>
+            <source>Kindle</source>
+            <translation>Kindle</translation>
+        </message>
+        <message>
+            <source>Edges</source>
+            <translation>Tepi</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Mati</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Balik zona ketuk</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Tidak dibalik</translation>
+        </message>
+        <message>
+            <source>Top and bottom</source>
+            <translation>Atas dan bawah</translation>
+        </message>
+        <message>
+            <source>Both ways</source>
+            <translation>Dua arah</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Zona ketuk di strip vertikal</translation>
+        </message>
+        <message>
+            <source>A tap scrolls a screen up or down instead of showing the controls.</source>
+            <translation>Ketukan menggulir satu layar ke atas atau bawah, bukan menampilkan kontrol.</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Tombol volume membalik halaman</translation>
+        </message>
+        <message>
+            <source>Volume down goes forward, volume up back, while a comic is open.</source>
+            <translation>Volume turun untuk maju, volume naik untuk mundur, selama komik terbuka.</translation>
+        </message>
+        <message>
             <source>Strip width</source>
             <translation>Lebar strip</translation>
         </message>
@@ -4072,8 +4740,20 @@
             <translation>Rel progres</translation>
         </message>
         <message>
-            <source>A thin line on the right edge showing how far through the chapter you are.</source>
-            <translation>Garis tipis di tepi kanan yang menunjukkan sejauh mana Anda membaca bab.</translation>
+            <source>A thin line on the left edge showing how far through the chapter you are.</source>
+            <translation>Garis tipis di tepi kiri yang menunjukkan sejauh mana Anda membaca bab ini.</translation>
+        </message>
+        <message>
+            <source>Progress rail colours</source>
+            <translation>Warna bilah progres</translation>
+        </message>
+        <message>
+            <source>Pages not read yet, pages read, and the page you are on.</source>
+            <translation>Halaman belum dibaca, halaman sudah dibaca, dan halaman tempat Anda berada.</translation>
+        </message>
+        <message>
+            <source>Reset colours</source>
+            <translation>Atur ulang warna</translation>
         </message>
         <message>
             <source>Novel reader</source>
@@ -4372,6 +5052,14 @@
             <translation>Light novel teratas</translation>
         </message>
         <message>
+            <source>Incognito is on: nothing you read or watch is recorded</source>
+            <translation>Mode penyamaran aktif: tidak ada yang Anda baca atau tonton yang dicatat</translation>
+        </message>
+        <message>
+            <source>Incognito is off</source>
+            <translation>Mode penyamaran mati</translation>
+        </message>
+        <message>
             <source>The theme</source>
             <translation>Tema itu</translation>
         </message>
@@ -4415,6 +5103,42 @@
             <translation>Ditambahkan ke pustaka Anda</translation>
         </message>
         <message>
+            <source>Remove bookmark</source>
+            <translation>Hapus penanda</translation>
+        </message>
+        <message>
+            <source>Bookmark</source>
+            <translation>Penanda</translation>
+        </message>
+        <message>
+            <source>Mark unread</source>
+            <translation>Tandai belum dibaca</translation>
+        </message>
+        <message>
+            <source>Mark read</source>
+            <translation>Tandai dibaca</translation>
+        </message>
+        <message>
+            <source>Mark previous as read</source>
+            <translation>Tandai sebelumnya sudah dibaca</translation>
+        </message>
+        <message>
+            <source>Mark previous as unread</source>
+            <translation>Tandai sebelumnya belum dibaca</translation>
+        </message>
+        <message>
+            <source>Remove download</source>
+            <translation>Hapus unduhan</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Unduh</translation>
+        </message>
+        <message>
+            <source>Download from here on</source>
+            <translation>Unduh mulai dari sini</translation>
+        </message>
+        <message>
             <source>Downloading </source>
             <translation>Mengunduh </translation>
         </message>
@@ -4425,6 +5149,30 @@
         <message>
             <source> chapters</source>
             <translation> bab</translation>
+        </message>
+        <message>
+            <source>Unread only</source>
+            <translation>Hanya yang belum dibaca</translation>
+        </message>
+        <message>
+            <source>Downloaded only</source>
+            <translation>Hanya yang diunduh</translation>
+        </message>
+        <message>
+            <source>Bookmarked only</source>
+            <translation>Hanya yang ditandai</translation>
+        </message>
+        <message>
+            <source>Translated by</source>
+            <translation>Diterjemahkan oleh</translation>
+        </message>
+        <message>
+            <source>Every group</source>
+            <translation>Semua grup</translation>
+        </message>
+        <message>
+            <source>Clear filters</source>
+            <translation>Hapus filter</translation>
         </message>
         <message>
             <source> · Novel</source>
@@ -4449,6 +5197,10 @@
         <message>
             <source>Tracking</source>
             <translation>Pelacakan</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Pindahkan ke sumber lain</translation>
         </message>
         <message>
             <source>Refresh</source>
@@ -4483,8 +5235,8 @@
             <translation>Cari bab</translation>
         </message>
         <message>
-            <source>Download </source>
-            <translation>Unduh </translation>
+            <source>Select chapters</source>
+            <translation>Pilih bab</translation>
         </message>
         <message>
             <source>Unread</source>
@@ -4495,12 +5247,16 @@
             <translation>Semua</translation>
         </message>
         <message>
-            <source>Cancel</source>
-            <translation>Batal</translation>
+            <source>Filters (%1 on)</source>
+            <translation>Filter (%1 aktif)</translation>
         </message>
         <message>
-            <source>Select chapters to download</source>
-            <translation>Pilih bab untuk diunduh</translation>
+            <source>Filter chapters</source>
+            <translation>Filter bab</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
         </message>
         <message>
             <source>Mark all as read</source>
@@ -4515,8 +5271,32 @@
             <translation>Terlama dulu</translation>
         </message>
         <message>
+            <source>Tap chapters to pick them</source>
+            <translation>Ketuk bab untuk memilihnya</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1 dipilih</translation>
+        </message>
+        <message>
+            <source>Remove downloads</source>
+            <translation>Hapus unduhan</translation>
+        </message>
+        <message>
             <source>No chapters available</source>
             <translation>Tidak ada bab tersedia</translation>
+        </message>
+        <message>
+            <source>No chapters match</source>
+            <translation>Tidak ada bab yang cocok</translation>
+        </message>
+        <message>
+            <source>Your filters hide every chapter. Clear them with the funnel above.</source>
+            <translation>Filter Anda menyembunyikan semua bab. Hapus dengan corong di atas.</translation>
+        </message>
+        <message>
+            <source>Nothing matches that search.</source>
+            <translation>Tidak ada yang cocok dengan pencarian itu.</translation>
         </message>
         <message>
             <source>This source has not published readable chapters for this title.</source>
@@ -4600,6 +5380,14 @@
         <message>
             <source>New chapters and notifications</source>
             <translation>Bab baru dan notifikasi</translation>
+        </message>
+        <message>
+            <source>Privacy</source>
+            <translation>Privasi</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Mode penyamaran dan kunci aplikasi</translation>
         </message>
         <message>
             <source>Sources</source>
@@ -4716,6 +5504,22 @@
         <message>
             <source> · Auto-skip </source>
             <translation> · Lewati otomatis </translation>
+        </message>
+        <message>
+            <source>Incognito on</source>
+            <translation>Penyamaran aktif</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Penyamaran mati</translation>
+        </message>
+        <message>
+            <source>locked with a PIN</source>
+            <translation>dikunci dengan PIN</translation>
+        </message>
+        <message>
+            <source>no app lock</source>
+            <translation>tanpa kunci aplikasi</translation>
         </message>
         <message>
             <source>Checks for new chapters every </source>
@@ -5008,6 +5812,10 @@
             <translation>Sumber sudah terbaru</translation>
         </message>
         <message>
+            <source>Move %1</source>
+            <translation>Pindahkan %1</translation>
+        </message>
+        <message>
             <source>Pass a browser check for this site</source>
             <translation>Lewati pemeriksaan peramban untuk situs ini</translation>
         </message>
@@ -5152,6 +5960,18 @@
             <translation>Menampilkan sumber bertanda 18+ di pemilih sumber komik.</translation>
         </message>
         <message>
+            <source>1 series</source>
+            <translation>1 seri</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 seri</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Pindahkan</translation>
+        </message>
+        <message>
             <source>Extensions</source>
             <translation>Ekstensi</translation>
         </message>
@@ -5210,6 +6030,14 @@
         <message>
             <source>Remove</source>
             <translation>Hapus</translation>
+        </message>
+        <message>
+            <source>No longer available</source>
+            <translation>Tidak tersedia lagi</translation>
+        </message>
+        <message>
+            <source>Your progress on these series is kept. Move them to a source you have to read new chapters.</source>
+            <translation>Progres Anda pada seri ini tetap disimpan. Pindahkan ke sumber yang Anda miliki untuk membaca bab baru.</translation>
         </message>
         <message>
             <source>Comics</source>
@@ -5671,12 +6499,8 @@
             <translation>File tema</translation>
         </message>
         <message>
-            <source>Save this theme, or use one someone shared.</source>
-            <translation>Simpan tema ini, atau gunakan yang dibagikan orang lain.</translation>
-        </message>
-        <message>
-            <source>Use a theme someone shared.</source>
-            <translation>Gunakan tema yang dibagikan orang lain.</translation>
+            <source>Save your whole look (colours, background, layout, arranged pages and reader colours) to share, or use a theme someone shared.</source>
+            <translation>Simpan seluruh tampilan Anda (warna, latar, tata letak, susunan halaman, dan warna pembaca) untuk dibagikan, atau gunakan tema yang dibagikan orang lain.</translation>
         </message>
         <message>
             <source>Export…</source>
@@ -5975,6 +6799,10 @@
         <message>
             <source>Episode </source>
             <translation>Episode </translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Penyamaran</translation>
         </message>
         <message>
             <source>Trying another server: </source>
@@ -6288,6 +7116,17 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 bab baru</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Lock</name>
+        <message>
+            <source>Unlock SCANCORE</source>
+            <translation>Buka kunci SCANCORE</translation>
+        </message>
+        <message>
+            <source>Use PIN</source>
+            <translation>Gunakan PIN</translation>
         </message>
     </context>
     <context>

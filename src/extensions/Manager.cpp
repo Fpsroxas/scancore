@@ -15,6 +15,7 @@
 #include <QJsonDocument>
 #include <QMutex>
 #include <QReadWriteLock>
+#include <QRegularExpression>
 #include <QSaveFile>
 #include <QSet>
 #include <QUrlQuery>
@@ -210,6 +211,35 @@ QUrl repositoryUrl(QString text) {
     return url;
 }
 
+// The files to try for a link: the link itself, or, for a repository's page
+// on GitHub (github.com/<owner>/<name>, perhaps /tree/<branch>), its index on
+// that branch, else on "repo" (where Mihon and Aniyomi repositories publish
+// it), "main" or "master".
+QList<QUrl> repositoryCandidates(const QString &text) {
+    const auto url = repositoryUrl(text);
+    const auto host = url.host().toLower();
+    if (host != QLatin1String("github.com") && host != QLatin1String("www.github.com"))
+        return {url};
+    auto parts = url.path().split(QLatin1Char('/'), Qt::SkipEmptyParts);
+    if (!parts.isEmpty() && parts.last() == QLatin1String("index.min.json") && parts.size() == 3)
+        parts.removeLast(); // github.com/<owner>/<name>/ became …/index.min.json above
+    if (parts.size() < 2 || (parts.size() > 2 && parts.at(2) != QLatin1String("tree")))
+        return {url};
+    const auto repo = parts.at(0) + QLatin1Char('/') + QString(parts.at(1)).remove(QRegularExpression(QStringLiteral("\\.git$")));
+    QStringList branches{QStringLiteral("repo"), QStringLiteral("main"), QStringLiteral("master")};
+    QString folder;
+    if (parts.size() > 3) {
+        branches.prepend(parts.at(3));
+        branches.removeDuplicates();
+        folder = parts.mid(4).join(QLatin1Char('/'));
+    }
+    QList<QUrl> out;
+    for (const auto &branch : branches)
+        out.append(QUrl(QStringLiteral("https://raw.githubusercontent.com/%1/%2/%3index.min.json")
+                            .arg(repo, branch, folder.isEmpty() ? QString() : folder + QLatin1Char('/'))));
+    return out;
+}
+
 Response fetch(const QUrl &url, const QString &etag = {}, const QString &modified = {}) {
     if (!url.isValid() || !allowedHost(url))
         throw Error(QStringLiteral("Repositories must be https links."));
@@ -336,10 +366,21 @@ void Manager::reload() {
 // ---------------------------------------------------------------- repositories
 
 RepositoryPreview Manager::preview(const QString &text, std::optional<Kind> hint) {
-    const auto url = repositoryUrl(text);
+    const auto candidates = repositoryCandidates(text);
+    const auto &url = candidates.first();
     if (!url.isValid() || url.host().isEmpty())
         throw Error(QStringLiteral("That is not a link."));
-    auto state = read(url, hint);
+    RepoState state;
+    for (int i = 0; i < candidates.size(); ++i) {
+        try {
+            state = read(candidates.at(i), hint);
+            break;
+        } catch (const Error &e) {
+            // A branch without the index: the next one.
+            if (e.status() != 404 || i + 1 == candidates.size())
+                throw;
+        }
+    }
     RepositoryPreview preview;
     preview.repo = state.repo;
     preview.packages = state.packages;

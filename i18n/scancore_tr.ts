@@ -113,7 +113,7 @@
         </message>
         <message>
             <source>The open-source software inside SCANCORE</source>
-            <translation>SCANCORE'un içindeki açık kaynak yazılımlar</translation>
+            <translation>SCANCORE&apos;un içindeki açık kaynak yazılımlar</translation>
         </message>
         <message>
             <source>Keyboard shortcuts</source>
@@ -1230,6 +1230,58 @@
             <translation>  ·  İndirildi</translation>
         </message>
         <message>
+            <source>Tap zones: left and right</source>
+            <translation>Dokunma alanları: sol ve sağ</translation>
+        </message>
+        <message>
+            <source>Tap zones: L shape</source>
+            <translation>Dokunma alanları: L biçimi</translation>
+        </message>
+        <message>
+            <source>Tap zones: Kindle</source>
+            <translation>Dokunma alanları: Kindle</translation>
+        </message>
+        <message>
+            <source>Tap zones: edges</source>
+            <translation>Dokunma alanları: kenarlar</translation>
+        </message>
+        <message>
+            <source>Tap zones: off</source>
+            <translation>Dokunma alanları: kapalı</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Çevrilmemiş</translation>
+        </message>
+        <message>
+            <source>Flipped left and right</source>
+            <translation>Sol ve sağ çevrilmiş</translation>
+        </message>
+        <message>
+            <source>Flipped top and bottom</source>
+            <translation>Üst ve alt çevrilmiş</translation>
+        </message>
+        <message>
+            <source>Flipped both ways</source>
+            <translation>İki yönde çevrilmiş</translation>
+        </message>
+        <message>
+            <source>Next</source>
+            <translation>Sonraki</translation>
+        </message>
+        <message>
+            <source>Previous</source>
+            <translation>Önceki</translation>
+        </message>
+        <message>
+            <source>Menu</source>
+            <translation>Menü</translation>
+        </message>
+        <message>
+            <source>  ·  Incognito</source>
+            <translation>  ·  Gizli mod</translation>
+        </message>
+        <message>
             <source>Previous chapter</source>
             <translation>Önceki bölüm</translation>
         </message>
@@ -1266,6 +1318,10 @@
             <translation>Bölüm </translation>
         </message>
         <message>
+            <source>Layout</source>
+            <translation>Düzen</translation>
+        </message>
+        <message>
             <source>Vertical</source>
             <translation>Dikey</translation>
         </message>
@@ -1288,6 +1344,58 @@
         <message>
             <source>Two pages</source>
             <translation>İki sayfa</translation>
+        </message>
+        <message>
+            <source>Trim white or black borders</source>
+            <translation>Beyaz veya siyah kenarları kırp</translation>
+        </message>
+        <message>
+            <source>Split wide pages in two</source>
+            <translation>Geniş sayfaları ikiye böl</translation>
+        </message>
+        <message>
+            <source>Width · %1 px</source>
+            <translation>Genişlik · %1 px</translation>
+        </message>
+        <message>
+            <source>Gap between panels · %1 px</source>
+            <translation>Paneller arası boşluk · %1 px</translation>
+        </message>
+        <message>
+            <source>Colour · brightness %1%</source>
+            <translation>Renk · parlaklık %1%</translation>
+        </message>
+        <message>
+            <source>Warmth · %1%</source>
+            <translation>Sıcaklık · %1%</translation>
+        </message>
+        <message>
+            <source>Greyscale</source>
+            <translation>Gri tonlama</translation>
+        </message>
+        <message>
+            <source>Invert colours</source>
+            <translation>Renkleri ters çevir</translation>
+        </message>
+        <message>
+            <source>Taps</source>
+            <translation>Dokunmalar</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Dokunma alanları</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Dokunma alanlarını çevir</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Dikey şeritte dokunma alanları</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Ses tuşları sayfa çevirir</translation>
         </message>
         <message>
             <source>Page progress bar</source>
@@ -1316,6 +1424,18 @@
         <message>
             <source>Thick</source>
             <translation>Kalın</translation>
+        </message>
+        <message>
+            <source>Only for this series</source>
+            <translation>Yalnızca bu seri için</translation>
+        </message>
+        <message>
+            <source>Keeps these settings for %1 alone</source>
+            <translation>Bu ayarları yalnızca %1 için saklar</translation>
+        </message>
+        <message>
+            <source>it</source>
+            <translation>bu seri</translation>
         </message>
     </context>
     <context>
@@ -1524,6 +1644,18 @@
             <translation>Kitaplıkta yeni bölümleri denetle</translation>
         </message>
         <message>
+            <source>Turn incognito off</source>
+            <translation>Gizli modu kapat</translation>
+        </message>
+        <message>
+            <source>Turn incognito on</source>
+            <translation>Gizli modu aç</translation>
+        </message>
+        <message>
+            <source>Lock SCANCORE</source>
+            <translation>SCANCORE&apos;u kilitle</translation>
+        </message>
+        <message>
             <source>Sync with scancore.onl</source>
             <translation>scancore.onl ile eşitle</translation>
         </message>
@@ -1689,14 +1821,6 @@
             <translation>Animeler izlediğin bölümlerle gelir. Çizgi romanlar ve romanlar, kaynaklarından birinde varsa okuduğun bölümlerle gelir; diğerleri bulunana kadar aşağıda bekler.</translation>
         </message>
         <message>
-            <source>Mihon or Tachiyomi backup</source>
-            <translation>Mihon veya Tachiyomi yedeği</translation>
-        </message>
-        <message>
-            <source>A .tachibk file from More → Backup and restore.</source>
-            <translation>Diğer → Yedekleme ve geri yükleme&apos;den bir .tachibk dosyası.</translation>
-        </message>
-        <message>
             <source>Choose file</source>
             <translation>Dosya seç</translation>
         </message>
@@ -1706,7 +1830,7 @@
         </message>
         <message>
             <source>Saves the comics you read from extensions as a .tachibk file Mihon or Tachiyomi can restore.</source>
-            <translation>Eklentilerden okuduğun çizgi romanları Mihon veya Tachiyomi'nin geri yükleyebileceği bir .tachibk dosyası olarak kaydeder.</translation>
+            <translation>Eklentilerden okuduğun çizgi romanları Mihon veya Tachiyomi&apos;nin geri yükleyebileceği bir .tachibk dosyası olarak kaydeder.</translation>
         </message>
         <message>
             <source>Save file</source>
@@ -1751,6 +1875,30 @@
         <message>
             <source>All files (*)</source>
             <translation>Tüm dosyalar (*)</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup</source>
+            <translation>Mihon, Tachiyomi veya Aniyomi yedeği</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.</source>
+            <translation>Diğer → Yedekle ve geri yükle&apos;den bir .tachibk dosyası. Burada sahip olduğun bir eklentideki seriler tam olarak önceki hâliyle geri gelir.</translation>
+        </message>
+        <message>
+            <source>LNReader backup</source>
+            <translation>LNReader yedeği</translation>
+        </message>
+        <message>
+            <source>A backup .zip from LNReader&apos;s More → Backup. Novels from a plugin you have here come back exactly as they were.</source>
+            <translation>LNReader&apos;da Diğer → Yedekle&apos;den bir yedek .zip dosyası. Burada sahip olduğun bir eklentideki romanlar tam olarak önceki hâliyle geri gelir.</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Mihon, Tachiyomi veya Aniyomi yedeği (*.tachibk *.proto.gz)</translation>
+        </message>
+        <message>
+            <source>LNReader backup (*.zip)</source>
+            <translation>LNReader yedeği (*.zip)</translation>
         </message>
         <message>
             <source>Saved %1 series</source>
@@ -3062,8 +3210,76 @@
             <translation>Ad A–Z</translation>
         </message>
         <message>
+            <source>Grid</source>
+            <translation>Izgara</translation>
+        </message>
+        <message>
+            <source>Compact grid</source>
+            <translation>Sıkı ızgara</translation>
+        </message>
+        <message>
+            <source>List</source>
+            <translation>Liste</translation>
+        </message>
+        <message>
+            <source>Files on this device stay where they are.</source>
+            <translation>Bu cihazdaki dosyalar oldukları yerde kalır.</translation>
+        </message>
+        <message>
+            <source>Remove 1 series from your library?</source>
+            <translation>1 seri kitaplığından kaldırılsın mı?</translation>
+        </message>
+        <message>
+            <source>Remove %1 series from your library?</source>
+            <translation>%1 seri kitaplığından kaldırılsın mı?</translation>
+        </message>
+        <message>
+            <source>Your reading history and downloads are kept.</source>
+            <translation>Okuma geçmişin ve indirdiklerin korunur.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Kaldır</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Bitti</translation>
+        </message>
+        <message>
+            <source>Select</source>
+            <translation>Seç</translation>
+        </message>
+        <message>
+            <source>Sort</source>
+            <translation>Sırala</translation>
+        </message>
+        <message>
+            <source>View</source>
+            <translation>Görünüm</translation>
+        </message>
+        <message>
             <source>All</source>
             <translation>Tümü</translation>
+        </message>
+        <message>
+            <source>Tap series to pick them</source>
+            <translation>Seçmek için serilere dokun</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1 seçildi</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Başka bir kaynağa taşı</translation>
+        </message>
+        <message>
+            <source>Move to list…</source>
+            <translation>Listeye taşı…</translation>
+        </message>
+        <message>
+            <source>Moved to %1</source>
+            <translation>%1 listesine taşındı</translation>
         </message>
         <message>
             <source>Nothing matches</source>
@@ -3153,6 +3369,74 @@
             <translation>scancore.onl&apos;dan SCANCORE haberleri, yayınlanır yayınlanmaz Bildirimler&apos;de.</translation>
         </message>
         <message>
+            <source>Which series are checked</source>
+            <translation>Hangi seriler denetlenir</translation>
+        </message>
+        <message>
+            <source>Lists</source>
+            <translation>Listeler</translation>
+        </message>
+        <message>
+            <source>Only series on these lists of your library are checked for new chapters.</source>
+            <translation>Yalnızca kitaplığındaki bu listelerde olan seriler yeni bölümler için denetlenir.</translation>
+        </message>
+        <message>
+            <source>Skip finished series</source>
+            <translation>Biten serileri atla</translation>
+        </message>
+        <message>
+            <source>Series their site marks as completed.</source>
+            <translation>Sitesinin tamamlandı diye işaretlediği seriler.</translation>
+        </message>
+        <message>
+            <source>Skip series with chapters left to read</source>
+            <translation>Okunacak bölümü olan serileri atla</translation>
+        </message>
+        <message>
+            <source>Checked again once you catch up.</source>
+            <translation>Yetiştiğinde yeniden denetlenir.</translation>
+        </message>
+        <message>
+            <source>Skip series you have not started</source>
+            <translation>Başlamadığın serileri atla</translation>
+        </message>
+        <message>
+            <source>Check by itself only on Wi-Fi</source>
+            <translation>Kendiliğinden yalnızca Wi-Fi&apos;de denetle</translation>
+        </message>
+        <message>
+            <source>Not on mobile data or a metered connection. Checking by hand always works.</source>
+            <translation>Mobil veride veya ölçülü bağlantıda değil. Elle denetlemek her zaman çalışır.</translation>
+        </message>
+        <message>
+            <source>Check by itself only while charging</source>
+            <translation>Kendiliğinden yalnızca şarj olurken denetle</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>İndirilenler</translation>
+        </message>
+        <message>
+            <source>Download new chapters</source>
+            <translation>Yeni bölümleri indir</translation>
+        </message>
+        <message>
+            <source>New chapters of series on these lists download as soon as they are found.</source>
+            <translation>Bu listelerdeki serilerin yeni bölümleri bulunur bulunmaz indirilir.</translation>
+        </message>
+        <message>
+            <source>Pick lists whose new chapters download as soon as they are found.</source>
+            <translation>Yeni bölümleri bulunur bulunmaz indirilecek listeleri seç.</translation>
+        </message>
+        <message>
+            <source>Delete chapters once read</source>
+            <translation>Okunan bölümleri sil</translation>
+        </message>
+        <message>
+            <source>A downloaded chapter goes when you finish the next one.</source>
+            <translation>İndirilen bir bölüm, sonrakini bitirdiğinde silinir.</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>Arka plan</translation>
         </message>
@@ -3205,6 +3489,29 @@
         </message>
     </context>
     <context>
+        <name>LockScreen</name>
+        <message>
+            <source>SCANCORE is locked</source>
+            <translation>SCANCORE kilitli</translation>
+        </message>
+        <message>
+            <source>Too many tries. Try again in %1 s.</source>
+            <translation>Çok fazla deneme. %1 sn sonra yeniden dene.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>Yanlış PIN</translation>
+        </message>
+        <message>
+            <source>Enter your PIN</source>
+            <translation>PIN&apos;ini gir</translation>
+        </message>
+        <message>
+            <source>Use fingerprint or face</source>
+            <translation>Parmak izi veya yüz kullan</translation>
+        </message>
+    </context>
+    <context>
         <name>Main</name>
         <message>
             <source> new chapter</source>
@@ -3221,6 +3528,18 @@
         <message>
             <source>Try again now; %1 should load.</source>
             <translation>Şimdi yeniden dene; %1 yüklenmeli.</translation>
+        </message>
+        <message>
+            <source>Incognito is on. Turn it off</source>
+            <translation>Gizli mod açık. Kapat</translation>
+        </message>
+        <message>
+            <source>Nothing you read or watch is recorded. Click to turn off.</source>
+            <translation>Okuduğun veya izlediğin hiçbir şey kaydedilmez. Kapatmak için tıkla.</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Gizli mod</translation>
         </message>
         <message>
             <source>Use this theme?</source>
@@ -3245,6 +3564,121 @@
         <message>
             <source>Allow</source>
             <translation>İzin ver</translation>
+        </message>
+    </context>
+    <context>
+        <name>MigrateDialog</name>
+        <message>
+            <source>The new source lists no chapters for this series.</source>
+            <translation>Yeni kaynakta bu serinin bölümü yok.</translation>
+        </message>
+        <message>
+            <source>Moved 1 series</source>
+            <translation>1 seri taşındı</translation>
+        </message>
+        <message>
+            <source>Moved %1 series</source>
+            <translation>%1 seri taşındı</translation>
+        </message>
+        <message>
+            <source>Move %1 series to other sources</source>
+            <translation>%1 seriyi başka kaynaklara taşı</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Başka bir kaynağa taşı</translation>
+        </message>
+        <message>
+            <source>Each one goes to the best match on your other sources. Change any of them before moving.</source>
+            <translation>Her biri diğer kaynaklarındaki en iyi eşleşmeye gider. Taşımadan önce istediğini değiştir.</translation>
+        </message>
+        <message>
+            <source>Your progress, library list and tracking go with it.</source>
+            <translation>İlerlemen, kitaplık listen ve takip onunla birlikte gelir.</translation>
+        </message>
+        <message>
+            <source>Loading its chapters…</source>
+            <translation>Bölümleri yükleniyor…</translation>
+        </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 bölüm</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 bölüm</translation>
+        </message>
+        <message>
+            <source>, newest %1</source>
+            <translation>, en yenisi %1</translation>
+        </message>
+        <message>
+            <source>%1 will count as read.</source>
+            <translation>%1 okunmuş sayılacak.</translation>
+        </message>
+        <message>
+            <source>Looking for it on your other sources…</source>
+            <translation>Diğer kaynaklarında aranıyor…</translation>
+        </message>
+        <message>
+            <source>None of your other sources has it.</source>
+            <translation>Diğer kaynaklarının hiçbirinde yok.</translation>
+        </message>
+        <message>
+            <source>Move it to</source>
+            <translation>Şuraya taşı</translation>
+        </message>
+        <message>
+            <source>Looking…</source>
+            <translation>Aranıyor…</translation>
+        </message>
+        <message>
+            <source>Not found on your other sources</source>
+            <translation>Diğer kaynaklarında bulunamadı</translation>
+        </message>
+        <message>
+            <source>Moving…</source>
+            <translation>Taşınıyor…</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Taşındı</translation>
+        </message>
+        <message>
+            <source>Bring my progress</source>
+            <translation>İlerlememi getir</translation>
+        </message>
+        <message>
+            <source>Chapters up to the furthest one you read count as read.</source>
+            <translation>Okuduğun en ileri bölüme kadar olanlar okunmuş sayılır.</translation>
+        </message>
+        <message>
+            <source>Keep the old one too</source>
+            <translation>Eskisini de tut</translation>
+        </message>
+        <message>
+            <source>Copy instead of move: both stay in your library.</source>
+            <translation>Taşımak yerine kopyala: ikisi de kitaplığında kalır.</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Geri</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>İptal</translation>
+        </message>
+        <message>
+            <source>Move %1</source>
+            <translation>%1 taşı</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Taşı</translation>
         </message>
     </context>
     <context>
@@ -3392,6 +3826,10 @@
         <message>
             <source> · Downloaded</source>
             <translation> · İndirildi</translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Gizli mod</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -3951,6 +4389,156 @@
         </message>
     </context>
     <context>
+        <name>PinPad</name>
+        <message>
+            <source>Delete</source>
+            <translation>Sil</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Bitti</translation>
+        </message>
+    </context>
+    <context>
+        <name>PrivacySettings</name>
+        <message>
+            <source>Privacy</source>
+            <translation>Gizlilik</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Gizli mod ve uygulama kilidi</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Gizli mod</translation>
+        </message>
+        <message>
+            <source>Incognito reading and watching leaves nothing behind: no history, no place kept, no reading time, no tracker updates and no Discord status. Saving series and downloads still work.</source>
+            <translation>Gizli modda okumak ve izlemek iz bırakmaz: geçmiş yok, kaldığın yer yok, okuma süresi yok, takip güncellemesi yok ve Discord durumu yok. Seri kaydetmek ve indirmek yine çalışır.</translation>
+        </message>
+        <message>
+            <source>Incognito mode</source>
+            <translation>Gizli mod</translation>
+        </message>
+        <message>
+            <source>A badge shows while it is on.</source>
+            <translation>Açıkken bir rozet görünür.</translation>
+        </message>
+        <message>
+            <source>App lock</source>
+            <translation>Uygulama kilidi</translation>
+        </message>
+        <message>
+            <source>Ask for a PIN when SCANCORE starts and after it has been away for a while.</source>
+            <translation>SCANCORE açılırken ve bir süre uzakta kaldıktan sonra PIN iste.</translation>
+        </message>
+        <message>
+            <source> Fingerprint or face can unlock it too.</source>
+            <translation> Parmak izi veya yüz de kilidi açabilir.</translation>
+        </message>
+        <message>
+            <source>Lock with a PIN</source>
+            <translation>PIN ile kilitle</translation>
+        </message>
+        <message>
+            <source>On · %1 digits</source>
+            <translation>Açık · %1 hane</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Kapalı</translation>
+        </message>
+        <message>
+            <source>Change PIN</source>
+            <translation>PIN&apos;i değiştir</translation>
+        </message>
+        <message>
+            <source>Set a PIN</source>
+            <translation>PIN belirle</translation>
+        </message>
+        <message>
+            <source>Turn off</source>
+            <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Lock again</source>
+            <translation>Yeniden kilitle</translation>
+        </message>
+        <message>
+            <source>After SCANCORE has been in the background this long.</source>
+            <translation>SCANCORE bu kadar süre arka planda kaldıktan sonra.</translation>
+        </message>
+        <message>
+            <source>Only when it starts</source>
+            <translation>Yalnızca açılırken</translation>
+        </message>
+        <message>
+            <source>Right away</source>
+            <translation>Hemen</translation>
+        </message>
+        <message>
+            <source>After 1 minute</source>
+            <translation>1 dakika sonra</translation>
+        </message>
+        <message>
+            <source>After 5 minutes</source>
+            <translation>5 dakika sonra</translation>
+        </message>
+        <message>
+            <source>After 15 minutes</source>
+            <translation>15 dakika sonra</translation>
+        </message>
+        <message>
+            <source>Unlock with fingerprint or face</source>
+            <translation>Parmak izi veya yüzle aç</translation>
+        </message>
+        <message>
+            <source>The phone&apos;s screen lock works there too, if you forget the PIN.</source>
+            <translation>PIN&apos;i unutursan telefonun ekran kilidi de orada çalışır.</translation>
+        </message>
+        <message>
+            <source>Lock now</source>
+            <translation>Şimdi kilitle</translation>
+        </message>
+        <message>
+            <source>The PINs do not match. Start again.</source>
+            <translation>PIN&apos;ler eşleşmiyor. Baştan başla.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>Yanlış PIN</translation>
+        </message>
+        <message>
+            <source>App lock is off</source>
+            <translation>Uygulama kilidi kapalı</translation>
+        </message>
+        <message>
+            <source>App lock is on</source>
+            <translation>Uygulama kilidi açık</translation>
+        </message>
+        <message>
+            <source>Enter your current PIN</source>
+            <translation>Mevcut PIN&apos;ini gir</translation>
+        </message>
+        <message>
+            <source>Choose a PIN</source>
+            <translation>Bir PIN seç</translation>
+        </message>
+        <message>
+            <source>Enter it again</source>
+            <translation>Bir kez daha gir</translation>
+        </message>
+        <message>
+            <source>4 to 8 digits, then the tick.</source>
+            <translation>4 ile 8 hane, sonra onay işareti.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>İptal</translation>
+        </message>
+    </context>
+    <context>
         <name>ReadFromDialog</name>
         <message>
             <source>Looking for it on your sources…</source>
@@ -3994,6 +4582,18 @@
         <message>
             <source>Comic and novel readers</source>
             <translation>Çizgi roman ve roman okuyucuları</translation>
+        </message>
+        <message>
+            <source>Not read yet</source>
+            <translation>Henüz okunmadı</translation>
+        </message>
+        <message>
+            <source>Read</source>
+            <translation>Okundu</translation>
+        </message>
+        <message>
+            <source>Current page</source>
+            <translation>Geçerli sayfa</translation>
         </message>
         <message>
             <source>Comic reader</source>
@@ -4052,6 +4652,74 @@
             <translation>Sayfalar düzeninde taranmış sayfaların çevresindeki düz beyaz veya siyah boşluğu keser.</translation>
         </message>
         <message>
+            <source>Split wide pages</source>
+            <translation>Geniş sayfaları böl</translation>
+        </message>
+        <message>
+            <source>Shows a two-page spread as its two halves, one after the other, in the Pages layout.</source>
+            <translation>Sayfalar düzeninde çift sayfayı iki yarısı olarak art arda gösterir.</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Dokunma alanları</translation>
+        </message>
+        <message>
+            <source>Where a tap turns the page back or forward, or shows the controls. The reader shows them when you change them.</source>
+            <translation>Dokunmanın sayfayı geri veya ileri çevirdiği ya da kontrolleri gösterdiği yerler. Değiştirdiğinde okuyucu bunları gösterir.</translation>
+        </message>
+        <message>
+            <source>Left and right</source>
+            <translation>Sol ve sağ</translation>
+        </message>
+        <message>
+            <source>L shape</source>
+            <translation>L biçimi</translation>
+        </message>
+        <message>
+            <source>Kindle</source>
+            <translation>Kindle</translation>
+        </message>
+        <message>
+            <source>Edges</source>
+            <translation>Kenarlar</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Kapalı</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Dokunma alanlarını çevir</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Çevrilmemiş</translation>
+        </message>
+        <message>
+            <source>Top and bottom</source>
+            <translation>Üst ve alt</translation>
+        </message>
+        <message>
+            <source>Both ways</source>
+            <translation>İki yönde</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Dikey şeritte dokunma alanları</translation>
+        </message>
+        <message>
+            <source>A tap scrolls a screen up or down instead of showing the controls.</source>
+            <translation>Dokunmak kontrolleri göstermek yerine bir ekran yukarı veya aşağı kaydırır.</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Ses tuşları sayfa çevirir</translation>
+        </message>
+        <message>
+            <source>Volume down goes forward, volume up back, while a comic is open.</source>
+            <translation>Bir çizgi roman açıkken ses kısma ileri, ses açma geri götürür.</translation>
+        </message>
+        <message>
             <source>Strip width</source>
             <translation>Şerit genişliği</translation>
         </message>
@@ -4072,8 +4740,20 @@
             <translation>İlerleme rayı</translation>
         </message>
         <message>
-            <source>A thin line on the right edge showing how far through the chapter you are.</source>
-            <translation>Bölümün ne kadarını okuduğunu gösteren, sağ kenarda ince bir çizgi.</translation>
+            <source>A thin line on the left edge showing how far through the chapter you are.</source>
+            <translation>Bölümde ne kadar ilerlediğini gösteren, sol kenarda ince bir çizgi.</translation>
+        </message>
+        <message>
+            <source>Progress rail colours</source>
+            <translation>İlerleme çubuğu renkleri</translation>
+        </message>
+        <message>
+            <source>Pages not read yet, pages read, and the page you are on.</source>
+            <translation>Henüz okunmamış sayfalar, okunmuş sayfalar ve bulunduğun sayfa.</translation>
+        </message>
+        <message>
+            <source>Reset colours</source>
+            <translation>Renkleri sıfırla</translation>
         </message>
         <message>
             <source>Novel reader</source>
@@ -4372,6 +5052,14 @@
             <translation>En iyi light novel&apos;lar</translation>
         </message>
         <message>
+            <source>Incognito is on: nothing you read or watch is recorded</source>
+            <translation>Gizli mod açık: okuduğun veya izlediğin hiçbir şey kaydedilmez</translation>
+        </message>
+        <message>
+            <source>Incognito is off</source>
+            <translation>Gizli mod kapalı</translation>
+        </message>
+        <message>
             <source>The theme</source>
             <translation>Tema</translation>
         </message>
@@ -4415,6 +5103,42 @@
             <translation>Kitaplığına eklendi</translation>
         </message>
         <message>
+            <source>Remove bookmark</source>
+            <translation>Yer imini kaldır</translation>
+        </message>
+        <message>
+            <source>Bookmark</source>
+            <translation>Yer imi</translation>
+        </message>
+        <message>
+            <source>Mark unread</source>
+            <translation>Okunmadı işaretle</translation>
+        </message>
+        <message>
+            <source>Mark read</source>
+            <translation>Okundu işaretle</translation>
+        </message>
+        <message>
+            <source>Mark previous as read</source>
+            <translation>Öncekileri okundu işaretle</translation>
+        </message>
+        <message>
+            <source>Mark previous as unread</source>
+            <translation>Öncekileri okunmadı işaretle</translation>
+        </message>
+        <message>
+            <source>Remove download</source>
+            <translation>İndirileni kaldır</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>İndir</translation>
+        </message>
+        <message>
+            <source>Download from here on</source>
+            <translation>Buradan itibaren indir</translation>
+        </message>
+        <message>
             <source>Downloading </source>
             <translation>İndiriliyor: </translation>
         </message>
@@ -4425,6 +5149,30 @@
         <message>
             <source> chapters</source>
             <translation> bölüm</translation>
+        </message>
+        <message>
+            <source>Unread only</source>
+            <translation>Yalnızca okunmamış</translation>
+        </message>
+        <message>
+            <source>Downloaded only</source>
+            <translation>Yalnızca indirilmiş</translation>
+        </message>
+        <message>
+            <source>Bookmarked only</source>
+            <translation>Yalnızca yer imli</translation>
+        </message>
+        <message>
+            <source>Translated by</source>
+            <translation>Çeviren</translation>
+        </message>
+        <message>
+            <source>Every group</source>
+            <translation>Her grup</translation>
+        </message>
+        <message>
+            <source>Clear filters</source>
+            <translation>Filtreleri temizle</translation>
         </message>
         <message>
             <source> · Novel</source>
@@ -4449,6 +5197,10 @@
         <message>
             <source>Tracking</source>
             <translation>Takip</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Başka bir kaynağa taşı</translation>
         </message>
         <message>
             <source>Refresh</source>
@@ -4483,8 +5235,8 @@
             <translation>Bölüm bul</translation>
         </message>
         <message>
-            <source>Download </source>
-            <translation>İndir: </translation>
+            <source>Select chapters</source>
+            <translation>Bölüm seç</translation>
         </message>
         <message>
             <source>Unread</source>
@@ -4495,12 +5247,16 @@
             <translation>Tümü</translation>
         </message>
         <message>
-            <source>Cancel</source>
-            <translation>İptal</translation>
+            <source>Filters (%1 on)</source>
+            <translation>Filtreler (%1 açık)</translation>
         </message>
         <message>
-            <source>Select chapters to download</source>
-            <translation>İndirilecek bölümleri seç</translation>
+            <source>Filter chapters</source>
+            <translation>Bölümleri filtrele</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>İptal</translation>
         </message>
         <message>
             <source>Mark all as read</source>
@@ -4515,8 +5271,32 @@
             <translation>Önce en eski</translation>
         </message>
         <message>
+            <source>Tap chapters to pick them</source>
+            <translation>Seçmek için bölümlere dokun</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1 seçildi</translation>
+        </message>
+        <message>
+            <source>Remove downloads</source>
+            <translation>İndirilenleri kaldır</translation>
+        </message>
+        <message>
             <source>No chapters available</source>
             <translation>Kullanılabilir bölüm yok</translation>
+        </message>
+        <message>
+            <source>No chapters match</source>
+            <translation>Eşleşen bölüm yok</translation>
+        </message>
+        <message>
+            <source>Your filters hide every chapter. Clear them with the funnel above.</source>
+            <translation>Filtrelerin tüm bölümleri gizliyor. Yukarıdaki huniyle temizle.</translation>
+        </message>
+        <message>
+            <source>Nothing matches that search.</source>
+            <translation>Bu aramayla eşleşen bir şey yok.</translation>
         </message>
         <message>
             <source>This source has not published readable chapters for this title.</source>
@@ -4600,6 +5380,14 @@
         <message>
             <source>New chapters and notifications</source>
             <translation>Yeni bölümler ve bildirimler</translation>
+        </message>
+        <message>
+            <source>Privacy</source>
+            <translation>Gizlilik</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Gizli mod ve uygulama kilidi</translation>
         </message>
         <message>
             <source>Sources</source>
@@ -4716,6 +5504,22 @@
         <message>
             <source> · Auto-skip </source>
             <translation> · Otomatik atlama </translation>
+        </message>
+        <message>
+            <source>Incognito on</source>
+            <translation>Gizli mod açık</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Gizli mod kapalı</translation>
+        </message>
+        <message>
+            <source>locked with a PIN</source>
+            <translation>PIN ile kilitli</translation>
+        </message>
+        <message>
+            <source>no app lock</source>
+            <translation>uygulama kilidi yok</translation>
         </message>
         <message>
             <source>Checks for new chapters every </source>
@@ -5008,6 +5812,10 @@
             <translation>Kaynaklar güncel</translation>
         </message>
         <message>
+            <source>Move %1</source>
+            <translation>%1 taşı</translation>
+        </message>
+        <message>
             <source>Pass a browser check for this site</source>
             <translation>Bu site için tarayıcı denetimini geç</translation>
         </message>
@@ -5212,12 +6020,32 @@
             <translation>Genişletilmiş roman kaynakları yüklendi</translation>
         </message>
         <message>
+            <source>No longer available</source>
+            <translation>Artık mevcut değil</translation>
+        </message>
+        <message>
+            <source>Your progress on these series is kept. Move them to a source you have to read new chapters.</source>
+            <translation>Bu serilerdeki ilerlemen korunur. Yeni bölümleri okumak için onları sahip olduğun bir kaynağa taşı.</translation>
+        </message>
+        <message>
             <source>Comics</source>
             <translation>Çizgi romanlar</translation>
         </message>
         <message>
             <source>Novels</source>
             <translation>Romanlar</translation>
+        </message>
+        <message>
+            <source>1 series</source>
+            <translation>1 seri</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 seri</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Taşı</translation>
         </message>
     </context>
     <context>
@@ -5671,12 +6499,8 @@
             <translation>Tema dosyası</translation>
         </message>
         <message>
-            <source>Save this theme, or use one someone shared.</source>
-            <translation>Bu temayı kaydet veya birinin paylaştığını kullan.</translation>
-        </message>
-        <message>
-            <source>Use a theme someone shared.</source>
-            <translation>Birinin paylaştığı bir temayı kullan.</translation>
+            <source>Save your whole look (colours, background, layout, arranged pages and reader colours) to share, or use a theme someone shared.</source>
+            <translation>Tüm görünümünü (renkler, arka plan, düzen, düzenlenmiş sayfalar ve okuyucu renkleri) paylaşmak için kaydet ya da birinin paylaştığı bir temayı kullan.</translation>
         </message>
         <message>
             <source>Export…</source>
@@ -5975,6 +6799,10 @@
         <message>
             <source>Episode </source>
             <translation>Bölüm </translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Gizli mod</translation>
         </message>
         <message>
             <source>Trying another server: </source>
@@ -6288,6 +7116,17 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 yeni bölüm</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Lock</name>
+        <message>
+            <source>Unlock SCANCORE</source>
+            <translation>SCANCORE kilidini aç</translation>
+        </message>
+        <message>
+            <source>Use PIN</source>
+            <translation>PIN kullan</translation>
         </message>
     </context>
     <context>

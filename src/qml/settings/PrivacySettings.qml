@@ -48,6 +48,7 @@ SettingsPane {
             title: qsTr("Lock again")
             description: qsTr("After SCANCORE has been in the background this long.")
             Select {
+                title: qsTr("Lock again")
                 model: [{ value: -1, label: qsTr("Only when it starts") }, { value: 0, label: qsTr("Right away") },
                         { value: 1, label: qsTr("After 1 minute") }, { value: 5, label: qsTr("After 5 minutes") },
                         { value: 15, label: qsTr("After 15 minutes") }]

@@ -1230,6 +1230,58 @@
             <translation>  ·  ダウンロード済み</translation>
         </message>
         <message>
+            <source>Tap zones: left and right</source>
+            <translation>タップ領域: 左右</translation>
+        </message>
+        <message>
+            <source>Tap zones: L shape</source>
+            <translation>タップ領域: L字型</translation>
+        </message>
+        <message>
+            <source>Tap zones: Kindle</source>
+            <translation>タップ領域: Kindle風</translation>
+        </message>
+        <message>
+            <source>Tap zones: edges</source>
+            <translation>タップ領域: 端</translation>
+        </message>
+        <message>
+            <source>Tap zones: off</source>
+            <translation>タップ領域: オフ</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>反転なし</translation>
+        </message>
+        <message>
+            <source>Flipped left and right</source>
+            <translation>左右を反転</translation>
+        </message>
+        <message>
+            <source>Flipped top and bottom</source>
+            <translation>上下を反転</translation>
+        </message>
+        <message>
+            <source>Flipped both ways</source>
+            <translation>上下左右を反転</translation>
+        </message>
+        <message>
+            <source>Next</source>
+            <translation>次へ</translation>
+        </message>
+        <message>
+            <source>Previous</source>
+            <translation>前へ</translation>
+        </message>
+        <message>
+            <source>Menu</source>
+            <translation>メニュー</translation>
+        </message>
+        <message>
+            <source>  ·  Incognito</source>
+            <translation>  ·  シークレット</translation>
+        </message>
+        <message>
             <source>Previous chapter</source>
             <translation>前の章</translation>
         </message>
@@ -1266,6 +1318,10 @@
             <translation>チャプター </translation>
         </message>
         <message>
+            <source>Layout</source>
+            <translation>レイアウト</translation>
+        </message>
+        <message>
             <source>Vertical</source>
             <translation>縦</translation>
         </message>
@@ -1288,6 +1344,58 @@
         <message>
             <source>Two pages</source>
             <translation>見開き</translation>
+        </message>
+        <message>
+            <source>Trim white or black borders</source>
+            <translation>白または黒の余白を切り取る</translation>
+        </message>
+        <message>
+            <source>Split wide pages in two</source>
+            <translation>横長のページを2つに分ける</translation>
+        </message>
+        <message>
+            <source>Width · %1 px</source>
+            <translation>幅 · %1 px</translation>
+        </message>
+        <message>
+            <source>Gap between panels · %1 px</source>
+            <translation>コマの間隔 · %1 px</translation>
+        </message>
+        <message>
+            <source>Colour · brightness %1%</source>
+            <translation>色 · 明るさ %1%</translation>
+        </message>
+        <message>
+            <source>Warmth · %1%</source>
+            <translation>暖かさ · %1%</translation>
+        </message>
+        <message>
+            <source>Greyscale</source>
+            <translation>グレースケール</translation>
+        </message>
+        <message>
+            <source>Invert colours</source>
+            <translation>色を反転</translation>
+        </message>
+        <message>
+            <source>Taps</source>
+            <translation>タップ</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>タップ領域</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>タップ領域を反転</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>縦スクロールでもタップ領域を使う</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>音量ボタンでページをめくる</translation>
         </message>
         <message>
             <source>Page progress bar</source>
@@ -1316,6 +1424,18 @@
         <message>
             <source>Thick</source>
             <translation>太い</translation>
+        </message>
+        <message>
+            <source>Only for this series</source>
+            <translation>このシリーズだけ</translation>
+        </message>
+        <message>
+            <source>Keeps these settings for %1 alone</source>
+            <translation>この設定を%1だけに保存します</translation>
+        </message>
+        <message>
+            <source>it</source>
+            <translation>このシリーズ</translation>
         </message>
     </context>
     <context>
@@ -1524,6 +1644,18 @@
             <translation>ライブラリの新しい章を確認</translation>
         </message>
         <message>
+            <source>Turn incognito off</source>
+            <translation>シークレットモードをオフにする</translation>
+        </message>
+        <message>
+            <source>Turn incognito on</source>
+            <translation>シークレットモードをオンにする</translation>
+        </message>
+        <message>
+            <source>Lock SCANCORE</source>
+            <translation>SCANCOREをロック</translation>
+        </message>
+        <message>
             <source>Sync with scancore.onl</source>
             <translation>scancore.onl と同期</translation>
         </message>
@@ -1689,14 +1821,6 @@
             <translation>アニメは視聴したエピソードと一緒に取り込まれます。コミックと小説は、ソースにあれば読んだ章と一緒に取り込まれ、ないものは見つかるまで下で待機します。</translation>
         </message>
         <message>
-            <source>Mihon or Tachiyomi backup</source>
-            <translation>Mihon または Tachiyomi のバックアップ</translation>
-        </message>
-        <message>
-            <source>A .tachibk file from More → Backup and restore.</source>
-            <translation>その他 → バックアップと復元で作る .tachibk ファイル。</translation>
-        </message>
-        <message>
             <source>Choose file</source>
             <translation>ファイルを選択</translation>
         </message>
@@ -1751,6 +1875,30 @@
         <message>
             <source>All files (*)</source>
             <translation>すべてのファイル (*)</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup</source>
+            <translation>Mihon・Tachiyomi・Aniyomiのバックアップ</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.</source>
+            <translation>「その他 → バックアップと復元」で作った.tachibkファイル。ここにある拡張機能のシリーズは元どおりに戻ります。</translation>
+        </message>
+        <message>
+            <source>LNReader backup</source>
+            <translation>LNReaderのバックアップ</translation>
+        </message>
+        <message>
+            <source>A backup .zip from LNReader&apos;s More → Backup. Novels from a plugin you have here come back exactly as they were.</source>
+            <translation>LNReaderの「その他 → バックアップ」で作った.zipファイル。ここにあるプラグインの小説は元どおりに戻ります。</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Mihon・Tachiyomi・Aniyomiのバックアップ (*.tachibk *.proto.gz)</translation>
+        </message>
+        <message>
+            <source>LNReader backup (*.zip)</source>
+            <translation>LNReaderのバックアップ (*.zip)</translation>
         </message>
         <message>
             <source>Saved %1 series</source>
@@ -3062,8 +3210,76 @@
             <translation>タイトル順</translation>
         </message>
         <message>
+            <source>Grid</source>
+            <translation>グリッド</translation>
+        </message>
+        <message>
+            <source>Compact grid</source>
+            <translation>コンパクトグリッド</translation>
+        </message>
+        <message>
+            <source>List</source>
+            <translation>リスト</translation>
+        </message>
+        <message>
+            <source>Files on this device stay where they are.</source>
+            <translation>この端末のファイルはそのままの場所に残ります。</translation>
+        </message>
+        <message>
+            <source>Remove 1 series from your library?</source>
+            <translation>1件のシリーズをライブラリから削除しますか?</translation>
+        </message>
+        <message>
+            <source>Remove %1 series from your library?</source>
+            <translation>%1件のシリーズをライブラリから削除しますか?</translation>
+        </message>
+        <message>
+            <source>Your reading history and downloads are kept.</source>
+            <translation>閲覧履歴とダウンロードは残ります。</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>削除</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>完了</translation>
+        </message>
+        <message>
+            <source>Select</source>
+            <translation>選択</translation>
+        </message>
+        <message>
+            <source>Sort</source>
+            <translation>並べ替え</translation>
+        </message>
+        <message>
+            <source>View</source>
+            <translation>表示</translation>
+        </message>
+        <message>
             <source>All</source>
             <translation>すべて</translation>
+        </message>
+        <message>
+            <source>Tap series to pick them</source>
+            <translation>シリーズをタップして選びます</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1件を選択中</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>別のソースに移す</translation>
+        </message>
+        <message>
+            <source>Move to list…</source>
+            <translation>リストに移動…</translation>
+        </message>
+        <message>
+            <source>Moved to %1</source>
+            <translation>%1に移動しました</translation>
         </message>
         <message>
             <source>Nothing matches</source>
@@ -3153,6 +3369,74 @@
             <translation>scancore.onl の SCANCORE ニュースを、投稿されるとすぐ「通知」に表示します。</translation>
         </message>
         <message>
+            <source>Which series are checked</source>
+            <translation>チェックするシリーズ</translation>
+        </message>
+        <message>
+            <source>Lists</source>
+            <translation>リスト</translation>
+        </message>
+        <message>
+            <source>Only series on these lists of your library are checked for new chapters.</source>
+            <translation>ライブラリのこれらのリストにあるシリーズだけ新しいチャプターをチェックします。</translation>
+        </message>
+        <message>
+            <source>Skip finished series</source>
+            <translation>完結したシリーズを除く</translation>
+        </message>
+        <message>
+            <source>Series their site marks as completed.</source>
+            <translation>サイトが完結としているシリーズ。</translation>
+        </message>
+        <message>
+            <source>Skip series with chapters left to read</source>
+            <translation>未読チャプターのあるシリーズを除く</translation>
+        </message>
+        <message>
+            <source>Checked again once you catch up.</source>
+            <translation>追いついたらまたチェックします。</translation>
+        </message>
+        <message>
+            <source>Skip series you have not started</source>
+            <translation>読み始めていないシリーズを除く</translation>
+        </message>
+        <message>
+            <source>Check by itself only on Wi-Fi</source>
+            <translation>自動チェックはWi-Fiのときだけ</translation>
+        </message>
+        <message>
+            <source>Not on mobile data or a metered connection. Checking by hand always works.</source>
+            <translation>モバイルデータや従量制の接続では行いません。手動のチェックはいつでもできます。</translation>
+        </message>
+        <message>
+            <source>Check by itself only while charging</source>
+            <translation>自動チェックは充電中だけ</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>ダウンロード</translation>
+        </message>
+        <message>
+            <source>Download new chapters</source>
+            <translation>新しいチャプターをダウンロード</translation>
+        </message>
+        <message>
+            <source>New chapters of series on these lists download as soon as they are found.</source>
+            <translation>これらのリストにあるシリーズの新しいチャプターは、見つかり次第ダウンロードされます。</translation>
+        </message>
+        <message>
+            <source>Pick lists whose new chapters download as soon as they are found.</source>
+            <translation>新しいチャプターを見つけ次第ダウンロードするリストを選びます。</translation>
+        </message>
+        <message>
+            <source>Delete chapters once read</source>
+            <translation>読み終えたチャプターを削除</translation>
+        </message>
+        <message>
+            <source>A downloaded chapter goes when you finish the next one.</source>
+            <translation>次のチャプターを読み終えると、ダウンロードしたチャプターは削除されます。</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>バックグラウンド</translation>
         </message>
@@ -3205,6 +3489,29 @@
         </message>
     </context>
     <context>
+        <name>LockScreen</name>
+        <message>
+            <source>SCANCORE is locked</source>
+            <translation>SCANCOREはロックされています</translation>
+        </message>
+        <message>
+            <source>Too many tries. Try again in %1 s.</source>
+            <translation>試行回数が多すぎます。%1秒後にもう一度お試しください。</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>PINが違います</translation>
+        </message>
+        <message>
+            <source>Enter your PIN</source>
+            <translation>PINを入力してください</translation>
+        </message>
+        <message>
+            <source>Use fingerprint or face</source>
+            <translation>指紋または顔を使う</translation>
+        </message>
+    </context>
+    <context>
         <name>Main</name>
         <message>
             <source> new chapter</source>
@@ -3221,6 +3528,18 @@
         <message>
             <source>Try again now; %1 should load.</source>
             <translation>今すぐ再試行してください。%1 は読み込めるはずです。</translation>
+        </message>
+        <message>
+            <source>Incognito is on. Turn it off</source>
+            <translation>シークレットモードがオンです。オフにする</translation>
+        </message>
+        <message>
+            <source>Nothing you read or watch is recorded. Click to turn off.</source>
+            <translation>読んだり見たりしたものは記録されません。クリックでオフにします。</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>シークレット</translation>
         </message>
         <message>
             <source>Use this theme?</source>
@@ -3245,6 +3564,121 @@
         <message>
             <source>Allow</source>
             <translation>許可</translation>
+        </message>
+    </context>
+    <context>
+        <name>MigrateDialog</name>
+        <message>
+            <source>The new source lists no chapters for this series.</source>
+            <translation>新しいソースにはこのシリーズのチャプターがありません。</translation>
+        </message>
+        <message>
+            <source>Moved 1 series</source>
+            <translation>1件のシリーズを移しました</translation>
+        </message>
+        <message>
+            <source>Moved %1 series</source>
+            <translation>%1件のシリーズを移しました</translation>
+        </message>
+        <message>
+            <source>Move %1 series to other sources</source>
+            <translation>%1件のシリーズを別のソースに移す</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>別のソースに移す</translation>
+        </message>
+        <message>
+            <source>Each one goes to the best match on your other sources. Change any of them before moving.</source>
+            <translation>それぞれ、ほかのソースで最も一致するものに移ります。移す前に変更できます。</translation>
+        </message>
+        <message>
+            <source>Your progress, library list and tracking go with it.</source>
+            <translation>進捗・ライブラリのリスト・トラッキングも一緒に移ります。</translation>
+        </message>
+        <message>
+            <source>Loading its chapters…</source>
+            <translation>チャプターを読み込み中…</translation>
+        </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1チャプター</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1チャプター</translation>
+        </message>
+        <message>
+            <source>, newest %1</source>
+            <translation>、最新 %1</translation>
+        </message>
+        <message>
+            <source>%1 will count as read.</source>
+            <translation>%1件が既読になります。</translation>
+        </message>
+        <message>
+            <source>Looking for it on your other sources…</source>
+            <translation>ほかのソースで探しています…</translation>
+        </message>
+        <message>
+            <source>None of your other sources has it.</source>
+            <translation>ほかのソースにはありません。</translation>
+        </message>
+        <message>
+            <source>Move it to</source>
+            <translation>移動先</translation>
+        </message>
+        <message>
+            <source>Looking…</source>
+            <translation>検索中…</translation>
+        </message>
+        <message>
+            <source>Not found on your other sources</source>
+            <translation>ほかのソースに見つかりません</translation>
+        </message>
+        <message>
+            <source>Moving…</source>
+            <translation>移動中…</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>移しました</translation>
+        </message>
+        <message>
+            <source>Bring my progress</source>
+            <translation>進捗も移す</translation>
+        </message>
+        <message>
+            <source>Chapters up to the furthest one you read count as read.</source>
+            <translation>読んだ中で最も先のチャプターまでが既読になります。</translation>
+        </message>
+        <message>
+            <source>Keep the old one too</source>
+            <translation>元のものも残す</translation>
+        </message>
+        <message>
+            <source>Copy instead of move: both stay in your library.</source>
+            <translation>移すのではなくコピー: 両方ともライブラリに残ります。</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>戻る</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>キャンセル</translation>
+        </message>
+        <message>
+            <source>Move %1</source>
+            <translation>%1件を移す</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>移す</translation>
         </message>
     </context>
     <context>
@@ -3392,6 +3826,10 @@
         <message>
             <source> · Downloaded</source>
             <translation> · ダウンロード済み</translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · シークレット</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -3951,6 +4389,156 @@
         </message>
     </context>
     <context>
+        <name>PinPad</name>
+        <message>
+            <source>Delete</source>
+            <translation>削除</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>完了</translation>
+        </message>
+    </context>
+    <context>
+        <name>PrivacySettings</name>
+        <message>
+            <source>Privacy</source>
+            <translation>プライバシー</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>シークレットモードとアプリのロック</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>シークレット</translation>
+        </message>
+        <message>
+            <source>Incognito reading and watching leaves nothing behind: no history, no place kept, no reading time, no tracker updates and no Discord status. Saving series and downloads still work.</source>
+            <translation>シークレットモードで読んだり見たりしても何も残りません。履歴、読んだ位置、読書時間、トラッカーの更新、Discordのステータスはありません。シリーズの保存とダウンロードはそのまま使えます。</translation>
+        </message>
+        <message>
+            <source>Incognito mode</source>
+            <translation>シークレットモード</translation>
+        </message>
+        <message>
+            <source>A badge shows while it is on.</source>
+            <translation>オンの間はバッジが表示されます。</translation>
+        </message>
+        <message>
+            <source>App lock</source>
+            <translation>アプリのロック</translation>
+        </message>
+        <message>
+            <source>Ask for a PIN when SCANCORE starts and after it has been away for a while.</source>
+            <translation>SCANCOREの起動時と、しばらく離れたあとにPINを求めます。</translation>
+        </message>
+        <message>
+            <source> Fingerprint or face can unlock it too.</source>
+            <translation> 指紋や顔でもロックを解除できます。</translation>
+        </message>
+        <message>
+            <source>Lock with a PIN</source>
+            <translation>PINでロック</translation>
+        </message>
+        <message>
+            <source>On · %1 digits</source>
+            <translation>オン · %1桁</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>オフ</translation>
+        </message>
+        <message>
+            <source>Change PIN</source>
+            <translation>PINを変更</translation>
+        </message>
+        <message>
+            <source>Set a PIN</source>
+            <translation>PINを設定</translation>
+        </message>
+        <message>
+            <source>Turn off</source>
+            <translation>オフにする</translation>
+        </message>
+        <message>
+            <source>Lock again</source>
+            <translation>再ロック</translation>
+        </message>
+        <message>
+            <source>After SCANCORE has been in the background this long.</source>
+            <translation>SCANCOREがこの時間バックグラウンドにあったあと。</translation>
+        </message>
+        <message>
+            <source>Only when it starts</source>
+            <translation>起動時のみ</translation>
+        </message>
+        <message>
+            <source>Right away</source>
+            <translation>すぐに</translation>
+        </message>
+        <message>
+            <source>After 1 minute</source>
+            <translation>1分後</translation>
+        </message>
+        <message>
+            <source>After 5 minutes</source>
+            <translation>5分後</translation>
+        </message>
+        <message>
+            <source>After 15 minutes</source>
+            <translation>15分後</translation>
+        </message>
+        <message>
+            <source>Unlock with fingerprint or face</source>
+            <translation>指紋または顔でロック解除</translation>
+        </message>
+        <message>
+            <source>The phone&apos;s screen lock works there too, if you forget the PIN.</source>
+            <translation>PINを忘れたときは、そこで端末の画面ロックも使えます。</translation>
+        </message>
+        <message>
+            <source>Lock now</source>
+            <translation>今すぐロック</translation>
+        </message>
+        <message>
+            <source>The PINs do not match. Start again.</source>
+            <translation>PINが一致しません。最初からやり直してください。</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>PINが違います</translation>
+        </message>
+        <message>
+            <source>App lock is off</source>
+            <translation>アプリのロックをオフにしました</translation>
+        </message>
+        <message>
+            <source>App lock is on</source>
+            <translation>アプリのロックをオンにしました</translation>
+        </message>
+        <message>
+            <source>Enter your current PIN</source>
+            <translation>現在のPINを入力してください</translation>
+        </message>
+        <message>
+            <source>Choose a PIN</source>
+            <translation>PINを決めてください</translation>
+        </message>
+        <message>
+            <source>Enter it again</source>
+            <translation>もう一度入力してください</translation>
+        </message>
+        <message>
+            <source>4 to 8 digits, then the tick.</source>
+            <translation>4～8桁の数字を入れてチェックを押します。</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>キャンセル</translation>
+        </message>
+    </context>
+    <context>
         <name>ReadFromDialog</name>
         <message>
             <source>Looking for it on your sources…</source>
@@ -3994,6 +4582,18 @@
         <message>
             <source>Comic and novel readers</source>
             <translation>コミックと小説のリーダー</translation>
+        </message>
+        <message>
+            <source>Not read yet</source>
+            <translation>未読</translation>
+        </message>
+        <message>
+            <source>Read</source>
+            <translation>既読</translation>
+        </message>
+        <message>
+            <source>Current page</source>
+            <translation>現在のページ</translation>
         </message>
         <message>
             <source>Comic reader</source>
@@ -4052,6 +4652,74 @@
             <translation>ページ表示で、スキャンしたページの周りの白や黒の余白を切り取ります。</translation>
         </message>
         <message>
+            <source>Split wide pages</source>
+            <translation>横長のページを分ける</translation>
+        </message>
+        <message>
+            <source>Shows a two-page spread as its two halves, one after the other, in the Pages layout.</source>
+            <translation>ページ表示のとき、見開きを左右の半分ずつ順に表示します。</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>タップ領域</translation>
+        </message>
+        <message>
+            <source>Where a tap turns the page back or forward, or shows the controls. The reader shows them when you change them.</source>
+            <translation>タップでページを戻す・進める、または操作を表示する場所。変更するとリーダーに表示されます。</translation>
+        </message>
+        <message>
+            <source>Left and right</source>
+            <translation>左右</translation>
+        </message>
+        <message>
+            <source>L shape</source>
+            <translation>L字型</translation>
+        </message>
+        <message>
+            <source>Kindle</source>
+            <translation>Kindle風</translation>
+        </message>
+        <message>
+            <source>Edges</source>
+            <translation>端</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>オフ</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>タップ領域を反転</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>反転なし</translation>
+        </message>
+        <message>
+            <source>Top and bottom</source>
+            <translation>上下</translation>
+        </message>
+        <message>
+            <source>Both ways</source>
+            <translation>上下左右</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>縦スクロールでもタップ領域を使う</translation>
+        </message>
+        <message>
+            <source>A tap scrolls a screen up or down instead of showing the controls.</source>
+            <translation>タップで操作を表示する代わりに、1画面分上下にスクロールします。</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>音量ボタンでページをめくる</translation>
+        </message>
+        <message>
+            <source>Volume down goes forward, volume up back, while a comic is open.</source>
+            <translation>コミックを開いている間、音量を下げると次へ、上げると前へ進みます。</translation>
+        </message>
+        <message>
             <source>Strip width</source>
             <translation>縦読みの幅</translation>
         </message>
@@ -4072,8 +4740,20 @@
             <translation>進行レール</translation>
         </message>
         <message>
-            <source>A thin line on the right edge showing how far through the chapter you are.</source>
-            <translation>章のどこまで読んだかを右端に示す細い線。</translation>
+            <source>A thin line on the left edge showing how far through the chapter you are.</source>
+            <translation>チャプターをどこまで読んだかを示す、左端の細い線。</translation>
+        </message>
+        <message>
+            <source>Progress rail colours</source>
+            <translation>進捗バーの色</translation>
+        </message>
+        <message>
+            <source>Pages not read yet, pages read, and the page you are on.</source>
+            <translation>まだ読んでいないページ、読んだページ、いま見ているページ。</translation>
+        </message>
+        <message>
+            <source>Reset colours</source>
+            <translation>色をリセット</translation>
         </message>
         <message>
             <source>Novel reader</source>
@@ -4372,6 +5052,14 @@
             <translation>人気のライトノベル</translation>
         </message>
         <message>
+            <source>Incognito is on: nothing you read or watch is recorded</source>
+            <translation>シークレットモードがオンです: 読んだり見たりしたものは記録されません</translation>
+        </message>
+        <message>
+            <source>Incognito is off</source>
+            <translation>シークレットモードをオフにしました</translation>
+        </message>
+        <message>
             <source>The theme</source>
             <translation>テーマ</translation>
         </message>
@@ -4415,6 +5103,42 @@
             <translation>ライブラリに追加しました</translation>
         </message>
         <message>
+            <source>Remove bookmark</source>
+            <translation>ブックマークを外す</translation>
+        </message>
+        <message>
+            <source>Bookmark</source>
+            <translation>ブックマーク</translation>
+        </message>
+        <message>
+            <source>Mark unread</source>
+            <translation>未読にする</translation>
+        </message>
+        <message>
+            <source>Mark read</source>
+            <translation>既読にする</translation>
+        </message>
+        <message>
+            <source>Mark previous as read</source>
+            <translation>これより前を既読にする</translation>
+        </message>
+        <message>
+            <source>Mark previous as unread</source>
+            <translation>これより前を未読にする</translation>
+        </message>
+        <message>
+            <source>Remove download</source>
+            <translation>ダウンロードを削除</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>ダウンロード</translation>
+        </message>
+        <message>
+            <source>Download from here on</source>
+            <translation>ここから先をダウンロード</translation>
+        </message>
+        <message>
             <source>Downloading </source>
             <translation>ダウンロード中 </translation>
         </message>
@@ -4425,6 +5149,30 @@
         <message>
             <source> chapters</source>
             <translation> 章</translation>
+        </message>
+        <message>
+            <source>Unread only</source>
+            <translation>未読のみ</translation>
+        </message>
+        <message>
+            <source>Downloaded only</source>
+            <translation>ダウンロード済みのみ</translation>
+        </message>
+        <message>
+            <source>Bookmarked only</source>
+            <translation>ブックマークのみ</translation>
+        </message>
+        <message>
+            <source>Translated by</source>
+            <translation>翻訳</translation>
+        </message>
+        <message>
+            <source>Every group</source>
+            <translation>すべてのグループ</translation>
+        </message>
+        <message>
+            <source>Clear filters</source>
+            <translation>フィルターをクリア</translation>
         </message>
         <message>
             <source> · Novel</source>
@@ -4449,6 +5197,10 @@
         <message>
             <source>Tracking</source>
             <translation>トラッキング</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>別のソースに移す</translation>
         </message>
         <message>
             <source>Refresh</source>
@@ -4483,8 +5235,8 @@
             <translation>章を探す</translation>
         </message>
         <message>
-            <source>Download </source>
-            <translation>ダウンロード </translation>
+            <source>Select chapters</source>
+            <translation>チャプターを選択</translation>
         </message>
         <message>
             <source>Unread</source>
@@ -4495,12 +5247,16 @@
             <translation>すべて</translation>
         </message>
         <message>
-            <source>Cancel</source>
-            <translation>キャンセル</translation>
+            <source>Filters (%1 on)</source>
+            <translation>フィルター (%1件オン)</translation>
         </message>
         <message>
-            <source>Select chapters to download</source>
-            <translation>ダウンロードする章を選択</translation>
+            <source>Filter chapters</source>
+            <translation>チャプターを絞り込む</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>キャンセル</translation>
         </message>
         <message>
             <source>Mark all as read</source>
@@ -4515,8 +5271,32 @@
             <translation>古い順</translation>
         </message>
         <message>
+            <source>Tap chapters to pick them</source>
+            <translation>チャプターをタップして選びます</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1件を選択中</translation>
+        </message>
+        <message>
+            <source>Remove downloads</source>
+            <translation>ダウンロードを削除</translation>
+        </message>
+        <message>
             <source>No chapters available</source>
             <translation>利用できる章はありません</translation>
+        </message>
+        <message>
+            <source>No chapters match</source>
+            <translation>該当するチャプターがありません</translation>
+        </message>
+        <message>
+            <source>Your filters hide every chapter. Clear them with the funnel above.</source>
+            <translation>フィルターですべてのチャプターが隠れています。上のじょうごのアイコンでクリアしてください。</translation>
+        </message>
+        <message>
+            <source>Nothing matches that search.</source>
+            <translation>その検索に一致するものはありません。</translation>
         </message>
         <message>
             <source>This source has not published readable chapters for this title.</source>
@@ -4600,6 +5380,14 @@
         <message>
             <source>New chapters and notifications</source>
             <translation>新しい章と通知</translation>
+        </message>
+        <message>
+            <source>Privacy</source>
+            <translation>プライバシー</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>シークレットモードとアプリのロック</translation>
         </message>
         <message>
             <source>Sources</source>
@@ -4716,6 +5504,22 @@
         <message>
             <source> · Auto-skip </source>
             <translation> · 自動スキップ </translation>
+        </message>
+        <message>
+            <source>Incognito on</source>
+            <translation>シークレット: オン</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>シークレット: オフ</translation>
+        </message>
+        <message>
+            <source>locked with a PIN</source>
+            <translation>PINでロック中</translation>
+        </message>
+        <message>
+            <source>no app lock</source>
+            <translation>アプリのロックなし</translation>
         </message>
         <message>
             <source>Checks for new chapters every </source>
@@ -5008,6 +5812,10 @@
             <translation>ソースは最新です</translation>
         </message>
         <message>
+            <source>Move %1</source>
+            <translation>%1件を移す</translation>
+        </message>
+        <message>
             <source>Pass a browser check for this site</source>
             <translation>このサイトのブラウザ確認を通過する</translation>
         </message>
@@ -5212,12 +6020,32 @@
             <translation>追加の小説ソースをインストールしました</translation>
         </message>
         <message>
+            <source>No longer available</source>
+            <translation>利用できなくなったもの</translation>
+        </message>
+        <message>
+            <source>Your progress on these series is kept. Move them to a source you have to read new chapters.</source>
+            <translation>これらのシリーズの進捗は残ります。新しいチャプターを読むには、お持ちのソースに移してください。</translation>
+        </message>
+        <message>
             <source>Comics</source>
             <translation>コミック</translation>
         </message>
         <message>
             <source>Novels</source>
             <translation>小説</translation>
+        </message>
+        <message>
+            <source>1 series</source>
+            <translation>1件のシリーズ</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1件のシリーズ</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>移す</translation>
         </message>
     </context>
     <context>
@@ -5671,12 +6499,8 @@
             <translation>テーマファイル</translation>
         </message>
         <message>
-            <source>Save this theme, or use one someone shared.</source>
-            <translation>このテーマを保存するか、誰かが共有したものを使います。</translation>
-        </message>
-        <message>
-            <source>Use a theme someone shared.</source>
-            <translation>誰かが共有したテーマを使います。</translation>
+            <source>Save your whole look (colours, background, layout, arranged pages and reader colours) to share, or use a theme someone shared.</source>
+            <translation>見た目のすべて(色、背景、レイアウト、並べたページ、リーダーの色)を保存して共有したり、ほかの人が共有したテーマを使ったりできます。</translation>
         </message>
         <message>
             <source>Export…</source>
@@ -5975,6 +6799,10 @@
         <message>
             <source>Episode </source>
             <translation>エピソード </translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · シークレット</translation>
         </message>
         <message>
             <source>Trying another server: </source>
@@ -6288,6 +7116,17 @@
         <message>
             <source>%1 new chapters</source>
             <translation>新しい章 %1 件</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Lock</name>
+        <message>
+            <source>Unlock SCANCORE</source>
+            <translation>SCANCOREのロックを解除</translation>
+        </message>
+        <message>
+            <source>Use PIN</source>
+            <translation>PINを使う</translation>
         </message>
     </context>
     <context>

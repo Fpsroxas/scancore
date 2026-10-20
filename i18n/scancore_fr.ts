@@ -1230,6 +1230,58 @@
             <translation>  ·  Téléchargé</translation>
         </message>
         <message>
+            <source>Tap zones: left and right</source>
+            <translation>Zones tactiles : gauche et droite</translation>
+        </message>
+        <message>
+            <source>Tap zones: L shape</source>
+            <translation>Zones tactiles : en L</translation>
+        </message>
+        <message>
+            <source>Tap zones: Kindle</source>
+            <translation>Zones tactiles : Kindle</translation>
+        </message>
+        <message>
+            <source>Tap zones: edges</source>
+            <translation>Zones tactiles : bords</translation>
+        </message>
+        <message>
+            <source>Tap zones: off</source>
+            <translation>Zones tactiles : désactivées</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Non inversées</translation>
+        </message>
+        <message>
+            <source>Flipped left and right</source>
+            <translation>Inversées gauche-droite</translation>
+        </message>
+        <message>
+            <source>Flipped top and bottom</source>
+            <translation>Inversées haut-bas</translation>
+        </message>
+        <message>
+            <source>Flipped both ways</source>
+            <translation>Inversées dans les deux sens</translation>
+        </message>
+        <message>
+            <source>Next</source>
+            <translation>Suivante</translation>
+        </message>
+        <message>
+            <source>Previous</source>
+            <translation>Précédente</translation>
+        </message>
+        <message>
+            <source>Menu</source>
+            <translation>Menu</translation>
+        </message>
+        <message>
+            <source>  ·  Incognito</source>
+            <translation>  ·  Navigation privée</translation>
+        </message>
+        <message>
             <source>Chapters</source>
             <translation>Chapitres</translation>
         </message>
@@ -1252,6 +1304,62 @@
         <message>
             <source>Full screen</source>
             <translation>Plein écran</translation>
+        </message>
+        <message>
+            <source>Layout</source>
+            <translation>Disposition</translation>
+        </message>
+        <message>
+            <source>Trim white or black borders</source>
+            <translation>Rogner les bords blancs ou noirs</translation>
+        </message>
+        <message>
+            <source>Split wide pages in two</source>
+            <translation>Couper les pages larges en deux</translation>
+        </message>
+        <message>
+            <source>Width · %1 px</source>
+            <translation>Largeur · %1 px</translation>
+        </message>
+        <message>
+            <source>Gap between panels · %1 px</source>
+            <translation>Espace entre les cases · %1 px</translation>
+        </message>
+        <message>
+            <source>Colour · brightness %1%</source>
+            <translation>Couleur · luminosité %1%</translation>
+        </message>
+        <message>
+            <source>Warmth · %1%</source>
+            <translation>Chaleur · %1%</translation>
+        </message>
+        <message>
+            <source>Greyscale</source>
+            <translation>Niveaux de gris</translation>
+        </message>
+        <message>
+            <source>Invert colours</source>
+            <translation>Inverser les couleurs</translation>
+        </message>
+        <message>
+            <source>Taps</source>
+            <translation>Appuis</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Zones tactiles</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Inverser les zones tactiles</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Zones tactiles dans le défilement vertical</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Les touches de volume tournent les pages</translation>
         </message>
         <message>
             <source>Page progress bar</source>
@@ -1280,6 +1388,18 @@
         <message>
             <source>Thick</source>
             <translation>Épaisse</translation>
+        </message>
+        <message>
+            <source>Only for this series</source>
+            <translation>Pour cette série seulement</translation>
+        </message>
+        <message>
+            <source>Keeps these settings for %1 alone</source>
+            <translation>Garde ces réglages pour %1 seulement</translation>
+        </message>
+        <message>
+            <source>it</source>
+            <translation>elle</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -1524,6 +1644,18 @@
             <translation>Rechercher de nouveaux chapitres dans la bibliothèque</translation>
         </message>
         <message>
+            <source>Turn incognito off</source>
+            <translation>Désactiver la navigation privée</translation>
+        </message>
+        <message>
+            <source>Turn incognito on</source>
+            <translation>Activer la navigation privée</translation>
+        </message>
+        <message>
+            <source>Lock SCANCORE</source>
+            <translation>Verrouiller SCANCORE</translation>
+        </message>
+        <message>
             <source>Sync with scancore.onl</source>
             <translation>Synchroniser avec scancore.onl</translation>
         </message>
@@ -1689,14 +1821,6 @@
             <translation>Les animes arrivent avec les épisodes vus. Les BD et romans arrivent avec les chapitres lus quand une de vos sources les a ; les autres attendent ci-dessous d&apos;être trouvés.</translation>
         </message>
         <message>
-            <source>Mihon or Tachiyomi backup</source>
-            <translation>Sauvegarde Mihon ou Tachiyomi</translation>
-        </message>
-        <message>
-            <source>A .tachibk file from More → Backup and restore.</source>
-            <translation>Un fichier .tachibk depuis Plus → Sauvegarde et restauration.</translation>
-        </message>
-        <message>
             <source>Choose file</source>
             <translation>Choisir un fichier</translation>
         </message>
@@ -1751,6 +1875,30 @@
         <message>
             <source>All files (*)</source>
             <translation>Tous les fichiers (*)</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup</source>
+            <translation>Sauvegarde Mihon, Tachiyomi ou Aniyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.</source>
+            <translation>Un fichier .tachibk de Plus → Sauvegarde et restauration. Les séries d&apos;une extension que vous avez ici reviennent exactement comme avant.</translation>
+        </message>
+        <message>
+            <source>LNReader backup</source>
+            <translation>Sauvegarde LNReader</translation>
+        </message>
+        <message>
+            <source>A backup .zip from LNReader&apos;s More → Backup. Novels from a plugin you have here come back exactly as they were.</source>
+            <translation>Un .zip de sauvegarde depuis Plus → Sauvegarde dans LNReader. Les romans d&apos;un plugin que vous avez ici reviennent exactement comme avant.</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Sauvegarde Mihon, Tachiyomi ou Aniyomi (*.tachibk *.proto.gz)</translation>
+        </message>
+        <message>
+            <source>LNReader backup (*.zip)</source>
+            <translation>Sauvegarde LNReader (*.zip)</translation>
         </message>
         <message>
             <source>Saved %1 series</source>
@@ -3062,6 +3210,22 @@
             <translation>Titre A–Z</translation>
         </message>
         <message>
+            <source>Grid</source>
+            <translation>Grille</translation>
+        </message>
+        <message>
+            <source>Compact grid</source>
+            <translation>Grille compacte</translation>
+        </message>
+        <message>
+            <source>List</source>
+            <translation>Liste</translation>
+        </message>
+        <message>
+            <source>Files on this device stay where they are.</source>
+            <translation>Les fichiers de cet appareil restent où ils sont.</translation>
+        </message>
+        <message>
             <source>Episode </source>
             <translation>Épisode </translation>
         </message>
@@ -3072,6 +3236,58 @@
         <message>
             <source>Comic</source>
             <translation>BD</translation>
+        </message>
+        <message>
+            <source>Remove 1 series from your library?</source>
+            <translation>Retirer 1 série de votre bibliothèque ?</translation>
+        </message>
+        <message>
+            <source>Remove %1 series from your library?</source>
+            <translation>Retirer %1 séries de votre bibliothèque ?</translation>
+        </message>
+        <message>
+            <source>Your reading history and downloads are kept.</source>
+            <translation>Votre historique de lecture et vos téléchargements sont conservés.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Retirer</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Terminé</translation>
+        </message>
+        <message>
+            <source>Select</source>
+            <translation>Sélectionner</translation>
+        </message>
+        <message>
+            <source>Sort</source>
+            <translation>Trier</translation>
+        </message>
+        <message>
+            <source>View</source>
+            <translation>Affichage</translation>
+        </message>
+        <message>
+            <source>Tap series to pick them</source>
+            <translation>Touchez des séries pour les choisir</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1 choisies</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Déplacer vers une autre source</translation>
+        </message>
+        <message>
+            <source>Move to list…</source>
+            <translation>Déplacer vers la liste…</translation>
+        </message>
+        <message>
+            <source>Moved to %1</source>
+            <translation>Déplacées vers %1</translation>
         </message>
         <message>
             <source>Nothing matches</source>
@@ -3153,6 +3369,74 @@
             <translation>Les nouvelles de SCANCORE depuis scancore.onl, dans Notifications dès leur publication.</translation>
         </message>
         <message>
+            <source>Which series are checked</source>
+            <translation>Séries vérifiées</translation>
+        </message>
+        <message>
+            <source>Lists</source>
+            <translation>Listes</translation>
+        </message>
+        <message>
+            <source>Only series on these lists of your library are checked for new chapters.</source>
+            <translation>Seules les séries de ces listes de votre bibliothèque sont vérifiées pour de nouveaux chapitres.</translation>
+        </message>
+        <message>
+            <source>Skip finished series</source>
+            <translation>Ignorer les séries terminées</translation>
+        </message>
+        <message>
+            <source>Series their site marks as completed.</source>
+            <translation>Séries que leur site indique comme terminées.</translation>
+        </message>
+        <message>
+            <source>Skip series with chapters left to read</source>
+            <translation>Ignorer les séries avec des chapitres à lire</translation>
+        </message>
+        <message>
+            <source>Checked again once you catch up.</source>
+            <translation>Vérifiées à nouveau une fois à jour.</translation>
+        </message>
+        <message>
+            <source>Skip series you have not started</source>
+            <translation>Ignorer les séries non commencées</translation>
+        </message>
+        <message>
+            <source>Check by itself only on Wi-Fi</source>
+            <translation>Vérifier tout seul uniquement en Wi-Fi</translation>
+        </message>
+        <message>
+            <source>Not on mobile data or a metered connection. Checking by hand always works.</source>
+            <translation>Pas sur les données mobiles ni sur une connexion limitée. La vérification manuelle marche toujours.</translation>
+        </message>
+        <message>
+            <source>Check by itself only while charging</source>
+            <translation>Vérifier tout seul uniquement en charge</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>Téléchargements</translation>
+        </message>
+        <message>
+            <source>Download new chapters</source>
+            <translation>Télécharger les nouveaux chapitres</translation>
+        </message>
+        <message>
+            <source>New chapters of series on these lists download as soon as they are found.</source>
+            <translation>Les nouveaux chapitres des séries de ces listes se téléchargent dès qu&apos;ils sont trouvés.</translation>
+        </message>
+        <message>
+            <source>Pick lists whose new chapters download as soon as they are found.</source>
+            <translation>Choisissez les listes dont les nouveaux chapitres se téléchargent dès qu&apos;ils sont trouvés.</translation>
+        </message>
+        <message>
+            <source>Delete chapters once read</source>
+            <translation>Supprimer les chapitres une fois lus</translation>
+        </message>
+        <message>
+            <source>A downloaded chapter goes when you finish the next one.</source>
+            <translation>Un chapitre téléchargé est supprimé quand vous finissez le suivant.</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>Arrière-plan</translation>
         </message>
@@ -3205,6 +3489,29 @@
         </message>
     </context>
     <context>
+        <name>LockScreen</name>
+        <message>
+            <source>SCANCORE is locked</source>
+            <translation>SCANCORE est verrouillé</translation>
+        </message>
+        <message>
+            <source>Too many tries. Try again in %1 s.</source>
+            <translation>Trop d&apos;essais. Réessayez dans %1 s.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>Code PIN incorrect</translation>
+        </message>
+        <message>
+            <source>Enter your PIN</source>
+            <translation>Saisissez votre code PIN</translation>
+        </message>
+        <message>
+            <source>Use fingerprint or face</source>
+            <translation>Utiliser l&apos;empreinte ou le visage</translation>
+        </message>
+    </context>
+    <context>
         <name>Main</name>
         <message>
             <source> new chapter</source>
@@ -3221,6 +3528,18 @@
         <message>
             <source>Try again now; %1 should load.</source>
             <translation>Réessayez maintenant ; %1 devrait se charger.</translation>
+        </message>
+        <message>
+            <source>Incognito is on. Turn it off</source>
+            <translation>La navigation privée est activée. La désactiver</translation>
+        </message>
+        <message>
+            <source>Nothing you read or watch is recorded. Click to turn off.</source>
+            <translation>Rien de ce que vous lisez ou regardez n&apos;est enregistré. Cliquez pour désactiver.</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Navigation privée</translation>
         </message>
         <message>
             <source>Use this theme?</source>
@@ -3245,6 +3564,121 @@
         <message>
             <source>Allow</source>
             <translation>Autoriser</translation>
+        </message>
+    </context>
+    <context>
+        <name>MigrateDialog</name>
+        <message>
+            <source>The new source lists no chapters for this series.</source>
+            <translation>La nouvelle source n&apos;a aucun chapitre pour cette série.</translation>
+        </message>
+        <message>
+            <source>Moved 1 series</source>
+            <translation>1 série déplacée</translation>
+        </message>
+        <message>
+            <source>Moved %1 series</source>
+            <translation>%1 séries déplacées</translation>
+        </message>
+        <message>
+            <source>Move %1 series to other sources</source>
+            <translation>Déplacer %1 séries vers d&apos;autres sources</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Déplacer vers une autre source</translation>
+        </message>
+        <message>
+            <source>Each one goes to the best match on your other sources. Change any of them before moving.</source>
+            <translation>Chacune va vers la meilleure correspondance parmi vos autres sources. Modifiez-en avant de déplacer.</translation>
+        </message>
+        <message>
+            <source>Your progress, library list and tracking go with it.</source>
+            <translation>Votre progression, votre liste et le suivi la suivent.</translation>
+        </message>
+        <message>
+            <source>Loading its chapters…</source>
+            <translation>Chargement de ses chapitres…</translation>
+        </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 chapitre</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 chapitres</translation>
+        </message>
+        <message>
+            <source>, newest %1</source>
+            <translation>, dernier %1</translation>
+        </message>
+        <message>
+            <source>%1 will count as read.</source>
+            <translation>%1 compteront comme lus.</translation>
+        </message>
+        <message>
+            <source>Looking for it on your other sources…</source>
+            <translation>Recherche dans vos autres sources…</translation>
+        </message>
+        <message>
+            <source>None of your other sources has it.</source>
+            <translation>Aucune de vos autres sources ne l&apos;a.</translation>
+        </message>
+        <message>
+            <source>Move it to</source>
+            <translation>La déplacer vers</translation>
+        </message>
+        <message>
+            <source>Looking…</source>
+            <translation>Recherche…</translation>
+        </message>
+        <message>
+            <source>Not found on your other sources</source>
+            <translation>Introuvable dans vos autres sources</translation>
+        </message>
+        <message>
+            <source>Moving…</source>
+            <translation>Déplacement…</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Déplacée</translation>
+        </message>
+        <message>
+            <source>Bring my progress</source>
+            <translation>Garder ma progression</translation>
+        </message>
+        <message>
+            <source>Chapters up to the furthest one you read count as read.</source>
+            <translation>Les chapitres jusqu&apos;au plus avancé que vous avez lu comptent comme lus.</translation>
+        </message>
+        <message>
+            <source>Keep the old one too</source>
+            <translation>Garder aussi l&apos;ancienne</translation>
+        </message>
+        <message>
+            <source>Copy instead of move: both stay in your library.</source>
+            <translation>Copier au lieu de déplacer : les deux restent dans votre bibliothèque.</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Retour</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Fermer</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Annuler</translation>
+        </message>
+        <message>
+            <source>Move %1</source>
+            <translation>Déplacer %1</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Déplacer</translation>
         </message>
     </context>
     <context>
@@ -3392,6 +3826,10 @@
         <message>
             <source> · Downloaded</source>
             <translation> · Téléchargé</translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Navigation privée</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -3951,6 +4389,156 @@
         </message>
     </context>
     <context>
+        <name>PinPad</name>
+        <message>
+            <source>Delete</source>
+            <translation>Effacer</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Terminé</translation>
+        </message>
+    </context>
+    <context>
+        <name>PrivacySettings</name>
+        <message>
+            <source>Privacy</source>
+            <translation>Confidentialité</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Navigation privée et verrouillage de l&apos;app</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Navigation privée</translation>
+        </message>
+        <message>
+            <source>Incognito reading and watching leaves nothing behind: no history, no place kept, no reading time, no tracker updates and no Discord status. Saving series and downloads still work.</source>
+            <translation>Lire et regarder en navigation privée ne laisse aucune trace : ni historique, ni position, ni temps de lecture, ni mise à jour des trackers, ni statut Discord. Ajouter des séries et télécharger fonctionnent toujours.</translation>
+        </message>
+        <message>
+            <source>Incognito mode</source>
+            <translation>Navigation privée</translation>
+        </message>
+        <message>
+            <source>A badge shows while it is on.</source>
+            <translation>Un badge s&apos;affiche tant qu&apos;elle est activée.</translation>
+        </message>
+        <message>
+            <source>App lock</source>
+            <translation>Verrouillage de l&apos;app</translation>
+        </message>
+        <message>
+            <source>Ask for a PIN when SCANCORE starts and after it has been away for a while.</source>
+            <translation>Demander un code PIN au lancement de SCANCORE et après un moment d&apos;absence.</translation>
+        </message>
+        <message>
+            <source> Fingerprint or face can unlock it too.</source>
+            <translation> L&apos;empreinte ou le visage peuvent aussi le déverrouiller.</translation>
+        </message>
+        <message>
+            <source>Lock with a PIN</source>
+            <translation>Verrouiller avec un code PIN</translation>
+        </message>
+        <message>
+            <source>On · %1 digits</source>
+            <translation>Activé · %1 chiffres</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Désactivé</translation>
+        </message>
+        <message>
+            <source>Change PIN</source>
+            <translation>Changer le code PIN</translation>
+        </message>
+        <message>
+            <source>Set a PIN</source>
+            <translation>Définir un code PIN</translation>
+        </message>
+        <message>
+            <source>Turn off</source>
+            <translation>Désactiver</translation>
+        </message>
+        <message>
+            <source>Lock again</source>
+            <translation>Reverrouiller</translation>
+        </message>
+        <message>
+            <source>After SCANCORE has been in the background this long.</source>
+            <translation>Après que SCANCORE est resté en arrière-plan aussi longtemps.</translation>
+        </message>
+        <message>
+            <source>Only when it starts</source>
+            <translation>Seulement au lancement</translation>
+        </message>
+        <message>
+            <source>Right away</source>
+            <translation>Tout de suite</translation>
+        </message>
+        <message>
+            <source>After 1 minute</source>
+            <translation>Après 1 minute</translation>
+        </message>
+        <message>
+            <source>After 5 minutes</source>
+            <translation>Après 5 minutes</translation>
+        </message>
+        <message>
+            <source>After 15 minutes</source>
+            <translation>Après 15 minutes</translation>
+        </message>
+        <message>
+            <source>Unlock with fingerprint or face</source>
+            <translation>Déverrouiller avec l&apos;empreinte ou le visage</translation>
+        </message>
+        <message>
+            <source>The phone&apos;s screen lock works there too, if you forget the PIN.</source>
+            <translation>Le verrouillage d&apos;écran du téléphone y fonctionne aussi, si vous oubliez le code PIN.</translation>
+        </message>
+        <message>
+            <source>Lock now</source>
+            <translation>Verrouiller maintenant</translation>
+        </message>
+        <message>
+            <source>The PINs do not match. Start again.</source>
+            <translation>Les codes PIN ne correspondent pas. Recommencez.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>Code PIN incorrect</translation>
+        </message>
+        <message>
+            <source>App lock is off</source>
+            <translation>Le verrouillage de l&apos;app est désactivé</translation>
+        </message>
+        <message>
+            <source>App lock is on</source>
+            <translation>Le verrouillage de l&apos;app est activé</translation>
+        </message>
+        <message>
+            <source>Enter your current PIN</source>
+            <translation>Saisissez votre code PIN actuel</translation>
+        </message>
+        <message>
+            <source>Choose a PIN</source>
+            <translation>Choisissez un code PIN</translation>
+        </message>
+        <message>
+            <source>Enter it again</source>
+            <translation>Saisissez-le à nouveau</translation>
+        </message>
+        <message>
+            <source>4 to 8 digits, then the tick.</source>
+            <translation>4 à 8 chiffres, puis la coche.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Annuler</translation>
+        </message>
+    </context>
+    <context>
         <name>ReadFromDialog</name>
         <message>
             <source>Looking for it on your sources…</source>
@@ -3994,6 +4582,18 @@
         <message>
             <source>Comic and novel readers</source>
             <translation>Lecteurs de BD et de romans</translation>
+        </message>
+        <message>
+            <source>Not read yet</source>
+            <translation>Pas encore lues</translation>
+        </message>
+        <message>
+            <source>Read</source>
+            <translation>Lues</translation>
+        </message>
+        <message>
+            <source>Current page</source>
+            <translation>Page actuelle</translation>
         </message>
         <message>
             <source>Comic reader</source>
@@ -4052,6 +4652,74 @@
             <translation>Coupe la marge unie blanche ou noire des pages scannées en mode Pages.</translation>
         </message>
         <message>
+            <source>Split wide pages</source>
+            <translation>Couper les pages larges</translation>
+        </message>
+        <message>
+            <source>Shows a two-page spread as its two halves, one after the other, in the Pages layout.</source>
+            <translation>Affiche une double page en ses deux moitiés, l&apos;une après l&apos;autre, en mode Pages.</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Zones tactiles</translation>
+        </message>
+        <message>
+            <source>Where a tap turns the page back or forward, or shows the controls. The reader shows them when you change them.</source>
+            <translation>Où un appui tourne la page en arrière ou en avant, ou affiche les commandes. Le lecteur les montre quand vous les changez.</translation>
+        </message>
+        <message>
+            <source>Left and right</source>
+            <translation>Gauche et droite</translation>
+        </message>
+        <message>
+            <source>L shape</source>
+            <translation>En L</translation>
+        </message>
+        <message>
+            <source>Kindle</source>
+            <translation>Kindle</translation>
+        </message>
+        <message>
+            <source>Edges</source>
+            <translation>Bords</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Désactivé</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Inverser les zones tactiles</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Non inversées</translation>
+        </message>
+        <message>
+            <source>Top and bottom</source>
+            <translation>Haut et bas</translation>
+        </message>
+        <message>
+            <source>Both ways</source>
+            <translation>Dans les deux sens</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Zones tactiles dans le défilement vertical</translation>
+        </message>
+        <message>
+            <source>A tap scrolls a screen up or down instead of showing the controls.</source>
+            <translation>Un appui fait défiler d&apos;un écran vers le haut ou le bas au lieu d&apos;afficher les commandes.</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Les touches de volume tournent les pages</translation>
+        </message>
+        <message>
+            <source>Volume down goes forward, volume up back, while a comic is open.</source>
+            <translation>Volume bas avance, volume haut recule, tant qu&apos;une BD est ouverte.</translation>
+        </message>
+        <message>
             <source>Strip width</source>
             <translation>Largeur de la bande</translation>
         </message>
@@ -4072,8 +4740,20 @@
             <translation>Barre de progression</translation>
         </message>
         <message>
-            <source>A thin line on the right edge showing how far through the chapter you are.</source>
-            <translation>Un trait fin sur le bord droit qui indique où vous en êtes dans le chapitre.</translation>
+            <source>A thin line on the left edge showing how far through the chapter you are.</source>
+            <translation>Une fine ligne sur le bord gauche qui montre où vous en êtes dans le chapitre.</translation>
+        </message>
+        <message>
+            <source>Progress rail colours</source>
+            <translation>Couleurs de la barre de progression</translation>
+        </message>
+        <message>
+            <source>Pages not read yet, pages read, and the page you are on.</source>
+            <translation>Pages pas encore lues, pages lues et la page où vous êtes.</translation>
+        </message>
+        <message>
+            <source>Reset colours</source>
+            <translation>Réinitialiser les couleurs</translation>
         </message>
         <message>
             <source>Novel reader</source>
@@ -4372,6 +5052,14 @@
             <translation>Meilleurs light novels</translation>
         </message>
         <message>
+            <source>Incognito is on: nothing you read or watch is recorded</source>
+            <translation>Navigation privée activée : rien de ce que vous lisez ou regardez n&apos;est enregistré</translation>
+        </message>
+        <message>
+            <source>Incognito is off</source>
+            <translation>Navigation privée désactivée</translation>
+        </message>
+        <message>
             <source>The theme</source>
             <translation>Le thème</translation>
         </message>
@@ -4415,6 +5103,42 @@
             <translation>Ajouté à votre bibliothèque</translation>
         </message>
         <message>
+            <source>Remove bookmark</source>
+            <translation>Retirer le signet</translation>
+        </message>
+        <message>
+            <source>Bookmark</source>
+            <translation>Signet</translation>
+        </message>
+        <message>
+            <source>Mark unread</source>
+            <translation>Marquer comme non lu</translation>
+        </message>
+        <message>
+            <source>Mark read</source>
+            <translation>Marquer comme lu</translation>
+        </message>
+        <message>
+            <source>Mark previous as read</source>
+            <translation>Marquer les précédents comme lus</translation>
+        </message>
+        <message>
+            <source>Mark previous as unread</source>
+            <translation>Marquer les précédents comme non lus</translation>
+        </message>
+        <message>
+            <source>Remove download</source>
+            <translation>Supprimer le téléchargement</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Télécharger</translation>
+        </message>
+        <message>
+            <source>Download from here on</source>
+            <translation>Télécharger à partir d&apos;ici</translation>
+        </message>
+        <message>
             <source>Downloading </source>
             <translation>Téléchargement de </translation>
         </message>
@@ -4425,6 +5149,30 @@
         <message>
             <source> chapters</source>
             <translation> chapitres</translation>
+        </message>
+        <message>
+            <source>Unread only</source>
+            <translation>Non lus uniquement</translation>
+        </message>
+        <message>
+            <source>Downloaded only</source>
+            <translation>Téléchargés uniquement</translation>
+        </message>
+        <message>
+            <source>Bookmarked only</source>
+            <translation>Avec signet uniquement</translation>
+        </message>
+        <message>
+            <source>Translated by</source>
+            <translation>Traduit par</translation>
+        </message>
+        <message>
+            <source>Every group</source>
+            <translation>Tous les groupes</translation>
+        </message>
+        <message>
+            <source>Clear filters</source>
+            <translation>Effacer les filtres</translation>
         </message>
         <message>
             <source> · Novel</source>
@@ -4449,6 +5197,10 @@
         <message>
             <source>Tracking</source>
             <translation>Suivi</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Déplacer vers une autre source</translation>
         </message>
         <message>
             <source>Refresh</source>
@@ -4483,8 +5235,8 @@
             <translation>Chercher un chapitre</translation>
         </message>
         <message>
-            <source>Download </source>
-            <translation>Télécharger </translation>
+            <source>Select chapters</source>
+            <translation>Sélectionner des chapitres</translation>
         </message>
         <message>
             <source>Unread</source>
@@ -4495,12 +5247,16 @@
             <translation>Tout</translation>
         </message>
         <message>
-            <source>Cancel</source>
-            <translation>Annuler</translation>
+            <source>Filters (%1 on)</source>
+            <translation>Filtres (%1 actifs)</translation>
         </message>
         <message>
-            <source>Select chapters to download</source>
-            <translation>Sélectionnez des chapitres à télécharger</translation>
+            <source>Filter chapters</source>
+            <translation>Filtrer les chapitres</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Annuler</translation>
         </message>
         <message>
             <source>Mark all as read</source>
@@ -4515,8 +5271,32 @@
             <translation>Plus anciens d’abord</translation>
         </message>
         <message>
+            <source>Tap chapters to pick them</source>
+            <translation>Touchez des chapitres pour les choisir</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1 choisies</translation>
+        </message>
+        <message>
+            <source>Remove downloads</source>
+            <translation>Supprimer les téléchargements</translation>
+        </message>
+        <message>
             <source>No chapters available</source>
             <translation>Aucun chapitre disponible</translation>
+        </message>
+        <message>
+            <source>No chapters match</source>
+            <translation>Aucun chapitre ne correspond</translation>
+        </message>
+        <message>
+            <source>Your filters hide every chapter. Clear them with the funnel above.</source>
+            <translation>Vos filtres masquent tous les chapitres. Effacez-les avec l&apos;entonnoir ci-dessus.</translation>
+        </message>
+        <message>
+            <source>Nothing matches that search.</source>
+            <translation>Rien ne correspond à cette recherche.</translation>
         </message>
         <message>
             <source>This source has not published readable chapters for this title.</source>
@@ -4600,6 +5380,14 @@
         <message>
             <source>New chapters and notifications</source>
             <translation>Nouveaux chapitres et notifications</translation>
+        </message>
+        <message>
+            <source>Privacy</source>
+            <translation>Confidentialité</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Navigation privée et verrouillage de l&apos;app</translation>
         </message>
         <message>
             <source>Sources</source>
@@ -4716,6 +5504,22 @@
         <message>
             <source> · Auto-skip </source>
             <translation> · Saut auto </translation>
+        </message>
+        <message>
+            <source>Incognito on</source>
+            <translation>Navigation privée activée</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Navigation privée désactivée</translation>
+        </message>
+        <message>
+            <source>locked with a PIN</source>
+            <translation>verrouillé par code PIN</translation>
+        </message>
+        <message>
+            <source>no app lock</source>
+            <translation>pas de verrouillage</translation>
         </message>
         <message>
             <source>Checks for new chapters every </source>
@@ -5008,6 +5812,10 @@
             <translation>Les sources sont à jour</translation>
         </message>
         <message>
+            <source>Move %1</source>
+            <translation>Déplacer %1</translation>
+        </message>
+        <message>
             <source>Pass a browser check for this site</source>
             <translation>Passer une vérification du navigateur pour ce site</translation>
         </message>
@@ -5152,6 +5960,18 @@
             <translation>Affiche les sources marquées 18+ dans le choix des sources de BD.</translation>
         </message>
         <message>
+            <source>1 series</source>
+            <translation>1 série</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 séries</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Les déplacer</translation>
+        </message>
+        <message>
             <source>Extensions</source>
             <translation>Extensions</translation>
         </message>
@@ -5210,6 +6030,14 @@
         <message>
             <source>Remove</source>
             <translation>Retirer</translation>
+        </message>
+        <message>
+            <source>No longer available</source>
+            <translation>Plus disponible</translation>
+        </message>
+        <message>
+            <source>Your progress on these series is kept. Move them to a source you have to read new chapters.</source>
+            <translation>Votre progression sur ces séries est conservée. Déplacez-les vers une source que vous avez pour lire les nouveaux chapitres.</translation>
         </message>
         <message>
             <source>Comics</source>
@@ -5671,12 +6499,8 @@
             <translation>Fichier de thème</translation>
         </message>
         <message>
-            <source>Save this theme, or use one someone shared.</source>
-            <translation>Enregistrez ce thème, ou utilisez-en un partagé.</translation>
-        </message>
-        <message>
-            <source>Use a theme someone shared.</source>
-            <translation>Utilisez un thème partagé.</translation>
+            <source>Save your whole look (colours, background, layout, arranged pages and reader colours) to share, or use a theme someone shared.</source>
+            <translation>Enregistrez tout votre style (couleurs, fond, disposition, pages arrangées et couleurs du lecteur) pour le partager, ou utilisez un thème partagé par quelqu&apos;un.</translation>
         </message>
         <message>
             <source>Export…</source>
@@ -5975,6 +6799,10 @@
         <message>
             <source>Episode </source>
             <translation>Épisode </translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Navigation privée</translation>
         </message>
         <message>
             <source>Trying another server: </source>
@@ -6288,6 +7116,17 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 nouveaux chapitres</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Lock</name>
+        <message>
+            <source>Unlock SCANCORE</source>
+            <translation>Déverrouiller SCANCORE</translation>
+        </message>
+        <message>
+            <source>Use PIN</source>
+            <translation>Utiliser le code PIN</translation>
         </message>
     </context>
     <context>

@@ -862,6 +862,32 @@ Rectangle {
 
     // ------------------------------------------------------------ top bar
 
+    // The series, and the chapter with the page you are on.
+    component TitleLines: Column {
+        property real maxWidth: 200
+        spacing: 1
+        Text {
+            text: reader.series.title || ""
+            color: "white"
+            font.family: Theme.fontSans
+            font.pixelSize: Theme.textMd
+            font.weight: Font.DemiBold
+            width: Math.max(0, Math.min(implicitWidth, parent.maxWidth))
+            elide: Text.ElideRight
+        }
+        Text {
+            text: (reader.unit.title || "")
+                  + (reader.panels.length ? "  ·  " + (reader.currentPanel + 1) + " / " + reader.panels.length : "")
+                  + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr("  ·  Downloaded") : "")
+                  + (App.settings.incognito === true ? qsTr("  ·  Incognito") : "")
+            color: "#b4b4bb"
+            font.family: Theme.fontSans
+            font.pixelSize: Theme.textSm
+            width: Math.max(0, Math.min(implicitWidth, parent.maxWidth))
+            elide: Text.ElideRight
+        }
+    }
+
     // Keeps the status bar legible over light pages while the controls are hidden.
     Rectangle {
         width: parent.width
@@ -874,8 +900,10 @@ Rectangle {
         id: topBar
         // Phones: right under the status bar, as in the novel reader.
         readonly property int pad: Theme.compact ? 8 : 16
+        // Too narrow for the title beside the buttons.
+        readonly property bool twoRows: reader.width - 100 - topActions.width < 160
         width: parent.width
-        height: (Theme.compact ? 64 : 76) + reader.insetTop
+        height: (Theme.compact ? 64 : 76) + (twoRows ? 56 : 0) + reader.insetTop
         y: reader.controlsShown ? 0 : -height
         opacity: reader.controlsShown ? 1 : 0
         Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
@@ -888,7 +916,7 @@ Rectangle {
                 GradientStop { position: 0; color: Qt.rgba(0, 0, 0, 0.85) }
                 // Dark through the buttons, so the bar reads as one piece
                 // with the status bar, then fading into the page.
-                GradientStop { position: (reader.insetTop + topBar.pad + 36) / topBar.height; color: Qt.rgba(0, 0, 0, 0.7) }
+                GradientStop { position: (reader.insetTop + topBar.pad + 36 + (topBar.twoRows ? 40 : 0)) / topBar.height; color: Qt.rgba(0, 0, 0, 0.72) }
                 GradientStop { position: 1; color: Qt.rgba(0, 0, 0, 0) }
             }
         }
@@ -902,30 +930,18 @@ Rectangle {
                 tip: qsTr("Close reader (Esc)")
                 onClicked: reader.exit()
             }
-            Column {
+            TitleLines {
+                visible: !topBar.twoRows
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 1
-                Text {
-                    text: reader.series.title || ""
-                    color: "white"
-                    font.family: Theme.fontSans
-                    font.pixelSize: Theme.textMd
-                    font.weight: Font.DemiBold
-                    width: Math.min(implicitWidth, reader.width - 100 - topActions.width)
-                    elide: Text.ElideRight
-                }
-                Text {
-                    text: (reader.unit.title || "")
-                          + (reader.panels.length ? "  ·  " + (reader.currentPanel + 1) + " / " + reader.panels.length : "")
-                          + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr("  ·  Downloaded") : "")
-                          + (App.settings.incognito === true ? qsTr("  ·  Incognito") : "")
-                    color: "#b4b4bb"
-                    font.family: Theme.fontSans
-                    font.pixelSize: Theme.textSm
-                    width: Math.min(implicitWidth, reader.width - 100 - topActions.width)
-                    elide: Text.ElideRight
-                }
+                maxWidth: reader.width - 100 - topActions.width
             }
+        }
+        // Phones: the buttons take the first row, the title the second.
+        TitleLines {
+            visible: topBar.twoRows
+            x: 18
+            y: topBar.pad + reader.insetTop + 40
+            maxWidth: reader.width - 36
         }
         Row {
             id: topActions
@@ -989,7 +1005,7 @@ Rectangle {
     Popup {
         id: chapterPopup
         x: parent.width - width - 18
-        y: 70 + reader.insetTop
+        y: topBar.height - 6
         width: Math.min(340, parent.width - 36)
         height: Math.min(parent.height - 160 - reader.insetTop - reader.insetBottom, 560)
         padding: 6
@@ -1041,14 +1057,14 @@ Rectangle {
     Popup {
         id: settingsPopup
         x: parent.width - width - 18
-        y: 70 + reader.insetTop
+        y: topBar.height - 6
         width: Math.min(320, parent.width - 36)
         padding: 18
         background: Rectangle { radius: Theme.radiusLg; color: "#151517"; border.width: 1; border.color: "#2a2a30" }
         enter: Transition {
             ParallelAnimation {
                 NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.fast }
-                NumberAnimation { property: "y"; from: 60 + reader.insetTop; to: 70 + reader.insetTop; duration: Motion.normal; easing.type: Easing.OutCubic }
+                NumberAnimation { property: "y"; from: topBar.height - 16; to: topBar.height - 6; duration: Motion.normal; easing.type: Easing.OutCubic }
             }
         }
         exit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Motion.fast } }

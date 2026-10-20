@@ -1230,6 +1230,58 @@
             <translation>  ·  다운로드됨</translation>
         </message>
         <message>
+            <source>Tap zones: left and right</source>
+            <translation>탭 영역: 왼쪽과 오른쪽</translation>
+        </message>
+        <message>
+            <source>Tap zones: L shape</source>
+            <translation>탭 영역: L자형</translation>
+        </message>
+        <message>
+            <source>Tap zones: Kindle</source>
+            <translation>탭 영역: Kindle식</translation>
+        </message>
+        <message>
+            <source>Tap zones: edges</source>
+            <translation>탭 영역: 가장자리</translation>
+        </message>
+        <message>
+            <source>Tap zones: off</source>
+            <translation>탭 영역: 끔</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>뒤집지 않음</translation>
+        </message>
+        <message>
+            <source>Flipped left and right</source>
+            <translation>좌우 뒤집기</translation>
+        </message>
+        <message>
+            <source>Flipped top and bottom</source>
+            <translation>상하 뒤집기</translation>
+        </message>
+        <message>
+            <source>Flipped both ways</source>
+            <translation>양방향 뒤집기</translation>
+        </message>
+        <message>
+            <source>Next</source>
+            <translation>다음</translation>
+        </message>
+        <message>
+            <source>Previous</source>
+            <translation>이전</translation>
+        </message>
+        <message>
+            <source>Menu</source>
+            <translation>메뉴</translation>
+        </message>
+        <message>
+            <source>  ·  Incognito</source>
+            <translation>  ·  시크릿</translation>
+        </message>
+        <message>
             <source>Previous chapter</source>
             <translation>이전 챕터</translation>
         </message>
@@ -1266,6 +1318,10 @@
             <translation>챕터 </translation>
         </message>
         <message>
+            <source>Layout</source>
+            <translation>레이아웃</translation>
+        </message>
+        <message>
             <source>Vertical</source>
             <translation>세로</translation>
         </message>
@@ -1288,6 +1344,58 @@
         <message>
             <source>Two pages</source>
             <translation>두 페이지</translation>
+        </message>
+        <message>
+            <source>Trim white or black borders</source>
+            <translation>흰색 또는 검은색 여백 자르기</translation>
+        </message>
+        <message>
+            <source>Split wide pages in two</source>
+            <translation>넓은 페이지를 둘로 나누기</translation>
+        </message>
+        <message>
+            <source>Width · %1 px</source>
+            <translation>너비 · %1 px</translation>
+        </message>
+        <message>
+            <source>Gap between panels · %1 px</source>
+            <translation>컷 사이 간격 · %1 px</translation>
+        </message>
+        <message>
+            <source>Colour · brightness %1%</source>
+            <translation>색상 · 밝기 %1%</translation>
+        </message>
+        <message>
+            <source>Warmth · %1%</source>
+            <translation>따뜻함 · %1%</translation>
+        </message>
+        <message>
+            <source>Greyscale</source>
+            <translation>흑백</translation>
+        </message>
+        <message>
+            <source>Invert colours</source>
+            <translation>색상 반전</translation>
+        </message>
+        <message>
+            <source>Taps</source>
+            <translation>탭</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>탭 영역</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>탭 영역 뒤집기</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>세로 스크롤에서도 탭 영역 사용</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>음량 버튼으로 페이지 넘기기</translation>
         </message>
         <message>
             <source>Page progress bar</source>
@@ -1316,6 +1424,18 @@
         <message>
             <source>Thick</source>
             <translation>두껍게</translation>
+        </message>
+        <message>
+            <source>Only for this series</source>
+            <translation>이 시리즈에만</translation>
+        </message>
+        <message>
+            <source>Keeps these settings for %1 alone</source>
+            <translation>이 설정을 %1에만 적용합니다</translation>
+        </message>
+        <message>
+            <source>it</source>
+            <translation>이 시리즈</translation>
         </message>
     </context>
     <context>
@@ -1524,6 +1644,18 @@
             <translation>라이브러리에서 새 챕터 확인</translation>
         </message>
         <message>
+            <source>Turn incognito off</source>
+            <translation>시크릿 모드 끄기</translation>
+        </message>
+        <message>
+            <source>Turn incognito on</source>
+            <translation>시크릿 모드 켜기</translation>
+        </message>
+        <message>
+            <source>Lock SCANCORE</source>
+            <translation>SCANCORE 잠그기</translation>
+        </message>
+        <message>
             <source>Sync with scancore.onl</source>
             <translation>scancore.onl과 동기화</translation>
         </message>
@@ -1689,14 +1821,6 @@
             <translation>애니메이션은 시청한 에피소드와 함께 들어옵니다. 만화와 소설은 내 소스에 있으면 읽은 챕터와 함께 들어오고, 나머지는 찾을 때까지 아래에서 기다립니다.</translation>
         </message>
         <message>
-            <source>Mihon or Tachiyomi backup</source>
-            <translation>Mihon 또는 Tachiyomi 백업</translation>
-        </message>
-        <message>
-            <source>A .tachibk file from More → Backup and restore.</source>
-            <translation>더보기 → 백업 및 복원에서 만든 .tachibk 파일.</translation>
-        </message>
-        <message>
             <source>Choose file</source>
             <translation>파일 선택</translation>
         </message>
@@ -1751,6 +1875,30 @@
         <message>
             <source>All files (*)</source>
             <translation>모든 파일 (*)</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup</source>
+            <translation>Mihon, Tachiyomi 또는 Aniyomi 백업</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.</source>
+            <translation>더 보기 → 백업 및 복원에서 만든 .tachibk 파일입니다. 여기 있는 확장 프로그램의 시리즈는 그대로 돌아옵니다.</translation>
+        </message>
+        <message>
+            <source>LNReader backup</source>
+            <translation>LNReader 백업</translation>
+        </message>
+        <message>
+            <source>A backup .zip from LNReader&apos;s More → Backup. Novels from a plugin you have here come back exactly as they were.</source>
+            <translation>LNReader의 더 보기 → 백업에서 만든 .zip 파일입니다. 여기 있는 플러그인의 소설은 그대로 돌아옵니다.</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Mihon, Tachiyomi 또는 Aniyomi 백업 (*.tachibk *.proto.gz)</translation>
+        </message>
+        <message>
+            <source>LNReader backup (*.zip)</source>
+            <translation>LNReader 백업 (*.zip)</translation>
         </message>
         <message>
             <source>Saved %1 series</source>
@@ -3062,8 +3210,76 @@
             <translation>제목 가나다순</translation>
         </message>
         <message>
+            <source>Grid</source>
+            <translation>격자</translation>
+        </message>
+        <message>
+            <source>Compact grid</source>
+            <translation>촘촘한 격자</translation>
+        </message>
+        <message>
+            <source>List</source>
+            <translation>목록</translation>
+        </message>
+        <message>
+            <source>Files on this device stay where they are.</source>
+            <translation>이 기기의 파일은 원래 위치에 그대로 있습니다.</translation>
+        </message>
+        <message>
+            <source>Remove 1 series from your library?</source>
+            <translation>라이브러리에서 시리즈 1개를 제거할까요?</translation>
+        </message>
+        <message>
+            <source>Remove %1 series from your library?</source>
+            <translation>라이브러리에서 시리즈 %1개를 제거할까요?</translation>
+        </message>
+        <message>
+            <source>Your reading history and downloads are kept.</source>
+            <translation>읽기 기록과 다운로드는 그대로 남습니다.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>제거</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>완료</translation>
+        </message>
+        <message>
+            <source>Select</source>
+            <translation>선택</translation>
+        </message>
+        <message>
+            <source>Sort</source>
+            <translation>정렬</translation>
+        </message>
+        <message>
+            <source>View</source>
+            <translation>보기</translation>
+        </message>
+        <message>
             <source>All</source>
             <translation>전체</translation>
+        </message>
+        <message>
+            <source>Tap series to pick them</source>
+            <translation>시리즈를 탭해서 고르세요</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1개 선택됨</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>다른 소스로 옮기기</translation>
+        </message>
+        <message>
+            <source>Move to list…</source>
+            <translation>목록으로 옮기기…</translation>
+        </message>
+        <message>
+            <source>Moved to %1</source>
+            <translation>%1(으)로 옮겼습니다</translation>
         </message>
         <message>
             <source>Nothing matches</source>
@@ -3153,6 +3369,74 @@
             <translation>scancore.onl의 SCANCORE 소식을 올라오는 즉시 알림에 표시합니다.</translation>
         </message>
         <message>
+            <source>Which series are checked</source>
+            <translation>확인할 시리즈</translation>
+        </message>
+        <message>
+            <source>Lists</source>
+            <translation>목록</translation>
+        </message>
+        <message>
+            <source>Only series on these lists of your library are checked for new chapters.</source>
+            <translation>라이브러리의 이 목록에 있는 시리즈만 새 챕터를 확인합니다.</translation>
+        </message>
+        <message>
+            <source>Skip finished series</source>
+            <translation>완결된 시리즈 건너뛰기</translation>
+        </message>
+        <message>
+            <source>Series their site marks as completed.</source>
+            <translation>사이트에서 완결로 표시한 시리즈입니다.</translation>
+        </message>
+        <message>
+            <source>Skip series with chapters left to read</source>
+            <translation>안 읽은 챕터가 있는 시리즈 건너뛰기</translation>
+        </message>
+        <message>
+            <source>Checked again once you catch up.</source>
+            <translation>다 따라잡으면 다시 확인합니다.</translation>
+        </message>
+        <message>
+            <source>Skip series you have not started</source>
+            <translation>시작하지 않은 시리즈 건너뛰기</translation>
+        </message>
+        <message>
+            <source>Check by itself only on Wi-Fi</source>
+            <translation>자동 확인은 Wi-Fi에서만</translation>
+        </message>
+        <message>
+            <source>Not on mobile data or a metered connection. Checking by hand always works.</source>
+            <translation>모바일 데이터나 데이터 통신 제한 연결에서는 하지 않습니다. 직접 확인은 언제든 됩니다.</translation>
+        </message>
+        <message>
+            <source>Check by itself only while charging</source>
+            <translation>자동 확인은 충전 중에만</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>다운로드</translation>
+        </message>
+        <message>
+            <source>Download new chapters</source>
+            <translation>새 챕터 다운로드</translation>
+        </message>
+        <message>
+            <source>New chapters of series on these lists download as soon as they are found.</source>
+            <translation>이 목록에 있는 시리즈의 새 챕터는 찾는 즉시 다운로드됩니다.</translation>
+        </message>
+        <message>
+            <source>Pick lists whose new chapters download as soon as they are found.</source>
+            <translation>새 챕터를 찾는 즉시 다운로드할 목록을 고르세요.</translation>
+        </message>
+        <message>
+            <source>Delete chapters once read</source>
+            <translation>읽은 챕터 삭제</translation>
+        </message>
+        <message>
+            <source>A downloaded chapter goes when you finish the next one.</source>
+            <translation>다음 챕터를 다 읽으면 다운로드한 챕터가 삭제됩니다.</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>백그라운드</translation>
         </message>
@@ -3205,6 +3489,29 @@
         </message>
     </context>
     <context>
+        <name>LockScreen</name>
+        <message>
+            <source>SCANCORE is locked</source>
+            <translation>SCANCORE가 잠겨 있습니다</translation>
+        </message>
+        <message>
+            <source>Too many tries. Try again in %1 s.</source>
+            <translation>시도 횟수가 너무 많습니다. %1초 후에 다시 시도하세요.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>PIN이 틀렸습니다</translation>
+        </message>
+        <message>
+            <source>Enter your PIN</source>
+            <translation>PIN을 입력하세요</translation>
+        </message>
+        <message>
+            <source>Use fingerprint or face</source>
+            <translation>지문 또는 얼굴 사용</translation>
+        </message>
+    </context>
+    <context>
         <name>Main</name>
         <message>
             <source> new chapter</source>
@@ -3221,6 +3528,18 @@
         <message>
             <source>Try again now; %1 should load.</source>
             <translation>지금 다시 시도하세요. %1이(가) 열릴 겁니다.</translation>
+        </message>
+        <message>
+            <source>Incognito is on. Turn it off</source>
+            <translation>시크릿 모드가 켜져 있습니다. 끄기</translation>
+        </message>
+        <message>
+            <source>Nothing you read or watch is recorded. Click to turn off.</source>
+            <translation>읽거나 본 것은 하나도 기록되지 않습니다. 끄려면 클릭하세요.</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>시크릿</translation>
         </message>
         <message>
             <source>Use this theme?</source>
@@ -3245,6 +3564,121 @@
         <message>
             <source>Allow</source>
             <translation>허용</translation>
+        </message>
+    </context>
+    <context>
+        <name>MigrateDialog</name>
+        <message>
+            <source>The new source lists no chapters for this series.</source>
+            <translation>새 소스에는 이 시리즈의 챕터가 없습니다.</translation>
+        </message>
+        <message>
+            <source>Moved 1 series</source>
+            <translation>시리즈 1개를 옮겼습니다</translation>
+        </message>
+        <message>
+            <source>Moved %1 series</source>
+            <translation>시리즈 %1개를 옮겼습니다</translation>
+        </message>
+        <message>
+            <source>Move %1 series to other sources</source>
+            <translation>시리즈 %1개를 다른 소스로 옮기기</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>다른 소스로 옮기기</translation>
+        </message>
+        <message>
+            <source>Each one goes to the best match on your other sources. Change any of them before moving.</source>
+            <translation>각 시리즈는 다른 소스에서 가장 잘 맞는 곳으로 갑니다. 옮기기 전에 원하는 대로 바꾸세요.</translation>
+        </message>
+        <message>
+            <source>Your progress, library list and tracking go with it.</source>
+            <translation>진행 상황, 라이브러리 목록, 트래킹도 함께 옮겨집니다.</translation>
+        </message>
+        <message>
+            <source>Loading its chapters…</source>
+            <translation>챕터를 불러오는 중…</translation>
+        </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>챕터 1개</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>챕터 %1개</translation>
+        </message>
+        <message>
+            <source>, newest %1</source>
+            <translation>, 최신 %1</translation>
+        </message>
+        <message>
+            <source>%1 will count as read.</source>
+            <translation>%1개가 읽음으로 처리됩니다.</translation>
+        </message>
+        <message>
+            <source>Looking for it on your other sources…</source>
+            <translation>다른 소스에서 찾는 중…</translation>
+        </message>
+        <message>
+            <source>None of your other sources has it.</source>
+            <translation>다른 소스 어디에도 없습니다.</translation>
+        </message>
+        <message>
+            <source>Move it to</source>
+            <translation>옮길 곳</translation>
+        </message>
+        <message>
+            <source>Looking…</source>
+            <translation>찾는 중…</translation>
+        </message>
+        <message>
+            <source>Not found on your other sources</source>
+            <translation>다른 소스에서 찾지 못했습니다</translation>
+        </message>
+        <message>
+            <source>Moving…</source>
+            <translation>옮기는 중…</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>옮겼습니다</translation>
+        </message>
+        <message>
+            <source>Bring my progress</source>
+            <translation>진행 상황 가져가기</translation>
+        </message>
+        <message>
+            <source>Chapters up to the furthest one you read count as read.</source>
+            <translation>읽은 챕터 중 가장 뒤의 챕터까지 읽음으로 처리됩니다.</translation>
+        </message>
+        <message>
+            <source>Keep the old one too</source>
+            <translation>원래 것도 남기기</translation>
+        </message>
+        <message>
+            <source>Copy instead of move: both stay in your library.</source>
+            <translation>옮기지 않고 복사: 둘 다 라이브러리에 남습니다.</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>뒤로</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>취소</translation>
+        </message>
+        <message>
+            <source>Move %1</source>
+            <translation>%1개 옮기기</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>옮기기</translation>
         </message>
     </context>
     <context>
@@ -3392,6 +3826,10 @@
         <message>
             <source> · Downloaded</source>
             <translation> · 다운로드됨</translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · 시크릿</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -3951,6 +4389,156 @@
         </message>
     </context>
     <context>
+        <name>PinPad</name>
+        <message>
+            <source>Delete</source>
+            <translation>지우기</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>완료</translation>
+        </message>
+    </context>
+    <context>
+        <name>PrivacySettings</name>
+        <message>
+            <source>Privacy</source>
+            <translation>개인정보 보호</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>시크릿 모드와 앱 잠금</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>시크릿</translation>
+        </message>
+        <message>
+            <source>Incognito reading and watching leaves nothing behind: no history, no place kept, no reading time, no tracker updates and no Discord status. Saving series and downloads still work.</source>
+            <translation>시크릿 모드로 읽고 보면 아무것도 남지 않습니다. 기록, 읽던 위치, 읽은 시간, 트래커 업데이트, Discord 상태가 남지 않습니다. 시리즈 저장과 다운로드는 그대로 됩니다.</translation>
+        </message>
+        <message>
+            <source>Incognito mode</source>
+            <translation>시크릿 모드</translation>
+        </message>
+        <message>
+            <source>A badge shows while it is on.</source>
+            <translation>켜져 있는 동안 배지가 표시됩니다.</translation>
+        </message>
+        <message>
+            <source>App lock</source>
+            <translation>앱 잠금</translation>
+        </message>
+        <message>
+            <source>Ask for a PIN when SCANCORE starts and after it has been away for a while.</source>
+            <translation>SCANCORE를 시작할 때와 한동안 벗어났다 돌아올 때 PIN을 묻습니다.</translation>
+        </message>
+        <message>
+            <source> Fingerprint or face can unlock it too.</source>
+            <translation> 지문이나 얼굴로도 잠금을 풀 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Lock with a PIN</source>
+            <translation>PIN으로 잠그기</translation>
+        </message>
+        <message>
+            <source>On · %1 digits</source>
+            <translation>켜짐 · %1자리</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>꺼짐</translation>
+        </message>
+        <message>
+            <source>Change PIN</source>
+            <translation>PIN 변경</translation>
+        </message>
+        <message>
+            <source>Set a PIN</source>
+            <translation>PIN 설정</translation>
+        </message>
+        <message>
+            <source>Turn off</source>
+            <translation>끄기</translation>
+        </message>
+        <message>
+            <source>Lock again</source>
+            <translation>다시 잠그기</translation>
+        </message>
+        <message>
+            <source>After SCANCORE has been in the background this long.</source>
+            <translation>SCANCORE가 이만큼 백그라운드에 있은 뒤.</translation>
+        </message>
+        <message>
+            <source>Only when it starts</source>
+            <translation>시작할 때만</translation>
+        </message>
+        <message>
+            <source>Right away</source>
+            <translation>바로</translation>
+        </message>
+        <message>
+            <source>After 1 minute</source>
+            <translation>1분 후</translation>
+        </message>
+        <message>
+            <source>After 5 minutes</source>
+            <translation>5분 후</translation>
+        </message>
+        <message>
+            <source>After 15 minutes</source>
+            <translation>15분 후</translation>
+        </message>
+        <message>
+            <source>Unlock with fingerprint or face</source>
+            <translation>지문 또는 얼굴로 잠금 해제</translation>
+        </message>
+        <message>
+            <source>The phone&apos;s screen lock works there too, if you forget the PIN.</source>
+            <translation>PIN을 잊었다면 그곳에서 휴대폰의 화면 잠금도 쓸 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Lock now</source>
+            <translation>지금 잠그기</translation>
+        </message>
+        <message>
+            <source>The PINs do not match. Start again.</source>
+            <translation>PIN이 일치하지 않습니다. 처음부터 다시 하세요.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>PIN이 틀렸습니다</translation>
+        </message>
+        <message>
+            <source>App lock is off</source>
+            <translation>앱 잠금이 꺼졌습니다</translation>
+        </message>
+        <message>
+            <source>App lock is on</source>
+            <translation>앱 잠금이 켜졌습니다</translation>
+        </message>
+        <message>
+            <source>Enter your current PIN</source>
+            <translation>현재 PIN을 입력하세요</translation>
+        </message>
+        <message>
+            <source>Choose a PIN</source>
+            <translation>PIN을 정하세요</translation>
+        </message>
+        <message>
+            <source>Enter it again</source>
+            <translation>한 번 더 입력하세요</translation>
+        </message>
+        <message>
+            <source>4 to 8 digits, then the tick.</source>
+            <translation>4~8자리 숫자를 입력한 뒤 체크를 누르세요.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>취소</translation>
+        </message>
+    </context>
+    <context>
         <name>ReadFromDialog</name>
         <message>
             <source>Looking for it on your sources…</source>
@@ -3994,6 +4582,18 @@
         <message>
             <source>Comic and novel readers</source>
             <translation>만화 및 소설 리더</translation>
+        </message>
+        <message>
+            <source>Not read yet</source>
+            <translation>아직 안 읽음</translation>
+        </message>
+        <message>
+            <source>Read</source>
+            <translation>읽음</translation>
+        </message>
+        <message>
+            <source>Current page</source>
+            <translation>현재 페이지</translation>
         </message>
         <message>
             <source>Comic reader</source>
@@ -4052,6 +4652,74 @@
             <translation>페이지 레이아웃에서 스캔한 페이지 주변의 흰색 또는 검은색 여백을 잘라냅니다.</translation>
         </message>
         <message>
+            <source>Split wide pages</source>
+            <translation>넓은 페이지 나누기</translation>
+        </message>
+        <message>
+            <source>Shows a two-page spread as its two halves, one after the other, in the Pages layout.</source>
+            <translation>페이지 레이아웃에서 펼침면을 두 쪽으로 나누어 차례로 보여 줍니다.</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>탭 영역</translation>
+        </message>
+        <message>
+            <source>Where a tap turns the page back or forward, or shows the controls. The reader shows them when you change them.</source>
+            <translation>탭으로 앞뒤 페이지로 넘기거나 컨트롤을 보이는 곳입니다. 바꾸면 리더에 표시됩니다.</translation>
+        </message>
+        <message>
+            <source>Left and right</source>
+            <translation>왼쪽과 오른쪽</translation>
+        </message>
+        <message>
+            <source>L shape</source>
+            <translation>L자형</translation>
+        </message>
+        <message>
+            <source>Kindle</source>
+            <translation>Kindle식</translation>
+        </message>
+        <message>
+            <source>Edges</source>
+            <translation>가장자리</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>꺼짐</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>탭 영역 뒤집기</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>뒤집지 않음</translation>
+        </message>
+        <message>
+            <source>Top and bottom</source>
+            <translation>위와 아래</translation>
+        </message>
+        <message>
+            <source>Both ways</source>
+            <translation>양방향</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>세로 스크롤에서도 탭 영역 사용</translation>
+        </message>
+        <message>
+            <source>A tap scrolls a screen up or down instead of showing the controls.</source>
+            <translation>탭하면 컨트롤을 보이는 대신 한 화면씩 위아래로 스크롤합니다.</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>음량 버튼으로 페이지 넘기기</translation>
+        </message>
+        <message>
+            <source>Volume down goes forward, volume up back, while a comic is open.</source>
+            <translation>만화를 여는 동안 음량 낮추기는 다음, 높이기는 이전으로 갑니다.</translation>
+        </message>
+        <message>
             <source>Strip width</source>
             <translation>스트립 너비</translation>
         </message>
@@ -4072,8 +4740,20 @@
             <translation>진행 레일</translation>
         </message>
         <message>
-            <source>A thin line on the right edge showing how far through the chapter you are.</source>
-            <translation>챕터를 얼마나 읽었는지 오른쪽 가장자리에 보여 주는 가는 선.</translation>
+            <source>A thin line on the left edge showing how far through the chapter you are.</source>
+            <translation>챕터를 얼마나 읽었는지 보여 주는 왼쪽 가장자리의 가는 선입니다.</translation>
+        </message>
+        <message>
+            <source>Progress rail colours</source>
+            <translation>진행 표시줄 색상</translation>
+        </message>
+        <message>
+            <source>Pages not read yet, pages read, and the page you are on.</source>
+            <translation>아직 안 읽은 페이지, 읽은 페이지, 지금 보고 있는 페이지.</translation>
+        </message>
+        <message>
+            <source>Reset colours</source>
+            <translation>색상 초기화</translation>
         </message>
         <message>
             <source>Novel reader</source>
@@ -4372,6 +5052,14 @@
             <translation>인기 라이트 노벨</translation>
         </message>
         <message>
+            <source>Incognito is on: nothing you read or watch is recorded</source>
+            <translation>시크릿 모드 켜짐: 읽거나 본 것은 하나도 기록되지 않습니다</translation>
+        </message>
+        <message>
+            <source>Incognito is off</source>
+            <translation>시크릿 모드 꺼짐</translation>
+        </message>
+        <message>
             <source>The theme</source>
             <translation>테마</translation>
         </message>
@@ -4415,6 +5103,42 @@
             <translation>라이브러리에 추가됨</translation>
         </message>
         <message>
+            <source>Remove bookmark</source>
+            <translation>북마크 제거</translation>
+        </message>
+        <message>
+            <source>Bookmark</source>
+            <translation>북마크</translation>
+        </message>
+        <message>
+            <source>Mark unread</source>
+            <translation>안 읽음으로 표시</translation>
+        </message>
+        <message>
+            <source>Mark read</source>
+            <translation>읽음으로 표시</translation>
+        </message>
+        <message>
+            <source>Mark previous as read</source>
+            <translation>이전 챕터를 읽음으로 표시</translation>
+        </message>
+        <message>
+            <source>Mark previous as unread</source>
+            <translation>이전 챕터를 안 읽음으로 표시</translation>
+        </message>
+        <message>
+            <source>Remove download</source>
+            <translation>다운로드 삭제</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>다운로드</translation>
+        </message>
+        <message>
+            <source>Download from here on</source>
+            <translation>여기부터 다운로드</translation>
+        </message>
+        <message>
             <source>Downloading </source>
             <translation>다운로드 중 </translation>
         </message>
@@ -4425,6 +5149,30 @@
         <message>
             <source> chapters</source>
             <translation> 챕터</translation>
+        </message>
+        <message>
+            <source>Unread only</source>
+            <translation>안 읽은 것만</translation>
+        </message>
+        <message>
+            <source>Downloaded only</source>
+            <translation>다운로드한 것만</translation>
+        </message>
+        <message>
+            <source>Bookmarked only</source>
+            <translation>북마크한 것만</translation>
+        </message>
+        <message>
+            <source>Translated by</source>
+            <translation>번역</translation>
+        </message>
+        <message>
+            <source>Every group</source>
+            <translation>모든 그룹</translation>
+        </message>
+        <message>
+            <source>Clear filters</source>
+            <translation>필터 지우기</translation>
         </message>
         <message>
             <source> · Novel</source>
@@ -4449,6 +5197,10 @@
         <message>
             <source>Tracking</source>
             <translation>트래킹</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>다른 소스로 옮기기</translation>
         </message>
         <message>
             <source>Refresh</source>
@@ -4483,8 +5235,8 @@
             <translation>챕터 찾기</translation>
         </message>
         <message>
-            <source>Download </source>
-            <translation>다운로드 </translation>
+            <source>Select chapters</source>
+            <translation>챕터 선택</translation>
         </message>
         <message>
             <source>Unread</source>
@@ -4495,12 +5247,16 @@
             <translation>전체</translation>
         </message>
         <message>
-            <source>Cancel</source>
-            <translation>취소</translation>
+            <source>Filters (%1 on)</source>
+            <translation>필터 (%1개 켜짐)</translation>
         </message>
         <message>
-            <source>Select chapters to download</source>
-            <translation>다운로드할 챕터 선택</translation>
+            <source>Filter chapters</source>
+            <translation>챕터 필터</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>취소</translation>
         </message>
         <message>
             <source>Mark all as read</source>
@@ -4515,8 +5271,32 @@
             <translation>오래된 순</translation>
         </message>
         <message>
+            <source>Tap chapters to pick them</source>
+            <translation>챕터를 탭해서 고르세요</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>%1개 선택됨</translation>
+        </message>
+        <message>
+            <source>Remove downloads</source>
+            <translation>다운로드 삭제</translation>
+        </message>
+        <message>
             <source>No chapters available</source>
             <translation>사용할 수 있는 챕터가 없습니다</translation>
+        </message>
+        <message>
+            <source>No chapters match</source>
+            <translation>맞는 챕터가 없습니다</translation>
+        </message>
+        <message>
+            <source>Your filters hide every chapter. Clear them with the funnel above.</source>
+            <translation>필터 때문에 모든 챕터가 숨겨졌습니다. 위의 깔때기로 필터를 지우세요.</translation>
+        </message>
+        <message>
+            <source>Nothing matches that search.</source>
+            <translation>그 검색과 맞는 것이 없습니다.</translation>
         </message>
         <message>
             <source>This source has not published readable chapters for this title.</source>
@@ -4600,6 +5380,14 @@
         <message>
             <source>New chapters and notifications</source>
             <translation>새 챕터와 알림</translation>
+        </message>
+        <message>
+            <source>Privacy</source>
+            <translation>개인정보 보호</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>시크릿 모드와 앱 잠금</translation>
         </message>
         <message>
             <source>Sources</source>
@@ -4716,6 +5504,22 @@
         <message>
             <source> · Auto-skip </source>
             <translation> · 자동 건너뛰기 </translation>
+        </message>
+        <message>
+            <source>Incognito on</source>
+            <translation>시크릿 켜짐</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>시크릿 꺼짐</translation>
+        </message>
+        <message>
+            <source>locked with a PIN</source>
+            <translation>PIN으로 잠김</translation>
+        </message>
+        <message>
+            <source>no app lock</source>
+            <translation>앱 잠금 없음</translation>
         </message>
         <message>
             <source>Checks for new chapters every </source>
@@ -5008,6 +5812,10 @@
             <translation>소스가 최신 상태입니다</translation>
         </message>
         <message>
+            <source>Move %1</source>
+            <translation>%1개 옮기기</translation>
+        </message>
+        <message>
             <source>Pass a browser check for this site</source>
             <translation>이 사이트의 브라우저 확인 통과하기</translation>
         </message>
@@ -5212,12 +6020,32 @@
             <translation>확장 소설 소스 설치됨</translation>
         </message>
         <message>
+            <source>No longer available</source>
+            <translation>더 이상 사용할 수 없음</translation>
+        </message>
+        <message>
+            <source>Your progress on these series is kept. Move them to a source you have to read new chapters.</source>
+            <translation>이 시리즈들의 진행 상황은 남아 있습니다. 새 챕터를 읽으려면 가지고 있는 소스로 옮기세요.</translation>
+        </message>
+        <message>
             <source>Comics</source>
             <translation>만화</translation>
         </message>
         <message>
             <source>Novels</source>
             <translation>소설</translation>
+        </message>
+        <message>
+            <source>1 series</source>
+            <translation>시리즈 1개</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>시리즈 %1개</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>옮기기</translation>
         </message>
     </context>
     <context>
@@ -5671,12 +6499,8 @@
             <translation>테마 파일</translation>
         </message>
         <message>
-            <source>Save this theme, or use one someone shared.</source>
-            <translation>이 테마를 저장하거나 다른 사람이 공유한 것을 쓰세요.</translation>
-        </message>
-        <message>
-            <source>Use a theme someone shared.</source>
-            <translation>다른 사람이 공유한 테마를 쓰세요.</translation>
+            <source>Save your whole look (colours, background, layout, arranged pages and reader colours) to share, or use a theme someone shared.</source>
+            <translation>색상, 배경, 레이아웃, 배치한 페이지, 리더 색상까지 모든 모양을 저장해 공유하거나, 다른 사람이 공유한 테마를 사용하세요.</translation>
         </message>
         <message>
             <source>Export…</source>
@@ -5975,6 +6799,10 @@
         <message>
             <source>Episode </source>
             <translation>에피소드 </translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · 시크릿</translation>
         </message>
         <message>
             <source>Trying another server: </source>
@@ -6288,6 +7116,17 @@
         <message>
             <source>%1 new chapters</source>
             <translation>새 챕터 %1개</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Lock</name>
+        <message>
+            <source>Unlock SCANCORE</source>
+            <translation>SCANCORE 잠금 해제</translation>
+        </message>
+        <message>
+            <source>Use PIN</source>
+            <translation>PIN 사용</translation>
         </message>
     </context>
     <context>

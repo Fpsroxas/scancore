@@ -368,7 +368,7 @@ Item {
                 }
 
                 Repeater {
-                    model: [["theme", "interface", "keyboard"], ["reading", "anime", "library"], ["connections", "sources", "storage"], ["about"]]
+                    model: [["theme", "interface", "keyboard"], ["reading", "anime", "library"], ["connections", "sources", "storage"], ["privacy", "about"]]
                     SettingsGroup {
                         required property var modelData
                         Repeater {

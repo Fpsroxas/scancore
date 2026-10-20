@@ -1230,6 +1230,58 @@
             <translation>  ·  Đã tải xuống</translation>
         </message>
         <message>
+            <source>Tap zones: left and right</source>
+            <translation>Vùng chạm: trái và phải</translation>
+        </message>
+        <message>
+            <source>Tap zones: L shape</source>
+            <translation>Vùng chạm: hình chữ L</translation>
+        </message>
+        <message>
+            <source>Tap zones: Kindle</source>
+            <translation>Vùng chạm: kiểu Kindle</translation>
+        </message>
+        <message>
+            <source>Tap zones: edges</source>
+            <translation>Vùng chạm: các cạnh</translation>
+        </message>
+        <message>
+            <source>Tap zones: off</source>
+            <translation>Vùng chạm: tắt</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Không đảo</translation>
+        </message>
+        <message>
+            <source>Flipped left and right</source>
+            <translation>Đảo trái phải</translation>
+        </message>
+        <message>
+            <source>Flipped top and bottom</source>
+            <translation>Đảo trên dưới</translation>
+        </message>
+        <message>
+            <source>Flipped both ways</source>
+            <translation>Đảo cả hai chiều</translation>
+        </message>
+        <message>
+            <source>Next</source>
+            <translation>Tiếp</translation>
+        </message>
+        <message>
+            <source>Previous</source>
+            <translation>Trước</translation>
+        </message>
+        <message>
+            <source>Menu</source>
+            <translation>Menu</translation>
+        </message>
+        <message>
+            <source>  ·  Incognito</source>
+            <translation>  ·  Ẩn danh</translation>
+        </message>
+        <message>
             <source>Previous chapter</source>
             <translation>Chương trước</translation>
         </message>
@@ -1266,6 +1318,10 @@
             <translation>Chương </translation>
         </message>
         <message>
+            <source>Layout</source>
+            <translation>Bố cục</translation>
+        </message>
+        <message>
             <source>Vertical</source>
             <translation>Dọc</translation>
         </message>
@@ -1288,6 +1344,58 @@
         <message>
             <source>Two pages</source>
             <translation>Hai trang</translation>
+        </message>
+        <message>
+            <source>Trim white or black borders</source>
+            <translation>Cắt viền trắng hoặc đen</translation>
+        </message>
+        <message>
+            <source>Split wide pages in two</source>
+            <translation>Chia đôi trang rộng</translation>
+        </message>
+        <message>
+            <source>Width · %1 px</source>
+            <translation>Chiều rộng · %1 px</translation>
+        </message>
+        <message>
+            <source>Gap between panels · %1 px</source>
+            <translation>Khoảng cách giữa các khung · %1 px</translation>
+        </message>
+        <message>
+            <source>Colour · brightness %1%</source>
+            <translation>Màu · độ sáng %1%</translation>
+        </message>
+        <message>
+            <source>Warmth · %1%</source>
+            <translation>Độ ấm · %1%</translation>
+        </message>
+        <message>
+            <source>Greyscale</source>
+            <translation>Thang xám</translation>
+        </message>
+        <message>
+            <source>Invert colours</source>
+            <translation>Đảo màu</translation>
+        </message>
+        <message>
+            <source>Taps</source>
+            <translation>Chạm</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Vùng chạm</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Đảo vùng chạm</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Vùng chạm ở chế độ cuộn dọc</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Phím âm lượng lật trang</translation>
         </message>
         <message>
             <source>Page progress bar</source>
@@ -1316,6 +1424,18 @@
         <message>
             <source>Thick</source>
             <translation>Dày</translation>
+        </message>
+        <message>
+            <source>Only for this series</source>
+            <translation>Chỉ cho bộ này</translation>
+        </message>
+        <message>
+            <source>Keeps these settings for %1 alone</source>
+            <translation>Giữ các cài đặt này riêng cho %1</translation>
+        </message>
+        <message>
+            <source>it</source>
+            <translation>bộ này</translation>
         </message>
     </context>
     <context>
@@ -1524,6 +1644,18 @@
             <translation>Kiểm tra chương mới trong thư viện</translation>
         </message>
         <message>
+            <source>Turn incognito off</source>
+            <translation>Tắt ẩn danh</translation>
+        </message>
+        <message>
+            <source>Turn incognito on</source>
+            <translation>Bật ẩn danh</translation>
+        </message>
+        <message>
+            <source>Lock SCANCORE</source>
+            <translation>Khóa SCANCORE</translation>
+        </message>
+        <message>
             <source>Sync with scancore.onl</source>
             <translation>Đồng bộ với scancore.onl</translation>
         </message>
@@ -1689,14 +1821,6 @@
             <translation>Anime được nhập cùng các tập bạn đã xem. Truyện tranh và tiểu thuyết được nhập cùng các chương đã đọc khi một nguồn của bạn có chúng; số còn lại chờ bên dưới cho đến khi tìm thấy.</translation>
         </message>
         <message>
-            <source>Mihon or Tachiyomi backup</source>
-            <translation>Bản sao lưu Mihon hoặc Tachiyomi</translation>
-        </message>
-        <message>
-            <source>A .tachibk file from More → Backup and restore.</source>
-            <translation>Một tệp .tachibk từ Thêm → Sao lưu và khôi phục.</translation>
-        </message>
-        <message>
             <source>Choose file</source>
             <translation>Chọn tệp</translation>
         </message>
@@ -1751,6 +1875,30 @@
         <message>
             <source>All files (*)</source>
             <translation>Mọi tệp (*)</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup</source>
+            <translation>Bản sao lưu Mihon, Tachiyomi hoặc Aniyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.</source>
+            <translation>Tệp .tachibk từ Thêm → Sao lưu và khôi phục. Các bộ từ tiện ích bạn có ở đây sẽ trở lại y như cũ.</translation>
+        </message>
+        <message>
+            <source>LNReader backup</source>
+            <translation>Bản sao lưu LNReader</translation>
+        </message>
+        <message>
+            <source>A backup .zip from LNReader&apos;s More → Backup. Novels from a plugin you have here come back exactly as they were.</source>
+            <translation>Tệp .zip sao lưu từ Thêm → Sao lưu trong LNReader. Các tiểu thuyết từ plugin bạn có ở đây sẽ trở lại y như cũ.</translation>
+        </message>
+        <message>
+            <source>Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Bản sao lưu Mihon, Tachiyomi hoặc Aniyomi (*.tachibk *.proto.gz)</translation>
+        </message>
+        <message>
+            <source>LNReader backup (*.zip)</source>
+            <translation>Bản sao lưu LNReader (*.zip)</translation>
         </message>
         <message>
             <source>Saved %1 series</source>
@@ -3062,8 +3210,76 @@
             <translation>Tên A–Z</translation>
         </message>
         <message>
+            <source>Grid</source>
+            <translation>Lưới</translation>
+        </message>
+        <message>
+            <source>Compact grid</source>
+            <translation>Lưới gọn</translation>
+        </message>
+        <message>
+            <source>List</source>
+            <translation>Danh sách</translation>
+        </message>
+        <message>
+            <source>Files on this device stay where they are.</source>
+            <translation>Các tệp trên thiết bị này vẫn ở nguyên chỗ.</translation>
+        </message>
+        <message>
+            <source>Remove 1 series from your library?</source>
+            <translation>Gỡ 1 bộ khỏi thư viện của bạn?</translation>
+        </message>
+        <message>
+            <source>Remove %1 series from your library?</source>
+            <translation>Gỡ %1 bộ khỏi thư viện của bạn?</translation>
+        </message>
+        <message>
+            <source>Your reading history and downloads are kept.</source>
+            <translation>Lịch sử đọc và các bản tải xuống của bạn vẫn được giữ.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Gỡ</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Xong</translation>
+        </message>
+        <message>
+            <source>Select</source>
+            <translation>Chọn</translation>
+        </message>
+        <message>
+            <source>Sort</source>
+            <translation>Sắp xếp</translation>
+        </message>
+        <message>
+            <source>View</source>
+            <translation>Hiển thị</translation>
+        </message>
+        <message>
             <source>All</source>
             <translation>Tất cả</translation>
+        </message>
+        <message>
+            <source>Tap series to pick them</source>
+            <translation>Chạm vào các bộ để chọn</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>Đã chọn %1</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Chuyển sang nguồn khác</translation>
+        </message>
+        <message>
+            <source>Move to list…</source>
+            <translation>Chuyển vào danh sách…</translation>
+        </message>
+        <message>
+            <source>Moved to %1</source>
+            <translation>Đã chuyển vào %1</translation>
         </message>
         <message>
             <source>Nothing matches</source>
@@ -3153,6 +3369,74 @@
             <translation>Tin tức về SCANCORE từ scancore.onl, hiện trong Thông báo ngay khi được đăng.</translation>
         </message>
         <message>
+            <source>Which series are checked</source>
+            <translation>Những bộ được kiểm tra</translation>
+        </message>
+        <message>
+            <source>Lists</source>
+            <translation>Danh sách</translation>
+        </message>
+        <message>
+            <source>Only series on these lists of your library are checked for new chapters.</source>
+            <translation>Chỉ những bộ trong các danh sách này của thư viện mới được kiểm tra chương mới.</translation>
+        </message>
+        <message>
+            <source>Skip finished series</source>
+            <translation>Bỏ qua bộ đã hoàn thành</translation>
+        </message>
+        <message>
+            <source>Series their site marks as completed.</source>
+            <translation>Những bộ được trang của chúng đánh dấu là hoàn thành.</translation>
+        </message>
+        <message>
+            <source>Skip series with chapters left to read</source>
+            <translation>Bỏ qua bộ còn chương chưa đọc</translation>
+        </message>
+        <message>
+            <source>Checked again once you catch up.</source>
+            <translation>Sẽ kiểm tra lại khi bạn đọc kịp.</translation>
+        </message>
+        <message>
+            <source>Skip series you have not started</source>
+            <translation>Bỏ qua bộ bạn chưa bắt đầu</translation>
+        </message>
+        <message>
+            <source>Check by itself only on Wi-Fi</source>
+            <translation>Tự kiểm tra chỉ khi có Wi-Fi</translation>
+        </message>
+        <message>
+            <source>Not on mobile data or a metered connection. Checking by hand always works.</source>
+            <translation>Không dùng dữ liệu di động hay kết nối tính phí. Kiểm tra thủ công luôn hoạt động.</translation>
+        </message>
+        <message>
+            <source>Check by itself only while charging</source>
+            <translation>Tự kiểm tra chỉ khi đang sạc</translation>
+        </message>
+        <message>
+            <source>Downloads</source>
+            <translation>Tải xuống</translation>
+        </message>
+        <message>
+            <source>Download new chapters</source>
+            <translation>Tải chương mới</translation>
+        </message>
+        <message>
+            <source>New chapters of series on these lists download as soon as they are found.</source>
+            <translation>Chương mới của các bộ trong những danh sách này được tải ngay khi tìm thấy.</translation>
+        </message>
+        <message>
+            <source>Pick lists whose new chapters download as soon as they are found.</source>
+            <translation>Chọn danh sách có chương mới được tải ngay khi tìm thấy.</translation>
+        </message>
+        <message>
+            <source>Delete chapters once read</source>
+            <translation>Xóa chương sau khi đọc</translation>
+        </message>
+        <message>
+            <source>A downloaded chapter goes when you finish the next one.</source>
+            <translation>Một chương đã tải sẽ bị xóa khi bạn đọc xong chương kế tiếp.</translation>
+        </message>
+        <message>
             <source>Background</source>
             <translation>Chạy nền</translation>
         </message>
@@ -3205,6 +3489,29 @@
         </message>
     </context>
     <context>
+        <name>LockScreen</name>
+        <message>
+            <source>SCANCORE is locked</source>
+            <translation>SCANCORE đã khóa</translation>
+        </message>
+        <message>
+            <source>Too many tries. Try again in %1 s.</source>
+            <translation>Thử quá nhiều lần. Hãy thử lại sau %1 giây.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>Sai mã PIN</translation>
+        </message>
+        <message>
+            <source>Enter your PIN</source>
+            <translation>Nhập mã PIN</translation>
+        </message>
+        <message>
+            <source>Use fingerprint or face</source>
+            <translation>Dùng vân tay hoặc khuôn mặt</translation>
+        </message>
+    </context>
+    <context>
         <name>Main</name>
         <message>
             <source> new chapter</source>
@@ -3221,6 +3528,18 @@
         <message>
             <source>Try again now; %1 should load.</source>
             <translation>Thử lại ngay; %1 sẽ tải được.</translation>
+        </message>
+        <message>
+            <source>Incognito is on. Turn it off</source>
+            <translation>Đang bật ẩn danh. Tắt</translation>
+        </message>
+        <message>
+            <source>Nothing you read or watch is recorded. Click to turn off.</source>
+            <translation>Không lưu lại gì bạn đọc hay xem. Bấm để tắt.</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Ẩn danh</translation>
         </message>
         <message>
             <source>Use this theme?</source>
@@ -3245,6 +3564,121 @@
         <message>
             <source>Allow</source>
             <translation>Cho phép</translation>
+        </message>
+    </context>
+    <context>
+        <name>MigrateDialog</name>
+        <message>
+            <source>The new source lists no chapters for this series.</source>
+            <translation>Nguồn mới không có chương nào của bộ này.</translation>
+        </message>
+        <message>
+            <source>Moved 1 series</source>
+            <translation>Đã chuyển 1 bộ</translation>
+        </message>
+        <message>
+            <source>Moved %1 series</source>
+            <translation>Đã chuyển %1 bộ</translation>
+        </message>
+        <message>
+            <source>Move %1 series to other sources</source>
+            <translation>Chuyển %1 bộ sang nguồn khác</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Chuyển sang nguồn khác</translation>
+        </message>
+        <message>
+            <source>Each one goes to the best match on your other sources. Change any of them before moving.</source>
+            <translation>Mỗi bộ sẽ sang kết quả khớp nhất trên các nguồn khác của bạn. Hãy đổi bất kỳ bộ nào trước khi chuyển.</translation>
+        </message>
+        <message>
+            <source>Your progress, library list and tracking go with it.</source>
+            <translation>Tiến độ, danh sách thư viện và theo dõi của bạn sẽ đi cùng.</translation>
+        </message>
+        <message>
+            <source>Loading its chapters…</source>
+            <translation>Đang tải các chương…</translation>
+        </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 chương</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 chương</translation>
+        </message>
+        <message>
+            <source>, newest %1</source>
+            <translation>, mới nhất %1</translation>
+        </message>
+        <message>
+            <source>%1 will count as read.</source>
+            <translation>%1 sẽ được tính là đã đọc.</translation>
+        </message>
+        <message>
+            <source>Looking for it on your other sources…</source>
+            <translation>Đang tìm trên các nguồn khác của bạn…</translation>
+        </message>
+        <message>
+            <source>None of your other sources has it.</source>
+            <translation>Không nguồn nào khác của bạn có bộ này.</translation>
+        </message>
+        <message>
+            <source>Move it to</source>
+            <translation>Chuyển sang</translation>
+        </message>
+        <message>
+            <source>Looking…</source>
+            <translation>Đang tìm…</translation>
+        </message>
+        <message>
+            <source>Not found on your other sources</source>
+            <translation>Không tìm thấy trên các nguồn khác của bạn</translation>
+        </message>
+        <message>
+            <source>Moving…</source>
+            <translation>Đang chuyển…</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Đã chuyển</translation>
+        </message>
+        <message>
+            <source>Bring my progress</source>
+            <translation>Mang theo tiến độ của tôi</translation>
+        </message>
+        <message>
+            <source>Chapters up to the furthest one you read count as read.</source>
+            <translation>Các chương đến chương xa nhất bạn đã đọc được tính là đã đọc.</translation>
+        </message>
+        <message>
+            <source>Keep the old one too</source>
+            <translation>Giữ cả bản cũ</translation>
+        </message>
+        <message>
+            <source>Copy instead of move: both stay in your library.</source>
+            <translation>Sao chép thay vì chuyển: cả hai vẫn ở trong thư viện.</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Quay lại</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Hủy</translation>
+        </message>
+        <message>
+            <source>Move %1</source>
+            <translation>Chuyển %1</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Chuyển</translation>
         </message>
     </context>
     <context>
@@ -3392,6 +3826,10 @@
         <message>
             <source> · Downloaded</source>
             <translation> · Đã tải xuống</translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Ẩn danh</translation>
         </message>
         <message>
             <source>Previous chapter</source>
@@ -3951,6 +4389,156 @@
         </message>
     </context>
     <context>
+        <name>PinPad</name>
+        <message>
+            <source>Delete</source>
+            <translation>Xóa</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Xong</translation>
+        </message>
+    </context>
+    <context>
+        <name>PrivacySettings</name>
+        <message>
+            <source>Privacy</source>
+            <translation>Quyền riêng tư</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Chế độ ẩn danh và khóa ứng dụng</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Ẩn danh</translation>
+        </message>
+        <message>
+            <source>Incognito reading and watching leaves nothing behind: no history, no place kept, no reading time, no tracker updates and no Discord status. Saving series and downloads still work.</source>
+            <translation>Đọc và xem ở chế độ ẩn danh không để lại gì: không lịch sử, không lưu vị trí, không thời gian đọc, không cập nhật trình theo dõi và không trạng thái Discord. Lưu bộ và tải xuống vẫn hoạt động.</translation>
+        </message>
+        <message>
+            <source>Incognito mode</source>
+            <translation>Chế độ ẩn danh</translation>
+        </message>
+        <message>
+            <source>A badge shows while it is on.</source>
+            <translation>Có huy hiệu hiển thị khi đang bật.</translation>
+        </message>
+        <message>
+            <source>App lock</source>
+            <translation>Khóa ứng dụng</translation>
+        </message>
+        <message>
+            <source>Ask for a PIN when SCANCORE starts and after it has been away for a while.</source>
+            <translation>Hỏi mã PIN khi mở SCANCORE và sau khi rời đi một lúc.</translation>
+        </message>
+        <message>
+            <source> Fingerprint or face can unlock it too.</source>
+            <translation> Vân tay hoặc khuôn mặt cũng mở khóa được.</translation>
+        </message>
+        <message>
+            <source>Lock with a PIN</source>
+            <translation>Khóa bằng mã PIN</translation>
+        </message>
+        <message>
+            <source>On · %1 digits</source>
+            <translation>Bật · %1 chữ số</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Tắt</translation>
+        </message>
+        <message>
+            <source>Change PIN</source>
+            <translation>Đổi mã PIN</translation>
+        </message>
+        <message>
+            <source>Set a PIN</source>
+            <translation>Đặt mã PIN</translation>
+        </message>
+        <message>
+            <source>Turn off</source>
+            <translation>Tắt</translation>
+        </message>
+        <message>
+            <source>Lock again</source>
+            <translation>Khóa lại</translation>
+        </message>
+        <message>
+            <source>After SCANCORE has been in the background this long.</source>
+            <translation>Sau khi SCANCORE ở chạy nền lâu chừng này.</translation>
+        </message>
+        <message>
+            <source>Only when it starts</source>
+            <translation>Chỉ khi mở</translation>
+        </message>
+        <message>
+            <source>Right away</source>
+            <translation>Ngay lập tức</translation>
+        </message>
+        <message>
+            <source>After 1 minute</source>
+            <translation>Sau 1 phút</translation>
+        </message>
+        <message>
+            <source>After 5 minutes</source>
+            <translation>Sau 5 phút</translation>
+        </message>
+        <message>
+            <source>After 15 minutes</source>
+            <translation>Sau 15 phút</translation>
+        </message>
+        <message>
+            <source>Unlock with fingerprint or face</source>
+            <translation>Mở khóa bằng vân tay hoặc khuôn mặt</translation>
+        </message>
+        <message>
+            <source>The phone&apos;s screen lock works there too, if you forget the PIN.</source>
+            <translation>Khóa màn hình của điện thoại cũng dùng được ở đó, nếu bạn quên mã PIN.</translation>
+        </message>
+        <message>
+            <source>Lock now</source>
+            <translation>Khóa ngay</translation>
+        </message>
+        <message>
+            <source>The PINs do not match. Start again.</source>
+            <translation>Mã PIN không khớp. Hãy làm lại.</translation>
+        </message>
+        <message>
+            <source>Wrong PIN</source>
+            <translation>Sai mã PIN</translation>
+        </message>
+        <message>
+            <source>App lock is off</source>
+            <translation>Đã tắt khóa ứng dụng</translation>
+        </message>
+        <message>
+            <source>App lock is on</source>
+            <translation>Đã bật khóa ứng dụng</translation>
+        </message>
+        <message>
+            <source>Enter your current PIN</source>
+            <translation>Nhập mã PIN hiện tại</translation>
+        </message>
+        <message>
+            <source>Choose a PIN</source>
+            <translation>Chọn mã PIN</translation>
+        </message>
+        <message>
+            <source>Enter it again</source>
+            <translation>Nhập lại lần nữa</translation>
+        </message>
+        <message>
+            <source>4 to 8 digits, then the tick.</source>
+            <translation>Từ 4 đến 8 chữ số, rồi bấm dấu tích.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Hủy</translation>
+        </message>
+    </context>
+    <context>
         <name>ReadFromDialog</name>
         <message>
             <source>Looking for it on your sources…</source>
@@ -3994,6 +4582,18 @@
         <message>
             <source>Comic and novel readers</source>
             <translation>Trình đọc truyện tranh và tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Not read yet</source>
+            <translation>Chưa đọc</translation>
+        </message>
+        <message>
+            <source>Read</source>
+            <translation>Đã đọc</translation>
+        </message>
+        <message>
+            <source>Current page</source>
+            <translation>Trang hiện tại</translation>
         </message>
         <message>
             <source>Comic reader</source>
@@ -4052,6 +4652,74 @@
             <translation>Cắt lề trắng hoặc đen quanh các trang scan trong bố cục Trang.</translation>
         </message>
         <message>
+            <source>Split wide pages</source>
+            <translation>Chia đôi trang rộng</translation>
+        </message>
+        <message>
+            <source>Shows a two-page spread as its two halves, one after the other, in the Pages layout.</source>
+            <translation>Hiển thị trang đôi thành hai nửa, lần lượt từng nửa, ở bố cục Trang.</translation>
+        </message>
+        <message>
+            <source>Tap zones</source>
+            <translation>Vùng chạm</translation>
+        </message>
+        <message>
+            <source>Where a tap turns the page back or forward, or shows the controls. The reader shows them when you change them.</source>
+            <translation>Nơi chạm để lật trang lùi hoặc tới, hoặc hiện các nút điều khiển. Trình đọc sẽ hiển thị khi bạn thay đổi.</translation>
+        </message>
+        <message>
+            <source>Left and right</source>
+            <translation>Trái và phải</translation>
+        </message>
+        <message>
+            <source>L shape</source>
+            <translation>Hình chữ L</translation>
+        </message>
+        <message>
+            <source>Kindle</source>
+            <translation>Kiểu Kindle</translation>
+        </message>
+        <message>
+            <source>Edges</source>
+            <translation>Các cạnh</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Tắt</translation>
+        </message>
+        <message>
+            <source>Flip the tap zones</source>
+            <translation>Đảo vùng chạm</translation>
+        </message>
+        <message>
+            <source>Not flipped</source>
+            <translation>Không đảo</translation>
+        </message>
+        <message>
+            <source>Top and bottom</source>
+            <translation>Trên và dưới</translation>
+        </message>
+        <message>
+            <source>Both ways</source>
+            <translation>Cả hai chiều</translation>
+        </message>
+        <message>
+            <source>Tap zones in the vertical strip</source>
+            <translation>Vùng chạm ở chế độ cuộn dọc</translation>
+        </message>
+        <message>
+            <source>A tap scrolls a screen up or down instead of showing the controls.</source>
+            <translation>Chạm sẽ cuộn lên hoặc xuống một màn hình thay vì hiện các nút điều khiển.</translation>
+        </message>
+        <message>
+            <source>Volume keys turn pages</source>
+            <translation>Phím âm lượng lật trang</translation>
+        </message>
+        <message>
+            <source>Volume down goes forward, volume up back, while a comic is open.</source>
+            <translation>Giảm âm lượng để tới, tăng âm lượng để lùi, khi đang mở truyện tranh.</translation>
+        </message>
+        <message>
             <source>Strip width</source>
             <translation>Độ rộng dải cuộn</translation>
         </message>
@@ -4072,8 +4740,20 @@
             <translation>Thanh tiến độ bên</translation>
         </message>
         <message>
-            <source>A thin line on the right edge showing how far through the chapter you are.</source>
-            <translation>Một đường mảnh ở mép phải cho biết bạn đã đọc tới đâu trong chương.</translation>
+            <source>A thin line on the left edge showing how far through the chapter you are.</source>
+            <translation>Một đường mảnh ở cạnh trái cho biết bạn đã đọc được bao nhiêu của chương.</translation>
+        </message>
+        <message>
+            <source>Progress rail colours</source>
+            <translation>Màu thanh tiến độ</translation>
+        </message>
+        <message>
+            <source>Pages not read yet, pages read, and the page you are on.</source>
+            <translation>Trang chưa đọc, trang đã đọc và trang bạn đang xem.</translation>
+        </message>
+        <message>
+            <source>Reset colours</source>
+            <translation>Đặt lại màu</translation>
         </message>
         <message>
             <source>Novel reader</source>
@@ -4372,6 +5052,14 @@
             <translation>Light novel hàng đầu</translation>
         </message>
         <message>
+            <source>Incognito is on: nothing you read or watch is recorded</source>
+            <translation>Đang bật ẩn danh: không lưu lại gì bạn đọc hay xem</translation>
+        </message>
+        <message>
+            <source>Incognito is off</source>
+            <translation>Đã tắt ẩn danh</translation>
+        </message>
+        <message>
             <source>The theme</source>
             <translation>Giao diện</translation>
         </message>
@@ -4415,6 +5103,42 @@
             <translation>Đã thêm vào thư viện</translation>
         </message>
         <message>
+            <source>Remove bookmark</source>
+            <translation>Bỏ dấu trang</translation>
+        </message>
+        <message>
+            <source>Bookmark</source>
+            <translation>Dấu trang</translation>
+        </message>
+        <message>
+            <source>Mark unread</source>
+            <translation>Đánh dấu chưa đọc</translation>
+        </message>
+        <message>
+            <source>Mark read</source>
+            <translation>Đánh dấu đã đọc</translation>
+        </message>
+        <message>
+            <source>Mark previous as read</source>
+            <translation>Đánh dấu các chương trước là đã đọc</translation>
+        </message>
+        <message>
+            <source>Mark previous as unread</source>
+            <translation>Đánh dấu các chương trước là chưa đọc</translation>
+        </message>
+        <message>
+            <source>Remove download</source>
+            <translation>Xóa bản tải</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Tải xuống</translation>
+        </message>
+        <message>
+            <source>Download from here on</source>
+            <translation>Tải từ đây trở đi</translation>
+        </message>
+        <message>
             <source>Downloading </source>
             <translation>Đang tải </translation>
         </message>
@@ -4425,6 +5149,30 @@
         <message>
             <source> chapters</source>
             <translation> chương</translation>
+        </message>
+        <message>
+            <source>Unread only</source>
+            <translation>Chỉ chưa đọc</translation>
+        </message>
+        <message>
+            <source>Downloaded only</source>
+            <translation>Chỉ đã tải</translation>
+        </message>
+        <message>
+            <source>Bookmarked only</source>
+            <translation>Chỉ có dấu trang</translation>
+        </message>
+        <message>
+            <source>Translated by</source>
+            <translation>Dịch bởi</translation>
+        </message>
+        <message>
+            <source>Every group</source>
+            <translation>Mọi nhóm</translation>
+        </message>
+        <message>
+            <source>Clear filters</source>
+            <translation>Xóa bộ lọc</translation>
         </message>
         <message>
             <source> · Novel</source>
@@ -4449,6 +5197,10 @@
         <message>
             <source>Tracking</source>
             <translation>Theo dõi</translation>
+        </message>
+        <message>
+            <source>Move to another source</source>
+            <translation>Chuyển sang nguồn khác</translation>
         </message>
         <message>
             <source>Refresh</source>
@@ -4483,8 +5235,8 @@
             <translation>Tìm chương</translation>
         </message>
         <message>
-            <source>Download </source>
-            <translation>Tải xuống </translation>
+            <source>Select chapters</source>
+            <translation>Chọn chương</translation>
         </message>
         <message>
             <source>Unread</source>
@@ -4495,12 +5247,16 @@
             <translation>Tất cả</translation>
         </message>
         <message>
-            <source>Cancel</source>
-            <translation>Hủy</translation>
+            <source>Filters (%1 on)</source>
+            <translation>Bộ lọc (bật %1)</translation>
         </message>
         <message>
-            <source>Select chapters to download</source>
-            <translation>Chọn chương để tải xuống</translation>
+            <source>Filter chapters</source>
+            <translation>Lọc chương</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Hủy</translation>
         </message>
         <message>
             <source>Mark all as read</source>
@@ -4515,8 +5271,32 @@
             <translation>Cũ nhất trước</translation>
         </message>
         <message>
+            <source>Tap chapters to pick them</source>
+            <translation>Chạm vào các chương để chọn</translation>
+        </message>
+        <message>
+            <source>%1 picked</source>
+            <translation>Đã chọn %1</translation>
+        </message>
+        <message>
+            <source>Remove downloads</source>
+            <translation>Xóa các bản tải</translation>
+        </message>
+        <message>
             <source>No chapters available</source>
             <translation>Không có chương nào</translation>
+        </message>
+        <message>
+            <source>No chapters match</source>
+            <translation>Không có chương nào khớp</translation>
+        </message>
+        <message>
+            <source>Your filters hide every chapter. Clear them with the funnel above.</source>
+            <translation>Bộ lọc của bạn đang ẩn mọi chương. Xóa chúng bằng biểu tượng phễu ở trên.</translation>
+        </message>
+        <message>
+            <source>Nothing matches that search.</source>
+            <translation>Không có gì khớp với tìm kiếm đó.</translation>
         </message>
         <message>
             <source>This source has not published readable chapters for this title.</source>
@@ -4600,6 +5380,14 @@
         <message>
             <source>New chapters and notifications</source>
             <translation>Chương mới và thông báo</translation>
+        </message>
+        <message>
+            <source>Privacy</source>
+            <translation>Quyền riêng tư</translation>
+        </message>
+        <message>
+            <source>Incognito mode and the app lock</source>
+            <translation>Chế độ ẩn danh và khóa ứng dụng</translation>
         </message>
         <message>
             <source>Sources</source>
@@ -4716,6 +5504,22 @@
         <message>
             <source> · Auto-skip </source>
             <translation> · Tự bỏ qua </translation>
+        </message>
+        <message>
+            <source>Incognito on</source>
+            <translation>Đang bật ẩn danh</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Đã tắt ẩn danh</translation>
+        </message>
+        <message>
+            <source>locked with a PIN</source>
+            <translation>đã khóa bằng mã PIN</translation>
+        </message>
+        <message>
+            <source>no app lock</source>
+            <translation>không khóa ứng dụng</translation>
         </message>
         <message>
             <source>Checks for new chapters every </source>
@@ -5008,6 +5812,10 @@
             <translation>Nguồn đã được cập nhật</translation>
         </message>
         <message>
+            <source>Move %1</source>
+            <translation>Chuyển %1</translation>
+        </message>
+        <message>
             <source>Pass a browser check for this site</source>
             <translation>Vượt qua kiểm tra trình duyệt cho trang này</translation>
         </message>
@@ -5212,12 +6020,32 @@
             <translation>Đã cài nguồn tiểu thuyết mở rộng</translation>
         </message>
         <message>
+            <source>No longer available</source>
+            <translation>Không còn khả dụng</translation>
+        </message>
+        <message>
+            <source>Your progress on these series is kept. Move them to a source you have to read new chapters.</source>
+            <translation>Tiến độ của bạn trên các bộ này vẫn được giữ. Hãy chuyển chúng sang một nguồn bạn có để đọc chương mới.</translation>
+        </message>
+        <message>
             <source>Comics</source>
             <translation>Truyện tranh</translation>
         </message>
         <message>
             <source>Novels</source>
             <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>1 series</source>
+            <translation>1 bộ</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 bộ</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Chuyển chúng</translation>
         </message>
     </context>
     <context>
@@ -5671,12 +6499,8 @@
             <translation>Tệp giao diện</translation>
         </message>
         <message>
-            <source>Save this theme, or use one someone shared.</source>
-            <translation>Lưu giao diện này, hoặc dùng giao diện người khác chia sẻ.</translation>
-        </message>
-        <message>
-            <source>Use a theme someone shared.</source>
-            <translation>Dùng giao diện người khác chia sẻ.</translation>
+            <source>Save your whole look (colours, background, layout, arranged pages and reader colours) to share, or use a theme someone shared.</source>
+            <translation>Lưu toàn bộ giao diện của bạn (màu, hình nền, bố cục, trang đã sắp xếp và màu trình đọc) để chia sẻ, hoặc dùng giao diện người khác đã chia sẻ.</translation>
         </message>
         <message>
             <source>Export…</source>
@@ -5975,6 +6799,10 @@
         <message>
             <source>Episode </source>
             <translation>Tập </translation>
+        </message>
+        <message>
+            <source> · Incognito</source>
+            <translation> · Ẩn danh</translation>
         </message>
         <message>
             <source>Trying another server: </source>
@@ -6288,6 +7116,17 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 chương mới</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Lock</name>
+        <message>
+            <source>Unlock SCANCORE</source>
+            <translation>Mở khóa SCANCORE</translation>
+        </message>
+        <message>
+            <source>Use PIN</source>
+            <translation>Dùng mã PIN</translation>
         </message>
     </context>
     <context>
