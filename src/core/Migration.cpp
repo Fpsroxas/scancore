@@ -98,9 +98,9 @@ Result move(const QString &fromId, const QString &toId, const Options &options) 
                     Database::query(QStringLiteral("INSERT OR IGNORE INTO bookmarks(series_id, unit_key, created_at) VALUES(?, ?, ?)"),
                                     {toId, unit.value(QStringLiteral("unit_key")), Database::now()});
             }
-            Database::query(QStringLiteral("INSERT OR IGNORE INTO series_settings(series_id, value) "
-                                           "SELECT ?, value FROM series_settings WHERE series_id = ?"),
-                            {toId, fromId});
+            Database::query(QStringLiteral("INSERT OR IGNORE INTO series_settings(series_id, value, changed_at) "
+                                           "SELECT ?, value, ? FROM series_settings WHERE series_id = ?"),
+                            {toId, Database::now(), fromId});
         }
         if (!entry.isEmpty()) {
             Database::query(QStringLiteral(R"(

@@ -186,6 +186,18 @@ const char *const kMigrations[] = {
     );
     CREATE TABLE series_settings (series_id TEXT PRIMARY KEY, value TEXT NOT NULL);
     )",
+    // 7: bookmarks and series settings in sync (2.2): when a bookmark was
+    // taken off, and when a series' settings last changed, so the latest
+    // change on any device wins.
+    R"(
+    CREATE TABLE bookmarks_removed (
+        series_id TEXT NOT NULL,
+        unit_key TEXT NOT NULL,
+        removed_at INTEGER NOT NULL,
+        PRIMARY KEY (series_id, unit_key)
+    );
+    ALTER TABLE series_settings ADD COLUMN changed_at INTEGER NOT NULL DEFAULT 0;
+    )",
 };
 
 QSqlDatabase connection() {

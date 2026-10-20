@@ -260,6 +260,29 @@ QJsonObject Sync::snapshot() {
                                 row.value("updated_at").toLongLong()});
         progress.insert(id, units);
     }
+    // Bookmarks, and those taken off lately: {series: {chapter: when}}.
+    QJsonObject bookmarks;
+    for (const auto &value : Database::query(QStringLiteral("SELECT series_id, unit_key, created_at FROM bookmarks WHERE series_id NOT LIKE '%:local:%'"))) {
+        const auto row = value.toMap();
+        auto units = bookmarks.value(row.value("series_id").toString()).toObject();
+        units.insert(row.value("unit_key").toString(), row.value("created_at").toLongLong());
+        bookmarks.insert(row.value("series_id").toString(), units);
+    }
+    QJsonObject bookmarksRemoved;
+    for (const auto &value : Database::query(QStringLiteral("SELECT series_id, unit_key, removed_at FROM bookmarks_removed WHERE removed_at > ?"),
+                                             {Database::now() - kRemovalLifetime})) {
+        const auto row = value.toMap();
+        auto units = bookmarksRemoved.value(row.value("series_id").toString()).toObject();
+        units.insert(row.value("unit_key").toString(), row.value("removed_at").toLongLong());
+        bookmarksRemoved.insert(row.value("series_id").toString(), units);
+    }
+    // Each series' own settings: {series: [settings, changed]}.
+    QJsonObject seriesSettings;
+    for (const auto &value : Database::query(QStringLiteral("SELECT series_id, value, changed_at FROM series_settings WHERE series_id NOT LIKE '%:local:%'"))) {
+        const auto row = value.toMap();
+        seriesSettings.insert(row.value("series_id").toString(),
+                              QJsonArray{QJsonDocument::fromJson(row.value("value").toByteArray()).object(), row.value("changed_at").toLongLong()});
+    }
     return {{"format", "scancore-sync"},
             {"version", kFormatVersion},
             {"device", QJsonObject{{"id", Activity::deviceId()},
@@ -271,6 +294,9 @@ QJsonObject Sync::snapshot() {
             {"library", library},
             {"removed", removed},
             {"progress", progress},
+            {"bookmarks", bookmarks},
+            {"bookmarksRemoved", bookmarksRemoved},
+            {"seriesSettings", seriesSettings},
             {"activity", Activity::rowsForSync()}};
 }
 
@@ -375,6 +401,52 @@ int Sync::merge(const QJsonObject &s) {
                                  std::clamp(p.at(4).toDouble(), 0.0, 1.0), p.at(5).toInt() ? 1 : 0, at});
                 ++changes;
             }
+        }
+
+        // Bookmarks: taking one and taking it off, the latest wins.
+        const auto bookmarks = s.value("bookmarks").toObject();
+        const auto bookmarksRemoved = s.value("bookmarksRemoved").toObject();
+        const auto localBookmark = [](const QString &id, const QString &key) {
+            const auto added = Database::scalar(QStringLiteral("SELECT created_at FROM bookmarks WHERE series_id = ? AND unit_key = ?"), {id, key});
+            const auto removed = Database::scalar(QStringLiteral("SELECT removed_at FROM bookmarks_removed WHERE series_id = ? AND unit_key = ?"), {id, key});
+            return std::max(added.isValid() ? added.toLongLong() : -1, removed.isValid() ? removed.toLongLong() : -1);
+        };
+        for (auto it = bookmarks.begin(); it != bookmarks.end(); ++it) {
+            const auto units = it.value().toObject();
+            for (auto unit = units.begin(); unit != units.end(); ++unit) {
+                const qint64 at = unit.value().toInteger();
+                if (at <= localBookmark(it.key(), unit.key()) || !ensureSeries(it.key()))
+                    continue;
+                Database::query(QStringLiteral("INSERT OR REPLACE INTO bookmarks(series_id, unit_key, created_at) VALUES(?, ?, ?)"),
+                                {it.key(), unit.key(), at});
+                Database::query(QStringLiteral("DELETE FROM bookmarks_removed WHERE series_id = ? AND unit_key = ?"), {it.key(), unit.key()});
+                ++changes;
+            }
+        }
+        for (auto it = bookmarksRemoved.begin(); it != bookmarksRemoved.end(); ++it) {
+            const auto units = it.value().toObject();
+            for (auto unit = units.begin(); unit != units.end(); ++unit) {
+                const qint64 at = unit.value().toInteger();
+                if (at <= localBookmark(it.key(), unit.key()))
+                    continue;
+                Database::query(QStringLiteral("DELETE FROM bookmarks WHERE series_id = ? AND unit_key = ?"), {it.key(), unit.key()});
+                Database::query(QStringLiteral("INSERT OR REPLACE INTO bookmarks_removed(series_id, unit_key, removed_at) VALUES(?, ?, ?)"),
+                                {it.key(), unit.key(), at});
+                ++changes;
+            }
+        }
+
+        // Series settings: the latest change wins, as a whole.
+        const auto settings = s.value("seriesSettings").toObject();
+        for (auto it = settings.begin(); it != settings.end(); ++it) {
+            const auto entry = it.value().toArray();
+            const qint64 at = entry.at(1).toInteger();
+            const auto local = Database::scalar(QStringLiteral("SELECT changed_at FROM series_settings WHERE series_id = ?"), {it.key()});
+            if (at <= (local.isValid() ? local.toLongLong() : -1) || !ensureSeries(it.key()))
+                continue;
+            Database::query(QStringLiteral("INSERT OR REPLACE INTO series_settings(series_id, value, changed_at) VALUES(?, ?, ?)"),
+                            {it.key(), QString::fromUtf8(QJsonDocument(entry.at(0).toObject()).toJson(QJsonDocument::Compact)), at});
+            ++changes;
         }
     });
     Activity::mergeRows(device, s.value("activity").toArray());

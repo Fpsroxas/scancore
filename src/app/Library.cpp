@@ -433,11 +433,16 @@ QVariantMap Library::bookmarks(const QString &seriesId) const {
 void Library::setBookmarked(const QString &seriesId, const QStringList &unitKeys, bool bookmarked) {
     Database::transaction([&] {
         for (const auto &key : unitKeys)
-            if (bookmarked)
+            // Taking one off is kept too, so sync takes it off elsewhere.
+            if (bookmarked) {
                 Database::query(QStringLiteral("INSERT OR IGNORE INTO bookmarks(series_id, unit_key, created_at) VALUES(?, ?, ?)"),
                                 {seriesId, key, Database::now()});
-            else
+                Database::query(QStringLiteral("DELETE FROM bookmarks_removed WHERE series_id = ? AND unit_key = ?"), {seriesId, key});
+            } else {
                 Database::query(QStringLiteral("DELETE FROM bookmarks WHERE series_id = ? AND unit_key = ?"), {seriesId, key});
+                Database::query(QStringLiteral("INSERT OR REPLACE INTO bookmarks_removed(series_id, unit_key, removed_at) VALUES(?, ?, ?)"),
+                                {seriesId, key, Database::now()});
+            }
     });
     notifyChanged();
 }
@@ -454,10 +459,9 @@ void Library::setSeriesSetting(const QString &seriesId, const QString &key, cons
         settings.remove(key);
     else
         settings.insert(key, value);
-    if (settings.isEmpty())
-        Database::exec(QStringLiteral("DELETE FROM series_settings WHERE series_id = ?"), {seriesId});
-    else
-        Database::exec(QStringLiteral("INSERT OR REPLACE INTO series_settings(series_id, value) VALUES(?, ?)"), {seriesId, json(settings)});
+    // Kept even when empty, with when it changed, for sync.
+    Database::exec(QStringLiteral("INSERT OR REPLACE INTO series_settings(series_id, value, changed_at) VALUES(?, ?, ?)"),
+                   {seriesId, json(settings), Database::now()});
     notifyChanged();
 }
 
