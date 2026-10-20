@@ -1,18 +1,24 @@
 #include "Library.h"
 
 #include "Activity.h"
+#include "App.h"
 #include "Comics.h"
+#include "Downloads.h"
 #include "Notifications.h"
 #include "Novels.h"
+#include "Platform.h"
 #include "Trackers.h"
 #include "core/Database.h"
+#include "core/Migration.h"
 #include "core/Parallel.h"
 #include "core/Text.h"
+#include "core/UpdateRules.h"
 #include "sources/comics/Registry.h"
 
 #include <QJsonDocument>
 #include <QSet>
 #include <QJsonObject>
+#include <QNetworkInformation>
 
 namespace sc {
 
@@ -154,16 +160,17 @@ void Library::storeUnits(const QString &seriesId, const QVariantList &units) {
         for (const auto &value : units) {
             const auto u = value.toMap();
             Database::query(QStringLiteral("INSERT OR REPLACE INTO units(series_id, unit_key, idx, number, title, url, "
-                                           "released_at) VALUES(?, ?, ?, ?, ?, ?, ?)"),
+                                           "released_at, scanlator) VALUES(?, ?, ?, ?, ?, ?, ?, ?)"),
                             {seriesId, u.value(QStringLiteral("key")).toString(), index++,
                              u.value(QStringLiteral("number")).toString(), u.value(QStringLiteral("title")).toString(),
-                             u.value(QStringLiteral("url")).toString(), u.value(QStringLiteral("released")).toString()});
+                             u.value(QStringLiteral("url")).toString(), u.value(QStringLiteral("released")).toString(),
+                             u.value(QStringLiteral("scanlator")).toString()});
         }
     });
 }
 
 QVariantList Library::cachedUnits(const QString &seriesId) {
-    return Database::query(QStringLiteral("SELECT unit_key AS key, number, title, url, released_at AS released "
+    return Database::query(QStringLiteral("SELECT unit_key AS key, number, title, url, released_at AS released, scanlator "
                                           "FROM units WHERE series_id = ? ORDER BY idx"),
                            {seriesId});
 }
@@ -343,6 +350,14 @@ void Library::saveProgress(const QVariantMap &series, const QVariantMap &unit, c
     if (completed && !wasCompleted) {
         Activity::unitFinished(seriesId.section(QLatin1Char(':'), 0, 0));
         Trackers::unitFinished(seriesId);
+        // "Delete once read": the downloads of chapters finished before this
+        // one go (this one may still be open).
+        if (App::instance()->settings().value(QStringLiteral("deleteAfterRead")).toBool())
+            for (const auto &value : Database::query(QStringLiteral("SELECT d.unit_key FROM downloads d JOIN progress p ON p.series_id = d.series_id "
+                                                                    "AND p.unit_key = d.unit_key WHERE d.series_id = ? AND d.status = 'done' "
+                                                                    "AND p.completed = 1 AND d.unit_key != ?"),
+                                                     {seriesId, key}))
+                Downloads::instance()->removeUnit(seriesId, value.toMap().value(QStringLiteral("unit_key")).toString());
     }
     notifyChanged();
 }
@@ -405,11 +420,117 @@ QVariantMap Library::seriesRow(const QString &seriesId) const {
     return row;
 }
 
-Task *Library::checkUpdates() {
-    return Task::run([this]() -> QVariant {
-        const auto rows = Database::query(QStringLiteral(
-            "SELECT s.id, s.media, s.source, s.source_url, s.title, l.known_units FROM library l "
-            "JOIN series s ON s.id = l.series_id WHERE s.media IN ('comic', 'novel')"));
+QVariantMap Library::bookmarks(const QString &seriesId) const {
+    QVariantMap out;
+    for (const auto &value : Database::query(QStringLiteral("SELECT unit_key FROM bookmarks WHERE series_id = ?"), {seriesId}))
+        out.insert(value.toMap().value(QStringLiteral("unit_key")).toString(), true);
+    return out;
+}
+
+void Library::setBookmarked(const QString &seriesId, const QStringList &unitKeys, bool bookmarked) {
+    Database::transaction([&] {
+        for (const auto &key : unitKeys)
+            if (bookmarked)
+                Database::query(QStringLiteral("INSERT OR IGNORE INTO bookmarks(series_id, unit_key, created_at) VALUES(?, ?, ?)"),
+                                {seriesId, key, Database::now()});
+            else
+                Database::query(QStringLiteral("DELETE FROM bookmarks WHERE series_id = ? AND unit_key = ?"), {seriesId, key});
+    });
+    notifyChanged();
+}
+
+QVariantMap Library::seriesSettings(const QString &seriesId) const {
+    return parse(Database::scalar(QStringLiteral("SELECT value FROM series_settings WHERE series_id = ?"), {seriesId})).toMap();
+}
+
+void Library::setSeriesSetting(const QString &seriesId, const QString &key, const QVariant &value) {
+    if (seriesId.isEmpty())
+        return;
+    auto settings = seriesSettings(seriesId);
+    if (value.isNull() || !value.isValid())
+        settings.remove(key);
+    else
+        settings.insert(key, value);
+    if (settings.isEmpty())
+        Database::exec(QStringLiteral("DELETE FROM series_settings WHERE series_id = ?"), {seriesId});
+    else
+        Database::exec(QStringLiteral("INSERT OR REPLACE INTO series_settings(series_id, value) VALUES(?, ?)"), {seriesId, json(settings)});
+    notifyChanged();
+}
+
+QVariantMap Library::sourceCounts(const QString &media) const {
+    QVariantMap out;
+    for (const auto &value : Database::query(QStringLiteral("SELECT s.source, COUNT(*) AS n FROM library l JOIN series s ON s.id = l.series_id "
+                                                            "WHERE s.media = ? GROUP BY s.source"),
+                                             {media})) {
+        const auto row = value.toMap();
+        out.insert(row.value(QStringLiteral("source")).toString(), row.value(QStringLiteral("n")));
+    }
+    return out;
+}
+
+QVariantList Library::seriesOn(const QString &media, const QString &source) const {
+    QVariantList out;
+    for (const auto &value : Database::query(QStringLiteral("SELECT s.id, s.media, s.source, s.source_url AS sourceUrl, s.title, s.cover, s.extra "
+                                                            "FROM library l JOIN series s ON s.id = l.series_id WHERE s.media = ? AND s.source = ? "
+                                                            "ORDER BY s.title"),
+                                             {media, source}))
+        out.append(shapeEntry(value.toMap()));
+    return out;
+}
+
+Task *Library::migrate(const QString &fromId, const QString &toId, const QVariantMap &options) {
+    return Task::run([this, fromId, toId, options]() -> QVariant {
+        migration::Options o;
+        o.progress = options.value(QStringLiteral("progress"), true).toBool();
+        o.keepOld = options.value(QStringLiteral("keepOld"), false).toBool();
+        const auto result = migration::move(fromId, toId, o);
+        Trackers::moveLinks(fromId, toId, o.keepOld);
+        QMetaObject::invokeMethod(this, [this, fromId, toId, keepOld = o.keepOld] {
+            notifyChanged();
+            emit saved(toId);
+            if (!keepOld)
+                emit removed(fromId);
+        });
+        return QVariantMap{{"read", result.read}, {"nextKey", result.nextKey}, {"id", toId}};
+    });
+}
+
+Task *Library::checkUpdates(bool automatic) {
+    const auto settings = App::instance()->settings();
+    updates::Rules rules;
+    rules.lists = settings.value(QStringLiteral("updateLists")).toStringList();
+    rules.skipFinished = settings.value(QStringLiteral("updateSkipFinished")).toBool();
+    rules.skipUnread = settings.value(QStringLiteral("updateSkipUnread")).toBool();
+    rules.skipNotStarted = settings.value(QStringLiteral("updateSkipNotStarted")).toBool();
+    const auto autoDownload = settings.value(QStringLiteral("autoDownloadLists")).toStringList();
+    // Read here, on the thread QNetworkInformation lives on.
+    QString waitFor;
+    if (automatic) {
+        const auto *network = QNetworkInformation::instance();
+        if (settings.value(QStringLiteral("updateOnlyUnmetered")).toBool() && network &&
+            (network->isMetered() || network->transportMedium() == QNetworkInformation::TransportMedium::Cellular))
+            waitFor = QStringLiteral("unmetered");
+        else if (settings.value(QStringLiteral("updateOnlyCharging")).toBool() && !platform::charging())
+            waitFor = QStringLiteral("charging");
+    }
+    return Task::run([this, rules, autoDownload, waitFor]() -> QVariant {
+        if (!waitFor.isEmpty())
+            return QVariantMap{{"checked", 0}, {"newUnits", 0}, {"waiting", waitFor}};
+        const auto all = Database::query(QStringLiteral(
+            "SELECT s.id, s.media, s.source, s.source_url, s.title, s.status, l.category, l.known_units, "
+            "(SELECT COUNT(*) FROM progress p WHERE p.series_id = s.id) AS touched, "
+            "(SELECT COUNT(*) FROM progress p WHERE p.series_id = s.id AND p.completed = 1) AS read_units "
+            "FROM library l JOIN series s ON s.id = l.series_id WHERE s.media IN ('comic', 'novel') AND s.source != 'local'"));
+        QVariantList rows;
+        for (const auto &value : all) {
+            const auto row = value.toMap();
+            const updates::Entry entry{row.value(QStringLiteral("category")).toString(), row.value(QStringLiteral("status")).toString(),
+                                       row.value(QStringLiteral("known_units")).toInt(), row.value(QStringLiteral("read_units")).toInt(),
+                                       row.value(QStringLiteral("touched")).toInt() > 0};
+            if (updates::shouldCheck(entry, rules))
+                rows.append(row);
+        }
         QList<std::function<QVariantMap()>> jobs;
         for (const auto &value : rows) {
             const auto row = value.toMap();
@@ -432,23 +553,42 @@ Task *Library::checkUpdates() {
             const auto units = results[i].value->value(QStringLiteral("units")).toList();
             if (units.isEmpty())
                 continue;
+            // Chapters not seen before, by key (a re-numbered list is not
+            // news).
+            QSet<QString> known;
+            for (const auto &u : Library::cachedUnits(id))
+                known.insert(u.toMap().value(QStringLiteral("key")).toString());
+            const int knownCount = row.value(QStringLiteral("known_units")).toInt();
+            QVariantList fresh;
+            if (knownCount > 0)
+                for (const auto &u : units)
+                    if (!known.contains(u.toMap().value(QStringLiteral("key")).toString()))
+                        fresh.append(u);
+            // Never more than the list grew by: a source that changed its
+            // chapters' links would otherwise make every chapter new.
+            const int grew = std::max(0, int(units.size()) - knownCount);
+            if (fresh.size() > grew)
+                fresh = units.mid(units.size() - grew);
             storeUnits(id, units);
-            const int known = row.value(QStringLiteral("known_units")).toInt();
-            const int fresh = known > 0 ? std::max(0, int(units.size()) - known) : 0;
             Database::exec(QStringLiteral("UPDATE library SET last_checked = ?, new_units = new_units + ?, "
                                           "known_units = ?, latest_title = ? WHERE series_id = ?"),
-                           {Database::now(), fresh, units.size(), units.last().toMap().value(QStringLiteral("title")), id});
-            if (fresh > 0) {
-                total += fresh;
-                const auto title = row.value(QStringLiteral("title")).toString();
-                updated.append(title);
-                // One per series; more chapters later replace it.
-                const auto latest = units.last().toMap().value(QStringLiteral("title")).toString();
-                Notifications::post({QStringLiteral("chapters"), QStringLiteral("chapters:") + id, title,
-                                     (fresh == 1 ? tr("1 new chapter") : tr("%1 new chapters").arg(fresh))
-                                         + (latest.isEmpty() ? QString() : QStringLiteral(" · ") + latest),
-                                     QVariantMap{{"seriesId", id}},
-                                     Database::pref(QStringLiteral("setting.notifyUpdates"), true).toBool()});
+                           {Database::now(), fresh.size(), units.size(), units.last().toMap().value(QStringLiteral("title")), id});
+            if (fresh.isEmpty())
+                continue;
+            total += int(fresh.size());
+            const auto title = row.value(QStringLiteral("title")).toString();
+            updated.append(title);
+            // One per series; more chapters later replace it.
+            const auto latest = fresh.last().toMap().value(QStringLiteral("title")).toString();
+            Notifications::post({QStringLiteral("chapters"), QStringLiteral("chapters:") + id, title,
+                                 (fresh.size() == 1 ? tr("1 new chapter") : tr("%1 new chapters").arg(fresh.size()))
+                                     + (latest.isEmpty() ? QString() : QStringLiteral(" · ") + latest),
+                                 QVariantMap{{"seriesId", id}},
+                                 Database::pref(QStringLiteral("setting.notifyUpdates"), true).toBool()});
+            const auto category = row.value(QStringLiteral("category")).toString();
+            if (autoDownload.contains(category.isEmpty() ? QStringLiteral("reading") : category)) {
+                const QVariantMap series{{"id", id}, {"media", row.value(QStringLiteral("media"))}, {"title", title}};
+                QMetaObject::invokeMethod(Downloads::instance(), [series, fresh] { Downloads::instance()->enqueue(series, fresh); });
             }
         }
         QMetaObject::invokeMethod(this, [this, total, updated] {

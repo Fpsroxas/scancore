@@ -402,6 +402,12 @@ QList<Chapter> MangaDexSource::feedChapters(const QJsonArray &rows, QSet<QString
         ch.url = tagged(QStringLiteral("https://mangadex.org/chapter/%1").arg(cid));
         ch.slug = cid;
         ch.released = str(attrs.value("publishAt"));
+        QStringList groups;
+        for (const auto &rel : arr(c.value("relationships")))
+            if (const auto r = rel.toObject(); str(r.value("type")) == QLatin1String("scanlation_group"))
+                if (const auto name = str(r.value("attributes").toObject().value("name")).trimmed(); !name.isEmpty())
+                    groups.append(name);
+        ch.scanlator = groups.join(QStringLiteral(", "));
         out.append(ch);
     }
     return out;
@@ -413,7 +419,8 @@ QList<QPair<QString, QString>> feedParams(int offset, const QStringList &languag
     QList<QPair<QString, QString>> params{{"offset", QString::number(offset)}, {"limit", "500"}};
     for (const auto &language : languages)
         params.append({"translatedLanguage[]", language});
-    params.append({{"order[chapter]", "asc"}, {"order[volume]", "asc"}, {"includeExternalUrl", "0"}, {"includeFuturePublishAt", "0"}});
+    params.append({{"order[chapter]", "asc"}, {"order[volume]", "asc"}, {"includeExternalUrl", "0"}, {"includeFuturePublishAt", "0"},
+                   {"includes[]", "scanlation_group"}});
     return params;
 }
 

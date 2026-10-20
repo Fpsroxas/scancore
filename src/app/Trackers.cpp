@@ -201,6 +201,21 @@ void saveLink(const QString &seriesId, const QString &service, const QVariant &i
     Database::setPref(QStringLiteral("tracker.links"), links);
 }
 
+void moveLinkEntries(const QString &pref, const QString &fromId, const QString &toId, bool keepOld) {
+    auto all = Database::pref(pref).toMap();
+    const auto entry = all.value(fromId).toMap();
+    if (entry.isEmpty())
+        return;
+    auto target = all.value(toId).toMap();
+    for (auto it = entry.begin(); it != entry.end(); ++it)
+        if (!target.contains(it.key()))
+            target.insert(it.key(), it.value());
+    all.insert(toId, target);
+    if (!keepOld)
+        all.remove(fromId);
+    Database::setPref(pref, all);
+}
+
 // Services that could not find a series by its titles, so the series page
 // can ask the reader to pick the entry: {seriesId: {service: when}}.
 QVariantMap allMisses() { return Database::pref(QStringLiteral("tracker.misses")).toMap(); }
@@ -818,6 +833,12 @@ int Trackers::comickAniListId(const QString &hid) {
 
 void Trackers::remember(const QString &seriesId, const QString &service, const QVariant &remoteId, const QString &title) {
     saveLink(seriesId, service, remoteId, title);
+}
+
+void Trackers::moveLinks(const QString &fromId, const QString &toId, bool keepOld) {
+    QMutexLocker lock(&g_linksMutex);
+    moveLinkEntries(QStringLiteral("tracker.links"), fromId, toId, keepOld);
+    moveLinkEntries(QStringLiteral("tracker.misses"), fromId, toId, keepOld);
 }
 
 void Trackers::unitFinished(const QString &seriesId) {

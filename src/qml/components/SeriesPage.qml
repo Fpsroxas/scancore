@@ -12,7 +12,6 @@ Item {
     property bool autoResume: false
 
     property var task: load()
-    property bool descending: true
     property string filter: ""
     property bool selecting: false
     // Chapters, Reviews or Discussion.
@@ -40,6 +39,22 @@ Item {
     readonly property var progress: { App.dependOn(Library.revision); return Library.progressMap(seriesId) }
     readonly property var downloads: { App.dependOn(Downloads.revision); return Downloads.states(seriesId) }
     readonly property bool saved: { App.dependOn(Library.revision); return Library.isSaved(seriesId) }
+    readonly property var bookmarks: { App.dependOn(Library.revision); return Library.bookmarks(seriesId) }
+    // This series' own chapter list settings: sort and filters.
+    readonly property var chapterSettings: { App.dependOn(Library.revision); return Library.seriesSettings(seriesId) }
+    readonly property bool descending: chapterSettings.sort !== "asc"
+    readonly property bool onlyUnread: chapterSettings.onlyUnread === true
+    readonly property bool onlyDownloaded: chapterSettings.onlyDownloaded === true
+    readonly property bool onlyBookmarked: chapterSettings.onlyBookmarked === true
+    readonly property string scanlator: chapterSettings.scanlator || ""
+    readonly property int filtersOn: (onlyUnread ? 1 : 0) + (onlyDownloaded ? 1 : 0) + (onlyBookmarked ? 1 : 0) + (scanlator ? 1 : 0)
+    // The groups that translated chapters here, most chapters first.
+    readonly property var scanlators: {
+        const counts = {}
+        for (const c of chapters) if (c.scanlator) counts[c.scanlator] = (counts[c.scanlator] || 0) + 1
+        return Object.keys(counts).sort((a, b) => counts[b] - counts[a])
+    }
+    function setChapterSetting(key, value) { Library.setSeriesSetting(seriesId, key, value) }
     readonly property string coverReferer: media === "comic" ? Comics.imageReferer(url) : ""
     // Comick's catalogue id when the comic was opened from the catalogue; it
     // ties the series to its comments, reviews and tracking.
@@ -68,6 +83,10 @@ Item {
         for (let i = 0; i < chapters.length; ++i) {
             const c = chapters[i]
             if (f && !(c.title || "").toLowerCase().includes(f) && String(c.number) !== f) continue
+            if (onlyUnread && progress[c.key] && progress[c.key].completed) continue
+            if (onlyDownloaded && !(downloads[c.key] && downloads[c.key].status === "done")) continue
+            if (onlyBookmarked && !bookmarks[c.key]) continue
+            if (scanlator && c.scanlator !== scanlator) continue
             out.push({ unit: c, index: i })
         }
         return descending ? out.reverse() : out
@@ -83,6 +102,9 @@ Item {
         pageIndex = filter.trim() || at < 0 ? 0 : Math.floor(at / perPage)
     }
     onFilterChanged: showCurrentPage()
+    onFiltersOnChanged: showCurrentPage()
+    onScanlatorChanged: showCurrentPage()
+    onPageCountChanged: if (pageIndex >= pageCount) pageIndex = pageCount - 1
     onDescendingChanged: showCurrentPage()
     onChaptersChanged: showCurrentPage()
     onPageIndexChanged: if (list.contentY - list.originY > (list.headerItem ? list.headerItem.height : 0)) list.positionViewAtBeginning()
@@ -102,6 +124,35 @@ Item {
             Library.save(series)
             Router.toast(qsTr("Added to your library"), "success")
         }
+    }
+
+    function selectedUnits() { return chapters.filter(c => selection[c.key]) }
+    function endSelection() { selecting = false; selection = ({}) }
+    // Everything before a chapter, in reading order.
+    function before(index) { return chapters.slice(0, index) }
+    function showMenu(row, x, y, unit, index) {
+        const read = progress[unit.key] && progress[unit.key].completed
+        const marked = !!bookmarks[unit.key]
+        const dl = downloads[unit.key]
+        const items = [
+            { text: marked ? qsTr("Remove bookmark") : qsTr("Bookmark"), icon: marked ? "bookmark-check" : "bookmark-plus",
+              run: () => Library.setBookmarked(seriesId, [unit.key], !marked) },
+            { text: read ? qsTr("Mark unread") : qsTr("Mark read"), icon: read ? "eye-off" : "eye",
+              run: () => Library.markUnits(series, [unit], !read) },
+            { text: qsTr("Mark previous as read"), icon: "check-check", enabled: index > 0,
+              run: () => Library.markUnits(series, before(index), true) },
+            { text: qsTr("Mark previous as unread"), icon: "undo-2", enabled: index > 0,
+              run: () => Library.markUnits(series, before(index), false) }
+        ]
+        if (!local) {
+            items.push(null)
+            items.push(dl && dl.status === "done"
+                ? { text: qsTr("Remove download"), icon: "trash", danger: true, run: () => Downloads.removeUnit(seriesId, unit.key) }
+                : { text: qsTr("Download"), icon: "download", run: () => download([unit]) })
+            items.push({ text: qsTr("Download from here on"), icon: "download",
+                         run: () => download(chapters.slice(index).filter(c => !(downloads[c.key] && downloads[c.key].status === "done"))) })
+        }
+        chapterMenu.openAt(row, x, y, items)
     }
 
     function download(units) {
@@ -133,11 +184,94 @@ Item {
         }
     }
 
+    ActionMenu { id: chapterMenu }
+
+    // The chapter list's filters, saved with the series.
+    Popup {
+        id: chapterFilters
+        parent: Overlay.overlay
+        x: Math.max(8, Math.min(filterAnchor.x, (parent ? parent.width : 400) - width - 8))
+        y: filterAnchor.y
+        property point filterAnchor: Qt.point(0, 0)
+        width: 300
+        padding: 14
+        focus: true
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+        background: Rectangle {
+            radius: Theme.radiusLg
+            color: Theme.surface
+            border.width: 1
+            border.color: Theme.borderStrong
+        }
+        contentItem: Column {
+            spacing: 4
+            Repeater {
+                model: [{ key: "onlyUnread", label: qsTr("Unread only") },
+                        { key: "onlyDownloaded", label: qsTr("Downloaded only"), hidden: page.local },
+                        { key: "onlyBookmarked", label: qsTr("Bookmarked only") }]
+                Item {
+                    required property var modelData
+                    visible: !modelData.hidden
+                    width: parent.width
+                    height: visible ? 40 : 0
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: parent.modelData.label
+                        color: Theme.text
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textSm
+                    }
+                    Toggle {
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        checked: page.chapterSettings[parent.modelData.key] === true
+                        onToggled: page.setChapterSetting(parent.modelData.key, checked ? true : null)
+                    }
+                }
+            }
+            Text {
+                visible: page.scanlators.length > 1
+                topPadding: 8
+                text: qsTr("Translated by")
+                color: Theme.textMuted
+                font.family: Theme.fontSans
+                font.pixelSize: Theme.textXs
+            }
+            Select {
+                visible: page.scanlators.length > 1
+                width: parent.width
+                model: [{ value: "", label: qsTr("Every group") }].concat(page.scanlators.map(s => ({ value: s, label: s })))
+                value: page.scanlator
+                onPicked: (v) => page.setChapterSetting("scanlator", v || null)
+            }
+            ScButton {
+                visible: page.filtersOn > 0
+                topPadding: 8
+                compact: true
+                variant: "ghost"
+                iconName: "funnel-x"
+                text: qsTr("Clear filters")
+                onClicked: {
+                    for (const k of ["onlyUnread", "onlyDownloaded", "onlyBookmarked", "scanlator"]) page.setChapterSetting(k, null)
+                }
+            }
+        }
+    }
+
     TrackingDialog {
         id: tracking
         seriesId: page.seriesId
         media: page.media
         seriesTitle: page.series.title || ""
+    }
+
+    MigrateDialog {
+        id: migrate
+        onMigrated: (result) => {
+            // The series lives on the new source now: its page replaces this one.
+            Router.back()
+            Router.openSeries(result.series, null)
+        }
     }
 
     ListView {
@@ -200,6 +334,16 @@ Item {
                     filled: true
                     tip: qsTr("Tracking")
                     onClicked: tracking.open()
+                }
+                IconButton {
+                    visible: !page.local
+                    iconName: "arrow-right-left"
+                    filled: true
+                    tip: qsTr("Move to another source")
+                    onClicked: migrate.start([{ id: page.seriesId, media: page.media, title: page.series.title || "",
+                                                cover: page.series.cover || "", source: page.series.source || "",
+                                                sourceLabel: page.series.sourceLabel || "", sourceUrl: page.url,
+                                                extra: page.series.extra || {} }])
                 }
                 IconButton {
                     iconName: "refresh-cw"
@@ -325,45 +469,21 @@ Item {
                     anchors.rightMargin: Theme.gutter - 6
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 4
-                    ScButton {
-                        visible: page.selecting
-                        compact: true
-                        variant: "primary"
-                        iconName: "download"
-                        text: qsTr("Download ") + Object.keys(page.selection).length
-                        enabled: Object.keys(page.selection).length > 0
+                    IconButton {
+                        id: filterButton
+                        iconName: "funnel"
+                        active: page.filtersOn > 0
+                        tip: page.filtersOn > 0 ? qsTr("Filters (%1 on)").arg(page.filtersOn) : qsTr("Filter chapters")
                         onClicked: {
-                            page.download(page.chapters.filter(c => page.selection[c.key]))
-                            page.selecting = false
-                            page.selection = ({})
-                        }
-                    }
-                    ScButton {
-                        visible: page.selecting
-                        compact: true
-                        text: qsTr("Unread")
-                        onClicked: {
-                            const s = {}
-                            for (const c of page.chapters)
-                                if (!(page.progress[c.key] && page.progress[c.key].completed)) s[c.key] = true
-                            page.selection = s
-                        }
-                    }
-                    ScButton {
-                        visible: page.selecting
-                        compact: true
-                        text: qsTr("All")
-                        onClicked: {
-                            const s = {}
-                            for (const c of page.chapters) s[c.key] = true
-                            page.selection = s
+                            const p = filterButton.mapToItem(Overlay.overlay, filterButton.width - chapterFilters.width, filterButton.height + 6)
+                            chapterFilters.filterAnchor = p
+                            chapterFilters.open()
                         }
                     }
                     IconButton {
-                        visible: !page.local
-                        iconName: page.selecting ? "x" : "download"
+                        iconName: page.selecting ? "x" : "list-checks"
                         active: page.selecting
-                        tip: page.selecting ? qsTr("Cancel") : qsTr("Select chapters to download")
+                        tip: page.selecting ? qsTr("Cancel") : qsTr("Select chapters")
                         onClicked: {
                             page.selecting = !page.selecting
                             page.selection = ({})
@@ -379,7 +499,93 @@ Item {
                         rotation: page.descending ? 0 : 180
                         tip: page.descending ? qsTr("Newest first") : qsTr("Oldest first")
                         Behavior on rotation { NumberAnimation { duration: Motion.normal; easing.type: Easing.OutCubic } }
-                        onClicked: page.descending = !page.descending
+                        onClicked: page.setChapterSetting("sort", page.descending ? "asc" : null)
+                    }
+                }
+            }
+
+            // What to do with the chapters picked.
+            Flow {
+                visible: page.selecting && page.tab === "chapters"
+                x: Theme.gutter
+                width: list.width - 2 * Theme.gutter
+                height: visible ? implicitHeight + 10 : 0
+                spacing: 6
+                readonly property int count: Object.keys(page.selection).length
+                Text {
+                    height: 32
+                    verticalAlignment: Text.AlignVCenter
+                    rightPadding: 6
+                    text: parent.count === 0 ? qsTr("Tap chapters to pick them") : qsTr("%1 picked").arg(parent.count)
+                    color: Theme.text
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textSm
+                    font.weight: Font.DemiBold
+                }
+                ScButton {
+                    compact: true
+                    text: qsTr("All")
+                    onClicked: {
+                        const s = {}
+                        for (const r of page.rows) s[r.unit.key] = true
+                        page.selection = s
+                    }
+                }
+                ScButton {
+                    compact: true
+                    text: qsTr("Unread")
+                    onClicked: {
+                        const s = {}
+                        for (const r of page.rows)
+                            if (!(page.progress[r.unit.key] && page.progress[r.unit.key].completed)) s[r.unit.key] = true
+                        page.selection = s
+                    }
+                }
+                ScButton {
+                    visible: !page.local
+                    compact: true
+                    variant: "primary"
+                    iconName: "download"
+                    text: qsTr("Download")
+                    enabled: parent.count > 0
+                    onClicked: { page.download(page.selectedUnits()); page.endSelection() }
+                }
+                ScButton {
+                    compact: true
+                    iconName: "eye"
+                    text: qsTr("Mark read")
+                    enabled: parent.count > 0
+                    onClicked: { Library.markUnits(page.series, page.selectedUnits(), true); page.endSelection() }
+                }
+                ScButton {
+                    compact: true
+                    iconName: "eye-off"
+                    text: qsTr("Mark unread")
+                    enabled: parent.count > 0
+                    onClicked: { Library.markUnits(page.series, page.selectedUnits(), false); page.endSelection() }
+                }
+                ScButton {
+                    compact: true
+                    iconName: "bookmark-plus"
+                    text: qsTr("Bookmark")
+                    enabled: parent.count > 0
+                    onClicked: {
+                        const keys = page.selectedUnits().map(c => c.key)
+                        // All bookmarked already: the button takes them off.
+                        Library.setBookmarked(page.seriesId, keys, !keys.every(k => page.bookmarks[k]))
+                        page.endSelection()
+                    }
+                }
+                ScButton {
+                    visible: !page.local
+                    compact: true
+                    iconName: "trash"
+                    text: qsTr("Remove downloads")
+                    enabled: page.selectedUnits().some(c => page.downloads[c.key] && page.downloads[c.key].status === "done")
+                    onClicked: {
+                        for (const c of page.selectedUnits())
+                            if (page.downloads[c.key] && page.downloads[c.key].status === "done") Downloads.removeUnit(page.seriesId, c.key)
+                        page.endSelection()
                     }
                 }
             }
@@ -403,9 +609,10 @@ Item {
                 height: visible ? 220 : 0
                 // Only on the chapters tab (StateView shows itself when needed).
                 task: page.tab === "chapters" ? page.task : null
-                empty: page.tab === "chapters" && page.task && page.task.ok && page.chapters.length === 0
-                emptyTitle: qsTr("No chapters available")
-                emptyText: qsTr("This source has not published readable chapters for this title.")
+                empty: page.tab === "chapters" && page.task && page.task.ok && (page.chapters.length === 0 || page.rows.length === 0)
+                emptyTitle: page.chapters.length > 0 ? qsTr("No chapters match") : qsTr("No chapters available")
+                emptyText: page.chapters.length > 0 ? (page.filtersOn > 0 ? qsTr("Your filters hide every chapter. Clear them with the funnel above.") : qsTr("Nothing matches that search."))
+                                                    : qsTr("This source has not published readable chapters for this title.")
                 onRetry: page.task = page.load()
             }
             Text {
@@ -422,6 +629,7 @@ Item {
         }
 
         delegate: UnitRow {
+            id: unitRow
             required property var modelData
             width: list.width
             unit: modelData.unit
@@ -431,6 +639,8 @@ Item {
             current: page.resumeInfo.index === modelData.index
             selecting: page.selecting
             selected: page.selection[modelData.unit.key] === true
+            bookmarked: page.bookmarks[modelData.unit.key] === true
+            onMenuRequested: (x, y) => page.showMenu(unitRow, x, y, unitRow.modelData.unit, unitRow.modelData.index)
             onClicked: {
                 if (page.selecting) {
                     const s = Object.assign({}, page.selection)

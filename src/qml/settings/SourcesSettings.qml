@@ -13,6 +13,31 @@ SettingsPane {
     readonly property var novelSources: { App.dependOn(Extensions.novelPackInstalled); return Novels.sources().filter(s => !s.extended) }
     readonly property int extendedCount: { App.dependOn(Extensions.novelPackInstalled); return Novels.sources().filter(s => s.extended).length }
 
+    // Saved series per source, to move them elsewhere.
+    readonly property var comicCounts: { App.dependOn(Library.revision); return Library.sourceCounts("comic") }
+    readonly property var novelCounts: { App.dependOn(Library.revision); return Library.sourceCounts("novel") }
+    // Sources the library still has series on that are gone (switched off
+    // for everyone, or their extension removed).
+    readonly property var goneSources: {
+        const out = []
+        const known = new Set(comicSources.map(s => s.key).concat(Novels.sources().map(s => s.key)))
+        for (const [media, counts] of [["comic", comicCounts], ["novel", novelCounts]])
+            for (const key of Object.keys(counts))
+                if (!known.has(key) && key !== "local") {
+                    // Named by its site when its links say which.
+                    const link = String((Library.seriesOn(media, key)[0] || {}).sourceUrl || "")
+                    const host = (link.match(/^https?:\/\/(?:www\.)?([^\/]+)/) || [])[1]
+                    out.push({ media: media, key: key, label: host || key, count: counts[key] })
+                }
+        return out
+    }
+
+    function moveFrom(media, key, label) {
+        migrate.start(Library.seriesOn(media, key).map(r => Object.assign({ sourceLabel: label }, r)))
+    }
+
+    MigrateDialog { id: migrate }
+
     function refresh() {
         refreshTask = App.refreshSources()
         refreshTask.finished.connect((r) => Router.toast(r.changed ? qsTr("Sources updated to version ") + r.version : qsTr("Sources are up to date"), "success"))
@@ -20,7 +45,10 @@ SettingsPane {
     }
 
     component SourceRow: SettingRow {
+        id: sourceRow
         required property var modelData
+        property string media: "comic"
+        readonly property int saved: (media === "novel" ? pane.novelCounts : pane.comicCounts)[modelData.key] || 0
         title: modelData.label + (modelData.nsfw ? "  · 18+" : "")
         description: modelData.base.replace("https://", "") + (modelData.languageName ? " · " + modelData.languageName : "")
             + (modelData.enabled ? "" : " · " + modelData.disabledReason)
@@ -34,6 +62,15 @@ SettingsPane {
                 color: modelData.enabled ? Theme.success : Theme.textFaint
             }
             Item { width: 6; height: 1 }
+            ScButton {
+                visible: sourceRow.saved > 0
+                anchors.verticalCenter: parent.verticalCenter
+                compact: true
+                variant: "ghost"
+                iconName: "arrow-right-left"
+                text: qsTr("Move %1").arg(sourceRow.saved)
+                onClicked: pane.moveFrom(sourceRow.media, modelData.key, modelData.label)
+            }
             IconButton {
                 visible: App.platform !== "android"
                 iconName: "shield-check"
@@ -249,6 +286,30 @@ SettingsPane {
         }
     }
 
+    // Series left on sources that are gone.
+    SettingsGroup {
+        visible: pane.goneSources.length > 0
+        title: qsTr("No longer available")
+        note: qsTr("Your progress on these series is kept. Move them to a source you have to read new chapters.")
+        Repeater {
+            model: pane.goneSources
+            SettingRow {
+                required property var modelData
+                iconName: "triangle-alert"
+                iconTint: Theme.warning
+                title: modelData.label
+                description: (modelData.media === "novel" ? qsTr("Novels") : qsTr("Comics")) + " · "
+                    + (modelData.count === 1 ? qsTr("1 series") : qsTr("%1 series").arg(modelData.count))
+                ScButton {
+                    compact: true
+                    iconName: "arrow-right-left"
+                    text: qsTr("Move them")
+                    onClicked: pane.moveFrom(modelData.media, modelData.key, modelData.label)
+                }
+            }
+        }
+    }
+
     SettingsGroup {
         title: qsTr("Comics")
         note: App.platform !== "android" ? "If a site asks for a browser check, the shield opens it inside SCANCORE once; the app then reuses the clearance." : ""
@@ -262,7 +323,7 @@ SettingsPane {
         title: qsTr("Novels")
         Repeater {
             model: pane.novelSources
-            SourceRow {}
+            SourceRow { media: "novel" }
         }
     }
 }

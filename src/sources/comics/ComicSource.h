@@ -36,6 +36,8 @@ struct Chapter {
     QString thumbnail;
     QString slug;
     QString released;
+    // The group that translated it, when the source says.
+    QString scanlator;
     QVariantMap toMap() const;
 };
 

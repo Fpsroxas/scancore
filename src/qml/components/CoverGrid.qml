@@ -14,6 +14,8 @@ Item {
     property var subtitleFor: (item) => ""
     property var badgeFor: (item) => ""
     property var progressFor: (item) => -1
+    // Whether a card is picked in a selection.
+    property var markedFor: (item) => false
     signal opened(var item, Item coverItem)
 
     // Covers rise in when the grid first fills; refreshes and filtering after
@@ -81,6 +83,7 @@ Item {
             subtitle: card.entry ? grid.subtitleFor(card.entry) : ""
             badge: card.entry ? grid.badgeFor(card.entry) : ""
             progress: card.entry ? grid.progressFor(card.entry) : -1
+            marked: card.entry ? grid.markedFor(card.entry) : false
             order: card.itemIndex
             onOpened: (it, cover) => grid.opened(it, cover)
         }

@@ -17,8 +17,8 @@ QVariantMap Summary::toMap() const {
 }
 
 QVariantMap Chapter::toMap() const {
-    return {{"number", number}, {"title", title}, {"url", url},
-            {"thumbnail", thumbnail}, {"slug", slug}, {"released", released}};
+    return {{"number", number}, {"title", title},       {"url", url},          {"thumbnail", thumbnail},
+            {"slug", slug},     {"released", released}, {"scanlator", scanlator}};
 }
 
 QVariantMap LatestItem::toMap() const {

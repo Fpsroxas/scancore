@@ -4,10 +4,12 @@ add_library(scancore_core STATIC
     core/Cookies.cpp
     core/Database.cpp
     core/Html.cpp
+    core/Migration.cpp
     core/Http.cpp
     core/ImageCache.cpp
     core/Parallel.cpp
     core/Text.cpp
+    core/UpdateRules.cpp
     extensions/AnimeSource.cpp
     extensions/Apk.cpp
     extensions/ExtensionSource.cpp

@@ -116,6 +116,7 @@ QList<comics::Chapter> ExtensionSource::chapters(const QString &seriesUrl) {
             ch.title = chapterLabel(ch.number);
         ch.url = wrapUrl(key(), c.value("url").toString());
         ch.slug = c.value("url").toString();
+        ch.scanlator = c.value("scanlator").toString().trimmed();
         if (const auto uploaded = qint64(c.value("uploaded").toDouble()); uploaded > 0)
             ch.released = QDateTime::fromMSecsSinceEpoch(uploaded, QTimeZone::UTC).toString(Qt::ISODate);
         out.append(ch);

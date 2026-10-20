@@ -13,6 +13,11 @@ if(SCANCORE_WITH_BUNDLED_SOURCES)
     target_compile_definitions(scancore_catalogue_tests PRIVATE SCANCORE_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 endif()
 
+# The library on a scratch database: moving series between sources.
+qt_add_executable(scancore_library_tests tst_library.cpp)
+target_link_libraries(scancore_library_tests PRIVATE scancore_core Qt6::Test)
+add_test(NAME library COMMAND scancore_library_tests)
+
 # Extension repositories, trust, installs and extension sources.
 qt_add_executable(scancore_extension_tests tst_extensions.cpp)
 target_link_libraries(scancore_extension_tests PRIVATE scancore_core Qt6::Test Qt6::CorePrivate)

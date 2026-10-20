@@ -20,6 +20,9 @@ void setSiteCheckDone(std::function<void(const QString &url)> done);
 bool batteryRestricted();
 // The system's question to let SCANCORE run unrestricted.
 void askBatteryUnrestricted();
+// Whether the device is charging (Android); true where SCANCORE cannot
+// tell, so nothing waits for it.
+bool charging();
 
 // A system notification (Android); false where there is none here, so the
 // caller can use the tray instead. `tag` replaces an earlier one with it.

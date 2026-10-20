@@ -19,7 +19,10 @@ Item {
 
     readonly property int pad: 16
     readonly property int textX: pad + (iconName ? 32 + 14 : 0)
-    readonly property bool stacked: Theme.compact && holder.width > width * 0.42
+    // Its control under the text on every screen (wide controls such as a
+    // row of chips); on phones any wide control goes there.
+    property bool wide: false
+    readonly property bool stacked: wide || (Theme.compact && holder.width > width * 0.42)
     readonly property real trailing: clickable ? 22 : 0
 
     width: parent ? parent.width : 600

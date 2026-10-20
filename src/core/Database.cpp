@@ -173,6 +173,19 @@ const char *const kMigrations[] = {
     );
     CREATE INDEX notifications_created ON notifications(created_at);
     )",
+    // 6: chapter tools (2.1): who translated a chapter, bookmarked
+    // chapters, and each series' own settings (chapter sort and filters,
+    // reader options) as JSON.
+    R"(
+    ALTER TABLE units ADD COLUMN scanlator TEXT;
+    CREATE TABLE bookmarks (
+        series_id TEXT NOT NULL,
+        unit_key TEXT NOT NULL,
+        created_at INTEGER NOT NULL,
+        PRIMARY KEY (series_id, unit_key)
+    );
+    CREATE TABLE series_settings (series_id TEXT PRIMARY KEY, value TEXT NOT NULL);
+    )",
 };
 
 QSqlDatabase connection() {

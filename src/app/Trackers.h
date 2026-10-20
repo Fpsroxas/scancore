@@ -66,6 +66,8 @@ public:
 
     // A chapter or episode of this series was finished (Library).
     static void unitFinished(const QString &seriesId);
+    // A series moved to another source: its links (and misses) go with it.
+    static void moveLinks(const QString &fromId, const QString &toId, bool keepOld);
     // Links a series without sending its progress (imports).
     static void remember(const QString &seriesId, const QString &service, const QVariant &remoteId, const QString &title);
     // Everything the connected Comick account follows (blocking; imports).

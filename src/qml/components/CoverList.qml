@@ -12,6 +12,8 @@ Item {
     property var subtitleFor: (item) => ""
     property var badgeFor: (item) => ""
     property var progressFor: (item) => -1
+    // Whether a row is picked in a selection.
+    property var markedFor: (item) => false
     property real rowHeight: Theme.compact ? 72 : 80
     signal opened(var item, Item coverItem)
 
@@ -51,6 +53,7 @@ Item {
             readonly property var entry: row.itemIndex < list.items.length ? list.items[row.itemIndex] : null
             readonly property real progress: row.entry ? list.progressFor(row.entry) : -1
             readonly property string badge: row.entry ? list.badgeFor(row.entry) : ""
+            readonly property bool marked: row.entry ? list.markedFor(row.entry) : false
             readonly property string referer: !row.entry ? ""
                 : row.entry.referer || (row.entry.sourceUrl && !row.entry.sourceUrl.startsWith("http")
                     ? (row.entry.media === "comic" ? Comics.imageReferer(row.entry.sourceUrl)
@@ -69,7 +72,9 @@ Item {
                 height: parent.height - 4
                 y: 2
                 radius: Theme.radiusLg
-                color: row.hovered || row.visualFocus ? Theme.surface2 : "transparent"
+                color: row.marked ? Theme.alpha(Theme.accent, 0.16) : row.hovered || row.visualFocus ? Theme.surface2 : "transparent"
+                border.width: row.marked ? 1 : 0
+                border.color: Theme.alpha(Theme.accent, 0.5)
                 Behavior on color { ColorAnimation { duration: Motion.fast } }
             }
             contentItem: Item {

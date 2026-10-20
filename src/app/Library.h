@@ -61,8 +61,27 @@ public:
     // page can show it before the site answers.
     Q_INVOKABLE QVariantList storedUnits(const QString &seriesId) const { return cachedUnits(seriesId); }
 
-    // Checks saved comics and novels for new chapters.
-    Q_INVOKABLE sc::Task *checkUpdates();
+    // Bookmarked chapters: {unitKey: true}.
+    Q_INVOKABLE QVariantMap bookmarks(const QString &seriesId) const;
+    Q_INVOKABLE void setBookmarked(const QString &seriesId, const QStringList &unitKeys, bool bookmarked);
+    // A series' own settings (chapter sort and filters, reader options).
+    Q_INVOKABLE QVariantMap seriesSettings(const QString &seriesId) const;
+    Q_INVOKABLE void setSeriesSetting(const QString &seriesId, const QString &key, const QVariant &value);
+
+    // How many saved series each source holds: {sourceKey: count}.
+    Q_INVOKABLE QVariantMap sourceCounts(const QString &media) const;
+    // The saved series on one source, as "Move to another source" takes them.
+    Q_INVOKABLE QVariantList seriesOn(const QString &media, const QString &source) const;
+    // Moves a series to another source (its series and chapters already
+    // stored, as the new source's series page stores them): library entry,
+    // progress by chapter number and tracker links. options: {progress,
+    // keepOld}. {read, nextKey}
+    Q_INVOKABLE sc::Task *migrate(const QString &fromId, const QString &toId, const QVariantMap &options = {});
+
+    // Checks saved comics and novels for new chapters, those the update
+    // rules (Settings > Library) pick. An automatic check also waits for an
+    // unmetered network or a charger when asked to.
+    Q_INVOKABLE sc::Task *checkUpdates(bool automatic = false);
     Q_INVOKABLE QVariantMap stats() const;
 
     // Used by services.

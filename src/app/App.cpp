@@ -16,6 +16,7 @@
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
 
+#include <QNetworkInformation>
 #include <QClipboard>
 #include <QDateTime>
 #include <QDesktopServices>
@@ -85,6 +86,17 @@ const QVariantMap kDefaults{
     {"playerSpeed", 1},
     {"autoSkip", false},
     {"libraryCheckHours", 2},
+    // Which saved series the check looks at, and when it runs by itself.
+    {"updateLists", QVariantList{"reading", "planned", "paused", "completed"}},
+    {"updateSkipFinished", true},
+    {"updateSkipUnread", false},
+    {"updateSkipNotStarted", false},
+    {"updateOnlyUnmetered", false},
+    {"updateOnlyCharging", false},
+    // New chapters of series on these lists download by themselves.
+    {"autoDownloadLists", QVariantList{}},
+    // A downloaded chapter is deleted once read.
+    {"deleteAfterRead", false},
     {"notifyUpdates", true},
     {"showNsfwSources", false},
     {"imageCacheMB", 1024},
@@ -129,8 +141,10 @@ App::App(QObject *parent) : QObject(parent) {
     // Before 2.0 the only catalogue was Comick's, switched by comickCatalog.
     if (!Database::pref(QStringLiteral("setting.catalogComic")).isValid() && m_settings.value("comickCatalog") == false)
         m_settings.insert(QStringLiteral("catalogComic"), QStringLiteral("none"));
+    // The network's kind (metered, cellular) for "only on Wi-Fi" checks.
+    QNetworkInformation::loadDefaultBackend();
     m_libraryTimer.setSingleShot(false);
-    connect(&m_libraryTimer, &QTimer::timeout, this, [] { Library::instance()->checkUpdates(); });
+    connect(&m_libraryTimer, &QTimer::timeout, this, [] { Library::instance()->checkUpdates(true); });
     platform::setSiteCheckDone([this](const QString &url) { emit siteChecked(url); });
     platform::setWebPlayerPrepared([this] { emit webPlayerPrepared(); });
 #ifdef Q_OS_ANDROID
@@ -478,7 +492,7 @@ void App::startBackgroundWork() {
     QTimer::singleShot(4000, this, [this] {
         refreshSources();
         if (m_settings.value(QStringLiteral("libraryCheckHours")).toInt() > 0)
-            Library::instance()->checkUpdates();
+            Library::instance()->checkUpdates(true);
         runInBackground([] {
             ImageCache::trim();
             Database::cachePrune();

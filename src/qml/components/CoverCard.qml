@@ -19,6 +19,8 @@ AbstractButton {
     property string subtitle: ""
     property string badge: ""
     property real progress: -1
+    // Picked in a selection (the library's Select).
+    property bool marked: false
     // Place in the entrance's stagger.
     property int order: 0
     property bool animateIn: true
@@ -89,8 +91,27 @@ AbstractButton {
                 anchors.fill: cover
                 radius: Theme.radiusMd
                 color: "transparent"
-                border.width: card.visualFocus ? 2 : 1
-                border.color: card.visualFocus ? Theme.accent : Theme.alpha(Theme.text, 0.06)
+                border.width: card.visualFocus || card.marked ? 2 : 1
+                border.color: card.visualFocus || card.marked ? Theme.accent : Theme.alpha(Theme.text, 0.06)
+            }
+
+            // Selected: a wash and a check in the corner.
+            Rectangle {
+                visible: card.marked
+                anchors.fill: cover
+                radius: Theme.radiusMd
+                color: Theme.alpha(Theme.accent, 0.22)
+            }
+            Rectangle {
+                visible: card.marked
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.margins: 8
+                width: 24
+                height: 24
+                radius: 12
+                color: Theme.accent
+                Icon { anchors.centerIn: parent; name: "check"; size: 14; color: Theme.accentInk }
             }
 
             Rectangle {

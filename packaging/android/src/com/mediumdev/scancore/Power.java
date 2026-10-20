@@ -20,6 +20,12 @@ public final class Power {
         return power != null && !power.isIgnoringBatteryOptimizations(context.getPackageName());
     }
 
+    // Plugged in (or on a wireless charger), for "only while charging".
+    public static boolean charging(Context context) {
+        android.os.BatteryManager battery = (android.os.BatteryManager) context.getSystemService(Context.BATTERY_SERVICE);
+        return battery == null || battery.isCharging();
+    }
+
     // The system's own "Allow SCANCORE to always run in the background?"
     // question, or its battery optimisation list where that is missing.
     public static void ask(Context context) {

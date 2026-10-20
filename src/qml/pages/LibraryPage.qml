@@ -10,6 +10,11 @@ Item {
     property string filter: ""
     property var task: Library.entries("", true)
     property var checkTask: null
+    // Select: pick several series to move, list or remove together.
+    property bool selecting: false
+    property var selection: ({})
+    readonly property int selectedCount: Object.keys(selection).length
+    onMediaChanged: { selecting = false; selection = ({}) }
 
     readonly property string media: App.settings.libraryMedia || "comic"
     readonly property string category: App.settings.libraryCategory || "all"
@@ -48,6 +53,31 @@ Item {
         : (categories.find(c => c.value === category) || { label: "" }).label
 
     function search(text) { filter = text }
+    function toggle(it) {
+        const s = Object.assign({}, selection)
+        if (s[it.id]) delete s[it.id]
+        else s[it.id] = true
+        selection = s
+    }
+    function selectAll() {
+        const s = {}
+        for (const e of entries) s[e.id] = true
+        selection = s
+    }
+    function endSelection() { selecting = false; selection = ({}) }
+    function moveSelected() {
+        const list = []
+        for (const id of Object.keys(selection)) {
+            const row = Library.seriesRow(id)
+            if (!row.id || String(row.sourceUrl || "").startsWith("file:")) continue
+            list.push({ id: row.id, media: row.media, title: row.title, cover: row.cover || "", source: row.source,
+                        sourceLabel: row.media === "novel" ? ((Novels.sources().find(x => x.key === row.source) || {}).label || row.source)
+                                                         : Comics.sourceLabel(row.source),
+                        sourceUrl: row.sourceUrl, extra: row.extra || {} })
+        }
+        if (list.length === 0) { Router.toast(qsTr("Files on this device stay where they are."), "info"); return }
+        migrate.start(list)
+    }
     function subtitle(it) {
         return it.unitTitle
             ? (it.media === "anime" ? qsTr("Episode ") + (it.unitNumber || it.unitKey) : it.unitTitle)
@@ -68,6 +98,22 @@ Item {
         function onFailed(error) { Router.toast(error, "error") }
     }
 
+    MigrateDialog {
+        id: migrate
+        onClosed: page.endSelection()
+    }
+    ConfirmDialog {
+        id: removeSelected
+        heading: page.selectedCount === 1 ? qsTr("Remove 1 series from your library?") : qsTr("Remove %1 series from your library?").arg(page.selectedCount)
+        message: qsTr("Your reading history and downloads are kept.")
+        confirmText: qsTr("Remove")
+        destructive: true
+        onConfirmed: {
+            for (const id of Object.keys(page.selection)) Library.remove(id)
+            page.endSelection()
+        }
+    }
+
     SmoothFlickable {
         id: flick
         anchors.fill: parent
@@ -82,6 +128,12 @@ Item {
                 title: qsTr("Library")
                 subtitle: page.all.length + qsTr(" saved")
                     + (Library.unreadUpdates > 0 ? " · " + Library.unreadUpdates + qsTr(" new chapters") : "")
+                ScButton {
+                    text: page.selecting ? qsTr("Done") : qsTr("Select")
+                    iconName: page.selecting ? "x" : "list-checks"
+                    variant: "ghost"
+                    onClicked: page.selecting ? page.endSelection() : page.selecting = true
+                }
                 ScButton {
                     text: page.checkTask && page.checkTask.loading ? qsTr("Checking…") : qsTr("Check for updates")
                     iconName: "refresh-cw"
@@ -146,6 +198,57 @@ Item {
                 }
             }
 
+            // What to do with the series picked.
+            Flow {
+                visible: page.selecting
+                x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
+                spacing: 8
+                Text {
+                    height: 36
+                    verticalAlignment: Text.AlignVCenter
+                    text: page.selectedCount === 0 ? qsTr("Tap series to pick them") : qsTr("%1 picked").arg(page.selectedCount)
+                    color: Theme.text
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textMd
+                    font.weight: Font.DemiBold
+                    rightPadding: 8
+                }
+                ScButton {
+                    compact: true
+                    text: qsTr("All")
+                    onClicked: page.selectAll()
+                }
+                ScButton {
+                    visible: page.media !== "anime"
+                    compact: true
+                    iconName: "arrow-right-left"
+                    text: qsTr("Move to another source")
+                    enabled: page.selectedCount > 0
+                    onClicked: page.moveSelected()
+                }
+                Select {
+                    implicitWidth: 170
+                    enabled: page.selectedCount > 0
+                    model: [{ value: "", label: qsTr("Move to list…") }].concat(page.categories)
+                    value: ""
+                    onPicked: (v) => {
+                        currentIndex = 0
+                        if (!v) return
+                        for (const id of Object.keys(page.selection)) Library.setCategory(id, v)
+                        Router.toast(qsTr("Moved to %1").arg(page.categories.find(c => c.value === v).label), "success")
+                        page.endSelection()
+                    }
+                }
+                ScButton {
+                    compact: true
+                    iconName: "trash"
+                    text: qsTr("Remove")
+                    enabled: page.selectedCount > 0
+                    onClicked: removeSelected.open()
+                }
+            }
+
             CoverGrid {
                 visible: page.view !== "list"
                 items: page.view !== "list" ? page.entries : []
@@ -154,7 +257,8 @@ Item {
                 badgeFor: (it) => it.newUnits > 0 ? "+" + it.newUnits : ""
                 progressFor: (it) => it.unitKey ? (it.completed ? 1 : (it.percent || 0)) : -1
                 subtitleFor: (it) => page.subtitle(it)
-                onOpened: (it, cover) => Router.openSeries(it, cover)
+                markedFor: { const s = page.selection; return (it) => !!s[it.id] }
+                onOpened: (it, cover) => page.selecting ? page.toggle(it) : Router.openSeries(it, cover)
             }
             CoverList {
                 visible: page.view === "list"
@@ -162,7 +266,8 @@ Item {
                 badgeFor: (it) => it.newUnits > 0 ? "+" + it.newUnits : ""
                 progressFor: (it) => it.unitKey ? (it.completed ? 1 : (it.percent || 0)) : -1
                 subtitleFor: (it) => [page.subtitle(it), it.sourceLabel || ""].filter(s => s).join(" · ")
-                onOpened: (it, cover) => Router.openSeries(it, cover)
+                markedFor: { const s = page.selection; return (it) => !!s[it.id] }
+                onOpened: (it, cover) => page.selecting ? page.toggle(it) : Router.openSeries(it, cover)
             }
 
             StateView {

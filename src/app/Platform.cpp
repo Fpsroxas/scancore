@@ -140,6 +140,15 @@ bool batteryRestricted() {
 #endif
 }
 
+bool charging() {
+#ifdef Q_OS_ANDROID
+    return QJniObject::callStaticMethod<jboolean>(kPowerClass, "charging", "(Landroid/content/Context;)Z",
+                                                  QNativeInterface::QAndroidApplication::context().object());
+#else
+    return true;
+#endif
+}
+
 void askBatteryUnrestricted() {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>(kPowerClass, "ask", "(Landroid/content/Context;)V",
