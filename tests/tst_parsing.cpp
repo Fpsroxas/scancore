@@ -316,6 +316,33 @@ private slots:
         QCOMPARE(panels[1].url, QStringLiteral("https://image-comic.pstatic.net/webtoon/747269/1/IMAG01_2.jpg"));
     }
 
+    void kakaoPage() {
+        // Free episodes only, without the video teaser; an unnumbered
+        // prologue keeps its place.
+        const auto page = QJsonDocument::fromJson(fixture("kakaopage-products.json")).object().value("result").toObject();
+        auto chapters = comics::KakaoPageSource::parseEpisodes(page.value("list").toArray(), QStringLiteral("https://page.kakao.com"),
+                                                               QStringLiteral("50866481"), QString::fromUtf8("나 혼자만 레벨업"));
+        QCOMPARE(chapters.size(), 2);
+        QCOMPARE(chapters[0].number, QStringLiteral("0.003"));
+        QCOMPARE(chapters[0].title, QString::fromUtf8("프롤로그"));
+        QCOMPARE(chapters[1].number, QStringLiteral("1"));
+        QCOMPARE(chapters[1].title, QString::fromUtf8("1화"));
+        QCOMPARE(chapters[1].url, QStringLiteral("https://page.kakao.com/content/50866481/viewer/50896826"));
+        QCOMPARE(chapters[1].released, QStringLiteral("2018-03-04T21:59:57+09:00"));
+        // AniList's links to the series page open it in "Read from".
+        comics::SourceConfig config;
+        config.key = QStringLiteral("kakaopage");
+        config.base = QStringLiteral("https://page.kakao.com");
+        config.hosts = {QStringLiteral("page.kakao.com")};
+        const comics::KakaoPageSource source(config);
+        QCOMPARE(source.seriesLink(QUrl(QStringLiteral("https://page.kakao.com/content/50866481"))),
+                 QStringLiteral("https://page.kakao.com/content/50866481"));
+        QCOMPARE(source.seriesLink(QUrl(QStringLiteral("https://page.kakao.com/content/50866481/viewer/50896826"))),
+                 QStringLiteral("https://page.kakao.com/content/50866481"));
+        QVERIFY(source.seriesLink(QUrl(QStringLiteral("https://page.kakao.com/menu/10010"))).isEmpty());
+        QVERIFY(source.seriesLink(QUrl(QStringLiteral("https://webtoon.kakao.com/content/x/2320"))).isEmpty());
+    }
+
     void zonaTmo() {
         const auto base = QStringLiteral("https://zonatmo.to");
         // Novels and (by default) doujinshi stay out; other names come along.

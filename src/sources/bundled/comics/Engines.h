@@ -184,6 +184,28 @@ public:
     static QList<Panel> parsePanels(const QByteArray &html);
 };
 
+// Kakao Page (Korean): the site's own API. Lists the episodes it shows
+// without an account (free ones; wait-for-free and paid ones need a login,
+// as do adult titles).
+class KakaoPageSource : public Source {
+public:
+    using Source::Source;
+    QList<Summary> search(const QString &query) override;
+    QList<Chapter> chapters(const QString &seriesUrl) override;
+    QList<Panel> panels(const QString &chapterUrl) override;
+    std::optional<Details> details(const QString &seriesUrl) override;
+    bool readable(const QString &seriesUrl) override;
+    QString seriesLink(const QUrl &url) const override;
+
+    static QString image(const QString &kid, const QString &size);
+    // Free episodes of one list page, numbered by their "<n>화" when they
+    // have one.
+    static QList<Chapter> parseEpisodes(const QJsonArray &rows, const QString &base, const QString &seriesId, const QString &seriesTitle);
+
+private:
+    QJsonObject api(const QString &path, const QList<QPair<QString, QString>> &params);
+};
+
 // ZonaTMO (Spanish): the site's JSON API ("api" = <site>/wp-api/api) and
 // its image CDN (cdn.<site>).
 class ZonaTmoSource : public Source {

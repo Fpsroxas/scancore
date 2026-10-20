@@ -1,6 +1,6 @@
 // Comic sources that publish a JSON API: Asura, MangaDex, Iken (Vortex),
-// HiveToons, Qi Manga, ManhwaWeb, Naver Webtoon, ZonaTMO, Olympus and
-// ZeroComics (LectorManga.lat).
+// HiveToons, Qi Manga, ManhwaWeb, Naver Webtoon, Kakao Page, ZonaTMO,
+// Olympus and ZeroComics (LectorManga.lat).
 
 #include "Engines.h"
 
@@ -1151,6 +1151,184 @@ std::optional<Details> NaverSource::details(const QString &seriesUrl) {
     for (const auto &tag : arr(m.value("curationTagList")))
         if (str(tag.toObject().value("curationType")).startsWith(QLatin1String("GENRE_")))
             d.genres.append(str(tag.toObject().value("tagName")));
+    return d;
+}
+
+// ---------------------------------------------------------------- Kakao Page
+
+namespace {
+QString kakaoSeriesId(const QString &url) {
+    static const QRegularExpression digits(QStringLiteral("^\\d+$"));
+    const QUrl u(url);
+    const auto id = pathSegment(u, 1);
+    if (pathSegment(u, 0) != QLatin1String("content") || !digits.match(id).hasMatch())
+        throw Error(QStringLiteral("That is not a Kakao Page series link."));
+    return id;
+}
+} // namespace
+
+QString KakaoPageSource::seriesLink(const QUrl &url) const {
+    if (!owns(url))
+        return {};
+    try {
+        return QStringLiteral("%1/content/%2").arg(m_config.base, kakaoSeriesId(url.toString()));
+    } catch (const Error &) {
+        return {};
+    }
+}
+
+QString KakaoPageSource::image(const QString &kid, const QString &size) {
+    if (kid.isEmpty())
+        return {};
+    return QStringLiteral("https://page-images.kakaoentcdn.com/download/resource?kid=%1&filename=%2").arg(kid, size);
+}
+
+QJsonObject KakaoPageSource::api(const QString &path, const QList<QPair<QString, QString>> &params) {
+    const auto doc = Http::getJson(apiUrl(m_config.api, path, params),
+                                   {{"Accept", "application/json"}, {"Referer", (m_config.base + QLatin1Char('/')).toUtf8()}});
+    const auto root = doc.object();
+    if (root.value("result_code").toInt() != 0)
+        throw Error(QStringLiteral("Kakao Page: %1").arg(str(root.value("message"))), 502);
+    return root.value("result").toObject();
+}
+
+QList<Summary> KakaoPageSource::search(const QString &query) {
+    const auto result = api(QStringLiteral("/api/v2/search/series"), {{"keyword", query},
+                                                                       {"category_uid", "0"},
+                                                                       {"is_complete", "false"},
+                                                                       {"sort_type", "ACCURACY"},
+                                                                       {"page", "0"},
+                                                                       {"size", "25"}});
+    QList<Summary> out;
+    for (const auto &row : arr(result.value("list"))) {
+        const auto m = row.toObject();
+        // Comics only (11 is web novels), and not adult titles.
+        const auto category = str(m.value("category"));
+        if (str(m.value("type")) != QLatin1String("SERIES") || m.value("category_uid").toInt() == 11 ||
+            m.value("age_grade").toInt() >= 19 || (category != QString::fromUtf8("웹툰") && category != QString::fromUtf8("만화")))
+            continue;
+        Summary item;
+        item.title = str(m.value("title")).trimmed();
+        const auto id = str(m.value("series_id"));
+        if (item.title.isEmpty() || id.isEmpty())
+            continue;
+        item.url = QStringLiteral("%1/content/%2").arg(m_config.base, id);
+        item.cover = image(str(m.value("thumbnail")), QStringLiteral("o1/dims/resize/384"));
+        item.author = str(m.value("authors"));
+        item.genres = str(m.value("sub_category"));
+        item.type = category == QString::fromUtf8("만화") ? QStringLiteral("Manga") : QStringLiteral("Manhwa");
+        item.source = key();
+        out.append(item);
+    }
+    return out;
+}
+
+QList<Chapter> KakaoPageSource::parseEpisodes(const QJsonArray &rows, const QString &base, const QString &seriesId, const QString &seriesTitle) {
+    static const QRegularExpression numbered(QString::fromUtf8(R"((\d+(?:\.\d+)?)\s*화)"));
+    QList<Chapter> out;
+    for (const auto &row : rows) {
+        const auto o = row.toObject();
+        const auto item = o.value("item").toObject();
+        // Free to everyone; the viewer refuses the rest without an account.
+        // Video teasers (SD01) do not play on the web.
+        if (!item.value("is_free").toBool() || item.value("hidden").toBool() || item.value("age_grade").toInt() >= 19 ||
+            str(item.value("slide_type")) == QLatin1String("SD01"))
+            continue;
+        const auto productId = str(item.value("product_id"));
+        if (productId.isEmpty())
+            continue;
+        auto title = str(item.value("title")).trimmed();
+        if (!seriesTitle.isEmpty() && title.startsWith(seriesTitle))
+            title = title.mid(seriesTitle.size()).trimmed();
+        Chapter ch;
+        const auto m = numbered.match(title);
+        // Episodes without a number (a prologue, a teaser) keep their place.
+        ch.number = m.hasMatch() ? m.captured(1) : QStringLiteral("0.%1").arg(o.value("cursor_index").toInt(), 3, 10, QLatin1Char('0'));
+        ch.title = title.isEmpty() ? comics::chapterLabel(QStringLiteral("ko"), ch.number) : title;
+        ch.url = QStringLiteral("%1/content/%2/viewer/%3").arg(base, seriesId, productId);
+        ch.slug = productId;
+        ch.thumbnail = image(str(item.value("thumbnail")), QStringLiteral("th3"));
+        ch.released = str(item.value("start_sale_dt"));
+        out.append(ch);
+    }
+    return out;
+}
+
+QList<Chapter> KakaoPageSource::chapters(const QString &seriesUrl) {
+    const auto id = kakaoSeriesId(seriesUrl);
+    QList<Chapter> out;
+    QString title;
+    // A hundred at a time, each page after the last one's cursor.
+    int cursor = 0;
+    for (int page = 0; page < 60; ++page) {
+        const auto result = api(QStringLiteral("/api/v2/content/product/list"),
+                                {{"series_id", id},
+                                 {"cursor_index", QString::number(cursor)},
+                                 {"cursor_direction", page == 0 ? QStringLiteral("ANCHOR") : QStringLiteral("NEXT")},
+                                 {"window_size", "100"}});
+        if (title.isEmpty())
+            title = str(result.value("series_item").toObject().value("title")).trimmed();
+        const auto rows = arr(result.value("list"));
+        out.append(parseEpisodes(rows, m_config.base, id, title));
+        if (rows.isEmpty() || !result.value("has_next").toBool())
+            break;
+        cursor = rows.last().toObject().value("cursor_index").toInt();
+    }
+    // Pages can overlap; one entry per episode.
+    QSet<QString> seen;
+    QList<Chapter> unique;
+    for (const auto &ch : out)
+        if (!seen.contains(ch.slug)) {
+            seen.insert(ch.slug);
+            unique.append(ch);
+        }
+    out = unique;
+    sortChapters(out);
+    return out;
+}
+
+bool KakaoPageSource::readable(const QString &seriesUrl) {
+    // A series with no free episode is no use without an account.
+    const auto cacheKey = QStringLiteral("kakaopage-readable:") + kakaoSeriesId(seriesUrl);
+    if (auto cached = Database::cacheGet(cacheKey))
+        return *cached == "1";
+    const bool ok = !chapters(seriesUrl).isEmpty();
+    Database::cachePut(cacheKey, ok ? "1" : "0", 86400);
+    return ok;
+}
+
+QList<Panel> KakaoPageSource::panels(const QString &chapterUrl) {
+    const QUrl url(chapterUrl);
+    const auto seriesId = kakaoSeriesId(chapterUrl);
+    const auto productId = pathSegment(url, 3);
+    const auto doc = Http::getJson(apiUrl(m_config.api, QStringLiteral("/api/v1/viewer/data"), {{"series_id", seriesId}, {"product_id", productId}}),
+                                   {{"Accept", "application/json"}, {"Referer", (m_config.base + QLatin1Char('/')).toUtf8()}});
+    const auto root = doc.object();
+    if (root.value("result_code").toInt() != 0)
+        throw Error(QStringLiteral("Kakao Page shows this episode only after signing in."), 403);
+    QList<Panel> out;
+    for (const auto &row : arr(root.value("viewer_data").toObject().value("imageDownloadData").toObject().value("files"))) {
+        const auto f = row.toObject();
+        if (const auto src = str(f.value("secureUrl")); src.startsWith(QLatin1String("https://")))
+            out.append({src, f.value("width").toInt(), f.value("height").toInt()});
+    }
+    if (out.isEmpty())
+        throw Error(QStringLiteral("Kakao Page shows this episode only in its app."), 404);
+    return out;
+}
+
+std::optional<Details> KakaoPageSource::details(const QString &seriesUrl) {
+    const auto result = api(QStringLiteral("/api/v2/content/product/list"),
+                            {{"series_id", kakaoSeriesId(seriesUrl)}, {"cursor_index", "0"}, {"cursor_direction", "ANCHOR"}, {"window_size", "1"}});
+    const auto s = result.value("series_item").toObject();
+    Details d;
+    d.title = str(s.value("title")).trimmed();
+    d.cover = image(str(s.value("thumbnail")), QStringLiteral("o1/dims/resize/384"));
+    d.description = str(s.value("description")).trimmed();
+    d.author = str(s.value("authors"));
+    d.status = str(s.value("on_issue")) == QLatin1String("Y") ? QString::fromUtf8("연재중") : QString::fromUtf8("완결");
+    if (const auto genre = str(s.value("sub_category")); !genre.isEmpty())
+        d.genres.append(genre);
     return d;
 }
 

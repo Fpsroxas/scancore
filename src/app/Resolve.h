@@ -10,8 +10,15 @@
 #include <algorithm>
 #include <functional>
 #include <memory>
+#include <type_traits>
 
 namespace sc {
+
+// Search results that carry the other names a source lists a series under.
+// A named concept on the type: MSVC gets a requires-expression on a local
+// variable inside a lambda wrong (always false).
+template <typename T>
+concept HasOtherNames = requires(const T &item) { item.names; };
 
 // "Read from" for a catalogue title: the series on the given sources listed
 // under any of its names. The main name is asked everywhere first; other
@@ -60,7 +67,7 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
                     Hit hits;
                     for (const auto &item : source->search(name)) {
                         QStringList hit{item.title, item.url, item.cover};
-                        if constexpr (requires { item.names; })
+                        if constexpr (HasOtherNames<std::decay_t<decltype(item)>>)
                             hit += item.names;
                         hits.append(hit);
                     }

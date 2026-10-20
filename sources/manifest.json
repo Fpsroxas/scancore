@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 6,
   "updated": "2026-10-20",
   "comics": [
     {
@@ -601,6 +601,18 @@
       ],
       "language": "ko",
       "minVersion": "2.0.0"
+    },
+    {
+      "key": "kakaopage",
+      "label": "카카오페이지",
+      "engine": "kakaopage",
+      "base": "https://page.kakao.com",
+      "api": "https://bff-page.kakao.com/api/gateway",
+      "hosts": [
+        "page.kakao.com"
+      ],
+      "language": "ko",
+      "minVersion": "2.0.1"
     },
     {
       "key": "mangadex-ko",

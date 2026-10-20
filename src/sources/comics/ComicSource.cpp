@@ -90,6 +90,8 @@ std::unique_ptr<Source> createSource(const SourceConfig &config) {
         return std::make_unique<LeerCapituloSource>(config);
     if (e == QLatin1String("dongman"))
         return std::make_unique<DongmanSource>(config);
+    if (e == QLatin1String("kakaopage"))
+        return std::make_unique<KakaoPageSource>(config);
     if (e == QLatin1String("naver"))
         return std::make_unique<NaverSource>(config);
     if (e == QLatin1String("zonatmo"))

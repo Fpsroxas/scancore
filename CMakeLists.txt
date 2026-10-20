@@ -17,6 +17,9 @@ endif()
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Sources are UTF-8 (titles and language names in many scripts); MSVC would
+# otherwise read them in the system code page.
+add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
