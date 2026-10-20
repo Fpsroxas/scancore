@@ -569,16 +569,8 @@
             <translation> đã được thêm</translation>
         </message>
         <message>
-            <source>, </source>
-            <translation>, </translation>
-        </message>
-        <message>
-            <source> extension installed</source>
-            <translation> tiện ích đã cài</translation>
-        </message>
-        <message>
-            <source> extensions installed</source>
-            <translation> tiện ích đã cài</translation>
+            <source>; installing %1 in the background</source>
+            <translation>; đang cài %1 tiện ích ở chế độ nền</translation>
         </message>
         <message>
             <source>Add “</source>
@@ -617,16 +609,16 @@
             <translation>Kho này đã được thêm. Thêm lại sẽ đọc lại từ đầu.</translation>
         </message>
         <message>
-            <source>Extensions in </source>
-            <translation>Các tiện ích bằng </translation>
+            <source>Install the %1 in %2 now, or add it only and pick extensions under Available. Installing goes on in the background.</source>
+            <translation>Cài ngay %1 tiện ích bằng %2, hoặc chỉ thêm rồi chọn tiện ích trong mục Có sẵn. Việc cài đặt tiếp tục ở chế độ nền.</translation>
         </message>
         <message>
-            <source> will be installed (</source>
-            <translation> sẽ được cài (</translation>
+            <source>Add only</source>
+            <translation>Chỉ thêm</translation>
         </message>
         <message>
-            <source> The rest are listed under Available.</source>
-            <translation> Phần còn lại nằm trong Có sẵn.</translation>
+            <source>Add and install %1</source>
+            <translation>Thêm và cài %1</translation>
         </message>
         <message>
             <source>None of them is in </source>
@@ -651,10 +643,6 @@
         <message>
             <source>Try again</source>
             <translation>Thử lại</translation>
-        </message>
-        <message>
-            <source>Installing…</source>
-            <translation>Đang cài…</translation>
         </message>
         <message>
             <source>Add</source>
@@ -2367,6 +2355,18 @@
             <translation>Tìm tiện ích</translation>
         </message>
         <message>
+            <source>Find an installed extension or site</source>
+            <translation>Tìm tiện ích đã cài hoặc trang web</translation>
+        </message>
+        <message>
+            <source>Installing %1 of %2</source>
+            <translation>Đang cài %1 / %2</translation>
+        </message>
+        <message>
+            <source>Stop</source>
+            <translation>Dừng</translation>
+        </message>
+        <message>
             <source>No repositories yet</source>
             <translation>Chưa có kho nào</translation>
         </message>
@@ -2419,8 +2419,8 @@
             <translation>Hiện nguồn</translation>
         </message>
         <message>
-            <source>Pass a browser check for this site</source>
-            <translation>Vượt qua kiểm tra trình duyệt cho trang này</translation>
+            <source>Open the site (browser check, sign in)</source>
+            <translation>Mở trang (kiểm tra trình duyệt, đăng nhập)</translation>
         </message>
         <message>
             <source>Browse this source</source>
@@ -3526,8 +3526,20 @@
             <translation>Đã tải </translation>
         </message>
         <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Thử lại ngay; %1 sẽ tải được.</translation>
+            <source>Browser check done for %1</source>
+            <translation>Đã kiểm tra trình duyệt xong cho %1</translation>
+        </message>
+        <message>
+            <source>1 extension installed</source>
+            <translation>Đã cài 1 tiện ích</translation>
+        </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>Đã cài %1 tiện ích</translation>
+        </message>
+        <message>
+            <source>%1 extensions could not be installed: %2</source>
+            <translation>Không cài được %1 tiện ích: %2</translation>
         </message>
         <message>
             <source>Incognito is on. Turn it off</source>
@@ -5717,10 +5729,6 @@
         <message>
             <source>Done</source>
             <translation>Xong</translation>
-        </message>
-        <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Thử lại ngay; %1 sẽ tải được.</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>

@@ -121,9 +121,22 @@ ApplicationWindow {
                 Router.addRepository(target)
             }
         }
-        // A browser check in Android's web view has been left.
+        // An extension's request is waiting for a check only the reader can pass.
+        function onBrowserCheckWanted(url) { Router.openSiteCheck(url) }
+        // A browser check has been left; pages waiting on it load again.
         function onSiteChecked(url) {
-            shell.toast(qsTr("Try again now; %1 should load.").arg(url.replace(/^https?:\/\//, "").replace(/\/.*$/, "")), "success")
+            shell.toast(qsTr("Browser check done for %1").arg(url.replace(/^https?:\/\//, "").replace(/\/.*$/, "")), "success")
+        }
+    }
+
+    // Extensions that were installing in the background (adding a repository).
+    Connections {
+        target: Extensions
+        function onInstallsFinished(installed, failed, firstError) {
+            if (installed > 0)
+                shell.toast(installed === 1 ? qsTr("1 extension installed") : qsTr("%1 extensions installed").arg(installed), "success")
+            if (failed > 0)
+                shell.toast(failed === 1 ? firstError : qsTr("%1 extensions could not be installed: %2").arg(failed).arg(firstError), "error")
         }
     }
 

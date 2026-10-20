@@ -17,6 +17,7 @@
 #include "sources/novels/LnCrawl.h"
 #include "sources/novels/Registry.h"
 
+#include <QTimer>
 #include <QDir>
 #include <QDirIterator>
 #include <QElapsedTimer>
@@ -480,8 +481,8 @@ Task *Extensions::previewRepository(const QString &link, const QString &kind) {
     });
 }
 
-Task *Extensions::addRepository(const QString &url) {
-    return Task::run([this, url]() -> QVariant {
+Task *Extensions::addRepository(const QString &url, bool install) {
+    return Task::run([this, url, install]() -> QVariant {
         std::optional<ext::RepositoryPreview> preview;
         {
             QMutexLocker lock(&g_previewMutex);
@@ -491,38 +492,85 @@ Task *Extensions::addRepository(const QString &url) {
         if (!preview)
             preview = ext::Manager::preview(url);
         const auto repo = ext::Manager::add(*preview);
-        // Extensions in the content language, a few at a time.
+        QList<ext::Package> wanted;
+        if (install)
+            for (const auto &p : preview->autoInstall)
+                if (!ext::Manager::installedPackage(p.kind, p.pkg))
+                    wanted.append(p);
+        if (!wanted.isEmpty())
+            QMetaObject::invokeMethod(this, [this, wanted] { installInBackground(wanted); });
+        return QVariantMap{{"name", repo.name.isEmpty() ? domainOf(repo.url) : repo.name},
+                           {"media", ext::kindMedia(repo.kind)},
+                           {"queued", int(wanted.size())}};
+    });
+}
+
+// Installs a few at a time on worker threads; the page shows how far it got.
+void Extensions::installInBackground(const QList<ext::Package> &packages) {
+    if (m_queueBatches++ == 0) {
+        m_stopQueue = false;
+        m_queueTotal = 0;
+        m_queueDone = 0;
+    }
+    m_queueTotal += int(packages.size());
+    emit queueChanged();
+    runInBackground([this, packages] {
         QList<std::function<bool()>> jobs;
-        for (const auto &p : preview->autoInstall) {
-            if (ext::Manager::installedPackage(p.kind, p.pkg))
-                continue;
+        for (const auto &p : packages)
             jobs.append([this, p] {
+                if (m_stopQueue)
+                    return false;
                 const auto id = ext::kindName(p.kind) + QLatin1Char(':') + p.pkg;
                 setInstalling(id, true);
                 try {
                     ext::Manager::install(p.kind, p.pkg);
                 } catch (...) {
                     setInstalling(id, false);
+                    ++m_queueDone;
+                    queueProgress();
                     throw;
                 }
                 setInstalling(id, false);
+                ++m_queueDone;
+                queueProgress();
                 return true;
             });
-        }
-        const auto results = parallel(jobs);
         int installed = 0;
-        QStringList failed;
-        for (const auto &r : results)
-            if (r.ok())
+        int failed = 0;
+        QString firstError;
+        for (const auto &r : parallel(jobs)) {
+            if (!r.ok()) {
+                ++failed;
+                if (firstError.isEmpty())
+                    firstError = r.error;
+            } else if (*r.value) {
                 ++installed;
-            else
-                failed.append(r.error);
-        return QVariantMap{{"name", repo.name.isEmpty() ? domainOf(repo.url) : repo.name},
-                           {"media", ext::kindMedia(repo.kind)},
-                           {"installed", installed},
-                           {"failed", failed}};
+            }
+        }
+        QMetaObject::invokeMethod(this, [this, installed, failed, firstError] {
+            if (--m_queueBatches == 0) {
+                m_queueTotal = 0;
+                m_queueDone = 0;
+                emit queueChanged();
+            }
+            emit installsFinished(installed, failed, firstError);
+        });
     });
 }
+
+// At most a few times a second, however fast installs finish.
+void Extensions::queueProgress() {
+    if (m_progressPending.exchange(true))
+        return;
+    QMetaObject::invokeMethod(this, [this] {
+        QTimer::singleShot(250, this, [this] {
+            m_progressPending = false;
+            emit queueChanged();
+        });
+    });
+}
+
+void Extensions::stopInstalls() { m_stopQueue = true; }
 
 void Extensions::removeRepository(const QString &url) { ext::Manager::removeRepository(url); }
 

@@ -569,16 +569,8 @@
             <translation> ditambahkan</translation>
         </message>
         <message>
-            <source>, </source>
-            <translation>, </translation>
-        </message>
-        <message>
-            <source> extension installed</source>
-            <translation> ekstensi terpasang</translation>
-        </message>
-        <message>
-            <source> extensions installed</source>
-            <translation> ekstensi terpasang</translation>
+            <source>; installing %1 in the background</source>
+            <translation>; memasang %1 di latar belakang</translation>
         </message>
         <message>
             <source>Add “</source>
@@ -617,16 +609,16 @@
             <translation>Sudah ditambahkan. Menambahkannya lagi akan membacanya ulang.</translation>
         </message>
         <message>
-            <source>Extensions in </source>
-            <translation>Ekstensi dalam bahasa </translation>
+            <source>Install the %1 in %2 now, or add it only and pick extensions under Available. Installing goes on in the background.</source>
+            <translation>Pasang %1 dalam %2 sekarang, atau tambahkan saja lalu pilih ekstensi di Tersedia. Pemasangan berlanjut di latar belakang.</translation>
         </message>
         <message>
-            <source> will be installed (</source>
-            <translation> akan dipasang (</translation>
+            <source>Add only</source>
+            <translation>Tambah saja</translation>
         </message>
         <message>
-            <source> The rest are listed under Available.</source>
-            <translation> Sisanya ada di Tersedia.</translation>
+            <source>Add and install %1</source>
+            <translation>Tambah dan pasang %1</translation>
         </message>
         <message>
             <source>None of them is in </source>
@@ -651,10 +643,6 @@
         <message>
             <source>Try again</source>
             <translation>Coba lagi</translation>
-        </message>
-        <message>
-            <source>Installing…</source>
-            <translation>Memasang…</translation>
         </message>
         <message>
             <source>Add</source>
@@ -2367,6 +2355,18 @@
             <translation>Cari ekstensi</translation>
         </message>
         <message>
+            <source>Find an installed extension or site</source>
+            <translation>Cari ekstensi terpasang atau situs</translation>
+        </message>
+        <message>
+            <source>Installing %1 of %2</source>
+            <translation>Memasang %1 dari %2</translation>
+        </message>
+        <message>
+            <source>Stop</source>
+            <translation>Berhenti</translation>
+        </message>
+        <message>
             <source>No repositories yet</source>
             <translation>Belum ada repositori</translation>
         </message>
@@ -2419,8 +2419,8 @@
             <translation>Tampilkan sumber</translation>
         </message>
         <message>
-            <source>Pass a browser check for this site</source>
-            <translation>Lewati pemeriksaan peramban untuk situs ini</translation>
+            <source>Open the site (browser check, sign in)</source>
+            <translation>Buka situs (pemeriksaan browser, masuk)</translation>
         </message>
         <message>
             <source>Browse this source</source>
@@ -3526,8 +3526,20 @@
             <translation>Diunduh </translation>
         </message>
         <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Coba lagi sekarang; %1 seharusnya dapat dimuat.</translation>
+            <source>Browser check done for %1</source>
+            <translation>Pemeriksaan browser selesai untuk %1</translation>
+        </message>
+        <message>
+            <source>1 extension installed</source>
+            <translation>1 ekstensi terpasang</translation>
+        </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>%1 ekstensi terpasang</translation>
+        </message>
+        <message>
+            <source>%1 extensions could not be installed: %2</source>
+            <translation>%1 ekstensi tidak dapat dipasang: %2</translation>
         </message>
         <message>
             <source>Incognito is on. Turn it off</source>
@@ -5717,10 +5729,6 @@
         <message>
             <source>Done</source>
             <translation>Selesai</translation>
-        </message>
-        <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Coba lagi sekarang; %1 seharusnya dapat dimuat.</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>

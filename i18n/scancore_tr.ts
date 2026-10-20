@@ -569,16 +569,8 @@
             <translation> eklendi</translation>
         </message>
         <message>
-            <source>, </source>
-            <translation>, </translation>
-        </message>
-        <message>
-            <source> extension installed</source>
-            <translation> eklenti yüklendi</translation>
-        </message>
-        <message>
-            <source> extensions installed</source>
-            <translation> eklenti yüklendi</translation>
+            <source>; installing %1 in the background</source>
+            <translation>; %1 tanesi arka planda yükleniyor</translation>
         </message>
         <message>
             <source>Add “</source>
@@ -617,16 +609,16 @@
             <translation>Zaten eklendi. Yeniden eklemek onu baştan okur.</translation>
         </message>
         <message>
-            <source>Extensions in </source>
-            <translation>Şu dildeki eklentiler: </translation>
+            <source>Install the %1 in %2 now, or add it only and pick extensions under Available. Installing goes on in the background.</source>
+            <translation>%2 dilindeki %1 uzantıyı şimdi yükleyin ya da yalnızca ekleyip Kullanılabilir&apos;den seçin. Yükleme arka planda sürer.</translation>
         </message>
         <message>
-            <source> will be installed (</source>
-            <translation> yüklenecek (</translation>
+            <source>Add only</source>
+            <translation>Yalnızca ekle</translation>
         </message>
         <message>
-            <source> The rest are listed under Available.</source>
-            <translation> Geri kalanı Kullanılabilir altında.</translation>
+            <source>Add and install %1</source>
+            <translation>Ekle ve %1 tanesini yükle</translation>
         </message>
         <message>
             <source>None of them is in </source>
@@ -651,10 +643,6 @@
         <message>
             <source>Try again</source>
             <translation>Yeniden dene</translation>
-        </message>
-        <message>
-            <source>Installing…</source>
-            <translation>Yükleniyor…</translation>
         </message>
         <message>
             <source>Add</source>
@@ -2367,6 +2355,18 @@
             <translation>Eklenti bul</translation>
         </message>
         <message>
+            <source>Find an installed extension or site</source>
+            <translation>Yüklü bir uzantı ya da site bul</translation>
+        </message>
+        <message>
+            <source>Installing %1 of %2</source>
+            <translation>%1 / %2 yükleniyor</translation>
+        </message>
+        <message>
+            <source>Stop</source>
+            <translation>Durdur</translation>
+        </message>
+        <message>
             <source>No repositories yet</source>
             <translation>Henüz depo yok</translation>
         </message>
@@ -2419,8 +2419,8 @@
             <translation>Kaynakları göster</translation>
         </message>
         <message>
-            <source>Pass a browser check for this site</source>
-            <translation>Bu site için tarayıcı denetimini geç</translation>
+            <source>Open the site (browser check, sign in)</source>
+            <translation>Siteyi aç (tarayıcı denetimi, oturum açma)</translation>
         </message>
         <message>
             <source>Browse this source</source>
@@ -3526,8 +3526,20 @@
             <translation>İndirildi: </translation>
         </message>
         <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Şimdi yeniden dene; %1 yüklenmeli.</translation>
+            <source>Browser check done for %1</source>
+            <translation>%1 için tarayıcı denetimi tamamlandı</translation>
+        </message>
+        <message>
+            <source>1 extension installed</source>
+            <translation>1 uzantı yüklendi</translation>
+        </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>%1 uzantı yüklendi</translation>
+        </message>
+        <message>
+            <source>%1 extensions could not be installed: %2</source>
+            <translation>%1 uzantı yüklenemedi: %2</translation>
         </message>
         <message>
             <source>Incognito is on. Turn it off</source>
@@ -5717,10 +5729,6 @@
         <message>
             <source>Done</source>
             <translation>Tamam</translation>
-        </message>
-        <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Şimdi yeniden dene; %1 yüklenmeli.</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>

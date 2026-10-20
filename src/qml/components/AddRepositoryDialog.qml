@@ -13,6 +13,7 @@ Dialog {
     property var addTask: null
     readonly property var preview: task && task.ok ? task.result : null
     readonly property bool adding: addTask ? addTask.loading : false
+    property bool withInstall: false
 
     // Opens the sheet for `text` (a link or an address); with no text it
     // asks for one.
@@ -46,10 +47,9 @@ Dialog {
         function onFinished(result) {
             dialog.close()
             let message = "“" + result.name + "”" + qsTr(" added")
-            if (result.installed > 0)
-                message += qsTr(", ") + result.installed + (result.installed === 1 ? qsTr(" extension installed") : qsTr(" extensions installed"))
+            if (result.queued > 0)
+                message += qsTr("; installing %1 in the background").arg(result.queued)
             Router.toast(message, "success")
-            if (result.failed.length) Router.toast(result.failed[0], "error")
         }
         function onFailed(error) { Router.toast(error, "error") }
     }
@@ -177,9 +177,8 @@ Dialog {
                 text: !dialog.preview ? ""
                     : dialog.preview.added ? qsTr("It is already added. Adding it again reads it afresh.")
                     : dialog.preview.autoInstall.length > 0
-                      ? qsTr("Extensions in ") + dialog.preview.languageName + qsTr(" will be installed (")
-                        + dialog.preview.autoInstall.length + ")."
-                        + (dialog.preview.autoInstall.length < dialog.preview.count ? qsTr(" The rest are listed under Available.") : "")
+                      ? qsTr("Install the %1 in %2 now, or add it only and pick extensions under Available. Installing goes on in the background.")
+                            .arg(dialog.preview.autoInstall.length).arg(dialog.preview.languageName)
                     : qsTr("None of them is in ") + dialog.preview.languageName + qsTr(", so nothing is installed yet. Pick extensions under Available.")
                 color: Theme.textMuted
                 font.family: Theme.fontSans
@@ -217,13 +216,23 @@ Dialog {
                 text: qsTr("Try again")
                 onClicked: dialog.start(dialog.link, dialog.kind)
             }
+            // Adding is quick; any installs carry on in the background.
+            readonly property int toInstall: dialog.preview && !dialog.preview.added ? dialog.preview.autoInstall.length : 0
             ScButton {
                 visible: dialog.preview !== null
-                text: dialog.adding ? qsTr("Installing…") : qsTr("Add")
-                variant: "primary"
-                loading: dialog.adding
+                text: parent.toInstall > 0 ? qsTr("Add only") : qsTr("Add")
+                variant: parent.toInstall > 0 ? "secondary" : "primary"
+                loading: dialog.adding && !dialog.withInstall
                 enabled: !dialog.adding
-                onClicked: dialog.addTask = Extensions.addRepository(dialog.preview.url)
+                onClicked: { dialog.withInstall = false; dialog.addTask = Extensions.addRepository(dialog.preview.url, false) }
+            }
+            ScButton {
+                visible: parent.toInstall > 0
+                text: qsTr("Add and install %1").arg(parent.toInstall)
+                variant: "primary"
+                loading: dialog.adding && dialog.withInstall
+                enabled: !dialog.adding
+                onClicked: { dialog.withInstall = true; dialog.addTask = Extensions.addRepository(dialog.preview.url, true) }
             }
         }
     }

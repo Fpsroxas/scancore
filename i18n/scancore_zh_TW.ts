@@ -569,16 +569,8 @@
             <translation> 已新增</translation>
         </message>
         <message>
-            <source>, </source>
-            <translation>， </translation>
-        </message>
-        <message>
-            <source> extension installed</source>
-            <translation> 個擴充功能已安裝</translation>
-        </message>
-        <message>
-            <source> extensions installed</source>
-            <translation> 個擴充功能已安裝</translation>
+            <source>; installing %1 in the background</source>
+            <translation>；正在背景安裝 %1 個</translation>
         </message>
         <message>
             <source>Add “</source>
@@ -617,16 +609,16 @@
             <translation>已經新增過了。再次新增會重新讀取。</translation>
         </message>
         <message>
-            <source>Extensions in </source>
-            <translation>語言為 </translation>
+            <source>Install the %1 in %2 now, or add it only and pick extensions under Available. Installing goes on in the background.</source>
+            <translation>現在安裝 %2 的 %1 個擴充功能，或僅新增後在「可用」中挑選。安裝會在背景繼續。</translation>
         </message>
         <message>
-            <source> will be installed (</source>
-            <translation> 的擴充功能將被安裝（</translation>
+            <source>Add only</source>
+            <translation>僅新增</translation>
         </message>
         <message>
-            <source> The rest are listed under Available.</source>
-            <translation> 其餘的在“可用”中。</translation>
+            <source>Add and install %1</source>
+            <translation>新增並安裝 %1 個</translation>
         </message>
         <message>
             <source>None of them is in </source>
@@ -651,10 +643,6 @@
         <message>
             <source>Try again</source>
             <translation>重試</translation>
-        </message>
-        <message>
-            <source>Installing…</source>
-            <translation>正在安裝…</translation>
         </message>
         <message>
             <source>Add</source>
@@ -2367,6 +2355,18 @@
             <translation>查詢擴充功能</translation>
         </message>
         <message>
+            <source>Find an installed extension or site</source>
+            <translation>尋找已安裝的擴充功能或網站</translation>
+        </message>
+        <message>
+            <source>Installing %1 of %2</source>
+            <translation>正在安裝 %1 / %2</translation>
+        </message>
+        <message>
+            <source>Stop</source>
+            <translation>停止</translation>
+        </message>
+        <message>
             <source>No repositories yet</source>
             <translation>還沒有儲存庫</translation>
         </message>
@@ -2419,8 +2419,8 @@
             <translation>顯示來源</translation>
         </message>
         <message>
-            <source>Pass a browser check for this site</source>
-            <translation>通過此網站的瀏覽器驗證</translation>
+            <source>Open the site (browser check, sign in)</source>
+            <translation>開啟網站（瀏覽器驗證、登入）</translation>
         </message>
         <message>
             <source>Browse this source</source>
@@ -3526,8 +3526,20 @@
             <translation>已下載 </translation>
         </message>
         <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>現在再試一次，%1 應該可以載入了。</translation>
+            <source>Browser check done for %1</source>
+            <translation>%1 的瀏覽器驗證已完成</translation>
+        </message>
+        <message>
+            <source>1 extension installed</source>
+            <translation>已安裝 1 個擴充功能</translation>
+        </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>已安裝 %1 個擴充功能</translation>
+        </message>
+        <message>
+            <source>%1 extensions could not be installed: %2</source>
+            <translation>%1 個擴充功能無法安裝：%2</translation>
         </message>
         <message>
             <source>Incognito is on. Turn it off</source>
@@ -5717,10 +5729,6 @@
         <message>
             <source>Done</source>
             <translation>完成</translation>
-        </message>
-        <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>現在再試一次，%1 應該可以載入了。</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>

@@ -569,16 +569,8 @@
             <translation> adicionado</translation>
         </message>
         <message>
-            <source>, </source>
-            <translation>, </translation>
-        </message>
-        <message>
-            <source> extension installed</source>
-            <translation> extensão instalada</translation>
-        </message>
-        <message>
-            <source> extensions installed</source>
-            <translation> extensões instaladas</translation>
+            <source>; installing %1 in the background</source>
+            <translation>; instalando %1 em segundo plano</translation>
         </message>
         <message>
             <source>Add “</source>
@@ -617,16 +609,16 @@
             <translation>Ele já foi adicionado. Adicioná-lo de novo o lê outra vez.</translation>
         </message>
         <message>
-            <source>Extensions in </source>
-            <translation>As extensões em </translation>
+            <source>Install the %1 in %2 now, or add it only and pick extensions under Available. Installing goes on in the background.</source>
+            <translation>Instale agora as %1 em %2, ou só adicione e escolha extensões em Disponíveis. A instalação continua em segundo plano.</translation>
         </message>
         <message>
-            <source> will be installed (</source>
-            <translation> serão instaladas (</translation>
+            <source>Add only</source>
+            <translation>Só adicionar</translation>
         </message>
         <message>
-            <source> The rest are listed under Available.</source>
-            <translation> As demais aparecem em Disponíveis.</translation>
+            <source>Add and install %1</source>
+            <translation>Adicionar e instalar %1</translation>
         </message>
         <message>
             <source>None of them is in </source>
@@ -651,10 +643,6 @@
         <message>
             <source>Try again</source>
             <translation>Tentar de novo</translation>
-        </message>
-        <message>
-            <source>Installing…</source>
-            <translation>Instalando…</translation>
         </message>
         <message>
             <source>Add</source>
@@ -2367,6 +2355,18 @@
             <translation>Procurar uma extensão</translation>
         </message>
         <message>
+            <source>Find an installed extension or site</source>
+            <translation>Buscar uma extensão instalada ou um site</translation>
+        </message>
+        <message>
+            <source>Installing %1 of %2</source>
+            <translation>Instalando %1 de %2</translation>
+        </message>
+        <message>
+            <source>Stop</source>
+            <translation>Parar</translation>
+        </message>
+        <message>
             <source>No repositories yet</source>
             <translation>Nenhum repositório ainda</translation>
         </message>
@@ -2419,8 +2419,8 @@
             <translation>Mostrar fontes</translation>
         </message>
         <message>
-            <source>Pass a browser check for this site</source>
-            <translation>Passar pela verificação do navegador deste site</translation>
+            <source>Open the site (browser check, sign in)</source>
+            <translation>Abrir o site (verificação do navegador, entrar)</translation>
         </message>
         <message>
             <source>Browse this source</source>
@@ -3526,8 +3526,20 @@
             <translation>Baixado </translation>
         </message>
         <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Tente de novo agora; %1 deve carregar.</translation>
+            <source>Browser check done for %1</source>
+            <translation>Verificação do navegador concluída para %1</translation>
+        </message>
+        <message>
+            <source>1 extension installed</source>
+            <translation>1 extensão instalada</translation>
+        </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>%1 extensões instaladas</translation>
+        </message>
+        <message>
+            <source>%1 extensions could not be installed: %2</source>
+            <translation>Não foi possível instalar %1 extensões: %2</translation>
         </message>
         <message>
             <source>Incognito is on. Turn it off</source>
@@ -5717,10 +5729,6 @@
         <message>
             <source>Done</source>
             <translation>Pronto</translation>
-        </message>
-        <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Tente de novo agora; %1 deve carregar.</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>

@@ -456,12 +456,19 @@ Item {
                         font.pixelSize: Theme.textLg
                         font.weight: Font.DemiBold
                     }
-                    SearchField {
+                    OutsideList {
+                        view: list
+                        outside: page
                         visible: !Theme.compact
                         width: 200
-                        implicitHeight: 34
-                        placeholderText: qsTr("Find chapter")
-                        onTextChanged: page.filter = text
+                        height: 34
+                        anchors.verticalCenter: parent.verticalCenter
+                        SearchField {
+                            width: parent.width
+                            implicitHeight: 34
+                            placeholderText: qsTr("Find chapter")
+                            onTextChanged: page.filter = text
+                        }
                     }
                 }
                 Row {
@@ -595,12 +602,19 @@ Item {
                 visible: Theme.compact && page.tab === "chapters" && page.chapters.length > 10
                 width: list.width
                 height: visible ? 50 : 0
-                SearchField {
+                OutsideList {
+                    view: list
+                    outside: page
                     x: Theme.gutter
                     width: parent.width - 2 * Theme.gutter
-                    implicitHeight: 40
-                    placeholderText: qsTr("Find chapter")
-                    onTextChanged: page.filter = text
+                    height: 40
+                    visible: parent.visible
+                    SearchField {
+                        width: parent.width
+                        implicitHeight: 40
+                        placeholderText: qsTr("Find chapter")
+                        onTextChanged: page.filter = text
+                    }
                 }
             }
 

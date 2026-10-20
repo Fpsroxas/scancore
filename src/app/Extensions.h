@@ -6,6 +6,12 @@
 #include <QQmlEngine>
 #include <QSet>
 
+#include <atomic>
+
+namespace sc::ext {
+struct Package;
+}
+
 namespace sc {
 
 // Optional add-ons downloaded on request: the Extensions runtime (desktop),
@@ -33,6 +39,10 @@ class Extensions : public QObject {
     // Extensions being installed or updated right now ("<kind>:<pkg>").
     Q_PROPERTY(QStringList installing READ installing NOTIFY extensionsChanged)
     Q_PROPERTY(int updateCount READ updateCount NOTIFY extensionsChanged)
+    // Extensions installing in the background (after adding a repository):
+    // how many in all and how many are done; both 0 when none are.
+    Q_PROPERTY(int queueTotal READ queueTotal NOTIFY queueChanged)
+    Q_PROPERTY(int queueDone READ queueDone NOTIFY queueChanged)
 
 public:
     static Extensions *instance();
@@ -67,9 +77,14 @@ public:
     // count, languages: [{value, label, count}], autoInstall: [names],
     // language, languageName}.
     Q_INVOKABLE sc::Task *previewRepository(const QString &link, const QString &kind = QString());
-    // Adds a previewed repository and installs its extensions in the content
-    // language: {name, installed, failed: [messages]}.
-    Q_INVOKABLE sc::Task *addRepository(const QString &url);
+    // Adds a previewed repository: {name, media, queued}. With `install`
+    // its extensions in the content language install in the background
+    // (queueTotal, installsFinished), so the app can be used meanwhile.
+    Q_INVOKABLE sc::Task *addRepository(const QString &url, bool install = false);
+    // The background installs still waiting are dropped.
+    Q_INVOKABLE void stopInstalls();
+    int queueTotal() const { return m_queueTotal; }
+    int queueDone() const { return m_queueDone; }
     Q_INVOKABLE void removeRepository(const QString &url);
     Q_INVOKABLE sc::Task *refreshRepositories();
 
@@ -106,6 +121,9 @@ signals:
     void changed();
     void extensionsChanged();
     void statusChanged(const QString &status);
+    void queueChanged();
+    // The background installs are done (or stopped).
+    void installsFinished(int installed, int failed, const QString &firstError);
 
 private:
     // Private so QML uses create(): Qt builds its own instance of a
@@ -116,6 +134,13 @@ private:
     void setStatus(const QString &status);
     void setInstalling(const QString &id, bool on);
     QSet<QString> m_installing;
+    void installInBackground(const QList<ext::Package> &packages);
+    void queueProgress();
+    std::atomic<int> m_queueTotal{0};
+    std::atomic<int> m_queueDone{0};
+    std::atomic<int> m_queueBatches{0};
+    std::atomic<bool> m_stopQueue{false};
+    std::atomic<bool> m_progressPending{false};
     int m_revision = 0;
     bool m_busy = false;
     QString m_busyWith;

@@ -569,16 +569,8 @@
             <translation> добавлено</translation>
         </message>
         <message>
-            <source>, </source>
-            <translation>, </translation>
-        </message>
-        <message>
-            <source> extension installed</source>
-            <translation> расширение установлено</translation>
-        </message>
-        <message>
-            <source> extensions installed</source>
-            <translation> расширений установлено</translation>
+            <source>; installing %1 in the background</source>
+            <translation>; %1 устанавливаются в фоне</translation>
         </message>
         <message>
             <source>Add “</source>
@@ -617,16 +609,16 @@
             <translation>Он уже добавлен. Повторное добавление перечитает его.</translation>
         </message>
         <message>
-            <source>Extensions in </source>
-            <translation>Расширения на языке </translation>
+            <source>Install the %1 in %2 now, or add it only and pick extensions under Available. Installing goes on in the background.</source>
+            <translation>Установите сейчас %1 на языке «%2» или только добавьте и выберите расширения в «Доступных». Установка продолжится в фоне.</translation>
         </message>
         <message>
-            <source> will be installed (</source>
-            <translation> будут установлены (</translation>
+            <source>Add only</source>
+            <translation>Только добавить</translation>
         </message>
         <message>
-            <source> The rest are listed under Available.</source>
-            <translation> Остальные — в разделе «Доступные».</translation>
+            <source>Add and install %1</source>
+            <translation>Добавить и установить %1</translation>
         </message>
         <message>
             <source>None of them is in </source>
@@ -651,10 +643,6 @@
         <message>
             <source>Try again</source>
             <translation>Повторить</translation>
-        </message>
-        <message>
-            <source>Installing…</source>
-            <translation>Установка…</translation>
         </message>
         <message>
             <source>Add</source>
@@ -2367,6 +2355,18 @@
             <translation>Найти расширение</translation>
         </message>
         <message>
+            <source>Find an installed extension or site</source>
+            <translation>Найти установленное расширение или сайт</translation>
+        </message>
+        <message>
+            <source>Installing %1 of %2</source>
+            <translation>Установка %1 из %2</translation>
+        </message>
+        <message>
+            <source>Stop</source>
+            <translation>Остановить</translation>
+        </message>
+        <message>
             <source>No repositories yet</source>
             <translation>Репозиториев пока нет</translation>
         </message>
@@ -2419,8 +2419,8 @@
             <translation>Показать источники</translation>
         </message>
         <message>
-            <source>Pass a browser check for this site</source>
-            <translation>Пройти проверку браузера для этого сайта</translation>
+            <source>Open the site (browser check, sign in)</source>
+            <translation>Открыть сайт (проверка браузера, вход)</translation>
         </message>
         <message>
             <source>Browse this source</source>
@@ -3526,8 +3526,20 @@
             <translation>Скачано: </translation>
         </message>
         <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Попробуйте ещё раз сейчас; %1 должен загрузиться.</translation>
+            <source>Browser check done for %1</source>
+            <translation>Проверка браузера для %1 пройдена</translation>
+        </message>
+        <message>
+            <source>1 extension installed</source>
+            <translation>Установлено 1 расширение</translation>
+        </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>Установлено расширений: %1</translation>
+        </message>
+        <message>
+            <source>%1 extensions could not be installed: %2</source>
+            <translation>Не удалось установить расширений: %1. %2</translation>
         </message>
         <message>
             <source>Incognito is on. Turn it off</source>
@@ -5717,10 +5729,6 @@
         <message>
             <source>Done</source>
             <translation>Готово</translation>
-        </message>
-        <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>Попробуйте ещё раз сейчас; %1 должен загрузиться.</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>

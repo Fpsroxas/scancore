@@ -569,16 +569,8 @@
             <translation> を追加しました</translation>
         </message>
         <message>
-            <source>, </source>
-            <translation>、 </translation>
-        </message>
-        <message>
-            <source> extension installed</source>
-            <translation> 個の拡張機能をインストール済み</translation>
-        </message>
-        <message>
-            <source> extensions installed</source>
-            <translation> 個の拡張機能をインストール済み</translation>
+            <source>; installing %1 in the background</source>
+            <translation>、バックグラウンドで %1 件をインストール中</translation>
         </message>
         <message>
             <source>Add “</source>
@@ -617,16 +609,16 @@
             <translation>すでに追加されています。もう一度追加すると読み込み直します。</translation>
         </message>
         <message>
-            <source>Extensions in </source>
-            <translation>対象の拡張機能: </translation>
+            <source>Install the %1 in %2 now, or add it only and pick extensions under Available. Installing goes on in the background.</source>
+            <translation>%2 の %1 件を今すぐインストールするか、追加だけして「利用可能」から選んでください。インストールはバックグラウンドで続きます。</translation>
         </message>
         <message>
-            <source> will be installed (</source>
-            <translation> をインストールします（</translation>
+            <source>Add only</source>
+            <translation>追加のみ</translation>
         </message>
         <message>
-            <source> The rest are listed under Available.</source>
-            <translation> 残りは「利用可能」にあります。</translation>
+            <source>Add and install %1</source>
+            <translation>追加して %1 件をインストール</translation>
         </message>
         <message>
             <source>None of them is in </source>
@@ -651,10 +643,6 @@
         <message>
             <source>Try again</source>
             <translation>再試行</translation>
-        </message>
-        <message>
-            <source>Installing…</source>
-            <translation>インストール中…</translation>
         </message>
         <message>
             <source>Add</source>
@@ -2367,6 +2355,18 @@
             <translation>拡張機能を探す</translation>
         </message>
         <message>
+            <source>Find an installed extension or site</source>
+            <translation>インストール済みの拡張機能やサイトを検索</translation>
+        </message>
+        <message>
+            <source>Installing %1 of %2</source>
+            <translation>%2 件中 %1 件をインストール中</translation>
+        </message>
+        <message>
+            <source>Stop</source>
+            <translation>停止</translation>
+        </message>
+        <message>
             <source>No repositories yet</source>
             <translation>まだリポジトリがありません</translation>
         </message>
@@ -2419,8 +2419,8 @@
             <translation>ソースを表示</translation>
         </message>
         <message>
-            <source>Pass a browser check for this site</source>
-            <translation>このサイトのブラウザ確認を通過する</translation>
+            <source>Open the site (browser check, sign in)</source>
+            <translation>サイトを開く（ブラウザ確認、ログイン）</translation>
         </message>
         <message>
             <source>Browse this source</source>
@@ -3526,8 +3526,20 @@
             <translation>ダウンロード済み </translation>
         </message>
         <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>今すぐ再試行してください。%1 は読み込めるはずです。</translation>
+            <source>Browser check done for %1</source>
+            <translation>%1 のブラウザ確認が完了しました</translation>
+        </message>
+        <message>
+            <source>1 extension installed</source>
+            <translation>拡張機能を 1 件インストールしました</translation>
+        </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>拡張機能を %1 件インストールしました</translation>
+        </message>
+        <message>
+            <source>%1 extensions could not be installed: %2</source>
+            <translation>%1 件の拡張機能をインストールできませんでした: %2</translation>
         </message>
         <message>
             <source>Incognito is on. Turn it off</source>
@@ -5717,10 +5729,6 @@
         <message>
             <source>Done</source>
             <translation>完了</translation>
-        </message>
-        <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>今すぐ再試行してください。%1 は読み込めるはずです。</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>

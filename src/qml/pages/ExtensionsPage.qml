@@ -28,7 +28,14 @@ Item {
         const q = query.trim().toLowerCase()
         return availableAll.filter(p => (!language || p.languageName === language) && (!q || p.name.toLowerCase().indexOf(q) >= 0))
     }
-    readonly property var rows: tab === "installed" ? installedList : tab === "available" ? availableList : repositories
+    // Installed ones by the extension's name, its sources' names or their sites.
+    readonly property var installedShown: {
+        const q = query.trim().toLowerCase()
+        if (!q) return installedList
+        return installedList.filter(e => e.name.toLowerCase().indexOf(q) >= 0
+            || (e.sources || []).some(s => (s.name || "").toLowerCase().indexOf(q) >= 0 || (s.baseUrl || "").toLowerCase().indexOf(q) >= 0))
+    }
+    readonly property var rows: tab === "installed" ? installedShown : tab === "available" ? availableList : repositories
     readonly property bool needsRuntime: App.platform !== "android" && Extensions.runtimeAvailable && !Extensions.runtimeInstalled
 
     function installing(id) { return Extensions.installing.indexOf(id) >= 0 }
@@ -173,23 +180,62 @@ Item {
                 onPicked: (v) => page.tab = v
             }
 
+            OutsideList {
+                view: list
+                outside: page
+                x: Theme.gutter
+                width: list.width - 2 * Theme.gutter
+                height: 40
+                visible: (page.tab === "available" && page.availableAll.length > 0) || (page.tab === "installed" && page.installedList.length > 0)
+                Row {
+                    width: parent.width
+                    spacing: 10
+                    SearchField {
+                        width: parent.width - (languagePick.visible ? languagePick.width + 10 : 0)
+                        placeholderText: page.tab === "installed" ? qsTr("Find an installed extension or site") : qsTr("Find an extension")
+                        onTextChanged: page.query = text
+                    }
+                    Select {
+                        id: languagePick
+                        visible: page.tab === "available"
+                        model: page.availableLanguages
+                        value: page.language
+                        onPicked: (v) => page.language = v
+                    }
+                }
+            }
+
+            // Extensions installing in the background, with a way to stop.
             Row {
                 x: Theme.gutter
                 width: list.width - 2 * Theme.gutter
-                spacing: 10
-                visible: page.tab === "available" && page.availableAll.length > 0
-                SearchField {
-                    width: parent.width - languagePick.width - 10
-                    placeholderText: qsTr("Find an extension")
-                    text: page.query
-                    onTextChanged: page.query = text
+                spacing: 12
+                visible: Extensions.queueTotal > 0
+                Column {
+                    width: parent.width - stopButton.width - 12
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 6
+                    Text {
+                        text: qsTr("Installing %1 of %2").arg(Math.min(Extensions.queueDone + 1, Extensions.queueTotal)).arg(Extensions.queueTotal)
+                        color: Theme.textMuted
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textSm
+                    }
+                    Rectangle {
+                        width: parent.width
+                        height: 4
+                        radius: 2
+                        color: Theme.surface3
+                        Rectangle {
+                            height: parent.height
+                            radius: parent.radius
+                            color: Theme.accent
+                            width: parent.width * Extensions.queueDone / Math.max(1, Extensions.queueTotal)
+                            Behavior on width { NumberAnimation { duration: Motion.normal } }
+                        }
+                    }
                 }
-                Select {
-                    id: languagePick
-                    model: page.availableLanguages
-                    value: page.language
-                    onPicked: (v) => page.language = v
-                }
+                ScButton { id: stopButton; text: qsTr("Stop"); compact: true; onClicked: Extensions.stopInstalls() }
             }
 
             // Nothing added yet: a place to paste a link, and nothing else.
@@ -445,9 +491,10 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 2
                         IconButton {
-                            visible: !!sourceRow.modelData.error && !!sourceRow.modelData.baseUrl
+                            // As Mihon's WebView: sign in, or pass a check the hidden one could not.
+                            visible: !!sourceRow.modelData.baseUrl
                             iconName: "shield-check"
-                            tip: qsTr("Pass a browser check for this site")
+                            tip: qsTr("Open the site (browser check, sign in)")
                             onClicked: Router.openSiteCheck(sourceRow.modelData.baseUrl + "/")
                         }
                         IconButton {

@@ -569,16 +569,8 @@
             <translation> 추가됨</translation>
         </message>
         <message>
-            <source>, </source>
-            <translation>, </translation>
-        </message>
-        <message>
-            <source> extension installed</source>
-            <translation>개 확장 프로그램 설치됨</translation>
-        </message>
-        <message>
-            <source> extensions installed</source>
-            <translation>개 확장 프로그램 설치됨</translation>
+            <source>; installing %1 in the background</source>
+            <translation>; 백그라운드에서 %1개 설치 중</translation>
         </message>
         <message>
             <source>Add “</source>
@@ -617,16 +609,16 @@
             <translation>이미 추가되어 있습니다. 다시 추가하면 새로 읽어 옵니다.</translation>
         </message>
         <message>
-            <source>Extensions in </source>
-            <translation>언어별 확장 프로그램: </translation>
+            <source>Install the %1 in %2 now, or add it only and pick extensions under Available. Installing goes on in the background.</source>
+            <translation>%2 확장 %1개를 지금 설치하거나, 추가만 하고 사용 가능 탭에서 고르세요. 설치는 백그라운드에서 계속됩니다.</translation>
         </message>
         <message>
-            <source> will be installed (</source>
-            <translation> 설치 예정 (</translation>
+            <source>Add only</source>
+            <translation>추가만</translation>
         </message>
         <message>
-            <source> The rest are listed under Available.</source>
-            <translation> 나머지는 사용 가능 탭에 있습니다.</translation>
+            <source>Add and install %1</source>
+            <translation>추가하고 %1개 설치</translation>
         </message>
         <message>
             <source>None of them is in </source>
@@ -651,10 +643,6 @@
         <message>
             <source>Try again</source>
             <translation>다시 시도</translation>
-        </message>
-        <message>
-            <source>Installing…</source>
-            <translation>설치 중…</translation>
         </message>
         <message>
             <source>Add</source>
@@ -2367,6 +2355,18 @@
             <translation>확장 프로그램 찾기</translation>
         </message>
         <message>
+            <source>Find an installed extension or site</source>
+            <translation>설치된 확장 또는 사이트 찾기</translation>
+        </message>
+        <message>
+            <source>Installing %1 of %2</source>
+            <translation>%2개 중 %1개 설치 중</translation>
+        </message>
+        <message>
+            <source>Stop</source>
+            <translation>중지</translation>
+        </message>
+        <message>
             <source>No repositories yet</source>
             <translation>아직 저장소가 없습니다</translation>
         </message>
@@ -2419,8 +2419,8 @@
             <translation>소스 보기</translation>
         </message>
         <message>
-            <source>Pass a browser check for this site</source>
-            <translation>이 사이트의 브라우저 확인 통과하기</translation>
+            <source>Open the site (browser check, sign in)</source>
+            <translation>사이트 열기 (브라우저 확인, 로그인)</translation>
         </message>
         <message>
             <source>Browse this source</source>
@@ -3526,8 +3526,20 @@
             <translation>다운로드됨 </translation>
         </message>
         <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>지금 다시 시도하세요. %1이(가) 열릴 겁니다.</translation>
+            <source>Browser check done for %1</source>
+            <translation>%1의 브라우저 확인 완료</translation>
+        </message>
+        <message>
+            <source>1 extension installed</source>
+            <translation>확장 1개 설치됨</translation>
+        </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>확장 %1개 설치됨</translation>
+        </message>
+        <message>
+            <source>%1 extensions could not be installed: %2</source>
+            <translation>확장 %1개를 설치하지 못했습니다: %2</translation>
         </message>
         <message>
             <source>Incognito is on. Turn it off</source>
@@ -5717,10 +5729,6 @@
         <message>
             <source>Done</source>
             <translation>완료</translation>
-        </message>
-        <message>
-            <source>Try again now; %1 should load.</source>
-            <translation>지금 다시 시도하세요. %1이(가) 열릴 겁니다.</translation>
         </message>
         <message>
             <source>This build has no embedded browser. Open </source>
