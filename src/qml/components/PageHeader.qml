@@ -9,9 +9,11 @@ Item {
     property string title
     property string subtitle
     property bool showBack: false
+    // Keep the controls beside the title on phones too (icon buttons).
+    property bool keepBeside: false
     default property alias trailing: trailingRow.data
 
-    readonly property bool stacked: Theme.compact && trailingRow.width > 0
+    readonly property bool stacked: Theme.compact && !keepBeside && trailingRow.width > 0
     width: parent ? parent.width : 800
     implicitHeight: column.implicitHeight + 28 + (stacked ? trailingRow.height + 14 : 0)
 

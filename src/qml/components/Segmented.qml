@@ -6,6 +6,8 @@ Rectangle {
     id: root
     property var options: []          // [{value, label, icon}]
     property var value
+    // Options share the whole width (phones), instead of each its own.
+    property bool fill: false
     signal picked(var value)
 
     readonly property int currentIndex: {
@@ -47,7 +49,8 @@ Rectangle {
                 required property var modelData
                 required property int index
                 // Icon-only options ({value, icon, tip}) are square-ish.
-                width: (label.visible ? label.implicitWidth + (glyph.visible ? 21 : 0) : glyph.width) + 26
+                width: root.fill ? (root.width - 8) / Math.max(1, root.options.length)
+                    : (label.visible ? label.implicitWidth + (glyph.visible ? 21 : 0) : glyph.width) + 26
                 height: root.height - 8
                 Row {
                     anchors.centerIn: parent

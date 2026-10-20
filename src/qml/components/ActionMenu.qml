@@ -3,8 +3,8 @@ import QtQuick.Controls.Basic
 import ScanCore
 
 // A small menu of actions, opened at a point (a right click or a long
-// press). items: [{text, icon, danger, enabled, run}]; a falsy entry is a
-// divider.
+// press). items: [{text, icon, danger, enabled, checked, run}]; a falsy
+// entry is a divider.
 Popup {
     id: menu
     property var items: []
@@ -73,22 +73,35 @@ Popup {
                         radius: Theme.radiusMd
                         color: button.hovered || button.visualFocus ? Theme.surface3 : "transparent"
                     }
-                    contentItem: Row {
-                        leftPadding: 10
-                        spacing: 10
-                        Icon {
+                    contentItem: Item {
+                        Row {
                             anchors.verticalCenter: parent.verticalCenter
-                            name: entry.modelData ? (entry.modelData.icon || "") : ""
-                            visible: name.length > 0
-                            size: 16
-                            color: entry.modelData && entry.modelData.danger ? Theme.danger : Theme.textMuted
+                            leftPadding: 10
+                            spacing: 10
+                            Icon {
+                                anchors.verticalCenter: parent.verticalCenter
+                                name: entry.modelData ? (entry.modelData.icon || "") : ""
+                                visible: name.length > 0
+                                size: 16
+                                color: entry.modelData && entry.modelData.danger ? Theme.danger : Theme.textMuted
+                            }
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: entry.modelData ? entry.modelData.text : ""
+                                color: entry.modelData && entry.modelData.danger ? Theme.danger : Theme.text
+                                font.family: Theme.fontSans
+                                font.pixelSize: Theme.textSm
+                                font.weight: entry.modelData && entry.modelData.checked ? Font.DemiBold : Font.Normal
+                            }
                         }
-                        Text {
+                        Icon {
+                            anchors.right: parent.right
+                            anchors.rightMargin: 10
                             anchors.verticalCenter: parent.verticalCenter
-                            text: entry.modelData ? entry.modelData.text : ""
-                            color: entry.modelData && entry.modelData.danger ? Theme.danger : Theme.text
-                            font.family: Theme.fontSans
-                            font.pixelSize: Theme.textSm
+                            visible: !!entry.modelData && !!entry.modelData.checked
+                            name: "check"
+                            size: 16
+                            color: Theme.accent
                         }
                     }
                 }

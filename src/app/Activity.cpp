@@ -1,5 +1,7 @@
 #include "Activity.h"
 
+#include "App.h"
+
 #include "core/Database.h"
 
 #include <QCoreApplication>
@@ -184,7 +186,8 @@ void Activity::setMedia(const QString &media) {
     if (media == m_media)
         return;
     tick(); // the time so far belongs to what was open
-    m_media = kMedia.contains(media) ? media : QString();
+    // Incognito reading and watching is not counted.
+    m_media = kMedia.contains(media) && !App::instance()->incognito() ? media : QString();
     m_lastInput = QDateTime::currentMSecsSinceEpoch();
 }
 

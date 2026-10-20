@@ -316,6 +316,9 @@ void Library::recordProgress(const QVariantMap &series, const QVariantMap &unit,
     const auto key = unit.value(QStringLiteral("key")).toString();
     if (seriesId.isEmpty() || key.isEmpty())
         return;
+    // Incognito: nothing is kept, so no history, activity or tracker update.
+    if (App::instance()->incognito())
+        return;
     // Called while reading and watching: a storage failure must not end
     // the app.
     try {

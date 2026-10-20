@@ -52,7 +52,17 @@ Item {
     readonly property string categoryLabel: category === "favourites" ? qsTr("Favourites")
         : (categories.find(c => c.value === category) || { label: "" }).label
 
+    readonly property bool checking: checkTask ? checkTask.loading : false
+    readonly property var mediaOptions: [{ value: "comic", label: qsTr("Comics"), icon: "book-open" },
+        { value: "novel", label: qsTr("Novels"), icon: "book-text" }, { value: "anime", label: qsTr("Anime"), icon: "tv" }]
+    readonly property var sortOptions: [{ value: "updates", label: qsTr("New chapters first") },
+        { value: "recent", label: media === "anime" ? qsTr("Recently watched") : qsTr("Recently read") },
+        { value: "added", label: qsTr("Recently added") }, { value: "title", label: qsTr("Title A–Z") }]
+    readonly property var viewOptions: [{ value: "grid", icon: "layout-grid", label: qsTr("Grid") },
+        { value: "compact", icon: "grid-2x2", label: qsTr("Compact grid") }, { value: "list", icon: "list", label: qsTr("List") }]
+
     function search(text) { filter = text }
+    function toggleSelecting() { if (selecting) endSelection(); else selecting = true }
     function toggle(it) {
         const s = Object.assign({}, selection)
         if (s[it.id]) delete s[it.id]
@@ -98,6 +108,7 @@ Item {
         function onFailed(error) { Router.toast(error, "error") }
     }
 
+    ActionMenu { id: menu }
     MigrateDialog {
         id: migrate
         onClosed: page.endSelection()
@@ -122,51 +133,127 @@ Item {
         Column {
             id: column
             width: parent.width
-            spacing: 20
+            spacing: Theme.compact ? 14 : 20
 
             PageHeader {
+                keepBeside: Theme.compact
                 title: qsTr("Library")
                 subtitle: page.all.length + qsTr(" saved")
                     + (Library.unreadUpdates > 0 ? " · " + Library.unreadUpdates + qsTr(" new chapters") : "")
                 ScButton {
+                    visible: !Theme.compact
                     text: page.selecting ? qsTr("Done") : qsTr("Select")
                     iconName: page.selecting ? "x" : "list-checks"
                     variant: "ghost"
-                    onClicked: page.selecting ? page.endSelection() : page.selecting = true
+                    onClicked: page.toggleSelecting()
                 }
                 ScButton {
-                    text: page.checkTask && page.checkTask.loading ? qsTr("Checking…") : qsTr("Check for updates")
+                    visible: !Theme.compact
+                    text: page.checking ? qsTr("Checking…") : qsTr("Check for updates")
                     iconName: "refresh-cw"
-                    loading: page.checkTask ? page.checkTask.loading : false
+                    loading: page.checking
                     onClicked: page.checkTask = Library.checkUpdates()
+                }
+                // Phones: the same two as icons, so the title keeps its row.
+                IconButton {
+                    visible: Theme.compact
+                    diameter: 40
+                    filled: !page.selecting
+                    iconName: page.selecting ? "x" : "list-checks"
+                    active: page.selecting
+                    tip: page.selecting ? qsTr("Done") : qsTr("Select")
+                    Accessible.name: tip
+                    onClicked: page.toggleSelecting()
+                }
+                IconButton {
+                    id: checkButton
+                    visible: Theme.compact
+                    diameter: 40
+                    filled: true
+                    iconName: "refresh-cw"
+                    enabled: !page.checking
+                    tip: page.checking ? qsTr("Checking…") : qsTr("Check for updates")
+                    Accessible.name: tip
+                    onClicked: page.checkTask = Library.checkUpdates()
+                    RotationAnimator on rotation {
+                        running: page.checking && !Motion.reduced
+                        loops: Animation.Infinite
+                        from: 0; to: 360; duration: 900
+                        onRunningChanged: if (!running) checkButton.rotation = 0
+                    }
+                }
+            }
+
+            Segmented {
+                visible: Theme.compact
+                x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
+                fill: true
+                options: page.mediaOptions
+                value: page.media
+                onPicked: (v) => App.setSetting("libraryMedia", v)
+            }
+
+            // Phones: the filter with sort and view as icon buttons beside it.
+            Row {
+                visible: Theme.compact
+                x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
+                spacing: 8
+                SearchField {
+                    width: parent.width - 2 * (40 + parent.spacing)
+                    placeholderText: qsTr("Filter library")
+                    text: page.filter
+                    onTextChanged: page.filter = text
+                }
+                IconButton {
+                    id: sortButton
+                    anchors.verticalCenter: parent.verticalCenter
+                    diameter: 40
+                    filled: true
+                    iconName: "arrow-up-down"
+                    tip: qsTr("Sort")
+                    Accessible.name: tip
+                    onClicked: menu.openAt(sortButton, 0, height + 6, page.sortOptions.map(o => ({
+                        text: o.label, checked: o.value === page.sort, run: () => App.setSetting("librarySort", o.value) })))
+                }
+                IconButton {
+                    id: viewButton
+                    anchors.verticalCenter: parent.verticalCenter
+                    diameter: 40
+                    filled: true
+                    iconName: (page.viewOptions.find(o => o.value === page.view) || page.viewOptions[0]).icon
+                    tip: qsTr("View")
+                    Accessible.name: tip
+                    onClicked: menu.openAt(viewButton, 0, height + 6, page.viewOptions.map(o => ({
+                        text: o.label, icon: o.icon, checked: o.value === page.view, run: () => App.setSetting("libraryView", o.value) })))
                 }
             }
 
             Flow {
+                visible: !Theme.compact
                 x: Theme.gutter
                 width: parent.width - 2 * Theme.gutter
                 spacing: 12
                 Segmented {
-                    options: [{ value: "comic", label: qsTr("Comics"), icon: "book-open" },
-                              { value: "novel", label: qsTr("Novels"), icon: "book-text" }, { value: "anime", label: qsTr("Anime"), icon: "tv" }]
+                    options: page.mediaOptions
                     value: page.media
                     onPicked: (v) => App.setSetting("libraryMedia", v)
                 }
                 SearchField {
-                    width: Theme.compact ? parent.width : 240
+                    width: 240
                     placeholderText: qsTr("Filter library")
                     text: page.filter
                     onTextChanged: page.filter = text
                 }
                 Select {
                     implicitWidth: 196
-                    model: [{ value: "updates", label: qsTr("New chapters first") }, { value: "recent", label: page.media === "anime" ? qsTr("Recently watched") : qsTr("Recently read") },
-                            { value: "added", label: qsTr("Recently added") }, { value: "title", label: qsTr("Title A–Z") }]
+                    model: page.sortOptions
                     value: page.sort
                     onPicked: (v) => App.setSetting("librarySort", v)
                 }
                 Segmented {
-                    options: [{ value: "grid", icon: "layout-grid" }, { value: "compact", icon: "grid-2x2" }, { value: "list", icon: "list" }]
+                    options: page.viewOptions.map(o => ({ value: o.value, icon: o.icon }))
                     value: page.view
                     onPicked: (v) => App.setSetting("libraryView", v)
                 }

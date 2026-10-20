@@ -4,6 +4,7 @@
 #include "core/Database.h"
 #include "core/Http.h"
 #include "core/Migration.h"
+#include "core/ThemeLook.h"
 #include "core/UpdateRules.h"
 
 #include <QTemporaryDir>
@@ -125,6 +126,43 @@ private slots:
         QVERIFY(!shouldCheck({QStringLiteral("reading"), QString(), 10, 4, true}, strict));
         QVERIFY(!shouldCheck({QStringLiteral("planned"), QString(), 10, 10, false}, strict));
         QVERIFY(shouldCheck({QString(), QString(), 10, 10, true}, strict));
+    }
+
+    // A theme file's look keeps known settings with sensible values and
+    // known pages only.
+    void themeLook() {
+        // Built in code: a raw string literal here makes AutoMoc skip the file.
+        const QJsonObject in{
+            {"mode", "dark"}, {"accentName", "violet"},
+            {"settings", QJsonObject{{"navStyle", "dock"}, {"roundness", "blobby"}, {"textScale", 9},
+                                     {"readerRailCurrent", "#000"}, {"readerRailRead", "red"}, {"libraryCheckHours", 1},
+                                     {"readerProgressWidth", 6.2}}},
+            {"pages", QJsonObject{
+                {"home", QJsonObject{{"order", QJsonArray{"continue", "trending", "../x", "continue"}},
+                                     {"hidden", QJsonObject{{"popular", true}, {"x", false}}},
+                                     {"look", QJsonObject{{"continue", QJsonObject{{"style", "grid"}, {"count", 999},
+                                                                                  {"subtitles", false}, {"evil", 1}}}}}}},
+                {"settings", QJsonObject{{"order", QJsonArray{"a"}}}}}}};
+        const auto out = theme::sanitizeLook(in);
+        QCOMPARE(out.value("mode").toString(), QStringLiteral("dark"));
+        QCOMPARE(out.value("accentName").toString(), QStringLiteral("violet"));
+        const auto settings = out.value("settings").toObject();
+        QCOMPARE(settings.value("navStyle").toString(), QStringLiteral("dock"));
+        QVERIFY(!settings.contains("roundness"));
+        QCOMPARE(settings.value("textScale").toDouble(), 1.4);
+        QCOMPARE(settings.value("readerRailCurrent").toString(), QStringLiteral("#000000"));
+        QVERIFY(!settings.contains("readerRailRead"));
+        QVERIFY(!settings.contains("libraryCheckHours"));
+        QCOMPARE(settings.value("readerProgressWidth").toInt(), 6);
+        const auto pages = out.value("pages").toObject();
+        QCOMPARE(pages.keys(), QStringList{QStringLiteral("home")});
+        const auto home = pages.value("home").toObject();
+        QCOMPARE(home.value("order").toArray().size(), 2);
+        QCOMPARE(home.value("hidden").toObject().keys(), QStringList{QStringLiteral("popular")});
+        const auto look = home.value("look").toObject().value("continue").toObject();
+        QCOMPARE(look.value("count").toInt(), 200);
+        QVERIFY(!look.contains("evil"));
+        QVERIFY(theme::sanitizeLook(QJsonObject{{"mode", "neon"}}).isEmpty());
     }
 
     void refusesNothingToMoveTo() {

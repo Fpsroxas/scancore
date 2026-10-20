@@ -517,6 +517,7 @@ Rectangle {
                 Text {
                     text: (reader.index + 1) + qsTr(" of ") + reader.chapters.length + " · " + (reader.unit.title || "")
                         + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr(" · Downloaded") : "")
+                        + (App.settings.incognito === true ? qsTr(" · Incognito") : "")
                     color: reader.look.muted
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm

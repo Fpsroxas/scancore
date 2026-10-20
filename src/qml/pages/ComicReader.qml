@@ -666,8 +666,9 @@ Rectangle {
     }
 
     // The page progress bar: one thin, flat segment per page flush with the
-    // left edge, as on scancore.onl: read pages dark, unread grey, the page
-    // you are on white. Tap one to go to that page, or drag along it.
+    // left edge: pages not read yet very light, read pages a heavier grey,
+    // the page you are on black (each colour set in Settings > Reading). Tap
+    // one to go to that page, or drag along it.
     function jumpTo(i) {
         if (i < 0 || i >= reader.panels.length) return
         if (reader.mode === "strip") strip.positionViewAtIndex(i, ListView.Beginning)
@@ -683,6 +684,9 @@ Rectangle {
         readonly property bool shown: mode !== false && reader.panels.length > 0
                                       && (mode !== "controls" && !fullScreen.fullScreen || reader.controlsShown)
         readonly property int thickness: Number(App.settings.readerProgressWidth) || 3
+        readonly property color unread: App.settings.readerRailUnread || "#e4e4e7"
+        readonly property color read: App.settings.readerRailRead || "#8b8b94"
+        readonly property color current: App.settings.readerRailCurrent || "#000000"
         opacity: shown ? 1 : 0
         visible: opacity > 0
         Behavior on opacity { NumberAnimation { duration: Motion.normal } }
@@ -705,8 +709,8 @@ Rectangle {
                 y: startY
                 width: rail.thickness
                 height: Math.max(1, endY - startY - rail.gap)
-                color: index === reader.currentPanel ? "#ffffff"
-                     : index < reader.currentPanel || reader.finished ? "#18181b" : "#71717a"
+                color: index === reader.currentPanel ? rail.current
+                     : index < reader.currentPanel || reader.finished ? rail.read : rail.unread
                 Behavior on color { ColorAnimation { duration: Motion.fast } }
             }
         }
@@ -784,6 +788,7 @@ Rectangle {
                     text: (reader.unit.title || "")
                           + (reader.panels.length ? "  ·  " + (reader.currentPanel + 1) + " / " + reader.panels.length : "")
                           + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr("  ·  Downloaded") : "")
+                          + (App.settings.incognito === true ? qsTr("  ·  Incognito") : "")
                     color: "#b4b4bb"
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm

@@ -11,6 +11,10 @@ SettingsPane {
     readonly property int tileWidth: Theme.compact ? Math.floor((width - 36) / 2) : 168
     readonly property var look: Theme.readingLook(App.settings.novelTheme)
     readonly property int sliderWidth: Theme.compact ? width - 80 : 220
+    readonly property var railColours: [
+        { key: "readerRailUnread", label: qsTr("Not read yet"), fallback: "#e4e4e7" },
+        { key: "readerRailRead", label: qsTr("Read"), fallback: "#8b8b94" },
+        { key: "readerRailCurrent", label: qsTr("Current page"), fallback: "#000000" }]
 
     // A value next to its slider.
     component Readout: Text {
@@ -101,8 +105,44 @@ SettingsPane {
         }
         SettingRow {
             title: qsTr("Progress rail")
-            description: qsTr("A thin line on the right edge showing how far through the chapter you are.")
+            description: qsTr("A thin line on the left edge showing how far through the chapter you are.")
             Toggle { checked: App.settings.readerProgressBar !== false; onToggled: App.setSetting("readerProgressBar", checked) }
+        }
+        SettingRow {
+            visible: App.settings.readerProgressBar !== false
+            title: qsTr("Progress rail colours")
+            description: qsTr("Pages not read yet, pages read, and the page you are on.")
+            Row {
+                spacing: 10
+                Repeater {
+                    model: pane.railColours
+                    AbstractButton {
+                        id: swatch
+                        required property var modelData
+                        width: 36
+                        height: 36
+                        hoverEnabled: true
+                        Accessible.name: modelData.label
+                        ToolTip.visible: hovered
+                        ToolTip.text: modelData.label
+                        onClicked: { railPicker.key = modelData.key; railPicker.title = modelData.label; railPicker.edit(App.settings[modelData.key]) }
+                        background: Rectangle {
+                            radius: Theme.radiusMd
+                            color: App.settings[swatch.modelData.key] || "#000000"
+                            border.width: 1
+                            border.color: swatch.hovered ? Theme.text : Theme.borderStrong
+                        }
+                    }
+                }
+                IconButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: pane.railColours.some(c => App.settings[c.key] !== c.fallback)
+                    iconName: "rotate-ccw"
+                    tip: qsTr("Reset colours")
+                    Accessible.name: tip
+                    onClicked: { for (const c of pane.railColours) App.setSetting(c.key, c.fallback) }
+                }
+            }
         }
     }
 
@@ -305,5 +345,13 @@ SettingsPane {
             title: qsTr("Keep the spoken paragraph on screen")
             Toggle { checked: App.settings.ttsFollow !== false; onToggled: App.setSetting("ttsFollow", checked) }
         }
+    }
+
+    ColorPicker {
+        id: railPicker
+        property string key
+        swatches: ["#000000", "#18181b", "#3f3f46", "#71717a", "#8b8b94", "#a1a1aa", "#d4d4d8", "#e4e4e7",
+                   "#ffffff", "#7c9cff", "#a78bfa", "#34d399", "#fb923c", "#fb7185"]
+        onChanged: (c) => App.setSetting(key, String(c).slice(0, 7))
     }
 }

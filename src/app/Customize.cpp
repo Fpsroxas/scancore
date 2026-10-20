@@ -2,6 +2,7 @@
 
 #include "App.h"
 #include "core/Database.h"
+#include "core/ThemeLook.h"
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
 
@@ -211,13 +212,22 @@ QVariantMap Customize::useBackground(const QUrl &url) {
 Task *Customize::exportTheme(const QVariantMap &theme, const QUrl &target) {
     return Task::run([theme, target]() -> QVariant {
         QJsonObject root{{"format", "scancore-theme"},
-                         {"version", 1},
+                         {"version", 2},
                          {"name", theme.value("name").toString().left(80)},
                          {"app", QStringLiteral("SCANCORE ") + QCoreApplication::applicationVersion()},
                          {"colors", QJsonObject{{"window", theme.value("base").toString()},
                                                 {"accent", theme.value("accent").toString()}}},
                          {"window", QJsonObject{{"opacity", theme.value("windowOpacity", 1.0).toDouble()},
                                                 {"panels", theme.value("panelOpacity", 0.85).toDouble()}}}};
+        // Version 2: the rest of the look (layout, arranged pages, reader colours).
+        const auto look = theme::sanitizeLook(QJsonObject::fromVariantMap(theme.value("look").toMap()));
+        if (!look.isEmpty())
+            root.insert("look", look);
+        // A preset theme (no colour of its own) carries only its accent.
+        if (theme.value("base").toString().isEmpty()) {
+            root.insert("colors", QJsonObject{{"accent", theme.value("accent").toString()}});
+            root.remove("window");
+        }
         const QUrl background(theme.value("background").toString());
         if (background.isLocalFile()) {
             QFile file(background.toLocalFile());
@@ -253,7 +263,7 @@ QVariantMap parseTheme(const QByteArray &bytes) {
     const auto root = QJsonDocument::fromJson(bytes, &parseError).object();
     if (parseError.error != QJsonParseError::NoError || root.value("format").toString() != QLatin1String("scancore-theme"))
         throw Error(QStringLiteral("That is not a SCANCORE theme."));
-    if (root.value("version").toInt() > 1)
+    if (root.value("version").toInt() > 2)
         throw Error(QStringLiteral("That theme was made by a newer SCANCORE. Update to use it."));
 
     const auto colors = root.value("colors").toObject();
@@ -277,6 +287,12 @@ QVariantMap parseTheme(const QByteArray &bytes) {
         theme.insert("backgroundDim", clamped(background.value("dim"), 0.0, 0.95, 0.45));
         theme.insert("backgroundBlur", clamped(background.value("blur"), 0.0, 1.0, 0.0));
     }
+    // Version 1 files have colours and a background only.
+    const auto look = theme::sanitizeLook(root.value("look").toObject());
+    if (!look.isEmpty())
+        theme.insert("look", look.toVariantMap());
+    if (!colors.contains("window") && look.value("mode").toString() != QLatin1String("custom"))
+        theme.insert("preset", true);
     return theme;
 }
 

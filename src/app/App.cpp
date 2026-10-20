@@ -56,6 +56,10 @@ const QVariantMap kDefaults{
     {"readerProgressBar", true},
     // Its width in pixels: 3, 6 or 10.
     {"readerProgressWidth", 3},
+    // Its colours: pages not read yet, pages read, the page you are on.
+    {"readerRailUnread", "#e4e4e7"},
+    {"readerRailRead", "#8b8b94"},
+    {"readerRailCurrent", "#000000"},
     // Readers open in full screen (their full screen button sets it).
     {"readerFullscreen", false},
     {"novelFont", "Literata"},
@@ -97,6 +101,11 @@ const QVariantMap kDefaults{
     {"autoDownloadLists", QVariantList{}},
     // A downloaded chapter is deleted once read.
     {"deleteAfterRead", false},
+    // Privacy: incognito (nothing recorded) and when the app lock asks
+    // again (minutes away, or -1 for only at start; see Lock).
+    {"incognito", false},
+    {"lockAfter", 1},
+    {"lockBiometric", true},
     {"notifyUpdates", true},
     {"showNsfwSources", false},
     {"imageCacheMB", 1024},

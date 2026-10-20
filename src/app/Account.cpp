@@ -893,7 +893,10 @@ Task *Account::sync() {
         const auto session = getJson(QStringLiteral("/api/auth/session"));
         if (session.value("user").isNull())
             throw Error(QStringLiteral("Your %1 session ended. Sign in again.").arg(siteName()), 401);
-        return importAll(session);
+        auto result = importAll(session);
+        // The profile as the website has it now (a new photo or name).
+        result.insert(QStringLiteral("user"), session.value("user").toObject().toVariantMap());
+        return result;
     });
     // Kept alive here rather than by QML: a page that starts a sync and
     // drops the task would otherwise let the garbage collector cancel it
@@ -907,6 +910,10 @@ Task *Account::sync() {
         // does not start another sync.
         if (task->ok()) {
             Database::setPref(QStringLiteral("account.lastSync"), Database::now());
+            const auto user = task->result().toMap().value(QStringLiteral("user")).toMap();
+            const QVariantMap fresh{{"username", user.value("username")}, {"email", user.value("email")}, {"avatar", user.value("avatarUrl")}};
+            if (!user.isEmpty() && signedIn() && fresh != m_user)
+                setUser(fresh);
             // What the sync brought in is not a change to send back; without
             // this every sync scheduled another a minute later.
             const bool dirty = m_dirty;

@@ -117,19 +117,70 @@ QtObject {
         return key
     }
 
+    // Incognito: nothing read or watched is recorded (Library, Activity,
+    // Presence check the setting); what is showing on Discord goes now.
+    function setIncognito(on) {
+        App.setSetting("incognito", on)
+        if (on) Presence.clear()
+        toast(on ? qsTr("Incognito is on: nothing you read or watch is recorded") : qsTr("Incognito is off"), "info")
+    }
+
+    // Everything a theme file carries beyond its colours and background
+    // (Customize.h): light or dark, accent, layout, arranged pages and the
+    // readers' colours.
+    readonly property var lookSettings: ["navStyle", "navSide", "dockSide", "pageSpacing", "roundness", "coverSize",
+        "motionSpeed", "textScale", "readerProgressWidth", "readerRailUnread", "readerRailRead", "readerRailCurrent",
+        "novelTheme", "novelCustomBg", "novelCustomText"]
+    readonly property var arrangedPages: ["home", "comics", "comics-top", "novels", "novels-top", "anime"]
+    // What the ones with no stored value look like, so a file resets them too.
+    readonly property var lookDefaults: ({ navStyle: "sidebar", navSide: "left", dockSide: "bottom", pageSpacing: "default",
+        roundness: "default", coverSize: "default", motionSpeed: "default", textScale: 1 })
+    function currentLook() {
+        const settings = {}
+        for (const k of lookSettings) {
+            const v = App.settings[k] !== undefined && App.settings[k] !== "" ? App.settings[k] : lookDefaults[k]
+            if (v !== undefined) settings[k] = v
+        }
+        const pages = {}
+        for (const p of arrangedPages) {
+            const stored = PageLayout.stored(p)
+            if (Object.keys(stored).length) pages[p] = stored
+        }
+        return { mode: App.settings.theme, accentName: App.settings.accent, settings: settings, pages: pages }
+    }
+
     // Switches to a theme read from a .sct file (Customize.importTheme).
     function applyTheme(theme) {
         const t = Object.assign({}, theme)
-        const accent = t.accent
+        const accent = t.accent, look = t.look, preset = t.preset
         delete t.accent
-        App.setSetting("customTheme", t)
+        delete t.look
+        delete t.preset
+        if (!preset) {
+            App.setSetting("customTheme", t)
+            App.setSetting("theme", "custom")
+        } else if (look && look.mode && look.mode !== "custom") {
+            App.setSetting("theme", look.mode)
+        }
         if (accent) {
             App.setSetting("customAccent", accent)
             App.setSetting("accent", "custom")
+        } else if (look && look.accentName && Theme.accents[look.accentName]) {
+            App.setSetting("accent", look.accentName)
         }
-        App.setSetting("theme", "custom")
+        // A version 2 file is the whole look: pages it does not arrange go
+        // back to their defaults.
+        if (look) {
+            const settings = look.settings || {}
+            for (const k of lookSettings) if (settings[k] !== undefined) App.setSetting(k, settings[k])
+            const pages = look.pages || {}
+            for (const p of arrangedPages) {
+                if (pages[p]) PageLayout.save(p, pages[p])
+                else PageLayout.reset(p)
+            }
+        }
         const name = t.name ? "“" + t.name + "”" : qsTr("The theme")
-        if (t.windowOpacity < 1 && !Customize.translucentWindow && Customize.canRestart)
+        if (!preset && t.windowOpacity < 1 && !Customize.translucentWindow && Customize.canRestart)
             toast(name + qsTr(" is on. Restart SCANCORE to make the window see-through."), "success")
         else
             toast(name + qsTr(" is on"), "success")

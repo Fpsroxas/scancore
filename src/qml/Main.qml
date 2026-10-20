@@ -418,10 +418,54 @@ ApplicationWindow {
         }
     }
 
+    // Incognito badge over the pages, at the bottom (readers say it in
+    // their own header).
+    AbstractButton {
+        id: incognitoBadge
+        parent: shellView
+        z: 4
+        visible: App.settings.incognito === true
+        anchors.horizontalCenter: parent.horizontalCenter
+        // Above the phone's tabs or a bottom dock, clear of page headers.
+        y: parent.height - height - 12 - (tabBar.visible ? tabBar.height
+            : dock.visible && dock.side !== "top" ? parent.height - dock.y : 0)
+        height: 28
+        width: badgeRow.implicitWidth + 22
+        hoverEnabled: true
+        Accessible.name: qsTr("Incognito is on. Turn it off")
+        ToolTip.visible: hovered
+        ToolTip.text: qsTr("Nothing you read or watch is recorded. Click to turn off.")
+        onClicked: Router.setIncognito(false)
+        background: Rectangle {
+            radius: height / 2
+            color: incognitoBadge.hovered ? Theme.surface3 : Theme.surface2
+            border.width: 1
+            border.color: Theme.borderStrong
+        }
+        contentItem: Item {
+            Row {
+                id: badgeRow
+                anchors.centerIn: parent
+                spacing: 6
+                Icon { anchors.verticalCenter: parent.verticalCenter; name: "venetian-mask"; size: 15; color: Theme.text }
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: qsTr("Incognito")
+                    color: Theme.text
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textXs
+                    font.weight: Font.DemiBold
+                }
+            }
+        }
+    }
+
     CommandPalette {
         id: commandPalette
         z: 30
     }
+
+    LockScreen {}
 
     ShortcutsSheet {
         id: shortcutsSheet
@@ -496,7 +540,7 @@ ApplicationWindow {
         id: toasts
         z: 40
         // Above the phone's tab bar, not over it.
-        bottomInset: tabBar.visible ? tabBar.height : 0
+        bottomInset: (tabBar.visible ? tabBar.height : 0) + (incognitoBadge.visible ? incognitoBadge.height + 12 : 0)
     }
 
     // Development hook: SCANCORE_START {"screenshot": "/path.png", "delay": ms}

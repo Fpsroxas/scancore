@@ -108,10 +108,13 @@ Rectangle {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.bottomMargin: parent.SafeArea.margins.bottom
-        height: 88
+        height: Theme.compact ? 100 : 88
 
+        // Phones put the dots above the buttons so a long label never meets them.
         Row {
-            anchors.centerIn: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: Theme.compact ? undefined : parent.verticalCenter
+            y: 8
             spacing: 8
             Repeater {
                 model: root.steps
@@ -128,32 +131,28 @@ Rectangle {
         }
         ScButton {
             anchors.left: parent.left
-            anchors.leftMargin: Theme.gutter
+            anchors.leftMargin: Theme.gutter - (Theme.compact ? 12 : 0)
             anchors.verticalCenter: parent.verticalCenter
-            visible: root.step > 0 && root.step < root.steps - 1
-            variant: "ghost"
-            text: qsTr("Back")
-            onClicked: root.go(root.step - 1)
+            anchors.verticalCenterOffset: Theme.compact ? 14 : 0
+            visible: root.step < root.steps - 1
+            variant: Theme.compact ? "plain" : "ghost"
+            compact: Theme.compact
+            text: root.step === 0 ? qsTr("Skip intro") : qsTr("Back")
+            onClicked: root.step === 0 ? root.finish() : root.go(root.step - 1)
         }
         ScButton {
             anchors.right: parent.right
             anchors.rightMargin: Theme.gutter
             anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: Theme.compact ? 14 : 0
             visible: root.step < root.steps - 1
             variant: root.step === root.accountIndex ? "ghost" : "primary"
+            compact: Theme.compact
+            implicitHeight: Theme.compact ? 36 : 40
+            iconName: root.step === root.accountIndex ? "" : "chevron-right"
+            iconAfter: true
             text: root.step === 0 ? qsTr("Get started") : root.step === root.accountIndex ? qsTr("Skip for now") : qsTr("Continue")
             onClicked: root.go(root.step + 1)
-        }
-        Text {
-            anchors.right: parent.right
-            anchors.rightMargin: Theme.gutter
-            anchors.bottom: parent.top
-            visible: root.step === 0
-            text: qsTr("Skip intro")
-            color: Theme.textFaint
-            font.family: Theme.fontSans
-            font.pixelSize: Theme.textSm
-            MouseArea { anchors.fill: parent; anchors.margins: -8; cursorShape: Qt.PointingHandCursor; onClicked: root.finish() }
         }
     }
 
@@ -263,11 +262,27 @@ Rectangle {
                 }
                 // The interface language comes first, so the rest of the
                 // intro is in it. It switches right away.
-                Row {
+                Column {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 10
-                    Icon { anchors.verticalCenter: parent.verticalCenter; name: "languages"; size: 18; color: Theme.textMuted }
+                    spacing: 8
+                    Row {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        spacing: 6
+                        Icon { anchors.verticalCenter: parent.verticalCenter; name: "languages"; size: 14; color: Theme.textFaint }
+                        Text {
+                            text: qsTr("Language")
+                            color: Theme.textFaint
+                            font.family: Theme.fontSans
+                            font.pixelSize: Theme.textXs
+                            font.weight: Font.DemiBold
+                            font.capitalization: Font.AllUppercase
+                            font.letterSpacing: 1.5
+                        }
+                    }
                     Select {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        width: Math.min(root.width - 2 * Theme.gutter, 260)
+                        implicitHeight: 42
                         Accessible.name: qsTr("Language")
                         model: [{ value: "system", label: qsTr("System") }].concat(Customize.languages)
                         value: Customize.language

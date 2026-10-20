@@ -106,6 +106,7 @@ Rectangle {
     }
     readonly property bool showSkip: activeSkip !== null && !skipsItself(activeSkip)
     readonly property string episodeLine: qsTr("Episode ") + (episode.number || "") + (episode.title && !String(episode.title).startsWith("Episode") ? " · " + episode.title : "")
+        + (App.settings.incognito === true ? qsTr(" · Incognito") : "")
 
     color: "#000000"
     focus: true

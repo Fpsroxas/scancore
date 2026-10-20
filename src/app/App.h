@@ -37,6 +37,9 @@ public:
     QString version() const;
     QString platform() const;
     QVariantMap settings() const { return m_settings; }
+    // Incognito mode (setting "incognito"): no progress, history, activity,
+    // tracker updates or Discord status.
+    bool incognito() const { return m_settings.value(QStringLiteral("incognito")).toBool(); }
     QString dataFolder() const;
     int manifestVersion() const;
     bool webEngine() const;
