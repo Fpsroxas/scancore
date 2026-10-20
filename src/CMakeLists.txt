@@ -139,6 +139,20 @@ if(TARGET Qt6::lupdate)
             ${PROJECT_SOURCE_DIR}/i18n/scancore_fr.ts
             ${PROJECT_SOURCE_DIR}/i18n/scancore_id.ts
             ${PROJECT_SOURCE_DIR}/i18n/scancore_pt_BR.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_ko.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_ja.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_zh_CN.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_zh_TW.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_pt_PT.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_de.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_it.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_ru.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_pl.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_tr.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_vi.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_th.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_fil.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_hi.ts
         RESOURCE_PREFIX /i18n
         LUPDATE_OPTIONS -no-obsolete -locations none)
 else()

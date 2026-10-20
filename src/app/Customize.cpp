@@ -353,10 +353,24 @@ namespace {
 
 // Languages with a translation (i18n/scancore_<code>.ts), by their own names.
 const QList<QPair<QString, QString>> kLanguages{{"en", "English"},
+                                                {"de", "Deutsch"},
                                                 {"es", "Español"},
+                                                {"fil", "Filipino"},
                                                 {"fr", "Français"},
                                                 {"id", "Bahasa Indonesia"},
-                                                {"pt_BR", "Português (Brasil)"}};
+                                                {"it", "Italiano"},
+                                                {"pl", "Polski"},
+                                                {"pt_BR", "Português (Brasil)"},
+                                                {"pt_PT", "Português (Portugal)"},
+                                                {"vi", "Tiếng Việt"},
+                                                {"tr", "Türkçe"},
+                                                {"ru", "Русский"},
+                                                {"hi", "हिन्दी"},
+                                                {"th", "ไทย"},
+                                                {"ko", "한국어"},
+                                                {"ja", "日本語"},
+                                                {"zh_CN", "简体中文"},
+                                                {"zh_TW", "繁體中文"}};
 
 QTranslator *g_translator = nullptr;
 QTranslator *g_qtTranslator = nullptr;
