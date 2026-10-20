@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.28)
 
 project(ScanCore
-    VERSION 1.5.0
+    VERSION 2.0.0
     DESCRIPTION "Read comics and novels and watch anime, entirely on your own machine"
     HOMEPAGE_URL "https://github.com/medium-gh/scancore"
     LANGUAGES C CXX)
@@ -9,7 +9,7 @@ project(ScanCore
 # A pre-release label ("beta.1") makes the app 2.0.0-beta.1, tagged
 # v2.0.0-beta.1 and published as a GitHub pre-release, which installed copies
 # never take as an update; empty for a release.
-set(SCANCORE_PRERELEASE "")
+set(SCANCORE_PRERELEASE "beta.1")
 set(SCANCORE_VERSION_FULL ${PROJECT_VERSION})
 if(SCANCORE_PRERELEASE)
     string(APPEND SCANCORE_VERSION_FULL "-${SCANCORE_PRERELEASE}")

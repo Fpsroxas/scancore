@@ -9,10 +9,13 @@ name: Extensions runtime
 # host/desktop/build.gradle.kts, kept equal).
 #
 # Run it by hand after the host changes in a way the app depends on, and
-# raise the host version when you do.
+# raise the host version when you do, or push the tag
+# extensions-runtime-<host version>.
 
 on:
   workflow_dispatch:
+  push:
+    tags: ["extensions-runtime-*"]
 
 permissions:
   contents: write
@@ -28,14 +31,17 @@ jobs:
           - { name: Linux x64, os: ubuntu-22.04 }
           - { name: Windows x64, os: windows-2022 }
           - { name: macOS arm64, os: macos-14 }
-          - { name: macOS x64, os: macos-13 }
+          - { name: macOS x64, os: macos-15-intel }
     steps:
       - uses: actions/checkout@v5
       # Java 21: class-data sharing archives the app turns on (Java 19+).
+      # Java 17: the host's Gradle toolchain, which not every runner has.
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: |
+            17
+            21
       - name: Build the runtime
         working-directory: host
         shell: bash
@@ -47,6 +53,8 @@ jobs:
 
   publish:
     needs: build
+    # What did build is still worth publishing.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5

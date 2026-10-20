@@ -204,7 +204,10 @@ if(ANDROID)
         QT_ANDROID_VERSION_NAME ${SCANCORE_VERSION_FULL}
         QT_ANDROID_VERSION_CODE ${SCANCORE_ANDROID_VERSION_CODE}
         QT_ANDROID_MIN_SDK_VERSION 28
-        QT_ANDROID_TARGET_SDK_VERSION 36)
+        QT_ANDROID_TARGET_SDK_VERSION 36
+        # The extension host's OkHttp needs 37. Named here because Qt
+        # otherwise picks the longest platform name (android-36-ext19).
+        QT_ANDROID_COMPILE_SDK_VERSION 37)
 else()
     target_link_libraries(scancore PRIVATE Qt6::Widgets)
 endif()

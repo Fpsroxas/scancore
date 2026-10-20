@@ -15,8 +15,9 @@
 #   Android  libmpv.so and FFmpeg's shared libraries (the app hands the Java
 #            VM to libavcodec, so it stays its own library)
 #   Linux    libmpv.so
-#   Windows  bin/libmpv-2.dll and lib/libmpv.dll.a
+#   Windows  bin/libmpv-2.dll, lib/libmpv.dll.a and lib/mpv.def (for MSVC)
 #   macOS    libmpv.2.dylib (universal)
+# and licenses/, the licence texts of what is linked in.
 # Everything else is linked into libmpv, with its symbols kept inside: the
 # app's own Qt may load another FFmpeg or FreeType beside it.
 #
@@ -44,8 +45,10 @@ if [ "$target" = macos-universal ]; then
     out=$base/macos-universal
     rm -rf "$out" && mkdir -p "$out/lib"
     cp -R "$base/macos-arm64/include" "$out/include"
+    cp -R "$base/macos-arm64/licenses" "$out/licenses"
     lipo -create "$base/macos-arm64/lib/libmpv.2.dylib" "$base/macos-x86_64/lib/libmpv.2.dylib" -output "$out/lib/libmpv.2.dylib"
     ln -sf libmpv.2.dylib "$out/lib/libmpv.dylib"
+    codesign --force -s - "$out/lib/libmpv.2.dylib"
     lipo -info "$out/lib/libmpv.2.dylib" >&2
     exit 0
 fi
@@ -86,7 +89,7 @@ sources=(
     "libass 0.17.5 https://github.com/libass/libass/releases/download/0.17.5/libass-0.17.5.tar.xz 2dca25c0e0c837ddf00b52011b3f82cac1e4ddd3ad018227806b0c2288864acc"
     "ffmpeg 9.0.2 https://ffmpeg.org/releases/ffmpeg-9.0.2.tar.xz 8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e"
     "mpv 0.41.0 https://github.com/mpv-player/mpv/archive/refs/tags/v0.41.0.tar.gz ee21092a5ee427353392360929dc64645c54479aefdb5babc5cfbb5fad626209"
-    "zlib 1.3.1 https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz -"
+    "zlib 1.3.1 https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz 9a93b2b7dfdac77ceba5a558a580e74667dd6fede4585b91eefb60f03b72df23"
     "gperf 3.1 https://ftp.gnu.org/pub/gnu/gperf/gperf-3.1.tar.gz 588546b945bba4b70b6a3a616e80b4ab466e3f33024a352fc2198112cdbb3ae2"
 )
 # libplacebo needs its submodules (glad, fast_float): a shallow clone of the
@@ -189,6 +192,7 @@ c_args = [$(quoted $cflags)]
 cpp_args = [$(quoted $cflags)]
 c_link_args = [$(quoted $cflags ${LDFLAGS:-})]
 cpp_link_args = [$(quoted $cflags ${LDFLAGS:-})]
+$([ $os = macos ] && printf "objc_args = [%s]\nobjc_link_args = [%s]" "$(quoted $cflags)" "$(quoted $cflags ${LDFLAGS:-})")
 [binaries]
 c = '$c'
 cpp = '$cxx'
@@ -197,6 +201,7 @@ nm = '${NM}'
 strip = '${STRIP}'
 pkg-config = 'pkg-config'
 $([ $os = windows ] && printf "windres = '%s'\ndlltool = '%s'" "$WINDRES" "$triple-dlltool")
+$([ $os = macos ] && printf "objc = '%s'" "$c")
 [host_machine]
 system = '$meson_system'
 cpu_family = '$cpu'
@@ -336,6 +341,9 @@ if ! done_mark libplacebo; then
     [ -d "$work/libplacebo" ] || git clone -q --depth 1 -b "$libplacebo_tag" --recurse-submodules --shallow-submodules \
         https://github.com/haasn/libplacebo "$work/libplacebo"
     [ "$(git -C "$work/libplacebo" rev-parse HEAD)" = "$libplacebo_commit" ] || { echo "libplacebo $libplacebo_tag is not $libplacebo_commit" >&2; exit 1; }
+    # Its objects mark the API dllexport even in a static build, which would
+    # export all of libplacebo from libmpv-2.dll.
+    [ $os = windows ] && sed -i "s/c_args: \['-DPL_EXPORT'\]/c_args: ['-DPL_STATIC']/" "$work/libplacebo/src/meson.build"
     meson_build libplacebo -Dvulkan=disabled -Dopengl=enabled -Ddemos=false -D{lcms,dovi,libdovi,shaderc,glslang,d3d11,unwind,xxhash}=disabled
     # Static linking needs the C++ library too.
     sed -i.bak "/^Libs:/ s|\$| -l$cxxlib|" "$prefix/lib/pkgconfig/libplacebo.pc" && rm -f "$prefix/lib/pkgconfig/libplacebo.pc.bak"
@@ -398,6 +406,26 @@ fi
 
 if ! done_mark mpv; then
     fetch mpv
+    # Linux: the system's static libraries are not built for a shared
+    # library, so mpv links shared ones, and ours (static only) list their
+    # private dependencies as public ones to be linked in full.
+    if [ $os = linux ]; then
+        python3 - "$prefix/lib/pkgconfig" <<'PY'
+import glob, sys
+for path in glob.glob(sys.argv[1] + "/*.pc"):
+    fields, lines = {}, []
+    for line in open(path).read().splitlines():
+        key = line.split(":", 1)[0] if ":" in line and "=" not in line.split(":", 1)[0] else None
+        if key in ("Libs", "Libs.private", "Requires", "Requires.private"):
+            fields[key] = line.split(":", 1)[1].strip()
+        else:
+            lines.append(line)
+    libs = " ".join(v for v in (fields.get("Libs"), fields.get("Libs.private")) if v)
+    requires = ", ".join(v for v in (fields.get("Requires"), fields.get("Requires.private")) if v)
+    lines += ["Libs: " + libs] + (["Requires: " + requires] if requires else [])
+    open(path, "w").write("\n".join(lines) + "\n")
+PY
+    fi
     # The static libraries' symbols stay inside libmpv. Optional features the
     # player does not use stay off, so no system FFmpeg or other extras get
     # linked in beside ours.
@@ -413,15 +441,29 @@ if ! done_mark mpv; then
         -Dsndio=disabled -Dvdpau=disabled -Doss-audio=disabled)
     case $os in
     android) options+=(-Diconv=disabled) ;;
-    linux) options+=(-Dprefer_static=true -Dwayland=disabled -Dpulse=enabled -Dalsa=enabled) ;;
+    linux) options+=(-Dwayland=disabled -Dpulse=enabled -Dalsa=enabled) ;;
     windows) options+=(-Dprefer_static=true -Diconv=disabled) ;;
-    macos) options+=(-Dprefer_static=true -Dswift-build=disabled -Dmacos-cocoa-cb=disabled -Dmacos-media-player=disabled) ;;
+    # Cocoa (and with it OpenGL) needs mpv's Swift part.
+    macos) options+=(-Dprefer_static=true -Dswift-build=enabled "-Dswift-flags=-target $carch-apple-macos$macos_min"
+        -Dmacos-cocoa-cb=disabled -Dmacos-media-player=disabled) ;;
     esac
     meson_build mpv --default-library=shared "${options[@]}"
     mark mpv
 fi
 
 # ---------------------------------------------------------------- result
+# The licences of everything inside, shipped beside the library
+# (licenses/<name>/). Linux takes libass and the font libraries from the
+# system, so they are not here.
+rm -rf "$prefix/licenses"
+for dir in "$work"/*/; do
+    name=$(basename "$dir")
+    [ "$name" = gperf ] && continue
+    mkdir -p "$prefix/licenses/$name"
+    for file in COPYING COPYING.LGPLv2.1 COPYING.LGPLv3 LICENSE LICENSE.md LICENSE.LGPL LICENSE.TXT LICENCE Copyright docs/FTL.TXT; do
+        [ -f "$dir/$file" ] && cp "$dir/$file" "$prefix/licenses/$name/"
+    done
+done
 cd "$prefix"
 case $os in
 android)
@@ -438,11 +480,22 @@ linux)
     ;;
 windows)
     "$STRIP" --strip-unneeded bin/libmpv-2.dll
+    # Only mpv's API leaves the DLL; lib/mpv.def lets MSVC make an import
+    # library (lib /def:mpv.def /machine:x64 /out:mpv.lib).
+    exports=$($triple-objdump -p bin/libmpv-2.dll | sed -n '/\[Ordinal\/Name Pointer\] Table/,/^$/p' | awk '/^\t\[/ { print $NF }')
+    if echo "$exports" | grep -v '^mpv_'; then
+        echo "libmpv-2.dll exports more than mpv_* (above)" >&2
+        exit 1
+    fi
+    { echo "LIBRARY libmpv-2.dll"; echo "EXPORTS"; echo "$exports" | sed 's/^/    /'; } >lib/mpv.def
     echo "needs: $($triple-objdump -p bin/libmpv-2.dll | grep 'DLL Name' | awk '{print $3}' | sort -u | tr '\n' ' ')" >&2
     ;;
 macos)
     # Found inside the app bundle.
     install_name_tool -id @rpath/libmpv.2.dylib lib/libmpv.2.dylib
+    # The edit voids the linker's ad-hoc signature, without which arm64
+    # Macs refuse to load the library.
+    codesign --force -s - lib/libmpv.2.dylib
     ;;
 esac
 echo "libmpv for $target in $prefix (include/, lib/)" >&2

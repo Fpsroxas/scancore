@@ -16,6 +16,8 @@ permissions:
 jobs:
   flatpak:
     name: Build and upload Flatpak bundle
+    # Pre-releases (v2.0.0-beta.1) get no Flatpak.
+    if: ${{ !contains(github.event.inputs.tag || github.ref_name, '-') }}
     runs-on: ubuntu-24.04
     steps:
       # v1.0.0 predates the upstream copy of this manifest. Keeping the
