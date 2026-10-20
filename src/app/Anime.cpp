@@ -769,6 +769,11 @@ QString providerKey(int anilistId) { return QStringLiteral("anime.provider:%1").
 
 } // namespace
 
+QVariantList Anime::fetchUnits(const QString &url) {
+    const auto wrapped = ext::unwrapUrl(url);
+    return episodeUnits(requireSource(wrapped ? wrapped->key : QString())->episodes(url, {}));
+}
+
 QVariantList Anime::sources() const {
     QVariantList out;
     for (const auto &source : anime::Registry::all())

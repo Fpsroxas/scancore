@@ -87,6 +87,43 @@ SettingsPane {
             Toggle { checked: App.settings.readerCrop === true; onToggled: App.setSetting("readerCrop", checked) }
         }
         SettingRow {
+            title: qsTr("Split wide pages")
+            description: qsTr("Shows a two-page spread as its two halves, one after the other, in the Pages layout.")
+            Toggle { checked: App.settings.readerSplitWide === true; onToggled: App.setSetting("readerSplitWide", checked) }
+        }
+        SettingRow {
+            title: qsTr("Tap zones")
+            description: qsTr("Where a tap turns the page back or forward, or shows the controls. The reader shows them when you change them.")
+            Select {
+                model: [{ value: "sides", label: qsTr("Left and right") }, { value: "lshape", label: qsTr("L shape") },
+                        { value: "kindle", label: qsTr("Kindle") }, { value: "edge", label: qsTr("Edges") }, { value: "off", label: qsTr("Off") }]
+                value: App.settings.readerTapZones || "sides"
+                onPicked: (v) => App.setSetting("readerTapZones", v)
+            }
+        }
+        SettingRow {
+            visible: App.settings.readerTapZones !== "off"
+            title: qsTr("Flip the tap zones")
+            Select {
+                model: [{ value: "none", label: qsTr("Not flipped") }, { value: "horizontal", label: qsTr("Left and right") },
+                        { value: "vertical", label: qsTr("Top and bottom") }, { value: "both", label: qsTr("Both ways") }]
+                value: App.settings.readerTapInvert || "none"
+                onPicked: (v) => App.setSetting("readerTapInvert", v)
+            }
+        }
+        SettingRow {
+            visible: App.settings.readerTapZones !== "off"
+            title: qsTr("Tap zones in the vertical strip")
+            description: qsTr("A tap scrolls a screen up or down instead of showing the controls.")
+            Toggle { checked: App.settings.readerStripTaps === true; onToggled: App.setSetting("readerStripTaps", checked) }
+        }
+        SettingRow {
+            visible: App.platform === "android"
+            title: qsTr("Volume keys turn pages")
+            description: qsTr("Volume down goes forward, volume up back, while a comic is open.")
+            Toggle { checked: App.settings.readerVolumeKeys === true; onToggled: App.setSetting("readerVolumeKeys", checked) }
+        }
+        SettingRow {
             title: qsTr("Strip width")
             description: qsTr("How wide the vertical strip is on large screens.")
             Row {

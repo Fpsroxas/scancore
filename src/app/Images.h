@@ -36,6 +36,11 @@ class PanelImage : public QQuickItem {
     Q_PROPERTY(int maxDecodeWidth READ maxDecodeWidth WRITE setMaxDecodeWidth NOTIFY sourceChanged)
     // Trims a scan's plain white or black margin.
     Q_PROPERTY(bool cropBorders READ cropBorders WRITE setCropBorders NOTIFY sourceChanged)
+    // "grey", "invert" or both ("grey invert"), applied while decoding, so
+    // drawing costs nothing extra.
+    Q_PROPERTY(QString filter READ filter WRITE setFilter NOTIFY sourceChanged)
+    // "left" or "right": only that half (a wide spread shown as two pages).
+    Q_PROPERTY(QString half READ half WRITE setHalf NOTIFY sourceChanged)
     // Smooth shrinking (mipmaps) for pages shown smaller than they were
     // decoded, as fitted pages are: fine lines and screentones stay clean
     // instead of shimmering. A third more video memory.
@@ -60,6 +65,10 @@ public:
     void setMaxDecodeWidth(int width);
     bool cropBorders() const { return m_cropBorders; }
     void setCropBorders(bool crop);
+    QString filter() const { return m_filter; }
+    void setFilter(const QString &filter);
+    QString half() const { return m_half; }
+    void setHalf(const QString &half);
     bool mipmap() const { return m_mipmap; }
     void setMipmap(bool mipmap);
     int sourceWidth() const { return m_size.width(); }
@@ -91,6 +100,8 @@ private:
     QString m_referer;
     int m_maxDecodeWidth = 1600;
     bool m_cropBorders = false;
+    QString m_filter;
+    QString m_half;
     bool m_mipmap = false;
     QSize m_size;
     Status m_status = Null;

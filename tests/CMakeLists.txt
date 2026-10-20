@@ -15,7 +15,7 @@ endif()
 
 # The library on a scratch database: moving series between sources.
 qt_add_executable(scancore_library_tests tst_library.cpp)
-target_link_libraries(scancore_library_tests PRIVATE scancore_core Qt6::Test)
+target_link_libraries(scancore_library_tests PRIVATE scancore_core Qt6::Test Qt6::CorePrivate)
 add_test(NAME library COMMAND scancore_library_tests)
 
 # Extension repositories, trust, installs and extension sources.

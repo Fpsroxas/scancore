@@ -11,6 +11,7 @@ add_library(scancore_core STATIC
     core/Text.cpp
     core/UpdateRules.cpp
     core/ThemeLook.cpp
+    core/Backups.cpp
     extensions/AnimeSource.cpp
     extensions/Apk.cpp
     extensions/ExtensionSource.cpp
@@ -270,6 +271,21 @@ if(SCANCORE_HAVE_ANDROID_HOST)
     add_custom_target(scancore_host_libs DEPENDS ${SCANCORE_APK_LIBS}/scancore-host.aar)
     add_dependencies(scancore_host_libs scancore_host)
     add_dependencies(scancore scancore_host_libs)
+endif()
+# AVIF images (Images.cpp): libavif when there is one; Android decodes them
+# with the system (Avif.java), and Qt may also have an image plugin for them.
+if(SCANCORE_WITH_AVIF AND NOT ANDROID)
+    find_package(PkgConfig QUIET)
+    if(PkgConfig_FOUND)
+        pkg_check_modules(AVIF QUIET IMPORTED_TARGET libavif)
+    endif()
+    if(AVIF_FOUND)
+        target_link_libraries(scancore PRIVATE PkgConfig::AVIF)
+        target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_AVIF)
+        message(STATUS "AVIF images: libavif ${AVIF_VERSION}")
+    else()
+        message(STATUS "AVIF images: libavif not found (only through a Qt image plugin)")
+    endif()
 endif()
 if(SCANCORE_HAVE_MPV)
     target_link_libraries(scancore PRIVATE scancore_mpv)

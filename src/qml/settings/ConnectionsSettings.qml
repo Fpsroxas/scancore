@@ -114,14 +114,26 @@ SettingsPane {
         note: qsTr("Anime come in with the episodes you watched. Comics and novels come in with the chapters you read when one of your sources has them; the others wait below until they are found.")
         SettingRow {
             iconName: "book-open"
-            title: qsTr("Mihon or Tachiyomi backup")
-            description: qsTr("A .tachibk file from More → Backup and restore.")
+            title: qsTr("Mihon, Tachiyomi or Aniyomi backup")
+            description: qsTr("A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.")
             ScButton {
                 text: qsTr("Choose file")
                 iconName: "folder-open"
                 loading: pane.importing === "mihon" && pane.importTask !== null && pane.importTask.loading
                 enabled: !(pane.importTask && pane.importTask.loading)
                 onClicked: mihonDialog.open()
+            }
+        }
+        SettingRow {
+            iconName: "book-text"
+            title: qsTr("LNReader backup")
+            description: qsTr("A backup .zip from LNReader's More → Backup. Novels from a plugin you have here come back exactly as they were.")
+            ScButton {
+                text: qsTr("Choose file")
+                iconName: "folder-open"
+                loading: pane.importing === "lnreader" && pane.importTask !== null && pane.importTask.loading
+                enabled: !(pane.importTask && pane.importTask.loading)
+                onClicked: lnreaderDialog.open()
             }
         }
         SettingRow {
@@ -196,8 +208,14 @@ SettingsPane {
     FileDialog {
         id: mihonDialog
         fileMode: FileDialog.OpenFile
-        nameFilters: [qsTr("Mihon or Tachiyomi backup (*.tachibk *.proto.gz)"), qsTr("All files (*)")]
+        nameFilters: [qsTr("Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)"), qsTr("All files (*)")]
         onAccepted: pane.imported(Importer.importMihon(selectedFile), "mihon")
+    }
+    FileDialog {
+        id: lnreaderDialog
+        fileMode: FileDialog.OpenFile
+        nameFilters: [qsTr("LNReader backup (*.zip)"), qsTr("All files (*)")]
+        onAccepted: pane.imported(Importer.importLNReader(selectedFile), "lnreader")
     }
     FileDialog {
         id: mihonSaveDialog

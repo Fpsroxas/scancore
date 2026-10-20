@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QByteArray>
+#include <QHash>
 #include <QString>
 #include <QStringList>
 
@@ -43,6 +44,10 @@ QStringList zipEntries(const QString &archive);
 QByteArray gunzip(const QByteArray &data);
 // A gzip stream of `data` (Mihon backups are gzipped protobuf).
 QByteArray gzip(const QByteArray &data);
+// The files in a zip archive held in memory, by their path inside it
+// (folders left out); files over `maxFile` bytes are skipped. Empty when it
+// is not a zip.
+QHash<QString, QByteArray> unzip(const QByteArray &zip, qint64 maxFile = 64 * 1024 * 1024);
 
 // PDF pages are drawn by the app (Qt PDF), when it has it.
 struct PdfRenderer {

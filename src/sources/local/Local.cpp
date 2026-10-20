@@ -317,6 +317,21 @@ QByteArray gzip(const QByteArray &data) {
     return out;
 }
 
+QHash<QString, QByteArray> unzip(const QByteArray &zip, qint64 maxFile) {
+    QHash<QString, QByteArray> out;
+    QBuffer buffer;
+    buffer.setData(zip);
+    if (!buffer.open(QIODevice::ReadOnly))
+        return out;
+    QZipReader reader(&buffer);
+    if (!reader.isReadable() || reader.status() != QZipReader::NoError)
+        return out;
+    for (const auto &info : reader.fileInfoList())
+        if (info.isFile && info.size <= maxFile)
+            out.insert(info.filePath, reader.fileData(info.filePath));
+    return out;
+}
+
 QByteArray gunzip(const QByteArray &data) {
     // Header: magic, method 8 (deflate), flags, then optional fields.
     if (data.size() < 18 || uchar(data[0]) != 0x1f || uchar(data[1]) != 0x8b || data[2] != 8)

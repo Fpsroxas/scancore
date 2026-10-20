@@ -63,6 +63,9 @@ public:
     // full screen (see Platform.h). Nothing elsewhere.
     Q_INVOKABLE void prepareWebPlayer() const;
     Q_INVOKABLE void setOrientation(const QString &mode) const;
+    // Android: volume keys come as volumeKey() instead of changing the
+    // volume while on (the comic reader turns pages with them).
+    Q_INVOKABLE void setVolumeKeys(bool on) const;
     // SCANCORE_PROFILE: the page now on screen, for the profiler's log.
     Q_PROPERTY(bool profiling READ profiling CONSTANT)
     bool profiling() const;
@@ -117,6 +120,7 @@ signals:
     void batteryChanged();
     // Android: the player's web view is ready to load (see prepareWebPlayer).
     void webPlayerPrepared();
+    void volumeKey(bool down);
 
 private:
     // Private so QML uses create(): Qt builds its own instance of a

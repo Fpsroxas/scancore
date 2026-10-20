@@ -75,6 +75,8 @@ public:
             m_bad = true;
     }
     bool bad() const { return m_bad; }
+    // Bytes left (for packed repeated values, read with varint()).
+    bool more() const { return m_at < m_data.size() && !m_bad; }
 
 private:
     QByteArrayView m_data;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QByteArray>
+#include <QImage>
 #include <QString>
 
 #include <functional>
@@ -35,6 +37,15 @@ void askNotificationPermission();
 // thread once that is done (or no web view turned up).
 void prepareWebPlayer();
 void setWebPlayerPrepared(std::function<void()> prepared);
+// Volume keys go to `pressed` (true for volume down) instead of changing the
+// volume, while on (the comic reader's page turning).
+void setVolumeKeys(bool on);
+void setVolumeKeyPressed(std::function<void(bool down)> pressed);
+
+// Decodes an image Qt cannot (AVIF) with Android's own decoder (Android 12
+// and later); a null image elsewhere or when it fails. Any thread.
+QImage decodeImage(const QByteArray &data);
+
 // The player's full screen on phones: "landscape", "portrait" (until the
 // phone is held upright) or "" (the system's rotation setting).
 void setOrientation(const QString &mode);

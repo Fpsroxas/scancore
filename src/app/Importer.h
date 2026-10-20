@@ -29,7 +29,13 @@ public:
 
     // Each returns {imported, unmatched, progress} (progress: chapters and
     // episodes marked read).
+    // A Mihon, Tachiyomi or Aniyomi backup (.tachibk, .proto.gz). Series
+    // from an extension installed here are restored onto it exactly (its
+    // own links, chapters and episodes read or watched, bookmarks, the one
+    // part-way, category); anime without theirs are found on AniList.
     Q_INVOKABLE sc::Task *importMihon(const QUrl &file);
+    // An LNReader backup (.zip): novels onto the same LNReader plugin.
+    Q_INVOKABLE sc::Task *importLNReader(const QUrl &file);
     Q_INVOKABLE sc::Task *importAniList(const QString &user);
     Q_INVOKABLE sc::Task *importMal(const QUrl &file);
     // The library of the Comick account connected in Settings.

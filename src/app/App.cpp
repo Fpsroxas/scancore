@@ -101,6 +101,20 @@ const QVariantMap kDefaults{
     {"autoDownloadLists", QVariantList{}},
     // A downloaded chapter is deleted once read.
     {"deleteAfterRead", false},
+    // Comic reader: colour filter, wide pages, taps and volume keys (the
+    // reader's own settings may keep them per series).
+    {"readerBrightness", 1},
+    {"readerWarmth", 0},
+    {"readerGrey", false},
+    {"readerInvert", false},
+    {"readerSplitWide", false},
+    // "sides", "lshape", "kindle", "edge" or "off"; flipped by
+    // readerTapInvert ("none", "horizontal", "vertical", "both").
+    {"readerTapZones", "sides"},
+    {"readerTapInvert", "none"},
+    // Tap zones in the vertical strip too (on touch screens).
+    {"readerStripTaps", false},
+    {"readerVolumeKeys", false},
     // Privacy: incognito (nothing recorded) and when the app lock asks
     // again (minutes away, or -1 for only at start; see Lock).
     {"incognito", false},
@@ -156,6 +170,7 @@ App::App(QObject *parent) : QObject(parent) {
     connect(&m_libraryTimer, &QTimer::timeout, this, [] { Library::instance()->checkUpdates(true); });
     platform::setSiteCheckDone([this](const QString &url) { emit siteChecked(url); });
     platform::setWebPlayerPrepared([this] { emit webPlayerPrepared(); });
+    platform::setVolumeKeyPressed([this](bool down) { emit volumeKey(down); });
 #ifdef Q_OS_ANDROID
     // The reader may change it in the system's settings while away.
     m_batteryRestricted = platform::batteryRestricted();
@@ -279,6 +294,8 @@ void App::askBatteryUnrestricted() const { platform::askBatteryUnrestricted(); }
 void App::prepareWebPlayer() const { platform::prepareWebPlayer(); }
 
 void App::setOrientation(const QString &mode) const { platform::setOrientation(mode); }
+
+void App::setVolumeKeys(bool on) const { platform::setVolumeKeys(on); }
 
 bool App::profiling() const { return Profiler::enabled(); }
 

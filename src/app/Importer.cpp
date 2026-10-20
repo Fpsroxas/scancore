@@ -1,9 +1,11 @@
 #include "Importer.h"
 
+#include "Anime.h"
 #include "Comics.h"
 #include "Library.h"
 #include "Novels.h"
 #include "Trackers.h"
+#include "core/Backups.h"
 #include "core/Database.h"
 #include "core/Parallel.h"
 #include "core/Proto.h"
@@ -33,26 +35,9 @@ namespace {
 const QString kUnmatched = QStringLiteral("import.unmatched");
 QMutex g_unmatchedMutex;
 
-// One series from elsewhere.
-struct Item {
-    QString media; // comic, novel or anime
-    QStringList titles;
-    QString cover;
-    QString category = QStringLiteral("reading");
-    QString sourceName; // Mihon's name for its source
-    QString url;        // Mihon's address on that source (often a path)
-    quint64 sourceId = 0; // Mihon's id for its source (an extension's)
-    int anilistId = 0;
-    int malId = 0;
-    QString comickHid;
-    // Chapters or episodes done: the numbers when known (Mihon), else a count.
-    QList<double> numbers;
-    int count = 0;
-    qint64 updatedAt = 0;
-    QJsonObject anime; // AniList media, for anime
-
-    QString title() const { return titles.value(0); }
-};
+using backups::Item;
+using backups::parseLNReader;
+using backups::parseMihon;
 
 QVariantMap toMap(const Item &item) {
     QVariantList numbers;
@@ -80,110 +65,6 @@ Item fromMap(const QVariantMap &map) {
         item.numbers.append(n.toDouble());
     item.count = map.value("count").toInt();
     return item;
-}
-
-// Mihon's Backup: manga (1) and the sources they come from (101).
-QList<Item> parseMihon(const QByteArray &data) {
-    QHash<quint64, QString> sourceNames;
-    QList<std::pair<quint64, Item>> manga;
-    Proto backup(data);
-    while (backup.next()) {
-        if (backup.field() == 101) {
-            Proto source(backup.bytes());
-            QString name;
-            quint64 id = 0;
-            while (source.next()) {
-                if (source.field() == 1)
-                    name = source.text();
-                else if (source.field() == 2)
-                    id = source.varint();
-                else
-                    source.skip();
-            }
-            sourceNames.insert(id, name);
-        } else if (backup.field() == 1) {
-            Proto m(backup.bytes());
-            Item item;
-            item.media = QStringLiteral("comic");
-            quint64 source = 0;
-            bool favorite = true;
-            float tracked = 0;
-            QString title;
-            while (m.next()) {
-                switch (m.field()) {
-                case 1: source = m.varint(); break;
-                case 2: item.url = m.text(); break;
-                case 3: title = m.text(); break;
-                case 9: item.cover = m.text(); break;
-                case 16: {
-                    Proto chapter(m.bytes());
-                    bool read = false;
-                    double number = -1;
-                    qint64 changed = 0;
-                    while (chapter.next()) {
-                        if (chapter.field() == 4)
-                            read = chapter.varint() != 0;
-                        else if (chapter.field() == 9)
-                            number = chapter.number();
-                        else if (chapter.field() == 11)
-                            changed = qint64(chapter.varint());
-                        else
-                            chapter.skip();
-                    }
-                    if (read && number >= 0) {
-                        item.numbers.append(number);
-                        item.updatedAt = std::max(item.updatedAt, changed);
-                    }
-                    break;
-                }
-                case 18: {
-                    Proto tracking(m.bytes());
-                    int service = 0;
-                    qint64 id = 0;
-                    float last = 0;
-                    while (tracking.next()) {
-                        if (tracking.field() == 1)
-                            service = int(tracking.varint());
-                        else if (tracking.field() == 3 || tracking.field() == 100)
-                            id = std::max<qint64>(id, qint64(tracking.varint()));
-                        else if (tracking.field() == 6)
-                            last = float(tracking.number());
-                        else
-                            tracking.skip();
-                    }
-                    // Mihon's tracker ids: 1 MyAnimeList, 2 AniList.
-                    if (service == 1)
-                        item.malId = int(id);
-                    else if (service == 2)
-                        item.anilistId = int(id);
-                    tracked = std::max(tracked, last);
-                    break;
-                }
-                case 100: favorite = m.varint() != 0; break;
-                default: m.skip();
-                }
-            }
-            if (m.bad())
-                throw Error(QStringLiteral("This backup is damaged."));
-            // Entries outside the library only carry history.
-            if (!favorite || title.isEmpty())
-                continue;
-            item.titles = {title};
-            item.count = int(tracked);
-            manga.append({source, item});
-        } else {
-            backup.skip();
-        }
-    }
-    if (backup.bad())
-        throw Error(QStringLiteral("This is not a Mihon or Tachiyomi backup, or it is damaged."));
-    QList<Item> out;
-    for (auto &[source, item] : manga) {
-        item.sourceName = sourceNames.value(source);
-        item.sourceId = source;
-        out.append(item);
-    }
-    return out;
 }
 
 // ------------------------------------------------------------ AniList
@@ -329,13 +210,32 @@ int store(const QVariantMap &series, const QString &category, const QVariantList
         Database::query(QStringLiteral("DELETE FROM library_removed WHERE series_id = ?"), {id});
         for (const auto &value : units) {
             const auto unit = value.toMap();
+            // The extension's own link, to match the backup's exactly.
+            auto link = unit.value("url").toString();
+            if (link.isEmpty())
+                link = unit.value("key").toString();
+            if (const auto wrapped = ext::unwrapUrl(link))
+                link = wrapped->url;
+            if (item.bookmarkLinks.contains(link))
+                Database::query(QStringLiteral("INSERT OR IGNORE INTO bookmarks(series_id, unit_key, created_at) VALUES(?, ?, ?)"),
+                                {id, unit.value("key").toString(), when});
             bool ok = false;
             const double number = unit.value("number").toString().toDouble(&ok);
-            if (!ok)
+            const bool done = item.doneLinks.contains(link)
+                || (ok && (numbers.isEmpty() ? number <= item.count && number > 0 : numbers.contains(qRound64(number * 1000))));
+            if (!done) {
+                if (!item.partLink.isEmpty() && link == item.partLink)
+                    Database::query(QStringLiteral(R"(
+                        INSERT INTO progress(series_id, unit_key, unit_title, unit_number, unit_url, position, percent, completed, updated_at)
+                        VALUES(?, ?, ?, ?, ?, ?, ?, 0, ?)
+                        ON CONFLICT(series_id, unit_key) DO NOTHING
+                    )"),
+                                    {id, unit.value("key").toString(), unit.value("title").toString(), unit.value("number").toString(),
+                                     unit.value("url").toString(),
+                                     QString::fromUtf8(QJsonDocument(QJsonObject::fromVariantMap(item.partPosition)).toJson(QJsonDocument::Compact)),
+                                     item.partPercent, when});
                 continue;
-            const bool done = numbers.isEmpty() ? number <= item.count && number > 0 : numbers.contains(qRound64(number * 1000));
-            if (!done)
-                continue;
+            }
             Database::query(QStringLiteral(R"(
                 INSERT INTO progress(series_id, unit_key, unit_title, unit_number, unit_url, percent, completed, updated_at)
                 VALUES(?, ?, ?, ?, ?, 1, 1, ?)
@@ -395,6 +295,7 @@ bool sameSource(const SourcePtr &source, const QString &name) {
 // false when no source has it.
 bool storeFound(const Item &item, Tally &outcome, bool searchEverywhere) {
     const bool novel = item.media == QLatin1String("novel");
+    const bool anime = item.media == QLatin1String("anime");
     QStringList wanted;
     for (const auto &t : item.titles)
         if (!titleKey(t).isEmpty())
@@ -404,7 +305,7 @@ bool storeFound(const Item &item, Tally &outcome, bool searchEverywhere) {
 
     const auto tryUrl = [&](const QString &url, const QString &sourceKey, const QString &title, const QString &cover) {
         try {
-            units = novel ? Novels::fetchUnits(url) : Comics::fetchUnits(url);
+            units = novel ? Novels::fetchUnits(url) : anime ? Anime::fetchUnits(url) : Comics::fetchUnits(url);
         } catch (const Error &) {
             return false;
         }
@@ -415,17 +316,21 @@ bool storeFound(const Item &item, Tally &outcome, bool searchEverywhere) {
         return true;
     };
 
-    // The same extension source installed here: the backup's own address
-    // on it, as Mihon restores it.
-    if (!novel && item.sourceId != 0 && !item.url.isEmpty()) {
-        const auto key = QStringLiteral("mihon:%1").arg(item.sourceId);
-        if (const auto source = comics::Registry::byKey(key); source && source->enabled() && tryUrl(ext::wrapUrl(key, item.url), key, {}, {})) {
+    // The same extension or plugin installed here: the backup's own
+    // address on it, as the app it came from restores it.
+    if (!item.extensionKey.isEmpty() && !item.url.isEmpty()) {
+        const auto key = item.extensionKey;
+        const auto comicSource = novel || anime ? nullptr : comics::Registry::byKey(key);
+        if ((novel || anime || (comicSource && comicSource->enabled())) && tryUrl(ext::wrapUrl(key, item.url), key, {}, {})) {
             outcome.progress += store(series, item.category, units, item);
             outcome.saved.append(series.value("id").toString());
             ++outcome.imported;
             return true;
         }
     }
+    // Anime without their extension are found on AniList (storeAnimeAll).
+    if (anime)
+        return false;
     if (!novel) {
         for (const auto &source : comics::Registry::all()) {
             if (!source->enabled() || source->key() == QLatin1String("local"))
@@ -486,7 +391,76 @@ bool storeFound(const Item &item, Tally &outcome, bool searchEverywhere) {
     return true;
 }
 
-// Comics and novels, a few at a time so no site gets flooded.
+// Anime whose extension is not installed here: their AniList entry (by the
+// tracker link the backup has, else by title), with the episodes watched.
+void storeAnimeOnAniList(const QList<Item> &items, Tally &outcome) {
+    QList<int> anilistIds;
+    QList<int> malIds;
+    for (const auto &item : items) {
+        if (item.anilistId > 0)
+            anilistIds.append(item.anilistId);
+        else if (item.malId > 0)
+            malIds.append(item.malId);
+    }
+    QHash<int, QJsonObject> byAnilist;
+    QHash<int, QJsonObject> byMal;
+    try {
+        for (int i = 0; i < anilistIds.size(); i += 50) {
+            QJsonArray chunk;
+            for (const int id : anilistIds.mid(i, 50))
+                chunk.append(id);
+            const auto data = anilist(QStringLiteral("query ($ids: [Int]) { Page(perPage: 50) { media(id_in: $ids, type: ANIME) {%1} } }")
+                                          .arg(QString::fromLatin1(kMediaFields)),
+                                      {{"ids", chunk}});
+            for (const auto &value : data.value("Page").toObject().value("media").toArray())
+                byAnilist.insert(value.toObject().value("id").toInt(), value.toObject());
+        }
+        byMal = byMalIds(malIds, true);
+    } catch (const Error &) {
+        // Whatever was not found waits in the list of titles to find.
+    }
+    // Searching by title is one request each; AniList allows about 90 a
+    // minute, so only the first few are looked up.
+    int searches = 0;
+    for (const auto &item : items) {
+        if (CancelScope::cancelled())
+            throw Error(QStringLiteral("Cancelled"), 499);
+        auto media = item.anilistId > 0 ? byAnilist.value(item.anilistId) : item.malId > 0 ? byMal.value(item.malId) : QJsonObject();
+        if (media.isEmpty() && searches < 30) {
+            ++searches;
+            try {
+                const auto data = anilist(QStringLiteral("query ($q: String) { Page(perPage: 8) { media(search: $q, type: ANIME) {%1} } }")
+                                              .arg(QString::fromLatin1(kMediaFields)),
+                                          {{"q", item.title()}});
+                const auto wanted = titleKey(item.title());
+                for (const auto &value : data.value("Page").toObject().value("media").toArray()) {
+                    const auto titles = titlesOf(value.toObject());
+                    if (std::any_of(titles.begin(), titles.end(), [&](const QString &t) { return titleKey(t) == wanted; })) {
+                        media = value.toObject();
+                        break;
+                    }
+                }
+            } catch (const Error &) {
+            }
+        }
+        if (media.isEmpty()) {
+            outcome.unmatched.append(item);
+            continue;
+        }
+        auto found = itemFrom(media);
+        found.category = item.category;
+        found.numbers = item.numbers;
+        found.updatedAt = item.updatedAt;
+        double last = item.count;
+        for (const double n : item.numbers)
+            last = std::max(last, n);
+        found.count = int(std::ceil(last));
+        storeAnime(found, outcome);
+    }
+}
+
+// Comics, novels and extension anime, a few at a time so no site gets
+// flooded; anime left over are looked up on AniList.
 void storeAll(const QList<Item> &items, Tally &outcome, bool searchEverywhere) {
     for (int i = 0; i < items.size(); i += 4) {
         if (CancelScope::cancelled())
@@ -508,6 +482,17 @@ void storeAll(const QList<Item> &items, Tally &outcome, bool searchEverywhere) {
             outcome.unmatched += result.value->unmatched;
         }
     }
+    QList<Item> anime;
+    for (auto it = outcome.unmatched.begin(); it != outcome.unmatched.end();) {
+        if (it->media == QLatin1String("anime")) {
+            anime.append(*it);
+            it = outcome.unmatched.erase(it);
+        } else {
+            ++it;
+        }
+    }
+    if (!anime.isEmpty())
+        storeAnimeOnAniList(anime, outcome);
 }
 
 void addUnmatched(const QList<Item> &items) {
@@ -575,6 +560,17 @@ Task *Importer::finish(Task *task) {
         emit changed();
     });
     return task;
+}
+
+Task *Importer::importLNReader(const QUrl &file) {
+    return finish(Task::run([file]() -> QVariant {
+        const auto items = parseLNReader(readFile(file));
+        if (items.isEmpty())
+            throw Error(QStringLiteral("This backup has no library."));
+        Tally outcome;
+        storeAll(items, outcome, false);
+        return summary(outcome);
+    }));
 }
 
 Task *Importer::importMihon(const QUrl &file) {

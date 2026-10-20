@@ -1,13 +1,17 @@
 // The library's own logic on a scratch database: moving series between
 // sources.
 
+#include "core/Backups.h"
 #include "core/Database.h"
 #include "core/Http.h"
 #include "core/Migration.h"
+#include "core/Proto.h"
 #include "core/ThemeLook.h"
 #include "core/UpdateRules.h"
 
+#include <QBuffer>
 #include <QTemporaryDir>
+#include <QtCore/private/qzipwriter_p.h>
 #include <QtTest>
 
 using namespace sc;
@@ -163,6 +167,109 @@ private slots:
         QCOMPARE(look.value("count").toInt(), 200);
         QVERIFY(!look.contains("evil"));
         QVERIFY(theme::sanitizeLook(QJsonObject{{"mode", "neon"}}).isEmpty());
+    }
+
+    // Aniyomi's backup: anime in the current layout (3, 4, 103) and the
+    // older one (501-503), categories by name, and episodes seen, part-way
+    // and bookmarked by their links.
+    void aniyomiBackup() {
+        const auto episode = [](const QString &link, float number, bool seen, qint64 at = 0, qint64 total = 0, bool bookmark = false) {
+            ProtoWriter e;
+            e.text(1, link);
+            e.boolean(4, seen);
+            e.boolean(5, bookmark);
+            e.varint(6, quint64(at));
+            e.fixed32(9, number);
+            e.varint(16, quint64(total));
+            return e;
+        };
+        const auto anime = [&](quint64 source, const QString &url, const QString &title, quint64 category) {
+            ProtoWriter a;
+            a.varint(1, source);
+            a.text(2, url);
+            a.text(3, title);
+            a.message(16, episode(QStringLiteral("/ep/1"), 1, true));
+            a.message(16, episode(QStringLiteral("/ep/2"), 2, false, 600000, 1440000, true));
+            a.varint(17, category);
+            ProtoWriter tracking;
+            tracking.varint(1, 2);
+            tracking.varint(100, 21);
+            a.message(18, tracking);
+            return a;
+        };
+        const auto category = [](const QString &name, quint64 order) {
+            ProtoWriter c;
+            c.text(1, name);
+            c.varint(2, order);
+            return c;
+        };
+        const auto source = [](const QString &name, quint64 id) {
+            ProtoWriter c;
+            c.text(1, name);
+            c.varint(2, id);
+            return c;
+        };
+        ProtoWriter current;
+        current.message(4, category(QStringLiteral("Plan to watch"), 3));
+        current.message(3, anime(777, QStringLiteral("/anime/one"), QStringLiteral("One Piece"), 3));
+        current.message(103, source(QStringLiteral("Some Source"), 777));
+        ProtoWriter legacy;
+        legacy.message(502, category(QStringLiteral("On hold"), 1));
+        legacy.message(501, anime(778, QStringLiteral("/anime/two"), QStringLiteral("Two"), 1));
+        legacy.message(503, source(QStringLiteral("Old Source"), 778));
+
+        for (const auto &[data, key, list] : {std::tuple{current.data(), QStringLiteral("aniyomi:777"), QStringLiteral("planned")},
+                                              std::tuple{legacy.data(), QStringLiteral("aniyomi:778"), QStringLiteral("paused")}}) {
+            const auto items = backups::parseMihon(data);
+            QCOMPARE(items.size(), 1);
+            const auto &item = items.first();
+            QCOMPARE(item.media, QStringLiteral("anime"));
+            QCOMPARE(item.extensionKey, key);
+            QCOMPARE(item.category, list);
+            QCOMPARE(item.anilistId, 21);
+            QCOMPARE(item.doneLinks, QSet<QString>{QStringLiteral("/ep/1")});
+            QCOMPARE(item.bookmarkLinks, QSet<QString>{QStringLiteral("/ep/2")});
+            QCOMPARE(item.partLink, QStringLiteral("/ep/2"));
+            QCOMPARE(item.partPosition.value("seconds").toDouble(), 600.0);
+            QCOMPARE(item.numbers, QList<double>{1.0});
+        }
+        QCOMPARE(backups::categoryNamed(QStringLiteral("Reading")), QStringLiteral("reading"));
+        QCOMPARE(backups::categoryNamed(QStringLiteral("Completed")), QStringLiteral("completed"));
+        QCOMPARE(backups::categoryNamed(QStringLiteral("Favourites")), QString());
+    }
+
+    // LNReader's zip: the novel on its plugin, chapters read by link, the
+    // one part-way, bookmarks, the category; novels outside the library and
+    // local ones left out.
+    void lnreaderBackup() {
+        QBuffer buffer;
+        buffer.open(QIODevice::WriteOnly);
+        {
+            QZipWriter zip(&buffer);
+            zip.addFile(QStringLiteral("Version.json"), QByteArray("{\"version\":\"2.0.0\"}"));
+            const QJsonObject novel{{"id", 5}, {"path", "novel/lord"}, {"pluginId", "royalroad"}, {"name", "Lord of Mysteries"},
+                                    {"cover", "https://example.com/c.jpg"}, {"inLibrary", 1}, {"isLocal", 0},
+                                    {"chapters", QJsonArray{QJsonObject{{"path", "c/1"}, {"unread", 0}, {"chapterNumber", 1}},
+                                                            QJsonObject{{"path", "c/2"}, {"unread", 1}, {"progress", 40}, {"bookmark", 1}},
+                                                            QJsonObject{{"path", "c/3"}, {"unread", 1}}}}};
+            zip.addFile(QStringLiteral("NovelAndChapters/5.json"), QJsonDocument(novel).toJson());
+            const QJsonObject away{{"id", 6}, {"path", "x"}, {"pluginId", "royalroad"}, {"name", "Not saved"}, {"inLibrary", 0}};
+            zip.addFile(QStringLiteral("NovelAndChapters/6.json"), QJsonDocument(away).toJson());
+            zip.addFile(QStringLiteral("Category.json"),
+                        QJsonDocument(QJsonArray{QJsonObject{{"id", 2}, {"name", "Completed"}, {"novelIds", QJsonArray{5}}}}).toJson());
+        }
+        const auto items = backups::parseLNReader(buffer.data());
+        QCOMPARE(items.size(), 1);
+        const auto &item = items.first();
+        QCOMPARE(item.media, QStringLiteral("novel"));
+        QCOMPARE(item.extensionKey, QStringLiteral("lnreader:royalroad"));
+        QCOMPARE(item.url, QStringLiteral("novel/lord"));
+        QCOMPARE(item.category, QStringLiteral("completed"));
+        QCOMPARE(item.doneLinks, QSet<QString>{QStringLiteral("c/1")});
+        QCOMPARE(item.partLink, QStringLiteral("c/2"));
+        QCOMPARE(item.partPercent, 0.4);
+        QCOMPARE(item.bookmarkLinks, QSet<QString>{QStringLiteral("c/2")});
+        QVERIFY_THROWS_EXCEPTION(Error, backups::parseLNReader(QByteArray("not a zip")));
     }
 
     void refusesNothingToMoveTo() {

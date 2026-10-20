@@ -1,5 +1,6 @@
 #include "Images.h"
 
+#include "Platform.h"
 #include "core/ImageCache.h"
 
 #include <QBuffer>
@@ -12,6 +13,11 @@
 #include <QSGImageNode>
 #include <QSvgRenderer>
 #include <QThreadPool>
+#include <QtEndian>
+
+#ifdef SCANCORE_HAVE_AVIF
+#include <avif/avif.h>
+#endif
 
 namespace sc {
 
@@ -43,24 +49,78 @@ QString unb64(const QString &value) {
     return QString::fromUtf8(QByteArray::fromBase64(value.toLatin1(), QByteArray::Base64UrlEncoding));
 }
 
+// AVIF (an ISO media file of brand avif or avis): Qt has no decoder of its
+// own, so libavif (desktop) or the system (Android) decodes it.
+bool isAvif(const QByteArray &data) {
+    if (data.size() < 16 || data.mid(4, 4) != "ftyp")
+        return false;
+    const auto box = data.mid(8, std::min<qsizetype>(qFromBigEndian<quint32>(data.constData()) - 8, 64));
+    return box.contains("avif") || box.contains("avis");
+}
+
+QImage decodeAvif(const QByteArray &data) {
+#ifdef SCANCORE_HAVE_AVIF
+    QImage out;
+    avifDecoder *decoder = avifDecoderCreate();
+    if (!decoder)
+        return out;
+    decoder->maxThreads = 2;
+    decoder->strictFlags = AVIF_STRICT_DISABLED;
+    if (avifDecoderSetIOMemory(decoder, reinterpret_cast<const uint8_t *>(data.constData()), size_t(data.size())) == AVIF_RESULT_OK &&
+        avifDecoderParse(decoder) == AVIF_RESULT_OK && avifDecoderNextImage(decoder) == AVIF_RESULT_OK) {
+        avifRGBImage rgb;
+        avifRGBImageSetDefaults(&rgb, decoder->image);
+        rgb.format = AVIF_RGB_FORMAT_RGBA;
+        rgb.depth = 8;
+        out = QImage(int(decoder->image->width), int(decoder->image->height), QImage::Format_RGBA8888);
+        rgb.pixels = out.bits();
+        rgb.rowBytes = uint32_t(out.bytesPerLine());
+        if (out.isNull() || avifImageYUVToRGB(decoder->image, &rgb) != AVIF_RESULT_OK)
+            out = QImage();
+    }
+    avifDecoderDestroy(decoder);
+    return out;
+#elif defined(Q_OS_ANDROID)
+    return platform::decodeImage(data);
+#else
+    Q_UNUSED(data)
+    return {};
+#endif
+}
+
+// The size an image of `size` is decoded at: to cover `requested` (covers),
+// or no wider than `maxWidth` (pages).
+QSize decodedSize(const QSize &size, const QSize &requested, int maxWidth) {
+    QSize target = size;
+    if (requested.width() > 0 && requested.height() > 0)
+        target = size.scaled(requested, Qt::KeepAspectRatioByExpanding);
+    else if (requested.width() > 0 && size.width() > requested.width())
+        target = QSize(requested.width(), size.height() * requested.width() / size.width());
+    else if (requested.height() > 0 && size.height() > requested.height())
+        target = QSize(size.width() * requested.height() / size.height(), requested.height());
+    if (maxWidth > 0 && target.width() > maxWidth)
+        target = QSize(maxWidth, target.height() * maxWidth / target.width());
+    return target.width() < size.width() ? target : size;
+}
+
 QImage decode(const QByteArray &data, const QSize &requested, int maxWidth = 0) {
     QBuffer buffer;
     buffer.setData(data);
     buffer.open(QIODevice::ReadOnly);
     QImageReader reader(&buffer);
     reader.setAutoTransform(true);
+    // A Qt image plugin for AVIF (KDE's, in the Flatpak) goes first.
+    if (isAvif(data) && !reader.canRead()) {
+        auto image = decodeAvif(data);
+        if (image.isNull())
+            throw Error(QStringLiteral("This AVIF image could not be read."));
+        const auto target = decodedSize(image.size(), requested, maxWidth);
+        return target == image.size() ? image : image.scaled(target, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    }
     const auto size = reader.size();
     if (size.isValid()) {
-        QSize target = size;
-        if (requested.width() > 0 && requested.height() > 0)
-            target = size.scaled(requested, Qt::KeepAspectRatioByExpanding);
-        else if (requested.width() > 0 && size.width() > requested.width())
-            target = QSize(requested.width(), size.height() * requested.width() / size.width());
-        else if (requested.height() > 0 && size.height() > requested.height())
-            target = QSize(size.width() * requested.height() / size.height(), requested.height());
-        if (maxWidth > 0 && target.width() > maxWidth)
-            target = QSize(maxWidth, target.height() * maxWidth / target.width());
-        if (target != size && target.width() < size.width())
+        const auto target = decodedSize(size, requested, maxWidth);
+        if (target != size)
             reader.setScaledSize(target);
     }
     QImage image = reader.read();
@@ -273,6 +333,22 @@ void PanelImage::setCropBorders(bool crop) {
     startSoon();
 }
 
+void PanelImage::setFilter(const QString &filter) {
+    if (filter == m_filter)
+        return;
+    m_filter = filter;
+    emit sourceChanged();
+    startSoon();
+}
+
+void PanelImage::setHalf(const QString &half) {
+    if (half == m_half)
+        return;
+    m_half = half;
+    emit sourceChanged();
+    startSoon();
+}
+
 void PanelImage::setMipmap(bool mipmap) {
     if (mipmap == m_mipmap)
         return;
@@ -319,7 +395,7 @@ void PanelImage::start() {
     const int generation = ++m_generation;
     QPointer<PanelImage> self(this);
     panelPool().start([self, generation, cancel = m_cancel, source = m_source, referer = m_referer,
-                       maxWidth = m_maxDecodeWidth, crop = m_cropBorders] {
+                       maxWidth = m_maxDecodeWidth, crop = m_cropBorders, filter = m_filter, half = m_half] {
         CancelScope scope(cancel);
         QList<QImage> tiles;
         QSize size;
@@ -328,9 +404,22 @@ void PanelImage::start() {
             const auto data = ImageCache::fetch(source, referer);
             if (cancel->load())
                 return;
-            auto image = decode(data, {}, maxWidth);
+            // Half of a spread decodes at twice the width, so each half is
+            // as sharp as a single page.
+            auto image = decode(data, {}, half.isEmpty() ? maxWidth : maxWidth * 2);
             if (crop)
                 image = image.copy(contentRect(image));
+            if (half == QLatin1String("left"))
+                image = image.copy(0, 0, image.width() / 2, image.height());
+            else if (half == QLatin1String("right"))
+                image = image.copy(image.width() / 2, 0, image.width() - image.width() / 2, image.height());
+            if (filter.contains(QLatin1String("grey")))
+                image = image.convertToFormat(QImage::Format_Grayscale8);
+            if (filter.contains(QLatin1String("invert"))) {
+                if (image.format() != QImage::Format_Grayscale8)
+                    image = image.convertToFormat(QImage::Format_RGB32);
+                image.invertPixels();
+            }
             size = image.size();
             image = image.convertToFormat(image.hasAlphaChannel() ? QImage::Format_RGBA8888_Premultiplied
                                                                   : QImage::Format_RGBX8888);

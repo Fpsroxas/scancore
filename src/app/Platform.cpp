@@ -20,6 +20,7 @@ namespace {
 
 std::function<void(const QString &)> g_siteCheckDone;
 std::function<void()> g_webPlayerPrepared;
+std::function<void(bool)> g_volumeKey;
 
 #ifdef Q_OS_ANDROID
 constexpr auto kBrowserCheckClass = "com/mediumdev/scancore/BrowserCheck";
@@ -27,6 +28,29 @@ constexpr auto kPowerClass = "com/mediumdev/scancore/Power";
 constexpr auto kNotifyClass = "com/mediumdev/scancore/Notify";
 constexpr auto kWebPlayerClass = "com/mediumdev/scancore/WebPlayer";
 constexpr auto kScreenClass = "com/mediumdev/scancore/Screen";
+constexpr auto kVolumeKeysClass = "com/mediumdev/scancore/VolumeKeys";
+constexpr auto kImagesClass = "com/mediumdev/scancore/Images";
+
+void jniVolumeKey(JNIEnv *, jclass, jboolean down) {
+    QMetaObject::invokeMethod(
+        QCoreApplication::instance(),
+        [down] {
+            if (g_volumeKey)
+                g_volumeKey(down);
+        },
+        Qt::QueuedConnection);
+}
+
+bool registerVolumeKeys() {
+    static const bool registered = [] {
+        const JNINativeMethod methods[] = {
+            {"nativeKey", "(Z)V", reinterpret_cast<void *>(jniVolumeKey)},
+        };
+        QJniEnvironment env;
+        return env.registerNativeMethods(kVolumeKeysClass, methods, 1);
+    }();
+    return registered;
+}
 
 QString javaString(JNIEnv *env, jstring s) {
     if (!s)
@@ -112,6 +136,52 @@ bool registerBrowserCheck() {
 } // namespace
 
 void setSiteCheckDone(std::function<void(const QString &)> done) { g_siteCheckDone = std::move(done); }
+
+void setVolumeKeyPressed(std::function<void(bool)> pressed) { g_volumeKey = std::move(pressed); }
+
+QImage decodeImage(const QByteArray &data) {
+#ifdef Q_OS_ANDROID
+    QJniEnvironment env;
+    jbyteArray bytes = env->NewByteArray(jsize(data.size()));
+    if (!bytes)
+        return {};
+    env->SetByteArrayRegion(bytes, 0, jsize(data.size()), reinterpret_cast<const jbyte *>(data.constData()));
+    // [width, height, then ARGB pixels] or null.
+    const auto answer = QJniObject::callStaticObjectMethod(kImagesClass, "decode", "([B)[I", bytes);
+    env->DeleteLocalRef(bytes);
+    const auto result = answer.object<jintArray>();
+    if (env.checkAndClearExceptions() || !result)
+        return {};
+    const jsize length = env->GetArrayLength(result);
+    if (length < 2)
+        return {};
+    jint size[2];
+    env->GetIntArrayRegion(result, 0, 2, size);
+    QImage image;
+    if (size[0] > 0 && size[1] > 0 && qint64(size[0]) * size[1] == length - 2) {
+        // Android's ARGB ints are QImage's ARGB32 in memory.
+        image = QImage(size[0], size[1], QImage::Format_ARGB32);
+        if (!image.isNull())
+            for (int y = 0; y < size[1]; ++y)
+                env->GetIntArrayRegion(result, 2 + y * size[0], size[0], reinterpret_cast<jint *>(image.scanLine(y)));
+    }
+    return image;
+#else
+    Q_UNUSED(data)
+    return {};
+#endif
+}
+
+void setVolumeKeys(bool on) {
+#ifdef Q_OS_ANDROID
+    if (!registerVolumeKeys())
+        return;
+    QJniObject::callStaticMethod<void>(kVolumeKeysClass, "setCapture", "(Landroid/app/Activity;Z)V",
+                                       QNativeInterface::QAndroidApplication::context().object(), jboolean(on));
+#else
+    Q_UNUSED(on)
+#endif
+}
 
 bool openSiteCheck(const QString &url, const QString &title, const QString &doneLabel) {
 #ifdef Q_OS_ANDROID

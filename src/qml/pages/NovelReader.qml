@@ -54,6 +54,9 @@ Rectangle {
     focus: true
     Behavior on color { ColorAnimation { duration: Motion.slow } }
 
+    // The chapter's text fades in (the list's header plays it).
+    signal reveal()
+
     function load(i) {
         savePosition(true)
         // A chapter picked by hand stops the voice; the end of one read
@@ -68,10 +71,10 @@ Rectangle {
         task = ahead ? nextTask : Novels.chapter(chapters[i].url, series.id)
         nextTask = null
         nextFor = -1
-        flick.scrollTo(0, false)
+        flick.positionViewAtBeginning()
         barsShown = true
         if (task.done) Qt.callLater(arrived)
-        contentReveal.restart()
+        reveal()
         Presence.show("novel", series.title || "", chapters[i].title || "")
     }
 
@@ -95,12 +98,10 @@ Rectangle {
     // chapter that fits on one screen as read.
     function arrived() {
         if (blocks.length === 0) return
-        // The column places its blocks later; their positions are needed now.
-        body.forceLayout()
-        if (resumePosition && resumePosition.block !== undefined) {
-            const item = blockRepeater.itemAt(Math.min(resumePosition.block, blockRepeater.count - 1))
-            if (item) flick.scrollTo(item.y + body.y - 80, false)
-        }
+        // The list places its paragraphs later; their positions are needed now.
+        flick.forceLayout()
+        if (resumePosition && resumePosition.block !== undefined)
+            goToBlock(resumePosition.block)
         resumePosition = null
         if (flick.contentHeight - flick.height <= 4) {
             finished = true
@@ -145,12 +146,10 @@ Rectangle {
             if (!reader.speaking) return
             reader.spokenBlock = tag
             if (tag >= 0 && App.settings.ttsFollow !== false) {
-                const item = blockRepeater.itemAt(tag)
-                if (!item) return
-                const top = item.y + body.y
+                const item = flick.itemAtIndex(tag)
                 // Keep it in the upper third, without jumping for every line.
-                if (top < flick.contentY + 80 || top + item.height > flick.contentY + flick.height - 80)
-                    flick.scrollTo(top - flick.height * 0.25)
+                if (!item || item.y < flick.contentY + 80 || item.y + item.height > flick.contentY + flick.height - 80)
+                    flick.showBlock(tag, flick.height * 0.25, !!item)
             }
         }
         function onFinished(tag) {
@@ -175,25 +174,25 @@ Rectangle {
     FrameAnimation {
         running: reader.autoScrolling && !flick.moving && !flick.dragging
         onTriggered: {
-            const max = flick.contentHeight - flick.height
-            if (flick.contentY >= max - 1) {
+            if (flick.atYEnd) {
                 reader.autoScrolling = false
                 return
             }
-            flick.contentY = Math.min(max, flick.contentY + (Number(App.settings.novelAutoScrollSpeed) || 40) * frameTime)
+            flick.contentY += (Number(App.settings.novelAutoScrollSpeed) || 40) * frameTime
         }
     }
 
+    // Paragraph `i` just under the bar at the top.
+    function goToBlock(i) { flick.showBlock(Math.max(0, Math.min(i, blocks.length - 1)), 80, false) }
+
+    // The paragraph just under the bar at the top (the title counts as 0).
     function firstVisibleBlock() {
-        const y = flick.contentY - body.y + 80
-        let lo = 0, hi = blockRepeater.count - 1, found = 0
-        while (lo <= hi) {
-            const mid = (lo + hi) >> 1
-            const it = blockRepeater.itemAt(mid)
-            if (!it) break
-            if (it.y <= y) { found = mid; lo = mid + 1 } else hi = mid - 1
+        // indexAt misses the gaps between paragraphs; look a little lower.
+        for (let dy = 80; dy < 240; dy += 20) {
+            const i = flick.indexAt(flick.width / 2, flick.contentY + dy)
+            if (i >= 0) return i
         }
-        return found
+        return 0
     }
 
     property real lastSaved: 0
@@ -201,8 +200,7 @@ Rectangle {
         if (!series.id || !unit.key || blocks.length === 0) return
         if (!force && Date.now() - lastSaved < 1500) return
         lastSaved = Date.now()
-        const max = Math.max(1, flick.contentHeight - flick.height)
-        const percent = finished ? 1 : Math.min(1, Math.max(0, flick.contentY / max))
+        const percent = finished ? 1 : flick.progress
         Library.recordProgress(series, unit, { type: "text", block: firstVisibleBlock(), percent: percent }, percent, finished || percent > 0.97)
     }
 
@@ -234,21 +232,50 @@ Rectangle {
     }
     Shortcut { sequences: Keymap.sequences("reader.next"); onActivated: if (reader.hasNext) reader.load(reader.index + 1) }
     Shortcut { sequences: Keymap.sequences("reader.prev"); onActivated: if (reader.hasPrev) reader.load(reader.index - 1) }
-    Shortcut { sequences: Keymap.sequences("reader.first"); onActivated: flick.scrollTo(0) }
-    Shortcut { sequences: Keymap.sequences("reader.last"); onActivated: flick.scrollTo(flick.contentHeight) }
+    Shortcut { sequences: Keymap.sequences("reader.first"); onActivated: flick.positionViewAtBeginning() }
+    Shortcut { sequences: Keymap.sequences("reader.last"); onActivated: flick.positionViewAtEnd() }
     Shortcut { sequences: Keymap.sequences("reader.fullscreen"); onActivated: reader.toggleFullScreen() }
     Shortcut { sequences: Keymap.sequences("reader.wider"); onActivated: App.setSetting("novelSize", Math.min(34, reader.fontSize + 1)) }
     Shortcut { sequences: Keymap.sequences("reader.narrower"); onActivated: App.setSetting("novelSize", Math.max(13, reader.fontSize - 1)) }
 
-    SmoothFlickable {
+    // The chapter as a list of its paragraphs, so only those near the
+    // screen exist: a chapter of thousands of paragraphs opens and scrolls
+    // as fast as a short one. Positions are by paragraph (block).
+    ListView {
         id: flick
         anchors.fill: parent
-        contentHeight: body.y + body.height + 120 + reader.insetBottom
-        wheelStep: 110
+        model: reader.blocks
+        clip: true
+        spacing: reader.fontSize * reader.paragraphSpacing
+        cacheBuffer: Math.max(1200, height * 2)
+        boundsBehavior: Flickable.StopAtBounds
+        maximumFlickVelocity: 4500
+        flickDeceleration: 3500
+        reuseItems: true
         ScrollBar.vertical: ScScrollBar {}
+        // Where an eased scroll is heading (contentY when none is running).
+        readonly property real target: wheel.ease.running ? wheel.target : contentY
+        // How far through the chapter, from 0 to 1 (contentY starts at
+        // originY, which moves as paragraph heights become known).
+        readonly property real progress: {
+            const max = contentHeight - height
+            return max > 0 ? Math.min(1, Math.max(0, (contentY - originY) / max)) : 1
+        }
+        function scrollTo(y, animated) { wheel.scrollTo(y, animated) }
+        // Paragraph `i` at `offset` pixels below the top of the screen.
+        function showBlock(i, offset, animated) {
+            const item = itemAtIndex(i)
+            if (!item) {
+                positionViewAtIndex(i, ListView.Beginning)
+                contentY = Math.max(originY, contentY - offset)
+                return
+            }
+            scrollTo(item.y - offset, animated)
+        }
+        WheelScroll { id: wheel; wheelStep: 110 }
 
-        // Phone: a tap toggles the bar. On the flickable, which takes
-        // touches before anything behind it.
+        // Phone: a tap toggles the bar. On the list, which takes touches
+        // before anything behind it.
         TapHandler {
             enabled: App.platform === "android"
             onSingleTapped: reader.barsShown = !reader.barsShown
@@ -257,30 +284,34 @@ Rectangle {
         onContentYChanged: {
             const delta = contentY - reader.lastY
             if (Math.abs(delta) > 6) {
-                reader.barsShown = delta < 0 || contentY < 60
+                reader.barsShown = delta < 0 || contentY - originY < 60
                 reader.lastY = contentY
             }
             reader.savePosition(false)
-            const max = contentHeight - height
-            if (max > 0 && contentY / max > 0.6 && reader.hasNext && reader.nextFor !== reader.index + 1) {
+            if (progress > 0.6 && reader.hasNext && reader.nextFor !== reader.index + 1) {
                 reader.nextFor = reader.index + 1
                 reader.nextTask = Novels.chapter(reader.chapters[reader.index + 1].url, reader.series.id)
             }
-            if (max > 0 && contentY >= max - 4 && reader.blocks.length > 0) {
+            if (atYEnd && reader.blocks.length > 0) {
                 reader.finished = true
                 reader.savePosition(true)
             }
         }
 
-        Column {
+        header: Column {
             id: body
             x: (flick.width - width) / 2
-            y: 110 + reader.insetTop
             width: reader.columnWidth
+            topPadding: 110 + reader.insetTop
+            bottomPadding: flick.spacing
             spacing: reader.fontSize * reader.paragraphSpacing
 
             opacity: 1
             transform: Translate { id: bodyShift; y: 0 }
+            Connections {
+                target: reader
+                function onReveal() { contentReveal.restart() }
+            }
             ParallelAnimation {
                 id: contentReveal
                 NumberAnimation { target: body; property: "opacity"; from: 0; to: 1; duration: Motion.slow; easing.type: Easing.OutCubic }
@@ -308,61 +339,68 @@ Rectangle {
                 wrapMode: Text.Wrap
                 bottomPadding: reader.fontSize * 0.6
             }
+        }
 
-            Repeater {
-                id: blockRepeater
-                model: reader.blocks
-                delegate: Item {
-                    required property var modelData
-                    required property int index
-                    width: body.width
-                    height: modelData.kind === "break" ? reader.fontSize * 1.6 : text.implicitHeight
-                    // The paragraph being read aloud.
+        delegate: Item {
+            required property var modelData
+            required property int index
+            // ListView puts every delegate at x 0; the column is centred inside.
+            width: flick.width
+            height: block.height
+            Item {
+                id: block
+                x: (parent.width - width) / 2
+                width: reader.columnWidth
+                height: modelData.kind === "break" ? reader.fontSize * 1.6 : text.implicitHeight
+                // The paragraph being read aloud.
+                Rectangle {
+                    visible: reader.spokenBlock === index
+                    anchors.fill: parent
+                    anchors.margins: -Math.round(reader.fontSize * 0.35)
+                    radius: Theme.radiusSm
+                    color: Theme.alpha(String(reader.look.text).slice(0, 7), 0.08)
+                }
+                Text {
+                    id: text
+                    visible: modelData.kind !== "break"
+                    width: parent.width
+                    leftPadding: modelData.kind === "quote" ? 22 : 0
+                    text: (reader.indent && modelData.kind === "paragraph" ? "\u2003" : "") + modelData.html
+                    textFormat: Text.StyledText
+                    color: reader.look.text
+                    font.family: modelData.kind === "heading" ? Theme.fontDisplay : reader.fontFamily
+                    font.pixelSize: modelData.kind === "heading" ? Math.round(reader.fontSize * 1.2) : reader.fontSize
+                    font.weight: modelData.kind === "heading" ? Font.DemiBold : reader.fontWeight
+                    font.italic: modelData.kind === "quote"
+                    lineHeight: reader.lineHeight
+                    wrapMode: Text.Wrap
+                    horizontalAlignment: App.settings.novelJustify === true ? Text.AlignJustify : Text.AlignLeft
                     Rectangle {
-                        visible: reader.spokenBlock === index
-                        anchors.fill: parent
-                        anchors.margins: -Math.round(reader.fontSize * 0.35)
-                        radius: Theme.radiusSm
-                        color: Theme.alpha(String(reader.look.text).slice(0, 7), 0.08)
-                    }
-                    Text {
-                        id: text
-                        visible: modelData.kind !== "break"
-                        width: parent.width
-                        leftPadding: modelData.kind === "quote" ? 22 : 0
-                        text: (reader.indent && modelData.kind === "paragraph" ? "\u2003" : "") + modelData.html
-                        textFormat: Text.StyledText
-                        color: reader.look.text
-                        font.family: modelData.kind === "heading" ? Theme.fontDisplay : reader.fontFamily
-                        font.pixelSize: modelData.kind === "heading" ? Math.round(reader.fontSize * 1.2) : reader.fontSize
-                        font.weight: modelData.kind === "heading" ? Font.DemiBold : reader.fontWeight
-                        font.italic: modelData.kind === "quote"
-                        lineHeight: reader.lineHeight
-                        wrapMode: Text.Wrap
-                        horizontalAlignment: App.settings.novelJustify === true ? Text.AlignJustify : Text.AlignLeft
-                        Rectangle {
-                            visible: modelData.kind === "quote"
-                            width: 3
-                            height: parent.height
-                            radius: 2
-                            color: reader.look.muted
-                            opacity: 0.5
-                        }
-                    }
-                    Text {
-                        visible: modelData.kind === "break"
-                        anchors.centerIn: parent
-                        text: "⁂"
+                        visible: modelData.kind === "quote"
+                        width: 3
+                        height: parent.height
+                        radius: 2
                         color: reader.look.muted
-                        font.pixelSize: reader.fontSize
+                        opacity: 0.5
                     }
                 }
+                Text {
+                    visible: modelData.kind === "break"
+                    anchors.centerIn: parent
+                    text: "⁂"
+                    color: reader.look.muted
+                    font.pixelSize: reader.fontSize
+                }
             }
+        }
 
-            Item { width: 1; height: 40 }
-
+        footer: Item {
+            width: flick.width
+            height: buttons.height + 40 + 120 + reader.insetBottom
             Row {
+                id: buttons
                 visible: reader.blocks.length > 0
+                y: 40
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 12
                 ScButton {
@@ -379,35 +417,35 @@ Rectangle {
                 }
             }
         }
+    }
 
-        Column {
+    Column {
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: 260
+        spacing: 14
+        visible: reader.task !== null && (reader.task.loading || !reader.task.ok)
+        Spinner {
             anchors.horizontalCenter: parent.horizontalCenter
-            y: 260
-            spacing: 14
-            visible: reader.task !== null && (reader.task.loading || !reader.task.ok)
-            Spinner {
-                anchors.horizontalCenter: parent.horizontalCenter
-                visible: reader.task !== null && reader.task.loading
-                color: reader.look.muted
-                size: 28
-            }
-            Text {
-                width: Math.min(420, reader.width - 48)
-                visible: reader.task !== null && !reader.task.loading && !reader.task.ok
-                text: reader.task ? reader.task.error : ""
-                color: reader.look.text
-                horizontalAlignment: Text.AlignHCenter
-                wrapMode: Text.Wrap
-                font.family: Theme.fontSans
-                font.pixelSize: Theme.textMd
-            }
-            ScButton {
-                anchors.horizontalCenter: parent.horizontalCenter
-                visible: reader.task !== null && !reader.task.loading && !reader.task.ok
-                text: qsTr("Try again")
-                iconName: "refresh-cw"
-                onClicked: reader.load(reader.index)
-            }
+            visible: reader.task !== null && reader.task.loading
+            color: reader.look.muted
+            size: 28
+        }
+        Text {
+            width: Math.min(420, reader.width - 48)
+            visible: reader.task !== null && !reader.task.loading && !reader.task.ok
+            text: reader.task ? reader.task.error : ""
+            color: reader.look.text
+            horizontalAlignment: Text.AlignHCenter
+            wrapMode: Text.Wrap
+            font.family: Theme.fontSans
+            font.pixelSize: Theme.textMd
+        }
+        ScButton {
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible: reader.task !== null && !reader.task.loading && !reader.task.ok
+            text: qsTr("Try again")
+            iconName: "refresh-cw"
+            onClicked: reader.load(reader.index)
         }
     }
 
@@ -477,7 +515,7 @@ Rectangle {
         z: 2
         y: reader.insetTop
         height: 2
-        width: parent.width * Math.min(1, Math.max(0, flick.contentY / Math.max(1, flick.contentHeight - flick.height)))
+        width: parent.width * flick.progress
         color: Theme.accent
         opacity: 0.8
     }
@@ -550,7 +588,7 @@ Rectangle {
                 tip: !Speech.available ? qsTr("No voices are installed on this device")
                     : reader.speaking ? qsTr("Stop reading aloud") : qsTr("Read aloud from here")
                 onClicked: reader.speaking ? reader.stopSpeaking()
-                    : reader.startSpeaking(flick.contentY < 40 ? -1 : reader.firstVisibleBlock())
+                    : reader.startSpeaking(flick.contentY - flick.originY < 40 ? -1 : reader.firstVisibleBlock())
             }
             IconButton {
                 iconName: "move-vertical"

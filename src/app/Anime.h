@@ -25,6 +25,10 @@ class Anime : public QObject {
 public:
     explicit Anime(QObject *parent = nullptr) : QObject(parent) {}
 
+    // An extension anime's episodes as library units (worker threads; for
+    // restoring backups). Throws when its source is missing or off.
+    static QVariantList fetchUnits(const QString &url);
+
     // SCANCORE's MyAnimeList client id (empty in builds without one).
     static QString malClientId();
 
