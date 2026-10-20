@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.0.0" date="2026-10-20">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#200--2026-10-20</url>
+      <description>
+        <p>Comics, novels and anime from the extensions you already use, a built-in video player, pages you arrange yourself, the interface in fourteen more languages and sources in your language, including official webtoon editions in eight languages. A library per media with categories and favourites, notifications, read aloud for novels, full-screen reading, backups for Mihon, a licences screen and a much faster app.</p>
+      </description>
+    </release>
     <release version="1.5.0" date="2026-10-19">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#150--2026-10-19</url>
       <description>

@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, v2]
   pull_request:
 
 concurrency:
@@ -71,3 +71,19 @@ jobs:
         run: ctest --test-dir build --output-on-failure
         env:
           QT_QPA_PLATFORM: offscreen
+
+      # A test that ends in an exception loses its buffered output; the log
+      # file keeps what QTest wrote before it.
+      - name: Failed tests' logs
+        if: failure() && runner.os == 'Windows'
+        shell: bash
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          for t in scancore_extension_tests scancore_host_tests; do
+            exe=$(find build -name "$t.exe" | head -1)
+            [ -n "$exe" ] || continue
+            echo "=== $t"
+            "$exe" -o "$t.txt,txt" -v1 || true
+            cat "$t.txt" || true
+          done
