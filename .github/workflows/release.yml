@@ -145,8 +145,10 @@ jobs:
         run: |
           EXTRA=""
           if [ "$RUNNER_OS" = "macOS" ]; then EXTRA="-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET=13.0"; fi
+          # SCANCORE_WITH_EXTENSION_HOST=OFF: users download the Extensions
+          # runtime; the host from host/ is for development builds.
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DSCANCORE_BUILD_TESTS=OFF \
-            -DCMAKE_INSTALL_PREFIX=/usr $EXTRA
+            -DSCANCORE_WITH_EXTENSION_HOST=OFF -DCMAKE_INSTALL_PREFIX=/usr $EXTRA
           cmake --build build --parallel
 
       # ---------------------------------------------------------------- Windows
@@ -257,7 +259,7 @@ jobs:
             echo "MPV_DIR=$MPV_DIR" >> "$GITHUB_ENV"
           fi
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DSCANCORE_BUILD_TESTS=OFF \
-            -DCMAKE_INSTALL_PREFIX=/usr
+            -DSCANCORE_WITH_EXTENSION_HOST=OFF -DCMAKE_INSTALL_PREFIX=/usr
           cmake --build build --parallel
 
       - name: AppImage

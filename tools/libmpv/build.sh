@@ -406,6 +406,26 @@ fi
 
 if ! done_mark mpv; then
     fetch mpv
+    # Linux: the system's static libraries are not built for a shared
+    # library, so mpv links shared ones, and ours (static only) list their
+    # private dependencies as public ones to be linked in full.
+    if [ $os = linux ]; then
+        python3 - "$prefix/lib/pkgconfig" <<'PY'
+import glob, sys
+for path in glob.glob(sys.argv[1] + "/*.pc"):
+    fields, lines = {}, []
+    for line in open(path).read().splitlines():
+        key = line.split(":", 1)[0] if ":" in line and "=" not in line.split(":", 1)[0] else None
+        if key in ("Libs", "Libs.private", "Requires", "Requires.private"):
+            fields[key] = line.split(":", 1)[1].strip()
+        else:
+            lines.append(line)
+    libs = " ".join(v for v in (fields.get("Libs"), fields.get("Libs.private")) if v)
+    requires = ", ".join(v for v in (fields.get("Requires"), fields.get("Requires.private")) if v)
+    lines += ["Libs: " + libs] + (["Requires: " + requires] if requires else [])
+    open(path, "w").write("\n".join(lines) + "\n")
+PY
+    fi
     # The static libraries' symbols stay inside libmpv. Optional features the
     # player does not use stay off, so no system FFmpeg or other extras get
     # linked in beside ours.
@@ -421,9 +441,11 @@ if ! done_mark mpv; then
         -Dsndio=disabled -Dvdpau=disabled -Doss-audio=disabled)
     case $os in
     android) options+=(-Diconv=disabled) ;;
-    linux) options+=(-Dprefer_static=true -Dwayland=disabled -Dpulse=enabled -Dalsa=enabled) ;;
+    linux) options+=(-Dwayland=disabled -Dpulse=enabled -Dalsa=enabled) ;;
     windows) options+=(-Dprefer_static=true -Diconv=disabled) ;;
-    macos) options+=(-Dprefer_static=true -Dswift-build=disabled -Dmacos-cocoa-cb=disabled -Dmacos-media-player=disabled) ;;
+    # Cocoa (and with it OpenGL) needs mpv's Swift part.
+    macos) options+=(-Dprefer_static=true -Dswift-build=enabled "-Dswift-flags=-target $carch-apple-macos$macos_min"
+        -Dmacos-cocoa-cb=disabled -Dmacos-media-player=disabled) ;;
     esac
     meson_build mpv --default-library=shared "${options[@]}"
     mark mpv
