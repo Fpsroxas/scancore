@@ -40,12 +40,16 @@ dependencies {
     androidTestImplementation(libs.androidx.test.junit)
 }
 
-// The instrumentation test gets the test extension and the fixture site as
+// The instrumentation test gets the test extensions and the fixture site as
 // assets.
 val testAssets = layout.buildDirectory.dir("generated/testAssets")
 val copyTestAssets by tasks.registering(Copy::class) {
     dependsOn(":testext:apk")
     from(project(":testext").layout.buildDirectory.dir("apk")) { include("testext.apk", "signer.txt") }
+    from(project(":testext").layout.buildDirectory.dir("animeapk")) {
+        include("testanime.apk", "signer.txt")
+        rename("signer.txt", "animesigner.txt")
+    }
     from(rootProject.layout.projectDirectory.dir("../tests/fixtures/host")) { into("site") }
     into(testAssets)
 }

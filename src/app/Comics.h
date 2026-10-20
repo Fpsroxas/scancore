@@ -36,7 +36,13 @@ public:
     // listed under any of its names, content language first, without
     // taken-down ones. {matches: [{source, sourceLabel, language, preferred,
     // url, title, cover}], contentLanguage}
-    Q_INVOKABLE sc::Task *resolve(const QVariantMap &item);
+    // Finds a catalogue title on the sources: those "All sources" searches,
+    // or with `language`, every source in that language (built-in ones
+    // switched off for their language too).
+    Q_INVOKABLE sc::Task *resolve(const QVariantMap &item, const QString &language = QString());
+    // Languages other than the content language that have comic sources:
+    // [{value, label, count}], English first, then most sources first.
+    Q_INVOKABLE QVariantList otherLanguages() const;
     // {series: {...}, chapters: [...], offline: bool, error?: string}
     Q_INVOKABLE sc::Task *series(const QString &url, const QVariantMap &summary = {});
     // {panels: [{url, width, height}], referer, offline}
@@ -55,6 +61,8 @@ public:
     Q_INVOKABLE sc::Task *latest(int limit = 40);
 
     Q_INVOKABLE QString imageReferer(const QString &url) const;
+    // The series' page on its site, for "Open on the website".
+    Q_INVOKABLE sc::Task *webUrl(const QString &url);
     // A browser check for `url` was passed: extensions get its cookies too.
     Q_INVOKABLE void shareSiteCookies(const QString &url);
     // Warms the image cache for the first pages of an upcoming chapter.

@@ -35,9 +35,10 @@ import java.net.ServerSocket
 import java.util.Collections
 import kotlin.concurrent.thread
 
-// The test extension inside a real Android: the package manager reads and
-// verifies it, it loads without conversion, QuickJS runs its JavaScript,
-// and it reads the fixture site served from this test.
+// The test extensions inside a real Android: the package manager reads and
+// verifies them, they load without conversion, QuickJS runs JavaScript,
+// and they read the fixture site served from this test. The anime one
+// (Aniyomi) is tested at the end.
 @RunWith(AndroidJUnit4::class)
 class AndroidHostTest {
     companion object {
@@ -45,6 +46,8 @@ class AndroidHostTest {
         private lateinit var host: ExtensionHost
         private lateinit var apk: File
         private lateinit var signer: String
+        private lateinit var animeApk: File
+        private lateinit var animeSigner: String
         private val requests = Collections.synchronizedList(mutableListOf<String>())
 
         @JvmStatic
@@ -57,6 +60,10 @@ class AndroidHostTest {
             assets.open("testext.apk").use { input -> apk.outputStream().use { input.copyTo(it) } }
             apk.setReadOnly()
             signer = assets.open("signer.txt").bufferedReader().readText().trim()
+            animeApk = File(context.filesDir, "testanime.apk").apply { setWritable(true) }
+            assets.open("testanime.apk").use { input -> animeApk.outputStream().use { input.copyTo(it) } }
+            animeApk.setReadOnly()
+            animeSigner = assets.open("animesigner.txt").bufferedReader().readText().trim()
 
             val server = ServerSocket(0, 50, java.net.InetAddress.getLoopbackAddress())
             thread(isDaemon = true) {
@@ -79,6 +86,14 @@ class AndroidHostTest {
                                     path == "/series/1/chapters" -> "chapters.json"
                                     path == "/chapter/2/pages" -> "pages.json"
                                     path == "/page/2" -> "page-2.json"
+                                    path == "/anime/popular" -> "anime/popular.json"
+                                    path == "/anime/1/episodes" -> "anime/episodes.json"
+                                    path == "/episode/1/hosters" -> "anime/hosters.json"
+                                    path == "/hoster/alpha" -> "anime/videos-alpha.json"
+                                    path == "/hoster/beta" -> "anime/videos-beta.json"
+                                    path == "/resolve" -> "anime/resolve.json"
+                                    path == "/episode/1/videos" -> "anime/videos-classic.json"
+                                    path == "/videopage/1" -> "anime/videopage-1.json"
                                     path.startsWith("/img/") && own -> "image.png"
                                     else -> null
                                 }
@@ -196,5 +211,53 @@ class AndroidHostTest {
         val perCall = (System.nanoTime() - started) / 100 / 1_000_000.0
         android.util.Log.i("AndroidHostTest", "filters call: %.2f ms".format(perCall))
         assertTrue("calls take $perCall ms", perCall < 20)
+    }
+
+    // ------------------------------------------------------------- anime
+
+    private fun animeBase() =
+        buildJsonObject {
+            put("pkg", "com.mediumdev.scancore.testanime")
+            put("apk", animeApk.path)
+            put("signer", animeSigner)
+        }
+
+    private val animeSources: Map<String, String> by lazy {
+        runBlocking { host.handle("load", animeBase()) }.jsonArray.associate {
+            it.jsonObject["name"]!!.jsonPrimitive.content to it.jsonObject["id"]!!.jsonPrimitive.content
+        }
+    }
+
+    private fun animeCall(
+        source: String,
+        method: String,
+        extra: Map<String, JsonElement> = emptyMap(),
+    ) = runBlocking {
+        host.handle(method, JsonObject(animeBase() + mapOf("source" to p(animeSources.getValue(source))) + extra))
+    }
+
+    @Test
+    fun animeHostersVideosAndResolving() {
+        assertEquals(setOf("Test Anime", "Test Anime Classic"), animeSources.keys)
+        val popular = animeCall("Test Anime", "popular", mapOf("page" to p(1))).jsonObject
+        assertEquals(2, popular["items"]!!.jsonArray.size)
+        val episodes = animeCall("Test Anime", "episodes", mapOf("url" to p("/anime/1"))).jsonArray
+        assertEquals("/episode/2", episodes[0].jsonObject["url"]!!.jsonPrimitive.content)
+        val hosters = animeCall("Test Anime", "hosters", mapOf("url" to p("/episode/1"))).jsonArray.map { it.jsonObject }
+        assertEquals(listOf("Alpha", "Beta", "Inline"), hosters.map { it["name"]!!.jsonPrimitive.content })
+        val alpha = animeCall("Test Anime", "hosterVideos", mapOf("hoster" to hosters[0]["id"]!!)).jsonArray.map { it.jsonObject }
+        assertEquals("Alpha 1080p", alpha[0]["title"]!!.jsonPrimitive.content)
+        assertTrue(alpha[0]["headers"]!!.jsonObject.containsKey("Referer"))
+        val resolved = animeCall("Test Anime", "resolveVideo", mapOf("video" to alpha[1]["id"]!!)).jsonObject
+        assertTrue(resolved["url"]!!.jsonPrimitive.content.endsWith("/video/alpha-720.m3u8"))
+        // A lazy hoster's videos only load when asked.
+        assertTrue(requests.none { it.startsWith("/hoster/beta") })
+    }
+
+    @Test
+    fun animeClassicVideos() {
+        val hosters = animeCall("Test Anime Classic", "hosters", mapOf("url" to p("/episode/1"))).jsonArray
+        val video = hosters.single().jsonObject["videos"]!!.jsonArray.single().jsonObject
+        assertTrue(video["url"]!!.jsonPrimitive.content.endsWith("/video/classic.mp4"))
     }
 }

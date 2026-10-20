@@ -27,7 +27,8 @@ if(SCANCORE_HAVE_EXTENSION_HOST)
     add_dependencies(scancore_host_tests scancore_host)
     add_test(NAME host_process COMMAND scancore_host_tests)
     target_compile_definitions(scancore_host_tests PRIVATE SCANCORE_SOURCE_DIR="${PROJECT_SOURCE_DIR}"
-        SCANCORE_HOST_DEV_LIB="${SCANCORE_HOST_LIB_DIR}" SCANCORE_TESTEXT_APK="${SCANCORE_TESTEXT_APK}")
+        SCANCORE_HOST_DEV_LIB="${SCANCORE_HOST_LIB_DIR}" SCANCORE_TESTEXT_APK="${SCANCORE_TESTEXT_APK}"
+        SCANCORE_TESTANIME_APK="${SCANCORE_TESTANIME_APK}")
 endif()
 
 # Live source checks (network); run by hand or from the scheduled workflow.
@@ -39,3 +40,17 @@ qt_add_resources(scancore_probe probe_lncrawl
     PREFIX /
     BASE ${PROJECT_SOURCE_DIR}/resources
     FILES ${PROJECT_SOURCE_DIR}/resources/lncrawl/sources.json ${PROJECT_SOURCE_DIR}/resources/lncrawl/bridge.py)
+
+# LNReader plugins in QJSEngine: modules, web APIs, network, storage, limits.
+qt_add_executable(scancore_plugin_tests tst_plugins.cpp)
+target_link_libraries(scancore_plugin_tests PRIVATE scancore_core Qt6::Test)
+add_test(NAME plugins COMMAND scancore_plugin_tests)
+target_compile_definitions(scancore_plugin_tests PRIVATE SCANCORE_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
+
+# Console programs on Windows too, so CTest shows their output.
+foreach(test scancore_tests scancore_catalogue_tests scancore_extension_tests scancore_plugin_tests scancore_probe)
+    set_target_properties(${test} PROPERTIES WIN32_EXECUTABLE FALSE)
+endforeach()
+if(TARGET scancore_host_tests)
+    set_target_properties(scancore_host_tests PROPERTIES WIN32_EXECUTABLE FALSE)
+endif()

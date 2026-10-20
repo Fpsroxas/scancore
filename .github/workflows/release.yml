@@ -282,6 +282,22 @@ jobs:
           modules: qtwebview qtimageformats qtwebchannel qtpositioning
           cache: true
 
+      # The video player's libmpv (LGPL, tools/libmpv/build.sh), built again
+      # only when the script changes.
+      - name: libmpv cache
+        id: libmpv
+        uses: actions/cache@v4
+        with:
+          path: build/libmpv/android-arm64
+          key: libmpv-android-arm64-${{ hashFiles('tools/libmpv/build.sh') }}
+
+      - name: libmpv
+        if: steps.libmpv.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get install -y nasm gperf python3-jinja2
+          pipx install meson
+          tools/libmpv/build.sh android-arm64
+
       - name: Signed APK
         env:
           KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}

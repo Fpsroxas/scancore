@@ -50,7 +50,7 @@ Item {
 
     // One line under each category on the phone list.
     function summary(key) {
-        App.settings
+        App.dependOn(App.settings)
         switch (key) {
         case "theme": {
             const theme = { system: qsTr("System"), light: qsTr("Light"), dark: qsTr("Dark"), black: qsTr("Black"), custom: qsTr("Custom") }[App.settings.theme] || qsTr("Dark")
@@ -75,7 +75,7 @@ Item {
             return hours > 0 ? qsTr("Checks for new chapters every ") + (hours === 1 ? "hour" : hours === 24 ? "day" : hours + qsTr(" hours")) : qsTr("Update checks off")
         }
         case "connections": {
-            Trackers.anilist
+            App.dependOn(Trackers.anilist)
             const on = [Trackers.anilist.name ? "AniList" : "", Trackers.mal.name ? "MyAnimeList" : "", Trackers.comick.name ? qsTr("Comick") : "",
                         Presence.available && App.settings.discordPresence === true ? qsTr("Discord") : ""].filter(s => s)
             return on.length ? on.join(" · ") + qsTr(" connected") : qsTr("Tracking and imports")

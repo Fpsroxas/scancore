@@ -27,4 +27,13 @@ bool notify(const QString &title, const QString &body, const QString &tag);
 // Android 13 and later: ask once to allow notifications.
 void askNotificationPermission();
 
+// The anime player's web view, just created: lets its video start with sound
+// and the page go full screen (see WebPlayer.java). `prepared` runs on the GUI
+// thread once that is done (or no web view turned up).
+void prepareWebPlayer();
+void setWebPlayerPrepared(std::function<void()> prepared);
+// The player's full screen on phones: "landscape", "portrait" (until the
+// phone is held upright) or "" (the system's rotation setting).
+void setOrientation(const QString &mode);
+
 } // namespace sc::platform

@@ -3,11 +3,15 @@ import QtQuick.Controls.Basic
 import ScanCore
 
 // One source by itself: its popular and latest lists, and searches with its
-// own filters, a page at a time as the list scrolls.
+// own filters, a page at a time as the list scrolls. Comics' and anime's
+// extensions and novels' plugins alike.
 Item {
     id: page
     property string sourceKey
-    readonly property var info: { App.manifestVersion; return Comics.sources().find(s => s.key === sourceKey) || ({ label: sourceKey }) }
+    readonly property bool novel: sourceKey.startsWith("lnreader:")
+    readonly property bool anime: sourceKey.startsWith("aniyomi:")
+    readonly property var service: anime ? Anime : novel ? Novels : Comics
+    readonly property var info: { App.dependOn(App.manifestVersion); return page.service.sources().find(s => s.key === sourceKey) || ({ label: sourceKey }) }
     // "popular", "latest" or "search"
     property string listing: "popular"
     property string query: ""
@@ -19,7 +23,7 @@ Item {
     property int pageNumber: 0
     property bool hasNext: true
     property var task: null
-    property var filtersTask: Comics.filters(sourceKey)
+    property var filtersTask: page.service.filters(sourceKey)
     // Ignores pages of a listing the user has since left.
     property int generation: 0
 
@@ -38,7 +42,7 @@ Item {
         if (!retry && task && !task.ok) return
         const g = generation
         const next = pageNumber + 1
-        task = Comics.browse(sourceKey, listing, next, query, listing === "search" ? filterStates : [])
+        task = page.service.browse(sourceKey, listing, next, query, listing === "search" ? filterStates : [])
         task.finished.connect((r) => {
             if (g !== page.generation) return
             page.pageNumber = next

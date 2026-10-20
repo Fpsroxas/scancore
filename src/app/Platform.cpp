@@ -19,11 +19,14 @@ namespace sc::platform {
 namespace {
 
 std::function<void(const QString &)> g_siteCheckDone;
+std::function<void()> g_webPlayerPrepared;
 
 #ifdef Q_OS_ANDROID
 constexpr auto kBrowserCheckClass = "com/mediumdev/scancore/BrowserCheck";
 constexpr auto kPowerClass = "com/mediumdev/scancore/Power";
 constexpr auto kNotifyClass = "com/mediumdev/scancore/Notify";
+constexpr auto kWebPlayerClass = "com/mediumdev/scancore/WebPlayer";
+constexpr auto kScreenClass = "com/mediumdev/scancore/Screen";
 
 QString javaString(JNIEnv *env, jstring s) {
     if (!s)
@@ -71,6 +74,27 @@ void jniSiteCheckDone(JNIEnv *env, jclass, jstring jurl, jstring jcookies) {
                 g_siteCheckDone(url);
         },
         Qt::QueuedConnection);
+}
+
+void jniWebPlayerPrepared(JNIEnv *, jclass) {
+    QMetaObject::invokeMethod(
+        QCoreApplication::instance(),
+        [] {
+            if (g_webPlayerPrepared)
+                g_webPlayerPrepared();
+        },
+        Qt::QueuedConnection);
+}
+
+bool registerWebPlayer() {
+    static const bool registered = [] {
+        const JNINativeMethod methods[] = {
+            {"nativePrepared", "()V", reinterpret_cast<void *>(jniWebPlayerPrepared)},
+        };
+        QJniEnvironment env;
+        return env.registerNativeMethods(kWebPlayerClass, methods, 1);
+    }();
+    return registered;
 }
 
 bool registerBrowserCheck() {
@@ -145,6 +169,30 @@ void askNotificationPermission() {
         QJniObject::callStaticMethod<void>(kNotifyClass, "ask", "(Landroid/content/Context;)V",
                                            QNativeInterface::QAndroidApplication::context().object());
     });
+#endif
+}
+
+void setWebPlayerPrepared(std::function<void()> prepared) { g_webPlayerPrepared = std::move(prepared); }
+
+void prepareWebPlayer() {
+#ifdef Q_OS_ANDROID
+    if (!registerWebPlayer()) {
+        if (g_webPlayerPrepared)
+            g_webPlayerPrepared();
+        return;
+    }
+    QJniObject::callStaticMethod<void>(kWebPlayerClass, "prepare", "(Landroid/app/Activity;)V",
+                                       QNativeInterface::QAndroidApplication::context().object());
+#endif
+}
+
+void setOrientation(const QString &mode) {
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>(kScreenClass, "orient", "(Landroid/app/Activity;Ljava/lang/String;)V",
+                                       QNativeInterface::QAndroidApplication::context().object(),
+                                       QJniObject::fromString(mode).object<jstring>());
+#else
+    Q_UNUSED(mode)
 #endif
 }
 

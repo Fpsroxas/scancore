@@ -8,10 +8,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceScreen
 import androidx.preference.TwoStatePreference
+import com.mediumdev.scancore.host.Configurable
 import com.mediumdev.scancore.host.HostError
 import com.mediumdev.scancore.host.SettingsBridge
-import eu.kanade.tachiyomi.source.ConfigurableSource
-import eu.kanade.tachiyomi.source.preferenceKey
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -29,17 +28,17 @@ import kotlinx.serialization.json.put
 class AndroidSettings(
     private val context: Context,
 ) : SettingsBridge {
-    private fun screen(source: ConfigurableSource): PreferenceScreen {
+    private fun screen(source: Configurable): PreferenceScreen {
         val manager = PreferenceManager(context)
-        manager.sharedPreferencesName = source.preferenceKey()
+        manager.sharedPreferencesName = source.preferenceKey
         val screen = manager.createPreferenceScreen(context)
-        source.setupPreferenceScreen(screen)
+        source.setup(screen)
         return screen
     }
 
     private fun PreferenceScreen.all() = (0 until preferenceCount).map { getPreference(it) }
 
-    override fun describe(source: ConfigurableSource): JsonArray =
+    override fun describe(source: Configurable): JsonArray =
         buildJsonArray {
             for (p in screen(source).all()) {
                 if (!p.isVisible) continue
@@ -82,7 +81,7 @@ class AndroidSettings(
         }
 
     override fun set(
-        source: ConfigurableSource,
+        source: Configurable,
         key: String,
         value: JsonElement,
     ) {

@@ -99,10 +99,20 @@ QtObject {
     readonly property string fontDisplay: "Space Grotesk"
     readonly property string fontSerif: "Literata"
 
-    readonly property int radiusSm: 6
-    readonly property int radiusMd: 10
-    readonly property int radiusLg: 14
-    readonly property int radiusXl: 20
+    // Settings → Interface → Corners: square, subtle, default or round.
+    readonly property real roundness: {
+        const scales = { square: 0, subtle: 0.5, round: 1.6 }
+        const v = App.settings.roundness
+        return scales.hasOwnProperty(v) ? scales[v] : 1
+    }
+    readonly property int radiusSm: Math.round(6 * roundness)
+    readonly property int radiusMd: Math.round(10 * roundness)
+    readonly property int radiusLg: Math.round(14 * roundness)
+    readonly property int radiusXl: Math.round(20 * roundness)
+
+    // Settings → Interface → Spacing: the gap between a page's sections.
+    readonly property real spacingScale: ({ compact: 0.6, spacious: 1.4 })[App.settings.pageSpacing] || 1
+    readonly property int sectionGap: Math.round((compact ? 28 : 36) * spacingScale)
 
     // Settings → Interface → Text size scales every text token.
     readonly property real textScale: {

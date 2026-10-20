@@ -1,6 +1,7 @@
 // From Suwayomi-Server (MPL-2.0): points converted extensions at
 // AndroidCompat's Android-behaving SimpleDateFormat. Changed for SCANCORE:
-// package, logging, and interface calls dex2jar writes as class calls.
+// package, logging, interface calls dex2jar writes as class calls, and the
+// class's name in stack map frames.
 package com.mediumdev.scancore.host.desktop
 
 /*
@@ -283,6 +284,20 @@ object BytecodeEditor {
                         ) {
                             logger.trace { "Field" to "$opcode: $owner: $name: ${desc.replaceIndirectly()}" }
                             super.visitFieldInsn(opcode, owner, name, desc.replaceIndirectly())
+                        }
+
+                        // SCANCORE: the frames dex2jar computed name the class
+                        // as well; left alone, a SimpleDateFormat kept in a
+                        // local across a branch fails verification.
+                        override fun visitFrame(
+                            type: Int,
+                            numLocal: Int,
+                            local: Array<out Any?>?,
+                            numStack: Int,
+                            stack: Array<out Any?>?,
+                        ) {
+                            fun replaced(items: Array<out Any?>?) = items?.map { if (it is String) it.replaceDirectly() else it }?.toTypedArray()
+                            super.visitFrame(type, numLocal, replaced(local), numStack, replaced(stack))
                         }
 
                         override fun visitInvokeDynamicInsn(

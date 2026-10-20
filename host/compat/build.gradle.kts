@@ -37,7 +37,8 @@ val androidStubs by tasks.registering {
         val bytes = raw.readBytes()
         check(sha256(bytes) == androidJarSha256) { "android.jar does not match its checksum" }
         val root = sources.asFile
-        val implemented = root.walkTopDown().filter { it.isFile }.map { it.relativeTo(root).path.substringBeforeLast('.') }.toSet()
+        // Zip entries use "/" on every system (Windows paths do not).
+        val implemented = root.walkTopDown().filter { it.isFile }.map { it.relativeTo(root).invariantSeparatorsPath.substringBeforeLast('.') }.toSet()
         val dropped = listOf("org/json/", "org/apache/", "org/w3c/", "org/xml/", "org/xmlpull/", "junit/", "javax/", "java/")
         ZipFile(raw).use { zip ->
             ZipOutputStream(output.get().asFile.outputStream().buffered()).use { out ->

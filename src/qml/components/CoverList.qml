@@ -52,8 +52,9 @@ Item {
             readonly property real progress: row.entry ? list.progressFor(row.entry) : -1
             readonly property string badge: row.entry ? list.badgeFor(row.entry) : ""
             readonly property string referer: !row.entry ? ""
-                : row.entry.referer || (row.entry.media === "comic" && row.entry.sourceUrl && !row.entry.sourceUrl.startsWith("http")
-                                        ? Comics.imageReferer(row.entry.sourceUrl) : "")
+                : row.entry.referer || (row.entry.sourceUrl && !row.entry.sourceUrl.startsWith("http")
+                    ? (row.entry.media === "comic" ? Comics.imageReferer(row.entry.sourceUrl)
+                       : row.entry.media === "novel" ? Novels.imageReferer(row.entry.sourceUrl) : "") : "")
             visible: row.entry !== null
             y: row.itemIndex * list.rowHeight
             width: list.width

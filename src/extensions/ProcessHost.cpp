@@ -89,7 +89,21 @@ struct ProcessHost::State {
             if (process == p)
                 process = nullptr;
             p->deleteLater();
-            const auto tail = QString::fromUtf8(errors).trimmed().section(QLatin1Char('\n'), -1);
+            // What went wrong, not where: the deepest "Caused by", else the
+            // last line of a Java stack trace that is not a frame.
+            QString tail;
+            const auto lines = QString::fromUtf8(errors).trimmed().split(QLatin1Char('\n'));
+            for (auto it = lines.crbegin(); it != lines.crend(); ++it) {
+                const auto line = it->trimmed();
+                if (line.isEmpty() || line.startsWith(QLatin1String("at ")) || line.startsWith(QLatin1String("...")))
+                    continue;
+                if (tail.isEmpty())
+                    tail = line;
+                if (line.startsWith(QLatin1String("Caused by:"))) {
+                    tail = line;
+                    break;
+                }
+            }
             failAll(code == 0 ? QStringLiteral("The extension host stopped.")
                               : QStringLiteral("The extension host stopped (%1).").arg(tail.isEmpty() ? QString::number(code) : tail.left(200)));
         });

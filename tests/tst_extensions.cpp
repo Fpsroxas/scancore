@@ -13,6 +13,7 @@
 #include "extensions/Index.h"
 #include "extensions/Manager.h"
 #include "extensions/Runtime.h"
+#include "sources/anime/Playback.h"
 #include "sources/comics/Registry.h"
 
 #include <QDir>
@@ -502,14 +503,19 @@ private slots:
     void runtimeInstall() {
         if (Runtime::platform().isEmpty())
             QSKIP("No Extensions runtime for this computer.");
-        const auto zip = [](const QString &host) {
+#ifdef Q_OS_WIN
+        const QString java = QStringLiteral("java.exe");
+#else
+        const QString java = QStringLiteral("java");
+#endif
+        const auto zip = [java](const QString &host) {
             QByteArray bytes;
             QBuffer buffer(&bytes);
             buffer.open(QIODevice::WriteOnly);
             QZipWriter writer(&buffer);
             writer.addFile(QStringLiteral("scancore-extensions-runtime/scancore-runtime.json"),
                            QStringLiteral(R"({"host": "%1", "java": "21"})").arg(host).toUtf8());
-            writer.addFile(QStringLiteral("scancore-extensions-runtime/bin/java"), QByteArray("#!/bin/sh\n"));
+            writer.addFile(QStringLiteral("scancore-extensions-runtime/bin/") + java, QByteArray("#!/bin/sh\n"));
             writer.addFile(QStringLiteral("scancore-extensions-runtime/lib/host/host.jar"), QByteArray("jar"));
             writer.close();
             return bytes;
@@ -535,7 +541,7 @@ private slots:
         Runtime::install([&](const QString &status) { said.append(status); });
         QVERIFY(Runtime::installed());
         QVERIFY(said.contains(QStringLiteral("Installed")));
-        QVERIFY(QFileInfo(Runtime::dir() + QStringLiteral("/bin/java")).isExecutable());
+        QVERIFY(QFileInfo(Runtime::dir() + QStringLiteral("/bin/") + java).isExecutable());
         QVERIFY(Runtime::assetUrl().contains(QStringLiteral("/extensions-runtime-%1/").arg(QLatin1String(Runtime::HostVersion))));
 
         // A damaged download leaves the installed runtime alone.
@@ -580,6 +586,41 @@ private slots:
         QCOMPARE(doc.packages[1499].sources[2].id, QStringLiteral("7894320198765404499"));
         QVERIFY2(elapsed < 1000, qPrintable(QStringLiteral("parsed in %1 ms").arg(elapsed)));
         qInfo("1500-extension index parsed in %lld ms", elapsed);
+    }
+
+    // Which video of an episode plays first, as Aniyomi picks it.
+    void animeBestVideo() {
+        const auto video = [](const QString &url, bool preferred = false, bool initialized = true, bool local = false) {
+            return QVariantMap{{"url", url}, {"preferred", preferred}, {"initialized", initialized}, {"localServer", local}};
+        };
+        const auto hoster = [](const QString &state, const QVariantList &videos = {}) {
+            return QVariantMap{{"state", state}, {"videos", videos}};
+        };
+        auto at = [](const QVariant &best) { return best.isNull() ? QStringLiteral("none") : QStringLiteral("%1/%2").arg(best.toMap().value("hoster").toInt()).arg(best.toMap().value("video").toInt()); };
+        // A preferred video wins over earlier ones, but only on a hoster that answered.
+        QCOMPARE(at(anime::bestVideo({hoster("ready", {video("a"), video("b", true)}), hoster("loading")})), QStringLiteral("0/1"));
+        QCOMPARE(at(anime::bestVideo({hoster("ready", {video("a")}), hoster("ready", {video("b", true)})})), QStringLiteral("1/0"));
+        // Then the first with an address, then one that can still get one.
+        QCOMPARE(at(anime::bestVideo({hoster("failed"), hoster("ready", {video("", false, false), video("c")})})), QStringLiteral("1/1"));
+        QCOMPARE(at(anime::bestVideo({hoster("ready", {video("", false, false)})})), QStringLiteral("0/0"));
+        // Local-server videos and lazy (idle) hosters are passed over.
+        QCOMPARE(at(anime::bestVideo({hoster("ready", {video("http://localhost:1/v", true, true, true)}), hoster("idle")})), QStringLiteral("none"));
+
+        // Episodes by AniList's number: by the source's number, else by place.
+        const QJsonArray numbered{QJsonObject{{"url", "e1"}, {"number", 1}}, QJsonObject{{"url", "e2"}, {"number", 2.5}}};
+        QCOMPARE(anime::episodeNumbered(numbered, 2.5), QStringLiteral("e2"));
+        QCOMPARE(anime::episodeNumbered(numbered, 3), QString());
+        const QJsonArray unnumbered{QJsonObject{{"url", "x"}, {"number", -1}}, QJsonObject{{"url", "y"}, {"number", -1}}};
+        QCOMPARE(anime::episodeNumbered(unnumbered, 2), QStringLiteral("y"));
+
+        // A video's chapters become skips in AniSkip's terms.
+        const auto map = anime::videoMap(QJsonObject{{"url", "v"},
+                                                     {"timestamps", QJsonArray{QJsonObject{{"start", 10}, {"end", 95}, {"name", "OP"}, {"type", "Opening"}},
+                                                                               QJsonObject{{"start", 100}, {"end", 200}, {"name", "Part A"}, {"type", "Other"}}}}});
+        const auto skips = map.value("skips").toList();
+        QCOMPARE(skips.size(), 1);
+        QCOMPARE(skips[0].toMap().value("type").toString(), QStringLiteral("op"));
+        QCOMPARE(skips[0].toMap().value("end").toDouble(), 95.0);
     }
 };
 

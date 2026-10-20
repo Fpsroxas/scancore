@@ -204,7 +204,7 @@ SettingsPane {
         width: parent.width
         leftPadding: 4
         wrapMode: Text.Wrap
-        text: qsTr("MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0).")
+        text: qsTr("MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.")
         color: Theme.textFaint
         font.family: Theme.fontSans
         font.pixelSize: Theme.textXs + 1

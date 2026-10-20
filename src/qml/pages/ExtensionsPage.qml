@@ -15,9 +15,9 @@ Item {
     property var updateTask: null
     property var refreshTask: null
 
-    readonly property var repositories: { Extensions.revision; return Extensions.repositories() }
-    readonly property var installedList: { Extensions.revision; return Extensions.installed() }
-    readonly property var availableAll: { Extensions.revision; App.settings.showNsfwSources; return page.tab === "available" ? Extensions.available() : [] }
+    readonly property var repositories: { App.dependOn(Extensions.revision); return Extensions.repositories() }
+    readonly property var installedList: { App.dependOn(Extensions.revision); return Extensions.installed() }
+    readonly property var availableAll: { App.dependOn(Extensions.revision, App.settings.showNsfwSources); return page.tab === "available" ? Extensions.available() : [] }
     readonly property var availableLanguages: {
         const seen = {}
         const out = [{ value: "", label: qsTr("All languages") }]

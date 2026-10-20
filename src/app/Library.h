@@ -53,6 +53,10 @@ public:
     Q_INVOKABLE QVariantMap progressMap(const QString &seriesId) const;
     Q_INVOKABLE QVariantMap lastProgress(const QString &seriesId) const;
     Q_INVOKABLE QVariantMap seriesRow(const QString &seriesId) const;
+    // A stored cover that no longer loads (sites move their images): asks
+    // the comic's source for its details again, once per series and run,
+    // and stores the new cover.
+    Q_INVOKABLE void refreshCover(const QString &seriesId);
     // The chapter list saved the last time the series was opened, so its
     // page can show it before the site answers.
     Q_INVOKABLE QVariantList storedUnits(const QString &seriesId) const { return cachedUnits(seriesId); }

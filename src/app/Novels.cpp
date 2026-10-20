@@ -8,6 +8,7 @@
 #include "core/Database.h"
 #include "core/Parallel.h"
 #include "core/Text.h"
+#include "plugins/PluginSource.h"
 #include "sources/novels/Registry.h"
 
 #include <QElapsedTimer>
@@ -54,8 +55,65 @@ QVariantList Novels::sources() const {
                                {"base", s->config().base},
                                {"extended", s->config().options.value("extended").toBool()},
                                {"language", s->config().language},
-                               {"languageName", languageName(s->config().language)}});
+                               {"languageName", languageName(s->config().language)},
+                               {"canBrowse", s->canBrowse()},
+                               {"browseLatest", s->hasLatestListing()},
+                               {"extension", s->key().contains(QLatin1Char(':'))}});
     return out;
+}
+
+Task *Novels::browse(const QString &key, const QString &listing, int page, const QString &query, const QVariantList &filters) {
+    return Task::run([key, listing, page, query, filters]() -> QVariant {
+        auto source = Registry::byKey(key);
+        if (!source || !source->canBrowse())
+            throw Error(QStringLiteral("That source cannot be browsed."));
+        if (!source->config().enabled)
+            throw Error(source->config().disabledReason.isEmpty() ? QStringLiteral("That source is switched off.")
+                                                                   : source->config().disabledReason);
+        // Popular and latest pages change slowly; a search with filters is
+        // asked afresh.
+        const bool cached = listing != QLatin1String("search");
+        const auto cacheKey = QStringLiteral("browse:%1:%2:%3").arg(key, listing).arg(page);
+        if (cached)
+            if (auto hit = Database::cacheGet(cacheKey))
+                return QJsonDocument::fromJson(*hit).toVariant();
+        const auto result = source->browse(listing, page, query, QJsonArray::fromVariantList(filters));
+        QVariantList items;
+        for (const auto &book : result.items) {
+            auto map = bookMap(book, source->label());
+            map.insert(QStringLiteral("sourceUrl"), book.url);
+            map.insert(QStringLiteral("referer"), source->imageReferer());
+            items.append(map);
+        }
+        const QVariantMap out{{"items", items}, {"hasNextPage", result.hasNextPage}};
+        if (cached && !items.isEmpty())
+            Database::cachePut(cacheKey, QJsonDocument::fromVariant(out).toJson(QJsonDocument::Compact), 900);
+        return out;
+    });
+}
+
+Task *Novels::filters(const QString &key) {
+    return Task::run([key]() -> QVariant {
+        auto source = Registry::byKey(key);
+        if (!source)
+            throw Error(QStringLiteral("That source is not installed."));
+        return source->filters().toVariantList();
+    });
+}
+
+Task *Novels::webUrl(const QString &url) {
+    return Task::run([url]() -> QVariant {
+        if (url.startsWith(QLatin1String("http")))
+            return url;
+        if (auto plugin = std::dynamic_pointer_cast<plugins::PluginSource>(Registry::forUrl(url)))
+            return plugin->webUrl(url);
+        throw Error(QStringLiteral("This book has no page on the web."));
+    });
+}
+
+QString Novels::imageReferer(const QString &url) const {
+    auto source = Registry::forUrl(url);
+    return source ? source->imageReferer() : QString();
 }
 
 QString Novels::seriesId(const QString &url) const {

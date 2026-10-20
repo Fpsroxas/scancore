@@ -113,7 +113,9 @@ Item {
                                 Text {
                                     width: parent.width
                                     elide: Text.ElideRight
-                                    text: qsTr("Episode ") + row.modelData.airingEpisode
+                                    text: (row.modelData.airingEpisodeLast
+                                          ? qsTr("Episodes ") + row.modelData.airingEpisode + "–" + row.modelData.airingEpisodeLast
+                                          : qsTr("Episode ") + row.modelData.airingEpisode)
                                         + (row.modelData.episodes ? qsTr(" of ") + row.modelData.episodes : "")
                                         + " · " + (row.aired ? qsTr("aired ") : qsTr("airs ")) + App.relativeTime(row.modelData.airingAt)
                                     color: Theme.textMuted

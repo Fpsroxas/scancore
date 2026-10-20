@@ -7,8 +7,11 @@
 #include "Trackers.h"
 #include "core/Database.h"
 #include "core/Parallel.h"
+#include "core/Text.h"
+#include "sources/comics/Registry.h"
 
 #include <QJsonDocument>
+#include <QSet>
 #include <QJsonObject>
 
 namespace sc {
@@ -54,6 +57,30 @@ Library *Library::instance() {
         return created;
     }();
     return library;
+}
+
+void Library::refreshCover(const QString &seriesId) {
+    static QSet<QString> tried;
+    if (!seriesId.startsWith(QLatin1String("comic:")) || tried.contains(seriesId))
+        return;
+    tried.insert(seriesId);
+    const auto row = seriesRow(seriesId);
+    const auto url = row.value(QStringLiteral("sourceUrl")).toString();
+    const auto old = row.value(QStringLiteral("cover")).toString();
+    if (url.isEmpty())
+        return;
+    runInBackground([this, seriesId, url, old] {
+        try {
+            const auto source = comics::Registry::forUrl(url);
+            const auto details = source ? source->details(url) : std::nullopt;
+            if (!details || details->cover.isEmpty() || details->cover == old)
+                return;
+            Database::exec(QStringLiteral("UPDATE series SET cover = ? WHERE id = ?"), {details->cover, seriesId});
+            Database::exec(QStringLiteral("DELETE FROM cache WHERE key = ?"), {QStringLiteral("comic-details:") + url});
+            QMetaObject::invokeMethod(this, [this] { notifyChanged(); }, Qt::QueuedConnection);
+        } catch (const Error &) {
+        }
+    });
 }
 
 void Library::notifyChanged() {
@@ -142,8 +169,10 @@ QVariantList Library::cachedUnits(const QString &seriesId) {
 }
 
 void Library::save(const QVariantMap &series, const QString &category) {
-    upsertSeries(series);
     const auto id = series.value(QStringLiteral("id")).toString();
+    if (id.isEmpty())
+        return;
+    upsertSeries(series);
     const auto known = Database::scalar(QStringLiteral("SELECT COUNT(*) FROM units WHERE series_id = ?"), {id}).toInt();
     Database::transaction([&] {
         Database::query(QStringLiteral("INSERT INTO library(series_id, category, added_at, known_units, changed_at) "
@@ -219,25 +248,50 @@ Task *Library::entries(const QString &media, bool brief) {
     });
 }
 
+namespace {
+
+QVariantList historyRows(const QString &media, int limit) {
+    const auto rows = Database::query(kEntrySelect + QStringLiteral(R"(
+        FROM progress p JOIN series s ON s.id = p.series_id
+        LEFT JOIN library l ON l.series_id = s.id
+        WHERE (? = '' OR s.media = ?) AND p.updated_at =
+            (SELECT MAX(updated_at) FROM progress WHERE series_id = s.id)
+        GROUP BY s.id
+        ORDER BY p.updated_at DESC LIMIT ?
+    )"),
+                                      {media, media, limit});
+    QVariantList out;
+    for (const auto &row : rows)
+        out.append(shapeEntry(row.toMap()));
+    return out;
+}
+
+} // namespace
+
 Task *Library::history(const QString &media, int limit) {
+    return Task::run([media, limit]() -> QVariant { return historyRows(media, limit); });
+}
+
+Task *Library::continueItems(const QString &media, int limit) {
     return Task::run([media, limit]() -> QVariant {
-        const auto rows = Database::query(kEntrySelect + QStringLiteral(R"(
-            FROM progress p JOIN series s ON s.id = p.series_id
-            LEFT JOIN library l ON l.series_id = s.id
-            WHERE (? = '' OR s.media = ?) AND p.updated_at =
-                (SELECT MAX(updated_at) FROM progress WHERE series_id = s.id)
-            GROUP BY s.id
-            ORDER BY p.updated_at DESC LIMIT ?
-        )"),
-                                          {media, media, limit});
+        // One entry per title: a series read on several sources, or under a
+        // source's changed address, shows only where it was read last.
         QVariantList out;
-        for (const auto &row : rows)
-            out.append(shapeEntry(row.toMap()));
+        QSet<QString> seen;
+        for (const auto &value : historyRows(media, limit * 4)) {
+            const auto entry = value.toMap();
+            const auto key = entry.value(QStringLiteral("media")).toString() + QLatin1Char(':') +
+                             titleKey(entry.value(QStringLiteral("title")).toString());
+            if (seen.contains(key))
+                continue;
+            seen.insert(key);
+            out.append(entry);
+            if (out.size() >= limit)
+                break;
+        }
         return out;
     });
 }
-
-Task *Library::continueItems(const QString &media, int limit) { return history(media, limit); }
 
 void Library::forget(const QString &seriesId) {
     Database::exec(QStringLiteral("DELETE FROM progress WHERE series_id = ?"), {seriesId});
@@ -268,6 +322,8 @@ void Library::saveProgress(const QVariantMap &series, const QVariantMap &unit, c
                            bool completed) {
     const auto seriesId = series.value(QStringLiteral("id")).toString();
     const auto key = unit.value(QStringLiteral("key")).toString();
+    if (seriesId.isEmpty())
+        return;
     upsertSeries(series);
     const bool wasCompleted =
         Database::scalar(QStringLiteral("SELECT completed FROM progress WHERE series_id = ? AND unit_key = ?"), {seriesId, key})

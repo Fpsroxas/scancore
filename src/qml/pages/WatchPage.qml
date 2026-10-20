@@ -3,9 +3,12 @@ import QtQuick.Controls.Basic
 import QtQuick.Window
 import ScanCore
 
-// Anime player. ReAnime streams are the provider's own player page, shown in
-// an embedded browser; ScanCore reads its position for resume, auto-next and
-// AniSkip intro skipping.
+// Anime player. Episodes from anime extensions play in SCANCORE's own player
+// (NativePlayer, libmpv): an extension's own anime from its source, an
+// AniList anime from the source picked in "Watch from". Otherwise ReAnime's
+// streams are the provider's own player page, shown in an embedded browser.
+// Either way ScanCore follows the position for resume, auto-next and
+// skipping intros (AniSkip, or the video's own chapters).
 //
 // Desktop with Qt WebEngine (Linux): the video fills the page and the top
 // bar and episode list float over it, fading out after a few seconds without
@@ -25,8 +28,29 @@ Rectangle {
     readonly property var episode: episodes[index] || ({})
     readonly property bool hasPrev: index > 0
     readonly property bool hasNext: index < episodes.length - 1
-    readonly property var series: Anime.seriesFor(media)
+    // An extension's own anime (opened from its source) plays from there;
+    // an AniList anime from the source picked for it, else the built-in
+    // servers ({builtIn: true}).
+    readonly property bool fromSource: String(media.source || "").startsWith("aniyomi:")
+    property var provider: fromSource ? { source: media.source, url: media.sourceUrl, sourceLabel: Anime.sourceLabel(media.source) }
+                                      : Anime.provider(media.anilistId || 0)
+    readonly property bool nativeStream: !!provider.source
+    readonly property bool hasSources: { App.dependOn(Extensions.revision); return Anime.sources().some(s => s.enabled) }
+    // "Watch from" is asked once, the first time an episode plays here.
+    property bool asked: false
+    readonly property bool finding: watchFrom.quiet && !!watchFrom.task && watchFrom.task.loading
+    readonly property var series: fromSource ? media : Anime.seriesFor(media)
     property var streamsTask: null
+    // Extensions: the episode's videos as its hosters answer, and the one
+    // chosen to play (with its headers and tracks).
+    property var videosTask: null
+    property var videoState: null
+    property var resolveTask: null
+    property var hosterTasks: []
+    property string currentId: ""
+    property var currentVideo: ({})
+    property var failedIds: ({})
+    property string playError: ""
     property var skipTask: null
     property string currentUrl: ""
     property real position: 0
@@ -38,21 +62,35 @@ Rectangle {
     readonly property bool phone: App.platform === "android"
     readonly property bool landscape: width > height
     readonly property bool fullScreen: Window.window !== null && Window.window.visibility === Window.FullScreen
-    readonly property bool systemView: Anime.playerEngine === "system"
+    readonly property bool systemView: !nativeStream && Anime.playerEngine === "system"
     // Desktop layout for a native player view (SCANCORE_START
     // {"playerLayout": "docked"} tries it with Qt WebEngine).
     readonly property bool docked: !phone && (systemView || App.startAction.playerLayout === "docked")
     // The embedded browser cannot decode this video (see WebPlayer).
     property bool unsupported: false
-    readonly property var progress: { Library.revision; return Library.progressMap(series.id) }
+    readonly property var progress: { App.dependOn(Library.revision); return Library.progressMap(series.id) }
 
     // Desktop chrome auto-hide. Docked chrome only hides in full screen, as
     // hiding it resizes the video.
     property bool idle: false
-    readonly property bool chromeShown: !player.active || unsupported || (docked ? !fullScreen || !idle : !idle)
+    readonly property bool chromeShown: !player.item || unsupported || (nativeStream && !currentUrl) || (docked ? !fullScreen || !idle : !idle)
 
-    readonly property var streams: streamsTask && streamsTask.ok ? streamsTask.result.streams : []
-    readonly property var skips: skipTask && skipTask.ok ? skipTask.result : []
+    // The server chips: ReAnime's servers, or every video of the hosters
+    // that answered (and a chip for each hoster that only loads on request).
+    readonly property var streams: {
+        if (!nativeStream) return streamsTask && streamsTask.ok ? streamsTask.result.streams : []
+        const out = []
+        for (const h of (videoState ? videoState.hosters : [])) {
+            if (h.state === "idle") out.push({ id: h.id, quality: h.name + "…", hoster: h.name, type: "hoster" })
+            for (const v of (h.videos || []))
+                if (!v.localServer)
+                    out.push({ id: v.id, url: v.url, quality: (h.name ? h.name + " · " : "") + (v.title || qsTr("Video")), hoster: h.name, type: "video", video: v })
+        }
+        return out
+    }
+    // A video's own chapters, else AniSkip's.
+    readonly property var skips: currentVideo.skips && currentVideo.skips.length ? currentVideo.skips
+                               : skipTask && skipTask.ok ? skipTask.result : []
     readonly property var activeSkip: {
         for (const s of skips)
             if (position >= s.start && position < s.end - 1) return s
@@ -84,7 +122,23 @@ Rectangle {
         const p = Library.progressMap(series.id)[episodes[i].key]
         resumeAt = p && !p.completed && p.position ? (p.position.seconds || 0) : 0
         currentUrl = ""
-        streamsTask = Anime.streams(media.anilistId, episodes[i].number)
+        currentId = ""
+        currentVideo = ({})
+        failedIds = ({})
+        playError = ""
+        videoState = null
+        resolveTask = null
+        hosterTasks = []
+        pickGrace.stop()
+        streamsTask = null
+        videosTask = null
+        if (nativeStream)
+            videosTask = Anime.videos(provider.source, fromSource ? episodes[i].url : "", fromSource ? "" : provider.url, Number(episodes[i].number))
+        else if (!fromSource && !provider.builtIn && hasSources && !asked) {
+            asked = true
+            watchFrom.start(media, true)
+        } else
+            streamsTask = Anime.streams(media.anilistId, episodes[i].number)
         Presence.show("anime", series.title || "", qsTr("Episode ") + (episodes[i].number || ""))
         if (phone && !landscape) phoneList.positionViewAtIndex(i, ListView.Contain)
     }
@@ -101,9 +155,11 @@ Rectangle {
         Presence.clear()
         saveProgress(true)
         if (phone && fullScreen) Window.window.showNormal()
+        if (phone) App.setOrientation("")
     }
 
-    // Phones: rotating to landscape is the way into full screen.
+    // Phones: landscape is full screen, by turning the phone or with the
+    // full screen buttons (which turn it, even with auto-rotate off).
     onLandscapeChanged: {
         if (!phone) return
         if (landscape) Window.window.showFullScreen()
@@ -120,8 +176,123 @@ Rectangle {
     }
 
     function pickServer(stream) {
+        if (stream.type === "hoster") return loadHoster(stream)
+        if (stream.type === "video") {
+            // A new server goes on from where this one was.
+            if (position > 5) resumeAt = position
+            return playVideo(stream)
+        }
         currentUrl = stream.url
         App.setSetting("animeServer", stream.quality)
+    }
+
+    // What plays first: a video of the server picked last time (when the
+    // episode has it), else the source's best, as Aniyomi picks it: a
+    // preferred video at once, otherwise once the hosters have answered (or
+    // a few seconds after the first video that plays).
+    function applyVideos(result, done) {
+        videoState = result
+        if (currentId) return
+        const wanted = App.settings.animeHoster || ""
+        const h = wanted ? result.hosters.findIndex(x => x.name === wanted) : -1
+        if (h >= 0 && result.hosters[h].state === "loading" && !done) return
+        let choice = null
+        if (h >= 0 && result.hosters[h].state === "ready") {
+            const videos = (result.hosters[h].videos || []).filter(v => !v.localServer)
+            choice = videos.find(v => v.preferred) || videos[0] || null
+        }
+        const best = result.best ? result.hosters[result.best.hoster].videos[result.best.video] : null
+        if (!choice && best && (best.preferred || done)) choice = best
+        if (choice) {
+            pickGrace.stop()
+            playVideo(streams.find(s => s.id === choice.id))
+        } else if (best && !pickGrace.running)
+            pickGrace.start()
+    }
+    Timer {
+        id: pickGrace
+        interval: 4000
+        onTriggered: if (!watch.currentId && watch.videoState && watch.videoState.best) {
+            const b = watch.videoState.best
+            watch.playVideo(watch.streams.find(s => s.id === watch.videoState.hosters[b.hoster].videos[b.video].id))
+        }
+    }
+
+    function playVideo(stream) {
+        if (!stream) return
+        currentId = stream.id
+        playError = ""
+        App.setSetting("animeHoster", stream.hoster || "")
+        // Only the video that plays asks for its final address.
+        if (stream.video.initialized === false || !stream.url) {
+            currentUrl = ""
+            const task = Anime.resolveVideo(provider.source, stream.id)
+            resolveTask = task
+            task.finished.connect((v) => {
+                if (watch.resolveTask !== task) return
+                watch.currentVideo = v
+                watch.currentUrl = v.url
+            })
+            task.failed.connect((error) => { if (watch.resolveTask === task) watch.videoFailed(error, task.status) })
+        } else {
+            resolveTask = null
+            currentVideo = stream.video
+            currentUrl = stream.url
+        }
+    }
+
+    // A hoster that only lists its videos when asked.
+    function loadHoster(stream) {
+        const task = Anime.hosterVideos(provider.source, stream.id)
+        hosterTasks = hosterTasks.concat([task])
+        task.finished.connect((videos) => {
+            if (!watch.videoState) return
+            const state = Object.assign({}, watch.videoState)
+            state.hosters = state.hosters.map(h => h.id === stream.id ? Object.assign({}, h, { state: "ready", videos: videos }) : h)
+            watch.videoState = state
+            const first = videos.find(v => !v.localServer)
+            if (first) watch.playVideo(watch.streams.find(s => s.id === first.id))
+        })
+        task.failed.connect((error) => Router.toast(error, "error"))
+    }
+
+    // The video would not play: the next one does, if there is one. After
+    // the extension host restarted, the episode's videos are asked again.
+    function videoFailed(message, status) {
+        if (status === 410) return load(index)
+        const failed = Object.assign({}, failedIds)
+        failed[currentId] = true
+        failedIds = failed
+        const next = streams.find(s => s.type === "video" && !failedIds[s.id])
+        currentId = ""
+        currentUrl = ""
+        if (next) {
+            Router.toast(qsTr("Trying another server: ") + message, "info")
+            playVideo(next)
+        } else
+            playError = message
+    }
+
+    function isCurrent(stream) {
+        return stream.type === "video" ? currentId === stream.id : stream.type !== "hoster" && currentUrl === stream.url
+    }
+
+    WatchFromDialog {
+        id: watchFrom
+        onChosen: (picked) => {
+            watch.provider = picked.source ? picked : { builtIn: true }
+            watch.load(watch.index)
+        }
+        // Not picked: the built-in servers, this time.
+        onDismissed: if (!watch.provider.source && !watch.streamsTask) {
+            watch.provider = { builtIn: true }
+            watch.load(watch.index)
+        }
+    }
+    Connections {
+        target: watch.videosTask
+        function onProgressed(partial) { watch.applyVideos(partial, false) }
+        function onFinished(result) { watch.applyVideos(result, true) }
     }
 
     property real lastSaved: 0
@@ -137,9 +308,11 @@ Rectangle {
     function onPlayerTime(seconds, total, status) {
         if (total > 0 && duration === 0) {
             duration = total
-            skipTask = Anime.skipTimes(media.anilistId, episode.number, Math.round(total))
-            if (resumeAt > 5 && resumeAt < total - 30 && seconds < resumeAt - 5) {
-                player.seek(resumeAt)
+            if (media.anilistId)
+                skipTask = Anime.skipTimes(media.anilistId, episode.number, Math.round(total))
+            // SCANCORE's player starts there by itself; web players are told.
+            if (resumeAt > 5 && resumeAt < total - 30 && (nativeStream || seconds < resumeAt - 5)) {
+                if (!nativeStream) player.seek(resumeAt)
                 Router.toast(qsTr("Resumed at ") + formatTime(resumeAt))
             }
         }
@@ -168,7 +341,8 @@ Rectangle {
     }
 
     function toggleFullScreen() {
-        if (fullScreen) Window.window.showNormal()
+        if (phone) App.setOrientation(landscape ? "portrait" : "landscape")
+        else if (fullScreen) Window.window.showNormal()
         else Window.window.showFullScreen()
     }
 
@@ -252,16 +426,30 @@ Rectangle {
             // A system web view draws above everything in the window, so it
             // steps aside while the comments panel is open.
             visible: !(watch.systemView && comments.visible)
-            active: Anime.playerEngine !== "" && watch.currentUrl.length > 0
-            source: watch.systemView ? "../components/WebPlayerSystem.qml" : "../components/WebPlayer.qml"
-            onLoaded: item.url = Qt.binding(() => watch.currentUrl)
+            // SCANCORE's player stays for the whole page (servers and
+            // episodes change under it); a web player comes with its page.
+            // One binding decides, so the two never mix while it changes.
+            source: watch.nativeStream ? "../components/NativePlayer.qml"
+                  : watch.currentUrl.length === 0 || Anime.playerEngine === "" ? ""
+                  : watch.systemView ? "../components/WebPlayerSystem.qml" : "../components/WebPlayer.qml"
+            onLoaded: {
+                item.url = Qt.binding(() => watch.currentUrl)
+                if (!watch.nativeStream) return
+                item.video = Qt.binding(() => watch.currentVideo)
+                item.startAt = Qt.binding(() => watch.resumeAt > 5 ? watch.resumeAt : 0)
+                item.chromeShown = Qt.binding(() => watch.chromeShown)
+            }
             function seek(seconds) { if (item) item.seek(seconds) }
             Connections {
                 target: player.item
+                // NativePlayer has more to say than the web players.
+                ignoreUnknownSignals: true
                 function onTime(seconds, total, status) { watch.onPlayerTime(seconds, total, status) }
                 function onInteracted() { watch.wake() }
                 function onKey(press) { watch.pageKey(press) }
                 function onUnsupported() { watch.unsupported = true }
+                function onFailed(message) { watch.videoFailed(message, 0) }
+                function onFullScreenRequested() { watch.toggleFullScreen() }
             }
         }
 
@@ -269,7 +457,7 @@ Rectangle {
         // system browser, which can. Drawn over the (Qt WebEngine) player.
         Rectangle {
             anchors.fill: parent
-            visible: watch.unsupported && player.active
+            visible: watch.unsupported && !!player.item
             color: "#000000"
             Column {
                 anchors.centerIn: parent
@@ -322,10 +510,11 @@ Rectangle {
         Column {
             anchors.centerIn: parent
             spacing: 14
-            visible: !player.active
+            visible: !player.item || (watch.nativeStream && !watch.currentUrl)
             Spinner {
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: watch.streamsTask !== null && watch.streamsTask.loading
+                visible: watch.finding || (watch.streamsTask !== null && watch.streamsTask.loading)
+                         || (watch.videosTask !== null && watch.videosTask.loading) || (watch.resolveTask !== null && watch.resolveTask.loading)
                 size: 30
                 color: "#a1a1aa"
             }
@@ -334,19 +523,34 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
                 visible: text.length > 0
-                text: Anime.playerEngine === "" ? qsTr("This build of SCANCORE has no embedded browser, which the ReAnime player needs.")
-                    : watch.streamsTask && !watch.streamsTask.loading
-                      ? (watch.streamsTask.ok ? (watch.streamsTask.result.message || "") : watch.streamsTask.error) : ""
+                text: watch.finding ? qsTr("Looking for %1 on your anime sources…").arg(watch.media.title || "")
+                    : watch.nativeStream ? (watch.playError || (watch.videosTask && !watch.videosTask.loading
+                        ? (watch.videosTask.ok ? (watch.videosTask.result.message || "") : watch.videosTask.error) : ""))
+                    : !watch.streamsTask ? ""
+                    : Anime.playerEngine === "" ? qsTr("This build of SCANCORE has no embedded browser, which the ReAnime player needs.")
+                    : !watch.streamsTask.loading ? (watch.streamsTask.ok ? (watch.streamsTask.result.message || "") : watch.streamsTask.error) : ""
                 color: "#d4d4d8"
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textMd
             }
-            ScButton {
+            Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-                visible: watch.streamsTask !== null && !watch.streamsTask.loading && watch.streams.length === 0
-                text: qsTr("Try again")
-                iconName: "refresh-cw"
-                onClicked: watch.load(watch.index)
+                spacing: 8
+                ScButton {
+                    visible: (watch.streamsTask !== null && !watch.streamsTask.loading && watch.streams.length === 0)
+                             || (watch.videosTask !== null && !watch.videosTask.loading && !watch.currentId)
+                    text: qsTr("Try again")
+                    iconName: "refresh-cw"
+                    onClicked: watch.load(watch.index)
+                }
+                ScButton {
+                    visible: !watch.fromSource && watch.hasSources && !watch.finding
+                             && ((watch.streamsTask !== null && !watch.streamsTask.loading && watch.streams.length === 0)
+                                 || (watch.videosTask !== null && !watch.videosTask.loading && !watch.currentId))
+                    text: qsTr("Watch from…")
+                    iconName: "server"
+                    onClicked: watchFrom.start(watch.media, false)
+                }
             }
         }
 
@@ -456,7 +660,7 @@ Rectangle {
             Text {
                 width: parent.width
                 visible: !watch.phone
-                text: watch.episodeLine
+                text: watch.episodeLine + (watch.provider.sourceLabel ? "  ·  " + watch.provider.sourceLabel : "")
                 color: "#a1a1aa"
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textSm
@@ -507,7 +711,7 @@ Rectangle {
                 Chip {
                     required property var modelData
                     text: modelData.quality
-                    selected: watch.currentUrl === modelData.url
+                    selected: watch.isCurrent(modelData)
                     onClicked: watch.pickServer(modelData)
                 }
             }
@@ -515,8 +719,17 @@ Rectangle {
             IconButton { iconName: "skip-back"; iconColor: "white"; enabled: watch.hasPrev; tip: qsTr("Previous episode") + watch.keyHint("player.prev"); onClicked: watch.load(watch.index - 1) }
             IconButton { iconName: "skip-forward"; iconColor: "white"; enabled: watch.hasNext; tip: qsTr("Next episode") + watch.keyHint("player.next"); onClicked: watch.load(watch.index + 1) }
             IconButton { iconName: "list"; iconColor: "white"; active: watch.sideOpen; tip: qsTr("Episodes"); onClicked: watch.sideOpen = !watch.sideOpen }
-            IconButton { iconName: "message-circle"; iconColor: "white"; tip: qsTr("Comments"); onClicked: comments.open() }
             IconButton {
+                visible: !watch.fromSource && (watch.hasSources || watch.nativeStream)
+                iconName: "server"
+                iconColor: "white"
+                tip: qsTr("Watch from")
+                onClicked: watchFrom.start(watch.media, false)
+            }
+            IconButton { visible: !!watch.media.anilistId; iconName: "message-circle"; iconColor: "white"; tip: qsTr("Comments"); onClicked: comments.open() }
+            IconButton {
+                // A video from an extension needs its headers; only web players open elsewhere.
+                visible: !watch.nativeStream
                 iconName: "external-link"
                 iconColor: "white"
                 enabled: watch.currentUrl.length > 0
@@ -662,7 +875,7 @@ Rectangle {
                             Chip {
                                 required property var modelData
                                 text: modelData.quality
-                                selected: watch.currentUrl === modelData.url
+                                selected: watch.isCurrent(modelData)
                                 onClicked: watch.pickServer(modelData)
                             }
                         }
@@ -673,6 +886,13 @@ Rectangle {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 4
+                    IconButton {
+                        visible: !watch.fromSource && (watch.hasSources || watch.nativeStream)
+                        iconName: "server"
+                        iconColor: "white"
+                        diameter: 40
+                        onClicked: watchFrom.start(watch.media, false)
+                    }
                     IconButton { iconName: "skip-back"; iconColor: "white"; diameter: 40; enabled: watch.hasPrev; onClicked: watch.load(watch.index - 1) }
                     IconButton { iconName: "skip-forward"; iconColor: "white"; diameter: 40; enabled: watch.hasNext; onClicked: watch.load(watch.index + 1) }
                 }
@@ -744,6 +964,7 @@ Rectangle {
                 onClicked: player.seek(watch.activeSkip.end)
             }
             IconButton { iconName: "skip-forward"; iconColor: "white"; diameter: 44; enabled: watch.hasNext; onClicked: watch.nextEpisode() }
+            IconButton { iconName: "minimize"; iconColor: "white"; diameter: 44; tip: qsTr("Exit full screen"); onClicked: watch.toggleFullScreen() }
         }
     }
 

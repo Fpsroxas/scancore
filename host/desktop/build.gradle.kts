@@ -30,6 +30,7 @@ dependencies {
 tasks.test {
     dependsOn(":testext:apk")
     systemProperty("scancore.testext.apk", project(":testext").layout.buildDirectory.file("apk/testext.apk").get().asFile.path)
+    systemProperty("scancore.testanime.apk", project(":testext").layout.buildDirectory.file("animeapk/testanime.apk").get().asFile.path)
     systemProperty("scancore.fixtures", rootProject.layout.projectDirectory.dir("../tests/fixtures/host").asFile.path)
     testLogging {
         events("passed", "skipped", "failed")

@@ -7,9 +7,9 @@ import androidx.preference.MultiSelectListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
 import androidx.preference.TwoStatePreference
+import com.mediumdev.scancore.host.Configurable
 import com.mediumdev.scancore.host.HostError
 import com.mediumdev.scancore.host.SettingsBridge
-import eu.kanade.tachiyomi.source.ConfigurableSource
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -27,17 +27,17 @@ import kotlinx.serialization.json.put
 class CompatSettings(
     private val context: Context,
 ) : SettingsBridge {
-    private fun screen(source: ConfigurableSource): List<Preference> {
+    private fun screen(source: Configurable): List<Preference> {
         val screen = PreferenceScreen(context)
-        screen.sharedPreferences = source.getSourcePreferences()
-        source.setupPreferenceScreen(screen)
+        screen.sharedPreferences = source.preferences()
+        source.setup(screen)
         return screen.preferences
     }
 
-    override fun describe(source: ConfigurableSource): JsonArray = preferences(screen(source))
+    override fun describe(source: Configurable): JsonArray = preferences(screen(source))
 
     override fun set(
-        source: ConfigurableSource,
+        source: Configurable,
         key: String,
         value: JsonElement,
     ) {

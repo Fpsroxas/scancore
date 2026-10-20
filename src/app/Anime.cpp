@@ -1,17 +1,28 @@
 #include "Anime.h"
 
+#include "App.h"
 #include "Library.h"
+#include "MpvPlayer.h"
+#include "Resolve.h"
 #include "core/Database.h"
 #include "core/Html.h"
 #include "core/Parallel.h"
+#include "core/Text.h"
+#include "extensions/ExtensionSource.h"
+#include "extensions/Host.h"
 #include "sources/Manifest.h"
+#include "sources/anime/Playback.h"
+#include "sources/anime/Registry.h"
 
+#include <QCryptographicHash>
 #include <QDateTime>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QRegularExpression>
 #include <QSettings>
+#include <QTimeZone>
+#include <QUrlQuery>
 
 namespace sc {
 
@@ -32,6 +43,7 @@ const char *kCardFields = R"(
 const char *kMediaFields = R"(
   id idMal
   title { romaji english native userPreferred }
+  synonyms
   description(asHtml: false)
   format status(version: 2) episodes duration
   season seasonYear startDate { year month day }
@@ -193,13 +205,7 @@ bool Anime::webPlayerAvailable() const {
 #endif
 }
 
-bool Anime::nativePlayerAvailable() const {
-#ifdef SCANCORE_HAVE_MPV
-    return true;
-#else
-    return false;
-#endif
-}
+bool Anime::nativePlayerAvailable() const { return MpvPlayer::supported(); }
 
 QString Anime::playerEngine() const {
     // Development override: SCANCORE_PLAYER=webengine|system.
@@ -234,6 +240,10 @@ QString Anime::playerEngine() const {
 }
 
 QString Anime::seriesId(int anilistId) const {
+    // None yet: a MyAnimeList title still being looked up, or one AniList
+    // does not have. All of them would otherwise share "anime:anilist:0".
+    if (anilistId <= 0)
+        return {};
     return Library::idFor(QStringLiteral("anime"), QStringLiteral("anilist"), QString::number(anilistId));
 }
 
@@ -263,7 +273,120 @@ QVariantMap Anime::seriesFor(const QVariantMap &media) const {
             {"extra", extra}};
 }
 
+namespace {
+
+// MyAnimeList's rankings as the home page's shelves, in the shape of
+// AniList's cards.
+QVariantMap malCard(const QJsonObject &n) {
+    static const QHash<QString, QString> formats{{"tv", "TV"},        {"movie", "Movie"},  {"ova", "OVA"},   {"ona", "ONA"},
+                                                 {"special", "Special"}, {"music", "Music"}, {"tv_special", "TV Special"}};
+    static const QHash<QString, QString> statuses{{"finished_airing", "Finished"}, {"currently_airing", "Airing"},
+                                                  {"not_yet_aired", "Upcoming"}};
+    const auto alt = n.value("alternative_titles").toObject();
+    const auto english = alt.value("en").toString();
+    const auto picture = n.value("main_picture").toObject();
+    QStringList genres;
+    for (const auto &g : n.value("genres").toArray())
+        genres.append(g.toObject().value("name").toString());
+    return {{"anilistId", 0},
+            {"idMal", n.value("id").toInt()},
+            {"id", Library::idFor(QStringLiteral("anime"), QStringLiteral("mal"), QString::number(n.value("id").toInt()))},
+            {"media", QStringLiteral("anime")},
+            {"title", english.isEmpty() ? n.value("title").toString() : english},
+            {"romaji", n.value("title").toString()},
+            {"cover", picture.value("large").toString(picture.value("medium").toString())},
+            {"coverSmall", picture.value("medium").toString()},
+            {"format", formats.value(n.value("media_type").toString(), n.value("media_type").toString().toUpper())},
+            {"status", statuses.value(n.value("status").toString())},
+            {"episodes", n.value("num_episodes").toInt()},
+            {"score", int(std::round(n.value("mean").toDouble() * 10))},
+            {"year", n.value("start_season").toObject().value("year").toInt(n.value("start_date").toString().left(4).toInt())},
+            {"genres", genres},
+            {"catalog", QStringLiteral("mal")}};
+}
+
+QVariantList malList(const QString &path, QList<QPair<QString, QString>> params) {
+    const auto id = Anime::malClientId();
+    params.append({QStringLiteral("fields"), QStringLiteral("alternative_titles,media_type,num_episodes,start_season,start_date,status,mean,main_picture,genres")});
+    params.append({QStringLiteral("limit"), QStringLiteral("30")});
+    QUrl url(QStringLiteral("https://api.myanimelist.net/v2") + path);
+    QUrlQuery query;
+    for (const auto &[k, v] : params)
+        query.addQueryItem(k, v);
+    url.setQuery(query);
+    const auto key = QStringLiteral("mal:anime:") + url.toString();
+    QByteArray body;
+    if (auto cached = Database::cacheGet(key))
+        body = *cached;
+    else {
+        const auto response = Http::get(url, {{"X-MAL-CLIENT-ID", id.toUtf8()}, {"Accept", "application/json"}}, 12000);
+        if (!response.ok()) {
+            if (auto stale = Database::cacheGet(key, true))
+                body = *stale;
+            else
+                throw Error(QStringLiteral("MyAnimeList's catalogue is unavailable right now (%1).").arg(response.status), response.status);
+        } else {
+            body = response.body;
+            Database::cachePut(key, body, 3600);
+        }
+    }
+    QVariantList out;
+    for (const auto &row : QJsonDocument::fromJson(body).object().value("data").toArray())
+        out.append(malCard(row.toObject().value("node").toObject()));
+    return out;
+}
+
+} // namespace
+
+QString Anime::malClientId() {
+#ifdef SCANCORE_MAL_CLIENT_ID
+    return QStringLiteral(SCANCORE_MAL_CLIENT_ID);
+#else
+    return {};
+#endif
+}
+
+Task *Anime::anilistIdFor(int malId) {
+    return Task::run([malId]() -> QVariant {
+        const auto data = graphql(QStringLiteral("query ($id: Int) { Media(idMal: $id, type: ANIME) { id } }"), {{"id", malId}},
+                                  QStringLiteral("anilist:idmal:%1").arg(malId), 30 * 86400);
+        const int id = data.value("Media").toObject().value("id").toInt();
+        if (!id)
+            throw Error(QStringLiteral("AniList has no entry for this anime yet."), 404);
+        return id;
+    });
+}
+
 Task *Anime::home() {
+    const auto catalog = App::instance()->settings().value(QStringLiteral("catalogAnime")).toString();
+    if (catalog == QLatin1String("mal") && !malClientId().isEmpty())
+        return Task::run([]() -> QVariant {
+            const auto [season, year] = currentSeason();
+            QList<std::function<QVariant()>> jobs{
+                [] { return QVariant(malList(QStringLiteral("/anime/ranking"), {{"ranking_type", "airing"}})); },
+                [] { return QVariant(malList(QStringLiteral("/anime/ranking"), {{"ranking_type", "bypopularity"}})); },
+                [season = season, year = year] {
+                    return QVariant(malList(QStringLiteral("/anime/season/%1/%2").arg(year, season.toLower()), {{"sort", "anime_num_list_users"}}));
+                },
+                [] { return QVariant(malList(QStringLiteral("/anime/ranking"), {{"ranking_type", "all"}})); },
+                // The spotlight wants AniList's banners, which MyAnimeList has not.
+                [] {
+                    const auto data = graphql(QStringLiteral("query { Page(page: 1, perPage: 12) { media(type: ANIME, isAdult: false, "
+                                                             "sort: [TRENDING_DESC]) { %1 } } }")
+                                                  .arg(QString::fromLatin1(kCardFields)),
+                                              {}, QStringLiteral("anilist:spotlight"), 3600);
+                    return QVariant(cards(data.value("Page").toObject().value("media").toArray()));
+                },
+            };
+            const auto results = parallel(jobs);
+            if (std::none_of(results.begin(), results.end(), [](auto &r) { return r.ok(); }))
+                throw Error(results.first().error);
+            auto value = [&](int i) { return results[i].ok() ? *results[i].value : QVariant(QVariantList()); };
+            return QVariantMap{{"trending", value(0)}, {"popular", value(1)}, {"season", value(2)}, {"top", value(3)},
+                               {"spotlight", value(4)},
+                               {"seasonName", QStringLiteral("%1 %2").arg(season.left(1) + season.mid(1).toLower(), year)},
+                               {"catalog", QStringLiteral("mal")}};
+        });
     return Task::run([]() -> QVariant {
         const auto [season, year] = currentSeason();
         const auto list = [](const QString &sort, const QString &extraDecl, const QString &extraArgs,
@@ -296,7 +419,8 @@ Task *Anime::home() {
             throw Error(results.first().error);
         auto value = [&](int i) { return results[i].ok() ? *results[i].value : QVariant(QVariantList()); };
         return QVariantMap{{"trending", value(0)}, {"popular", value(1)}, {"season", value(2)}, {"top", value(3)},
-                           {"seasonName", QStringLiteral("%1 %2").arg(season.left(1) + season.mid(1).toLower(), year)}};
+                           {"seasonName", QStringLiteral("%1 %2").arg(season.left(1) + season.mid(1).toLower(), year)},
+                           {"catalog", QStringLiteral("anilist")}};
     });
 }
 
@@ -342,6 +466,16 @@ Task *Anime::media(int anilistId) {
         const auto m = mediaObject(anilistId);
         auto map = card(m);
         map.insert("description", plainDescription(m.value("description").toString()));
+        // Every name it is known by, for finding it on anime sources.
+        QStringList titles{map.value("title").toString()};
+        const auto names = m.value("title").toObject();
+        for (const char *key : {"english", "romaji", "userPreferred", "native"})
+            titles.append(names.value(QLatin1String(key)).toString());
+        for (const auto &synonym : m.value("synonyms").toArray())
+            titles.append(synonym.toString());
+        titles.removeAll(QString());
+        titles.removeDuplicates();
+        map.insert("titles", titles);
         QStringList studios;
         for (const auto &s : m.value("studios").toObject().value("nodes").toArray())
             studios.append(s.toObject().value("name").toString());
@@ -443,6 +577,9 @@ Task *Anime::recommendations(int anilistId) {
 Task *Anime::schedule(qint64 start, qint64 end) {
     return Task::run([start, end]() -> QVariant {
         QVariantList out;
+        // Episodes of one anime out at the same moment (a whole season at
+        // once) are one entry: airingEpisode to airingEpisodeLast.
+        QHash<QString, qsizetype> slot;
         for (int page = 1; page <= 8; ++page) {
             const auto data = graphql(QStringLiteral("query ($page: Int, $start: Int, $end: Int) { Page(page: $page, "
                                                      "perPage: 50) { pageInfo { hasNextPage } airingSchedules(airingAt_greater: "
@@ -457,9 +594,20 @@ Task *Anime::schedule(qint64 start, qint64 end) {
                 const auto m = r.value("media").toObject();
                 if (m.isEmpty() || m.value("isAdult").toBool())
                     continue;
+                const auto at = qint64(r.value("airingAt").toDouble());
+                const auto episode = r.value("episode").toInt();
+                const auto key = QString::number(m.value("id").toInt()) + QLatin1Char('@') + QString::number(at);
+                if (const auto it = slot.constFind(key); it != slot.cend()) {
+                    auto merged = out[*it].toMap();
+                    merged.insert("airingEpisode", std::min(merged.value("airingEpisode").toInt(), episode));
+                    merged.insert("airingEpisodeLast", std::max(merged.value("airingEpisodeLast").toInt(), episode));
+                    out[*it] = merged;
+                    continue;
+                }
                 auto c = card(m);
-                c.insert("airingAt", qint64(r.value("airingAt").toDouble()));
-                c.insert("airingEpisode", r.value("episode").toInt());
+                c.insert("airingAt", at);
+                c.insert("airingEpisode", episode);
+                slot.insert(key, out.size());
                 out.append(c);
             }
             if (!p.value("pageInfo").toObject().value("hasNextPage").toBool())
@@ -552,6 +700,292 @@ Task *Anime::skipTimes(int anilistId, int episode, int duration) {
                                    {"end", interval.value("endTime").toDouble()}});
         }
         return out;
+    });
+}
+
+// ---------------------------------------------------------------- extensions
+
+namespace {
+
+std::shared_ptr<ext::AnimeSource> requireSource(const QString &key) {
+    auto source = anime::Registry::byKey(key);
+    if (!source)
+        throw Error(QStringLiteral("That anime source is not installed."), 404);
+    if (!source->enabled())
+        throw Error(source->blocked().isEmpty() ? QStringLiteral("That source is switched off.") : source->blocked());
+    return source;
+}
+
+QVariantMap itemMap(const ext::AnimeSource &source, const ext::AnimeItem &item) {
+    return {{"id", Library::idFor(QStringLiteral("anime"), source.key(), item.url)},
+            {"media", QStringLiteral("anime")},
+            {"source", source.key()},
+            {"sourceUrl", item.url},
+            {"url", item.url},
+            {"sourceLabel", source.label()},
+            {"title", item.title},
+            {"cover", item.cover},
+            {"referer", source.imageReferer()},
+            {"seasons", item.seasons},
+            {"season", item.season}};
+}
+
+// An anime's episodes on a source, oldest first; kept half an hour so the
+// next episode starts without asking again.
+QJsonArray cachedEpisodes(ext::AnimeSource &source, const QString &url, const QString &title = {}) {
+    const auto key = QStringLiteral("anime-episodes:") + url;
+    if (auto hit = Database::cacheGet(key))
+        return QJsonDocument::fromJson(*hit).array();
+    const auto episodes = source.episodes(url, title);
+    if (!episodes.isEmpty())
+        Database::cachePut(key, QJsonDocument(episodes).toJson(QJsonDocument::Compact), 1800);
+    return episodes;
+}
+
+QVariantList episodeUnits(const QJsonArray &episodes) {
+    QVariantList out;
+    for (const auto &value : episodes) {
+        const auto e = value.toObject();
+        const double number = e.value("number").toDouble(-1);
+        const auto name = e.value("name").toString().trimmed();
+        QVariantMap unit{{"key", e.value("url").toString()},
+                         {"url", e.value("url").toString()},
+                         {"number", number >= 0 ? QVariant(number) : QVariant(out.size() + 1)},
+                         {"title", name.isEmpty() ? QStringLiteral("Episode %1").arg(out.size() + 1) : name},
+                         {"filler", e.value("filler").toBool()},
+                         {"overview", e.value("summary").toString()},
+                         {"image", e.value("preview").toString()}};
+        if (const auto uploaded = qint64(e.value("uploaded").toDouble()); uploaded > 0)
+            unit.insert("released", QDateTime::fromMSecsSinceEpoch(uploaded, QTimeZone::UTC).toString(Qt::ISODate));
+        out.append(unit);
+    }
+    return out;
+}
+
+QString providerKey(int anilistId) { return QStringLiteral("anime.provider:%1").arg(anilistId); }
+
+} // namespace
+
+QVariantList Anime::sources() const {
+    QVariantList out;
+    for (const auto &source : anime::Registry::all())
+        out.append(QVariantMap{{"key", source->key()},
+                               {"label", source->label()},
+                               {"enabled", source->enabled()},
+                               {"disabledReason", source->blocked()},
+                               {"nsfw", source->nsfw()},
+                               {"language", source->config().language},
+                               {"languageName", languageName(source->config().language)},
+                               {"base", source->baseUrl()},
+                               {"canBrowse", true},
+                               {"browseLatest", true},
+                               {"extension", true}});
+    return out;
+}
+
+QString Anime::sourceLabel(const QString &key) const {
+    const auto source = anime::Registry::byKey(key);
+    return source ? source->label() : key;
+}
+
+Task *Anime::browse(const QString &key, const QString &listing, int page, const QString &query, const QVariantList &filters) {
+    return Task::run([key, listing, page, query, filters]() -> QVariant {
+        auto source = requireSource(key);
+        // Popular and latest pages change slowly; a search is asked afresh.
+        const bool cached = listing != QLatin1String("search");
+        const auto cacheKey = QStringLiteral("browse:%1:%2:%3").arg(key, listing).arg(page);
+        if (cached)
+            if (auto hit = Database::cacheGet(cacheKey))
+                return QJsonDocument::fromJson(*hit).toVariant();
+        const auto result = source->browse(listing, page, query, QJsonArray::fromVariantList(filters));
+        QVariantList items;
+        for (const auto &item : result.items)
+            items.append(itemMap(*source, item));
+        const QVariantMap out{{"items", items}, {"hasNextPage", result.hasNextPage}};
+        if (cached && !items.isEmpty())
+            Database::cachePut(cacheKey, QJsonDocument::fromVariant(out).toJson(QJsonDocument::Compact), 900);
+        return out;
+    });
+}
+
+Task *Anime::filters(const QString &key) {
+    return Task::run([key]() -> QVariant { return requireSource(key)->filters().toVariantList(); });
+}
+
+Task *Anime::sourceAnime(const QString &url, const QVariantMap &summary) {
+    return Task::run([url, summary]() -> QVariant {
+        const auto wrapped = ext::unwrapUrl(url);
+        auto source = requireSource(wrapped ? wrapped->key : QString());
+        const bool seasons = summary.value("seasons").toBool();
+        const auto title = summary.value("title").toString();
+        // Details and episodes (or seasons) at once.
+        QList<std::function<QVariant()>> jobs{
+            [source, url, title, seasons]() -> QVariant { return source->details(url, title, seasons).toVariantMap(); },
+            [source, url, title, seasons]() -> QVariant {
+                if (!seasons) {
+                    // Kept for the player, which looks episodes up again.
+                    const auto episodes = source->episodes(url, title);
+                    if (!episodes.isEmpty())
+                        Database::cachePut(QStringLiteral("anime-episodes:") + url,
+                                           QJsonDocument(episodes).toJson(QJsonDocument::Compact), 1800);
+                    return episodeUnits(episodes);
+                }
+                QVariantList list;
+                for (const auto &item : source->seasons(url, title))
+                    list.append(itemMap(*source, item));
+                return list;
+            }};
+        const auto results = parallel(jobs);
+        if (!results[1].ok())
+            throw Error(results[1].error, results[1].status);
+        const auto details = results[0].ok() ? results[0].value->toMap() : QVariantMap();
+        // The source may only now say the anime has seasons.
+        const bool split = seasons || details.value("fetchType").toString() == QLatin1String("seasons");
+        QVariantList units = seasons ? QVariantList() : results[1].value->toList();
+        QVariantList seasonList = seasons ? results[1].value->toList() : QVariantList();
+        if (split && !seasons)
+            for (const auto &item : source->seasons(url, title))
+                seasonList.append(itemMap(*source, item));
+
+        QVariantMap series = summary;
+        series.insert("id", Library::idFor(QStringLiteral("anime"), source->key(), url));
+        series.insert("media", QStringLiteral("anime"));
+        series.insert("source", source->key());
+        series.insert("sourceLabel", source->label());
+        series.insert("sourceUrl", url);
+        for (const char *key : {"title", "cover", "description"})
+            if (const auto value = details.value(QLatin1String(key)).toString(); !value.isEmpty())
+                series.insert(QLatin1String(key), value);
+        if (const auto genres = details.value("genres").toStringList(); !genres.isEmpty())
+            series.insert("genres", genres);
+        if (const auto status = ext::ExtensionSource::statusName(details.value("status").toInt()); !status.isEmpty())
+            series.insert("status", status);
+        auto extra = series.value("extra").toMap();
+        extra.insert("background", details.value("background"));
+        extra.insert("author", details.value("author"));
+        extra.insert("seasons", split);
+        series.insert("extra", extra);
+        return QVariantMap{{"series", series}, {"episodes", units}, {"seasons", seasonList}};
+    });
+}
+
+Task *Anime::watchFrom(const QVariantMap &media) {
+    return Task::run([media]() -> QVariant {
+        const auto language = Database::pref(QStringLiteral("setting.sourceLanguages")).toString();
+        QList<std::shared_ptr<ext::AnimeSource>> sources;
+        QStringList keys;
+        for (const auto &source : anime::Registry::all())
+            if (source->enabled() && (language.isEmpty() || baseLanguage(source->config().language) == language)) {
+                sources.append(source);
+                keys.append(source->key());
+            }
+        if (sources.isEmpty())
+            return QVariantMap{{"matches", QVariantList()}, {"contentLanguage", contentLanguage()}};
+        const auto id = media.value("anilistId").toInt();
+        const auto sourcesHash = QCryptographicHash::hash(keys.join(QLatin1Char(',')).toUtf8(), QCryptographicHash::Md5).toHex().left(12);
+        const auto cacheKey = QStringLiteral("resolve:anime:%1:%2:%3:%4").arg(QString::fromLatin1(sourcesHash), language, contentLanguage()).arg(id);
+        if (id)
+            if (auto cached = Database::cacheGet(cacheKey))
+                return QJsonDocument::fromJson(*cached).toVariant();
+        auto names = media.value("titles").toStringList();
+        names.prepend(media.value("title").toString());
+        names.append(media.value("romaji").toString());
+        auto matches = resolveAcross<std::shared_ptr<ext::AnimeSource>>(sources, names);
+        for (auto &match : matches) {
+            auto map = match.toMap();
+            if (const auto source = anime::Registry::byKey(map.value("source").toString()))
+                map.insert(QStringLiteral("referer"), source->imageReferer());
+            match = map;
+        }
+        const QVariantMap result{{"matches", matches}, {"contentLanguage", contentLanguage()}};
+        if (id && !matches.isEmpty())
+            Database::cachePut(cacheKey, QJsonDocument::fromVariant(result).toJson(QJsonDocument::Compact), 86400);
+        return result;
+    });
+}
+
+QVariantMap Anime::provider(int anilistId) const {
+    auto chosen = Database::pref(providerKey(anilistId)).toMap();
+    // A source since uninstalled: asked again.
+    if (chosen.value("builtIn").toBool() || anime::Registry::byKey(chosen.value("source").toString()))
+        return chosen;
+    return {};
+}
+
+void Anime::setProvider(int anilistId, const QVariantMap &match) {
+    if (match.value("source").toString().isEmpty()) {
+        Database::setPref(providerKey(anilistId), QVariantMap{{"builtIn", true}});
+        return;
+    }
+    Database::setPref(providerKey(anilistId), QVariantMap{{"source", match.value("source")},
+                                                          {"url", match.value("url")},
+                                                          {"title", match.value("title")},
+                                                          {"sourceLabel", match.value("sourceLabel")}});
+}
+
+Task *Anime::videos(const QString &key, const QString &episodeUrl, const QString &animeUrl, double number) {
+    return Task::run([key, episodeUrl, animeUrl, number]() -> QVariant {
+        auto source = requireSource(key);
+        auto url = episodeUrl;
+        if (url.isEmpty()) {
+            url = anime::episodeNumbered(cachedEpisodes(*source, animeUrl), number);
+            if (url.isEmpty())
+                return QVariantMap{{"hosters", QVariantList()},
+                                   {"best", QVariant()},
+                                   {"message", QStringLiteral("Episode %1 is not on %2 yet.").arg(number).arg(source->label())}};
+        }
+        QVariantList hosters;
+        QList<int> waiting;
+        QList<std::function<QJsonArray()>> jobs;
+        for (const auto &value : source->hosters(url)) {
+            const auto h = value.toObject();
+            QVariantMap hoster{{"id", h.value("id").toString()}, {"name", h.value("name").toString()}, {"lazy", h.value("lazy").toBool()}};
+            if (h.contains("videos")) {
+                hoster.insert("state", QStringLiteral("ready"));
+                hoster.insert("videos", anime::videoList(h.value("videos").toArray()));
+            } else if (h.value("lazy").toBool()) {
+                hoster.insert("state", QStringLiteral("idle"));
+            } else {
+                hoster.insert("state", QStringLiteral("loading"));
+                waiting.append(int(hosters.size()));
+                jobs.append([source, id = h.value("id").toString()] { return source->hosterVideos(id); });
+            }
+            hosters.append(hoster);
+        }
+        QVariantMap out{{"episodeUrl", url}, {"hosters", hosters}, {"best", anime::bestVideo(hosters)}};
+        Task::report(out);
+        // Every hoster at once; each shows up as it answers.
+        parallelEach<QJsonArray>(jobs, 25000, [&](int i, const Outcome<QJsonArray> &result) {
+            auto hoster = hosters[waiting[i]].toMap();
+            if (result.ok()) {
+                hoster.insert("state", QStringLiteral("ready"));
+                hoster.insert("videos", anime::videoList(*result.value));
+            } else {
+                hoster.insert("state", QStringLiteral("failed"));
+                hoster.insert("error", result.error);
+            }
+            hosters[waiting[i]] = hoster;
+            out.insert("hosters", hosters);
+            out.insert("best", anime::bestVideo(hosters));
+            Task::report(out);
+        });
+        if (out.value("best").isNull())
+            out.insert("message", hosters.isEmpty() ? QStringLiteral("%1 has no videos for this episode.").arg(source->label())
+                                                    : QStringLiteral("None of the servers had a video that plays here."));
+        return out;
+    });
+}
+
+Task *Anime::hosterVideos(const QString &key, const QString &hosterId) {
+    return Task::run([key, hosterId]() -> QVariant { return anime::videoList(requireSource(key)->hosterVideos(hosterId)); });
+}
+
+Task *Anime::resolveVideo(const QString &key, const QString &videoId) {
+    return Task::run([key, videoId]() -> QVariant {
+        auto video = anime::videoMap(requireSource(key)->resolveVideo(videoId));
+        if (video.value("url").toString().isEmpty())
+            throw Error(QStringLiteral("This video is not available."), 404);
+        return video;
     });
 }
 

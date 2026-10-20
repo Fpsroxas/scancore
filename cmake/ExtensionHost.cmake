@@ -1,8 +1,8 @@
-# The Kotlin extension host (host/): runs Mihon extensions. Built with its
-# Gradle wrapper, which downloads Gradle and the host's libraries the first
-# time. Needs a JDK 17 or newer. On desktop it is a development host (users
-# download the Extensions runtime; without a JDK the app builds without
-# one); on Android it is an AAR inside the APK.
+# The Kotlin extension host (host/): runs Mihon and Aniyomi extensions.
+# Built with its Gradle wrapper, which downloads Gradle and the host's
+# libraries the first time. Needs a JDK 17 or newer. On desktop it is a
+# development host (users download the Extensions runtime; without a JDK
+# the app builds without one); on Android it is an AAR inside the APK.
 set(SCANCORE_HAVE_EXTENSION_HOST OFF)
 set(SCANCORE_HAVE_ANDROID_HOST OFF)
 if(SCANCORE_WITH_EXTENSION_HOST AND ANDROID)
@@ -48,12 +48,13 @@ if(SCANCORE_WITH_EXTENSION_HOST AND NOT ANDROID)
         else()
             set(SCANCORE_GRADLE ${SCANCORE_HOST_DIR}/gradlew)
         endif()
-        # Where `installDist` puts the host and its jars, and the test APK.
+        # Where `installDist` puts the host and its jars, and the test APKs.
         set(SCANCORE_HOST_LIB_DIR ${SCANCORE_HOST_DIR}/desktop/build/install/scancore-host/lib)
         set(SCANCORE_TESTEXT_APK ${SCANCORE_HOST_DIR}/testext/build/apk/testext.apk)
+        set(SCANCORE_TESTANIME_APK ${SCANCORE_HOST_DIR}/testext/build/animeapk/testanime.apk)
         file(GLOB_RECURSE SCANCORE_HOST_SOURCES CONFIGURE_DEPENDS
             ${SCANCORE_HOST_DIR}/*.kt ${SCANCORE_HOST_DIR}/*.java ${SCANCORE_HOST_DIR}/*.kts
-            ${SCANCORE_HOST_DIR}/*.toml ${SCANCORE_HOST_DIR}/testext/src/main/android/*)
+            ${SCANCORE_HOST_DIR}/*.toml ${SCANCORE_HOST_DIR}/testext/src/main/android/* ${SCANCORE_HOST_DIR}/testext/src/anime/android/*)
         list(FILTER SCANCORE_HOST_SOURCES EXCLUDE REGEX "/build/")
         # Gradle only runs when a host file changed.
         add_custom_command(

@@ -5,6 +5,7 @@
 #include "app/Customize.h"
 #include "app/Extensions.h"
 #include "app/Images.h"
+#include "app/MpvPlayer.h"
 #include "app/Presence.h"
 #include "app/SingleInstance.h"
 #include "app/Sync.h"
@@ -15,6 +16,7 @@
 #include "core/ImageCache.h"
 #include "extensions/Manager.h"
 #include "sources/Manifest.h"
+#include "sources/anime/Registry.h"
 #include "sources/catalogue/Catalogue.h"
 #include "sources/comics/Registry.h"
 #include "sources/local/Local.h"
@@ -36,6 +38,7 @@
 #include <QFile>
 #include <QFontDatabase>
 #include <QIcon>
+#include <QOpenGLContext>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 #include <QQuickWindow>
@@ -135,6 +138,30 @@ void openStorage() {
     ext::Manager::setStorage(data + QStringLiteral("/extensions"));
     comics::Registry::rebuild();
     novels::Registry::rebuild();
+    anime::Registry::rebuild();
+}
+
+// The video player (libmpv's render API) draws with OpenGL, so the
+// interface does too: Linux and Android do already; Windows and macOS would
+// pick Direct3D and Metal, so OpenGL is asked for where it works. Without
+// it, or with another graphics API chosen (QSG_RHI_BACKEND, the software
+// renderer), anime from extensions cannot play and the web players remain.
+void chooseGraphicsApi() {
+    const auto backend = qEnvironmentVariable("QSG_RHI_BACKEND");
+    if (QQuickWindow::sceneGraphBackend() == QLatin1String("software") || QGuiApplication::platformName() == QLatin1String("offscreen") ||
+        (!backend.isEmpty() && backend != QLatin1String("opengl"))) {
+        MpvPlayer::setSceneSupported(false);
+        return;
+    }
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
+    QOpenGLContext probe;
+    if (!probe.create()) {
+        qWarning("No OpenGL: videos from anime extensions cannot play here.");
+        MpvPlayer::setSceneSupported(false);
+        return;
+    }
+    QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
+#endif
 }
 
 // Installed, removed, trusted or switched extensions change the sources:
@@ -147,6 +174,7 @@ void watchExtensions() {
         QObject::connect(timer, &QTimer::timeout, App::instance(), [] {
             comics::Registry::rebuild();
             novels::Registry::rebuild();
+            anime::Registry::rebuild();
             emit App::instance()->manifestChanged();
             Extensions::instance()->notifyExtensionsChanged();
         });
@@ -245,6 +273,8 @@ int main(int argc, char *argv[]) {
         qCritical().noquote() << e.message();
         return 1;
     }
+
+    chooseGraphicsApi();
 
 #ifndef Q_OS_ANDROID
     // A see-through window needs an alpha channel from the start.
