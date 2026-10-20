@@ -49,7 +49,9 @@ int main(int argc, char **argv) {
     QCoreApplication app(argc, argv);
     QCoreApplication::setOrganizationName(QStringLiteral("Medium Dev"));
     QCoreApplication::setApplicationName(QStringLiteral("ScanCore"));
-    QFile manifest(QStringLiteral(SCANCORE_SOURCE_DIR "/sources/manifest.json"));
+    // SCANCORE_PROBE_MANIFEST: another manifest, for sites being considered.
+    QFile manifest(qEnvironmentVariableIsSet("SCANCORE_PROBE_MANIFEST") ? qEnvironmentVariable("SCANCORE_PROBE_MANIFEST")
+                                                                      : QStringLiteral(SCANCORE_SOURCE_DIR "/sources/manifest.json"));
     manifest.open(QIODevice::ReadOnly);
     Manifest::loadData(manifest.readAll());
     comics::Registry::rebuild();
@@ -146,8 +148,19 @@ int main(int argc, char **argv) {
             out << source->label() << Qt::endl;
             QList<comics::Summary> results;
             QList<comics::Chapter> chapters;
+            // "@latest": start from the site's latest updates (sites in other
+            // languages may not have the query's title).
             bool ok = step("search", [&] {
-                results = source->search(query);
+                if (query == QLatin1String("@latest")) {
+                    for (const auto &item : source->latest(10)) {
+                        comics::Summary summary;
+                        summary.title = item.title;
+                        summary.url = item.url;
+                        results.append(summary);
+                    }
+                } else {
+                    results = source->search(query);
+                }
                 if (results.isEmpty())
                     throw Error(QStringLiteral("no results"));
                 return QStringLiteral("%1 results, first: %2 (%3)").arg(results.size()).arg(results.first().title, results.first().url);

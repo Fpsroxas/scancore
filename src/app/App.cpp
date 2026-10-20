@@ -11,6 +11,7 @@
 #include "core/Http.h"
 #include "core/ImageCache.h"
 #include "extensions/Manager.h"
+#include "core/Text.h"
 #include "sources/Manifest.h"
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
@@ -195,6 +196,12 @@ void App::setSetting(const QString &key, const QVariant &value) {
         else
             Announcements::instance()->stop();
     }
+    // Built-in sources follow their language being switched on or off.
+    if (key == QLatin1String("builtinLanguages")) {
+        comics::Registry::rebuild();
+        novels::Registry::rebuild();
+        emit manifestChanged();
+    }
     if (key == QLatin1String("imageCacheMB")) {
         ImageCache::setBudget(std::max<qint64>(128, value.toLongLong()) * 1024 * 1024);
         // A smaller limit takes effect now, not at the next start.
@@ -295,6 +302,28 @@ QString App::formatBytes(qint64 bytes) const { return QLocale().formattedDataSiz
 bool App::saveWindowImage(QObject *window, const QString &path) const {
     auto *quick = qobject_cast<QQuickWindow *>(window);
     return quick && quick->grabWindow().save(path);
+}
+
+QVariantList App::builtinLanguages() const {
+    QHash<QString, int> counts;
+    const auto manifest = Manifest::current();
+    for (const auto *media : {"comics", "novels"})
+        for (const auto &value : manifest.value(QLatin1String(media)).toArray()) {
+            const auto o = value.toObject();
+            if (Manifest::supports(o) && o.value(QStringLiteral("enabled")).toBool(true))
+                ++counts[baseLanguage(o.value(QStringLiteral("language")).toString(QStringLiteral("en")))];
+        }
+    const auto on = sc::builtinLanguages();
+    QVariantList out;
+    for (auto it = counts.cbegin(); it != counts.cend(); ++it)
+        out.append(QVariantMap{{"value", it.key()}, {"label", languageName(it.key())}, {"count", it.value()}, {"on", on.contains(QStringLiteral("*")) || on.contains(it.key())}});
+    std::sort(out.begin(), out.end(), [](const QVariant &a, const QVariant &b) {
+        const auto x = a.toMap(), y = b.toMap();
+        if (x.value("on").toBool() != y.value("on").toBool())
+            return x.value("on").toBool();
+        return x.value("count").toInt() > y.value("count").toInt();
+    });
+    return out;
 }
 
 void App::stackAfter(QObject *item, QObject *sibling) const {

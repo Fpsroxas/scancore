@@ -132,6 +132,31 @@ SettingsPane {
             }
         }
         SettingRow {
+            iconName: "globe"
+            title: qsTr("Source languages")
+            description: qsTr("Built-in sources in these languages are on. Series you already read keep opening whatever you choose.")
+        }
+        Flow {
+            x: 16
+            width: parent.width - 32
+            bottomPadding: 14
+            spacing: 8
+            Repeater {
+                model: { App.manifestVersion; App.settings.builtinLanguages; return App.builtinLanguages() }
+                Chip {
+                    required property var modelData
+                    text: modelData.label + " · " + modelData.count
+                    selected: modelData.on
+                    onClicked: {
+                        const on = App.builtinLanguages().filter(l => l.on).map(l => l.value)
+                        const next = modelData.on ? on.filter(v => v !== modelData.value) : on.concat([modelData.value])
+                        // At least one language stays on.
+                        if (next.length > 0) App.setSetting("builtinLanguages", next)
+                    }
+                }
+            }
+        }
+        SettingRow {
             iconName: "languages"
             title: qsTr("Languages for “All sources”")
             description: qsTr("Which comic sources “All sources” searches and finds series on. Each source can still be picked on its own.")

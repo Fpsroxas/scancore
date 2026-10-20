@@ -3878,12 +3878,24 @@
             <translation>Recherche dans vos sources…</translation>
         </message>
         <message>
+            <source>No source in that language has it either.</source>
+            <translation>Aucune source dans cette langue ne l&apos;a non plus.</translation>
+        </message>
+        <message>
             <source>None of your sources has it yet.</source>
             <translation>Aucune de vos sources ne l’a encore.</translation>
         </message>
         <message>
             <source>Read it from</source>
             <translation>Le lire sur</translation>
+        </message>
+        <message>
+            <source>Look for it in another language:</source>
+            <translation>Le chercher dans une autre langue :</translation>
+        </message>
+        <message>
+            <source>Other languages</source>
+            <translation>Autres langues</translation>
         </message>
         <message>
             <source>Comick</source>
@@ -5031,6 +5043,14 @@
         <message>
             <source>Check now</source>
             <translation>Vérifier maintenant</translation>
+        </message>
+        <message>
+            <source>Source languages</source>
+            <translation>Langues des sources</translation>
+        </message>
+        <message>
+            <source>Built-in sources in these languages are on. Series you already read keep opening whatever you choose.</source>
+            <translation>Les sources intégrées dans ces langues sont activées. Les séries que vous avez déjà lues s&apos;ouvrent toujours, quel que soit votre choix.</translation>
         </message>
         <message>
             <source>Languages for “All sources”</source>

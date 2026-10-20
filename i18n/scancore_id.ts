@@ -3878,12 +3878,24 @@
             <translation>Mencarinya di sumber Anda…</translation>
         </message>
         <message>
+            <source>No source in that language has it either.</source>
+            <translation>Tidak ada sumber dalam bahasa itu yang memilikinya juga.</translation>
+        </message>
+        <message>
             <source>None of your sources has it yet.</source>
             <translation>Belum ada sumber Anda yang memilikinya.</translation>
         </message>
         <message>
             <source>Read it from</source>
             <translation>Baca dari</translation>
+        </message>
+        <message>
+            <source>Look for it in another language:</source>
+            <translation>Cari dalam bahasa lain:</translation>
+        </message>
+        <message>
+            <source>Other languages</source>
+            <translation>Bahasa lain</translation>
         </message>
         <message>
             <source>Comick</source>
@@ -5031,6 +5043,14 @@
         <message>
             <source>Check now</source>
             <translation>Periksa sekarang</translation>
+        </message>
+        <message>
+            <source>Source languages</source>
+            <translation>Bahasa sumber</translation>
+        </message>
+        <message>
+            <source>Built-in sources in these languages are on. Series you already read keep opening whatever you choose.</source>
+            <translation>Sumber bawaan dalam bahasa ini aktif. Seri yang sudah kamu baca tetap bisa dibuka apa pun pilihanmu.</translation>
         </message>
         <message>
             <source>Languages for “All sources”</source>

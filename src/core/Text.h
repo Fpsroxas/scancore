@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QStringList>
 
 namespace sc {
 
@@ -32,5 +33,11 @@ QString baseLanguage(const QString &code);
 QString contentLanguage(const QString &sourceLanguages, const QString &interfaceLanguage, const QString &systemLocale);
 // The same from the stored settings.
 QString contentLanguage();
+
+// The languages whose built-in sources are on (Settings -> Sources): the
+// stored choice, else the content language alone. Short codes; "*" (every
+// language) without stored settings. A medium with no built-in source in
+// these languages keeps its English ones (the registries see to that).
+QStringList builtinLanguages();
 
 } // namespace sc

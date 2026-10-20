@@ -1,6 +1,9 @@
 #include "Customize.h"
 
+#include "App.h"
 #include "core/Database.h"
+#include "sources/comics/Registry.h"
+#include "sources/novels/Registry.h"
 
 #include <QColor>
 #include <QCoreApplication>
@@ -405,6 +408,13 @@ void Customize::setLanguage(const QString &code) {
     Database::setPref(QStringLiteral("language"), code);
     loadTranslation(code);
     emit languageChanged();
+    // Unless the user chose them, the languages of built-in sources follow
+    // the interface language.
+    if (Database::pref(QStringLiteral("setting.builtinLanguages")).toStringList().isEmpty()) {
+        comics::Registry::rebuild();
+        novels::Registry::rebuild();
+        emit App::instance()->manifestChanged();
+    }
     if (m_engine)
         m_engine->retranslate();
 }

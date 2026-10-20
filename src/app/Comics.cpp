@@ -347,15 +347,37 @@ Task *Comics::catalogFeeds(bool mature) {
     return Task::run([mature]() -> QVariant { return catalogShelves(QStringLiteral("comic"), mature); });
 }
 
-Task *Comics::resolve(const QVariantMap &item) {
-    return Task::run([item]() -> QVariant {
+QVariantList Comics::otherLanguages() const {
+    QHash<QString, int> counts;
+    const auto own = contentLanguage();
+    for (const auto &source : Registry::all()) {
+        const auto language = baseLanguage(source->language());
+        if ((source->enabled() || source->config().languageOff) && source->key() != QLatin1String("local") && language != own)
+            ++counts[language];
+    }
+    QVariantList out;
+    for (auto it = counts.cbegin(); it != counts.cend(); ++it)
+        out.append(QVariantMap{{"value", it.key()}, {"label", languageName(it.key())}, {"count", it.value()}});
+    // English first (most series are there), then by how many sources.
+    std::sort(out.begin(), out.end(), [](const QVariant &a, const QVariant &b) {
+        const auto x = a.toMap(), y = b.toMap();
+        if ((x.value("value") == QLatin1String("en")) != (y.value("value") == QLatin1String("en")))
+            return x.value("value") == QLatin1String("en");
+        return x.value("count").toInt() > y.value("count").toInt();
+    });
+    return out;
+}
+
+Task *Comics::resolve(const QVariantMap &item, const QString &only) {
+    return Task::run([item, only]() -> QVariant {
         const auto id = item.value("catalogId").toString().isEmpty() ? item.value("hid").toString()
                                                                        : item.value("catalogId").toString();
-        const auto language = searchLanguage();
+        const auto language = only.isEmpty() ? searchLanguage() : baseLanguage(only);
         QList<std::shared_ptr<Source>> sources;
         QStringList keys;
         for (const auto &source : Registry::all())
-            if (source->enabled() && source->key() != QLatin1String("local") && inSearchLanguage(*source, language)) {
+            if ((source->enabled() || (!only.isEmpty() && source->config().languageOff)) && source->key() != QLatin1String("local") &&
+                inSearchLanguage(*source, language)) {
                 sources.append(source);
                 keys.append(source->key());
             }
@@ -380,7 +402,7 @@ Task *Comics::resolve(const QVariantMap &item) {
                 map.insert(QStringLiteral("referer"), source->imageReferer());
             match = map;
         }
-        const QVariantMap result{{"matches", matches}, {"contentLanguage", contentLanguage()}};
+        const QVariantMap result{{"matches", matches}, {"contentLanguage", contentLanguage()}, {"language", language}};
         if (!id.isEmpty() && !matches.isEmpty())
             Database::cachePut(cacheKey, QJsonDocument::fromVariant(result).toJson(QJsonDocument::Compact), 86400);
         return result;

@@ -93,6 +93,9 @@ struct SourceConfig {
     // Set when another source shares the host: this source's links end in
     // "#<urlTag>" so Registry::forUrl can tell them apart.
     QString urlTag;
+    // Off only because its language is not among the user's source
+    // languages: "Read from" can still look there when asked to.
+    bool languageOff = false;
 };
 
 class Source {

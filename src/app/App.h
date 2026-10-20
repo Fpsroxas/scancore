@@ -72,6 +72,9 @@ public:
     // Moves `item` right after (or before) its sibling in stacking order,
     // which is also the order Column and Row lay children out in (page
     // sections, PageArranger.qml).
+    // Languages of the built-in sources: [{value, label, count, on}], the
+    // ones that are on first (Settings -> Sources -> Source languages).
+    Q_INVOKABLE QVariantList builtinLanguages() const;
     Q_INVOKABLE void stackAfter(QObject *item, QObject *sibling) const;
     Q_INVOKABLE void stackBefore(QObject *item, QObject *sibling) const;
 
