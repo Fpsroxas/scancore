@@ -21,6 +21,7 @@ serialization-json-okio = { module = "org.jetbrains.kotlinx:kotlinx-serializatio
 serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "serialization" }
 okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-brotli = { module = "com.squareup.okhttp3:okhttp-brotli", version.ref = "okhttp" }
+okhttp-zstd = { module = "com.squareup.okhttp3:okhttp-zstd", version.ref = "okhttp" }
 okhttp-dnsoverhttps = { module = "com.squareup.okhttp3:okhttp-dnsoverhttps", version.ref = "okhttp" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 jsoup = "org.jsoup:jsoup:1.23.2"

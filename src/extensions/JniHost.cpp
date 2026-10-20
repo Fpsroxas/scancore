@@ -75,6 +75,10 @@ QJsonValue JniHost::call(const QString &method, const QJsonObject &params) {
                                            QJniObject::fromString(launch.appVersion).object<jstring>());
         QJniEnvironment env;
         m_state->ok = !env.checkAndClearExceptions();
+        // Extensions send the web view's user agent; the check window for
+        // their sites uses it too.
+        if (m_state->ok)
+            setExtensionAgent(QJniObject::callStaticObjectMethod(kBridge, "userAgent", "()Ljava/lang/String;").toString());
     });
     if (!m_state->ok)
         throw Error(QStringLiteral("The extension host could not start."), 503);

@@ -86,6 +86,13 @@ public:
     static constexpr const char *BrowserUA =
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
         "(KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36";
+    // Chrome's user agent for this system at Chromium `major`, as Chrome
+    // itself sends it (reduced: x.0.0.0). Builds with Qt WebEngine use it with
+    // the engine's own version (main.cpp): Cloudflare compares the user agent
+    // with what the browser shows of itself (navigator.platform, client
+    // hints), and a Windows Chrome 141 that is Chromium 140 on Linux gets a
+    // check to click every time, whose clearance then works for nothing.
+    static QByteArray chromeUserAgent(int major);
     // Accept header for images: only formats every build decodes (Qt and
     // qtimageformats). Image servers that choose the format from it would
     // otherwise send AVIF, which Qt cannot read.

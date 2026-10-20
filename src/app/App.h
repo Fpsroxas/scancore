@@ -58,6 +58,15 @@ public:
     // Android: a site's browser check in the system web view (see
     // Platform.h); siteChecked(url) follows. False where there is none.
     Q_INVOKABLE bool openSiteCheck(const QString &url, const QString &title, const QString &doneLabel);
+    // The user agent to pass a site's check with: the extension's own when
+    // one met the check, else SCANCORE's (Cloudflare ties the clearance to it).
+    Q_INVOKABLE QString siteAgent(const QString &url) const;
+    Q_INVOKABLE QString defaultAgent() const;
+    // The reader passed a check in the window (desktop): extensions get the
+    // site's cookies, then siteChecked(url) tells pages to try again.
+    Q_INVOKABLE void finishSiteCheck(const QString &url);
+    // The check window closed without the check being passed.
+    Q_INVOKABLE void cancelSiteCheck(const QString &url);
     Q_INVOKABLE void askBatteryUnrestricted() const;
     // Android: the anime player's web view, and turning the phone for its
     // full screen (see Platform.h). Nothing elsewhere.
@@ -117,12 +126,21 @@ signals:
     // A file or link to open, given on the command line or by a later launch.
     void openRequested(const QString &target);
     void siteChecked(const QString &url);
+    // The embedded browser received a site's Cloudflare clearance.
+    void siteCleared(const QString &domain);
+    // An extension met a check the hidden browser could not pass: open the
+    // site's check now (Main.qml); its request waits for it.
+    void browserCheckWanted(const QString &url);
     void batteryChanged();
     // Android: the player's web view is ready to load (see prepareWebPlayer).
     void webPlayerPrepared();
     void volumeKey(bool down);
 
 private:
+    // Extension requests waiting on the reader's browser check, by site.
+    void askReader(const QString &url, std::function<void(const QJsonValue &)> answer);
+    void answerReader(const QString &url, bool passed);
+    QHash<QString, QList<std::function<void(const QJsonValue &)>>> m_readerChecks;
     // Private so QML uses create(): Qt builds its own instance of a
     // singleton it can default-construct, and C++ and QML would then
     // work on different objects.

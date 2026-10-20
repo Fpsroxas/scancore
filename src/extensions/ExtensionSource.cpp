@@ -1,12 +1,17 @@
 #include "ExtensionSource.h"
 
 #include "Host.h"
+#include "LineHost.h"
+#include "Manager.h"
 #include "core/Cookies.h"
 #include "core/ImageCache.h"
 #include "sources/anime/Registry.h"
 #include "sources/comics/Registry.h"
 
 #include <QDateTime>
+#include <QUrl>
+
+#include <algorithm>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -173,20 +178,30 @@ void ExtensionSource::installImageWriter() {
 
 void ExtensionSource::shareCookies(const QString &url) {
     const QUrl site(url);
-    // Comic and anime extensions share the host and its cookies.
-    auto entries = Manager::sources(Kind::Mihon);
-    entries += Manager::sources(Kind::Aniyomi);
-    const bool used = std::any_of(entries.begin(), entries.end(), [&](const SourceEntry &e) {
-        return hostMatches(site.host(), QUrl(e.baseUrl).host()) || hostMatches(QUrl(e.baseUrl).host(), site.host());
-    });
+    // Comic and anime extensions share the host and its cookies. Every
+    // site's, not only their listed one: an extension may read a mirror the
+    // reader picked, or an API or image server on another domain.
     auto h = host(Kind::Mihon);
-    if (!used || !h || !h->available())
+    if (!h || !h->available())
         return;
     QJsonArray cookies;
     for (const auto &cookie : CookieJar::shared().cookiesForUrl(site))
         cookies.append(QString::fromUtf8(cookie.toRawForm()));
     if (!cookies.isEmpty())
         h->call(QStringLiteral("setCookies"), {{"url", site.toString()}, {"cookies", cookies}});
+}
+
+QString ExtensionSource::checkAgent(const QString &url) {
+    if (const auto agent = browserCheckAgent(url); !agent.isEmpty())
+        return agent;
+    const auto host = QUrl(url).host();
+    auto entries = Manager::sources(Kind::Mihon);
+    entries += Manager::sources(Kind::Aniyomi);
+    const bool extensionSite = std::any_of(entries.begin(), entries.end(), [&](const SourceEntry &e) {
+        const auto base = QUrl(e.baseUrl).host();
+        return !base.isEmpty() && (hostMatches(host, base) || hostMatches(base, host));
+    });
+    return extensionSite ? extensionAgent() : QString::fromUtf8(Http::userAgent());
 }
 
 QString ExtensionSource::statusName(int status) {

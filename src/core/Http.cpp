@@ -141,6 +141,19 @@ bool Response::isChallenge() const {
     return refused && (head.contains(QLatin1String("cf-mitigated")) || head.contains(QLatin1String("challenge-platform")));
 }
 
+QByteArray Http::chromeUserAgent(int major) {
+#if defined(Q_OS_WIN)
+    const char *platform = "Windows NT 10.0; Win64; x64";
+#elif defined(Q_OS_MACOS)
+    const char *platform = "Macintosh; Intel Mac OS X 10_15_7";
+#else
+    // What Chrome sends on every Linux, whatever the processor.
+    const char *platform = "X11; Linux x86_64";
+#endif
+    return QByteArray("Mozilla/5.0 (") + platform + ") AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" + QByteArray::number(major) +
+           ".0.0.0 Safari/537.36";
+}
+
 void Http::setUserAgent(const QByteArray &ua) {
     std::lock_guard lock(g_uaMutex);
     g_userAgent = ua;

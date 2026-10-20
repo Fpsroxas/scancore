@@ -29,7 +29,10 @@ import java.net.UnknownHostException
 
 // What SCANCORE and the host say to each other: one JSON object per line.
 //   -> {"id": 1, "method": "search", "params": {...}}
-//   <- {"id": 1, "result": ...}  or  {"id": 1, "error": {"message", "status", "verifyUrl"}}
+//   <- {"id": 1, "result": ...}  or  {"id": 1, "error": {"message", "status", "verifyUrl", "verifyAgent"}}
+// The host can ask SCANCORE too (a browser check to pass, see ask()):
+//   <- {"ask": 7, "method": "solveBrowserCheck", "params": {...}}
+//   -> {"id": 0, "method": "answer", "params": {"ask": 7, "result": ...}}
 // Calls run concurrently and answer in any order, so a slow site never
 // holds up another source.
 class RpcServer(
@@ -42,6 +45,40 @@ class RpcServer(
 
     // Calls running, by id, so SCANCORE can cancel one it no longer needs.
     private val running = java.util.concurrent.ConcurrentHashMap<String, Job>()
+
+    // Questions to SCANCORE waiting for their answer, and where lines to it go.
+    private val asks = java.util.concurrent.ConcurrentHashMap<Long, java.util.concurrent.CompletableFuture<JsonElement>>()
+    private val nextAsk = java.util.concurrent.atomic.AtomicLong(1)
+
+    @Volatile
+    private var outbound: ((String) -> Unit)? = null
+
+    // Asks SCANCORE something and blocks until it answers; null when it does
+    // not within `timeoutMs` or nothing has been said to the host yet.
+    fun ask(
+        method: String,
+        params: JsonObject,
+        timeoutMs: Long,
+    ): JsonElement? {
+        val send = outbound ?: return null
+        val id = nextAsk.getAndIncrement()
+        val answer = java.util.concurrent.CompletableFuture<JsonElement>()
+        asks[id] = answer
+        return try {
+            send(
+                buildJsonObject {
+                    put("ask", id)
+                    put("method", method)
+                    put("params", params)
+                }.toString(),
+            )
+            answer.get(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS)
+        } catch (_: Exception) {
+            null
+        } finally {
+            asks.remove(id)
+        }
+    }
 
     // Over a pipe (desktop helper process).
     fun serve(
@@ -69,6 +106,7 @@ class RpcServer(
         reply: (String) -> Unit,
     ): Boolean {
         if (line.isBlank()) return true
+        outbound = reply
         val request =
             runCatching { json.parseToJsonElement(line).jsonObject }.getOrElse {
                 reply(error(JsonNull, "The host could not read a request.", 400).toString())
@@ -82,6 +120,11 @@ class RpcServer(
                 finish()
                 reply(buildJsonObject { put("id", id); put("result", JsonNull) }.toString())
                 return false
+            }
+            // SCANCORE's answer to an ask(); not answered itself.
+            "answer" -> {
+                params["ask"]?.jsonPrimitive?.content?.toLongOrNull()?.let { asks[it]?.complete(params["result"] ?: JsonNull) }
+                return true
             }
             // Not answered: the caller stopped waiting already.
             "cancel" -> {
@@ -126,6 +169,7 @@ class RpcServer(
         message: String,
         status: Int,
         verifyUrl: String? = null,
+        verifyAgent: String? = null,
     ) = buildJsonObject {
         put("id", id)
         put(
@@ -134,6 +178,7 @@ class RpcServer(
                 put("message", message)
                 put("status", status)
                 if (verifyUrl != null) put("verifyUrl", verifyUrl)
+                if (verifyAgent != null) put("verifyAgent", verifyAgent)
             },
         )
     }
@@ -153,13 +198,17 @@ class RpcServer(
         val io = chain.firstNotNullOfOrNull { it as? IOException }
         return when {
             e is HostError -> error(id, e.message, e.status, e.verifyUrl)
-            browserCheck != null -> error(id, browserCheck.message ?: "Browser check", 403, browserCheck.url)
+            browserCheck != null -> error(id, browserCheck.message ?: "Browser check", 403, browserCheck.url, browserCheck.userAgent)
             http != null -> error(id, "The site answered HTTP ${http.code}.", http.code)
             e is TimeoutCancellationException || chain.any { it is SocketTimeoutException } -> error(id, "The site took too long to respond.", 504)
             unknownHost != null -> error(id, "Could not find ${hostName(unknownHost.message)}. Check your connection.", 502)
             io != null -> error(id, "Could not reach the site (${io.message ?: io.javaClass.simpleName}).", 502)
             root is UnsupportedOperationException -> error(id, root.message ?: "The extension cannot do that.", 501)
-            else -> error(id, "The extension failed: ${root.message ?: root.javaClass.simpleName}", 500)
+            else -> {
+                // Not something the reader can act on: the trace goes to the log.
+                e.printStackTrace()
+                error(id, "The extension failed: ${root.message ?: root.javaClass.simpleName}", 500)
+            }
         }
     }
 

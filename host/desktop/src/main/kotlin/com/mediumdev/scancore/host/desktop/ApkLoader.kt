@@ -31,7 +31,7 @@ class ApkLoader(
 
     companion object {
         // Raised whenever conversion changes (BytecodeEditor included).
-        const val CONVERTER = 2
+        const val CONVERTER = 3
     }
 
     override fun load(
@@ -53,7 +53,7 @@ class ApkLoader(
             // Older conversions of this extension are no longer needed.
             cacheDir.listFiles { f -> f.name.startsWith("$pkg-") && !f.name.startsWith("$pkg-$stamp") }?.forEach { it.delete() }
         }
-        val meta = manifest.readLines().associate { it.substringBefore('=') to it.substringAfter('=') }
+        val meta = manifest.readLines().associate { it.substringBefore('=') to typedValue(it.substringAfter('=')) }
         // Aniyomi's extensions name their classes under their own key.
         val anime = meta.containsKey("tachiyomi.animeextension.class")
         val (libKey, supported) = if (anime) "aniyomix.extensionLib" to animeLibs else "tachiyomix.extensionLib" to libs
@@ -122,7 +122,7 @@ class ApkLoader(
         temp.delete()
         val handler = BaksmaliBaseDexExceptionHandler()
         Dex2jar
-            .from(MultiDexFileReader.open(apk))
+            .from(InlinedConstructors.fix(MultiDexFileReader.open(apk)))
             .withExceptionHandler(handler)
             .reUseReg(false)
             .topoLogicalSort()
@@ -139,7 +139,50 @@ class ApkLoader(
             throw HostError("The extension could not be converted to run on this computer.", 422)
         }
         BytecodeEditor.fixAndroidClasses(temp.toPath())
+        copyResources(apk, temp)
         if (!temp.renameTo(jar)) throw HostError("The converted extension could not be saved.", 500)
+    }
+
+    // The APK's other files (assets/, res/ and any at its root) go into the
+    // jar too: on Android an extension's class loader reads them from the
+    // APK, so getResourceAsStream("assets/i18n/messages_en.properties")
+    // works there. Keiyoushi's builds load their texts that way when the
+    // source is made, and without them every one failed with a
+    // NullPointerException. Not META-INF: its signatures are the APK's and
+    // would make Java reject the converted classes.
+    private fun copyResources(
+        apk: ByteArray,
+        jar: File,
+    ) {
+        java.nio.file.FileSystems.newFileSystem(jar.toPath()).use { zip ->
+            java.util.zip.ZipInputStream(apk.inputStream()).use { input ->
+                while (true) {
+                    val entry = input.nextEntry ?: break
+                    val name = entry.name
+                    if (entry.isDirectory || name.startsWith("META-INF/") || name.endsWith(".dex") || name.contains("..")) continue
+                    if (name == "AndroidManifest.xml" || name == "resources.arsc") continue
+                    val target = zip.getPath(name)
+                    if (java.nio.file.Files.exists(target)) continue
+                    target.parent?.let { java.nio.file.Files.createDirectories(it) }
+                    java.nio.file.Files.copy(input, target)
+                }
+            }
+        }
+    }
+
+    // The APK parser writes typed values it does not know as {type:data}:
+    // Keiyoushi's builds declare tachiyomix.extensionLib as a float (1.6 is
+    // {4:1070386381}), which read as text made every one of them "lib
+    // {4:…}". Android's binary XML types: 4 float, 16 and 17 int, 18 boolean.
+    private fun typedValue(value: String): String {
+        val match = Regex("""^\{(\d+):(-?\d+)\}$""").matchEntire(value) ?: return value
+        val data = match.groupValues[2].toLong().toInt()
+        return when (match.groupValues[1].toInt()) {
+            4 -> java.lang.Float.intBitsToFloat(data).toString()
+            16, 17 -> data.toString()
+            18 -> (data != 0).toString()
+            else -> value
+        }
     }
 
     // The meta-data of the manifest's <application>, and the version name.

@@ -44,7 +44,7 @@ open class MemoryCookieJar : CookieJar {
     fun clear() = cookies.clear()
 }
 
-class PersistentCookieJar(
+open class PersistentCookieJar(
     private val file: File,
 ) : MemoryCookieJar() {
     @Serializable

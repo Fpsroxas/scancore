@@ -15,6 +15,8 @@ dependencies {
     api(libs.serialization.protobuf)
     api(libs.okhttp.core)
     api(libs.okhttp.brotli)
+    // Keiyoushi's extensions decompress Zstd themselves (Mihon ships it too).
+    api(libs.okhttp.zstd)
     api(libs.okhttp.dnsoverhttps)
     api(libs.okio)
     api(libs.jsoup)

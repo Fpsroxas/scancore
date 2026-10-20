@@ -7,10 +7,14 @@
 #include "Notifications.h"
 #include "Platform.h"
 #include "Profiler.h"
+#include "core/Cookies.h"
 #include "core/Database.h"
 #include "core/Http.h"
 #include "core/ImageCache.h"
+#include "extensions/ExtensionSource.h"
+#include "extensions/LineHost.h"
 #include "extensions/Manager.h"
+#include "core/Task.h"
 #include "core/Text.h"
 #include "sources/Manifest.h"
 #include "sources/comics/Registry.h"
@@ -28,6 +32,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLocale>
+#include <QNetworkCookie>
+#include <QPointer>
 #include <QQuickItem>
 #include <QQuickWindow>
 #include <QStandardPaths>
@@ -169,6 +175,28 @@ App::App(QObject *parent) : QObject(parent) {
     m_libraryTimer.setSingleShot(false);
     connect(&m_libraryTimer, &QTimer::timeout, this, [] { Library::instance()->checkUpdates(true); });
     platform::setSiteCheckDone([this](const QString &url) { emit siteChecked(url); });
+    connect(this, &App::siteChecked, this, [this](const QString &url) { answerReader(url, true); });
+    setClearanceSeen([this](const QString &domain) { emit siteCleared(domain); });
+    // Browser checks the desktop extension host asks SCANCORE to pass in a
+    // page nobody sees (Android's host has its own web view).
+    ext::LineHost::setAskHandler([this](const QString &method, const QJsonObject &params, ext::LineHost::Answer answer) {
+        if (method == QLatin1String("readerBrowserCheck")) {
+            QMetaObject::invokeMethod(
+                this, [this, url = params.value(QStringLiteral("url")).toString(), answer = std::move(answer)] { askReader(url, answer); },
+                Qt::QueuedConnection);
+            return;
+        }
+        if (method != QLatin1String("solveBrowserCheck"))
+            return answer(QJsonValue());
+        QMetaObject::invokeMethod(
+            QCoreApplication::instance(),
+            [params, answer = std::move(answer)] {
+                solveBrowserCheck(QUrl(params.value(QStringLiteral("url")).toString()), params.value(QStringLiteral("userAgent")).toString(),
+                                  params.value(QStringLiteral("headers")).toObject(),
+                                  [answer](const QJsonArray &cookies) { answer(QJsonObject{{"cookies", cookies}}); });
+            },
+            Qt::QueuedConnection);
+    });
     platform::setWebPlayerPrepared([this] { emit webPlayerPrepared(); });
     platform::setVolumeKeyPressed([this](bool down) { emit volumeKey(down); });
 #ifdef Q_OS_ANDROID
@@ -287,6 +315,57 @@ void App::moveToBackground() const {
 
 bool App::openSiteCheck(const QString &url, const QString &title, const QString &doneLabel) {
     return platform::openSiteCheck(url, title, doneLabel);
+}
+
+void App::cancelSiteCheck(const QString &url) { answerReader(url, false); }
+
+// One window per site: requests that meet the same check wait on it together.
+// Not while SCANCORE is in the background, and not longer than 90 seconds.
+void App::askReader(const QString &url, std::function<void(const QJsonValue &)> answer) {
+    if (qGuiApp->applicationState() != Qt::ApplicationActive)
+        return answer(QJsonObject{{"passed", false}});
+    const auto host = QUrl(url).host();
+    const bool open = m_readerChecks.contains(host);
+    m_readerChecks[host].append(std::move(answer));
+    if (open)
+        return;
+    emit browserCheckWanted(url);
+    QTimer::singleShot(90000, this, [this, url] { answerReader(url, false); });
+}
+
+void App::answerReader(const QString &url, bool passed) {
+    const auto host = QUrl(url).host();
+    const auto waiting = m_readerChecks.take(host);
+    if (waiting.isEmpty())
+        return;
+    QJsonArray cookies;
+    for (const auto &cookie : CookieJar::shared().cookiesForUrl(QUrl(QStringLiteral("https://%1/").arg(host))))
+        cookies.append(QString::fromUtf8(cookie.toRawForm()));
+    const QJsonObject result{{"passed", passed}, {"cookies", cookies}};
+    for (const auto &answer : waiting)
+        answer(result);
+}
+
+QString App::siteAgent(const QString &url) const { return ext::ExtensionSource::checkAgent(url); }
+
+QString App::defaultAgent() const { return QString::fromUtf8(Http::userAgent()); }
+
+void App::finishSiteCheck(const QString &url) {
+    QPointer<App> self(this);
+    runInBackground([self, url] {
+        try {
+            ext::ExtensionSource::shareCookies(url);
+        } catch (const Error &) {
+            // The extension asks again if it still needs the check.
+        }
+        QMetaObject::invokeMethod(
+            QCoreApplication::instance(),
+            [self, url] {
+                if (self)
+                    emit self->siteChecked(url);
+            },
+            Qt::QueuedConnection);
+    });
 }
 
 void App::askBatteryUnrestricted() const { platform::askBatteryUnrestricted(); }

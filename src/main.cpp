@@ -47,6 +47,7 @@
 #include <QUrl>
 
 #ifdef SCANCORE_HAVE_WEBENGINE
+#include <QtWebEngineCore/qtwebenginecoreglobal.h>
 #include <QtWebEngineQuick/QtWebEngineQuick>
 #endif
 #ifdef SCANCORE_HAVE_PDF
@@ -201,9 +202,13 @@ int main(int argc, char *argv[]) {
     // Chromium's GPU compositor shares textures with Qt Quick through GBM;
     // where GBM is unavailable it falls back to Vulkan, and some Mesa drivers
     // then crash on import. Compositing the player in software avoids that
-    // and video still decodes on the GPU. Users can override the flags.
+    // and video still decodes on the GPU. WebGL took the same Vulkan path
+    // and crashed the app in Mesa (Intel with an NVIDIA laptop GPU), and
+    // Cloudflare's browser check draws with WebGL, so no Cloudflare site
+    // could be passed there; without Vulkan Chromium uses GL, as it does
+    // where GBM works. Users can override the flags.
     if (qEnvironmentVariableIsEmpty("QTWEBENGINE_CHROMIUM_FLAGS"))
-        qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--disable-gpu-compositing");
+        qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--disable-gpu-compositing --disable-features=Vulkan");
     // A global MANGOHUD=1 injects MangoHud's Vulkan layer into Chromium's
     // in-process GPU thread, which then aborts with "free(): invalid
     // pointer" shortly after startup. Set DISABLE_MANGOHUD=0 to keep it.
@@ -212,6 +217,11 @@ int main(int argc, char *argv[]) {
 #endif
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     QtWebEngineQuick::initialize();
+    // The engine's own Chromium version, so sites see one browser (see
+    // Http::chromeUserAgent): before anything is requested or the extension
+    // host starts with it.
+    if (const int major = QByteArray(qWebEngineChromiumVersion()).split('.').value(0).toInt(); major > 0)
+        sc::Http::setUserAgent(sc::Http::chromeUserAgent(major));
 #endif
 #ifdef SCANCORE_HAVE_WEBVIEW
 #ifdef Q_OS_WIN

@@ -122,16 +122,6 @@ QString Comics::seriesId(const QString &url) const {
     return Library::idFor(QStringLiteral("comic"), sourceForUrl(url), url);
 }
 
-void Comics::shareSiteCookies(const QString &url) {
-    runInBackground([url] {
-        try {
-            ext::ExtensionSource::shareCookies(url);
-        } catch (const Error &) {
-            // The extension asks again if it still needs the check.
-        }
-    });
-}
-
 Task *Comics::webUrl(const QString &url) {
     return Task::run([url]() -> QVariant {
         if (url.startsWith(QLatin1String("http")))

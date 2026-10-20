@@ -82,8 +82,24 @@ public final class BrowserCheck extends Activity {
         CookieManager cookies = CookieManager.getInstance();
         cookies.setAcceptCookie(true);
         cookies.setAcceptThirdPartyCookies(web, true);
-        // Links and the check's own redirects stay in this view.
+        // Links and the check's own redirects stay in this view. Once the
+        // site sets a new Cloudflare clearance the check is passed, and the
+        // screen closes by itself.
+        final String before = clearance(cookies, url);
         web.setWebViewClient(new WebViewClient());
+        // Looked for four times a second: a site's page behind the check
+        // may never quite finish loading (ads, covers), and waiting for it
+        // kept the screen open long after the check had passed.
+        final android.os.Handler main = new android.os.Handler(android.os.Looper.getMainLooper());
+        main.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isFinishing() || isDestroyed()) return;
+                String now = clearance(cookies, url);
+                if (now != null && !now.equals(before)) finish();
+                else main.postDelayed(this, 250);
+            }
+        }, 250);
         web.setOverScrollMode(View.OVER_SCROLL_NEVER);
         root.addView(web, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1f));
 
@@ -103,6 +119,16 @@ public final class BrowserCheck extends Activity {
     public void onBackPressed() {
         if (web != null && web.canGoBack()) web.goBack();
         else finish();
+    }
+
+    private static String clearance(CookieManager cookies, String url) {
+        String header = url == null ? null : cookies.getCookie(url);
+        if (header == null) return null;
+        for (String part : header.split(";")) {
+            String p = part.trim();
+            if (p.startsWith("cf_clearance=")) return p.substring("cf_clearance=".length());
+        }
+        return null;
     }
 
     private void report() {

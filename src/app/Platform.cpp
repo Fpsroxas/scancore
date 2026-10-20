@@ -5,6 +5,7 @@
 #include "core/Http.h"
 #include "core/Task.h"
 #include "extensions/ExtensionSource.h"
+#include "extensions/LineHost.h"
 
 #include <QCoreApplication>
 #include <QDateTime>
@@ -84,20 +85,21 @@ void jniSiteCheckDone(JNIEnv *env, jclass, jstring jurl, jstring jcookies) {
         CookieJar::shared().setCookiesFromUrl(cookies, site);
         CookieJar::shared().save();
     }
+    // Pages try again once extensions have the cookies too.
     runInBackground([url] {
         try {
             ext::ExtensionSource::shareCookies(url);
         } catch (const Error &) {
             // The extension asks again if it still needs the check.
         }
+        QMetaObject::invokeMethod(
+            QCoreApplication::instance(),
+            [url] {
+                if (g_siteCheckDone)
+                    g_siteCheckDone(url);
+            },
+            Qt::QueuedConnection);
     });
-    QMetaObject::invokeMethod(
-        QCoreApplication::instance(),
-        [url] {
-            if (g_siteCheckDone)
-                g_siteCheckDone(url);
-        },
-        Qt::QueuedConnection);
 }
 
 void jniWebPlayerPrepared(JNIEnv *, jclass) {
@@ -190,7 +192,7 @@ bool openSiteCheck(const QString &url, const QString &title, const QString &done
     QJniObject::callStaticMethod<void>(
         kBrowserCheckClass, "start", "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
         QNativeInterface::QAndroidApplication::context().object(), QJniObject::fromString(url).object<jstring>(),
-        QJniObject::fromString(QString::fromUtf8(Http::userAgent())).object<jstring>(),
+        QJniObject::fromString(ext::ExtensionSource::checkAgent(url)).object<jstring>(),
         QJniObject::fromString(title).object<jstring>(), QJniObject::fromString(doneLabel).object<jstring>());
     return true;
 #else

@@ -12,7 +12,6 @@ import eu.kanade.tachiyomi.AppInfo
 import eu.kanade.tachiyomi.network.HostNetwork
 import eu.kanade.tachiyomi.network.JavaScriptEngine
 import eu.kanade.tachiyomi.network.NetworkHelper
-import eu.kanade.tachiyomi.network.PersistentCookieJar
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
@@ -42,8 +41,9 @@ object Bridge {
         if (server != null) return
         val app = context.applicationContext as Application
         val folder = File(root).apply { mkdirs() }
-        HostNetwork.userAgent = userAgent
-        HostNetwork.cookieJar = PersistentCookieJar(File(folder, "cookies.json"))
+        HostNetwork.userAgent = webViewUserAgent(app) ?: userAgent
+        HostNetwork.cookieJar = WebViewCookieJar(File(folder, "cookies.json"))
+        HostNetwork.browserCheckSolver = WebViewBrowserCheck(app)
         HostNetwork.cacheDir = File(folder, "cache")
         AppInfo.set(versionCode = 1, versionName = appVersion)
         Injekt.addSingleton<Application>(app)
@@ -58,7 +58,9 @@ object Bridge {
         }
         Injekt.addSingletonFactory<ProtoBuf> { ProtoBuf }
         val host = ExtensionHost(AndroidLoader(app), MemoStore(File(folder, "memos.json")), HOST_VERSION, AndroidSettings(app))
-        server = RpcServer({ method, params -> handle(host, method, params) })
+        server = RpcServer({ method, params -> handle(host, method, params) }).also {
+            HostNetwork.readerBrowserCheck = com.mediumdev.scancore.host.ReaderBrowserCheck(it)
+        }
     }
 
     // One request line; answered later through reply().
@@ -70,6 +72,20 @@ object Bridge {
 
     @JvmStatic
     external fun reply(line: String)
+
+    // The user agent extensions send, for SCANCORE's browser check window.
+    @JvmStatic
+    fun userAgent(): String = HostNetwork.userAgent
+
+    // Chrome's own (reduced) user agent at the phone's web view version, as
+    // Mihon sends: the hidden check and the check window are that web view,
+    // and Cloudflare only lets a browser through without a click when the
+    // user agent matches what it shows of itself (Android, its version).
+    private fun webViewUserAgent(context: Context): String? =
+        runCatching {
+            val major = Regex("""Chrome/(\d+)""").find(android.webkit.WebSettings.getDefaultUserAgent(context))?.groupValues?.get(1)
+            major?.let { "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/$it.0.0.0 Mobile Safari/537.36" }
+        }.getOrNull()
 
     // On a phone the browser check runs in a web view; its cookies reach
     // extensions from Android's own cookie store.

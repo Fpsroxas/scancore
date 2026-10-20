@@ -1,12 +1,45 @@
 #include "LineHost.h"
 
+#include "core/Http.h"
+
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QUrl>
 
 #include <chrono>
 #include <condition_variable>
 
 namespace sc::ext {
+
+namespace {
+
+std::mutex g_mutex;
+LineHost::AskHandler g_ask;
+QHash<QString, QString> g_agents; // host -> user agent
+QString g_extensionAgent;
+
+} // namespace
+
+QString browserCheckAgent(const QString &url) {
+    const auto host = QUrl(url).host();
+    std::lock_guard lock(g_mutex);
+    return g_agents.value(host);
+}
+
+void setExtensionAgent(const QString &agent) {
+    std::lock_guard lock(g_mutex);
+    g_extensionAgent = agent;
+}
+
+QString extensionAgent() {
+    std::lock_guard lock(g_mutex);
+    return g_extensionAgent.isEmpty() ? QString::fromUtf8(Http::userAgent()) : g_extensionAgent;
+}
+
+void LineHost::setAskHandler(AskHandler handler) {
+    std::lock_guard lock(g_mutex);
+    g_ask = std::move(handler);
+}
 
 struct LineHost::Waiting {
     std::mutex mutex;
@@ -54,6 +87,11 @@ QJsonValue LineHost::call(const QString &method, const QJsonObject &params) {
     lock.unlock();
     if (reply.contains(QStringLiteral("error"))) {
         const auto e = reply.value(QStringLiteral("error")).toObject();
+        const auto agent = e.value(QStringLiteral("verifyAgent")).toString();
+        if (!agent.isEmpty()) {
+            std::lock_guard agents(g_mutex);
+            g_agents.insert(QUrl(e.value(QStringLiteral("verifyUrl")).toString()).host(), agent);
+        }
         throw Error(e.value(QStringLiteral("message")).toString(QStringLiteral("The extension failed.")),
                     e.value(QStringLiteral("status")).toInt(), e.value(QStringLiteral("verifyUrl")).toString());
     }
@@ -62,6 +100,27 @@ QJsonValue LineHost::call(const QString &method, const QJsonObject &params) {
 
 void LineHost::receive(const QByteArray &line) {
     const auto reply = QJsonDocument::fromJson(line).object();
+    if (reply.contains(QStringLiteral("ask"))) {
+        const auto ask = reply.value(QStringLiteral("ask")).toInteger();
+        const std::weak_ptr<int> alive = m_alive;
+        Answer answer = [this, alive, ask](const QJsonValue &result) {
+            if (alive.expired())
+                return;
+            sendLine(QJsonDocument(QJsonObject{{"id", 0}, {"method", "answer"}, {"params", QJsonObject{{"ask", ask}, {"result", result}}}})
+                         .toJson(QJsonDocument::Compact) +
+                     '\n');
+        };
+        AskHandler handler;
+        {
+            std::lock_guard lock(g_mutex);
+            handler = g_ask;
+        }
+        if (handler)
+            handler(reply.value(QStringLiteral("method")).toString(), reply.value(QStringLiteral("params")).toObject(), std::move(answer));
+        else
+            answer(QJsonValue());
+        return;
+    }
     if (!reply.contains(QStringLiteral("id")))
         return;
     std::shared_ptr<Waiting> waiting;

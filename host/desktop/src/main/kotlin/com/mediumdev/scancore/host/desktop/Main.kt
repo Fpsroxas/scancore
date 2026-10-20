@@ -39,7 +39,10 @@ fun main(args: Array<String>) {
     System.setOut(PrintStream(System.err, true, "UTF-8"))
 
     val (host, memos) = setUp(root, options["user-agent"], options["app-version"])
-    RpcServer(host::handle).serve(System.`in`.bufferedReader(Charsets.UTF_8), protocol)
+    val server = RpcServer(host::handle)
+    HostNetwork.browserCheckSolver = AppBrowserCheck(server)
+    HostNetwork.readerBrowserCheck = com.mediumdev.scancore.host.ReaderBrowserCheck(server)
+    server.serve(System.`in`.bufferedReader(Charsets.UTF_8), protocol)
     memos.save()
     exitProcess(0)
 }

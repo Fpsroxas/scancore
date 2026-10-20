@@ -26,6 +26,7 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.put
 import okhttp3.Cookie
+import uy.kohesive.injekt.api.get
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Response
 import java.io.File
@@ -142,6 +143,41 @@ class ExtensionHost(
 
     private fun base(source: Source) = (source as? HttpSource)?.baseUrl
 
+    // Calls that start with the site itself, rather than images.
+    private val browsing = setOf("popular", "latest", "search", "details", "chapters", "pages", "episodes", "seasons", "hosters")
+
+    // Sites whose home page went through the Cloudflare check this session.
+    private val warmed = java.util.concurrent.ConcurrentHashMap.newKeySet<String>()
+
+    // Some extensions (Comix) open the site in a web view of their own, where
+    // a Cloudflare check is never seen by CloudflareInterceptor: they wait
+    // minutes and fail. So the first call to a site in a session loads its
+    // home page through the default client first, which passes a check
+    // there (hidden, else with the reader's tap) and leaves the clearance
+    // in the cookies those web views share. One request per site per
+    // session; any other failure is the extension's own business.
+    private suspend fun warmUp(source: Any) {
+        val (base, headers) =
+            when (source) {
+                is HttpSource -> source.baseUrl to source.headers
+                is AnimeHttpSource -> source.baseUrl to source.headers
+                else -> return
+            }
+        val url = base.toHttpUrlOrNull() ?: return
+        if (url.host in warmed) return
+        kotlinx.coroutines.runInterruptible(kotlinx.coroutines.Dispatchers.IO) {
+            try {
+                val request = okhttp3.Request.Builder().url(url).headers(headers).build()
+                uy.kohesive.injekt.Injekt.get<eu.kanade.tachiyomi.network.NetworkHelper>().client.newCall(request).execute().close()
+                warmed += url.host
+            } catch (e: eu.kanade.tachiyomi.network.BrowserCheckException) {
+                throw e
+            } catch (_: Exception) {
+                warmed += url.host
+            }
+        }
+    }
+
     private fun catalogue(source: Source) = source as? CatalogueSource ?: throw HostError("${source.name} cannot be browsed.", 501)
 
     private fun manga(
@@ -166,8 +202,10 @@ class ExtensionHost(
         method: String,
         params: JsonObject,
     ): JsonElement {
+        val found = source(params)
+        if (method in browsing) warmUp(found)
         val source =
-            when (val found = source(params)) {
+            when (found) {
                 is AnimeSource -> return anime.call(method, found, params)
                 else -> found as Source
             }

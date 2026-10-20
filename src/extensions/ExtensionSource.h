@@ -51,6 +51,10 @@ public:
     // cookies to the extension host, when an extension uses that site.
     // Blocking.
     static void shareCookies(const QString &url);
+    // The user agent to pass a site's browser check with, since Cloudflare
+    // ties the clearance to it: the one an extension met the check with,
+    // else the extensions' own for a site an extension reads, else SCANCORE's.
+    static QString checkAgent(const QString &url);
 
 private:
     QJsonValue call(const QString &method, QJsonObject params);
