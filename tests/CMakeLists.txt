@@ -46,3 +46,11 @@ qt_add_executable(scancore_plugin_tests tst_plugins.cpp)
 target_link_libraries(scancore_plugin_tests PRIVATE scancore_core Qt6::Test)
 add_test(NAME plugins COMMAND scancore_plugin_tests)
 target_compile_definitions(scancore_plugin_tests PRIVATE SCANCORE_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
+
+# Console programs on Windows too, so CTest shows their output.
+foreach(test scancore_tests scancore_catalogue_tests scancore_extension_tests scancore_plugin_tests scancore_probe)
+    set_target_properties(${test} PROPERTIES WIN32_EXECUTABLE FALSE)
+endforeach()
+if(TARGET scancore_host_tests)
+    set_target_properties(scancore_host_tests PROPERTIES WIN32_EXECUTABLE FALSE)
+endif()

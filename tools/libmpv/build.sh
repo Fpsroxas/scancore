@@ -192,6 +192,7 @@ c_args = [$(quoted $cflags)]
 cpp_args = [$(quoted $cflags)]
 c_link_args = [$(quoted $cflags ${LDFLAGS:-})]
 cpp_link_args = [$(quoted $cflags ${LDFLAGS:-})]
+$([ $os = macos ] && printf "objc_args = [%s]\nobjc_link_args = [%s]" "$(quoted $cflags)" "$(quoted $cflags ${LDFLAGS:-})")
 [binaries]
 c = '$c'
 cpp = '$cxx'
@@ -200,6 +201,7 @@ nm = '${NM}'
 strip = '${STRIP}'
 pkg-config = 'pkg-config'
 $([ $os = windows ] && printf "windres = '%s'\ndlltool = '%s'" "$WINDRES" "$triple-dlltool")
+$([ $os = macos ] && printf "objc = '%s'" "$c")
 [host_machine]
 system = '$meson_system'
 cpu_family = '$cpu'

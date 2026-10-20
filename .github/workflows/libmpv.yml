@@ -14,6 +14,7 @@ name: libmpv
 on:
   workflow_call:
   push:
+    branches: ["**"]
     paths:
       - tools/libmpv/**
       - .github/workflows/libmpv.yml
@@ -37,6 +38,10 @@ jobs:
             libfribidi-dev libharfbuzz-dev libfontconfig-dev libva-dev libdrm-dev libegl-dev libgl-dev \
             libpulse-dev libasound2-dev libx11-dev libxext-dev libxss-dev libxpresent-dev libxrandr-dev
           pipx install meson
+          # Static linking picks the system's static libraries too, and
+          # Ubuntu's libuuid.a (from fontconfig's dependencies) cannot go
+          # into a shared library; the shared one is used instead.
+          sudo rm -f /usr/lib/x86_64-linux-gnu/libuuid.a
           tools/libmpv/build.sh linux-x86_64
       - uses: actions/upload-artifact@v4
         with:
