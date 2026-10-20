@@ -2,6 +2,25 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.1.0 — 2026-10-20
+
+SCANCORE 2.1 "Parity": what people coming from Mihon, Aniyomi and Kotatsu reach for first.
+
+- **Move a series to another source**: "Move to another source" on a comic's or novel's page finds it on your other sources (under every name its catalogue knows), shows the match first (chapters, newest, how many will count as read) and moves it with its library list, favourite, tracker links, bookmarks and progress, carried by chapter number. Select series in the library to move them together, and Settings → Sources moves every series of a source at once, including sources that are gone. "Keep the old one too" copies instead.
+- **Update rules**: choose which library lists are checked for new chapters, skip finished series, series with chapters left to read or series not started, and check by itself only on Wi-Fi and (Android) only while charging. New chapters of the lists you pick download by themselves, and "Delete chapters once read" clears a download when you finish the next chapter.
+- **Chapter tools**: bookmarks, a filter for one translation group, unread, downloaded and bookmarked filters and a sort order remembered per series, "mark previous as read", and Select to download, mark, bookmark or remove many chapters at once.
+- **Incognito mode and app lock** (Settings → Privacy): incognito keeps nothing of what you read or watch (no history, place, reading time, tracker updates or Discord status) and shows a badge while it is on. The app lock asks for a PIN when SCANCORE starts and after it has been away (right away, 1, 5 or 15 minutes); on Android fingerprint or face unlocks it too.
+- **Comic reader**: a colour filter (brightness, warmth, greyscale, invert), wide spreads split into their two halves in the Pages layout, tap zones (left and right, L shape, Kindle, edges or off, flippable) shown on screen when you change them, volume keys that turn pages on Android, and page bar colours you choose (unread pages very light, read pages grey and the page you are on black to start). On phones the series and chapter title have their own row under the buttons, and the page count in the Pages layout no longer lags a page behind.
+- **Backups**: Aniyomi backups restore onto the same anime extension exactly (episodes watched, the one part-way, bookmarks, list), or through AniList when the extension is not installed; LNReader backups restore novels onto the same plugin. Mihon backups now bring categories and bookmarks too.
+- **Themes carry your whole look**: a theme file holds light or dark, accent, navigation, spacing, corners, text and cover sizes, motion, the pages you arranged and the readers' colours, and any theme can be exported, not only a custom one. Older theme files still open.
+- **Phones**: dropdowns open as a sheet from the bottom, the first-run screen has a cleaner language picker and buttons, the library header takes four rows instead of seven, and Settings shows your scancore.onl profile photo.
+- **Long novel chapters** open and scroll quickly: only the paragraphs near the screen exist (a 6000-paragraph chapter opens three times faster).
+- **AVIF covers and pages** on Linux, in the Flatpak and on Android 12 and later.
+- A repository's GitHub page (for example github.com/keiyoushi/extensions) can be added as an extension repository; SCANCORE reads the repository's own files from it.
+- Taps no longer reach the tabs behind the first-run screen.
+
+Still to come: the interface in Polish, Thai, Filipino and Hindi, SCANCORE's video player in the Flatpak, AVIF on Windows and macOS, and bookmarks and per-series settings in sync.
+
 ## 2.0.1 — 2026-10-20
 
 - **"Read from" on Windows** found a series only under the names the catalogue gives it, never under the other names a source lists it by, so a series a source lists under its Russian, Spanish or Korean name was missed. It is found again, as on the other systems.

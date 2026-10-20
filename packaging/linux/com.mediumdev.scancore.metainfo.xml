@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.1.0" date="2026-10-20">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#210--2026-10-20</url>
+      <description>
+        <p>Move series to another source, update rules and automatic downloads, chapter bookmarks and filters, incognito mode and an app lock, a colour filter, split spreads, tap zones and volume keys in the comic reader, exact restores of Aniyomi and LNReader backups, themes that carry your whole look, AVIF images, and faster long novel chapters.</p>
+      </description>
+    </release>
     <release version="2.0.1" date="2026-10-20">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#201--2026-10-20</url>
       <description>
