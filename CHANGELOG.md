@@ -2,6 +2,16 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.1.1 — 2026-10-21
+
+- **Keiyoushi extensions work again.** Their current builds refused to start in SCANCORE ("CloudflareInterceptor must be present in default client") because SCANCORE's network setup was not exactly Mihon's; on desktop they also failed to load at all. Every one of them runs now, on Android and desktop.
+- **Cloudflare checks pass by themselves**, as in Mihon: when a site shows a check, SCANCORE passes it in a browser you do not see and loads the page, usually in a few seconds. SCANCORE now introduces itself as the browser it really is, which is what lets most checks through without a click.
+- When a site still wants you to tick the box, the check opens by itself while the page loads: one tap and it closes and the page carries on, nothing to try again. "Open browser check" appears on phones too, and every extension source has "Open the site" in Extensions (to pass a check or sign in), like Mihon's WebView.
+- Extensions that open the site in a web view of their own (Comix) no longer wait minutes for a check they cannot see: the first visit to a site in a session passes it first.
+- **Adding a repository** no longer has to install anything: "Add only" or "Add and install" the extensions in your language, which then install in the background while you use the app, with progress and a Stop button in Extensions.
+- **Search your installed extensions** by name, source or site. Typing in a search box on phones (Extensions, History, a series' chapters) no longer closes the keyboard after every letter.
+- On some Linux computers (Intel graphics with an NVIDIA laptop GPU) opening a Cloudflare check, or any page with 3D graphics, closed SCANCORE. It no longer does.
+
 ## 2.1.0 — 2026-10-20
 
 SCANCORE 2.1 "Parity": what people coming from Mihon, Aniyomi and Kotatsu reach for first.

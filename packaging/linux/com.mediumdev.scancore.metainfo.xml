@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.1.1" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#211--2026-10-21</url>
+      <description>
+        <p>Keiyoushi extensions run again, Cloudflare checks pass by themselves as in Mihon (with one tap at most when a site insists), repositories can be added without installing anything and extensions install in the background, installed extensions can be searched, and opening a check no longer closes SCANCORE on some Linux computers.</p>
+      </description>
+    </release>
     <release version="2.1.0" date="2026-10-20">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#210--2026-10-20</url>
       <description>
