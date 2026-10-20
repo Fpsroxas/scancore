@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QByteArray>
 #include <QByteArrayView>
 #include <QString>
 
@@ -81,6 +82,46 @@ private:
     int m_field = 0;
     int m_wire = 0;
     bool m_bad = false;
+};
+
+// Writes protobuf messages (Mihon's backups): fields in the order added.
+class ProtoWriter {
+public:
+    void varint(int field, quint64 value) {
+        tag(field, 0);
+        raw(value);
+    }
+    void boolean(int field, bool value) { varint(field, value ? 1 : 0); }
+    void bytes(int field, QByteArrayView data) {
+        tag(field, 2);
+        raw(quint64(data.size()));
+        m_out.append(data.data(), data.size());
+    }
+    // Empty strings are left out, as protobuf does.
+    void text(int field, const QString &value) {
+        if (!value.isEmpty())
+            bytes(field, value.toUtf8());
+    }
+    void fixed32(int field, float value) {
+        tag(field, 5);
+        quint32 bits;
+        std::memcpy(&bits, &value, sizeof bits);
+        for (int i = 0; i < 4; ++i)
+            m_out.append(char(bits >> (8 * i) & 0xff));
+    }
+    void message(int field, const ProtoWriter &inner) { bytes(field, inner.data()); }
+    const QByteArray &data() const { return m_out; }
+
+private:
+    void tag(int field, int wire) { raw(quint64(field) << 3 | quint64(wire)); }
+    void raw(quint64 value) {
+        do {
+            const auto byte = char(value & 0x7f);
+            value >>= 7;
+            m_out.append(value ? char(byte | 0x80) : byte);
+        } while (value);
+    }
+    QByteArray m_out;
 };
 
 } // namespace sc

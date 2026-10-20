@@ -456,4 +456,23 @@ std::shared_ptr<Catalogue> forMedia(const QString &chosen, const QString &media)
     return byKey(QStringLiteral("anilist"));
 }
 
+QStringList readingLinks(int anilistId) {
+    if (anilistId <= 0)
+        return {};
+    const auto cacheKey = QStringLiteral("anilist-links:%1").arg(anilistId);
+    if (auto cached = Database::cacheGet(cacheKey))
+        return QString::fromUtf8(*cached).split(QLatin1Char('\n'), Qt::SkipEmptyParts);
+    QStringList out;
+    try {
+        const auto data = anilist(QStringLiteral("query ($id: Int) { Media(id: $id) { externalLinks { url } } }"), {{"id", anilistId}});
+        for (const auto &link : data.value("Media").toObject().value("externalLinks").toArray())
+            if (const auto url = link.toObject().value("url").toString(); url.startsWith(QLatin1String("http")))
+                out.append(url);
+    } catch (const Error &) {
+        return {};
+    }
+    Database::cachePut(cacheKey, out.join(QLatin1Char('\n')).toUtf8(), 7 * 86400);
+    return out;
+}
+
 } // namespace sc::catalogue

@@ -82,6 +82,22 @@ QString contentLanguage() {
                            QLocale::system().name());
 }
 
+QStringList builtinLanguages() {
+    // No settings (tools such as the probe): every language.
+    if (Database::path().isEmpty())
+        return {QStringLiteral("*")};
+    const auto stored = Database::pref(QStringLiteral("setting.builtinLanguages"));
+    QStringList out;
+    for (const auto &code : stored.toStringList())
+        if (const auto base = baseLanguage(code); !base.isEmpty() && !out.contains(base))
+            out.append(base);
+    if (!out.isEmpty())
+        return out;
+    // By default only the content language's (which follows the interface
+    // language).
+    return {contentLanguage()};
+}
+
 QString titleKey(const QString &text) { return normalizedTitle(text).remove(QLatin1Char(' ')); }
 
 } // namespace sc

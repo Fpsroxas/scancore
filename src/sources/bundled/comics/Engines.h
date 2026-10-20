@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ComicSource.h"
+#include "sources/comics/ComicSource.h"
 
 #include <QJsonArray>
 #include <QSet>
@@ -18,6 +18,8 @@ public:
     bool hasLatest() const override { return true; }
 };
 
+// WEBTOON: one edition per source (option "edition": the site's language
+// path, "en" by default; "es", "fr", "de", "id", "th", "zh-hant").
 class WebtoonSource : public Source {
 public:
     using Source::Source;
@@ -26,6 +28,26 @@ public:
     QList<Panel> panels(const QString &chapterUrl) override;
     std::optional<Details> details(const QString &seriesUrl) override;
     QString imageReferer() const override { return QStringLiteral("https://www.webtoons.com/"); }
+    // Only its edition's links (the path starts with the language).
+    bool owns(const QUrl &url) const override;
+    QString seriesLink(const QUrl &url) const override;
+
+private:
+    QString edition() const;
+};
+
+// Dongman Manhua (Simplified Chinese WEBTOON): the same viewer and series
+// pages, with its own search and paged episode lists.
+class DongmanSource : public WebtoonSource {
+public:
+    using WebtoonSource::WebtoonSource;
+    QList<Summary> search(const QString &query) override;
+    QList<Chapter> chapters(const QString &seriesUrl) override;
+    QString imageReferer() const override { return m_config.base + QLatin1Char('/'); }
+    QString seriesLink(const QUrl &) const override { return {}; }
+
+    static QList<Summary> parseSearch(const QByteArray &html, const QString &base, const QString &source);
+    static QList<Chapter> parseEpisodes(const QByteArray &html, const QString &base, const QString &language);
 };
 
 class MangaDexSource : public Source {
@@ -40,6 +62,12 @@ public:
     // The readable chapters of one feed page. `takenDown` counts chapters
     // MangaDex lists but no longer serves (licensed, "isUnavailable").
     QList<Chapter> feedChapters(const QJsonArray &rows, QSet<QString> &seen, int *takenDown) const;
+
+    // A title's names in other languages ({language code, name}), for
+    // finding it on sites that list it under a translated name. The title
+    // is the one whose AniList or MyAnimeList id matches (when given), else
+    // the one named `title` exactly. Cached for a week.
+    QList<QPair<QString, QString>> otherNames(const QString &title, int anilist, int mal);
 
 private:
     // Translations to list (option "languages", default English).
@@ -139,6 +167,69 @@ public:
 };
 
 // WordPress manga themes (MangaReader/MangaStream).
+// Naver Webtoon (Korean): the site's own JSON API and viewer pages. Lists
+// the episodes anyone can read without an account (not paid previews or
+// adult titles, which need a login).
+class NaverSource : public Source {
+public:
+    using Source::Source;
+    QList<Summary> search(const QString &query) override;
+    QList<Chapter> chapters(const QString &seriesUrl) override;
+    QList<Panel> panels(const QString &chapterUrl) override;
+    std::optional<Details> details(const QString &seriesUrl) override;
+    QString imageReferer() const override { return m_config.base + QLatin1Char('/'); }
+    QString seriesLink(const QUrl &url) const override;
+
+    static QList<Chapter> parseChapters(const QJsonObject &page, const QString &base);
+    static QList<Panel> parsePanels(const QByteArray &html);
+};
+
+// ZonaTMO (Spanish): the site's JSON API ("api" = <site>/wp-api/api) and
+// its image CDN (cdn.<site>).
+class ZonaTmoSource : public Source {
+public:
+    using Source::Source;
+    QList<Summary> search(const QString &query) override;
+    QList<Chapter> chapters(const QString &seriesUrl) override;
+    QList<Panel> panels(const QString &chapterUrl) override;
+    std::optional<Details> details(const QString &seriesUrl) override;
+
+    static QList<Summary> parseSearch(const QJsonObject &root, const QString &base, const QString &source, bool adult);
+    static QList<Chapter> parseChapters(const QJsonArray &rows, const QString &base, const QString &slug, const QString &language);
+};
+
+// Olympus Scanlation (Spanish): a JSON API on the site. Series links carry
+// the series id ("#<id>") because the site renames its slugs now and then.
+class OlympusSource : public Source {
+public:
+    using Source::Source;
+    QList<Summary> search(const QString &query) override;
+    QList<Chapter> chapters(const QString &seriesUrl) override;
+    QList<Panel> panels(const QString &chapterUrl) override;
+    std::optional<Details> details(const QString &seriesUrl) override;
+
+    static QList<Panel> parsePanels(const QByteArray &html);
+
+private:
+    // Every comic: id -> {slug, name, cover}, cached for an hour.
+    QJsonArray seriesList(bool fresh = false);
+    // The series' current slug, looked up by id when the link's one is old.
+    QString currentSlug(const QString &seriesUrl, bool fresh);
+};
+
+// ZeroComics sites (LectorManga.lat, Spanish): a JSON API ("api").
+class ZeroComicsSource : public Source {
+public:
+    using Source::Source;
+    QList<Summary> search(const QString &query) override;
+    QList<Chapter> chapters(const QString &seriesUrl) override;
+    QList<Panel> panels(const QString &chapterUrl) override;
+    std::optional<Details> details(const QString &seriesUrl) override;
+
+private:
+    QJsonObject series(const QString &seriesUrl);
+};
+
 class WpSource : public Source {
 public:
     using Source::Source;

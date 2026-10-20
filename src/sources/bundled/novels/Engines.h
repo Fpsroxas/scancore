@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NovelSource.h"
+#include "sources/novels/NovelSource.h"
 
 namespace sc::novels {
 

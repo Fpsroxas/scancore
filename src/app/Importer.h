@@ -34,6 +34,9 @@ public:
     Q_INVOKABLE sc::Task *importMal(const QUrl &file);
     // The library of the Comick account connected in Settings.
     Q_INVOKABLE sc::Task *importComick();
+    // Writes the comics from extensions (Mihon's sources) to a Mihon backup,
+    // with categories and chapters read. {exported, skipped}
+    Q_INVOKABLE sc::Task *exportMihon(const QUrl &file);
     // Searches every comic or novel source for the waiting titles, and adds
     // the ones found under exactly that title. {matched, left}
     Q_INVOKABLE sc::Task *matchAll();

@@ -14,7 +14,7 @@ Dialog {
     // The service being linked (search shown), or "".
     property string picking: ""
     property var searchTask: null
-    readonly property var links: { Trackers.anilist; Trackers.mal; Trackers.comick; return Trackers.links(seriesId) }
+    readonly property var links: { App.dependOn(Trackers.anilist, Trackers.mal, Trackers.comick); return Trackers.links(seriesId) }
     readonly property var services: [
         { key: "anilist", label: "AniList", connected: !!Trackers.anilist.name, kind: media === "anime" ? "anime" : "manga",
           site: "https://anilist.co/" },
@@ -28,7 +28,7 @@ Dialog {
     // The name to search by: the catalogue's title when the series came
     // from one, which trackers know better than a site's.
     readonly property string lookupTitle: Trackers.lookupTitle(seriesId, seriesTitle)
-    readonly property var misses: { Trackers.anilist; return Trackers.misses(seriesId) }
+    readonly property var misses: { App.dependOn(Trackers.anilist); return Trackers.misses(seriesId) }
     property string pendingPick: ""
 
     function search(service, text) {

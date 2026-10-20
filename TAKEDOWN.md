@@ -1,9 +1,10 @@
 # Takedown requests
 
 SCANCORE is a reader and player. It does not host, store or distribute any
-comics, novels or video, ships no sources for scan sites and runs no
-extension repository. Users add the sources they want themselves, and what
-they read is fetched from those sites by the user's own device.
+comics, novels or video and runs no extension repository. What people read
+is fetched from the sites they choose by their own device. Built-in support
+for some public sites can be switched off in every installed copy at once,
+without a release, and removed from the code on request.
 
 So there is usually nothing in this repository or in SCANCORE's releases to
 take down. If you hold rights to a work and find it on a site, the site that

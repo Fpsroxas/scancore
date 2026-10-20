@@ -67,6 +67,10 @@ QString chosen(const QString &media);
 // "comick", "anilist" or "mal"; null for an unknown key or a catalogue this
 // build cannot use (MyAnimeList without its client id).
 std::shared_ptr<Catalogue> byKey(const QString &key);
+// Where AniList says a title can be read (its "external links": official
+// sites such as WEBTOON editions and Naver Webtoon). Cached for a week;
+// empty when AniList is unreachable.
+QStringList readingLinks(int anilistId);
 // The catalogue for a media: the chosen one when it has that media, else
 // AniList. Null when the user chose none.
 std::shared_ptr<Catalogue> forMedia(const QString &chosen, const QString &media);

@@ -1,11 +1,15 @@
 // Comic sources that publish a JSON API: Asura, MangaDex, Iken (Vortex),
-// HiveToons, Qi Manga and ManhwaWeb.
+// HiveToons, Qi Manga, ManhwaWeb, Naver Webtoon, ZonaTMO, Olympus and
+// ZeroComics (LectorManga.lat).
 
 #include "Engines.h"
 
 #include "core/Database.h"
 #include "core/Html.h"
+#include "core/Parallel.h"
+#include "core/Text.h"
 
+#include <QDate>
 #include <QDateTime>
 #include <QHash>
 #include <QJsonArray>
@@ -13,6 +17,7 @@
 #include <QSet>
 #include <QThread>
 #include <QTimeZone>
+#include <QUrlQuery>
 
 #include <mutex>
 
@@ -231,6 +236,10 @@ QString dexTitle(const QJsonObject &attrs, const QStringList &languages) {
     }
     if (const auto title = str(titles.value("en")); !title.isEmpty())
         return title;
+    // An English name before a romanised one ("Na Honjaman Level-Up").
+    for (const auto &alt : arr(attrs.value("altTitles")))
+        if (const auto title = str(alt.toObject().value("en")); !title.isEmpty())
+            return title;
     return titles.isEmpty() ? QString() : str(titles.begin().value());
 }
 
@@ -288,6 +297,14 @@ QList<Summary> MangaDexSource::search(const QString &query) {
         const auto attrs = manga.value("attributes").toObject();
         Summary item;
         item.title = dexTitle(attrs, wanted);
+        // Shown in the wanted language, but a catalogue knows it by another.
+        for (const auto &title : attrs.value("title").toObject())
+            item.names.append(str(title));
+        for (const auto &alt : arr(attrs.value("altTitles")))
+            for (const auto &title : alt.toObject())
+                item.names.append(str(title));
+        item.names.removeAll(item.title);
+        item.names.removeDuplicates();
         const auto id = str(manga.value("id"));
         item.url = tagged(QStringLiteral("https://mangadex.org/title/%1").arg(id));
         for (const auto &rel : arr(manga.value("relationships"))) {
@@ -308,6 +325,57 @@ QList<Summary> MangaDexSource::search(const QString &query) {
         if (!item.title.isEmpty())
             out.append(item);
     }
+    return out;
+}
+
+QList<QPair<QString, QString>> MangaDexSource::otherNames(const QString &title, int anilist, int mal) {
+    const auto wanted = normalizedTitle(title);
+    if (wanted.isEmpty())
+        return {};
+    const auto cacheKey = QStringLiteral("mangadex-names:%1:%2:%3").arg(anilist).arg(mal).arg(wanted);
+    QList<QPair<QString, QString>> out;
+    if (auto cached = Database::cacheGet(cacheKey)) {
+        for (const auto &row : QJsonDocument::fromJson(*cached).array())
+            out.append({str(row.toArray().at(0)), str(row.toArray().at(1))});
+        return out;
+    }
+    const auto doc = api(QStringLiteral("/manga"), {{"title", title},
+                                                   {"limit", "10"},
+                                                   {"contentRating[]", "safe"},
+                                                   {"contentRating[]", "suggestive"},
+                                                   {"contentRating[]", "erotica"},
+                                                   {"order[relevance]", "desc"}});
+    const auto namesOf = [](const QJsonObject &attrs) {
+        QList<QPair<QString, QString>> names;
+        const auto titles = attrs.value("title").toObject();
+        for (auto it = titles.begin(); it != titles.end(); ++it)
+            names.append({it.key(), str(it.value())});
+        for (const auto &alt : arr(attrs.value("altTitles"))) {
+            const auto o = alt.toObject();
+            for (auto it = o.begin(); it != o.end(); ++it)
+                names.append({it.key(), str(it.value())});
+        }
+        return names;
+    };
+    const QString al = anilist > 0 ? QString::number(anilist) : QString();
+    const QString ml = mal > 0 ? QString::number(mal) : QString();
+    for (const auto &row : arr(doc.object().value("data"))) {
+        const auto attrs = row.toObject().value("attributes").toObject();
+        const auto links = attrs.value("links").toObject();
+        const auto names = namesOf(attrs);
+        bool same = (!al.isEmpty() && str(links.value("al")) == al) || (!ml.isEmpty() && str(links.value("mal")) == ml);
+        // Without ids, only an exact name will do.
+        if (!same && al.isEmpty() && ml.isEmpty())
+            same = std::any_of(names.begin(), names.end(), [&](const auto &n) { return normalizedTitle(n.second) == wanted; });
+        if (same) {
+            out = names;
+            break;
+        }
+    }
+    QJsonArray rows;
+    for (const auto &[language, name] : out)
+        rows.append(QJsonArray{language, name});
+    Database::cachePut(cacheKey, QJsonDocument(rows).toJson(QJsonDocument::Compact), 7 * 86400);
     return out;
 }
 
@@ -941,6 +1009,612 @@ std::optional<Details> ManhwaWebSource::details(const QString &seriesUrl) {
     authors.removeAll(QString());
     authors.removeDuplicates();
     d.author = authors.join(QStringLiteral(", "));
+    return d;
+}
+
+// ---------------------------------------------------------------- Naver Webtoon
+
+namespace {
+QString naverTitleId(const QString &url) {
+    const auto id = QUrlQuery(QUrl(url)).queryItemValue(QStringLiteral("titleId"));
+    static const QRegularExpression digits(QStringLiteral("^\\d+$"));
+    if (!digits.match(id).hasMatch())
+        throw Error(QStringLiteral("That is not a Naver Webtoon link."));
+    return id;
+}
+
+// "26.06.09" (yy.MM.dd), or a time of day for today's episodes.
+QString naverDate(const QString &text) {
+    if (text.contains(QLatin1Char(':')))
+        return QDateTime::currentDateTimeUtc().toString(Qt::ISODate);
+    const auto date = QDate::fromString(text, QStringLiteral("yy.MM.dd"));
+    // Two-digit years read as 19xx.
+    return date.isValid() ? date.addYears(date.year() < 2000 ? 100 : 0).toString(Qt::ISODate) : QString();
+}
+} // namespace
+
+QString NaverSource::seriesLink(const QUrl &url) const {
+    // Also the old pages (list.nhn) and the mobile site.
+    if (!owns(url) || !url.path().startsWith(QLatin1String("/webtoon/list")))
+        return {};
+    try {
+        return QStringLiteral("%1/webtoon/list?titleId=%2").arg(m_config.base, naverTitleId(url.toString()));
+    } catch (const Error &) {
+        return {};
+    }
+}
+
+QList<Summary> NaverSource::search(const QString &query) {
+    const auto doc = Http::getJson(apiUrl(m_config.base, QStringLiteral("/api/search/webtoon"), {{"keyword", query}, {"page", "1"}}),
+                                   jsonHeaders());
+    QList<Summary> out;
+    for (const auto &row : arr(doc.object().value("searchList"))) {
+        const auto m = row.toObject();
+        // Adult titles open only after signing in.
+        if (m.value("adult").toBool())
+            continue;
+        Summary item;
+        item.title = str(m.value("titleName"));
+        const auto id = str(m.value("titleId"));
+        if (item.title.isEmpty() || id.isEmpty())
+            continue;
+        item.url = QStringLiteral("%1/webtoon/list?titleId=%2").arg(m_config.base, id);
+        item.cover = str(m.value("thumbnailUrl"));
+        item.author = str(m.value("displayAuthor"));
+        item.genres = names(arr(m.value("genreList")), QStringLiteral("description")).join(QStringLiteral(", "));
+        item.type = QStringLiteral("Manhwa");
+        item.source = key();
+        out.append(item);
+    }
+    return out;
+}
+
+QList<Chapter> NaverSource::parseChapters(const QJsonObject &page, const QString &base) {
+    const auto titleId = str(page.value("titleId"));
+    QList<Chapter> out;
+    for (const auto &row : arr(page.value("articleList"))) {
+        const auto a = row.toObject();
+        // Paid previews ("charge") need an account.
+        if (a.value("charge").toBool())
+            continue;
+        Chapter ch;
+        ch.number = str(a.value("no"));
+        ch.title = str(a.value("subtitle")).trimmed();
+        if (ch.number.isEmpty() || titleId.isEmpty())
+            continue;
+        if (ch.title.isEmpty())
+            ch.title = comics::chapterLabel(QStringLiteral("ko"), ch.number);
+        ch.slug = ch.number;
+        ch.url = QStringLiteral("%1/webtoon/detail?titleId=%2&no=%3").arg(base, titleId, ch.number);
+        ch.thumbnail = str(a.value("thumbnailUrl"));
+        ch.released = naverDate(str(a.value("serviceDateDescription")));
+        out.append(ch);
+    }
+    return out;
+}
+
+QList<Chapter> NaverSource::chapters(const QString &seriesUrl) {
+    const auto id = naverTitleId(seriesUrl);
+    const auto page = [this, id](int n) {
+        return Http::getJson(apiUrl(m_config.base, QStringLiteral("/api/article/list"), {{"titleId", id}, {"page", QString::number(n)}}),
+                             jsonHeaders())
+            .object();
+    };
+    // 20 episodes a page; the rest in parallel.
+    const auto first = page(1);
+    auto out = parseChapters(first, m_config.base);
+    const int pages = std::min(first.value("pageInfo").toObject().value("totalPages").toInt(1), 200);
+    QList<std::function<QList<Chapter>()>> jobs;
+    for (int n = 2; n <= pages; ++n)
+        jobs.append([this, page, n] { return parseChapters(page(n), m_config.base); });
+    for (const auto &result : parallel(jobs)) {
+        if (!result.ok())
+            throw Error(result.error);
+        out.append(*result.value);
+    }
+    sortChapters(out);
+    return out;
+}
+
+QList<Panel> NaverSource::parsePanels(const QByteArray &html) {
+    HtmlDocument doc(html);
+    QList<Panel> out;
+    for (const auto &img : doc.select(QStringLiteral(".wt_viewer img")))
+        // The first image is an age notice, not a page.
+        if (img.attr("id").startsWith(QLatin1String("content_image")))
+            if (const auto url = img.attr("src"); url.startsWith(QLatin1String("https://")))
+                out.append({url});
+    return out;
+}
+
+QList<Panel> NaverSource::panels(const QString &chapterUrl) {
+    naverTitleId(chapterUrl);
+    const auto response = Http::getOk(QUrl(chapterUrl), htmlHeaders());
+    auto out = parsePanels(response.body);
+    if (out.isEmpty())
+        throw Error(QStringLiteral("Naver Webtoon shows this episode only after signing in."));
+    return out;
+}
+
+std::optional<Details> NaverSource::details(const QString &seriesUrl) {
+    const auto doc = Http::getJson(apiUrl(m_config.base, QStringLiteral("/api/article/list/info"), {{"titleId", naverTitleId(seriesUrl)}}),
+                                   jsonHeaders());
+    const auto m = doc.object();
+    Details d;
+    d.title = str(m.value("titleName"));
+    d.cover = str(m.value("posterThumbnailUrl"));
+    if (d.cover.isEmpty())
+        d.cover = str(m.value("thumbnailUrl"));
+    d.description = str(m.value("synopsis")).trimmed();
+    d.status = m.value("finished").toBool() ? QStringLiteral("Completed") : m.value("rest").toBool() ? QStringLiteral("Hiatus") : QStringLiteral("Ongoing");
+    d.author = names(arr(m.value("communityArtists"))).join(QStringLiteral(", "));
+    for (const auto &tag : arr(m.value("curationTagList")))
+        if (str(tag.toObject().value("curationType")).startsWith(QLatin1String("GENRE_")))
+            d.genres.append(str(tag.toObject().value("tagName")));
+    return d;
+}
+
+// ---------------------------------------------------------------- Spanish sites: shared bits
+
+namespace {
+// "1.00" -> "1", "200.50" -> "200.5".
+QString plainNumber(QString number) {
+    number = number.trimmed();
+    if (number.contains(QLatin1Char('.'))) {
+        while (number.endsWith(QLatin1Char('0')))
+            number.chop(1);
+        if (number.endsWith(QLatin1Char('.')))
+            number.chop(1);
+    }
+    return number.isEmpty() ? QStringLiteral("0") : number;
+}
+
+// A chapter title that only repeats "<series> Capítulo 12" says nothing.
+QString chapterTitleOrEmpty(const QString &title) {
+    static const QRegularExpression bare(QStringLiteral(R"((^|\s)cap[ií]tulo\s*[\d.,]+\s*$)"), QRegularExpression::CaseInsensitiveOption);
+    const auto t = title.trimmed();
+    return bare.match(t).hasMatch() ? QString() : t;
+}
+
+// "2026-05-09 07:11:04" (UTC) -> ISO 8601.
+QString sqlDate(const QString &text) {
+    const auto at = QDateTime::fromString(text.left(19), QStringLiteral("yyyy-MM-dd HH:mm:ss"));
+    if (!at.isValid())
+        return text;
+    return QDateTime(at.date(), at.time(), QTimeZone::UTC).toString(Qt::ISODate);
+}
+
+// Chapters several groups uploaded under one number: each says whose it is.
+void nameGroups(QList<Chapter> &chapters, const QStringList &groups, const QString &language) {
+    QHash<QString, int> counts;
+    for (const auto &ch : chapters)
+        ++counts[ch.number];
+    for (int i = 0; i < chapters.size() && i < groups.size(); ++i) {
+        auto &ch = chapters[i];
+        if (counts.value(ch.number) < 2 || groups[i].isEmpty())
+            continue;
+        const auto title = ch.slug.section(QLatin1Char('|'), 1);
+        ch.title = comics::chapterLabel(language, ch.number, title.isEmpty() ? groups[i] : QStringLiteral("%1 (%2)").arg(title, groups[i]));
+    }
+    for (auto &ch : chapters)
+        ch.slug = ch.slug.section(QLatin1Char('|'), 0, 0);
+}
+} // namespace
+
+// ---------------------------------------------------------------- ZonaTMO
+
+namespace {
+// Type ids: 207 doujinshi, 214 novel.
+bool zonaTmoReadable(const QJsonObject &m, bool adult) {
+    for (const auto &type : arr(m.value("types"))) {
+        const auto id = type.toInt();
+        if (id == 214 || (!adult && id == 207))
+            return false;
+    }
+    return true;
+}
+
+QString zonaTmoCover(const QString &path, const QString &base) {
+    if (path.isEmpty() || path.startsWith(QLatin1String("http")))
+        return path;
+    return base + QStringLiteral("/wp-content/uploads") + (path.startsWith(QLatin1Char('/')) ? path : QLatin1Char('/') + path);
+}
+
+QString zonaTmoStatus(const QJsonArray &ids) {
+    for (const auto &value : ids)
+        switch (value.toInt()) {
+        case 12: return QString::fromUtf8("En emisión");
+        case 19: return QStringLiteral("Finalizado");
+        case 174: return QStringLiteral("En pausa");
+        case 198: return QStringLiteral("Cancelado");
+        default: break;
+        }
+    return {};
+}
+} // namespace
+
+QList<Summary> ZonaTmoSource::parseSearch(const QJsonObject &root, const QString &base, const QString &source, bool adult) {
+    QList<Summary> out;
+    for (const auto &row : arr(root.value("data").toObject().value("items"))) {
+        const auto m = row.toObject();
+        const auto slug = str(m.value("slug")).trimmed();
+        Summary item;
+        item.title = str(m.value("title")).trimmed();
+        if (slug.isEmpty() || item.title.isEmpty() || !zonaTmoReadable(m, adult))
+            continue;
+        item.url = QStringLiteral("%1/manga/%2").arg(base, slug);
+        item.cover = zonaTmoCover(str(m.value("cover")), base);
+        item.source = source;
+        // Its names in other languages ("synonyms") and spellings.
+        for (const auto &synonym : arr(m.value("synonyms")))
+            item.names.append(str(synonym.toObject().value("text")));
+        for (const auto &alt : arr(m.value("alt_titles")))
+            item.names.append(alt.isObject() ? str(alt.toObject().value("text")) : str(alt));
+        item.names.append(str(m.value("subtitle")));
+        item.names.removeAll(QString());
+        item.names.removeAll(item.title);
+        item.names.removeDuplicates();
+        out.append(item);
+    }
+    return out;
+}
+
+QList<Summary> ZonaTmoSource::search(const QString &query) {
+    const bool adult = m_config.options.value("adult").toBool(false);
+    const auto page = [this, query](int n) {
+        return Http::getJson(apiUrl(m_config.api, QStringLiteral("/listing/manga"), {{"page", QString::number(n)}, {"search", query}}),
+                             jsonHeaders())
+            .object();
+    };
+    const auto first = page(1);
+    auto out = parseSearch(first, m_config.base, key(), adult);
+    // Twelve a page, not ranked by how well they match: the series itself
+    // can come after its spin-offs, so two more pages.
+    const int pages = std::min(first.value("data").toObject().value("pagination").toObject().value("total_pages").toInt(1), 3);
+    QList<std::function<QList<Summary>()>> jobs;
+    for (int n = 2; n <= pages; ++n)
+        jobs.append([this, page, n, adult] { return parseSearch(page(n), m_config.base, key(), adult); });
+    for (const auto &result : parallel(jobs))
+        if (result.ok())
+            out.append(*result.value);
+    return out;
+}
+
+QList<Chapter> ZonaTmoSource::parseChapters(const QJsonArray &rows, const QString &base, const QString &slug, const QString &language) {
+    QList<Chapter> out;
+    QStringList groups;
+    QSet<int> seen;
+    for (const auto &row : rows) {
+        const auto c = row.toObject();
+        const int id = c.value("id").toInt();
+        const auto chapterSlug = str(c.value("slug"));
+        if (chapterSlug.isEmpty() || seen.contains(id))
+            continue;
+        seen.insert(id);
+        Chapter ch;
+        ch.number = plainNumber(str(c.value("chapter_number")));
+        const auto title = chapterTitleOrEmpty(str(c.value("title")));
+        ch.title = comics::chapterLabel(language, ch.number, title);
+        ch.url = QStringLiteral("%1/manga/%2/%3").arg(base, slug, chapterSlug);
+        // The title rides along until nameGroups() has used it.
+        ch.slug = chapterSlug + QLatin1Char('|') + title;
+        ch.released = sqlDate(str(c.value("release_date")));
+        out.append(ch);
+        groups.append(str(c.value("group").toObject().value("name")).trimmed());
+    }
+    nameGroups(out, groups, language);
+    return out;
+}
+
+QList<Chapter> ZonaTmoSource::chapters(const QString &seriesUrl) {
+    const auto slug = pathSegment(QUrl(seriesUrl), 1);
+    if (slug.isEmpty() || pathSegment(QUrl(seriesUrl), 0) != QLatin1String("manga"))
+        throw Error(QStringLiteral("That is not a %1 series link.").arg(label()));
+    const auto path = QStringLiteral("/single/manga/%1/chapters").arg(slug);
+    const auto page = [this, path](int n) {
+        return Http::getJson(apiUrl(m_config.api, path, {{"page", QString::number(n)}, {"postsPerPage", "100"}, {"order", "asc"}}),
+                             jsonHeaders(), 20000)
+            .object()
+            .value("data")
+            .toObject();
+    };
+    const auto first = page(1);
+    QJsonArray rows = arr(first.value("items"));
+    // 25 a page whatever is asked; the rest in parallel.
+    const int pages = std::min(first.value("pagination").toObject().value("total_pages").toInt(1), 200);
+    QList<std::function<QJsonArray()>> jobs;
+    for (int n = 2; n <= pages; ++n)
+        jobs.append([page, n] { return arr(page(n).value("items")); });
+    for (const auto &result : parallel(jobs)) {
+        if (!result.ok())
+            throw Error(result.error);
+        for (const auto &row : *result.value)
+            rows.append(row);
+    }
+    auto out = parseChapters(rows, m_config.base, slug, m_config.language);
+    sortChapters(out);
+    return out;
+}
+
+QList<Panel> ZonaTmoSource::panels(const QString &chapterUrl) {
+    const QUrl url(chapterUrl);
+    const auto slug = pathSegment(url, 1), chapterSlug = pathSegment(url, 2);
+    if (slug.isEmpty() || chapterSlug.isEmpty())
+        throw Error(QStringLiteral("That is not a %1 chapter link.").arg(label()));
+    const auto doc = Http::getJson(apiUrl(m_config.api, QStringLiteral("/single/manga/%1/%2").arg(slug, chapterSlug)), jsonHeaders());
+    const auto chapter = doc.object().value("data").toObject().value("chapter").toObject();
+    const auto jit = str(chapter.value("jit"));
+    QList<QPair<int, QString>> images;
+    for (const auto &row : arr(chapter.value("images"))) {
+        const auto image = row.toObject();
+        if (const auto name = str(image.value("image_url")); !name.isEmpty())
+            images.append({image.value("page_number").toInt(), name});
+    }
+    std::stable_sort(images.begin(), images.end(), [](const auto &a, const auto &b) { return a.first < b.first; });
+    const auto cdn = QStringLiteral("https://cdn.%1/manga/%2/").arg(QUrl(m_config.base).host(), jit);
+    QList<Panel> out;
+    for (const auto &image : images)
+        out.append({image.second.startsWith(QLatin1String("http")) ? image.second : cdn + image.second});
+    return out;
+}
+
+std::optional<Details> ZonaTmoSource::details(const QString &seriesUrl) {
+    const auto slug = pathSegment(QUrl(seriesUrl), 1);
+    const auto doc = Http::getJson(apiUrl(m_config.api, QStringLiteral("/single/manga/%1").arg(slug)), jsonHeaders());
+    const auto m = doc.object().value("data").toObject();
+    Details d;
+    d.title = str(m.value("title")).trimmed();
+    d.cover = zonaTmoCover(str(m.value("cover")), m_config.base);
+    d.description = str(m.value("overview")).trimmed();
+    d.status = zonaTmoStatus(arr(m.value("status")));
+    d.author = names(arr(m.value("author"))).join(QStringLiteral(", "));
+    return d;
+}
+
+// ---------------------------------------------------------------- Olympus
+
+namespace {
+// <base>/series/comic-<slug>#<id>
+QString olympusId(const QString &url) {
+    static const QRegularExpression digits(QStringLiteral("^\\d+$"));
+    const auto id = QUrl(url).fragment();
+    return digits.match(id).hasMatch() ? id : QString();
+}
+
+QString olympusSlug(const QString &url) {
+    const auto segment = pathSegment(QUrl(url), 1);
+    return segment.startsWith(QLatin1String("comic-")) ? segment.mid(6) : QString();
+}
+} // namespace
+
+QJsonArray OlympusSource::seriesList(bool fresh) {
+    const auto cacheKey = QStringLiteral("olympus-series:") + m_config.base;
+    if (!fresh)
+        if (auto cached = Database::cacheGet(cacheKey))
+            return QJsonDocument::fromJson(*cached).array();
+    const auto doc = Http::getJson(QUrl(m_config.base + QStringLiteral("/api/series/list")), jsonHeaders(), 20000);
+    QJsonArray comics;
+    for (const auto &row : arr(doc.object().value("data")))
+        if (str(row.toObject().value("type")) == QLatin1String("comic"))
+            comics.append(row);
+    Database::cachePut(cacheKey, QJsonDocument(comics).toJson(QJsonDocument::Compact), 3600);
+    return comics;
+}
+
+QString OlympusSource::currentSlug(const QString &seriesUrl, bool fresh) {
+    const auto id = olympusId(seriesUrl);
+    if (!fresh || id.isEmpty())
+        return olympusSlug(seriesUrl);
+    for (const auto &row : seriesList(true))
+        if (str(row.toObject().value("id")) == id)
+            return str(row.toObject().value("slug"));
+    throw Error(QStringLiteral("%1 no longer lists this series.").arg(label()), 404);
+}
+
+QList<Summary> OlympusSource::search(const QString &query) {
+    // The site has no search; it lists every series at once.
+    const auto wanted = normalizedTitle(query);
+    QList<Summary> out;
+    for (const auto &row : seriesList()) {
+        const auto m = row.toObject();
+        Summary item;
+        item.title = str(m.value("name")).trimmed();
+        if (item.title.isEmpty() || !normalizedTitle(item.title).contains(wanted))
+            continue;
+        item.url = QStringLiteral("%1/series/comic-%2#%3").arg(m_config.base, str(m.value("slug")), str(m.value("id")));
+        item.cover = str(m.value("cover"));
+        item.source = key();
+        out.append(item);
+        if (out.size() >= 30)
+            break;
+    }
+    return out;
+}
+
+QList<Chapter> OlympusSource::chapters(const QString &seriesUrl) {
+    const auto id = olympusId(seriesUrl);
+    // An old slug answers 404: look the series up again by id.
+    for (const bool fresh : {false, true}) {
+        const auto slug = currentSlug(seriesUrl, fresh);
+        const auto path = QStringLiteral("/api/series/%1/chapters").arg(slug);
+        const auto page = [this, path](int n) {
+            return Http::get(apiUrl(m_config.base, path, {{"page", QString::number(n)}, {"direction", "asc"}, {"type", "comic"}}),
+                             jsonHeaders(), 20000);
+        };
+        const auto first = page(1);
+        if (first.status == 404 && !fresh && !id.isEmpty())
+            continue;
+        if (!first.ok())
+            throw Error(QStringLiteral("%1 responded with HTTP %2.").arg(label()).arg(first.status), first.status);
+        const auto root = QJsonDocument::fromJson(first.body).object();
+        QJsonArray rows = arr(root.value("data"));
+        const int pages = std::min(root.value("meta").toObject().value("last_page").toInt(1), 100);
+        QList<std::function<QJsonArray()>> jobs;
+        for (int n = 2; n <= pages; ++n)
+            jobs.append([page, n] {
+                const auto response = page(n);
+                if (!response.ok())
+                    throw Error(QStringLiteral("HTTP %1").arg(response.status), response.status);
+                return arr(QJsonDocument::fromJson(response.body).object().value("data"));
+            });
+        for (const auto &result : parallel(jobs)) {
+            if (!result.ok())
+                throw Error(result.error);
+            for (const auto &row : *result.value)
+                rows.append(row);
+        }
+        QList<Chapter> out;
+        QSet<QString> seen;
+        for (const auto &row : rows) {
+            const auto c = row.toObject();
+            const auto chapterId = str(c.value("id"));
+            if (chapterId.isEmpty() || seen.contains(chapterId))
+                continue;
+            seen.insert(chapterId);
+            Chapter ch;
+            ch.number = plainNumber(str(c.value("name")));
+            ch.title = chapterLabel(ch.number);
+            ch.slug = chapterId;
+            // The reader opens by chapter id; the series id finds its slug
+            // after a rename.
+            ch.url = QStringLiteral("%1/capitulo/%2/comic-%3#%4").arg(m_config.base, chapterId, slug, id);
+            ch.released = str(c.value("published_at"));
+            out.append(ch);
+        }
+        sortChapters(out);
+        return out;
+    }
+    return {};
+}
+
+QList<Panel> OlympusSource::parsePanels(const QByteArray &html) {
+    HtmlDocument doc(html);
+    QList<Panel> out;
+    for (const auto &img : doc.select(QStringLiteral("main.strip div.panel > img")))
+        if (const auto url = img.attr("src"); url.startsWith(QLatin1String("https://")))
+            out.append({url});
+    return out;
+}
+
+QList<Panel> OlympusSource::panels(const QString &chapterUrl) {
+    const QUrl url(chapterUrl);
+    const auto chapterId = pathSegment(url, 1);
+    const auto seriesId = url.fragment();
+    for (const bool fresh : {false, true}) {
+        const auto slug = fresh ? currentSlug(QStringLiteral("%1/series/comic-x#%2").arg(m_config.base, seriesId), true)
+                                : pathSegment(url, 2).mid(6);
+        // The chapter page forwards (a meta refresh) to the reader.
+        auto response = Http::get(QUrl(QStringLiteral("%1/capitulo/%2/comic-%3").arg(m_config.base, chapterId, slug)), htmlHeaders());
+        static const QRegularExpression refresh(QStringLiteral(R"(http-equiv="refresh"\s+content="\d+;\s*url=([^"]+))"),
+                                                QRegularExpression::CaseInsensitiveOption);
+        if (const auto m = refresh.match(QString::fromUtf8(response.body.left(2048))); response.ok() && m.hasMatch())
+            response = Http::get(QUrl(m_config.base).resolved(QUrl(decodeEntities(m.captured(1)))), htmlHeaders());
+        if (response.ok())
+            if (auto out = parsePanels(response.body); !out.isEmpty())
+                return out;
+        if (fresh || seriesId.isEmpty())
+            break;
+    }
+    throw Error(QStringLiteral("%1 did not show the pages of this chapter.").arg(label()));
+}
+
+std::optional<Details> OlympusSource::details(const QString &seriesUrl) {
+    for (const bool fresh : {false, true}) {
+        const auto response = Http::get(apiUrl(m_config.base, QStringLiteral("/api/series/%1").arg(currentSlug(seriesUrl, fresh)), {{"type", "comic"}}),
+                                        jsonHeaders());
+        if (response.status == 404 && !fresh && !olympusId(seriesUrl).isEmpty())
+            continue;
+        if (!response.ok())
+            throw Error(QStringLiteral("%1 responded with HTTP %2.").arg(label()).arg(response.status), response.status);
+        const auto m = QJsonDocument::fromJson(response.body).object().value("data").toObject();
+        Details d;
+        d.title = str(m.value("name")).trimmed();
+        d.cover = str(m.value("cover"));
+        d.description = str(m.value("summary")).trimmed();
+        d.status = str(m.value("status").toObject().value("name"));
+        for (const auto &genre : names(arr(m.value("genres"))))
+            d.genres.append(genre.trimmed());
+        d.author = str(m.value("team").toObject().value("name")).trimmed();
+        return d;
+    }
+    return std::nullopt;
+}
+
+// ---------------------------------------------------------------- ZeroComics
+
+QList<Summary> ZeroComicsSource::search(const QString &query) {
+    const auto doc = Http::getJson(apiUrl(m_config.api, QStringLiteral("/series"), {{"q", query}, {"page", "1"}}), jsonHeaders());
+    const bool adult = m_config.options.value("adult").toBool(false);
+    QList<Summary> out;
+    for (const auto &row : arr(doc.object().value("data"))) {
+        const auto m = row.toObject();
+        const auto slug = str(m.value("slug"));
+        Summary item;
+        item.title = str(m.value("titulo")).trimmed();
+        // The API lists a few broken entries without a slug.
+        if (slug.isEmpty() || item.title.isEmpty() || (!adult && (m.value("adulto").toBool() || m.value("is_adult").toBool())))
+            continue;
+        item.url = QStringLiteral("%1/comics/%2").arg(m_config.base, slug);
+        item.cover = str(m.value("portada"));
+        item.type = str(m.value("tipo"));
+        item.source = key();
+        for (const auto &name : str(m.value("titulo_alternativo")).split(QRegularExpression(QStringLiteral("[,;/|]")), Qt::SkipEmptyParts))
+            item.names.append(name.trimmed());
+        out.append(item);
+    }
+    return out;
+}
+
+QJsonObject ZeroComicsSource::series(const QString &seriesUrl) {
+    const auto slug = pathSegment(QUrl(seriesUrl), 1);
+    if (slug.isEmpty() || pathSegment(QUrl(seriesUrl), 0) != QLatin1String("comics"))
+        throw Error(QStringLiteral("That is not a %1 series link.").arg(label()));
+    return Http::getJson(apiUrl(m_config.api, QStringLiteral("/series/%1").arg(slug)), jsonHeaders()).object().value("data").toObject();
+}
+
+QList<Chapter> ZeroComicsSource::chapters(const QString &seriesUrl) {
+    const auto data = series(seriesUrl);
+    const auto slug = str(data.value("slug"));
+    QList<Chapter> out;
+    for (const auto &row : arr(data.value("capitulos"))) {
+        const auto c = row.toObject();
+        const auto id = str(c.value("id"));
+        if (id.isEmpty())
+            continue;
+        Chapter ch;
+        ch.number = plainNumber(str(c.value("numero")));
+        ch.title = chapterLabel(ch.number, str(c.value("titulo")).trimmed());
+        ch.slug = id;
+        ch.url = QStringLiteral("%1/comics/%2/capitulo-%3#%4").arg(m_config.base, slug, ch.number, id);
+        ch.released = str(c.value("publicado_en"));
+        out.append(ch);
+    }
+    sortChapters(out);
+    return out;
+}
+
+QList<Panel> ZeroComicsSource::panels(const QString &chapterUrl) {
+    const auto id = QUrl(chapterUrl).fragment();
+    static const QRegularExpression digits(QStringLiteral("^\\d+$"));
+    if (!digits.match(id).hasMatch())
+        throw Error(QStringLiteral("That is not a %1 chapter link.").arg(label()));
+    const auto doc = Http::getJson(apiUrl(m_config.api, QStringLiteral("/capitulos/%1").arg(id)), jsonHeaders());
+    QList<Panel> out;
+    for (const auto &page : arr(doc.object().value("data").toObject().value("paginas")))
+        if (const auto url = str(page); url.startsWith(QLatin1String("https://")))
+            out.append({url});
+    return out;
+}
+
+std::optional<Details> ZeroComicsSource::details(const QString &seriesUrl) {
+    const auto m = series(seriesUrl);
+    Details d;
+    d.title = str(m.value("titulo")).trimmed();
+    d.cover = str(m.value("portada"));
+    d.description = str(m.value("sinopsis")).trimmed();
+    d.status = str(m.value("estado"));
+    d.genres = names(arr(m.value("generos")));
+    d.author = str(m.value("grupo").toObject().value("nombre")).trimmed();
     return d;
 }
 

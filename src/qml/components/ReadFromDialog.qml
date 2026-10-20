@@ -12,11 +12,24 @@ Dialog {
     property var task: null
     readonly property bool novel: item.media === "novel"
     readonly property var matches: task && task.ok ? task.result.matches : []
+    // Another language to look in (comics), when the user's own has nothing.
+    property string language: ""
+    property bool choosing: false
+    readonly property var otherLanguages: novel ? [] : Comics.otherLanguages().filter(l => l.value !== language)
+    readonly property bool showLanguages: !novel && !!task && task.ok && (matches.length === 0 || choosing) && otherLanguages.length > 0
 
     function start(entry) {
         item = entry
+        language = ""
+        choosing = false
         task = entry.media === "novel" ? Novels.resolve(entry) : Comics.resolve(entry)
         open()
+    }
+
+    function lookIn(code) {
+        language = code
+        choosing = false
+        task = Comics.resolve(item, code)
     }
 
     function show(match) {
@@ -105,6 +118,7 @@ Dialog {
                     width: parent.width
                     text: !dialog.task || dialog.task.loading ? qsTr("Looking for it on your sources…")
                         : !dialog.task.ok ? dialog.task.error
+                        : dialog.matches.length === 0 && dialog.language ? qsTr("No source in that language has it either.")
                         : dialog.matches.length === 0 ? qsTr("None of your sources has it yet.")
                         : qsTr("Read it from")
                     color: dialog.task && !dialog.task.loading && !dialog.task.ok ? Theme.danger : Theme.textMuted
@@ -146,8 +160,9 @@ Dialog {
                             anchors.verticalCenter: parent.verticalCenter
                             spacing: 2
                             Text {
-                                // The content language, when it is not English.
-                                text: option.modelData.sourceLabel + (option.modelData.language && option.modelData.language !== "en"
+                                // The language, when it is not the user's.
+                                text: option.modelData.sourceLabel + (option.modelData.language
+                                    && option.modelData.language.split("-")[0] !== (dialog.task.result.contentLanguage || "en")
                                     ? " · " + option.modelData.language.toUpperCase() : "")
                                 color: Theme.text
                                 font.family: Theme.fontSans
@@ -176,9 +191,44 @@ Dialog {
             }
         }
 
+        // Other languages to look in.
+        Column {
+            visible: dialog.showLanguages
+            width: parent.width
+            spacing: 10
+            Text {
+                width: parent.width
+                text: qsTr("Look for it in another language:")
+                color: Theme.textMuted
+                font.family: Theme.fontSans
+                font.pixelSize: Theme.textSm
+                wrapMode: Text.Wrap
+            }
+            Flow {
+                width: parent.width
+                spacing: 8
+                Repeater {
+                    model: dialog.showLanguages ? dialog.otherLanguages : []
+                    Chip {
+                        required property var modelData
+                        text: modelData.label
+                        onClicked: dialog.lookIn(modelData.value)
+                    }
+                }
+            }
+        }
+
         Row {
             anchors.right: parent.right
             spacing: 8
+            ScButton {
+                visible: !dialog.novel && !!dialog.task && dialog.task.ok && dialog.matches.length > 0 && !dialog.choosing
+                         && dialog.otherLanguages.length > 0
+                text: qsTr("Other languages")
+                iconName: "languages"
+                variant: "ghost"
+                onClicked: dialog.choosing = true
+            }
             ScButton {
                 visible: !!dialog.item.catalogUrl
                 text: dialog.item.catalog === "anilist" ? "AniList" : dialog.item.catalog === "mal" ? "MyAnimeList" : qsTr("Comick")

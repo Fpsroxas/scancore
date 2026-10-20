@@ -4,15 +4,73 @@ import QtQuick.Controls.Basic
 import ScanCore
 
 // Anime home: rotating spotlight, continue watching, today's schedule and
-// AniList's trending, seasonal, popular and top lists.
+// the anime catalogue's lists: AniList's trending, seasonal, popular and
+// top, or MyAnimeList's top airing, seasonal, popular and top rated.
 Item {
     id: page
-    property var homeTask: Anime.home()
-    property var historyTask: Library.history("anime", 16)
+    // Assigned, not bound: the catalogue's change handler can run while a
+    // binding here is still being evaluated, and the task the binding then
+    // kept was destroyed, leaving the spotlight and the lists empty.
+    property var homeTask: null
+    // Settings → Connections: whose lists these are.
+    readonly property string catalog: App.settings.catalogAnime || "anilist"
+    onCatalogChanged: homeTask = Anime.home()
+    Component.onCompleted: if (!homeTask) homeTask = Anime.home()
+    readonly property bool mal: !!home && home.catalog === "mal"
+    property var historyTask: Library.continueItems("anime", 16)
     property var todayTask: Anime.schedule(Math.floor(new Date().setHours(0, 0, 0, 0) / 1000), Math.floor(new Date().setHours(23, 59, 59, 999) / 1000))
     readonly property var home: homeTask && homeTask.ok ? homeTask.result : null
-    readonly property var spotlight: home ? home.trending.filter(m => m.banner).slice(0, 6) : []
+    readonly property var spotlight: home ? (home.spotlight || home.trending).filter(m => m.banner).slice(0, 6) : []
+    // Installed anime sources (extensions), each browsable by itself.
+    readonly property var sources: { App.dependOn(Extensions.revision); return Anime.sources().filter(s => s.enabled) }
     property int spot: 0
+
+    // Edit page: arrange the sections (PageLayout).
+    property bool editing: false
+    PageArranger {
+        id: layout
+        page: "anime"
+        column: column
+        editing: page.editing
+        defaults: ["spotlight", "continue", "sources", "airing", "trending", "season", "popular", "top"]
+    }
+    // Over the spotlight when it is the first section shown; else a row.
+    readonly property bool toolsOnSpotlight: !editing && (PageLayout.revision, PageLayout.order("anime", layout.declared)
+        .filter(k => !PageLayout.isHidden("anime", k))[0] === "spotlight")
+
+    // Browse, Schedule, Extensions, Edit page and search (phones get a
+    // search button instead).
+    component AnimeTools: Item {
+        width: parent ? parent.width : 800
+        height: Math.max(80, buttons.y + buttons.height + 8)
+        SearchField {
+            visible: !Theme.compact
+            anchors.right: parent.right
+            anchors.rightMargin: Theme.gutter
+            y: 24
+            width: 300
+            placeholderText: qsTr("Search anime")
+            onSubmitted: (text) => Router.openAnimeBrowse({ q: text })
+        }
+        // Wraps on phones rather than running off the screen.
+        Flow {
+            id: buttons
+            x: Theme.gutter
+            y: 24
+            width: parent.width - 2 * Theme.gutter - (Theme.compact ? 0 : 330)
+            spacing: 8
+            ScButton { text: qsTr("Browse"); iconName: "compass"; compact: true; onClicked: Router.openAnimeBrowse({}) }
+            ScButton { text: qsTr("Schedule"); iconName: "calendar"; compact: true; onClicked: Router.openAnimeSchedule() }
+            ScButton { visible: Theme.compact; text: qsTr("Search"); iconName: "search"; compact: true; onClicked: Router.openAnimeBrowse({}) }
+            ScButton { text: qsTr("Extensions"); iconName: "puzzle"; compact: true; onClicked: Router.openExtensions() }
+            IconButton {
+                iconName: "layout-dashboard"
+                tip: qsTr("Edit page")
+                active: page.editing
+                onClicked: page.editing = !page.editing
+            }
+        }
+    }
 
     function search(text) { Router.openAnimeBrowse({ q: text }) }
 
@@ -20,7 +78,7 @@ Item {
         target: Library
         function onChanged() { refresh.restart() }
     }
-    Timer { id: refresh; interval: 500; onTriggered: page.historyTask = Library.history("anime", 16) }
+    Timer { id: refresh; interval: 500; onTriggered: page.historyTask = Library.continueItems("anime", 16) }
     property var history: []
     Connections {
         target: page.historyTask
@@ -56,9 +114,15 @@ Item {
         Column {
             id: column
             width: parent.width
-            spacing: 36
+            spacing: Theme.sectionGap
+
+            AnimeTools { visible: !page.toolsOnSpotlight }
 
             // ------------------------------------------------ spotlight
+            PageSection {
+                arranger: layout
+                key: "spotlight"
+                label: qsTr("Spotlight")
             Item {
                 id: hero
                 width: parent.width
@@ -232,24 +296,8 @@ Item {
                     }
                 }
 
-                // Phones get a search button in the row below instead.
-                SearchField {
-                    visible: !Theme.compact
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.gutter
-                    y: 24
-                    width: 300
-                    placeholderText: qsTr("Search anime")
-                    onSubmitted: (text) => Router.openAnimeBrowse({ q: text })
-                }
-                Row {
-                    x: Theme.gutter
-                    y: 24
-                    spacing: 8
-                    ScButton { text: qsTr("Browse"); iconName: "compass"; compact: true; onClicked: Router.openAnimeBrowse({}) }
-                    ScButton { text: qsTr("Schedule"); iconName: "calendar"; compact: true; onClicked: Router.openAnimeSchedule() }
-                    ScButton { visible: Theme.compact; text: qsTr("Search"); iconName: "search"; compact: true; onClicked: Router.openAnimeBrowse({}) }
-                }
+                // The page's buttons sit over the spotlight when it is at the top.
+                AnimeTools { visible: page.toolsOnSpotlight }
 
                 StateView {
                     anchors.fill: parent
@@ -257,52 +305,119 @@ Item {
                     onRetry: page.homeTask = Anime.home()
                 }
             }
+            }
 
-            Shelf {
-                title: qsTr("Continue watching")
-                items: page.history
-                subtitleFor: (it) => qsTr("Episode ") + (it.unitNumber || it.unitKey || "")
-                progressFor: (it) => it.completed ? 1 : (it.percent || 0)
-                onOpened: (it, cover) => Router.resume(it)
+            PageSection {
+                arranger: layout
+                key: "continue"
+                label: qsTr("Continue watching")
+                Shelf {
+                    title: qsTr("Continue watching")
+                    items: page.history
+                    subtitleFor: (it) => qsTr("Episode ") + (it.unitNumber || it.unitKey || "")
+                    progressFor: (it) => it.completed ? 1 : (it.percent || 0)
+                    onOpened: (it, cover) => Router.resume(it)
+                }
             }
-            Shelf {
-                title: qsTr("Airing today")
-                actionText: qsTr("Full schedule")
-                onAction: Router.openAnimeSchedule()
-                items: page.todayTask && page.todayTask.ok ? page.todayTask.result : []
-                loading: page.todayTask ? page.todayTask.loading : false
-                subtitleFor: (it) => qsTr("Ep ") + it.airingEpisode + " · " + Qt.formatTime(new Date(it.airingAt * 1000), "hh:mm")
-                onOpened: (it, cover) => Router.openSeries(it, cover)
+            PageSection {
+                arranger: layout
+                key: "sources"
+                label: qsTr("Your anime sources")
+                Column {
+                    readonly property bool hasContent: page.sources.length > 0
+                    visible: hasContent
+                    x: Theme.gutter
+                    width: parent.width - 2 * Theme.gutter
+                    spacing: 12
+                    Text {
+                        text: qsTr("Your anime sources")
+                        color: Theme.text
+                        font.family: Theme.fontDisplay
+                        font.pixelSize: Theme.textXl
+                        font.weight: Font.DemiBold
+                    }
+                    Flow {
+                        width: parent.width
+                        spacing: 8
+                        Repeater {
+                            model: page.sources
+                            Chip {
+                                required property var modelData
+                                text: modelData.label + (modelData.language && modelData.language !== "en" ? " · " + modelData.language.toUpperCase() : "")
+                                onClicked: Router.openSource(modelData.key)
+                            }
+                        }
+                    }
+                }
             }
-            Shelf {
-                title: qsTr("Trending now")
-                items: page.home ? page.home.trending : []
-                loading: page.homeTask ? page.homeTask.loading : false
-                subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
-                onOpened: (it, cover) => Router.openSeries(it, cover)
+            PageSection {
+                arranger: layout
+                key: "airing"
+                label: qsTr("Airing today")
+                Shelf {
+                    title: qsTr("Airing today")
+                    actionText: qsTr("Full schedule")
+                    onAction: Router.openAnimeSchedule()
+                    items: page.todayTask && page.todayTask.ok ? page.todayTask.result : []
+                    loading: page.todayTask ? page.todayTask.loading : false
+                    subtitleFor: (it) => qsTr("Ep ") + it.airingEpisode + (it.airingEpisodeLast ? "–" + it.airingEpisodeLast : "") + " · " + Qt.formatTime(new Date(it.airingAt * 1000), "hh:mm")
+                    onOpened: (it, cover) => Router.openSeries(it, cover)
+                }
             }
-            Shelf {
-                title: page.home ? page.home.seasonName : qsTr("This season")
-                items: page.home ? page.home.season : []
-                loading: page.homeTask ? page.homeTask.loading : false
-                subtitleFor: (it) => it.nextEpisode ? qsTr("Ep ") + it.nextEpisode + " " + App.relativeTime(it.nextAiringAt) : [it.format, it.status].filter(Boolean).join(" · ")
-                onOpened: (it, cover) => Router.openSeries(it, cover)
+            PageSection {
+                arranger: layout
+                key: "trending"
+                label: page.mal ? qsTr("Top airing") : qsTr("Trending now")
+                Shelf {
+                    title: page.mal ? qsTr("Top airing") : qsTr("Trending now")
+                    items: page.home ? page.home.trending : []
+                    loading: page.homeTask ? page.homeTask.loading : false
+                    subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
+                    onOpened: (it, cover) => Router.openSeries(it, cover)
+                }
             }
-            Shelf {
-                title: qsTr("All-time popular")
-                items: page.home ? page.home.popular : []
-                subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
-                onOpened: (it, cover) => Router.openSeries(it, cover)
+            PageSection {
+                arranger: layout
+                key: "season"
+                label: qsTr("This season")
+                Shelf {
+                    title: page.home ? page.home.seasonName : qsTr("This season")
+                    items: page.home ? page.home.season : []
+                    loading: page.homeTask ? page.homeTask.loading : false
+                    subtitleFor: (it) => it.nextEpisode ? qsTr("Ep ") + it.nextEpisode + " " + App.relativeTime(it.nextAiringAt) : [it.format, it.status].filter(Boolean).join(" · ")
+                    onOpened: (it, cover) => Router.openSeries(it, cover)
+                }
             }
-            Shelf {
-                title: qsTr("Top rated")
-                items: page.home ? page.home.top : []
-                badgeFor: (it) => it.score ? it.score + "%" : ""
-                subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
-                onOpened: (it, cover) => Router.openSeries(it, cover)
+            PageSection {
+                arranger: layout
+                key: "popular"
+                label: page.mal ? qsTr("Most popular") : qsTr("All-time popular")
+                Shelf {
+                    title: page.mal ? qsTr("Most popular") : qsTr("All-time popular")
+                    items: page.home ? page.home.popular : []
+                    subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
+                    onOpened: (it, cover) => Router.openSeries(it, cover)
+                }
+            }
+            PageSection {
+                arranger: layout
+                key: "top"
+                label: qsTr("Top rated")
+                Shelf {
+                    title: qsTr("Top rated")
+                    items: page.home ? page.home.top : []
+                    badgeFor: (it) => it.score ? it.score + "%" : ""
+                    subtitleFor: (it) => [it.format, it.year].filter(Boolean).join(" · ")
+                    onOpened: (it, cover) => Router.openSeries(it, cover)
+                }
             }
         }
     }
 
     BackToTop { flick: flick }
+    EditPageBar {
+        editing: page.editing
+        arrangers: [layout]
+        onDone: page.editing = false
+    }
 }

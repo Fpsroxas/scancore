@@ -1,6 +1,9 @@
 #include "Customize.h"
 
+#include "App.h"
 #include "core/Database.h"
+#include "sources/comics/Registry.h"
+#include "sources/novels/Registry.h"
 
 #include <QColor>
 #include <QCoreApplication>
@@ -350,10 +353,20 @@ namespace {
 
 // Languages with a translation (i18n/scancore_<code>.ts), by their own names.
 const QList<QPair<QString, QString>> kLanguages{{"en", "English"},
+                                                {"de", "Deutsch"},
                                                 {"es", "Español"},
                                                 {"fr", "Français"},
                                                 {"id", "Bahasa Indonesia"},
-                                                {"pt_BR", "Português (Brasil)"}};
+                                                {"it", "Italiano"},
+                                                {"pt_BR", "Português (Brasil)"},
+                                                {"pt_PT", "Português (Portugal)"},
+                                                {"vi", "Tiếng Việt"},
+                                                {"tr", "Türkçe"},
+                                                {"ru", "Русский"},
+                                                {"ko", "한국어"},
+                                                {"ja", "日本語"},
+                                                {"zh_CN", "简体中文"},
+                                                {"zh_TW", "繁體中文"}};
 
 QTranslator *g_translator = nullptr;
 QTranslator *g_qtTranslator = nullptr;
@@ -405,6 +418,13 @@ void Customize::setLanguage(const QString &code) {
     Database::setPref(QStringLiteral("language"), code);
     loadTranslation(code);
     emit languageChanged();
+    // Unless the user chose them, the languages of built-in sources follow
+    // the interface language.
+    if (Database::pref(QStringLiteral("setting.builtinLanguages")).toStringList().isEmpty()) {
+        comics::Registry::rebuild();
+        novels::Registry::rebuild();
+        emit App::instance()->manifestChanged();
+    }
     if (m_engine)
         m_engine->retranslate();
 }

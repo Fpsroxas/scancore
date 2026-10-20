@@ -5,7 +5,7 @@
 #include "core/Database.h"
 #include "core/Text.h"
 #include "sources/catalogue/Catalogue.h"
-#include "sources/comics/Engines.h"
+#include "sources/bundled/comics/Engines.h"
 
 #include <QElapsedTimer>
 #include <QFile>

@@ -37,16 +37,16 @@ Item {
     // Until the site answers, the chapter list saved last time (if any).
     readonly property var storedChapters: Library.storedUnits(seriesId)
     readonly property var chapters: task && task.ok ? task.result.chapters : storedChapters
-    readonly property var progress: { Library.revision; return Library.progressMap(seriesId) }
-    readonly property var downloads: { Downloads.revision; return Downloads.states(seriesId) }
-    readonly property bool saved: { Library.revision; return Library.isSaved(seriesId) }
+    readonly property var progress: { App.dependOn(Library.revision); return Library.progressMap(seriesId) }
+    readonly property var downloads: { App.dependOn(Downloads.revision); return Downloads.states(seriesId) }
+    readonly property bool saved: { App.dependOn(Library.revision); return Library.isSaved(seriesId) }
     readonly property string coverReferer: media === "comic" ? Comics.imageReferer(url) : ""
     // Comick's catalogue id when the comic was opened from the catalogue; it
     // ties the series to its comments, reviews and tracking.
     readonly property string catalogId: (series.extra && series.extra.hid) || summary.hid || ""
 
     readonly property var resumeInfo: {
-        Library.revision
+        App.dependOn(Library.revision)
         if (chapters.length === 0) return { index: 0, label: page.media === "novel" ? qsTr("Start reading") : qsTr("Start reading"), detail: "" }
         const last = Library.lastProgress(seriesId)
         if (last && last.unitKey) {
@@ -183,8 +183,16 @@ Item {
                     iconName: page.local ? "folder-open" : "external-link"
                     filled: true
                     tip: page.local ? qsTr("Show in its folder") : qsTr("Open on the website")
-                    onClicked: page.local ? App.openFolder(App.localPath(String(page.url).replace(/\/[^\/]*$/, "")))
-                                          : App.openUrl(page.url)
+                    onClicked: {
+                        if (page.local) App.openFolder(App.localPath(String(page.url).replace(/\/[^\/]*$/, "")))
+                        else if (/^https?:/.test(page.url)) App.openUrl(page.url)
+                        else {
+                            // Extensions' and plugins' links are their own paths.
+                            const task = page.media === "novel" ? Novels.webUrl(page.url) : Comics.webUrl(page.url)
+                            task.finished.connect((link) => App.openUrl(link))
+                            task.failed.connect((error) => Router.toast(error, "error"))
+                        }
+                    }
                 }
                 IconButton {
                     visible: !page.local && (!!Trackers.anilist.name || !!Trackers.mal.name || !!Trackers.comick.name)
@@ -205,7 +213,7 @@ Item {
             // titles: one tap to pick the entry.
             Rectangle {
                 id: missNotice
-                readonly property var misses: { Trackers.anilist; Library.revision; return page.local ? [] : Trackers.misses(page.seriesId) }
+                readonly property var misses: { App.dependOn(Trackers.anilist, Library.revision); return page.local ? [] : Trackers.misses(page.seriesId) }
                 readonly property var names: misses.map(k => k === "anilist" ? "AniList" : k === "mal" ? "MyAnimeList" : qsTr("Comick"))
                 visible: misses.length > 0
                 x: Theme.gutter

@@ -155,7 +155,10 @@ SettingsPane {
         SettingRow { iconName: "message-circle"; title: qsTr("Discord"); description: qsTr("Questions, feedback and updates"); clickable: true; external: true; onClicked: App.openUrl("https://scancore.onl/discord") }
         SettingRow { iconName: "triangle-alert"; title: qsTr("Report a problem"); description: qsTr("Opens GitHub Issues"); clickable: true; external: true; onClicked: App.openUrl("https://github.com/medium-gh/scancore/issues/new/choose") }
         SettingRow { iconName: "sparkles"; title: qsTr("Welcome tour"); description: qsTr("See the introduction again"); clickable: true; onClicked: Router.shell.showWelcome() }
+        SettingRow { iconName: "file-text"; title: qsTr("Licences"); description: qsTr("The open-source software inside SCANCORE"); clickable: true; onClicked: licences.start() }
     }
+
+    LicencesDialog { id: licences }
 
     SettingsGroup {
         visible: !Theme.compact
@@ -204,7 +207,7 @@ SettingsPane {
         width: parent.width
         leftPadding: 4
         wrapMode: Text.Wrap
-        text: qsTr("MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0).")
+        text: qsTr("MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.")
         color: Theme.textFaint
         font.family: Theme.fontSans
         font.pixelSize: Theme.textXs + 1

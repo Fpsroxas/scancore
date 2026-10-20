@@ -8,6 +8,7 @@
 #include "core/Parallel.h"
 #include "core/Proto.h"
 #include "core/Text.h"
+#include "extensions/Host.h"
 #include "sources/comics/Registry.h"
 #include "sources/local/Local.h"
 #include "sources/novels/Registry.h"
@@ -19,6 +20,7 @@
 #include <QJsonObject>
 #include <QMutex>
 #include <QRegularExpression>
+#include <QSaveFile>
 #include <QSet>
 #include <QXmlStreamReader>
 
@@ -39,6 +41,7 @@ struct Item {
     QString category = QStringLiteral("reading");
     QString sourceName; // Mihon's name for its source
     QString url;        // Mihon's address on that source (often a path)
+    quint64 sourceId = 0; // Mihon's id for its source (an extension's)
     int anilistId = 0;
     int malId = 0;
     QString comickHid;
@@ -177,6 +180,7 @@ QList<Item> parseMihon(const QByteArray &data) {
     QList<Item> out;
     for (auto &[source, item] : manga) {
         item.sourceName = sourceNames.value(source);
+        item.sourceId = source;
         out.append(item);
     }
     return out;
@@ -411,6 +415,17 @@ bool storeFound(const Item &item, Tally &outcome, bool searchEverywhere) {
         return true;
     };
 
+    // The same extension source installed here: the backup's own address
+    // on it, as Mihon restores it.
+    if (!novel && item.sourceId != 0 && !item.url.isEmpty()) {
+        const auto key = QStringLiteral("mihon:%1").arg(item.sourceId);
+        if (const auto source = comics::Registry::byKey(key); source && source->enabled() && tryUrl(ext::wrapUrl(key, item.url), key, {}, {})) {
+            outcome.progress += store(series, item.category, units, item);
+            outcome.saved.append(series.value("id").toString());
+            ++outcome.imported;
+            return true;
+        }
+    }
     if (!novel) {
         for (const auto &source : comics::Registry::all()) {
             if (!source->enabled() || source->key() == QLatin1String("local"))
@@ -572,6 +587,132 @@ Task *Importer::importMihon(const QUrl &file) {
         storeAll(items, outcome, false);
         return summary(outcome);
     }));
+}
+
+namespace {
+// SCANCORE's categories as Mihon's, in this order.
+const QList<QPair<QString, QString>> kMihonCategories{{"reading", "Reading"},    {"planned", "Plan to read"}, {"paused", "On hold"},
+                                                     {"completed", "Completed"}, {"dropped", "Dropped"}};
+
+// Mihon's SManga status: 1 ongoing, 2 completed, 5 cancelled, 6 on hiatus.
+int mihonStatus(const QString &status) {
+    const auto s = status.toLower();
+    if (s.contains(QLatin1String("complet")) || s.contains(QLatin1String("finaliz")) || s.contains(QLatin1String("ended")))
+        return 2;
+    if (s.contains(QLatin1String("cancel")))
+        return 5;
+    if (s.contains(QLatin1String("hiatus")) || s.contains(QLatin1String("pausa")))
+        return 6;
+    if (s.contains(QLatin1String("ongoing")) || s.contains(QLatin1String("emisi")) || s.contains(QLatin1String("releasing")))
+        return 1;
+    return 0;
+}
+
+// The link an extension knows ("mihon:<id>:<link>" without the key).
+QString extensionLink(const QString &url) {
+    const auto wrapped = ext::unwrapUrl(url);
+    return wrapped ? wrapped->url : QString();
+}
+} // namespace
+
+Task *Importer::exportMihon(const QUrl &file) {
+    return Task::run([file]() -> QVariant {
+        const auto rows = Database::query(QStringLiteral(R"(
+            SELECT s.id, s.source, s.source_url, s.title, s.cover, s.description, s.author, s.status, s.genres,
+                   l.category, l.added_at
+            FROM library l JOIN series s ON s.id = l.series_id
+            WHERE s.media = 'comic' ORDER BY s.title
+        )"));
+        ProtoWriter backup;
+        QHash<QString, QString> sourceNames;
+        int exported = 0, skipped = 0;
+        for (const auto &value : rows) {
+            const auto row = value.toMap();
+            const auto key = row.value("source").toString();
+            const auto url = extensionLink(row.value("source_url").toString());
+            bool ok = false;
+            const auto sourceId = key.startsWith(QLatin1String("mihon:")) ? key.mid(6).toLongLong(&ok) : 0;
+            // Built-in sources have no Mihon source to open them.
+            if (!ok || url.isEmpty()) {
+                ++skipped;
+                continue;
+            }
+            const auto id = row.value("id").toString();
+            if (!sourceNames.contains(key))
+                if (const auto source = comics::Registry::byKey(key))
+                    sourceNames.insert(key, source->label());
+            ProtoWriter manga;
+            manga.varint(1, quint64(sourceId));
+            manga.text(2, url);
+            manga.text(3, row.value("title").toString());
+            manga.text(5, row.value("author").toString());
+            manga.text(6, row.value("description").toString());
+            for (const auto &genre : row.value("genres").toString().split(QStringLiteral(", "), Qt::SkipEmptyParts))
+                manga.text(7, genre);
+            manga.varint(8, quint64(mihonStatus(row.value("status").toString())));
+            manga.text(9, row.value("cover").toString());
+            manga.varint(13, quint64(row.value("added_at").toLongLong() * 1000));
+            // Chapters, with the ones finished read and the others' place.
+            QHash<QString, QVariantMap> progress;
+            for (const auto &p : Database::query(QStringLiteral("SELECT unit_key, completed, updated_at FROM progress WHERE series_id = ?"), {id}))
+                progress.insert(p.toMap().value("unit_key").toString(), p.toMap());
+            const auto units = Database::query(QStringLiteral("SELECT unit_key, number, title, url FROM units WHERE series_id = ? ORDER BY idx"), {id});
+            QList<ProtoWriter> history;
+            for (int i = 0; i < units.size(); ++i) {
+                const auto unit = units[i].toMap();
+                const auto key = unit.value("unit_key").toString();
+                auto link = extensionLink(unit.value("url").toString());
+                if (link.isEmpty())
+                    link = extensionLink(key);
+                if (link.isEmpty())
+                    continue;
+                const auto done = progress.value(key);
+                ProtoWriter chapter;
+                chapter.text(1, link);
+                chapter.text(2, unit.value("title").toString());
+                chapter.boolean(4, done.value("completed").toBool());
+                bool numbered = false;
+                const auto number = unit.value("number").toString().toFloat(&numbered);
+                chapter.fixed32(9, numbered ? number : -1.f);
+                chapter.varint(10, quint64(units.size() - 1 - i));
+                if (!done.isEmpty()) {
+                    chapter.varint(11, quint64(done.value("updated_at").toLongLong()));
+                    ProtoWriter read;
+                    read.text(1, link);
+                    read.varint(2, quint64(done.value("updated_at").toLongLong() * 1000));
+                    history.append(read);
+                }
+                manga.message(16, chapter);
+            }
+            for (int c = 0; c < kMihonCategories.size(); ++c)
+                if (kMihonCategories[c].first == row.value("category").toString())
+                    manga.varint(17, quint64(c + 1));
+            manga.boolean(100, true);
+            for (const auto &read : history)
+                manga.message(104, read);
+            backup.message(1, manga);
+            ++exported;
+        }
+        if (exported == 0)
+            throw Error(QStringLiteral("No comics from extensions to export. Mihon cannot open series from SCANCORE's built-in sources."));
+        for (int c = 0; c < kMihonCategories.size(); ++c) {
+            ProtoWriter category;
+            category.text(1, kMihonCategories[c].second);
+            category.varint(2, quint64(c + 1));
+            backup.message(2, category);
+        }
+        for (auto it = sourceNames.cbegin(); it != sourceNames.cend(); ++it) {
+            ProtoWriter source;
+            source.text(1, it.value());
+            source.varint(2, quint64(it.key().mid(6).toLongLong()));
+            backup.message(101, source);
+        }
+        QSaveFile out(file.isLocalFile() ? file.toLocalFile() : file.toString());
+        const auto data = local::gzip(backup.data());
+        if (data.isEmpty() || !out.open(QIODevice::WriteOnly) || out.write(data) != data.size() || !out.commit())
+            throw Error(QStringLiteral("Could not write %1.").arg(out.fileName()));
+        return QVariantMap{{"exported", exported}, {"skipped", skipped}};
+    });
 }
 
 Task *Importer::importAniList(const QString &user) {

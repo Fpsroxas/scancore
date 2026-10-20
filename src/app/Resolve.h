@@ -7,6 +7,7 @@
 #include <QStringList>
 #include <QVariantList>
 
+#include <algorithm>
 #include <functional>
 #include <memory>
 
@@ -18,9 +19,11 @@ namespace sc {
 // drops matches whose chapters were all taken down. Matches in the content
 // language come first, then the sources' own order; each says whether it is
 // in that language ("preferred"), so the caller can open the only one.
+// `known` gives a source's series straight away (a tracker's link to it).
 template <typename SourcePtr>
 QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &titles,
-                           const std::function<bool(const SourcePtr &, const QString &url)> &readable = {}) {
+                           const std::function<bool(const SourcePtr &, const QString &url)> &readable = {},
+                           const std::function<QString(const SourcePtr &)> &known = {}) {
     QStringList names;
     QSet<QString> wanted;
     for (const auto &title : titles) {
@@ -39,6 +42,13 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
     };
     QList<Found> found;
     QSet<QString> done;
+    // Series a tracker links to on a source: no need to search there.
+    if (known && !names.isEmpty())
+        for (const auto &source : sources)
+            if (const auto url = known(source); !url.isEmpty()) {
+                done.insert(source->key());
+                found.append({source, url, names.first(), QString(), int(sources.indexOf(source))});
+            }
     for (int round = 0; round < std::min<int>(names.size(), 3) && done.size() < sources.size(); ++round) {
         QList<SourcePtr> asked;
         using Hit = QList<QStringList>;
@@ -48,8 +58,12 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
                 asked.append(source);
                 jobs.append([source, name = names[round]] {
                     Hit hits;
-                    for (const auto &item : source->search(name))
-                        hits.append({item.title, item.url, item.cover});
+                    for (const auto &item : source->search(name)) {
+                        QStringList hit{item.title, item.url, item.cover};
+                        if constexpr (requires { item.names; })
+                            hit += item.names;
+                        hits.append(hit);
+                    }
                     return hits;
                 });
             }
@@ -57,11 +71,27 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
         parallelEach<Hit>(jobs, 15000, [&](int i, const Outcome<Hit> &result) {
             if (!result.ok())
                 return;
+            if (done.contains(asked[i]->key()))
+                return;
+            // A hit is [title, url, cover, other names...]: a source may list
+            // it under a translated name the catalogue does not have. A hit
+            // named so comes first; one only known by such a name (a spin-off
+            // can carry its series' name) only when none is.
+            const QStringList *pick = nullptr;
             for (const auto &hit : *result.value)
-                if (wanted.contains(normalizedTitle(hit[0])) && !done.contains(asked[i]->key())) {
-                    done.insert(asked[i]->key());
-                    found.append({asked[i], hit[1], hit[0], hit[2], int(sources.indexOf(asked[i]))});
+                if (wanted.contains(normalizedTitle(hit[0]))) {
+                    pick = &hit;
+                    break;
                 }
+            for (int h = 0; !pick && h < result.value->size(); ++h) {
+                const auto &hit = result.value->at(h);
+                if (std::any_of(hit.begin() + 3, hit.end(), [&](const QString &n) { return wanted.contains(normalizedTitle(n)); }))
+                    pick = &hit;
+            }
+            if (pick) {
+                done.insert(asked[i]->key());
+                found.append({asked[i], pick->at(1), pick->at(0), pick->at(2), int(sources.indexOf(asked[i]))});
+            }
         });
     }
     // Taken-down series are left out (one request per match, in parallel).

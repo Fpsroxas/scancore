@@ -11,6 +11,9 @@
 #include "extensions/ExtensionSource.h"
 #include "sources/Manifest.h"
 #include "sources/catalogue/Catalogue.h"
+#ifdef SCANCORE_BUNDLED_SOURCES
+#include "sources/bundled/comics/Engines.h"
+#endif
 #include "sources/comics/Registry.h"
 
 #include <QCache>
@@ -126,6 +129,16 @@ void Comics::shareSiteCookies(const QString &url) {
         } catch (const Error &) {
             // The extension asks again if it still needs the check.
         }
+    });
+}
+
+Task *Comics::webUrl(const QString &url) {
+    return Task::run([url]() -> QVariant {
+        if (url.startsWith(QLatin1String("http")))
+            return url;
+        if (auto extension = std::dynamic_pointer_cast<ext::ExtensionSource>(Registry::forUrl(url)))
+            return extension->webUrl(url);
+        throw Error(QStringLiteral("This series has no page on the web."));
     });
 }
 
@@ -317,6 +330,61 @@ QVariantMap Comics::catalogSearch(const QString &media, const QString &query, bo
     return result;
 }
 
+namespace {
+// MangaDex's codes for a content language's names.
+[[maybe_unused]] QStringList dexLanguages(const QString &language) {
+    if (language == QLatin1String("es"))
+        return {QStringLiteral("es"), QStringLiteral("es-la")};
+    if (language == QLatin1String("pt"))
+        return {QStringLiteral("pt-br"), QStringLiteral("pt")};
+    if (language == QLatin1String("zh"))
+        return {QStringLiteral("zh"), QStringLiteral("zh-hk")};
+    return {language};
+}
+
+// The catalogue's names, with the title's names in `language` (from
+// MangaDex) right after the main one: sources in that language that miss
+// the main name are asked for those next. Other languages' names follow,
+// for recognising a match only.
+QStringList withLocalNames(QStringList names, const QVariantMap &item, const QString &language) {
+#ifndef SCANCORE_BUNDLED_SOURCES
+    Q_UNUSED(item)
+    Q_UNUSED(language)
+    return names;
+#else
+    if (names.isEmpty() || language.isEmpty() || language == QLatin1String("en"))
+        return names;
+    auto dex = std::dynamic_pointer_cast<MangaDexSource>(Registry::byKey(QStringLiteral("mangadex")));
+    if (!dex)
+        return names;
+    const auto ids = item.value("ids").toMap();
+    QList<QPair<QString, QString>> other;
+    try {
+        other = dex->otherNames(names.first(), ids.value("anilist").toInt(), ids.value("mal").toInt());
+    } catch (const Error &) {
+        return names;
+    }
+    QStringList local, rest;
+    const auto codes = dexLanguages(language);
+    // Earlier codes' names first ("es" before "es-la").
+    for (const auto &code : codes)
+        for (const auto &[c, name] : other)
+            if (c == code)
+                local.append(name);
+    for (const auto &[c, name] : other)
+        if (!codes.contains(c))
+            rest.append(name);
+    QStringList out{names.first()};
+    out += local;
+    out += names.mid(1);
+    out += rest;
+    out.removeAll(QString());
+    out.removeDuplicates();
+    return out;
+#endif
+}
+} // namespace
+
 QStringList Comics::catalogNames(const QVariantMap &item) {
     const auto entry = catalogue::Entry::fromMap(item);
     QStringList names{entry.title};
@@ -337,15 +405,37 @@ Task *Comics::catalogFeeds(bool mature) {
     return Task::run([mature]() -> QVariant { return catalogShelves(QStringLiteral("comic"), mature); });
 }
 
-Task *Comics::resolve(const QVariantMap &item) {
-    return Task::run([item]() -> QVariant {
+QVariantList Comics::otherLanguages() const {
+    QHash<QString, int> counts;
+    const auto own = contentLanguage();
+    for (const auto &source : Registry::all()) {
+        const auto language = baseLanguage(source->language());
+        if ((source->enabled() || source->config().languageOff) && source->key() != QLatin1String("local") && language != own)
+            ++counts[language];
+    }
+    QVariantList out;
+    for (auto it = counts.cbegin(); it != counts.cend(); ++it)
+        out.append(QVariantMap{{"value", it.key()}, {"label", languageName(it.key())}, {"count", it.value()}});
+    // English first (most series are there), then by how many sources.
+    std::sort(out.begin(), out.end(), [](const QVariant &a, const QVariant &b) {
+        const auto x = a.toMap(), y = b.toMap();
+        if ((x.value("value") == QLatin1String("en")) != (y.value("value") == QLatin1String("en")))
+            return x.value("value") == QLatin1String("en");
+        return x.value("count").toInt() > y.value("count").toInt();
+    });
+    return out;
+}
+
+Task *Comics::resolve(const QVariantMap &item, const QString &only) {
+    return Task::run([item, only]() -> QVariant {
         const auto id = item.value("catalogId").toString().isEmpty() ? item.value("hid").toString()
                                                                        : item.value("catalogId").toString();
-        const auto language = searchLanguage();
+        const auto language = only.isEmpty() ? searchLanguage() : baseLanguage(only);
         QList<std::shared_ptr<Source>> sources;
         QStringList keys;
         for (const auto &source : Registry::all())
-            if (source->enabled() && source->key() != QLatin1String("local") && inSearchLanguage(*source, language)) {
+            if ((source->enabled() || (!only.isEmpty() && source->config().languageOff)) && source->key() != QLatin1String("local") &&
+                inSearchLanguage(*source, language)) {
                 sources.append(source);
                 keys.append(source->key());
             }
@@ -358,11 +448,31 @@ Task *Comics::resolve(const QVariantMap &item) {
         if (!id.isEmpty())
             if (auto cached = Database::cacheGet(cacheKey))
                 return QJsonDocument::fromJson(*cached).toVariant();
-        const auto names = catalogNames(item);
+        const auto names = withLocalNames(catalogNames(item), item, language.isEmpty() ? contentLanguage() : language);
         if (std::all_of(names.begin(), names.end(), [](const QString &n) { return normalizedTitle(n).isEmpty(); }))
             throw Error(QStringLiteral("This title has no name SCANCORE's sources could list it under."));
+        // Where AniList says it can be read, on sources that take such links.
+        const auto ids = item.value("ids").toMap();
+        int anilistId = ids.value("anilist").toInt();
+        if (!anilistId && item.value("catalog").toString() == QLatin1String("anilist"))
+            anilistId = id.toInt();
+        QList<QUrl> links;
+        for (const auto &link : catalogue::readingLinks(anilistId))
+            links.append(QUrl(link));
+        const auto cover = item.value("cover").toString();
         auto matches = resolveAcross<std::shared_ptr<Source>>(
-            sources, names, [](const std::shared_ptr<Source> &source, const QString &url) { return source->readable(url); });
+            sources, names, [](const std::shared_ptr<Source> &source, const QString &url) { return source->readable(url); },
+            [&links](const std::shared_ptr<Source> &source) {
+                for (const auto &link : links)
+                    if (const auto url = source->seriesLink(link); !url.isEmpty())
+                        return url;
+                return QString();
+            });
+        for (auto &match : matches)
+            if (auto map = match.toMap(); map.value("cover").toString().isEmpty()) {
+                map.insert(QStringLiteral("cover"), cover);
+                match = map;
+            }
         // Covers some sites only send to their own pages (or extensions).
         for (auto &match : matches) {
             auto map = match.toMap();
@@ -370,7 +480,7 @@ Task *Comics::resolve(const QVariantMap &item) {
                 map.insert(QStringLiteral("referer"), source->imageReferer());
             match = map;
         }
-        const QVariantMap result{{"matches", matches}, {"contentLanguage", contentLanguage()}};
+        const QVariantMap result{{"matches", matches}, {"contentLanguage", contentLanguage()}, {"language", language}};
         if (!id.isEmpty() && !matches.isEmpty())
             Database::cachePut(cacheKey, QJsonDocument::fromVariant(result).toJson(QJsonDocument::Compact), 86400);
         return result;

@@ -1,6 +1,6 @@
 {
-  "version": 3,
-  "updated": "2026-10-19",
+  "version": 5,
+  "updated": "2026-10-20",
   "comics": [
     {
       "key": "asura",
@@ -21,6 +21,90 @@
       "hosts": [
         "webtoons.com"
       ]
+    },
+    {
+      "key": "webtoon-es",
+      "label": "Webtoon (Español)",
+      "engine": "webtoon",
+      "base": "https://www.webtoons.com",
+      "hosts": [
+        "webtoons.com"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0",
+      "options": {
+        "edition": "es"
+      }
+    },
+    {
+      "key": "webtoon-fr",
+      "label": "Webtoon (Français)",
+      "engine": "webtoon",
+      "base": "https://www.webtoons.com",
+      "hosts": [
+        "webtoons.com"
+      ],
+      "language": "fr",
+      "minVersion": "2.0.0",
+      "options": {
+        "edition": "fr"
+      }
+    },
+    {
+      "key": "webtoon-de",
+      "label": "Webtoon (Deutsch)",
+      "engine": "webtoon",
+      "base": "https://www.webtoons.com",
+      "hosts": [
+        "webtoons.com"
+      ],
+      "language": "de",
+      "minVersion": "2.0.0",
+      "options": {
+        "edition": "de"
+      }
+    },
+    {
+      "key": "webtoon-id",
+      "label": "Webtoon (Bahasa Indonesia)",
+      "engine": "webtoon",
+      "base": "https://www.webtoons.com",
+      "hosts": [
+        "webtoons.com"
+      ],
+      "language": "id",
+      "minVersion": "2.0.0",
+      "options": {
+        "edition": "id"
+      }
+    },
+    {
+      "key": "webtoon-th",
+      "label": "Webtoon (ไทย)",
+      "engine": "webtoon",
+      "base": "https://www.webtoons.com",
+      "hosts": [
+        "webtoons.com"
+      ],
+      "language": "th",
+      "minVersion": "2.0.0",
+      "options": {
+        "edition": "th"
+      }
+    },
+    {
+      "key": "webtoon-zh",
+      "label": "Webtoon (繁體中文)",
+      "engine": "webtoon",
+      "base": "https://www.webtoons.com",
+      "hosts": [
+        "webtoons.com"
+      ],
+      "language": "zh",
+      "minVersion": "2.0.0",
+      "options": {
+        "edition": "zh-hant"
+      }
     },
     {
       "key": "mangadex",
@@ -171,6 +255,152 @@
       }
     },
     {
+      "key": "zonatmo",
+      "label": "ZonaTMO",
+      "engine": "zonatmo",
+      "base": "https://zonatmo.to",
+      "api": "https://zonatmo.to/wp-api/api",
+      "hosts": [
+        "zonatmo.to"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "olympus",
+      "label": "Olympus Scanlation",
+      "engine": "olympus",
+      "base": "https://olympusxyz.com",
+      "hosts": [
+        "olympusxyz.com",
+        "olympusbiblioteca.com"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "lectormanga",
+      "label": "LectorManga",
+      "engine": "zerocomics",
+      "base": "https://lector-mangas.lat",
+      "api": "https://api.zerocomics.net/api",
+      "hosts": [
+        "lector-mangas.lat"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "houseofotakus",
+      "label": "House Of Otakus",
+      "engine": "madara",
+      "base": "https://houseofotakusv2.xyz",
+      "hosts": [
+        "houseofotakusv2.xyz"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "infrafandub",
+      "label": "InfraFandub",
+      "engine": "madara",
+      "base": "https://infrafandub.com",
+      "hosts": [
+        "infrafandub.com"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "inventariooculto",
+      "label": "Inventario Oculto",
+      "engine": "madara",
+      "base": "https://inventariooculto.com",
+      "hosts": [
+        "inventariooculto.com"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "mhscans",
+      "label": "MHScans",
+      "engine": "madara",
+      "base": "https://mhscans.com",
+      "hosts": [
+        "mhscans.com"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "monopolyscan",
+      "label": "Monopoly Scan",
+      "engine": "madara",
+      "base": "https://monopolymanhua.com",
+      "hosts": [
+        "monopolymanhua.com"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "ragnarokscanlation",
+      "label": "Ragnarok Scanlation",
+      "engine": "madara",
+      "base": "https://ragnarokscanlation.org",
+      "hosts": [
+        "ragnarokscanlation.org"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "richtoscan",
+      "label": "RichtoScan",
+      "engine": "madara",
+      "base": "https://r1.richtoon.top",
+      "hosts": [
+        "r1.richtoon.top"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "uchuujinprojects",
+      "label": "Uchuujin Projects",
+      "engine": "wp",
+      "base": "https://uchuujinmangas.com",
+      "hosts": [
+        "uchuujinmangas.com"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "undertranslations",
+      "label": "UnderTranslations",
+      "engine": "wp",
+      "base": "https://undertranslations.com",
+      "hosts": [
+        "undertranslations.com"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "yurionline",
+      "label": "Yuri-Online",
+      "engine": "madara",
+      "base": "https://yuri-online.com",
+      "hosts": [
+        "yuri-online.com"
+      ],
+      "language": "es",
+      "minVersion": "2.0.0"
+    },
+    {
       "key": "rizzcomic",
       "label": "RizzComic",
       "engine": "wp",
@@ -214,6 +444,617 @@
       ],
       "enabled": false,
       "disabledReason": "The site requires a browser check"
+    },
+    {
+      "key": "mangadex-pt",
+      "label": "MangaDex (Português)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "pt",
+      "urlTag": "pt",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "pt-br",
+          "pt"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-id",
+      "label": "MangaDex (Bahasa Indonesia)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "id",
+      "urlTag": "id",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "id"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-fr",
+      "label": "MangaDex (Français)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "fr",
+      "urlTag": "fr",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "fr"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-ru",
+      "label": "MangaDex (Русский)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "ru",
+      "urlTag": "ru",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "ru"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-tr",
+      "label": "MangaDex (Türkçe)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "tr",
+      "urlTag": "tr",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "tr"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-vi",
+      "label": "MangaDex (Tiếng Việt)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "vi",
+      "urlTag": "vi",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "vi"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-ar",
+      "label": "MangaDex (العربية)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "ar",
+      "urlTag": "ar",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "ar"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-th",
+      "label": "MangaDex (ไทย)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "th",
+      "urlTag": "th",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "th"
+        ]
+      }
+    },
+    {
+      "key": "naver",
+      "label": "Naver Webtoon",
+      "engine": "naver",
+      "base": "https://comic.naver.com",
+      "hosts": [
+        "comic.naver.com",
+        "m.comic.naver.com"
+      ],
+      "language": "ko",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "mangadex-ko",
+      "label": "MangaDex (한국어)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "ko",
+      "urlTag": "ko",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "ko"
+        ]
+      }
+    },
+    {
+      "key": "dongman",
+      "label": "咚漫",
+      "engine": "dongman",
+      "base": "https://www.dongmanmanhua.cn",
+      "hosts": [
+        "dongmanmanhua.cn"
+      ],
+      "language": "zh",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "mangadex-zh",
+      "label": "MangaDex (中文)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "zh",
+      "urlTag": "zh",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "zh",
+          "zh-hk"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-de",
+      "label": "MangaDex (Deutsch)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "de",
+      "urlTag": "de",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "de"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-it",
+      "label": "MangaDex (Italiano)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "it",
+      "urlTag": "it",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "it"
+        ]
+      }
+    },
+    {
+      "key": "mangadex-pl",
+      "label": "MangaDex (Polski)",
+      "engine": "mangadex",
+      "base": "https://mangadex.org",
+      "api": "https://api.mangadex.org",
+      "hosts": [
+        "mangadex.org"
+      ],
+      "language": "pl",
+      "urlTag": "pl",
+      "minVersion": "2.0.0",
+      "options": {
+        "languages": [
+          "pl"
+        ]
+      }
+    },
+    {
+      "key": "mangalivreto",
+      "label": "Manga Livre",
+      "engine": "madara",
+      "base": "https://mangalivre.to",
+      "hosts": [
+        "mangalivre.to"
+      ],
+      "language": "pt",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "kamisamaexplorer",
+      "label": "Kami Sama Explorer",
+      "engine": "madara",
+      "base": "https://leitor.kamisama.com.br",
+      "hosts": [
+        "leitor.kamisama.com.br"
+      ],
+      "language": "pt",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "arthurscan",
+      "label": "Arthur Scan",
+      "engine": "madara",
+      "base": "https://arthurscan.xyz",
+      "hosts": [
+        "arthurscan.xyz"
+      ],
+      "language": "pt",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "ninjascan",
+      "label": "Ninja Scan",
+      "engine": "madara",
+      "base": "https://ninjacomics.xyz",
+      "hosts": [
+        "ninjacomics.xyz"
+      ],
+      "language": "pt",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "montetai",
+      "label": "Monte Tai",
+      "engine": "madara",
+      "base": "https://montetaiscanlator.xyz",
+      "hosts": [
+        "montetaiscanlator.xyz"
+      ],
+      "language": "pt",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "nebulosascan",
+      "label": "Nebulosa Scan",
+      "engine": "madara",
+      "base": "https://nebulosascan.com",
+      "hosts": [
+        "nebulosascan.com"
+      ],
+      "language": "pt",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "tsundokutraducoes",
+      "label": "Tsundoku Traduções",
+      "engine": "wp",
+      "base": "https://tsundoku.com.br",
+      "hosts": [
+        "tsundoku.com.br"
+      ],
+      "language": "pt",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "klikmanga",
+      "label": "KlikManga",
+      "engine": "madara",
+      "base": "https://klikmanga.org",
+      "hosts": [
+        "klikmanga.org"
+      ],
+      "language": "id",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "isekaikomik",
+      "label": "IsekaiKomik",
+      "engine": "wp",
+      "base": "https://ch1.isekaikomik.site",
+      "hosts": [
+        "ch1.isekaikomik.site"
+      ],
+      "language": "id",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "noromax",
+      "label": "Noromax",
+      "engine": "wp",
+      "base": "https://noromax02.my.id",
+      "hosts": [
+        "noromax02.my.id"
+      ],
+      "language": "id",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "izanamiscans",
+      "label": "Izanami Scans",
+      "engine": "wp",
+      "base": "https://izanamiscans.my.id",
+      "hosts": [
+        "izanamiscans.my.id"
+      ],
+      "language": "id",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "rosyscans",
+      "label": "Rosyscans",
+      "engine": "wp",
+      "base": "https://rosyscans.com",
+      "hosts": [
+        "rosyscans.com"
+      ],
+      "language": "id",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "harmonyscan",
+      "label": "Harmony-Scan",
+      "engine": "madara",
+      "base": "https://harmony-scan.fr",
+      "hosts": [
+        "harmony-scan.fr"
+      ],
+      "language": "fr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "lelmanga",
+      "label": "Lelmanga",
+      "engine": "wp",
+      "base": "https://www.lelmanga.com",
+      "hosts": [
+        "lelmanga.com"
+      ],
+      "language": "fr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "pantheonscan",
+      "label": "Pantheon Scan",
+      "engine": "madara",
+      "base": "https://pantheon-scan.com",
+      "hosts": [
+        "pantheon-scan.com"
+      ],
+      "language": "fr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "ruyamanga",
+      "label": "Rüya Manga",
+      "engine": "madara",
+      "base": "https://www.ruyamanga2.com",
+      "hosts": [
+        "ruyamanga2.com"
+      ],
+      "language": "tr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "tortugaceviri",
+      "label": "Tortuga Çeviri",
+      "engine": "madara",
+      "base": "https://tortugaceviri.com",
+      "hosts": [
+        "tortugaceviri.com"
+      ],
+      "language": "tr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "mangawow",
+      "label": "MangaWOW",
+      "engine": "madara",
+      "base": "https://mangawow.org",
+      "hosts": [
+        "mangawow.org"
+      ],
+      "language": "tr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "turkcemangaoku",
+      "label": "Türkçe Manga Oku",
+      "engine": "madara",
+      "base": "https://trmangaoku.com",
+      "hosts": [
+        "trmangaoku.com"
+      ],
+      "language": "tr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "anikiga",
+      "label": "Anikiga",
+      "engine": "madara",
+      "base": "https://anikiga.com",
+      "hosts": [
+        "anikiga.com"
+      ],
+      "language": "tr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "amangaplanet",
+      "label": "Amanga Planet",
+      "engine": "wp",
+      "base": "https://www.amangaplanet.com.tr",
+      "hosts": [
+        "amangaplanet.com.tr"
+      ],
+      "language": "tr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "zenithscans",
+      "label": "Zenith Scans",
+      "engine": "wp",
+      "base": "https://zenithscans.com",
+      "hosts": [
+        "zenithscans.com"
+      ],
+      "language": "tr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "nirvanamanga",
+      "label": "Nirvana Manga",
+      "engine": "wp",
+      "base": "https://nirvanamanga.com",
+      "hosts": [
+        "nirvanamanga.com"
+      ],
+      "language": "tr",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "mangalc",
+      "label": "Manga-Lc",
+      "engine": "madara",
+      "base": "https://manga-lc.net",
+      "hosts": [
+        "manga-lc.net"
+      ],
+      "language": "th",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "manhuathai",
+      "label": "ManhuaThai",
+      "engine": "madara",
+      "base": "https://www.manhuathai.com",
+      "hosts": [
+        "manhuathai.com"
+      ],
+      "language": "th",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "manhuabug",
+      "label": "ManhuaBug",
+      "engine": "madara",
+      "base": "https://www.manhuabug.com",
+      "hosts": [
+        "manhuabug.com"
+      ],
+      "language": "th",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "doodmanga",
+      "label": "Doodmanga",
+      "engine": "madara",
+      "base": "https://www.doodmanga.com",
+      "hosts": [
+        "doodmanga.com"
+      ],
+      "language": "th",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "reapertrans",
+      "label": "ReaperTrans",
+      "engine": "wp",
+      "base": "https://reapertrans.com",
+      "hosts": [
+        "reapertrans.com"
+      ],
+      "language": "th",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "mangakimi",
+      "label": "MangaKimi",
+      "engine": "wp",
+      "base": "https://www.mangakimi.com",
+      "hosts": [
+        "mangakimi.com"
+      ],
+      "language": "th",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "thaimanga",
+      "label": "ThaiManga",
+      "engine": "wp",
+      "base": "https://www.thaimanga.net",
+      "hosts": [
+        "thaimanga.net"
+      ],
+      "language": "th",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "speedmanga",
+      "label": "Speed Manga",
+      "engine": "wp",
+      "base": "https://speed-manga.net",
+      "hosts": [
+        "speed-manga.net"
+      ],
+      "language": "th",
+      "minVersion": "2.0.0"
+    },
+    {
+      "key": "truyentuoitho",
+      "label": "TruyenTuoiTho",
+      "engine": "madara",
+      "base": "https://truyentuoitho.com",
+      "hosts": [
+        "truyentuoitho.com"
+      ],
+      "language": "vi",
+      "minVersion": "2.0.0"
     }
   ],
   "novels": [

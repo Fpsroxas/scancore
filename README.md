@@ -266,7 +266,19 @@ On desktop, use the **Open browser check** button (or the globe next to the sour
 <details>
 <summary><b>Can I read in Spanish or another language?</b></summary>
 
-The interface is in English, Spanish, French, Brazilian Portuguese and Indonesian (Settings → Interface → Language, or the first screen). For content, MangaDex lists Spanish translations, and the sources you add can be in any language. Settings → Sources shows each source's language and can keep "All sources" to one.
+Yes. The interface is in fourteen languages besides English (Settings → Interface → Language, or the first screen), and SCANCORE turns on the sources in your language by default; Settings → Sources → Source languages adds others. "Read from" finds a series under its name in your language, and when no source in your language has it, offers to look in another.
+</details>
+
+<details>
+<summary><b>How do I add extensions?</b></summary>
+
+Settings → Extensions → Add repository, or tap a repository link (scancore://, tachiyomi://, mihon://, aniyomi:// and lnreader:// links open in SCANCORE). Comic, anime and novel extensions work on Android and desktop; on desktop SCANCORE downloads a small Java runtime for comic and anime extensions the first time.
+</details>
+
+<details>
+<summary><b>Can I bring my Mihon library, and take it back?</b></summary>
+
+Settings → Connections imports a Mihon or Tachiyomi backup (series land on the same extension source when it is installed), a public AniList list, a MyAnimeList export or a Comick library. **Back up for Mihon** saves the comics you read from extensions as a backup Mihon restores.
 </details>
 
 <details>
@@ -285,7 +297,7 @@ Settings → About → *Install updates automatically*. You can also turn off up
 
 SCANCORE is released under the [MIT licence](LICENSE).
 
-Fonts: DM Sans, Space Grotesk and Literata (SIL Open Font Licence). Icons: [Lucide](https://lucide.dev) (ISC). HTML parsing: [lexbor](https://github.com/lexbor/lexbor) (Apache 2.0).
+Fonts: DM Sans, Space Grotesk and Literata (SIL Open Font Licence). Icons: [Lucide](https://lucide.dev) (ISC). HTML parsing: [lexbor](https://github.com/lexbor/lexbor) (Apache 2.0). Video player: [mpv](https://mpv.io) and FFmpeg (LGPL). The extension host and the rest are listed, with their licences, in Settings → About → Licences and [host/NOTICE.md](host/NOTICE.md).
 
 ## Disclaimer
 

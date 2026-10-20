@@ -6,6 +6,9 @@ import com.googlecode.d2j.reader.MultiDexFileReader
 import com.googlecode.dex2jar.tools.BaksmaliBaseDexExceptionHandler
 import com.mediumdev.scancore.host.ExtensionLoader
 import com.mediumdev.scancore.host.HostError
+import com.mediumdev.scancore.host.LoadedExtension
+import eu.kanade.tachiyomi.animesource.AnimeSource
+import eu.kanade.tachiyomi.animesource.AnimeSourceFactory
 import eu.kanade.tachiyomi.source.Source
 import eu.kanade.tachiyomi.source.SourceFactory
 import net.dongliu.apk.parser.ApkFile
@@ -15,7 +18,7 @@ import java.net.URLClassLoader
 import java.security.MessageDigest
 import javax.xml.parsers.DocumentBuilderFactory
 
-// Runs Mihon extension APKs on the JVM: checks the signature (apksig) is the
+// Runs Mihon and Aniyomi extension APKs on the JVM: checks the signature (apksig) is the
 // one SCANCORE trusted, converts the Dalvik bytecode to JVM bytecode
 // (dex2jar, as Suwayomi does), points date parsing at Android's behaviour,
 // and loads the sources in their own class loader. The check and the
@@ -24,17 +27,18 @@ class ApkLoader(
     private val cacheDir: File,
 ) : ExtensionLoader {
     override val libs = listOf("1.4", "1.5", "1.6")
+    override val animeLibs = listOf("14", "16", "17")
 
     companion object {
         // Raised whenever conversion changes (BytecodeEditor included).
-        const val CONVERTER = 1
+        const val CONVERTER = 2
     }
 
     override fun load(
         pkg: String,
         path: String,
         signer: String?,
-    ): List<Source> {
+    ): LoadedExtension {
         val apk = File(path)
         if (!apk.isFile) throw HostError("The extension's file is missing. Install it again.", 404)
         val bytes = apk.readBytes()
@@ -50,21 +54,47 @@ class ApkLoader(
             cacheDir.listFiles { f -> f.name.startsWith("$pkg-") && !f.name.startsWith("$pkg-$stamp") }?.forEach { it.delete() }
         }
         val meta = manifest.readLines().associate { it.substringBefore('=') to it.substringAfter('=') }
-        val lib = meta["tachiyomix.extensionLib"]?.takeIf { it.isNotEmpty() && it != "0.0" } ?: meta["versionName"].orEmpty().substringBeforeLast('.')
-        if (lib.toDoubleOrNull() !in libs.map { it.toDouble() }) {
+        // Aniyomi's extensions name their classes under their own key.
+        val anime = meta.containsKey("tachiyomi.animeextension.class")
+        val (libKey, supported) = if (anime) "aniyomix.extensionLib" to animeLibs else "tachiyomix.extensionLib" to libs
+        val lib = meta[libKey]?.takeIf { it.isNotEmpty() && it.toDoubleOrNull() != 0.0 } ?: meta["versionName"].orEmpty().substringBeforeLast('.')
+        if (lib.toDoubleOrNull() !in supported.map { it.toDouble() }) {
             throw HostError("This extension uses lib $lib, which this SCANCORE does not run.", 426)
         }
         val classes =
-            meta["tachiyomi.extension.class"]?.split(";")?.map { it.trim() }?.filter { it.isNotEmpty() }
+            meta[if (anime) "tachiyomi.animeextension.class" else "tachiyomi.extension.class"]
+                ?.split(";")
+                ?.map { it.trim() }
+                ?.filter { it.isNotEmpty() }
                 ?: throw HostError("The extension does not say which sources it has.", 422)
         val loader = ChildFirstClassLoader(arrayOf(jar.toURI().toURL()), javaClass.classLoader)
-        return classes.flatMap { name ->
-            val className = if (name.startsWith(".")) pkg + name else name
-            when (val instance = Class.forName(className, false, loader).getDeclaredConstructor().newInstance()) {
-                is Source -> listOf(instance)
-                is SourceFactory -> instance.createSources()
-                else -> throw HostError("The extension's class $className is not a source.", 422)
+        val instances =
+            classes.map { name ->
+                val className = if (name.startsWith(".")) pkg + name else name
+                Class.forName(className, false, loader).getDeclaredConstructor().newInstance()
             }
+        return if (anime) {
+            LoadedExtension(
+                anime =
+                    instances.flatMap {
+                        when (it) {
+                            is AnimeSource -> listOf(it)
+                            is AnimeSourceFactory -> it.createSources()
+                            else -> throw HostError("The extension's class ${it.javaClass.name} is not a source.", 422)
+                        }
+                    },
+            )
+        } else {
+            LoadedExtension(
+                sources =
+                    instances.flatMap {
+                        when (it) {
+                            is Source -> listOf(it)
+                            is SourceFactory -> it.createSources()
+                            else -> throw HostError("The extension's class ${it.javaClass.name} is not a source.", 422)
+                        }
+                    },
+            )
         }
     }
 

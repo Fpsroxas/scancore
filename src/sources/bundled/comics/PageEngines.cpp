@@ -6,6 +6,7 @@
 #include "core/Html.h"
 #include "core/Parallel.h"
 
+#include <QDate>
 #include <QDateTime>
 #include <QTimeZone>
 #include <QJsonArray>
@@ -56,8 +57,12 @@ const QString kThumbCdn = QStringLiteral("https://webtoon-phinf.pstatic.net");
 const QString kWebtoonsBase = QStringLiteral("https://www.webtoons.com");
 const QString kWebtoonsMobile = QStringLiteral("https://m.webtoons.com");
 
+// The editions besides English, by their path.
+const QStringList kWebtoonEditions{QStringLiteral("es"), QStringLiteral("fr"), QStringLiteral("de"),
+                                   QStringLiteral("id"), QStringLiteral("th"), QStringLiteral("zh-hant")};
+
 QString webtoonEpisodeSlug(const QString &url) {
-    static const QRegularExpression re(QStringLiteral(R"(webtoons\.com/en/[^/]+/[^/]+/([^/]+)/viewer)"),
+    static const QRegularExpression re(QStringLiteral(R"(webtoons\.com/[a-z-]+/[^/]+/[^/]+/([^/]+)/viewer)"),
                                        QRegularExpression::CaseInsensitiveOption);
     const auto m = re.match(url);
     return m.hasMatch() ? m.captured(1) : QString();
@@ -71,14 +76,53 @@ QString authors(const QJsonObject &t) {
 }
 } // namespace
 
+QString WebtoonSource::edition() const {
+    const auto path = m_config.options.value("edition").toString();
+    return kWebtoonEditions.contains(path) ? path : QStringLiteral("en");
+}
+
+bool WebtoonSource::owns(const QUrl &url) const {
+    if (!Source::owns(url))
+        return false;
+    const auto first = pathSegment(url, 0);
+    return edition() == QLatin1String("en") ? !kWebtoonEditions.contains(first) : first == edition();
+}
+
+QString WebtoonSource::seriesLink(const QUrl &url) const {
+    // https://www.webtoons.com/es/fantasy/tower-of-god/list?title_no=1718
+    const auto titleNo = QUrlQuery(url).queryItemValue(QStringLiteral("title_no"));
+    if (!owns(url) || titleNo.isEmpty() || pathSegment(url, 3) != QLatin1String("list"))
+        return {};
+    return QStringLiteral("%1/%2/%3/%4/list?title_no=%5")
+        .arg(kWebtoonsBase, pathSegment(url, 0), pathSegment(url, 1), pathSegment(url, 2), titleNo);
+}
+
 QList<Summary> WebtoonSource::search(const QString &query) {
-    const auto doc = Http::getJson(queryUrl(kWebtoonsMobile + QStringLiteral("/undefined/search/result"),
-                                            {{"keyword", query}, {"searchType", "ALL"}, {"start", "1"}}),
-                                   {{"Origin", kWebtoonsBase.toUtf8()}, {"Referer", "https://www.webtoons.com/en/"}});
-    const auto root = doc.object();
-    if (!root.value("success").toBool())
-        throw Error(QStringLiteral("Webtoon search failed."));
-    const auto result = root.value("result").toObject();
+    // The edition searched is the one the "locale" cookie names.
+    const auto lang = edition();
+    const auto find = [&](const char *type) {
+        const auto doc = Http::getJson(queryUrl(QStringLiteral("%1/%2/search/result").arg(kWebtoonsMobile, lang),
+                                                {{"keyword", query}, {"searchType", QString::fromLatin1(type)}, {"start", "1"}}),
+                                       {{"Origin", kWebtoonsBase.toUtf8()},
+                                        {"Referer", QStringLiteral("https://www.webtoons.com/%1/").arg(lang).toUtf8()},
+                                        {"Cookie", QStringLiteral("locale=%1; needGDPR=false").arg(lang).toUtf8()}});
+        const auto root = doc.object();
+        if (!root.value("success").toBool())
+            throw Error(QStringLiteral("Webtoon search failed."));
+        return root.value("result").toObject();
+    };
+    // Twenty series of each kind ("ALL" gives three). Only the English
+    // edition links its Canvas (amateur) series.
+    QList<std::function<QJsonObject()>> jobs{[&] { return find("WEBTOON"); }};
+    if (lang == QLatin1String("en"))
+        jobs.append([&] { return find("CHALLENGE"); });
+    QJsonObject result;
+    for (const auto &outcome : parallel(jobs)) {
+        if (!outcome.ok())
+            throw Error(outcome.error);
+        for (auto it = outcome.value->begin(); it != outcome.value->end(); ++it)
+            result.insert(it.key(), it.value());
+    }
     QList<Summary> out;
     for (const auto &row : result.value("webtoonResult").toObject().value("titleList").toArray()) {
         const auto t = row.toObject();
@@ -88,7 +132,7 @@ QList<Summary> WebtoonSource::search(const QString &query) {
         const auto genre = t.value("representGenre").toString().toLower();
         Summary item;
         item.title = t.value("title").toString();
-        item.url = QStringLiteral("%1/en/%2/%3/list?title_no=%4").arg(kWebtoonsBase, genre, group, str(t.value("titleNo")));
+        item.url = QStringLiteral("%1/%2/%3/%4/list?title_no=%5").arg(kWebtoonsBase, lang, genre, group, str(t.value("titleNo")));
         item.type = QStringLiteral("Webtoon");
         item.author = authors(t);
         item.views = formatViews(qint64(t.value("readCount").toDouble()));
@@ -105,7 +149,7 @@ QList<Summary> WebtoonSource::search(const QString &query) {
             continue;
         Summary item;
         item.title = t.value("title").toString();
-        item.url = QStringLiteral("%1/en/canvas/%2/list?title_no=%3").arg(kWebtoonsBase, group, str(t.value("titleNo")));
+        item.url = QStringLiteral("%1/%2/canvas/%3/list?title_no=%4").arg(kWebtoonsBase, lang, group, str(t.value("titleNo")));
         item.type = QStringLiteral("Canvas");
         item.author = authors(t);
         item.views = formatViews(qint64(t.value("readCount").toDouble()));
@@ -132,7 +176,8 @@ QList<Chapter> WebtoonSource::chapters(const QString &seriesUrl) {
     try {
         const auto doc = Http::getJson(
             queryUrl(QStringLiteral("%1/api/v1/%2/%3/episodes").arg(kWebtoonsMobile, type, titleNo), {{"pageSize", "99999"}}),
-            {{"Referer", "https://m.webtoons.com/"}, {"Cookie", "ageGatePass=true; needGDPR=false; locale=en"}}, 20000);
+            {{"Referer", "https://m.webtoons.com/"}, {"Cookie", QStringLiteral("ageGatePass=true; needGDPR=false; locale=%1").arg(edition()).toUtf8()}},
+            20000);
         for (const auto &row : doc.object().value("result").toObject().value("episodeList").toArray()) {
             const auto e = row.toObject();
             const auto title = e.value("episodeTitle").toString().trimmed();
@@ -182,7 +227,7 @@ QList<Chapter> WebtoonSource::chapters(const QString &seriesUrl) {
         ch.thumbnail = img.attr("data-url").isEmpty() ? img.attr("src") : img.attr("data-url");
         ch.title = li.first(QStringLiteral(".subj span, .subj, .tit")).textTrim();
         if (ch.title.isEmpty())
-            ch.title = QStringLiteral("Episode %1").arg(number);
+            ch.title = chapterLabel(number);
         out.append(ch);
     }
     sortChapters(out);
@@ -222,6 +267,79 @@ std::optional<Details> WebtoonSource::details(const QString &seriesUrl) {
         d.genres.append(genre);
     d.status = doc.first(QStringLiteral(".day_info")).textTrim();
     return d;
+}
+
+// ---------------------------------------------------------------- Dongman Manhua
+
+QList<Summary> DongmanSource::parseSearch(const QByteArray &html, const QString &base, const QString &source) {
+    HtmlDocument doc(html);
+    QList<Summary> out;
+    for (const auto &a : doc.select(QStringLiteral(".card_wrap.search ul.card_lst li a.card_item"))) {
+        Summary item;
+        item.title = a.first(QStringLiteral("p.subj")).textTrim();
+        item.url = resolveUrl(base, a.attr("href"));
+        if (item.title.isEmpty() || item.url.isEmpty())
+            continue;
+        item.cover = a.first(QStringLiteral("img")).attr("src");
+        item.author = a.first(QStringLiteral("p.author")).textTrim();
+        item.genres = a.first(QStringLiteral("span.genre")).textTrim();
+        item.type = QStringLiteral("Webtoon");
+        item.source = source;
+        out.append(item);
+    }
+    return out;
+}
+
+QList<Summary> DongmanSource::search(const QString &query) {
+    const auto page = Http::getOk(queryUrl(m_config.base + QStringLiteral("/search"), {{"keyword", query}}), htmlHeaders());
+    return parseSearch(page.body, m_config.base, key());
+}
+
+QList<Chapter> DongmanSource::parseEpisodes(const QByteArray &html, const QString &base, const QString &language) {
+    HtmlDocument doc(html);
+    QList<Chapter> out;
+    for (const auto &li : doc.select(QStringLiteral("ul#_listUl li"))) {
+        Chapter ch;
+        ch.number = li.attr("data-episode-no");
+        ch.url = resolveUrl(base, li.first(QStringLiteral("a")).attr("href"));
+        if (ch.number.isEmpty() || ch.url.isEmpty())
+            continue;
+        ch.url = QUrl(base).resolved(QUrl(ch.url)).toString();
+        ch.title = li.first(QStringLiteral("span.subj span")).textTrim();
+        if (ch.title.isEmpty())
+            ch.title = comics::chapterLabel(language, ch.number);
+        ch.thumbnail = li.first(QStringLiteral("img")).attr("src");
+        // "2014-8-13"
+        if (const auto date = QDate::fromString(li.first(QStringLiteral("span.date")).textTrim(), QStringLiteral("yyyy-M-d")); date.isValid())
+            ch.released = date.toString(Qt::ISODate);
+        out.append(ch);
+    }
+    return out;
+}
+
+QList<Chapter> DongmanSource::chapters(const QString &seriesUrl) {
+    // Ten episodes a page; the page links name the next ten pages.
+    QList<Chapter> out;
+    QSet<QString> seen, done;
+    QStringList queue{seriesUrl};
+    while (!queue.isEmpty() && done.size() < 300) {
+        const auto url = queue.takeFirst();
+        if (done.contains(url))
+            continue;
+        done.insert(url);
+        const auto page = Http::getOk(QUrl(url), htmlHeaders(), 20000);
+        for (const auto &ch : parseEpisodes(page.body, m_config.base, m_config.language))
+            if (!seen.contains(ch.url)) {
+                seen.insert(ch.url);
+                out.append(ch);
+            }
+        HtmlDocument doc(page.body);
+        for (const auto &a : doc.select(QStringLiteral("div.paginate a[href]")))
+            if (const auto next = resolveUrl(m_config.base, a.attr("href")); next.contains(QLatin1String("page=")) && !done.contains(next))
+                queue.append(next);
+    }
+    sortChapters(out);
+    return out;
 }
 
 // ---------------------------------------------------------------- Flame

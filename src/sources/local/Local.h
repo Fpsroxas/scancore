@@ -41,6 +41,8 @@ QByteArray zipEntry(const QString &archive, const QString &name);
 QStringList zipEntries(const QString &archive);
 // Gzip data unpacked (a Mihon backup, a MyAnimeList export), or nothing.
 QByteArray gunzip(const QByteArray &data);
+// A gzip stream of `data` (Mihon backups are gzipped protobuf).
+QByteArray gzip(const QByteArray &data);
 
 // PDF pages are drawn by the app (Qt PDF), when it has it.
 struct PdfRenderer {

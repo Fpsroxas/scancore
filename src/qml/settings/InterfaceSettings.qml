@@ -172,6 +172,42 @@ SettingsPane {
     }
 
     SettingsGroup {
+        title: qsTr("Pages")
+        note: qsTr("Home, Comics, Novels and Anime each have an Edit page button: move, hide and restyle their sections there.")
+        SettingRow {
+            iconName: "rows-3"
+            title: qsTr("Spacing")
+            description: qsTr("The room between a page's sections.")
+            Segmented {
+                options: [{ value: "compact", label: qsTr("Compact") }, { value: "default", label: qsTr("Default") }, { value: "spacious", label: qsTr("Spacious") }]
+                value: App.settings.pageSpacing || "default"
+                onPicked: (v) => App.setSetting("pageSpacing", v)
+            }
+        }
+        SettingRow {
+            iconName: "square"
+            title: qsTr("Corners")
+            description: qsTr("How round covers, cards, buttons and panels are.")
+            Segmented {
+                options: [{ value: "square", label: qsTr("Square") }, { value: "subtle", label: qsTr("Subtle") },
+                          { value: "default", label: qsTr("Default") }, { value: "round", label: qsTr("Round") }]
+                value: App.settings.roundness || "default"
+                onPicked: (v) => App.setSetting("roundness", v)
+            }
+        }
+        SettingRow {
+            iconName: "rotate-ccw"
+            title: qsTr("Page arrangements")
+            description: qsTr("Put every page's sections back in their first order and look.")
+            ScButton {
+                text: qsTr("Reset all")
+                variant: "ghost"
+                onClicked: ["home", "comics", "comics-top", "novels", "novels-top", "anime"].forEach(p => PageLayout.reset(p))
+            }
+        }
+    }
+
+    SettingsGroup {
         title: qsTr("Motion")
         SettingRow {
             iconName: "gauge"

@@ -3,6 +3,7 @@
 #include "Host.h"
 #include "core/Cookies.h"
 #include "core/ImageCache.h"
+#include "sources/anime/Registry.h"
 #include "sources/comics/Registry.h"
 
 #include <QDateTime>
@@ -156,9 +157,13 @@ void ExtensionSource::installImageWriter() {
             throw Error(QStringLiteral("The extension for this page is not installed."), 404);
         source->fetchImage(page, path);
     });
-    // A cover (any plain image link) through the source's own client.
+    // A cover (any plain image link) through the source's own client, for
+    // comic and anime sources alike.
     ImageCache::setRefererWriter(QStringLiteral("extsource"), [](const QString &url, const QString &referer, const QString &path) {
-        auto source = std::dynamic_pointer_cast<ExtensionSource>(comics::Registry::byKey(referer.mid(int(qstrlen("extsource:")))));
+        const auto key = referer.mid(int(qstrlen("extsource:")));
+        if (auto show = anime::Registry::byKey(key))
+            return show->fetchImage(url, path);
+        auto source = std::dynamic_pointer_cast<ExtensionSource>(comics::Registry::byKey(key));
         if (!source)
             throw Error(QStringLiteral("The extension for this image is not installed."), 404);
         source->fetchImage(QJsonObject{{"index", 0}, {"url", QString()}, {"imageUrl", url}}, path);
@@ -167,7 +172,9 @@ void ExtensionSource::installImageWriter() {
 
 void ExtensionSource::shareCookies(const QString &url) {
     const QUrl site(url);
-    const auto entries = Manager::sources(Kind::Mihon);
+    // Comic and anime extensions share the host and its cookies.
+    auto entries = Manager::sources(Kind::Mihon);
+    entries += Manager::sources(Kind::Aniyomi);
     const bool used = std::any_of(entries.begin(), entries.end(), [&](const SourceEntry &e) {
         return hostMatches(site.host(), QUrl(e.baseUrl).host()) || hostMatches(QUrl(e.baseUrl).host(), site.host());
     });
@@ -213,6 +220,14 @@ std::optional<comics::Details> ExtensionSource::details(const QString &seriesUrl
 // Covers go through the extension too, with the headers its site wants
 // (ImageCache's referer writer below).
 QString ExtensionSource::imageReferer() const { return QStringLiteral("extsource:") + key(); }
+
+QString ExtensionSource::webUrl(const QString &url) const {
+    const auto path = unwrap(url);
+    if (path.startsWith(QLatin1String("http")))
+        return path;
+    const auto base = m_config.base.endsWith(QLatin1Char('/')) ? m_config.base : m_config.base + QLatin1Char('/');
+    return QUrl(base).resolved(QUrl(path)).toString();
+}
 
 QJsonArray ExtensionSource::filters() { return call(QStringLiteral("filters"), {}).toArray(); }
 

@@ -1,15 +1,18 @@
 // Offline tests for the HTML layer and parsers. Live site checks are a
 // separate, opt-in run because sites change and CI must stay deterministic.
 
+#include "app/Resolve.h"
+#include "core/Database.h"
 #include "core/Html.h"
 #include "core/Parallel.h"
+#include "core/Proto.h"
 #include "core/Text.h"
 #include "sources/Manifest.h"
 #include "sources/comics/ComicSource.h"
-#include "sources/comics/Engines.h"
+#include "sources/bundled/comics/Engines.h"
 #include "sources/comics/Registry.h"
 #include "sources/local/Local.h"
-#include "sources/novels/Engines.h"
+#include "sources/bundled/novels/Engines.h"
 #include "sources/novels/NovelSource.h"
 #include "sources/novels/Registry.h"
 
@@ -18,6 +21,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QRegularExpression>
+#include <QTemporaryDir>
 #include <QVersionNumber>
 #include <QtTest>
 
@@ -144,6 +148,9 @@ private slots:
         QCOMPARE(comics::chapterLabel(QStringLiteral("es-la"), QStringLiteral("4.5"), QStringLiteral("Fin")), QString::fromUtf8("Capítulo 4.5: Fin"));
         // Unknown languages fall back to English.
         QCOMPARE(comics::chapterLabel(QStringLiteral("xx"), QStringLiteral("1")), QStringLiteral("Chapter 1"));
+        QCOMPARE(comics::chapterLabel(QStringLiteral("pt-br"), QStringLiteral("2")), QString::fromUtf8("Capítulo 2"));
+        QCOMPARE(comics::chapterLabel(QStringLiteral("ko"), QStringLiteral("12")), QString::fromUtf8("12화"));
+        QCOMPARE(comics::chapterLabel(QStringLiteral("fr"), QStringLiteral("1"), QStringLiteral("Début")), QString::fromUtf8("Chapitre 1: Début"));
     }
 
     void minVersion() {
@@ -293,6 +300,53 @@ private slots:
         QCOMPARE(chapters[1].released, QStringLiteral("2023-08-07T19:20:00Z"));
     }
 
+    void naver() {
+        // Paid previews are left out; the episode number is the chapter.
+        const auto page = QJsonDocument::fromJson(fixture("naver-articles.json")).object();
+        const auto chapters = comics::NaverSource::parseChapters(page, QStringLiteral("https://comic.naver.com"));
+        QCOMPARE(chapters.size(), 2);
+        QCOMPARE(chapters[0].number, QStringLiteral("3"));
+        QCOMPARE(chapters[0].released, QStringLiteral("2026-06-09"));
+        QCOMPARE(chapters[1].title, QString::fromUtf8("000. 프롤로그"));
+        QCOMPARE(chapters[1].url, QStringLiteral("https://comic.naver.com/webtoon/detail?titleId=747269&no=1"));
+        QCOMPARE(chapters[1].released, QStringLiteral("2022-04-22"));
+        // The age notice is not a page.
+        const auto panels = comics::NaverSource::parsePanels(fixture("naver-viewer.html"));
+        QCOMPARE(panels.size(), 2);
+        QCOMPARE(panels[1].url, QStringLiteral("https://image-comic.pstatic.net/webtoon/747269/1/IMAG01_2.jpg"));
+    }
+
+    void zonaTmo() {
+        const auto base = QStringLiteral("https://zonatmo.to");
+        // Novels and (by default) doujinshi stay out; other names come along.
+        const auto search = QJsonDocument::fromJson(fixture("zonatmo-search.json")).object();
+        const auto results = comics::ZonaTmoSource::parseSearch(search, base, QStringLiteral("zonatmo"), false);
+        QCOMPARE(results.size(), 1);
+        QCOMPARE(results[0].url, QStringLiteral("https://zonatmo.to/manga/solo-leveling"));
+        QCOMPARE(results[0].cover, QStringLiteral("https://zonatmo.to/wp-content/uploads/2025/11/5c2efcd42cd5e.webp"));
+        QVERIFY(results[0].names.contains(QStringLiteral("I Level Up Alone")));
+        QVERIFY(!results[0].names.contains(QStringLiteral("Solo Leveling")));
+        QCOMPARE(comics::ZonaTmoSource::parseSearch(search, base, QStringLiteral("zonatmo"), true).size(), 2);
+        // One number from two groups says whose each is; a title that only
+        // repeats the number is dropped.
+        const auto rows = QJsonDocument::fromJson(fixture("zonatmo-chapters.json")).array();
+        const auto chapters = comics::ZonaTmoSource::parseChapters(rows, base, QStringLiteral("solo-leveling"), QStringLiteral("es"));
+        QCOMPARE(chapters.size(), 3);
+        QCOMPARE(chapters[0].title, QString::fromUtf8("Capítulo 1: Lectorxd_com"));
+        QCOMPARE(chapters[1].title, QString::fromUtf8("Capítulo 1: Otro Scan"));
+        QCOMPARE(chapters[1].url, QStringLiteral("https://zonatmo.to/manga/solo-leveling/solo-leveling-capitulo-1-2"));
+        QCOMPARE(chapters[1].slug, QStringLiteral("solo-leveling-capitulo-1-2"));
+        QCOMPARE(chapters[2].number, QStringLiteral("200.5"));
+        QCOMPARE(chapters[2].title, QString::fromUtf8("Capítulo 200.5: Epílogo"));
+        QCOMPARE(chapters[2].released, QStringLiteral("2026-06-01T00:00:00Z"));
+    }
+
+    void olympus() {
+        const auto panels = comics::OlympusSource::parsePanels(fixture("olympus-reader.html"));
+        QCOMPARE(panels.size(), 2);
+        QCOMPARE(panels[0].url, QStringLiteral("https://media.imagesolymp.xyz/comics/5/106167/01.webp"));
+    }
+
     void wtrLab() {
         // The site's JSON and page data, through a stand-in site.
         Http::setTestHandler([](const Request &request) -> std::optional<Response> {
@@ -396,6 +450,39 @@ private slots:
         QVERIFY(local::gunzip("not gzip at all").isEmpty());
     }
 
+    void protoWriterRoundTrip() {
+        // What a Mihon backup export writes reads back the same, gzipped.
+        ProtoWriter chapter;
+        chapter.text(1, QStringLiteral("/chapter/1"));
+        chapter.boolean(4, true);
+        chapter.fixed32(9, 12.5f);
+        ProtoWriter manga;
+        manga.varint(1, quint64(Q_INT64_C(2499283573021220255)));
+        manga.text(3, QString::fromUtf8("Título"));
+        manga.message(16, chapter);
+        ProtoWriter backup;
+        backup.message(1, manga);
+        const auto packed = local::gzip(backup.data());
+        QVERIFY(packed.startsWith("\x1f\x8b"));
+        const auto data = local::gunzip(packed);
+        QCOMPARE(data, backup.data());
+        Proto root(data);
+        QVERIFY(root.next());
+        QCOMPARE(root.field(), 1);
+        Proto m(root.bytes());
+        QVERIFY(m.next());
+        QCOMPARE(m.varint(), quint64(Q_INT64_C(2499283573021220255)));
+        QVERIFY(m.next());
+        QCOMPARE(m.text(), QString::fromUtf8("Título"));
+        QVERIFY(m.next());
+        QCOMPARE(m.field(), 16);
+        Proto c(m.bytes());
+        QVERIFY(c.next() && c.text() == QStringLiteral("/chapter/1"));
+        QVERIFY(c.next() && c.varint() == 1);
+        QVERIFY(c.next());
+        QCOMPARE(c.number(), 12.5);
+    }
+
     void manifestIsValid() {
         QFile file(QStringLiteral(SCANCORE_SOURCE_DIR "/sources/manifest.json"));
         QVERIFY(file.open(QIODevice::ReadOnly));
@@ -428,6 +515,48 @@ private slots:
                     QVERIFY2(novels::createSource(config) != nullptr, qPrintable(config.engine));
                 }
             }
+    }
+
+    // Last: it opens a database (for the content language), which the
+    // tests above run without.
+    void resolveNames() {
+        QTemporaryDir dir;
+        Database::open(dir.filePath(QStringLiteral("resolve.db")));
+        // No source is in the content language: the sources' own order.
+        Database::setPref(QStringLiteral("language"), QStringLiteral("fr"));
+        // Stand-in sources for "Read from".
+        struct Config {
+            QString language;
+        };
+        struct Fake {
+            QString name;
+            Config cfg;
+            QList<comics::Summary> hits;
+            QString key() const { return name; }
+            QString label() const { return name; }
+            const Config &config() const { return cfg; }
+            QList<comics::Summary> search(const QString &) const { return hits; }
+        };
+        const auto hit = [](const QString &title, const QString &url, const QStringList &names = {}) {
+            comics::Summary s;
+            s.title = title;
+            s.url = url;
+            s.names = names;
+            return s;
+        };
+        // Listed only under its Russian name, known in English as an
+        // alternative: found. A spin-off carrying the series' name as an
+        // alternative loses to the series itself.
+        auto ru = std::make_shared<Fake>(Fake{QStringLiteral("ru"), {QStringLiteral("ru")},
+                                              {hit(QString::fromUtf8("Поднятие уровня"), QStringLiteral("ru:1"), {QStringLiteral("Solo Leveling")})}});
+        auto es = std::make_shared<Fake>(Fake{QStringLiteral("es"), {QStringLiteral("es")},
+                                              {hit(QStringLiteral("Solo Leveling: Spin-off"), QStringLiteral("es:2"), {QStringLiteral("Solo Leveling")}),
+                                               hit(QStringLiteral("Solo Leveling"), QStringLiteral("es:1"))}});
+        auto none = std::make_shared<Fake>(Fake{QStringLiteral("en"), {QStringLiteral("en")}, {hit(QStringLiteral("Other"), QStringLiteral("en:1"))}});
+        const auto matches = resolveAcross<std::shared_ptr<Fake>>({ru, es, none}, {QStringLiteral("Solo Leveling")});
+        QCOMPARE(matches.size(), 2);
+        QCOMPARE(matches[0].toMap().value("url").toString(), QStringLiteral("ru:1"));
+        QCOMPARE(matches[1].toMap().value("url").toString(), QStringLiteral("es:1"));
     }
 };
 

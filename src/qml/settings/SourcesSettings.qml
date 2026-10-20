@@ -10,8 +10,8 @@ SettingsPane {
 
     property var refreshTask: null
     readonly property var comicSources: Comics.sources()
-    readonly property var novelSources: { Extensions.novelPackInstalled; return Novels.sources().filter(s => !s.extended) }
-    readonly property int extendedCount: { Extensions.novelPackInstalled; return Novels.sources().filter(s => s.extended).length }
+    readonly property var novelSources: { App.dependOn(Extensions.novelPackInstalled); return Novels.sources().filter(s => !s.extended) }
+    readonly property int extendedCount: { App.dependOn(Extensions.novelPackInstalled); return Novels.sources().filter(s => s.extended).length }
 
     function refresh() {
         refreshTask = App.refreshSources()
@@ -45,8 +45,8 @@ SettingsPane {
     }
 
     // Extensions from the repositories the user added.
-    readonly property var extensionRepos: { Extensions.revision; return Extensions.repositories() }
-    readonly property int extensionCount: { Extensions.revision; return Extensions.installed().length }
+    readonly property var extensionRepos: { App.dependOn(Extensions.revision); return Extensions.repositories() }
+    readonly property int extensionCount: { App.dependOn(Extensions.revision); return Extensions.installed().length }
     SettingsGroup {
         title: qsTr("Extensions")
         note: qsTr("SCANCORE runs Mihon, Tachiyomi, Aniyomi and LNReader extensions from repositories you add. It has no repository of its own.")
@@ -129,6 +129,31 @@ SettingsPane {
                 text: qsTr("Check now")
                 loading: pane.refreshTask ? pane.refreshTask.loading : false
                 onClicked: pane.refresh()
+            }
+        }
+        SettingRow {
+            iconName: "globe"
+            title: qsTr("Source languages")
+            description: qsTr("Built-in sources in these languages are on. Series you already read keep opening whatever you choose.")
+        }
+        Flow {
+            x: 16
+            width: parent.width - 32
+            bottomPadding: 14
+            spacing: 8
+            Repeater {
+                model: { App.dependOn(App.manifestVersion, App.settings.builtinLanguages); return App.builtinLanguages() }
+                Chip {
+                    required property var modelData
+                    text: modelData.label + " · " + modelData.count
+                    selected: modelData.on
+                    onClicked: {
+                        const on = App.builtinLanguages().filter(l => l.on).map(l => l.value)
+                        const next = modelData.on ? on.filter(v => v !== modelData.value) : on.concat([modelData.value])
+                        // At least one language stays on.
+                        if (next.length > 0) App.setSetting("builtinLanguages", next)
+                    }
+                }
             }
         }
         SettingRow {

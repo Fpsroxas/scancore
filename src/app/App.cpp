@@ -11,6 +11,7 @@
 #include "core/Http.h"
 #include "core/ImageCache.h"
 #include "extensions/Manager.h"
+#include "core/Text.h"
 #include "sources/Manifest.h"
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
@@ -19,12 +20,14 @@
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QDir>
+#include <QDirIterator>
 #include <QFile>
 #include <QGuiApplication>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLocale>
+#include <QQuickItem>
 #include <QQuickWindow>
 #include <QStandardPaths>
 #ifdef Q_OS_ANDROID
@@ -48,7 +51,10 @@ const QVariantMap kDefaults{
     {"readerDirection", "ltr"},
     {"readerSpread", "single"},
     {"readerCrop", false},
+    // true (always), "controls" (only with the reader's controls) or false.
     {"readerProgressBar", true},
+    // Its width in pixels: 3, 6 or 10.
+    {"readerProgressWidth", 3},
     // Readers open in full screen (their full screen button sets it).
     {"readerFullscreen", false},
     {"novelFont", "Literata"},
@@ -74,6 +80,9 @@ const QVariantMap kDefaults{
     {"ttsContinue", true},
     {"ttsFollow", true},
     {"autoNext", true},
+    // The video player's volume (0-130) and speed, kept between episodes.
+    {"playerVolume", 100},
+    {"playerSpeed", 1},
     {"autoSkip", false},
     {"libraryCheckHours", 2},
     {"notifyUpdates", true},
@@ -99,6 +108,8 @@ const QVariantMap kDefaults{
     // anilist, mal or none (novels: anilist, mal or none).
     {"catalogComic", "comick"},
     {"catalogNovel", "anilist"},
+    // Anime: anilist or mal (the Anime page's shelves).
+    {"catalogAnime", "anilist"},
     // Content language "All sources" searches; empty for every language.
     {"sourceLanguages", ""},
     {"onboarded", false},
@@ -121,6 +132,7 @@ App::App(QObject *parent) : QObject(parent) {
     m_libraryTimer.setSingleShot(false);
     connect(&m_libraryTimer, &QTimer::timeout, this, [] { Library::instance()->checkUpdates(); });
     platform::setSiteCheckDone([this](const QString &url) { emit siteChecked(url); });
+    platform::setWebPlayerPrepared([this] { emit webPlayerPrepared(); });
 #ifdef Q_OS_ANDROID
     // The reader may change it in the system's settings while away.
     m_batteryRestricted = platform::batteryRestricted();
@@ -189,6 +201,12 @@ void App::setSetting(const QString &key, const QVariant &value) {
         else
             Announcements::instance()->stop();
     }
+    // Built-in sources follow their language being switched on or off.
+    if (key == QLatin1String("builtinLanguages")) {
+        comics::Registry::rebuild();
+        novels::Registry::rebuild();
+        emit manifestChanged();
+    }
     if (key == QLatin1String("imageCacheMB")) {
         ImageCache::setBudget(std::max<qint64>(128, value.toLongLong()) * 1024 * 1024);
         // A smaller limit takes effect now, not at the next start.
@@ -234,6 +252,10 @@ bool App::openSiteCheck(const QString &url, const QString &title, const QString 
 }
 
 void App::askBatteryUnrestricted() const { platform::askBatteryUnrestricted(); }
+
+void App::prepareWebPlayer() const { platform::prepareWebPlayer(); }
+
+void App::setOrientation(const QString &mode) const { platform::setOrientation(mode); }
 
 bool App::profiling() const { return Profiler::enabled(); }
 
@@ -291,6 +313,72 @@ bool App::saveWindowImage(QObject *window, const QString &path) const {
     return quick && quick->grabWindow().save(path);
 }
 
+QVariantList App::licences() const {
+    QFile list(QStringLiteral(":/licenses/components.json"));
+    QVariantList out;
+    if (list.open(QIODevice::ReadOnly))
+        out = QJsonDocument::fromJson(list.readAll()).toVariant().toList();
+    // licenses/<library>/<file>, copied from the libmpv build.
+    QDirIterator it(QStringLiteral(":/licenses/mpv"), QDir::Files, QDirIterator::Subdirectories);
+    QVariantList player;
+    while (it.hasNext()) {
+        const auto path = it.next();
+        const auto relative = path.mid(QStringLiteral(":/licenses/").size());
+        player.append(QVariantMap{{"name", relative.section(QLatin1Char('/'), 1, 1)},
+                                  {"use", QStringLiteral("Video player library")},
+                                  {"licence", relative.section(QLatin1Char('/'), -1)},
+                                  {"file", relative}});
+    }
+    std::sort(player.begin(), player.end(), [](const QVariant &a, const QVariant &b) {
+        return a.toMap().value("file").toString() < b.toMap().value("file").toString();
+    });
+    return out + player;
+}
+
+QString App::licenceText(const QString &file) const {
+    // Only the app's own licence files.
+    if (file.contains(QLatin1String("..")))
+        return {};
+    QFile text(QStringLiteral(":/licenses/") + file);
+    return text.open(QIODevice::ReadOnly) ? QString::fromUtf8(text.readAll()) : QString();
+}
+
+QVariantList App::builtinLanguages() const {
+    QHash<QString, int> counts;
+    const auto manifest = Manifest::current();
+    for (const auto *media : {"comics", "novels"})
+        for (const auto &value : manifest.value(QLatin1String(media)).toArray()) {
+            const auto o = value.toObject();
+            if (Manifest::supports(o) && o.value(QStringLiteral("enabled")).toBool(true))
+                ++counts[baseLanguage(o.value(QStringLiteral("language")).toString(QStringLiteral("en")))];
+        }
+    const auto on = sc::builtinLanguages();
+    QVariantList out;
+    for (auto it = counts.cbegin(); it != counts.cend(); ++it)
+        out.append(QVariantMap{{"value", it.key()}, {"label", languageName(it.key())}, {"count", it.value()}, {"on", on.contains(QStringLiteral("*")) || on.contains(it.key())}});
+    std::sort(out.begin(), out.end(), [](const QVariant &a, const QVariant &b) {
+        const auto x = a.toMap(), y = b.toMap();
+        if (x.value("on").toBool() != y.value("on").toBool())
+            return x.value("on").toBool();
+        return x.value("count").toInt() > y.value("count").toInt();
+    });
+    return out;
+}
+
+void App::stackAfter(QObject *item, QObject *sibling) const {
+    auto *a = qobject_cast<QQuickItem *>(item);
+    auto *b = qobject_cast<QQuickItem *>(sibling);
+    if (a && b && a != b && a->parentItem() == b->parentItem())
+        a->stackAfter(b);
+}
+
+void App::stackBefore(QObject *item, QObject *sibling) const {
+    auto *a = qobject_cast<QQuickItem *>(item);
+    auto *b = qobject_cast<QQuickItem *>(sibling);
+    if (a && b && a != b && a->parentItem() == b->parentItem())
+        a->stackBefore(b);
+}
+
 Task *App::checkForUpdate() {
     return Task::run([this]() -> QVariant {
         const auto doc = Http::getJson(QUrl(QStringLiteral("https://api.github.com/repos/medium-gh/scancore/releases/latest")),
@@ -300,8 +388,11 @@ Task *App::checkForUpdate() {
         if (tag.startsWith(QLatin1Char('v')))
             tag.remove(0, 1);
         const auto latest = QVersionNumber::fromString(tag);
-        const auto current = QVersionNumber::fromString(QCoreApplication::applicationVersion());
-        const bool available = !latest.isNull() && latest > current;
+        qsizetype suffix = 0;
+        const auto running = QCoreApplication::applicationVersion();
+        const auto current = QVersionNumber::fromString(running, &suffix);
+        // A pre-release (2.0.0-beta.1) is older than its release.
+        const bool available = !latest.isNull() && (latest > current || (latest == current && suffix < running.size()));
         const auto url = release.value("html_url").toString();
         if (available)
             QMetaObject::invokeMethod(this, [this, tag, url] { emit updateAvailable(tag, url); });

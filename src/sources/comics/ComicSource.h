@@ -23,6 +23,9 @@ struct Summary {
     QString genres;
     QString views;
     QString source;
+    // The source's other names for it (other languages), for "Read from" to
+    // recognise a catalogue title shown under a translated name.
+    QStringList names;
     QVariantMap toMap() const;
 };
 
@@ -93,6 +96,9 @@ struct SourceConfig {
     // Set when another source shares the host: this source's links end in
     // "#<urlTag>" so Registry::forUrl can tell them apart.
     QString urlTag;
+    // Off only because its language is not among the user's source
+    // languages: "Read from" can still look there when asked to.
+    bool languageOff = false;
 };
 
 class Source {
@@ -116,6 +122,9 @@ public:
     // False when the series is listed but none of its chapters can be read
     // here (taken down), so "Read from" leaves it out. One request at most.
     virtual bool readable(const QString &) { return true; }
+    // This source's own link for a series page link from elsewhere (a
+    // tracker's "where to read"), or empty when it cannot tell.
+    virtual QString seriesLink(const QUrl &) const { return {}; }
     // Referer sent with image requests for this source.
     virtual QString imageReferer() const { return m_config.base + QLatin1Char('/'); }
     // Other headers its images need.

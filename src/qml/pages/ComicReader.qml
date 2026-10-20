@@ -667,8 +667,7 @@ Rectangle {
 
     // The page progress bar: one thin, flat segment per page flush with the
     // left edge, as on scancore.onl: read pages dark, unread grey, the page
-    // you are on white. Tap one to go
-    // to that page.
+    // you are on white. Tap one to go to that page, or drag along it.
     function jumpTo(i) {
         if (i < 0 || i >= reader.panels.length) return
         if (reader.mode === "strip") strip.positionViewAtIndex(i, ListView.Beginning)
@@ -678,14 +677,21 @@ Rectangle {
         id: rail
         // Above the controls' shading, so it reads the same with them shown.
         z: 50
-        // Full screen keeps it out of the way until the controls come up.
-        visible: App.settings.readerProgressBar !== false && reader.panels.length > 0 && (!fullScreen.fullScreen || reader.controlsShown)
+        // Full screen (or the "with controls" setting) keeps it out of the way
+        // until the controls come up.
+        readonly property var mode: App.settings.readerProgressBar
+        readonly property bool shown: mode !== false && reader.panels.length > 0
+                                      && (mode !== "controls" && !fullScreen.fullScreen || reader.controlsShown)
+        readonly property int thickness: Number(App.settings.readerProgressWidth) || 3
+        opacity: shown ? 1 : 0
+        visible: opacity > 0
+        Behavior on opacity { NumberAnimation { duration: Motion.normal } }
         anchors.left: parent.left
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.topMargin: reader.insetTop
         // Wider than what it paints, so the segments are easy to hit.
-        width: 12
+        width: thickness * 2 + 6
         readonly property int count: reader.panels.length
         readonly property real gap: count > 0 && (height - (count - 1)) / count >= 3 ? 1 : 0
         readonly property real segment: count > 0 ? (height - (count - 1) * gap) / count : 0
@@ -697,7 +703,7 @@ Rectangle {
                 readonly property int startY: Math.round(index * (rail.segment + rail.gap))
                 readonly property int endY: Math.round((index + 1) * (rail.segment + rail.gap))
                 y: startY
-                width: 3
+                width: rail.thickness
                 height: Math.max(1, endY - startY - rail.gap)
                 color: index === reader.currentPanel ? "#ffffff"
                      : index < reader.currentPanel || reader.finished ? "#18181b" : "#71717a"
@@ -707,7 +713,16 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            onClicked: (mouse) => reader.jumpTo(Math.min(rail.count - 1, Math.floor(mouse.y / (rail.segment + rail.gap))))
+            // The page moves with the finger; the strip does not take the drag.
+            preventStealing: true
+            function pick(y) {
+                const i = Math.max(0, Math.min(rail.count - 1, Math.floor(y / (rail.segment + rail.gap))))
+                if (i !== reader.currentPanel) reader.jumpTo(i)
+                // Shown controls (and with them the bar) stay while it is used.
+                if (reader.controlsShown) reader.showControls()
+            }
+            onPressed: (mouse) => pick(mouse.y)
+            onPositionChanged: (mouse) => { if (pressed) pick(mouse.y) }
         }
     }
 
@@ -951,13 +966,17 @@ Rectangle {
                 value: reader.gap
                 onMoved: reader.setOpt("readerGap", value)
             }
-            Row {
-                spacing: 10
-                Toggle {
-                    checked: App.settings.readerProgressBar !== false
-                    onToggled: App.setSetting("readerProgressBar", checked)
-                }
-                Text { anchors.verticalCenter: parent.verticalCenter; text: qsTr("Page progress bar"); color: "#d4d4d8"; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+            Text { text: qsTr("Page progress bar"); color: "#9a9aa2"; font.family: Theme.fontSans; font.pixelSize: Theme.textXs; font.capitalization: Font.AllUppercase; font.letterSpacing: 1 }
+            Segmented {
+                options: [{ value: true, label: qsTr("Always") }, { value: "controls", label: qsTr("With controls") }, { value: false, label: qsTr("Off") }]
+                value: rail.mode
+                onPicked: (v) => App.setSetting("readerProgressBar", v)
+            }
+            Segmented {
+                visible: rail.mode !== false
+                options: [{ value: 3, label: qsTr("Thin") }, { value: 6, label: qsTr("Medium") }, { value: 10, label: qsTr("Thick") }]
+                value: rail.thickness
+                onPicked: (v) => App.setSetting("readerProgressWidth", v)
             }
             Row {
                 spacing: 10

@@ -27,13 +27,16 @@ import java.net.InetSocketAddress
 import java.nio.file.Files
 import java.util.Collections
 
-// The test extension (host/testext), loaded the way SCANCORE's will be:
+// The test extensions (host/testext), loaded the way SCANCORE's will be:
 // verified, converted from Dalvik bytecode, run against a fixture site on
-// fixture.test (tests/fixtures/host).
+// fixture.test (tests/fixtures/host). The anime one (Aniyomi) is tested
+// below the comics one.
 class HostTest {
     companion object {
         private val apk = File(System.getProperty("scancore.testext.apk", ""))
         private val signer = File(apk.parentFile, "signer.txt").takeIf { it.exists() }?.readText()?.trim()
+        private val animeApk = File(System.getProperty("scancore.testanime.apk", ""))
+        private val animeSigner = File(animeApk.parentFile, "signer.txt").takeIf { it.exists() }?.readText()?.trim()
         private val fixtures = File(System.getProperty("scancore.fixtures", ""))
         private lateinit var server: HttpServer
         private lateinit var host: ExtensionHost
@@ -55,6 +58,17 @@ class HostTest {
                         path == "/series/1/chapters" -> 200 to "chapters.json"
                         path == "/chapter/2/pages" -> 200 to "pages.json"
                         path == "/page/2" -> 200 to "page-2.json"
+                        path == "/anime/popular" -> 200 to "anime/popular.json"
+                        path == "/anime/search" -> 200 to "anime/search.json"
+                        path == "/anime/1" -> 200 to "anime/anime-1.json"
+                        path == "/anime/1/episodes" -> 200 to "anime/episodes.json"
+                        path == "/anime/2/seasons" -> 200 to "anime/seasons.json"
+                        path == "/episode/1/hosters" -> 200 to "anime/hosters.json"
+                        path == "/hoster/alpha" -> 200 to "anime/videos-alpha.json"
+                        path == "/hoster/beta" -> 200 to "anime/videos-beta.json"
+                        path == "/resolve" -> 200 to "anime/resolve.json"
+                        path == "/episode/1/videos" -> 200 to "anime/videos-classic.json"
+                        path == "/videopage/1" -> 200 to "anime/videopage-1.json"
                         // Only the extension's own client sends this header.
                         path.startsWith("/img/") && exchange.requestHeaders.getFirst("X-Test-Source") == "1" -> 200 to "image.png"
                         else -> 404 to null
@@ -210,5 +224,153 @@ class HostTest {
         val perCall = (System.nanoTime() - started) / 100 / 1_000_000.0
         println("filters call: %.2f ms".format(perCall))
         assertTrue("calls take $perCall ms", perCall < 20)
+    }
+
+    // ------------------------------------------------------------- anime
+
+    private fun animeCall(
+        source: String,
+        method: String,
+        extra: Map<String, Any?> = emptyMap(),
+    ) = runBlocking {
+        assumeTrue("No test anime extension APK (no Android SDK)", animeApk.isFile && animeSigner != null)
+        host.handle(
+            method,
+            buildJsonObject {
+                put("pkg", "com.mediumdev.scancore.testanime")
+                put("apk", animeApk.path)
+                put("signer", animeSigner)
+                put("source", animeSources.getValue(source))
+                for ((k, v) in extra) {
+                    when (v) {
+                        is String -> put(k, v)
+                        is Int -> put(k, v)
+                        is Boolean -> put(k, v)
+                        is JsonArray -> put(k, v)
+                    }
+                }
+            },
+        )
+    }
+
+    // By name: the hoster-style source and the lib 14 style one.
+    private val animeSources: Map<String, String> by lazy {
+        assumeTrue("No test anime extension APK (no Android SDK)", animeApk.isFile && animeSigner != null)
+        runBlocking {
+            host
+                .handle(
+                    "load",
+                    buildJsonObject {
+                        put("pkg", "com.mediumdev.scancore.testanime")
+                        put("apk", animeApk.path)
+                        put("signer", animeSigner)
+                    },
+                ).jsonArray
+                .associate { it.jsonObject["name"]!!.jsonPrimitive.content to it.jsonObject["id"]!!.jsonPrimitive.content }
+        }
+    }
+
+    private fun JsonObject.text(key: String) = this[key]!!.jsonPrimitive.content
+
+    @Test
+    fun animeLoadsAndBrowses() {
+        assertEquals(setOf("Test Anime", "Test Anime Classic"), animeSources.keys)
+        val loaded = runBlocking { host.handle("load", buildJsonObject { put("pkg", "com.mediumdev.scancore.testanime"); put("apk", animeApk.path); put("signer", animeSigner) }) }
+        val source = loaded.jsonArray.first { it.jsonObject.text("name") == "Test Anime" }.jsonObject
+        assertEquals("true", source.text("anime"))
+        assertEquals("true", source.text("configurable"))
+        val popular = animeCall("Test Anime", "popular", mapOf("page" to 1)).jsonObject
+        val items = popular["items"]!!.jsonArray.map { it.jsonObject }
+        assertEquals(listOf("/anime/1", "/anime/2"), items.map { it.text("url") })
+        assertEquals(listOf("episodes", "seasons"), items.map { it.text("fetchType") })
+        // Covers relative to the site come back as full links.
+        assertTrue(items[0].text("cover").endsWith("/img/anime-1.png") && items[0].text("cover").startsWith("http://fixture.test"))
+
+        val filters = animeCall("Test Anime", "filters").jsonArray
+        assertEquals(listOf("header", "select"), filters.map { it.jsonObject.text("type") })
+        val chosen = buildJsonArray { add(filters[0]); add(buildJsonObject { put("type", "select"); put("state", 2) }) }
+        animeCall("Test Anime", "search", mapOf("query" to "fix", "filters" to chosen))
+        val sent = requests.last { it.startsWith("/anime/search") }
+        assertTrue(sent, sent.contains("q=fix") && sent.contains("genre=Comedy"))
+    }
+
+    @Test
+    fun animeDetailsEpisodesAndSeasons() {
+        val details = animeCall("Test Anime", "details", mapOf("url" to "/anime/1", "title" to "Fixture Anime")).jsonObject
+        assertEquals("A. Studio", details.text("author"))
+        assertEquals(listOf("Action", "Comedy"), details["genres"]!!.jsonArray.map { it.jsonPrimitive.content })
+        assertTrue(details.text("background").endsWith("/img/background.png"))
+        assertEquals("episodes", details.text("fetchType"))
+
+        val episodes = animeCall("Test Anime", "episodes", mapOf("url" to "/anime/1")).jsonArray.map { it.jsonObject }
+        assertEquals(listOf("/episode/2", "/episode/1"), episodes.map { it.text("url") })
+        assertEquals(listOf(false, true), episodes.map { it["filler"]!!.jsonPrimitive.content.toBoolean() })
+        assertEquals(1.0, episodes[1]["number"]!!.jsonPrimitive.content.toDouble(), 0.0)
+
+        val seasons = animeCall("Test Anime", "seasons", mapOf("url" to "/anime/2")).jsonArray.map { it.jsonObject }
+        assertEquals(listOf("Season 1", "Season 2"), seasons.map { it.text("title") })
+        assertEquals(listOf(1.0, 2.0), seasons.map { it["season"]!!.jsonPrimitive.content.toDouble() })
+    }
+
+    @Test
+    fun hostersVideosAndResolving() {
+        val hosters = animeCall("Test Anime", "hosters", mapOf("url" to "/episode/1", "name" to "Episode 1")).jsonArray.map { it.jsonObject }
+        assertEquals(listOf("Alpha", "Beta", "Inline"), hosters.map { it.text("name") })
+        assertEquals(listOf(false, true, false), hosters.map { it["lazy"]!!.jsonPrimitive.content.toBoolean() })
+        // Videos the hoster listed itself come with it.
+        assertEquals(null, hosters[0]["videos"])
+        assertEquals("Inline 480p", hosters[2]["videos"]!!.jsonArray.single().jsonObject.text("title"))
+
+        val alpha = animeCall("Test Anime", "hosterVideos", mapOf("hoster" to hosters[0].text("id"))).jsonArray.map { it.jsonObject }
+        // The source's own order: higher resolutions first.
+        assertEquals(listOf("Alpha 1080p", "Alpha 720p"), alpha.map { it.text("title") })
+        val best = alpha[0]
+        assertEquals("true", best.text("preferred"))
+        assertTrue(best.text("url").endsWith("/video/alpha-1080.m3u8"))
+        // The headers mpv must send: the source's, as the video has none.
+        val headers = best["headers"]!!.jsonObject
+        assertTrue(headers.toString(), headers.text("Referer").startsWith("http://fixture.test") && headers.containsKey("User-Agent"))
+        assertEquals("English", best["subtitles"]!!.jsonArray.single().jsonObject.text("lang"))
+
+        // A video listed without its address gets it when it is to play.
+        assertEquals("false", alpha[1].text("initialized"))
+        val resolved = animeCall("Test Anime", "resolveVideo", mapOf("video" to alpha[1].text("id"))).jsonObject
+        assertTrue(resolved.text("url").endsWith("/video/alpha-720.m3u8"))
+        assertEquals("true", resolved.text("initialized"))
+
+        // A lazy hoster's videos only load when asked.
+        assertTrue(requests.none { it.startsWith("/hoster/beta") })
+        val beta = animeCall("Test Anime", "hosterVideos", mapOf("hoster" to hosters[1].text("id"))).jsonArray
+        assertEquals("Beta 360p", beta.single().jsonObject.text("title"))
+
+        // An id from before a restart, or from another source, is refused.
+        try {
+            animeCall("Test Anime", "hosterVideos", mapOf("hoster" to "${animeSources.getValue("Test Anime")}.999999"))
+            throw AssertionError("an unknown hoster id was accepted")
+        } catch (e: HostError) {
+            assertEquals(410, e.status)
+        }
+    }
+
+    @Test
+    fun classicVideosGetTheirAddress() {
+        val hosters = animeCall("Test Anime Classic", "hosters", mapOf("url" to "/episode/1")).jsonArray.map { it.jsonObject }
+        // Before hosters: one unnamed hoster with the episode's videos.
+        assertEquals("", hosters.single().text("name"))
+        val video = hosters.single()["videos"]!!.jsonArray.single().jsonObject
+        assertEquals("Classic 720p", video.text("title"))
+        assertTrue(video.text("url"), video.text("url").endsWith("/video/classic.mp4"))
+    }
+
+    @Test
+    fun animeSettings() {
+        val dub = animeCall("Test Anime", "preferences").jsonArray.single().jsonObject
+        assertEquals("switch", dub.text("type"))
+        assertEquals("false", dub.text("value"))
+        animeCall("Test Anime", "setPreference", mapOf("key" to "dub", "value" to true))
+        assertEquals("true", animeCall("Test Anime", "preferences").jsonArray.single().jsonObject.text("value"))
+        animeCall("Test Anime", "hosters", mapOf("url" to "/episode/1"))
+        assertTrue(requests.last { it.startsWith("/episode/1/hosters") }.contains("dub=true"))
+        animeCall("Test Anime", "setPreference", mapOf("key" to "dub", "value" to false))
     }
 }

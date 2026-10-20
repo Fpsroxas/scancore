@@ -108,6 +108,14 @@
             <translation>Lihat pengenalan lagi</translation>
         </message>
         <message>
+            <source>Licences</source>
+            <translation>Lisensi</translation>
+        </message>
+        <message>
+            <source>The open-source software inside SCANCORE</source>
+            <translation>Perangkat lunak sumber terbuka di dalam SCANCORE</translation>
+        </message>
+        <message>
             <source>Keyboard shortcuts</source>
             <translation>Pintasan papan ketik</translation>
         </message>
@@ -152,8 +160,8 @@
             <translation>Lebar atau ukuran teks</translation>
         </message>
         <message>
-            <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0).</source>
-            <translation>Lisensi MIT · github.com/medium-gh/scancore. Fon: DM Sans, Space Grotesk, Literata (OFL). Ikon: Lucide (ISC). Penguraian HTML: lexbor (Apache 2.0).</translation>
+            <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
+            <translation>Lisensi MIT · github.com/medium-gh/scancore. Fon: DM Sans, Space Grotesk, Literata (OFL). Ikon: Lucide (ISC). Penguraian HTML: lexbor (Apache 2.0). Pemutar video: mpv dan FFmpeg (LGPL), dibangun dengan tools/libmpv/build.sh.</translation>
         </message>
     </context>
     <context>
@@ -783,6 +791,10 @@
             <translation> episode</translation>
         </message>
         <message>
+            <source> seasons</source>
+            <translation> musim</translation>
+        </message>
+        <message>
             <source> episodes so far</source>
             <translation> episode sejauh ini</translation>
         </message>
@@ -803,8 +815,20 @@
             <translation>Dihapus dari pustaka Anda</translation>
         </message>
         <message>
+            <source>Still looking this anime up. Try again in a moment.</source>
+            <translation>Anime ini masih dicari. Coba lagi sebentar lagi.</translation>
+        </message>
+        <message>
+            <source>AniList has no entry for this anime yet, so it cannot be saved.</source>
+            <translation>AniList belum punya entri untuk anime ini, jadi tidak bisa disimpan.</translation>
+        </message>
+        <message>
             <source>Watch trailer</source>
             <translation>Tonton trailer</translation>
+        </message>
+        <message>
+            <source>Watch from</source>
+            <translation>Tonton dari</translation>
         </message>
         <message>
             <source>Open on AniList</source>
@@ -839,8 +863,16 @@
             <translation>Terlama dulu</translation>
         </message>
         <message>
+            <source>Filler</source>
+            <translation>Filler</translation>
+        </message>
+        <message>
             <source>No episodes yet</source>
             <translation>Belum ada episode</translation>
+        </message>
+        <message>
+            <source>The source lists no episodes for it.</source>
+            <translation>Sumber ini tidak mencantumkan episode untuknya.</translation>
         </message>
         <message>
             <source>Episode </source>
@@ -853,6 +885,14 @@
         <message>
             <source>This anime has not aired yet.</source>
             <translation>Anime ini belum tayang.</translation>
+        </message>
+        <message>
+            <source>Seasons</source>
+            <translation>Musim</translation>
+        </message>
+        <message>
+            <source>Season %1</source>
+            <translation>Musim %1</translation>
         </message>
         <message>
             <source>Related</source>
@@ -902,12 +942,28 @@
             <translation>Cari</translation>
         </message>
         <message>
+            <source>Extensions</source>
+            <translation>Ekstensi</translation>
+        </message>
+        <message>
+            <source>Edit page</source>
+            <translation>Edit halaman</translation>
+        </message>
+        <message>
+            <source>Spotlight</source>
+            <translation>Sorotan</translation>
+        </message>
+        <message>
             <source>Continue watching</source>
             <translation>Lanjutkan menonton</translation>
         </message>
         <message>
             <source>Episode </source>
             <translation>Episode </translation>
+        </message>
+        <message>
+            <source>Your anime sources</source>
+            <translation>Sumber anime Anda</translation>
         </message>
         <message>
             <source>Airing today</source>
@@ -926,6 +982,10 @@
             <translation>Sedang tren</translation>
         </message>
         <message>
+            <source>Top airing</source>
+            <translation>Teratas yang sedang tayang</translation>
+        </message>
+        <message>
             <source>This season</source>
             <translation>Musim ini</translation>
         </message>
@@ -934,12 +994,20 @@
             <translation>Populer sepanjang masa</translation>
         </message>
         <message>
+            <source>Most popular</source>
+            <translation>Paling populer</translation>
+        </message>
+        <message>
             <source>Top rated</source>
             <translation>Rating teratas</translation>
         </message>
     </context>
     <context>
         <name>AnimeSchedule</name>
+        <message>
+            <source>Episodes </source>
+            <translation>Episode </translation>
+        </message>
         <message>
             <source>Schedule</source>
             <translation>Jadwal</translation>
@@ -1190,6 +1258,30 @@
             <translation>Bilah kemajuan halaman</translation>
         </message>
         <message>
+            <source>Always</source>
+            <translation>Selalu</translation>
+        </message>
+        <message>
+            <source>With controls</source>
+            <translation>Bersama kontrol</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Mati</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>Tipis</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Sedang</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>Tebal</translation>
+        </message>
+        <message>
             <source>Previous chapter</source>
             <translation>Bab sebelumnya</translation>
         </message>
@@ -1261,8 +1353,20 @@
             <translation>Comick</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Edit halaman</translation>
+        </message>
+        <message>
             <source>Extensions</source>
             <translation>Ekstensi</translation>
+        </message>
+        <message>
+            <source>Search bar</source>
+            <translation>Bilah pencarian</translation>
+        </message>
+        <message>
+            <source>Source chips</source>
+            <translation>Tombol sumber</translation>
         </message>
         <message>
             <source>%1 titles for “%2” from %3&apos;s catalogue</source>
@@ -1315,6 +1419,10 @@
         <message>
             <source>Choose folders</source>
             <translation>Pilih folder</translation>
+        </message>
+        <message>
+            <source>Recent searches</source>
+            <translation>Pencarian terbaru</translation>
         </message>
         <message>
             <source>Continue reading</source>
@@ -1533,6 +1641,14 @@
             <translation>Yang ditampilkan dan dicari halaman Novel.</translation>
         </message>
         <message>
+            <source>Anime catalogue</source>
+            <translation>Katalog anime</translation>
+        </message>
+        <message>
+            <source>Whose lists the Anime page shows. Episodes, the schedule and search come from AniList either way.</source>
+            <translation>Daftar dari mana yang ditampilkan halaman Anime. Episode, jadwal, dan pencarian tetap dari AniList.</translation>
+        </message>
+        <message>
             <source>Discord</source>
             <translation>Discord</translation>
         </message>
@@ -1585,6 +1701,18 @@
             <translation>Pilih file</translation>
         </message>
         <message>
+            <source>Back up for Mihon</source>
+            <translation>Cadangan untuk Mihon</translation>
+        </message>
+        <message>
+            <source>Saves the comics you read from extensions as a .tachibk file Mihon or Tachiyomi can restore.</source>
+            <translation>Menyimpan komik yang kamu baca dari ekstensi sebagai file .tachibk yang bisa dipulihkan Mihon atau Tachiyomi.</translation>
+        </message>
+        <message>
+            <source>Save file</source>
+            <translation>Simpan file</translation>
+        </message>
+        <message>
             <source>Anime, comics and novels from a public AniList list.</source>
             <translation>Anime, komik, dan novel dari daftar AniList publik.</translation>
         </message>
@@ -1623,6 +1751,14 @@
         <message>
             <source>All files (*)</source>
             <translation>Semua file (*)</translation>
+        </message>
+        <message>
+            <source>Saved %1 series</source>
+            <translation>%1 seri disimpan</translation>
+        </message>
+        <message>
+            <source> · %1 from built-in sources left out</source>
+            <translation> · %1 dari sumber bawaan tidak disertakan</translation>
         </message>
         <message>
             <source>MyAnimeList export (*.xml *.xml.gz *.gz)</source>
@@ -1939,6 +2075,25 @@
         <message>
             <source>Open series</source>
             <translation>Buka seri</translation>
+        </message>
+    </context>
+    <context>
+        <name>EditPageBar</name>
+        <message>
+            <source>Move sections with the arrows, hide them with the eye</source>
+            <translation>Pindahkan bagian dengan panah, sembunyikan dengan ikon mata</translation>
+        </message>
+        <message>
+            <source>Drag sections to move them, hide them with the eye</source>
+            <translation>Seret bagian untuk memindahkannya, sembunyikan dengan ikon mata</translation>
+        </message>
+        <message>
+            <source>Reset</source>
+            <translation>Atur ulang</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Selesai</translation>
         </message>
     </context>
     <context>
@@ -2296,6 +2451,14 @@
             <translation>Selamat malam</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Edit halaman</translation>
+        </message>
+        <message>
+            <source>Greeting</source>
+            <translation>Sapaan</translation>
+        </message>
+        <message>
             <source>Comics</source>
             <translation>Komik</translation>
         </message>
@@ -2306,6 +2469,10 @@
         <message>
             <source>Anime</source>
             <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Last read or watched</source>
+            <translation>Terakhir dibaca atau ditonton</translation>
         </message>
         <message>
             <source>Continue</source>
@@ -2465,6 +2632,62 @@
         <message>
             <source>How big covers are in grids and rows. Smaller fits more on screen.</source>
             <translation>Seberapa besar sampul di kisi dan baris. Lebih kecil muat lebih banyak.</translation>
+        </message>
+        <message>
+            <source>Pages</source>
+            <translation>Halaman</translation>
+        </message>
+        <message>
+            <source>Home, Comics, Novels and Anime each have an Edit page button: move, hide and restyle their sections there.</source>
+            <translation>Beranda, Komik, Novel, dan Anime masing-masing punya tombol Edit halaman: pindahkan, sembunyikan, dan ubah tampilan bagiannya di sana.</translation>
+        </message>
+        <message>
+            <source>Spacing</source>
+            <translation>Jarak</translation>
+        </message>
+        <message>
+            <source>The room between a page&apos;s sections.</source>
+            <translation>Ruang di antara bagian-bagian halaman.</translation>
+        </message>
+        <message>
+            <source>Compact</source>
+            <translation>Rapat</translation>
+        </message>
+        <message>
+            <source>Spacious</source>
+            <translation>Lapang</translation>
+        </message>
+        <message>
+            <source>Corners</source>
+            <translation>Sudut</translation>
+        </message>
+        <message>
+            <source>How round covers, cards, buttons and panels are.</source>
+            <translation>Seberapa bulat sampul, kartu, tombol, dan panel.</translation>
+        </message>
+        <message>
+            <source>Square</source>
+            <translation>Kotak</translation>
+        </message>
+        <message>
+            <source>Subtle</source>
+            <translation>Halus</translation>
+        </message>
+        <message>
+            <source>Round</source>
+            <translation>Bulat</translation>
+        </message>
+        <message>
+            <source>Page arrangements</source>
+            <translation>Susunan halaman</translation>
+        </message>
+        <message>
+            <source>Put every page&apos;s sections back in their first order and look.</source>
+            <translation>Kembalikan bagian setiap halaman ke urutan dan tampilan awalnya.</translation>
+        </message>
+        <message>
+            <source>Reset all</source>
+            <translation>Atur ulang semua</translation>
         </message>
         <message>
             <source>Motion</source>
@@ -2720,6 +2943,30 @@
             <translation>Episode sebelumnya</translation>
         </message>
         <message>
+            <source>Play or pause</source>
+            <translation>Putar atau jeda</translation>
+        </message>
+        <message>
+            <source>Forward 10 seconds</source>
+            <translation>Maju 10 detik</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>Mundur 10 detik</translation>
+        </message>
+        <message>
+            <source>Volume up</source>
+            <translation>Naikkan volume</translation>
+        </message>
+        <message>
+            <source>Volume down</source>
+            <translation>Turunkan volume</translation>
+        </message>
+        <message>
+            <source>Mute</source>
+            <translation>Bisukan</translation>
+        </message>
+        <message>
             <source>Anywhere</source>
             <translation>Di mana saja</translation>
         </message>
@@ -2939,6 +3186,25 @@
         </message>
     </context>
     <context>
+        <name>LicencesDialog</name>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source>Licences</source>
+            <translation>Lisensi</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>SCANCORE is built with this open-source software. Choose one to read its licence.</source>
+            <translation>SCANCORE dibuat dengan perangkat lunak sumber terbuka ini. Pilih salah satu untuk membaca lisensinya.</translation>
+        </message>
+    </context>
+    <context>
         <name>Main</name>
         <message>
             <source> new chapter</source>
@@ -2979,6 +3245,53 @@
         <message>
             <source>Allow</source>
             <translation>Izinkan</translation>
+        </message>
+    </context>
+    <context>
+        <name>NativePlayer</name>
+        <message>
+            <source>This copy of SCANCORE has no video player for anime from extensions.</source>
+            <translation>Salinan SCANCORE ini tidak memiliki pemutar video untuk anime dari ekstensi.</translation>
+        </message>
+        <message>
+            <source>Play</source>
+            <translation>Putar</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>Jeda</translation>
+        </message>
+        <message>
+            <source>Unmute</source>
+            <translation>Bunyikan</translation>
+        </message>
+        <message>
+            <source>Mute</source>
+            <translation>Bisukan</translation>
+        </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>Subtitle</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Mati</translation>
+        </message>
+        <message>
+            <source>Track </source>
+            <translation>Trek </translation>
+        </message>
+        <message>
+            <source>Audio</source>
+            <translation>Audio</translation>
+        </message>
+        <message>
+            <source>Speed</source>
+            <translation>Kecepatan</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>Normal</translation>
         </message>
     </context>
     <context>
@@ -3240,8 +3553,24 @@
             <translation> sumber</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Edit halaman</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Ekstensi</translation>
+        </message>
+        <message>
+            <source>Search bar</source>
+            <translation>Bilah pencarian</translation>
+        </message>
+        <message>
             <source>Search by title, or paste a book link</source>
             <translation>Cari berdasarkan judul, atau tempel tautan buku</translation>
+        </message>
+        <message>
+            <source>Source chips</source>
+            <translation>Tombol sumber</translation>
         </message>
         <message>
             <source>More sources (</source>
@@ -3298,6 +3627,10 @@
         <message>
             <source>Choose folders</source>
             <translation>Pilih folder</translation>
+        </message>
+        <message>
+            <source>Recent searches</source>
+            <translation>Pencarian terbaru</translation>
         </message>
         <message>
             <source>Continue reading</source>
@@ -3543,10 +3876,89 @@
         </message>
     </context>
     <context>
+        <name>PageSection</name>
+        <message>
+            <source>Hidden</source>
+            <translation>Disembunyikan</translation>
+        </message>
+        <message>
+            <source>Nothing to show right now</source>
+            <translation>Belum ada yang bisa ditampilkan</translation>
+        </message>
+        <message>
+            <source>Look</source>
+            <translation>Tampilan</translation>
+        </message>
+        <message>
+            <source>Move up</source>
+            <translation>Naikkan</translation>
+        </message>
+        <message>
+            <source>Move down</source>
+            <translation>Turunkan</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>Tampilkan</translation>
+        </message>
+        <message>
+            <source>Hide</source>
+            <translation>Sembunyikan</translation>
+        </message>
+        <message>
+            <source>Show as</source>
+            <translation>Tampilkan sebagai</translation>
+        </message>
+        <message>
+            <source>Row</source>
+            <translation>Baris</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>Kisi</translation>
+        </message>
+        <message>
+            <source>Card size</source>
+            <translation>Ukuran kartu</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Kecil</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Sedang</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>Besar</translation>
+        </message>
+        <message>
+            <source>How many</source>
+            <translation>Berapa banyak</translation>
+        </message>
+        <message>
+            <source>All</source>
+            <translation>Semua</translation>
+        </message>
+        <message>
+            <source>Details under covers</source>
+            <translation>Detail di bawah sampul</translation>
+        </message>
+        <message>
+            <source>Progress bars</source>
+            <translation>Bilah kemajuan</translation>
+        </message>
+    </context>
+    <context>
         <name>ReadFromDialog</name>
         <message>
             <source>Looking for it on your sources…</source>
             <translation>Mencarinya di sumber Anda…</translation>
+        </message>
+        <message>
+            <source>No source in that language has it either.</source>
+            <translation>Tidak ada sumber dalam bahasa itu yang memilikinya juga.</translation>
         </message>
         <message>
             <source>None of your sources has it yet.</source>
@@ -3555,6 +3967,14 @@
         <message>
             <source>Read it from</source>
             <translation>Baca dari</translation>
+        </message>
+        <message>
+            <source>Look for it in another language:</source>
+            <translation>Cari dalam bahasa lain:</translation>
+        </message>
+        <message>
+            <source>Other languages</source>
+            <translation>Bahasa lain</translation>
         </message>
         <message>
             <source>Comick</source>
@@ -4704,6 +5124,14 @@
             <translation>Periksa sekarang</translation>
         </message>
         <message>
+            <source>Source languages</source>
+            <translation>Bahasa sumber</translation>
+        </message>
+        <message>
+            <source>Built-in sources in these languages are on. Series you already read keep opening whatever you choose.</source>
+            <translation>Sumber bawaan dalam bahasa ini aktif. Seri yang sudah kamu baca tetap bisa dibuka apa pun pilihanmu.</translation>
+        </message>
+        <message>
             <source>Languages for “All sources”</source>
             <translation>Bahasa untuk “Semua sumber”</translation>
         </message>
@@ -5484,7 +5912,54 @@
         </message>
     </context>
     <context>
+        <name>WatchFromDialog</name>
+        <message>
+            <source>Which season?</source>
+            <translation>Musim yang mana?</translation>
+        </message>
+        <message>
+            <source>Watch from</source>
+            <translation>Tonton dari</translation>
+        </message>
+        <message>
+            <source>Looking for %1 on your anime sources…</source>
+            <translation>Mencari %1 di sumber anime Anda…</translation>
+        </message>
+        <message>
+            <source>None of your anime sources has %1 yet.</source>
+            <translation>Belum ada sumber anime Anda yang memiliki %1.</translation>
+        </message>
+        <message>
+            <source>Season %1</source>
+            <translation>Musim %1</translation>
+        </message>
+        <message>
+            <source>in seasons</source>
+            <translation>per musim</translation>
+        </message>
+        <message>
+            <source>Built-in servers</source>
+            <translation>Server bawaan</translation>
+        </message>
+        <message>
+            <source>The player SCANCORE has without extensions</source>
+            <translation>Pemutar bawaan SCANCORE tanpa ekstensi</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+    </context>
+    <context>
         <name>WatchPage</name>
+        <message>
+            <source>Video</source>
+            <translation>Video</translation>
+        </message>
         <message>
             <source>Skip ending</source>
             <translation>Lewati ending</translation>
@@ -5500,6 +5975,10 @@
         <message>
             <source>Episode </source>
             <translation>Episode </translation>
+        </message>
+        <message>
+            <source>Trying another server: </source>
+            <translation>Mencoba server lain: </translation>
         </message>
         <message>
             <source>Resumed at </source>
@@ -5526,12 +6005,20 @@
             <translation>Dapatkan SCANCORE</translation>
         </message>
         <message>
+            <source>Looking for %1 on your anime sources…</source>
+            <translation>Mencari %1 di sumber anime Anda…</translation>
+        </message>
+        <message>
             <source>This build of SCANCORE has no embedded browser, which the ReAnime player needs.</source>
             <translation>Build SCANCORE ini tidak punya peramban bawaan yang dibutuhkan pemutar ReAnime.</translation>
         </message>
         <message>
             <source>Try again</source>
             <translation>Coba lagi</translation>
+        </message>
+        <message>
+            <source>Watch from…</source>
+            <translation>Tonton dari…</translation>
         </message>
         <message>
             <source>Next episode in </source>
@@ -5564,6 +6051,10 @@
         <message>
             <source>Episodes</source>
             <translation>Episode</translation>
+        </message>
+        <message>
+            <source>Watch from</source>
+            <translation>Tonton dari</translation>
         </message>
         <message>
             <source>Comments</source>

@@ -377,6 +377,12 @@ Rectangle {
                     CataloguePicker { media: "novel" }
                 }
                 Column {
+                    spacing: 10
+                    visible: Trackers.malAvailable
+                    Text { text: qsTr("Anime"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
+                    CataloguePicker { media: "anime" }
+                }
+                Column {
                     width: parent.width
                     spacing: 4
                     visible: Trackers.anilistAvailable || Trackers.malAvailable || Trackers.comickAvailable
@@ -427,7 +433,7 @@ Rectangle {
             WheelScroll {}
             contentHeight: extensionsColumn.height + 60
             clip: true
-            readonly property var repositories: { Extensions.revision; return Extensions.repositories() }
+            readonly property var repositories: { App.dependOn(Extensions.revision); return Extensions.repositories() }
             Column {
                 id: extensionsColumn
                 x: Theme.gutter

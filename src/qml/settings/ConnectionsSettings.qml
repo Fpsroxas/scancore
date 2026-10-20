@@ -15,6 +15,7 @@ SettingsPane {
     property var importTask: null
     property string importing: ""
     property var matchTask: null
+    property var exportTask: null
     property bool showAllWaiting: false
     readonly property var waiting: Importer.unmatched
 
@@ -38,7 +39,7 @@ SettingsPane {
             ? qsTr("Finishing a chapter or episode moves the series forward on every tracker you connect. Anime are matched by their AniList entry, comics and novels by their catalogue entry or title; link one by hand from its page.")
             : qsTr("This copy of SCANCORE was built without AniList, MyAnimeList and Comick ids, so tracking is off. Official downloads have them.")
 
-        // The catalogues the Comics and Novels pages browse and search.
+        // The catalogues the Comics, Novels and Anime pages browse and search.
         SettingRow {
             iconName: "compass"
             title: qsTr("Comics catalogue")
@@ -50,6 +51,13 @@ SettingsPane {
             title: qsTr("Novels catalogue")
             description: qsTr("What the Novels page shows and searches.")
             CataloguePicker { media: "novel" }
+        }
+        SettingRow {
+            visible: Trackers.malAvailable
+            iconName: "compass"
+            title: qsTr("Anime catalogue")
+            description: qsTr("Whose lists the Anime page shows. Episodes, the schedule and search come from AniList either way.")
+            CataloguePicker { media: "anime" }
         }
         SettingRow {
             visible: Trackers.anilistAvailable
@@ -117,6 +125,17 @@ SettingsPane {
             }
         }
         SettingRow {
+            iconName: "download"
+            title: qsTr("Back up for Mihon")
+            description: qsTr("Saves the comics you read from extensions as a .tachibk file Mihon or Tachiyomi can restore.")
+            ScButton {
+                text: qsTr("Save file")
+                iconName: "download"
+                loading: pane.exportTask !== null && pane.exportTask.loading
+                onClicked: mihonSaveDialog.open()
+            }
+        }
+        SettingRow {
             iconName: "list"
             title: "AniList"
             description: qsTr("Anime, comics and novels from a public AniList list.")
@@ -179,6 +198,19 @@ SettingsPane {
         fileMode: FileDialog.OpenFile
         nameFilters: [qsTr("Mihon or Tachiyomi backup (*.tachibk *.proto.gz)"), qsTr("All files (*)")]
         onAccepted: pane.imported(Importer.importMihon(selectedFile), "mihon")
+    }
+    FileDialog {
+        id: mihonSaveDialog
+        fileMode: FileDialog.SaveFile
+        defaultSuffix: "tachibk"
+        currentFile: "scancore.tachibk"
+        nameFilters: [qsTr("Mihon or Tachiyomi backup (*.tachibk *.proto.gz)")]
+        onAccepted: {
+            pane.exportTask = Importer.exportMihon(selectedFile)
+            pane.exportTask.finished.connect((r) => Router.toast(qsTr("Saved %1 series").arg(r.exported)
+                + (r.skipped > 0 ? qsTr(" · %1 from built-in sources left out").arg(r.skipped) : ""), "success"))
+            pane.exportTask.failed.connect((error) => Router.toast(error, "error"))
+        }
     }
     FileDialog {
         id: malDialog

@@ -196,13 +196,13 @@ Item {
                 visible: header.saved && !!header.series.id
                 implicitWidth: 168
                 model: Router.libraryCategories(header.series.media)
-                value: { Library.revision; return header.saved ? (Library.category(header.series.id) || "reading") : "reading" }
+                value: { App.dependOn(Library.revision); return header.saved ? (Library.category(header.series.id) || "reading") : "reading" }
                 onPicked: (v) => Library.setCategory(header.series.id, v)
             }
             IconButton {
                 id: heart
                 visible: header.saved && !!header.series.id
-                readonly property bool on: { Library.revision; return header.saved && Library.isFavourite(header.series.id) }
+                readonly property bool on: { App.dependOn(Library.revision); return header.saved && Library.isFavourite(header.series.id) }
                 iconName: "heart"
                 iconColor: on ? Theme.danger : Theme.textMuted
                 tip: on ? qsTr("Remove from favourites") : qsTr("Add to favourites")
