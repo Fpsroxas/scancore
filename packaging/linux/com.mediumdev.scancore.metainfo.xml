@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.0.1" date="2026-10-20">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#201--2026-10-20</url>
+      <description>
+        <p>"Read from" on Windows finds series under the other names a source lists them by again, and Kakao Page joins the Korean comic sources with every episode it shows without an account.</p>
+      </description>
+    </release>
     <release version="2.0.0" date="2026-10-20">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#200--2026-10-20</url>
       <description>

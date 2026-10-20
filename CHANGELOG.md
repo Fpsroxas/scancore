@@ -2,6 +2,11 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.0.1 — 2026-10-20
+
+- **"Read from" on Windows** found a series only under the names the catalogue gives it, never under the other names a source lists it by, so a series a source lists under its Russian, Spanish or Korean name was missed. It is found again, as on the other systems.
+- **Kakao Page** for Korean comics: webtoons and manga with every episode it shows without an account (wait-for-free and paid episodes, and adult titles, need one and are left out). "Read from" opens a series there directly when AniList links to it.
+
 ## 2.0.0 — 2026-10-20
 
 SCANCORE 2.0: comics, novels and anime from the extensions you already use, SCANCORE's own video player, pages you arrange yourself, the interface in fourteen languages, and sources in your language. Everything in 2.0.0-beta.1 below is in it, and since the beta:
