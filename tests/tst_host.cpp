@@ -29,6 +29,8 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QTemporaryDir>
+
+#include <cstdio>
 #include <QThread>
 #include <QtTest>
 
@@ -453,5 +455,18 @@ private slots:
     }
 };
 
-QTEST_GUILESS_MAIN(HostTests)
+// QTEST_GUILESS_MAIN, except that an exception escaping a test is reported
+// (with the test it came from in the log above) instead of ending the
+// program without a word, as it does on Windows.
+int main(int argc, char **argv) {
+    QCoreApplication app(argc, argv);
+    HostTests tests;
+    try {
+        return QTest::qExec(&tests, argc, argv);
+    } catch (const std::exception &e) {
+        std::fprintf(stderr, "Uncaught exception: %s\n", e.what());
+        std::fflush(stderr);
+        return 1;
+    }
+}
 #include "tst_host.moc"

@@ -503,14 +503,19 @@ private slots:
     void runtimeInstall() {
         if (Runtime::platform().isEmpty())
             QSKIP("No Extensions runtime for this computer.");
-        const auto zip = [](const QString &host) {
+#ifdef Q_OS_WIN
+        const QString java = QStringLiteral("java.exe");
+#else
+        const QString java = QStringLiteral("java");
+#endif
+        const auto zip = [java](const QString &host) {
             QByteArray bytes;
             QBuffer buffer(&bytes);
             buffer.open(QIODevice::WriteOnly);
             QZipWriter writer(&buffer);
             writer.addFile(QStringLiteral("scancore-extensions-runtime/scancore-runtime.json"),
                            QStringLiteral(R"({"host": "%1", "java": "21"})").arg(host).toUtf8());
-            writer.addFile(QStringLiteral("scancore-extensions-runtime/bin/java"), QByteArray("#!/bin/sh\n"));
+            writer.addFile(QStringLiteral("scancore-extensions-runtime/bin/") + java, QByteArray("#!/bin/sh\n"));
             writer.addFile(QStringLiteral("scancore-extensions-runtime/lib/host/host.jar"), QByteArray("jar"));
             writer.close();
             return bytes;
@@ -536,7 +541,7 @@ private slots:
         Runtime::install([&](const QString &status) { said.append(status); });
         QVERIFY(Runtime::installed());
         QVERIFY(said.contains(QStringLiteral("Installed")));
-        QVERIFY(QFileInfo(Runtime::dir() + QStringLiteral("/bin/java")).isExecutable());
+        QVERIFY(QFileInfo(Runtime::dir() + QStringLiteral("/bin/") + java).isExecutable());
         QVERIFY(Runtime::assetUrl().contains(QStringLiteral("/extensions-runtime-%1/").arg(QLatin1String(Runtime::HostVersion))));
 
         // A damaged download leaves the installed runtime alone.
