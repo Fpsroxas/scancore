@@ -25,6 +25,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLocale>
+#include <QQuickItem>
 #include <QQuickWindow>
 #include <QStandardPaths>
 #ifdef Q_OS_ANDROID
@@ -294,6 +295,20 @@ QString App::formatBytes(qint64 bytes) const { return QLocale().formattedDataSiz
 bool App::saveWindowImage(QObject *window, const QString &path) const {
     auto *quick = qobject_cast<QQuickWindow *>(window);
     return quick && quick->grabWindow().save(path);
+}
+
+void App::stackAfter(QObject *item, QObject *sibling) const {
+    auto *a = qobject_cast<QQuickItem *>(item);
+    auto *b = qobject_cast<QQuickItem *>(sibling);
+    if (a && b && a != b && a->parentItem() == b->parentItem())
+        a->stackAfter(b);
+}
+
+void App::stackBefore(QObject *item, QObject *sibling) const {
+    auto *a = qobject_cast<QQuickItem *>(item);
+    auto *b = qobject_cast<QQuickItem *>(sibling);
+    if (a && b && a != b && a->parentItem() == b->parentItem())
+        a->stackBefore(b);
 }
 
 Task *App::checkForUpdate() {

@@ -40,7 +40,17 @@ Item {
     property bool catalogFailed: false
     readonly property bool catalogResults: !!searchTask && searchTask.ok && !catalogFailed && useCatalog && query.length > 0
     readonly property bool browsingLocal: source === "local" && query.length === 0
-    readonly property bool searching: query.length > 0 || source === "local"
+    readonly property bool searching: !editing && (query.length > 0 || source === "local")
+    // Edit page: arrange the sections (PageLayout).
+    property bool editing: false
+    PageArranger { id: topLayout; page: "comics-top"; column: column; editing: page.editing; defaults: ["search", "sources"] }
+    PageArranger {
+        id: idleLayout
+        page: "comics"
+        column: idle
+        editing: page.editing
+        defaults: ["recent", "continue", "trending", "popular", "newest", "completed", "top", "manhwa", "manhua", "latest"]
+    }
     Component.onCompleted: if (source === "local") run("")
 
     function search(text) {
@@ -85,11 +95,17 @@ Item {
         Column {
             id: column
             width: parent.width
-            spacing: 26
+            spacing: Math.round(Theme.sectionGap * 0.72)
 
             PageHeader {
                 title: qsTr("Comics")
                 subtitle: page.sources.length + qsTr(" sources · manhwa, manga and webtoons")
+                IconButton {
+                    iconName: "layout-dashboard"
+                    tip: qsTr("Edit page")
+                    active: page.editing
+                    onClicked: page.editing = !page.editing
+                }
                 ScButton {
                     text: qsTr("Extensions")
                     iconName: "puzzle"
@@ -108,42 +124,52 @@ Item {
                 }
             }
 
-            SearchField {
-                id: field
-                x: Theme.gutter
-                width: Math.min(parent.width - 2 * Theme.gutter, 760)
-                large: true
-                placeholderText: page.useCatalog ? qsTr("Search every manhwa, manga and comic") : qsTr("Search titles across every source")
-                onSubmitted: (text) => page.run(text)
-                onTextChanged: if (text.length === 0 && page.query.length > 0) page.run("")
+            PageSection {
+                arranger: topLayout
+                key: "search"
+                label: qsTr("Search bar")
+                SearchField {
+                    id: field
+                    x: Theme.gutter
+                    width: Math.min(parent.width - 2 * Theme.gutter, 760)
+                    large: true
+                    placeholderText: page.useCatalog ? qsTr("Search every manhwa, manga and comic") : qsTr("Search titles across every source")
+                    onSubmitted: (text) => page.run(text)
+                    onTextChanged: if (text.length === 0 && page.query.length > 0) page.run("")
+                }
             }
 
-            ChipRow {
-                Chip {
-                    text: qsTr("All sources")
-                    selected: page.source === "all"
-                    onClicked: {
-                        page.source = "all"
-                        App.setSetting("comicSource", "all")
-                        page.run(page.query)
-                    }
-                }
-                Repeater {
-                    model: page.sources
+            PageSection {
+                arranger: topLayout
+                key: "sources"
+                label: qsTr("Source chips")
+                ChipRow {
                     Chip {
-                        required property var modelData
-                        // The content language, when it is not English.
-                        text: modelData.label + (modelData.language && modelData.language !== "en" ? " · " + modelData.language.toUpperCase() : "")
-                        selected: page.source === modelData.key
-                        detail: {
-                            if (!page.found) return ""
-                            const p = page.found.providers.find(x => x.source === modelData.key)
-                            return !p ? "" : p.pending ? "…" : p.ok ? String(p.count) : "!"
-                        }
+                        text: qsTr("All sources")
+                        selected: page.source === "all"
                         onClicked: {
-                            page.source = modelData.key
-                            App.setSetting("comicSource", modelData.key)
-                            if (page.searching || modelData.key === "local") page.run(page.query)
+                            page.source = "all"
+                            App.setSetting("comicSource", "all")
+                            page.run(page.query)
+                        }
+                    }
+                    Repeater {
+                        model: page.sources
+                        Chip {
+                            required property var modelData
+                            // The content language, when it is not English.
+                            text: modelData.label + (modelData.language && modelData.language !== "en" ? " · " + modelData.language.toUpperCase() : "")
+                            selected: page.source === modelData.key
+                            detail: {
+                                if (!page.found) return ""
+                                const p = page.found.providers.find(x => x.source === modelData.key)
+                                return !p ? "" : p.pending ? "…" : p.ok ? String(p.count) : "!"
+                            }
+                            onClicked: {
+                                page.source = modelData.key
+                                App.setSetting("comicSource", modelData.key)
+                                if (page.searching || modelData.key === "local") page.run(page.query)
+                            }
                         }
                     }
                 }
@@ -236,22 +262,33 @@ Item {
 
             // ---------------------------------------------------- idle
             Column {
+                id: idle
                 visible: !page.searching
                 width: parent.width
-                spacing: 34
+                spacing: Theme.sectionGap
 
-                RecentSearches {
-                    id: recent
-                    key: "recentComicSearches"
-                    onPicked: (text) => page.search(text)
+                PageSection {
+                    arranger: idleLayout
+                    key: "recent"
+                    label: qsTr("Recent searches")
+                    RecentSearches {
+                        id: recent
+                        key: "recentComicSearches"
+                        onPicked: (text) => page.search(text)
+                    }
                 }
 
-                Shelf {
-                    title: qsTr("Continue reading")
-                    items: page.history
-                    subtitleFor: (it) => it.unitTitle || ""
-                    progressFor: (it) => it.completed ? 1 : (it.percent || 0)
-                    onOpened: (it, cover) => Router.resume(it)
+                PageSection {
+                    arranger: idleLayout
+                    key: "continue"
+                    label: qsTr("Continue reading")
+                    Shelf {
+                        title: qsTr("Continue reading")
+                        items: page.history
+                        subtitleFor: (it) => it.unitTitle || ""
+                        progressFor: (it) => it.completed ? 1 : (it.percent || 0)
+                        onOpened: (it, cover) => Router.resume(it)
+                    }
                 }
 
                 // While the catalogue loads (or fails), one shelf shows that.
@@ -266,17 +303,27 @@ Item {
                 }
                 Repeater {
                     model: page.useCatalog ? page.feeds.shelves : []
-                    Shelf {
+                    PageSection {
+                        id: feed
                         required property var modelData
-                        width: parent.width
-                        title: Router.shelfTitle(modelData.key)
-                        items: modelData.items
-                        subtitleFor: (it) => [it.type, it.lastChapter ? qsTr("Ch. ") + it.lastChapter : ""].filter(s => s).join(" · ")
-                        onOpened: (it, cover) => readFrom.start(it)
+                        arranger: idleLayout
+                        key: modelData.key
+                        label: Router.shelfTitle(modelData.key)
+                        Shelf {
+                            width: parent.width
+                            title: Router.shelfTitle(feed.modelData.key)
+                            items: feed.modelData.items
+                            subtitleFor: (it) => [it.type, it.lastChapter ? qsTr("Ch. ") + it.lastChapter : ""].filter(s => s).join(" · ")
+                            onOpened: (it, cover) => readFrom.start(it)
+                        }
                     }
                 }
 
-                Column {
+                PageSection {
+                    arranger: idleLayout
+                    key: "latest"
+                    label: qsTr("Latest chapters")
+                  Column {
                     width: parent.width
                     spacing: 16
                     Text {
@@ -306,10 +353,16 @@ Item {
                             page.latestTask = Comics.latest(page.latestLimit)
                         }
                     }
+                  }
                 }
             }
         }
     }
 
     BackToTop { flick: flick }
+    EditPageBar {
+        editing: page.editing
+        arrangers: [topLayout, idleLayout]
+        onDone: page.editing = false
+    }
 }

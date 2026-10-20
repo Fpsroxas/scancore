@@ -930,6 +930,14 @@
             <translation>Ekstensi</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Edit halaman</translation>
+        </message>
+        <message>
+            <source>Spotlight</source>
+            <translation>Sorotan</translation>
+        </message>
+        <message>
             <source>Continue watching</source>
             <translation>Lanjutkan menonton</translation>
         </message>
@@ -1305,8 +1313,20 @@
             <translation>Comick</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Edit halaman</translation>
+        </message>
+        <message>
             <source>Extensions</source>
             <translation>Ekstensi</translation>
+        </message>
+        <message>
+            <source>Search bar</source>
+            <translation>Bilah pencarian</translation>
+        </message>
+        <message>
+            <source>Source chips</source>
+            <translation>Tombol sumber</translation>
         </message>
         <message>
             <source>%1 titles for “%2” from %3&apos;s catalogue</source>
@@ -1359,6 +1379,10 @@
         <message>
             <source>Choose folders</source>
             <translation>Pilih folder</translation>
+        </message>
+        <message>
+            <source>Recent searches</source>
+            <translation>Pencarian terbaru</translation>
         </message>
         <message>
             <source>Continue reading</source>
@@ -1994,6 +2018,25 @@
         </message>
     </context>
     <context>
+        <name>EditPageBar</name>
+        <message>
+            <source>Move sections with the arrows, hide them with the eye</source>
+            <translation>Pindahkan bagian dengan panah, sembunyikan dengan ikon mata</translation>
+        </message>
+        <message>
+            <source>Drag sections to move them, hide them with the eye</source>
+            <translation>Seret bagian untuk memindahkannya, sembunyikan dengan ikon mata</translation>
+        </message>
+        <message>
+            <source>Reset</source>
+            <translation>Atur ulang</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Selesai</translation>
+        </message>
+    </context>
+    <context>
         <name>ExtensionsPage</name>
         <message>
             <source>All languages</source>
@@ -2348,6 +2391,14 @@
             <translation>Selamat malam</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Edit halaman</translation>
+        </message>
+        <message>
+            <source>Greeting</source>
+            <translation>Sapaan</translation>
+        </message>
+        <message>
             <source>Comics</source>
             <translation>Komik</translation>
         </message>
@@ -2358,6 +2409,10 @@
         <message>
             <source>Anime</source>
             <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Last read or watched</source>
+            <translation>Terakhir dibaca atau ditonton</translation>
         </message>
         <message>
             <source>Continue</source>
@@ -2517,6 +2572,62 @@
         <message>
             <source>How big covers are in grids and rows. Smaller fits more on screen.</source>
             <translation>Seberapa besar sampul di kisi dan baris. Lebih kecil muat lebih banyak.</translation>
+        </message>
+        <message>
+            <source>Pages</source>
+            <translation>Halaman</translation>
+        </message>
+        <message>
+            <source>Home, Comics, Novels and Anime each have an Edit page button: move, hide and restyle their sections there.</source>
+            <translation>Beranda, Komik, Novel, dan Anime masing-masing punya tombol Edit halaman: pindahkan, sembunyikan, dan ubah tampilan bagiannya di sana.</translation>
+        </message>
+        <message>
+            <source>Spacing</source>
+            <translation>Jarak</translation>
+        </message>
+        <message>
+            <source>The room between a page&apos;s sections.</source>
+            <translation>Ruang di antara bagian-bagian halaman.</translation>
+        </message>
+        <message>
+            <source>Compact</source>
+            <translation>Rapat</translation>
+        </message>
+        <message>
+            <source>Spacious</source>
+            <translation>Lapang</translation>
+        </message>
+        <message>
+            <source>Corners</source>
+            <translation>Sudut</translation>
+        </message>
+        <message>
+            <source>How round covers, cards, buttons and panels are.</source>
+            <translation>Seberapa bulat sampul, kartu, tombol, dan panel.</translation>
+        </message>
+        <message>
+            <source>Square</source>
+            <translation>Kotak</translation>
+        </message>
+        <message>
+            <source>Subtle</source>
+            <translation>Halus</translation>
+        </message>
+        <message>
+            <source>Round</source>
+            <translation>Bulat</translation>
+        </message>
+        <message>
+            <source>Page arrangements</source>
+            <translation>Susunan halaman</translation>
+        </message>
+        <message>
+            <source>Put every page&apos;s sections back in their first order and look.</source>
+            <translation>Kembalikan bagian setiap halaman ke urutan dan tampilan awalnya.</translation>
+        </message>
+        <message>
+            <source>Reset all</source>
+            <translation>Atur ulang semua</translation>
         </message>
         <message>
             <source>Motion</source>
@@ -3363,12 +3474,24 @@
             <translation> sumber</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Edit halaman</translation>
+        </message>
+        <message>
             <source>Extensions</source>
             <translation>Ekstensi</translation>
         </message>
         <message>
+            <source>Search bar</source>
+            <translation>Bilah pencarian</translation>
+        </message>
+        <message>
             <source>Search by title, or paste a book link</source>
             <translation>Cari berdasarkan judul, atau tempel tautan buku</translation>
+        </message>
+        <message>
+            <source>Source chips</source>
+            <translation>Tombol sumber</translation>
         </message>
         <message>
             <source>More sources (</source>
@@ -3425,6 +3548,10 @@
         <message>
             <source>Choose folders</source>
             <translation>Pilih folder</translation>
+        </message>
+        <message>
+            <source>Recent searches</source>
+            <translation>Pencarian terbaru</translation>
         </message>
         <message>
             <source>Continue reading</source>
@@ -3667,6 +3794,81 @@
         <message>
             <source>Back</source>
             <translation>Kembali</translation>
+        </message>
+    </context>
+    <context>
+        <name>PageSection</name>
+        <message>
+            <source>Hidden</source>
+            <translation>Disembunyikan</translation>
+        </message>
+        <message>
+            <source>Nothing to show right now</source>
+            <translation>Belum ada yang bisa ditampilkan</translation>
+        </message>
+        <message>
+            <source>Look</source>
+            <translation>Tampilan</translation>
+        </message>
+        <message>
+            <source>Move up</source>
+            <translation>Naikkan</translation>
+        </message>
+        <message>
+            <source>Move down</source>
+            <translation>Turunkan</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>Tampilkan</translation>
+        </message>
+        <message>
+            <source>Hide</source>
+            <translation>Sembunyikan</translation>
+        </message>
+        <message>
+            <source>Show as</source>
+            <translation>Tampilkan sebagai</translation>
+        </message>
+        <message>
+            <source>Row</source>
+            <translation>Baris</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>Kisi</translation>
+        </message>
+        <message>
+            <source>Card size</source>
+            <translation>Ukuran kartu</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Kecil</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Sedang</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>Besar</translation>
+        </message>
+        <message>
+            <source>How many</source>
+            <translation>Berapa banyak</translation>
+        </message>
+        <message>
+            <source>All</source>
+            <translation>Semua</translation>
+        </message>
+        <message>
+            <source>Details under covers</source>
+            <translation>Detail di bawah sampul</translation>
+        </message>
+        <message>
+            <source>Progress bars</source>
+            <translation>Bilah kemajuan</translation>
         </message>
     </context>
     <context>

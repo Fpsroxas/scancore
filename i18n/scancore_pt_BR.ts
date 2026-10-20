@@ -930,6 +930,14 @@
             <translation>Extensões</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Editar página</translation>
+        </message>
+        <message>
+            <source>Spotlight</source>
+            <translation>Destaques</translation>
+        </message>
+        <message>
             <source>Continue watching</source>
             <translation>Continuar assistindo</translation>
         </message>
@@ -1305,8 +1313,20 @@
             <translation>Comick</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Editar página</translation>
+        </message>
+        <message>
             <source>Extensions</source>
             <translation>Extensões</translation>
+        </message>
+        <message>
+            <source>Search bar</source>
+            <translation>Barra de pesquisa</translation>
+        </message>
+        <message>
+            <source>Source chips</source>
+            <translation>Botões de fontes</translation>
         </message>
         <message>
             <source>%1 titles for “%2” from %3&apos;s catalogue</source>
@@ -1359,6 +1379,10 @@
         <message>
             <source>Choose folders</source>
             <translation>Escolher pastas</translation>
+        </message>
+        <message>
+            <source>Recent searches</source>
+            <translation>Pesquisas recentes</translation>
         </message>
         <message>
             <source>Continue reading</source>
@@ -1994,6 +2018,25 @@
         </message>
     </context>
     <context>
+        <name>EditPageBar</name>
+        <message>
+            <source>Move sections with the arrows, hide them with the eye</source>
+            <translation>Mova as seções com as setas e oculte-as com o olho</translation>
+        </message>
+        <message>
+            <source>Drag sections to move them, hide them with the eye</source>
+            <translation>Arraste as seções para movê-las e oculte-as com o olho</translation>
+        </message>
+        <message>
+            <source>Reset</source>
+            <translation>Redefinir</translation>
+        </message>
+        <message>
+            <source>Done</source>
+            <translation>Concluído</translation>
+        </message>
+    </context>
+    <context>
         <name>ExtensionsPage</name>
         <message>
             <source>All languages</source>
@@ -2348,6 +2391,14 @@
             <translation>Boa noite</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Editar página</translation>
+        </message>
+        <message>
+            <source>Greeting</source>
+            <translation>Saudação</translation>
+        </message>
+        <message>
             <source>Comics</source>
             <translation>Quadrinhos</translation>
         </message>
@@ -2358,6 +2409,10 @@
         <message>
             <source>Anime</source>
             <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Last read or watched</source>
+            <translation>Último lido ou assistido</translation>
         </message>
         <message>
             <source>Continue</source>
@@ -2517,6 +2572,62 @@
         <message>
             <source>How big covers are in grids and rows. Smaller fits more on screen.</source>
             <translation>O tamanho das capas em grades e fileiras. Menores cabem mais na tela.</translation>
+        </message>
+        <message>
+            <source>Pages</source>
+            <translation>Páginas</translation>
+        </message>
+        <message>
+            <source>Home, Comics, Novels and Anime each have an Edit page button: move, hide and restyle their sections there.</source>
+            <translation>Início, Quadrinhos, Romances e Anime têm um botão Editar página: mova, oculte e mude o visual das seções ali.</translation>
+        </message>
+        <message>
+            <source>Spacing</source>
+            <translation>Espaçamento</translation>
+        </message>
+        <message>
+            <source>The room between a page&apos;s sections.</source>
+            <translation>O espaço entre as seções de uma página.</translation>
+        </message>
+        <message>
+            <source>Compact</source>
+            <translation>Compacto</translation>
+        </message>
+        <message>
+            <source>Spacious</source>
+            <translation>Espaçoso</translation>
+        </message>
+        <message>
+            <source>Corners</source>
+            <translation>Cantos</translation>
+        </message>
+        <message>
+            <source>How round covers, cards, buttons and panels are.</source>
+            <translation>O quanto capas, cartões, botões e painéis são arredondados.</translation>
+        </message>
+        <message>
+            <source>Square</source>
+            <translation>Retos</translation>
+        </message>
+        <message>
+            <source>Subtle</source>
+            <translation>Sutis</translation>
+        </message>
+        <message>
+            <source>Round</source>
+            <translation>Redondos</translation>
+        </message>
+        <message>
+            <source>Page arrangements</source>
+            <translation>Organização das páginas</translation>
+        </message>
+        <message>
+            <source>Put every page&apos;s sections back in their first order and look.</source>
+            <translation>Volta as seções de todas as páginas à ordem e ao visual originais.</translation>
+        </message>
+        <message>
+            <source>Reset all</source>
+            <translation>Redefinir tudo</translation>
         </message>
         <message>
             <source>Motion</source>
@@ -3363,12 +3474,24 @@
             <translation> fontes</translation>
         </message>
         <message>
+            <source>Edit page</source>
+            <translation>Editar página</translation>
+        </message>
+        <message>
             <source>Extensions</source>
             <translation>Extensões</translation>
         </message>
         <message>
+            <source>Search bar</source>
+            <translation>Barra de pesquisa</translation>
+        </message>
+        <message>
             <source>Search by title, or paste a book link</source>
             <translation>Pesquise por título ou cole o link de um livro</translation>
+        </message>
+        <message>
+            <source>Source chips</source>
+            <translation>Botões de fontes</translation>
         </message>
         <message>
             <source>More sources (</source>
@@ -3425,6 +3548,10 @@
         <message>
             <source>Choose folders</source>
             <translation>Escolher pastas</translation>
+        </message>
+        <message>
+            <source>Recent searches</source>
+            <translation>Pesquisas recentes</translation>
         </message>
         <message>
             <source>Continue reading</source>
@@ -3667,6 +3794,81 @@
         <message>
             <source>Back</source>
             <translation>Voltar</translation>
+        </message>
+    </context>
+    <context>
+        <name>PageSection</name>
+        <message>
+            <source>Hidden</source>
+            <translation>Oculta</translation>
+        </message>
+        <message>
+            <source>Nothing to show right now</source>
+            <translation>Nada para mostrar agora</translation>
+        </message>
+        <message>
+            <source>Look</source>
+            <translation>Visual</translation>
+        </message>
+        <message>
+            <source>Move up</source>
+            <translation>Mover para cima</translation>
+        </message>
+        <message>
+            <source>Move down</source>
+            <translation>Mover para baixo</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>Mostrar</translation>
+        </message>
+        <message>
+            <source>Hide</source>
+            <translation>Ocultar</translation>
+        </message>
+        <message>
+            <source>Show as</source>
+            <translation>Mostrar como</translation>
+        </message>
+        <message>
+            <source>Row</source>
+            <translation>Fileira</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>Grade</translation>
+        </message>
+        <message>
+            <source>Card size</source>
+            <translation>Tamanho dos cartões</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Pequeno</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Médio</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>Grande</translation>
+        </message>
+        <message>
+            <source>How many</source>
+            <translation>Quantos</translation>
+        </message>
+        <message>
+            <source>All</source>
+            <translation>Todos</translation>
+        </message>
+        <message>
+            <source>Details under covers</source>
+            <translation>Detalhes sob as capas</translation>
+        </message>
+        <message>
+            <source>Progress bars</source>
+            <translation>Barras de progresso</translation>
         </message>
     </context>
     <context>

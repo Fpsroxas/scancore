@@ -69,6 +69,11 @@ public:
     Q_INVOKABLE QString formatBytes(qint64 bytes) const;
     // Development hook used by SCANCORE_START screenshots.
     Q_INVOKABLE bool saveWindowImage(QObject *window, const QString &path) const;
+    // Moves `item` right after (or before) its sibling in stacking order,
+    // which is also the order Column and Row lay children out in (page
+    // sections, PageArranger.qml).
+    Q_INVOKABLE void stackAfter(QObject *item, QObject *sibling) const;
+    Q_INVOKABLE void stackBefore(QObject *item, QObject *sibling) const;
 
     // {available, version, url, notes}
     Q_INVOKABLE sc::Task *checkForUpdate();
