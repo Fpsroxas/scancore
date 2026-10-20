@@ -80,7 +80,7 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
         run: |
-          for t in scancore_extension_tests scancore_host_tests; do
+          for t in scancore_tests scancore_extension_tests scancore_host_tests; do
             exe=$(find build -name "$t.exe" | head -1)
             [ -n "$exe" ] || continue
             echo "=== $t"
