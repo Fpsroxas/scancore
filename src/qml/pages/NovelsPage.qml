@@ -23,7 +23,7 @@ Item {
     readonly property string catalogLabel: feedsTask && feedsTask.ok && feedsTask.result.label ? feedsTask.result.label : "AniList"
     property bool catalogFailed: false
     readonly property bool catalogResults: !!searchTask && searchTask.ok && !catalogFailed && useCatalog && query.length > 0
-    property var historyTask: Library.history("novel", 16)
+    property var historyTask: Library.continueItems("novel", 16)
     property var libraryTask: Library.entries("novel")
     // Books on this device are listed without a search.
     readonly property bool browsingLocal: source === "local" && query.length === 0
@@ -42,7 +42,7 @@ Item {
         id: refresh
         interval: 500
         onTriggered: {
-            page.historyTask = Library.history("novel", 16)
+            page.historyTask = Library.continueItems("novel", 16)
             page.libraryTask = Library.entries("novel")
         }
     }

@@ -8,12 +8,16 @@ import ScanCore
 // top, or MyAnimeList's top airing, seasonal, popular and top rated.
 Item {
     id: page
-    property var homeTask: Anime.home()
+    // Assigned, not bound: the catalogue's change handler can run while a
+    // binding here is still being evaluated, and the task the binding then
+    // kept was destroyed, leaving the spotlight and the lists empty.
+    property var homeTask: null
     // Settings → Connections: whose lists these are.
     readonly property string catalog: App.settings.catalogAnime || "anilist"
     onCatalogChanged: homeTask = Anime.home()
+    Component.onCompleted: if (!homeTask) homeTask = Anime.home()
     readonly property bool mal: !!home && home.catalog === "mal"
-    property var historyTask: Library.history("anime", 16)
+    property var historyTask: Library.continueItems("anime", 16)
     property var todayTask: Anime.schedule(Math.floor(new Date().setHours(0, 0, 0, 0) / 1000), Math.floor(new Date().setHours(23, 59, 59, 999) / 1000))
     readonly property var home: homeTask && homeTask.ok ? homeTask.result : null
     readonly property var spotlight: home ? (home.spotlight || home.trending).filter(m => m.banner).slice(0, 6) : []
@@ -27,7 +31,7 @@ Item {
         target: Library
         function onChanged() { refresh.restart() }
     }
-    Timer { id: refresh; interval: 500; onTriggered: page.historyTask = Library.history("anime", 16) }
+    Timer { id: refresh; interval: 500; onTriggered: page.historyTask = Library.continueItems("anime", 16) }
     property var history: []
     Connections {
         target: page.historyTask
@@ -304,7 +308,7 @@ Item {
                 onAction: Router.openAnimeSchedule()
                 items: page.todayTask && page.todayTask.ok ? page.todayTask.result : []
                 loading: page.todayTask ? page.todayTask.loading : false
-                subtitleFor: (it) => qsTr("Ep ") + it.airingEpisode + " · " + Qt.formatTime(new Date(it.airingAt * 1000), "hh:mm")
+                subtitleFor: (it) => qsTr("Ep ") + it.airingEpisode + (it.airingEpisodeLast ? "–" + it.airingEpisodeLast : "") + " · " + Qt.formatTime(new Date(it.airingAt * 1000), "hh:mm")
                 onOpened: (it, cover) => Router.openSeries(it, cover)
             }
             Shelf {

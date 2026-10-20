@@ -14,6 +14,7 @@ Item {
     property real zoom: 1
     property color tint: Theme.surface2
     readonly property bool ready: image.status === Image.Ready
+    readonly property bool failed: image.status === Image.Error
 
     Rectangle {
         id: placeholder

@@ -981,6 +981,10 @@
     <context>
         <name>AnimeSchedule</name>
         <message>
+            <source>Episodes </source>
+            <translation>Episodios </translation>
+        </message>
+        <message>
             <source>Schedule</source>
             <translation>Horario</translation>
         </message>

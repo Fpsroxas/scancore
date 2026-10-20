@@ -9,10 +9,11 @@ AbstractButton {
     id: card
     property var item: ({})
     property string coverUrl: item.cover || ""
-    // Comics from extensions (library, history) fetch covers through their
-    // extension even when the list did not say so.
+    // Library and history entries carry no referer: their source gives it
+    // (sites that refuse covers without one, and extensions, which fetch
+    // covers themselves).
     property string referer: item.referer
-        || (item.sourceUrl && !item.sourceUrl.startsWith("http")
+        || (item.sourceUrl
             ? (item.media === "comic" ? Comics.imageReferer(item.sourceUrl) : item.media === "novel" ? Novels.imageReferer(item.sourceUrl) : "") : "")
     property string title: item.title || ""
     property string subtitle: ""
@@ -76,6 +77,8 @@ AbstractButton {
                 referer: card.referer
                 title: card.title
                 radius: Theme.radiusMd
+                // A saved series whose site moved its pictures.
+                onFailedChanged: if (failed && card.item.id && card.item.progressAt !== undefined) Library.refreshCover(card.item.id)
                 zoom: card.hovered ? 1.06 : 1
                 Behavior on zoom { NumberAnimation { duration: Motion.slow; easing.type: Easing.OutCubic } }
                 scale: card.pressed ? 0.975 : 1

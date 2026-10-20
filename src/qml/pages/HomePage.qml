@@ -7,7 +7,7 @@ import ScanCore
 Item {
     id: page
 
-    property var historyTask: Library.history("", 24)
+    property var historyTask: Library.continueItems("", 24)
     property var libraryTask: Library.entries("")
     property var latestTask: Comics.latest(30)
     property var animeTask: Anime.home()
@@ -34,7 +34,7 @@ Item {
         id: refresh
         interval: 400
         onTriggered: {
-            page.historyTask = Library.history("", 24)
+            page.historyTask = Library.continueItems("", 24)
             page.libraryTask = Library.entries("")
         }
     }

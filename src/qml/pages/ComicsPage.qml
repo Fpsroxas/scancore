@@ -14,7 +14,7 @@ Item {
     readonly property int stillSearching: found && searchTask.loading ? (found.pending || 0) : 0
     property int latestLimit: 36
     property var latestTask: Comics.latest(latestLimit)
-    property var historyTask: Library.history("comic", 16)
+    property var historyTask: Library.continueItems("comic", 16)
     // The shelves of the chosen comic catalogue, when search goes through it.
     property var feedsTask: useCatalog ? Comics.catalogFeeds(App.settings.showNsfwSources === true) : null
     readonly property var feeds: feedsTask && feedsTask.ok ? feedsTask.result : ({ shelves: [] })
@@ -30,7 +30,7 @@ Item {
         target: Library
         function onChanged() { refreshHistory.restart() }
     }
-    Timer { id: refreshHistory; interval: 500; onTriggered: page.historyTask = Library.history("comic", 16) }
+    Timer { id: refreshHistory; interval: 500; onTriggered: page.historyTask = Library.continueItems("comic", 16) }
     // Files on this device are listed without a search.
     // "All sources" searches the chosen comic catalogue, then finds the pick
     // on a source.

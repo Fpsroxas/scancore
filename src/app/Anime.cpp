@@ -573,6 +573,9 @@ Task *Anime::recommendations(int anilistId) {
 Task *Anime::schedule(qint64 start, qint64 end) {
     return Task::run([start, end]() -> QVariant {
         QVariantList out;
+        // Episodes of one anime out at the same moment (a whole season at
+        // once) are one entry: airingEpisode to airingEpisodeLast.
+        QHash<QString, qsizetype> slot;
         for (int page = 1; page <= 8; ++page) {
             const auto data = graphql(QStringLiteral("query ($page: Int, $start: Int, $end: Int) { Page(page: $page, "
                                                      "perPage: 50) { pageInfo { hasNextPage } airingSchedules(airingAt_greater: "
@@ -587,9 +590,20 @@ Task *Anime::schedule(qint64 start, qint64 end) {
                 const auto m = r.value("media").toObject();
                 if (m.isEmpty() || m.value("isAdult").toBool())
                     continue;
+                const auto at = qint64(r.value("airingAt").toDouble());
+                const auto episode = r.value("episode").toInt();
+                const auto key = QString::number(m.value("id").toInt()) + QLatin1Char('@') + QString::number(at);
+                if (const auto it = slot.constFind(key); it != slot.cend()) {
+                    auto merged = out[*it].toMap();
+                    merged.insert("airingEpisode", std::min(merged.value("airingEpisode").toInt(), episode));
+                    merged.insert("airingEpisodeLast", std::max(merged.value("airingEpisodeLast").toInt(), episode));
+                    out[*it] = merged;
+                    continue;
+                }
                 auto c = card(m);
-                c.insert("airingAt", qint64(r.value("airingAt").toDouble()));
-                c.insert("airingEpisode", r.value("episode").toInt());
+                c.insert("airingAt", at);
+                c.insert("airingEpisode", episode);
+                slot.insert(key, out.size());
                 out.append(c);
             }
             if (!p.value("pageInfo").toObject().value("hasNextPage").toBool())
