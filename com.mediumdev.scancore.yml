@@ -29,6 +29,9 @@ modules:
   - name: dav1d
     buildsystem: meson
     config-opts:
+      # Meson picks lib64 here, which is off the runtime's library and
+      # pkg-config paths (mpv then cannot find libplacebo).
+      - -Dlibdir=lib
       - -Denable_tests=false
       - -Denable_tools=false
     cleanup:
@@ -53,6 +56,7 @@ modules:
   - name: libplacebo
     buildsystem: meson
     config-opts:
+      - -Dlibdir=lib
       - -Dvulkan=disabled
       - -Dopengl=enabled
       - -Ddemos=false
@@ -105,6 +109,7 @@ modules:
   - name: mpv
     buildsystem: meson
     config-opts:
+      - -Dlibdir=lib
       - -Dlibmpv=true
       - -Dcplayer=false
       - -Dgpl=false
