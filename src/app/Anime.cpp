@@ -83,10 +83,23 @@ QJsonObject graphql(const QString &query, const QJsonObject &variables, const QS
     const auto root = QJsonDocument::fromJson(response.body).object();
     const auto data = root.value("data").toObject();
     if (data.isEmpty()) {
-        for (const auto &e : root.value("errors").toArray())
-            if (e.toObject().value("status").toInt() == 404)
+        QString reason;
+        for (const auto &e : root.value("errors").toArray()) {
+            const auto error = e.toObject();
+            if (error.value("status").toInt() == 404)
                 throw Error(QStringLiteral("Anime not found."), 404);
-        throw Error(QStringLiteral("Anime details are unavailable right now."), 502);
+            if (reason.isEmpty())
+                reason = error.value("message").toString().trimmed();
+        }
+        // AniList is down or has switched its API off (it did so in October
+        // 2026): what was fetched last time, however old, beats an error.
+        if (!cacheKey.isEmpty())
+            if (auto stale = Database::cacheGet(cacheKey, true))
+                return QJsonDocument::fromJson(*stale).object();
+        throw Error(reason.isEmpty() || reason.size() > 200
+                        ? QStringLiteral("AniList is not answering right now. Try again later.")
+                        : QStringLiteral("AniList is unavailable right now: %1").arg(reason),
+                    response.status >= 400 ? response.status : 502);
     }
     if (!cacheKey.isEmpty())
         Database::cachePut(cacheKey, QJsonDocument(data).toJson(QJsonDocument::Compact), ttl);
