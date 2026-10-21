@@ -163,6 +163,10 @@ if(TARGET Qt6::lupdate)
             ${PROJECT_SOURCE_DIR}/i18n/scancore_ru.ts
             ${PROJECT_SOURCE_DIR}/i18n/scancore_tr.ts
             ${PROJECT_SOURCE_DIR}/i18n/scancore_vi.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_pl.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_th.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_fil.ts
+            ${PROJECT_SOURCE_DIR}/i18n/scancore_hi.ts
         RESOURCE_PREFIX /i18n
         LUPDATE_OPTIONS -no-obsolete -locations none)
 else()

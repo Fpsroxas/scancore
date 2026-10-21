@@ -53,6 +53,10 @@ const QVariantMap kDefaults{
     {"theme", "dark"},
     {"accent", "mono"},
     {"reducedMotion", false},
+    // E-ink screens: black and white, no motion, a flash on comic page
+    // turns (einkFlash), novels paged by taps.
+    {"eink", false},
+    {"einkFlash", true},
     {"readerMode", "strip"},
     {"readerWidth", 820},
     {"readerGap", 0},

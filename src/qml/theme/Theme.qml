@@ -10,14 +10,16 @@ QtObject {
     id: theme
 
     readonly property string mode: App.settings.theme
-    readonly property bool custom: mode === "custom"
+    // E-ink screens (Settings → Interface): black on white whatever the theme.
+    readonly property bool eink: App.settings.eink === true
+    readonly property bool custom: mode === "custom" && !eink
     // Settings → Theme: {name, base, windowOpacity, panelOpacity, background,
     // backgroundAnimated, backgroundFit, backgroundDim, backgroundBlur}.
     readonly property var customTheme: App.settings.customTheme || ({})
     readonly property color customBase: hexOr(customTheme.base, "#15171d")
-    readonly property bool dark: custom ? isDark(customBase)
+    readonly property bool dark: eink ? false : custom ? isDark(customBase)
         : mode === "dark" || mode === "black" || (mode === "system" && Qt.styleHints.colorScheme !== Qt.ColorScheme.Light)
-    readonly property bool black: mode === "black"
+    readonly property bool black: mode === "black" && !eink
 
     // Base colours per theme. Settings draws its theme previews from these.
     readonly property var palettes: ({
@@ -25,10 +27,12 @@ QtObject {
                  border: "#e2e2e6", borderStrong: "#cfcfd5", text: "#141416", textMuted: "#5f5f68", textFaint: "#94949c" },
         dark: { bg: "#0c0c0d", sidebar: "#101012", surface: "#151517", surface2: "#1c1c1f", surface3: "#26262a",
                 border: "#25252a", borderStrong: "#36363c", text: "#f2f2f3", textMuted: "#a3a3ab", textFaint: "#6c6c75" },
+        eink: { bg: "#ffffff", sidebar: "#ffffff", surface: "#ffffff", surface2: "#f2f2f2", surface3: "#dcdcdc",
+                border: "#9a9a9a", borderStrong: "#000000", text: "#000000", textMuted: "#202020", textFaint: "#4a4a4a" },
         black: { bg: "#000000", sidebar: "#050505", surface: "#0b0b0b", surface2: "#141414", surface3: "#1d1d1d",
                  border: "#25252a", borderStrong: "#36363c", text: "#f2f2f3", textMuted: "#a3a3ab", textFaint: "#6c6c75" }
     })
-    readonly property var palette: custom ? generate(customBase) : palettes[black ? "black" : dark ? "dark" : "light"]
+    readonly property var palette: eink ? palettes.eink : custom ? generate(customBase) : palettes[black ? "black" : dark ? "dark" : "light"]
 
     // Surfaces over a background picture or a see-through window let it show:
     // panels by the theme's panel opacity, the page itself entirely.
@@ -70,10 +74,10 @@ QtObject {
     readonly property var accentSet: accents[App.settings.accent] || accents.mono
     // Any colour, from the colour wheel.
     readonly property bool customAccent: App.settings.accent === "custom" && hexOr(App.settings.customAccent, "") !== ""
-    readonly property color accent: customAccent ? App.settings.customAccent : dark ? accentSet.dark : accentSet.light
+    readonly property color accent: eink ? "#000000" : customAccent ? App.settings.customAccent : dark ? accentSet.dark : accentSet.light
     // Text and icons on the accent colour. (A name starting with "on" would be
     // read as a signal handler and silently never bound.)
-    readonly property color accentInk: customAccent ? (luminance(accent) > 0.36 ? "#0c0c0d" : "#ffffff")
+    readonly property color accentInk: eink ? "#ffffff" : customAccent ? (luminance(accent) > 0.36 ? "#0c0c0d" : "#ffffff")
         : dark ? accentSet.on.dark : accentSet.on.light
 
     // Novel reader page colours; "app" follows the app theme.

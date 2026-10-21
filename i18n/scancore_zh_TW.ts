@@ -3166,6 +3166,22 @@
             <source>History</source>
             <translation>歷史</translation>
         </message>
+        <message>
+            <source>E-ink screen</source>
+            <translation>電子紙螢幕</translation>
+        </message>
+        <message>
+            <source>For Boox, Kobo and other e-paper devices: black on white, no animation, comics in pages and novels turned page by page with a tap on the sides.</source>
+            <translation>適用於文石 Boox、Kobo 等電子紙裝置：白底黑字、無動畫，漫畫按頁顯示，小說點擊兩側逐頁翻頁。</translation>
+        </message>
+        <message>
+            <source>Flash on page turns</source>
+            <translation>翻頁時閃屏</translation>
+        </message>
+        <message>
+            <source>A moment of black when a comic page turns clears the last page's ghost.</source>
+            <translation>翻漫畫頁時短暫顯示黑色，清除上一頁的殘影。</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

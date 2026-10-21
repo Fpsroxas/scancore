@@ -3166,6 +3166,22 @@
             <source>History</source>
             <translation>Riwayat</translation>
         </message>
+        <message>
+            <source>E-ink screen</source>
+            <translation>Layar e-ink</translation>
+        </message>
+        <message>
+            <source>For Boox, Kobo and other e-paper devices: black on white, no animation, comics in pages and novels turned page by page with a tap on the sides.</source>
+            <translation>Untuk Boox, Kobo, dan perangkat e-paper lain: hitam di atas putih, tanpa animasi, komik per halaman, dan novel dibalik per halaman dengan ketukan di sisi.</translation>
+        </message>
+        <message>
+            <source>Flash on page turns</source>
+            <translation>Kedip saat ganti halaman</translation>
+        </message>
+        <message>
+            <source>A moment of black when a comic page turns clears the last page's ghost.</source>
+            <translation>Sekejap hitam saat halaman komik berganti menghapus bayangan halaman sebelumnya.</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

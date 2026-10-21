@@ -275,10 +275,16 @@ Rectangle {
         WheelScroll { id: wheel; wheelStep: 110 }
 
         // Phone: a tap toggles the bar. On the list, which takes touches
-        // before anything behind it.
+        // before anything behind it. E-ink: the sides turn a page at once
+        // (no scrolling to redraw), the middle toggles the bar.
         TapHandler {
-            enabled: App.platform === "android"
-            onSingleTapped: reader.barsShown = !reader.barsShown
+            enabled: App.platform === "android" || Theme.eink
+            onSingleTapped: (point) => {
+                const x = point.position.x
+                if (Theme.eink && x < flick.width / 3) flick.scrollTo(flick.contentY - flick.height * 0.92, false)
+                else if (Theme.eink && x > flick.width * 2 / 3) flick.scrollTo(flick.contentY + flick.height * 0.92, false)
+                else reader.barsShown = !reader.barsShown
+            }
         }
 
         onContentYChanged: {

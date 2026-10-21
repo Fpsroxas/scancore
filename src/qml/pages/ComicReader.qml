@@ -147,6 +147,8 @@ Rectangle {
     }
 
     onCurrentPanelChanged: {
+        // E-ink: a black frame between pages clears the last one's ghost.
+        if (Theme.eink && mode === "paged" && App.settings.einkFlash !== false) einkFlash.start()
         saveProgress(false)
         if (panels.length > 0 && currentPanel >= panels.length * 0.7) prefetchNext()
     }
@@ -1264,4 +1266,13 @@ Rectangle {
             }
         }
     }
+
+    Rectangle {
+        id: einkFlashCover
+        anchors.fill: parent
+        z: 1000
+        color: "black"
+        visible: einkFlash.running
+    }
+    Timer { id: einkFlash; interval: 120 }
 }

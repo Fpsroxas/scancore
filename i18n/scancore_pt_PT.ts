@@ -3166,6 +3166,22 @@
             <source>History</source>
             <translation>Histórico</translation>
         </message>
+        <message>
+            <source>E-ink screen</source>
+            <translation>Ecrã de tinta eletrónica</translation>
+        </message>
+        <message>
+            <source>For Boox, Kobo and other e-paper devices: black on white, no animation, comics in pages and novels turned page by page with a tap on the sides.</source>
+            <translation>Para Boox, Kobo e outros dispositivos de papel eletrónico: preto sobre branco, sem animações, banda desenhada em páginas e romances virados página a página com um toque nos lados.</translation>
+        </message>
+        <message>
+            <source>Flash on page turns</source>
+            <translation>Piscar ao virar a página</translation>
+        </message>
+        <message>
+            <source>A moment of black when a comic page turns clears the last page's ghost.</source>
+            <translation>Um instante de preto ao virar uma página de banda desenhada apaga o fantasma da anterior.</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

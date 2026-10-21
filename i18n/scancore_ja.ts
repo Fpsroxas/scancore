@@ -3166,6 +3166,22 @@
             <source>History</source>
             <translation>履歴</translation>
         </message>
+        <message>
+            <source>E-ink screen</source>
+            <translation>E Ink 画面</translation>
+        </message>
+        <message>
+            <source>For Boox, Kobo and other e-paper devices: black on white, no animation, comics in pages and novels turned page by page with a tap on the sides.</source>
+            <translation>Boox や Kobo などの電子ペーパー端末向け：白地に黒、アニメーションなし、コミックはページ表示、小説は左右をタップしてページ送り。</translation>
+        </message>
+        <message>
+            <source>Flash on page turns</source>
+            <translation>ページめくりで画面を更新</translation>
+        </message>
+        <message>
+            <source>A moment of black when a comic page turns clears the last page's ghost.</source>
+            <translation>コミックのページをめくるときに一瞬黒くして、前のページの残像を消します。</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

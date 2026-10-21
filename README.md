@@ -266,7 +266,7 @@ On desktop, use the **Open browser check** button (or the globe next to the sour
 <details>
 <summary><b>Can I read in Spanish or another language?</b></summary>
 
-Yes. The interface is in fourteen languages besides English (Settings → Interface → Language, or the first screen), and SCANCORE turns on the sources in your language by default; Settings → Sources → Source languages adds others. "Read from" finds a series under its name in your language, and when no source in your language has it, offers to look in another.
+Yes. The interface is in eighteen languages besides English (Settings → Interface → Language, or the first screen), and SCANCORE turns on the sources in your language by default; Settings → Sources → Source languages adds others. "Read from" finds a series under its name in your language, and when no source in your language has it, offers to look in another.
 </details>
 
 <details>

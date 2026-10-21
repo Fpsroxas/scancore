@@ -239,6 +239,25 @@ SettingsPane {
             description: qsTr("Turns off page transitions, hover lifts, animated backgrounds and other animations.")
             Toggle { checked: App.settings.reducedMotion === true; onToggled: App.setSetting("reducedMotion", checked) }
         }
+        SettingRow {
+            iconName: "book-open"
+            title: qsTr("E-ink screen")
+            description: qsTr("For Boox, Kobo and other e-paper devices: black on white, no animation, comics in pages and novels turned page by page with a tap on the sides.")
+            Toggle {
+                checked: App.settings.eink === true
+                onToggled: {
+                    App.setSetting("eink", checked)
+                    if (checked) App.setSetting("readerMode", "paged")
+                }
+            }
+        }
+        SettingRow {
+            visible: App.settings.eink === true
+            iconName: "square"
+            title: qsTr("Flash on page turns")
+            description: qsTr("A moment of black when a comic page turns clears the last page's ghost.")
+            Toggle { checked: App.settings.einkFlash !== false; onToggled: App.setSetting("einkFlash", checked) }
+        }
     }
 
     SettingsGroup {

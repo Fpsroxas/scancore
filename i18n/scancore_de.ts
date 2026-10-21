@@ -3166,6 +3166,22 @@
             <source>History</source>
             <translation>Verlauf</translation>
         </message>
+        <message>
+            <source>E-ink screen</source>
+            <translation>E-Ink-Bildschirm</translation>
+        </message>
+        <message>
+            <source>For Boox, Kobo and other e-paper devices: black on white, no animation, comics in pages and novels turned page by page with a tap on the sides.</source>
+            <translation>Für Boox, Kobo und andere E-Paper-Geräte: schwarz auf weiß, keine Animationen, Comics seitenweise und Romane mit einem Tipp auf die Ränder Seite für Seite.</translation>
+        </message>
+        <message>
+            <source>Flash on page turns</source>
+            <translation>Aufblitzen beim Umblättern</translation>
+        </message>
+        <message>
+            <source>A moment of black when a comic page turns clears the last page's ghost.</source>
+            <translation>Ein kurzer schwarzer Moment beim Umblättern eines Comics entfernt den Schatten der letzten Seite.</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

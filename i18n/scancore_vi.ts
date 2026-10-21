@@ -3166,6 +3166,22 @@
             <source>History</source>
             <translation>Lịch sử</translation>
         </message>
+        <message>
+            <source>E-ink screen</source>
+            <translation>Màn hình e-ink</translation>
+        </message>
+        <message>
+            <source>For Boox, Kobo and other e-paper devices: black on white, no animation, comics in pages and novels turned page by page with a tap on the sides.</source>
+            <translation>Cho Boox, Kobo và các thiết bị giấy điện tử khác: chữ đen nền trắng, không hiệu ứng, truyện tranh theo trang và tiểu thuyết lật từng trang bằng cách chạm hai bên.</translation>
+        </message>
+        <message>
+            <source>Flash on page turns</source>
+            <translation>Nháy khi lật trang</translation>
+        </message>
+        <message>
+            <source>A moment of black when a comic page turns clears the last page's ghost.</source>
+            <translation>Một khoảnh khắc màu đen khi lật trang truyện tranh xóa bóng mờ của trang trước.</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

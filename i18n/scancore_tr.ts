@@ -3166,6 +3166,22 @@
             <source>History</source>
             <translation>Geçmiş</translation>
         </message>
+        <message>
+            <source>E-ink screen</source>
+            <translation>E-mürekkep ekran</translation>
+        </message>
+        <message>
+            <source>For Boox, Kobo and other e-paper devices: black on white, no animation, comics in pages and novels turned page by page with a tap on the sides.</source>
+            <translation>Boox, Kobo ve diğer e-kâğıt cihazları için: beyaz üstüne siyah, animasyon yok, çizgi romanlar sayfa sayfa ve romanlar kenarlara dokunarak sayfa sayfa çevrilir.</translation>
+        </message>
+        <message>
+            <source>Flash on page turns</source>
+            <translation>Sayfa çevrilirken parlat</translation>
+        </message>
+        <message>
+            <source>A moment of black when a comic page turns clears the last page's ghost.</source>
+            <translation>Bir çizgi roman sayfası çevrilirken kısa bir siyah an, önceki sayfanın izini temizler.</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
