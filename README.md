@@ -37,7 +37,7 @@
 ## Why SCANCORE
 
 - **Native and fast.** Written in C++20 with Qt Quick, so it renders on the GPU and starts quickly. There is no Electron and no embedded web UI.
-- **Your sources, your choice.** SCANCORE ships no scan sites and runs no extension repository. It reads your files, a few official and public catalogues, and the sources you add yourself.
+- **Your sources, your choice.** SCANCORE runs no extension repository. It reads your files, a few official and public catalogues, a bundled pack of built-in sources (which can be switched off) and the sources you add yourself.
 - **Trackers built in.** AniList, MyAnimeList and Comick keep your lists in step as you read and watch, and their catalogues are there to browse.
 - **Three kinds of media, one library.** Comics, novels and anime share the same library, history, downloads and search.
 - **Local first.** No account and no server needed. Everything lives in one SQLite file you can back up.
@@ -156,7 +156,7 @@ The bundle contains SCANCORE; Flatpak downloads the KDE runtime and Qt WebEngine
 
 ## Sources
 
-SCANCORE is a reader. It hosts no content, ships no sources for scan sites and runs no extension repository. It reads only what sites show publicly and does not bypass paywalls, logins or locked chapters.
+SCANCORE is a reader. It hosts no content and runs no extension repository. It reads only what sites show publicly and does not bypass paywalls, logins or locked chapters.
 
 | Kind | Built in |
 | --- | --- |
@@ -164,7 +164,7 @@ SCANCORE is a reader. It hosts no content, ships no sources for scan sites and r
 | Novels | EPUB books on this device, Royal Road |
 | Anime | AniList metadata, ani.zip episode details, AniSkip |
 
-Everything else comes from sources you add yourself. SCANCORE 2.0 runs the extensions people already use: Mihon and Tachiyomi extensions for comics, LNReader plugins for novels and Aniyomi extensions for anime, from repositories you choose. SCANCORE asks you to trust each extension's signing key before it runs.
+Besides these, SCANCORE includes a **bundled pack** of built-in comic and novel sources. It is kept apart from the rest of the app on purpose (`src/sources/bundled`, `sources/bundled.json`): it can be switched off remotely, left out with the `SCANCORE_WITH_BUNDLED_SOURCES` build option, or removed in a single commit, because the app mainly depends on its built-in trackers and on the extensions you add, not on the pack. Everything else comes from sources you add yourself. SCANCORE 2.0 runs the extensions people already use: Mihon and Tachiyomi extensions for comics, LNReader plugins for novels and Aniyomi extensions for anime, from repositories you choose. SCANCORE asks you to trust each extension's signing key before it runs.
 
 Rights holders: see [TAKEDOWN.md](TAKEDOWN.md).
 
@@ -240,7 +240,7 @@ Join the [SCANCORE Discord](https://scancore.onl/discord) for questions, feedbac
 Issues and pull requests are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) has the build, test and source-adapter details. Questions and ideas go in [Discussions](https://github.com/medium-gh/scancore/discussions), bug reports in [Issues](https://github.com/medium-gh/scancore/issues), and chat on [Discord](https://scancore.onl/discord). Release notes are in [CHANGELOG.md](CHANGELOG.md).
 
 - **A bug or a feature?** Open an issue first for anything larger than a small fix.
-- **Sources** for scan sites are not accepted: SCANCORE ships none (see [Sources](#sources)).
+- **Sources** for scan sites are not accepted as pull requests (see [Sources](#sources)).
 - Run `ctest` and the live probe before opening a pull request.
 
 ## FAQ
@@ -301,4 +301,4 @@ Fonts: DM Sans, Space Grotesk and Literata (SIL Open Font Licence). Icons: [Luci
 
 ## Disclaimer
 
-SCANCORE does not host any content and ships no sources for scan sites. Extensions you add are other people's code, run at your choice. SCANCORE's developers are not affiliated with any site or extension. Support the creators and official releases of the series you enjoy.
+SCANCORE does not host any content. Its bundled sources are a separable pack. Extensions you add are other people's code, run at your choice. SCANCORE's developers are not affiliated with any site or extension. Support the creators and official releases of the series you enjoy.
