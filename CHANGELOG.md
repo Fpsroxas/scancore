@@ -2,6 +2,11 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.3.3 — 2026-10-21
+
+- **Reader controls stay out of the status bar**: on phones, the novel reader's top bar no longer slides up over the clock and icons when it hides as you scroll. Both readers now draw under the status bar and keep their controls below it.
+- **The novel's title is readable on phones**: it gets its own row under the reader's buttons instead of shrinking to "…".
+
 ## 2.3.2 — 2026-10-21
 
 - **Settings → Sources is fast again**: it lists SCANCORE's built-in sources (extensions have their own page), those you have series on first, a dozen at a time with Show all and a search. With many extensions installed it used to build a row for each of their sources.

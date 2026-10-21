@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.3.3" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#233--2026-10-21</url>
+      <description>
+        <p>On phones the readers' top bar no longer slides over the status bar when it hides, both readers draw under the status bar with their controls below it, and the novel's title gets its own row under the reader's buttons.</p>
+      </description>
+    </release>
     <release version="2.3.2" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#232--2026-10-21</url>
       <description>
