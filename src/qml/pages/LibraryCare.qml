@@ -8,6 +8,20 @@ Item {
     id: page
     property var task: Upkeep.report()
     readonly property var report: task && task.ok ? task.result : ({ sources: [], failing: [], stalled: [], duplicates: [] })
+    // Long lists show their first rows until asked: a big library can have
+    // hundreds of series on a source that stopped.
+    readonly property int firstRows: 20
+    property var expanded: ({})
+    function capped(list, key) { return expanded[key] ? list : list.slice(0, firstRows) }
+    component ShowAll: ScButton {
+        property string listKey
+        property int total: 0
+        visible: total > page.firstRows
+        x: Theme.gutter
+        variant: "ghost"
+        text: page.expanded[listKey] ? qsTr("Show fewer") : qsTr("Show all %1").arg(total)
+        onClicked: page.expanded = Object.assign({}, page.expanded, { [listKey]: !page.expanded[listKey] })
+    }
     readonly property bool empty: report.sources.length + report.failing.length + report.stalled.length + report.duplicates.length === 0
     // The series to keep in each duplicate group, by group index.
     property var keep: ({})
@@ -203,8 +217,9 @@ Item {
                         font.pixelSize: Theme.textXl
                         font.weight: Font.DemiBold
                     }
+                    ShowAll { listKey: "failing"; total: page.report.failing.length }
                     Repeater {
-                        model: page.report.failing
+                        model: page.capped(page.report.failing, "failing")
                         Loader {
                             required property var modelData
                             x: Theme.gutter
@@ -241,8 +256,9 @@ Item {
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm
                     }
+                    ShowAll { listKey: "stalled"; total: page.report.stalled.length }
                     Repeater {
-                        model: page.report.stalled
+                        model: page.capped(page.report.stalled, "stalled")
                         Loader {
                             required property var modelData
                             x: Theme.gutter
@@ -281,8 +297,9 @@ Item {
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm
                     }
+                    ShowAll { listKey: "duplicates"; total: page.report.duplicates.length }
                     Repeater {
-                        model: page.report.duplicates
+                        model: page.capped(page.report.duplicates, "duplicates")
                         Rectangle {
                             id: group
                             required property var modelData

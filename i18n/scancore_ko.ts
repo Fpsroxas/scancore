@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>%1 추가함</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>확장 프로그램 찾기</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>%1개 더: 검색해서 찾으세요.</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>최고 평점</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>간단히 보기</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>전체 %1</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>비추천</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>댓글 더 보기(%1)</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3670,6 +3690,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>최근 모든 소스가 응답했고 두 번 저장된 것도 없습니다.</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>간단히 보기</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>모두 보기(%1)</translation>
         </message>
     </context>
     <context>
@@ -5622,6 +5650,10 @@
             <source>No reviews yet.</source>
             <translation>아직 리뷰가 없습니다.</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>리뷰 더 보기(%1)</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6389,6 +6421,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>모든 소스</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6703,6 +6742,26 @@
         <message>
             <source>Move them</source>
             <translation>옮기기</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>소스 찾기</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>간단히 보기</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>만화 소스 %1개 모두 보기</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>소설 소스 %1개 모두 보기</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>일치하는 내장 소스가 없습니다. 확장 프로그램의 소스는 확장 프로그램 페이지에 있습니다.</translation>
         </message>
     </context>
     <context>

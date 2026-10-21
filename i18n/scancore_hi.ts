@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>%1 जोड़ा गया</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>एक्सटेंशन खोजें</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>%1 और: ढूँढने के लिए खोजें।</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>सबसे ऊंची रेटिंग</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>कम दिखाएँ</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>सभी %1</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>डाउनवोट</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>और टिप्पणियाँ दिखाएँ (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3662,6 +3682,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>हाल में हर स्रोत ने जवाब दिया, और कुछ भी दो बार सेव नहीं है।</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>कम दिखाएँ</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>सभी %1 दिखाएँ</translation>
         </message>
     </context>
     <context>
@@ -5614,6 +5642,10 @@
             <source>No reviews yet.</source>
             <translation>अभी कोई रिव्यू नहीं।</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>और समीक्षाएँ दिखाएँ (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6374,6 +6406,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>सभी स्रोत</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6688,6 +6727,26 @@
         <message>
             <source>Move them</source>
             <translation>इन्हें ले जाएं</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>सोर्स खोजें</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>कम दिखाएँ</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>सभी %1 कॉमिक सोर्स दिखाएँ</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>सभी %1 उपन्यास सोर्स दिखाएँ</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>कोई बिल्ट-इन सोर्स मेल नहीं खाता। एक्सटेंशन के सोर्स एक्सटेंशन पेज पर हैं।</translation>
         </message>
     </context>
     <context>

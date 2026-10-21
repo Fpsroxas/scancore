@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>%1 eklendi</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Eklenti bul</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>%1 tane daha: bulmak için arayın.</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>En yüksek puanlı</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Daha az göster</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>Tümü (%1)</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>Beğenme</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>Daha fazla yorum göster (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3670,6 +3690,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>Tüm kaynaklar son zamanlarda yanıt verdi ve hiçbir şey iki kez kaydedilmedi.</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Daha az göster</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>Tümünü göster (%1)</translation>
         </message>
     </context>
     <context>
@@ -5622,6 +5650,10 @@
             <source>No reviews yet.</source>
             <translation>Henüz inceleme yok.</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>Daha fazla inceleme göster (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6389,6 +6421,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>Tüm kaynaklar</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6703,6 +6742,26 @@
         <message>
             <source>Move them</source>
             <translation>Taşı</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>Kaynak bul</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Daha az göster</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>%1 çizgi roman kaynağının tümünü göster</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>%1 roman kaynağının tümünü göster</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>Eşleşen yerleşik kaynak yok. Eklenti kaynakları Eklentiler sayfasında.</translation>
         </message>
     </context>
     <context>

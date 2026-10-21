@@ -9,9 +9,35 @@ SettingsPane {
     iconName: "globe"
 
     property var refreshTask: null
-    readonly property var comicSources: Comics.sources()
-    readonly property var novelSources: { App.dependOn(Extensions.novelPackInstalled); return Novels.sources().filter(s => !s.extended) }
-    readonly property int extendedCount: { App.dependOn(Extensions.novelPackInstalled); return Novels.sources().filter(s => s.extended).length }
+    readonly property var allComicSources: Comics.sources()
+    readonly property var allNovelSources: { App.dependOn(Extensions.novelPackInstalled); return Novels.sources() }
+    // Built-in sources only: extensions have their own page (above), and a
+    // row each for hundreds of extension sources made this page crawl.
+    readonly property var comicSources: savedFirst(allComicSources.filter(s => !s.extension), comicCounts)
+    readonly property var novelSources: savedFirst(allNovelSources.filter(s => !s.extended && !s.extension), novelCounts)
+    readonly property int extendedCount: allNovelSources.filter(s => s.extended).length
+
+    // A few rows per list until the reader asks for all or searches: every
+    // row is a few dozen items, all made when the page opens.
+    readonly property int collapsedRows: 12
+    property string sourceQuery: ""
+    property bool allComics: false
+    property bool allNovels: false
+    // Sources with saved series first, then those switched on, otherwise in
+    // the registry's order (the sort here is not stable, hence the index).
+    function savedFirst(list, counts) {
+        const rank = (s) => ((counts[s.key] || 0) > 0 ? 0 : 2) + (s.enabled ? 0 : 1)
+        return list.map((s, i) => ({ s: s, i: i, r: rank(s) }))
+            .sort((a, b) => a.r - b.r || a.i - b.i)
+            .map(x => x.s)
+    }
+    function shown(list, all) {
+        const q = sourceQuery.trim().toLowerCase()
+        if (q.length)
+            return list.filter(s => s.label.toLowerCase().indexOf(q) >= 0 || String(s.base).toLowerCase().indexOf(q) >= 0
+                                    || String(s.languageName || "").toLowerCase().indexOf(q) >= 0)
+        return all ? list : list.slice(0, collapsedRows)
+    }
 
     // Saved series per source, to move them elsewhere.
     readonly property var comicCounts: { App.dependOn(Library.revision); return Library.sourceCounts("comic") }
@@ -20,7 +46,7 @@ SettingsPane {
     // for everyone, or their extension removed).
     readonly property var goneSources: {
         const out = []
-        const known = new Set(comicSources.map(s => s.key).concat(Novels.sources().map(s => s.key)))
+        const known = new Set(allComicSources.map(s => s.key).concat(allNovelSources.map(s => s.key)))
         for (const [media, counts] of [["comic", comicCounts], ["novel", novelCounts]])
             for (const key of Object.keys(counts))
                 if (!known.has(key) && key !== "local") {
@@ -71,13 +97,14 @@ SettingsPane {
                 text: qsTr("Move %1").arg(sourceRow.saved)
                 onClicked: pane.moveFrom(sourceRow.media, modelData.key, modelData.label)
             }
+            // Files on this device have no site to check or open.
             IconButton {
-                visible: App.platform !== "android"
+                visible: App.platform !== "android" && modelData.key !== "local"
                 iconName: "shield-check"
                 tip: qsTr("Pass a browser check for this site")
                 onClicked: Router.openSiteCheck(modelData.base + "/")
             }
-            IconButton { iconName: "external-link"; tip: qsTr("Open site"); onClicked: App.openUrl(modelData.base) }
+            IconButton { visible: modelData.key !== "local"; iconName: "external-link"; tip: qsTr("Open site"); onClicked: App.openUrl(modelData.base) }
         }
     }
 
@@ -310,20 +337,55 @@ SettingsPane {
         }
     }
 
+    SearchField {
+        width: parent.width
+        placeholderText: qsTr("Find a source")
+        text: pane.sourceQuery
+        onTextChanged: pane.sourceQuery = text
+    }
+
     SettingsGroup {
+        id: comicGroup
+        readonly property var visibleSources: pane.shown(pane.comicSources, pane.allComics)
+        visible: visibleSources.length > 0
         title: qsTr("Comics")
         note: App.platform !== "android" ? "If a site asks for a browser check, the shield opens it inside SCANCORE once; the app then reuses the clearance." : ""
         Repeater {
-            model: pane.comicSources
+            model: comicGroup.visibleSources
             SourceRow {}
+        }
+        SettingRow {
+            visible: !pane.sourceQuery.trim().length && pane.comicSources.length > pane.collapsedRows
+            clickable: true
+            title: pane.allComics ? qsTr("Show fewer") : qsTr("Show all %1 comic sources").arg(pane.comicSources.length)
+            onClicked: pane.allComics = !pane.allComics
         }
     }
 
     SettingsGroup {
+        id: novelGroup
+        readonly property var visibleSources: pane.shown(pane.novelSources, pane.allNovels)
+        visible: visibleSources.length > 0
         title: qsTr("Novels")
         Repeater {
-            model: pane.novelSources
+            model: novelGroup.visibleSources
             SourceRow { media: "novel" }
         }
+        SettingRow {
+            visible: !pane.sourceQuery.trim().length && pane.novelSources.length > pane.collapsedRows
+            clickable: true
+            title: pane.allNovels ? qsTr("Show fewer") : qsTr("Show all %1 novel sources").arg(pane.novelSources.length)
+            onClicked: pane.allNovels = !pane.allNovels
+        }
+    }
+
+    Text {
+        visible: pane.sourceQuery.trim().length > 0 && !comicGroup.visible && !novelGroup.visible
+        width: parent.width
+        text: qsTr("No built-in source matches. Extension sources are on the Extensions page.")
+        color: Theme.textMuted
+        font.family: Theme.fontSans
+        font.pixelSize: Theme.textSm
+        wrapMode: Text.Wrap
     }
 }

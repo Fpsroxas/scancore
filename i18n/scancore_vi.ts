@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>Đã thêm %1</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Tìm tiện ích</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>Còn %1: tìm kiếm để thấy.</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>Điểm cao nhất</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Thu gọn</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>Tất cả %1</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>Phản đối</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>Hiện thêm bình luận (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3670,6 +3690,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>Mọi nguồn đều phản hồi gần đây và không có gì bị lưu hai lần.</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Thu gọn</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>Hiện tất cả %1</translation>
         </message>
     </context>
     <context>
@@ -5622,6 +5650,10 @@
             <source>No reviews yet.</source>
             <translation>Chưa có đánh giá.</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>Hiện thêm đánh giá (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6389,6 +6421,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>Tất cả nguồn</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6703,6 +6742,26 @@
         <message>
             <source>Move them</source>
             <translation>Chuyển chúng</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>Tìm nguồn</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Thu gọn</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>Hiện tất cả %1 nguồn truyện tranh</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>Hiện tất cả %1 nguồn tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>Không có nguồn tích hợp nào khớp. Nguồn từ tiện ích mở rộng nằm ở trang Tiện ích mở rộng.</translation>
         </message>
     </context>
     <context>

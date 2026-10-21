@@ -14,7 +14,11 @@ Dialog {
         App.dependOn(PageLayout.revision)
         return arranger ? arranger.sections().filter(s => s.removed).map(s => ({ key: s.key, label: s.label })) : []
     }
+    // Only while the sheet is open: two options per installed extension
+    // (hundreds), which no page should pay for until asked.
+    property string query: ""
     readonly property var listings: {
+        if (!dialog.visible) return []
         App.dependOn(PageLayout.revision, App.manifestVersion)
         const taken = PageLayout.extras(pageKey).map(e => e.key)
         const out = []
@@ -148,6 +152,13 @@ Dialog {
                 font.pixelSize: Theme.textSm
                 topPadding: 4
             }
+            SearchField {
+                visible: dialog.listings.length > 12
+                width: parent.width
+                placeholderText: qsTr("Find an extension")
+                text: dialog.query
+                onTextChanged: dialog.query = text
+            }
             Text {
                 visible: dialog.listings.length === 0
                 width: parent.width
@@ -158,7 +169,12 @@ Dialog {
                 font.pixelSize: Theme.textSm
             }
             Repeater {
-                model: dialog.listings
+                // The first 30, or what the search finds.
+                model: {
+                    const q = dialog.query.trim().toLowerCase()
+                    return q.length ? dialog.listings.filter(l => l.label.toLowerCase().indexOf(q) >= 0).slice(0, 60)
+                                    : dialog.listings.slice(0, 30)
+                }
                 Option {
                     required property var modelData
                     label: modelData.label
@@ -169,6 +185,15 @@ Dialog {
                         Router.toast(qsTr("Added %1").arg(modelData.label), "success")
                     }
                 }
+            }
+            Text {
+                visible: !dialog.query.trim().length && dialog.listings.length > 30
+                width: parent.width
+                wrapMode: Text.Wrap
+                text: qsTr("%1 more: search to find one.").arg(dialog.listings.length - 30)
+                color: Theme.textFaint
+                font.family: Theme.fontSans
+                font.pixelSize: Theme.textSm
             }
         }
     }

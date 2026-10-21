@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>Naidagdag ang %1</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Maghanap ng extension</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>%1 pa: maghanap para makita ang isa.</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>Pinakamataas ang rating</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Ipakita nang mas kaunti</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>Lahat (%1)</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>Downvote</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>Ipakita ang iba pang komento (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3662,6 +3682,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>Sumagot kamakailan ang lahat ng source, at walang dalawang beses na-save.</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Ipakita nang mas kaunti</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>Ipakita lahat (%1)</translation>
         </message>
     </context>
     <context>
@@ -5614,6 +5642,10 @@
             <source>No reviews yet.</source>
             <translation>Wala pang review.</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>Ipakita ang iba pang review (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6374,6 +6406,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>Lahat ng source</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6688,6 +6727,26 @@
         <message>
             <source>Move them</source>
             <translation>Ilipat sila</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>Maghanap ng source</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Ipakita nang mas kaunti</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>Ipakita lahat ng %1 comic source</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>Ipakita lahat ng %1 novel source</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>Walang tugmang built-in na source. Nasa page ng Extensions ang mga source ng extension.</translation>
         </message>
     </context>
     <context>

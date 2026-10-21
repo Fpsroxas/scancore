@@ -360,19 +360,25 @@ Dialog {
                 }
             }
 
-            // Several series: one row each.
-            Column {
+            // Several series: one row each, in a list of its own so only the
+            // rows on screen exist (and re-read `rows` when one changes).
+            ListView {
                 visible: dialog.batch
                 width: parent.width
+                height: Math.min(contentHeight, 70 * 6.5)
                 spacing: 6
-                Repeater {
-                    model: dialog.batch ? dialog.rows.length : 0
-                    Rectangle {
+                clip: true
+                boundsBehavior: Flickable.StopAtBounds
+                interactive: contentHeight > height
+                model: dialog.batch ? dialog.rows.length : 0
+                WheelScroll {}
+                ScrollBar.vertical: ScScrollBar {}
+                delegate: Rectangle {
                         id: batchRow
                         required property int index
                         readonly property var entry: dialog.entries[index] || {}
                         readonly property var row: dialog.rows[index] || { state: "finding", matches: [] }
-                        width: parent.width
+                        width: ListView.view ? ListView.view.width : 300
                         height: 64
                         radius: Theme.radiusMd
                         color: Theme.surface2
@@ -446,7 +452,6 @@ Dialog {
                             }
                         }
                     }
-                }
             }
 
             Column {

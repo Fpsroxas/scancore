@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>%1 hinzugefügt</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Erweiterung finden</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>%1 weitere: suche, um eine zu finden.</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>Am besten bewertet</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Weniger zeigen</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>Alle %1</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>Runterstimmen</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>Mehr Kommentare zeigen (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3670,6 +3690,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>Alle Quellen haben zuletzt geantwortet, und nichts ist doppelt gespeichert.</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Weniger zeigen</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>Alle %1 zeigen</translation>
         </message>
     </context>
     <context>
@@ -5622,6 +5650,10 @@
             <source>No reviews yet.</source>
             <translation>Noch keine Rezensionen.</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>Mehr Rezensionen zeigen (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6389,6 +6421,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>Alle Quellen</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6703,6 +6742,26 @@
         <message>
             <source>Move them</source>
             <translation>Verschieben</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>Quelle suchen</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Weniger zeigen</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>Alle %1 Comic-Quellen zeigen</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>Alle %1 Roman-Quellen zeigen</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>Keine eingebaute Quelle passt. Quellen aus Erweiterungen findest du auf der Seite Erweiterungen.</translation>
         </message>
     </context>
     <context>

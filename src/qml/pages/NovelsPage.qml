@@ -40,6 +40,12 @@ Item {
     }
     Component.onCompleted: if (source === "local") run("")
     readonly property var allSources: { App.dependOn(Extensions.novelPackInstalled); return Novels.sources() }
+    // Each source's entry in the running search, by key, for the chips.
+    readonly property var providerMap: {
+        const map = {}
+        for (const p of (page.found && page.found.providers) || []) map[p.source] = p
+        return map
+    }
     readonly property var sources: allSources.filter(s => s.enabled && s.searchable && !s.extended)
     readonly property var moreSources: allSources.filter(s => s.enabled && s.searchable && s.extended)
         .sort((a, b) => a.label.localeCompare(b.label))
@@ -140,9 +146,12 @@ Item {
                 arranger: topLayout
                 key: "sources"
                 label: qsTr("Source chips")
-                ChipRow {
+                Column {
+                    width: parent.width
+                    spacing: 10
                     Select {
                         visible: page.moreSources.length > 0
+                        x: Theme.gutter
                         implicitWidth: 220
                         model: [{ value: "", label: qsTr("More sources (") + page.moreSources.length + ")" }]
                             .concat(page.moreSources.map(x => ({ value: x.key, label: x.label + (x.language && x.language !== "en" ? " · " + x.language : "") })))
@@ -153,31 +162,15 @@ Item {
                             if (page.searching) page.run(page.query)
                         }
                     }
-                    Chip {
-                        text: qsTr("All sources")
-                        selected: page.source === "all"
-                        onClicked: {
-                            page.source = "all"
-                            App.setSetting("novelSource", "all")
-                            page.run(page.query)
-                        }
-                    }
-                    Repeater {
-                        model: page.sources
-                        Chip {
-                            required property var modelData
-                            text: modelData.label
-                            selected: page.source === modelData.key
-                            detail: {
-                                if (!page.found) return ""
-                                const p = page.found.providers.find(x => x.source === modelData.key)
-                                return !p ? "" : p.pending ? "…" : p.ok ? String(p.count) : "!"
-                            }
-                            onClicked: {
-                                page.source = modelData.key
-                                App.setSetting("novelSource", modelData.key)
-                                if (page.searching || modelData.key === "local") page.run(page.query)
-                            }
+                    SourceChips {
+                        sources: page.sources
+                        current: page.source
+                        providers: page.providerMap
+                        showLanguage: false
+                        onPicked: (key) => {
+                            page.source = key
+                            App.setSetting("novelSource", key)
+                            if (key === "all" || page.searching || key === "local") page.run(page.query)
                         }
                     }
                 }

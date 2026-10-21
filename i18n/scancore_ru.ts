@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>Добавлено: %1</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Найти расширение</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>Ещё %1: найдите через поиск.</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>Лучшие по оценке</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Свернуть</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>Все (%1)</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>Минус</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>Показать ещё комментарии (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3670,6 +3690,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>Все источники недавно отвечали, и ничего не сохранено дважды.</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Свернуть</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>Показать все (%1)</translation>
         </message>
     </context>
     <context>
@@ -5622,6 +5650,10 @@
             <source>No reviews yet.</source>
             <translation>Рецензий пока нет.</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>Показать ещё отзывы (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6389,6 +6421,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>Все источники</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6703,6 +6742,26 @@
         <message>
             <source>Move them</source>
             <translation>Перенести</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>Найти источник</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Свернуть</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>Показать все источники комиксов (%1)</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>Показать все источники новелл (%1)</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>Подходящих встроенных источников нет. Источники расширений — на странице «Расширения».</translation>
         </message>
     </context>
     <context>

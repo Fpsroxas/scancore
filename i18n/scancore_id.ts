@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>%1 ditambahkan</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Cari ekstensi</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>%1 lagi: cari untuk menemukannya.</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>Rating teratas</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Tampilkan lebih sedikit</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>Semua %1</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>Tidak suka</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>Tampilkan komentar lain (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3670,6 +3690,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>Semua sumber merespons akhir-akhir ini, dan tidak ada yang tersimpan dua kali.</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Tampilkan lebih sedikit</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>Tampilkan semua %1</translation>
         </message>
     </context>
     <context>
@@ -5622,6 +5650,10 @@
             <source>No reviews yet.</source>
             <translation>Belum ada ulasan.</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>Tampilkan ulasan lain (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6389,6 +6421,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>Semua sumber</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6703,6 +6742,26 @@
         <message>
             <source>Novels</source>
             <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>Cari sumber</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>Tampilkan lebih sedikit</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>Tampilkan semua %1 sumber komik</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>Tampilkan semua %1 sumber novel</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>Tidak ada sumber bawaan yang cocok. Sumber dari ekstensi ada di halaman Ekstensi.</translation>
         </message>
     </context>
     <context>

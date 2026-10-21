@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>เพิ่ม %1 แล้ว</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>ค้นหาส่วนขยาย</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>อีก %1 รายการ: ค้นหาเพื่อหา</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>คะแนนสูงสุด</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>แสดงน้อยลง</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>ทั้งหมด %1</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>โหวตลง</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>แสดงความคิดเห็นเพิ่ม (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3662,6 +3682,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>ทุกแหล่งตอบสนองเมื่อเร็ว ๆ นี้ และไม่มีอะไรบันทึกซ้ำ</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>แสดงน้อยลง</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>แสดงทั้งหมด %1</translation>
         </message>
     </context>
     <context>
@@ -5614,6 +5642,10 @@
             <source>No reviews yet.</source>
             <translation>ยังไม่มีรีวิว</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>แสดงรีวิวเพิ่ม (%1)</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6374,6 +6406,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>ทุกแหล่ง</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6688,6 +6727,26 @@
         <message>
             <source>Move them</source>
             <translation>ย้ายเลย</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>ค้นหาแหล่ง</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>แสดงน้อยลง</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>แสดงแหล่งการ์ตูนทั้งหมด %1 แหล่ง</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>แสดงแหล่งนิยายทั้งหมด %1 แหล่ง</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>ไม่มีแหล่งในตัวที่ตรงกัน แหล่งจากส่วนขยายอยู่ในหน้าส่วนขยาย</translation>
         </message>
     </context>
     <context>

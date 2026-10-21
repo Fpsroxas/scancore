@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>%1を追加しました</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>拡張機能を探す</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>ほかに %1 件：検索して探してください。</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>高評価</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>表示を減らす</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>すべて（%1）</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>低評価</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>コメントをさらに表示（%1）</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3670,6 +3690,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>最近すべてのソースが応答し、二重に保存されたものもありません。</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>表示を減らす</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>すべて表示（%1）</translation>
         </message>
     </context>
     <context>
@@ -5622,6 +5650,10 @@
             <source>No reviews yet.</source>
             <translation>まだレビューはありません。</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>レビューをさらに表示（%1）</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6389,6 +6421,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>すべてのソース</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6703,6 +6742,26 @@
         <message>
             <source>Move them</source>
             <translation>移す</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>ソースを探す</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>表示を減らす</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>コミックのソース %1 件をすべて表示</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>小説のソース %1 件をすべて表示</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>一致する組み込みソースはありません。拡張機能のソースは「拡張機能」ページにあります。</translation>
         </message>
     </context>
     <context>

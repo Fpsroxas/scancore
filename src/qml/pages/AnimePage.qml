@@ -336,16 +336,24 @@ Item {
                         font.pixelSize: Theme.textXl
                         font.weight: Font.DemiBold
                     }
+                    // A couple of dozen until asked: extensions can add hundreds.
                     Flow {
+                        id: animeSourceChips
+                        property bool all: false
                         width: parent.width
                         spacing: 8
                         Repeater {
-                            model: page.sources
+                            model: animeSourceChips.all ? page.sources : page.sources.slice(0, 24)
                             Chip {
                                 required property var modelData
                                 text: modelData.label + (modelData.language && modelData.language !== "en" ? " · " + modelData.language.toUpperCase() : "")
                                 onClicked: Router.openSource(modelData.key)
                             }
+                        }
+                        Chip {
+                            visible: page.sources.length > 24
+                            text: animeSourceChips.all ? qsTr("Show fewer") : qsTr("All %1").arg(page.sources.length)
+                            onClicked: animeSourceChips.all = !animeSourceChips.all
                         }
                     }
                 }

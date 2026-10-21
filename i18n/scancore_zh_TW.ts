@@ -719,6 +719,14 @@
             <source>Added %1</source>
             <translation>已新增%1</translation>
         </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>查詢擴充功能</translation>
+        </message>
+        <message>
+            <source>%1 more: search to find one.</source>
+            <translation>還有 %1 個：請搜尋尋找。</translation>
+        </message>
     </context>
     <context>
         <name>AniListSignIn</name>
@@ -1122,6 +1130,14 @@
         <message>
             <source>Top rated</source>
             <translation>評分最高</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>收合</translation>
+        </message>
+        <message>
+            <source>All %1</source>
+            <translation>全部 %1</translation>
         </message>
     </context>
     <context>
@@ -2488,6 +2504,10 @@
             <source>Downvote</source>
             <translation>踩</translation>
         </message>
+        <message>
+            <source>Show more comments (%1)</source>
+            <translation>顯示更多留言（%1）</translation>
+        </message>
     </context>
     <context>
         <name>Dock</name>
@@ -3670,6 +3690,14 @@
         <message>
             <source>Every source answered lately, and nothing is saved twice.</source>
             <translation>所有來源最近都有回應，也沒有重複儲存的作品。</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>收合</translation>
+        </message>
+        <message>
+            <source>Show all %1</source>
+            <translation>顯示全部 %1</translation>
         </message>
     </context>
     <context>
@@ -5622,6 +5650,10 @@
             <source>No reviews yet.</source>
             <translation>還沒有評價。</translation>
         </message>
+        <message>
+            <source>Show more reviews (%1)</source>
+            <translation>顯示更多評價（%1）</translation>
+        </message>
     </context>
     <context>
         <name>Router</name>
@@ -6389,6 +6421,13 @@
         </message>
     </context>
     <context>
+        <name>SourceChips</name>
+        <message>
+            <source>All sources</source>
+            <translation>全部來源</translation>
+        </message>
+    </context>
+    <context>
         <name>SourcePage</name>
         <message>
             <source>Source settings</source>
@@ -6703,6 +6742,26 @@
         <message>
             <source>Move them</source>
             <translation>遷移</translation>
+        </message>
+        <message>
+            <source>Find a source</source>
+            <translation>尋找來源</translation>
+        </message>
+        <message>
+            <source>Show fewer</source>
+            <translation>收合</translation>
+        </message>
+        <message>
+            <source>Show all %1 comic sources</source>
+            <translation>顯示全部 %1 個漫畫來源</translation>
+        </message>
+        <message>
+            <source>Show all %1 novel sources</source>
+            <translation>顯示全部 %1 個小說來源</translation>
+        </message>
+        <message>
+            <source>No built-in source matches. Extension sources are on the Extensions page.</source>
+            <translation>沒有相符的內建來源。擴充功能的來源在「擴充功能」頁面。</translation>
         </message>
     </context>
     <context>

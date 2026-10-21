@@ -85,6 +85,12 @@ Item {
 
     ReadFromDialog { id: readFrom }
 
+    // Each source's entry in the running search, by key, for the chips.
+    readonly property var providerMap: {
+        const map = {}
+        for (const p of (page.found && page.found.providers) || []) map[p.source] = p
+        return map
+    }
     readonly property var sources: Comics.sources().filter(s => s.enabled && (!s.nsfw || App.settings.showNsfwSources))
 
     SmoothFlickable {
@@ -143,34 +149,15 @@ Item {
                 arranger: topLayout
                 key: "sources"
                 label: qsTr("Source chips")
-                ChipRow {
-                    Chip {
-                        text: qsTr("All sources")
-                        selected: page.source === "all"
-                        onClicked: {
-                            page.source = "all"
-                            App.setSetting("comicSource", "all")
-                            page.run(page.query)
-                        }
-                    }
-                    Repeater {
-                        model: page.sources
-                        Chip {
-                            required property var modelData
-                            // The content language, when it is not English.
-                            text: modelData.label + (modelData.language && modelData.language !== "en" ? " · " + modelData.language.toUpperCase() : "")
-                            selected: page.source === modelData.key
-                            detail: {
-                                if (!page.found) return ""
-                                const p = page.found.providers.find(x => x.source === modelData.key)
-                                return !p ? "" : p.pending ? "…" : p.ok ? String(p.count) : "!"
-                            }
-                            onClicked: {
-                                page.source = modelData.key
-                                App.setSetting("comicSource", modelData.key)
-                                if (page.searching || modelData.key === "local") page.run(page.query)
-                            }
-                        }
+                SourceChips {
+                    sources: page.sources
+                    current: page.source
+                    providers: page.providerMap
+                    showLanguage: true
+                    onPicked: (key) => {
+                        page.source = key
+                        App.setSetting("comicSource", key)
+                        if (key === "all" || page.searching || key === "local") page.run(page.query)
                     }
                 }
             }
