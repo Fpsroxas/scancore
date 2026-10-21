@@ -65,6 +65,30 @@ Item {
         return { index: 0, label: qsTr("Watch episode 1"), detail: "" }
     }
 
+    // Episodes can be downloaded when they play from an anime source with
+    // SCANCORE's own player: {source, animeUrl?}, or null.
+    readonly property var downloadSource: {
+        App.dependOn(Downloads.revision)
+        if (!Anime.nativePlayerAvailable) return null
+        if (fromSource) return (media.source || summary.source) ? { source: media.source || summary.source } : null
+        const p = Anime.provider(anilistId)
+        return p.source ? { source: p.source, animeUrl: p.url } : null
+    }
+    readonly property var downloadStates: { App.dependOn(Downloads.revision); return seriesId ? Downloads.states(seriesId) : ({}) }
+    function download(list) {
+        if (!downloadSource || list.length === 0) return
+        Downloads.enqueue(Object.assign({}, series, { id: seriesId }), list.map(ep => ({
+            key: ep.key, title: ep.title, url: ep.url || "",
+            download: Object.assign({}, downloadSource, fromSource ? { episodeUrl: ep.url } : { number: Number(ep.number) })
+        })))
+        Router.toast(list.length === 1 ? qsTr("Downloading episode %1").arg(list[0].number) : qsTr("Downloading %1 episodes").arg(list.length), "info")
+    }
+    // Not watched to the end and not downloaded yet.
+    function unwatched() {
+        return episodes.filter(e => !(progress[e.key] && progress[e.key].completed) && !downloadStates[e.key])
+    }
+    ActionMenu { id: downloadMenu }
+
     function watch(i) {
         if (i < 0 || i >= episodes.length) return
         Library.markSeen(seriesId)
@@ -203,6 +227,19 @@ Item {
                     anchors.rightMargin: Theme.gutter - 6
                     anchors.verticalCenter: parent.verticalCenter
                     IconButton {
+                        id: downloadButton
+                        visible: page.downloadSource !== null
+                        iconName: "download"
+                        tip: qsTr("Download episodes")
+                        onClicked: {
+                            const left = page.unwatched()
+                            downloadMenu.openAt(downloadButton, 0, downloadButton.height, [
+                                { text: qsTr("Next %1 unwatched").arg(Math.min(5, left.length)), icon: "download", enabled: left.length > 0, run: () => page.download(left.slice(0, 5)) },
+                                { text: qsTr("All %1 unwatched").arg(left.length), icon: "download", enabled: left.length > 0, run: () => page.download(left) }
+                            ])
+                        }
+                    }
+                    IconButton {
                         iconName: "check"
                         tip: qsTr("Mark all as watched")
                         onClicked: Library.markUnits(page.series, page.episodes, true)
@@ -295,6 +332,29 @@ Item {
                                     radius: 6
                                     color: Theme.alpha("#000000", 0.65)
                                     Text { id: epNum; anchors.centerIn: parent; text: "EP " + ep.modelData.number; color: "white"; font.family: Theme.fontSans; font.pixelSize: 11; font.weight: Font.Bold }
+                                }
+                                // Download: start it, see it go, or delete it.
+                                IconButton {
+                                    readonly property var job: page.downloadStates[ep.modelData.key] || null
+                                    visible: page.downloadSource !== null || job !== null
+                                    anchors.right: parent.right
+                                    anchors.top: parent.top
+                                    anchors.margins: 4
+                                    diameter: 32
+                                    iconSize: 16
+                                    iconName: !job ? "download" : job.status === "done" ? "check" : job.status === "failed" ? "triangle-alert" : job.status === "running" ? "loader-circle" : "clock"
+                                    iconColor: "white"
+                                    background: Rectangle { radius: 16; color: Theme.alpha("#000000", 0.6) }
+                                    tip: !job ? qsTr("Download")
+                                        : job.status === "done" ? qsTr("Downloaded: delete")
+                                        : job.status === "failed" ? qsTr("Download failed: try again")
+                                        : job.status === "running" && job.total > 0 ? Math.floor(job.done / job.total * 100) + "%" + qsTr(": stop")
+                                        : qsTr("Waiting: stop")
+                                    onClicked: {
+                                        if (!job) page.download([ep.modelData])
+                                        else if (job.status === "failed") page.download([ep.modelData])
+                                        else Downloads.removeUnit(page.seriesId, ep.modelData.key)
+                                    }
                                 }
                                 Rectangle {
                                     visible: ep.state !== null

@@ -894,6 +894,46 @@
             <source>You might also like</source>
             <translation>Das könnte dir auch gefallen</translation>
         </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>Folge %1 wird heruntergeladen</translation>
+        </message>
+        <message>
+            <source>Downloading %1 episodes</source>
+            <translation>%1 Folgen werden heruntergeladen</translation>
+        </message>
+        <message>
+            <source>Download episodes</source>
+            <translation>Folgen herunterladen</translation>
+        </message>
+        <message>
+            <source>Next %1 unwatched</source>
+            <translation>Nächste %1 ungesehenen</translation>
+        </message>
+        <message>
+            <source>All %1 unwatched</source>
+            <translation>Alle %1 ungesehenen</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Herunterladen</translation>
+        </message>
+        <message>
+            <source>Downloaded: delete</source>
+            <translation>Heruntergeladen: löschen</translation>
+        </message>
+        <message>
+            <source>Download failed: try again</source>
+            <translation>Download fehlgeschlagen: erneut versuchen</translation>
+        </message>
+        <message>
+            <source>: stop</source>
+            <translation>: anhalten</translation>
+        </message>
+        <message>
+            <source>Waiting: stop</source>
+            <translation>Wartet: anhalten</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1083,6 +1123,94 @@
             <source>Goes straight to the next episode&apos;s countdown when the credits start.</source>
             <translation>Springt beim Abspann direkt zum Countdown der nächsten Folge.</translation>
         </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>Untertitel</translation>
+        </message>
+        <message>
+            <source>For SCANCORE's player. Subtitles with their own styling keep it, apart from the size.</source>
+            <translation>Für den SCANCORE-Player. Untertitel mit eigener Gestaltung behalten diese, bis auf die Größe.</translation>
+        </message>
+        <message>
+            <source>Size</source>
+            <translation>Größe</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Klein</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>Normal</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>Groß</translation>
+        </message>
+        <message>
+            <source>Huge</source>
+            <translation>Riesig</translation>
+        </message>
+        <message>
+            <source>Colour</source>
+            <translation>Farbe</translation>
+        </message>
+        <message>
+            <source>White</source>
+            <translation>Weiß</translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <translation>Gelb</translation>
+        </message>
+        <message>
+            <source>Light blue</source>
+            <translation>Hellblau</translation>
+        </message>
+        <message>
+            <source>Outline</source>
+            <translation>Umriss</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>Dünn</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>Dick</translation>
+        </message>
+        <message>
+            <source>Dark box behind the lines</source>
+            <translation>Dunkler Kasten hinter den Zeilen</translation>
+        </message>
+        <message>
+            <source>Easier to read over bright scenes.</source>
+            <translation>Besser lesbar bei hellen Szenen.</translation>
+        </message>
+        <message>
+            <source>Picture</source>
+            <translation>Bild</translation>
+        </message>
+        <message>
+            <source>Sharpen (Anime4K)</source>
+            <translation>Schärfen (Anime4K)</translation>
+        </message>
+        <message>
+            <source>Cleaner lines and upscaling for lower-resolution episodes. Best needs a strong graphics card; on phones Fast is the most to try.</source>
+            <translation>Klarere Linien und Hochskalierung für Folgen in niedriger Auflösung. „Beste“ braucht eine starke Grafikkarte; auf Handys höchstens „Schnell“ probieren.</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Aus</translation>
+        </message>
+        <message>
+            <source>Fast</source>
+            <translation>Schnell</translation>
+        </message>
+        <message>
+            <source>Best</source>
+            <translation>Beste</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1156,6 +1284,80 @@
         <message>
             <source>Back to top</source>
             <translation>Nach oben</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastOverlay</name>
+        <message>
+            <source>Connecting…</source>
+            <translation>Verbinden…</translation>
+        </message>
+        <message>
+            <source>Loading…</source>
+            <translation>Laden…</translation>
+        </message>
+        <message>
+            <source>Paused</source>
+            <translation>Pausiert</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>Abgeschlossen</translation>
+        </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>Etwas ist schiefgelaufen</translation>
+        </message>
+        <message>
+            <source>Playing</source>
+            <translation>Läuft</translation>
+        </message>
+        <message>
+            <source>Playing on %1</source>
+            <translation>Läuft auf %1</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>10 Sekunden zurück</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Nächste Folge</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>Streamen beenden</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastPicker</name>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>Auf einen Fernseher streamen</translation>
+        </message>
+        <message>
+            <source>Chromecast</source>
+            <translation>Chromecast</translation>
+        </message>
+        <message>
+            <source>TV (DLNA)</source>
+            <translation>Fernseher (DLNA)</translation>
+        </message>
+        <message>
+            <source>Looking on this network…</source>
+            <translation>Suche in diesem Netzwerk…</translation>
+        </message>
+        <message>
+            <source>Nothing found. The TV or Chromecast needs to be on and on the same Wi-Fi as this device.</source>
+            <translation>Nichts gefunden. Der Fernseher oder Chromecast muss eingeschaltet und im selben WLAN wie dieses Gerät sein.</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>Erneut suchen</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Schließen</translation>
         </message>
     </context>
     <context>
@@ -2230,6 +2432,22 @@
         <message>
             <source>Open series</source>
             <translation>Serie öffnen</translation>
+        </message>
+        <message>
+            <source> saved · </source>
+            <translation> gespeichert · </translation>
+        </message>
+        <message>
+            <source>On a comic, novel or anime page, use the download button on a chapter or episode, or select several at once. Downloads open without a connection.</source>
+            <translation>Nutze auf einer Comic-, Roman- oder Anime-Seite den Download-Knopf an einem Kapitel oder einer Folge, oder wähle mehrere auf einmal. Downloads öffnen sich ohne Verbindung.</translation>
+        </message>
+        <message>
+            <source>Stop and delete</source>
+            <translation>Anhalten und löschen</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Löschen</translation>
         </message>
     </context>
     <context>
@@ -5124,6 +5342,13 @@
         </message>
     </context>
     <context>
+        <name>sc::Anime</name>
+        <message>
+            <source>Another app</source>
+            <translation>Andere App</translation>
+        </message>
+    </context>
+    <context>
         <name>SeriesPage</name>
         <message>
             <source>Start reading</source>
@@ -6950,6 +7175,54 @@
         <message>
             <source>EP </source>
             <translation>FL. </translation>
+        </message>
+        <message>
+            <source> · Downloaded</source>
+            <translation> · Heruntergeladen</translation>
+        </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>Folge %1 wird heruntergeladen</translation>
+        </message>
+        <message>
+            <source>Downloading…</source>
+            <translation>Lade herunter…</translation>
+        </message>
+        <message>
+            <source>Download this episode</source>
+            <translation>Diese Folge herunterladen</translation>
+        </message>
+        <message>
+            <source>Could not open it there.</source>
+            <translation>Konnte dort nicht geöffnet werden.</translation>
+        </message>
+        <message>
+            <source>Continue on %1</source>
+            <translation>Auf %1 fortsetzen</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>An %1 gesendet</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>Noch nichts zu senden: lies oder schau zuerst ein wenig.</translation>
+        </message>
+        <message>
+            <source>Open in another app</source>
+            <translation>In anderer App öffnen</translation>
+        </message>
+        <message>
+            <source>Open in another player</source>
+            <translation>In anderem Player öffnen</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>Streamen beenden</translation>
+        </message>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>Auf einen Fernseher streamen</translation>
         </message>
     </context>
     <context>

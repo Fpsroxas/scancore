@@ -3,7 +3,13 @@
 #include "core/Http.h"
 #include "core/Task.h"
 
+#include <QColor>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 #include <QGuiApplication>
+#include <QHash>
+#include <QStandardPaths>
 #include <QMutex>
 #include <QOpenGLContext>
 #include <QOpenGLFramebufferObject>
@@ -125,7 +131,7 @@ void setString(mpv_handle *mpv, const char *name, const QString &value) {
 // touches files, scripts or other programs.
 const QSet<QString> &allowedOptions() {
     static const QSet<QString> allowed{
-        "user-agent", "referrer", "http-header-fields", "network-timeout", "demuxer-lavf-format", "demuxer-lavf-o",
+        "user-agent", "referrer", "http-header-fields", "network-timeout", "demuxer", "demuxer-lavf-format", "demuxer-lavf-o",
         "stream-lavf-o", "start", "aid", "sid", "vid", "sub-delay", "audio-delay", "cache-secs", "demuxer-readahead-secs"};
     return allowed;
 }
@@ -478,6 +484,15 @@ void MpvPlayer::load() {
     value.format = MPV_FORMAT_NODE_ARRAY;
     value.u.list = &list;
     mpv_set_property(mpv, "http-header-fields", MPV_FORMAT_NODE, &value);
+    // mpv keeps options from one file to the next: the last video's go back
+    // to their defaults first (a downloaded episode's HLS demuxer must not
+    // reach the next stream).
+    static const QList<QPair<const char *, const char *>> defaults{
+        {"demuxer", "auto"}, {"demuxer-lavf-format", ""}, {"demuxer-lavf-o", ""}, {"stream-lavf-o", ""}, {"aid", "auto"}, {"sid", "auto"},
+        {"vid", "auto"}, {"sub-delay", "0"}, {"audio-delay", "0"}};
+    for (const auto &[name, value] : defaults)
+        if (!m_options.contains(QLatin1String(name)))
+            mpv_set_property_string(mpv, name, value);
     for (auto it = m_options.begin(); it != m_options.end(); ++it) {
         if (allowedOptions().contains(it.key()))
             setString(mpv, it.key().toUtf8().constData(), it.value().toString());
@@ -674,6 +689,81 @@ void MpvPlayer::setSubtitlePosition(int position) {
         qint64 value = position;
         mpv_set_property_async(m_core->mpv, 0, "sub-pos", MPV_FORMAT_INT64, &value);
     }
+#endif
+}
+
+#ifdef SCANCORE_HAVE_MPV
+namespace {
+
+// Anime4K's mode A: restore, then upscale; "fast" for most graphics, "hq"
+// for strong ones. The shaders come from the app's resources into its
+// cache folder once, as mpv reads files.
+QStringList sharpenShaders(const QString &mode) {
+    static const QHash<QString, QStringList> modes{
+        {QStringLiteral("fast"),
+         {"Clamp_Highlights", "Restore_CNN_M", "Upscale_CNN_x2_M", "AutoDownscalePre_x2", "AutoDownscalePre_x4", "Upscale_CNN_x2_S"}},
+        {QStringLiteral("hq"),
+         {"Clamp_Highlights", "Restore_CNN_VL", "Upscale_CNN_x2_VL", "AutoDownscalePre_x2", "AutoDownscalePre_x4", "Upscale_CNN_x2_M"}}};
+    QStringList out;
+    const auto dir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + QStringLiteral("/anime4k");
+    QDir().mkpath(dir);
+    for (const auto &name : modes.value(mode)) {
+        const auto file = QStringLiteral("Anime4K_%1.glsl").arg(name);
+        const auto path = dir + QLatin1Char('/') + file;
+        const QString resource = QStringLiteral(":/shaders/anime4k/") + file;
+        if (QFileInfo(path).size() != QFileInfo(resource).size()) {
+            QFile::remove(path);
+            if (!QFile::copy(resource, path))
+                return {};
+        }
+        out.append(path);
+    }
+    return out;
+}
+
+} // namespace
+#endif
+
+void MpvPlayer::setLook(const QVariantMap &look) {
+    if (look == m_look)
+        return;
+    m_look = look;
+    emit lookChanged();
+#ifdef SCANCORE_HAVE_MPV
+    auto *mpv = m_core->mpv;
+    if (!mpv)
+        return;
+    const auto number = [&](const char *key, double fallback) { return look.value(QLatin1String(key), fallback).toDouble(); };
+    setString(mpv, "sub-scale", QString::number(std::clamp(number("subtitleScale", 1), 0.5, 3.0)));
+    // Older mpv names it "sub-border-*".
+    const auto outline = QString::number(std::clamp(number("subtitleOutline", 3), 0.0, 10.0));
+    if (mpv_set_property_string(mpv, "sub-outline-size", outline.toUtf8().constData()) < 0)
+        setString(mpv, "sub-border-size", outline);
+    const auto color = look.value(QStringLiteral("subtitleColor")).toString();
+    setString(mpv, "sub-color", QColor::isValidColorName(color) ? color : QStringLiteral("#FFFFFFFF"));
+    // A dark box behind the lines instead of an outline.
+    const bool box = look.value(QStringLiteral("subtitleBox")).toBool();
+    setString(mpv, "sub-border-style", box ? QStringLiteral("opaque-box") : QStringLiteral("outline-and-shadow"));
+    const auto boxColor = box ? QStringLiteral("#B0000000") : QStringLiteral("#FF000000");
+    if (mpv_set_property_string(mpv, "sub-outline-color", boxColor.toUtf8().constData()) < 0)
+        setString(mpv, "sub-border-color", boxColor);
+    // A list, so no separator (":" or ";" by system) gets in the way.
+    const auto shaders = sharpenShaders(look.value(QStringLiteral("sharpen")).toString());
+    QList<QByteArray> paths;
+    for (const auto &path : shaders)
+        paths.append(path.toUtf8());
+    QList<mpv_node> nodes;
+    for (auto &path : paths) {
+        mpv_node n;
+        n.format = MPV_FORMAT_STRING;
+        n.u.string = path.data();
+        nodes.append(n);
+    }
+    mpv_node_list list{int(nodes.size()), nodes.data(), nullptr};
+    mpv_node value;
+    value.format = MPV_FORMAT_NODE_ARRAY;
+    value.u.list = &list;
+    mpv_set_property(mpv, "glsl-shaders", MPV_FORMAT_NODE, &value);
 #endif
 }
 

@@ -894,6 +894,46 @@
             <source>You might also like</source>
             <translation>你可能也喜歡</translation>
         </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>正在下載第 %1 集</translation>
+        </message>
+        <message>
+            <source>Downloading %1 episodes</source>
+            <translation>正在下載 %1 集</translation>
+        </message>
+        <message>
+            <source>Download episodes</source>
+            <translation>下載劇集</translation>
+        </message>
+        <message>
+            <source>Next %1 unwatched</source>
+            <translation>接下來 %1 集未看</translation>
+        </message>
+        <message>
+            <source>All %1 unwatched</source>
+            <translation>全部 %1 集未看</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>下載</translation>
+        </message>
+        <message>
+            <source>Downloaded: delete</source>
+            <translation>已下載：刪除</translation>
+        </message>
+        <message>
+            <source>Download failed: try again</source>
+            <translation>下載失敗：重試</translation>
+        </message>
+        <message>
+            <source>: stop</source>
+            <translation>：停止</translation>
+        </message>
+        <message>
+            <source>Waiting: stop</source>
+            <translation>等待中：停止</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1083,6 +1123,94 @@
             <source>Goes straight to the next episode&apos;s countdown when the credits start.</source>
             <translation>片尾字幕開始時直接進入下一集的倒計時。</translation>
         </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>字幕</translation>
+        </message>
+        <message>
+            <source>For SCANCORE's player. Subtitles with their own styling keep it, apart from the size.</source>
+            <translation>用於 SCANCORE 播放器。自帶樣式的字幕會保留其樣式，大小除外。</translation>
+        </message>
+        <message>
+            <source>Size</source>
+            <translation>大小</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>小</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>正常</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>大</translation>
+        </message>
+        <message>
+            <source>Huge</source>
+            <translation>特大</translation>
+        </message>
+        <message>
+            <source>Colour</source>
+            <translation>顏色</translation>
+        </message>
+        <message>
+            <source>White</source>
+            <translation>白色</translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <translation>黃色</translation>
+        </message>
+        <message>
+            <source>Light blue</source>
+            <translation>淺藍</translation>
+        </message>
+        <message>
+            <source>Outline</source>
+            <translation>描邊</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>細</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>粗</translation>
+        </message>
+        <message>
+            <source>Dark box behind the lines</source>
+            <translation>文字後方的深色底框</translation>
+        </message>
+        <message>
+            <source>Easier to read over bright scenes.</source>
+            <translation>在明亮畫面中更易閱讀。</translation>
+        </message>
+        <message>
+            <source>Picture</source>
+            <translation>圖片</translation>
+        </message>
+        <message>
+            <source>Sharpen (Anime4K)</source>
+            <translation>銳利化 (Anime4K)</translation>
+        </message>
+        <message>
+            <source>Cleaner lines and upscaling for lower-resolution episodes. Best needs a strong graphics card; on phones Fast is the most to try.</source>
+            <translation>讓低解析度劇集線條更乾淨並放大畫面。「最佳」需要強勁的顯示卡；手機上最多試試「快速」。</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Fast</source>
+            <translation>快速</translation>
+        </message>
+        <message>
+            <source>Best</source>
+            <translation>最佳</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1156,6 +1284,80 @@
         <message>
             <source>Back to top</source>
             <translation>回到頂部</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastOverlay</name>
+        <message>
+            <source>Connecting…</source>
+            <translation>正在連線…</translation>
+        </message>
+        <message>
+            <source>Loading…</source>
+            <translation>正在載入…</translation>
+        </message>
+        <message>
+            <source>Paused</source>
+            <translation>已暫停</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>已完結</translation>
+        </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>出了點問題</translation>
+        </message>
+        <message>
+            <source>Playing</source>
+            <translation>正在播放</translation>
+        </message>
+        <message>
+            <source>Playing on %1</source>
+            <translation>正在 %1 上播放</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>後退 10 秒</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>下一集</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>停止投放</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastPicker</name>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>投放到電視</translation>
+        </message>
+        <message>
+            <source>Chromecast</source>
+            <translation>Chromecast</translation>
+        </message>
+        <message>
+            <source>TV (DLNA)</source>
+            <translation>電視 (DLNA)</translation>
+        </message>
+        <message>
+            <source>Looking on this network…</source>
+            <translation>正在此網路中尋找…</translation>
+        </message>
+        <message>
+            <source>Nothing found. The TV or Chromecast needs to be on and on the same Wi-Fi as this device.</source>
+            <translation>找不到裝置。電視或 Chromecast 需要開機，並與本裝置連接同一個 Wi-Fi。</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>重新尋找</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>關閉</translation>
         </message>
     </context>
     <context>
@@ -2230,6 +2432,22 @@
         <message>
             <source>Open series</source>
             <translation>開啟作品</translation>
+        </message>
+        <message>
+            <source> saved · </source>
+            <translation> 項已儲存 · </translation>
+        </message>
+        <message>
+            <source>On a comic, novel or anime page, use the download button on a chapter or episode, or select several at once. Downloads open without a connection.</source>
+            <translation>在漫畫、小說或動畫頁面上，點章節或劇集的下載按鈕，或一次選取多個。下載內容可離線開啟。</translation>
+        </message>
+        <message>
+            <source>Stop and delete</source>
+            <translation>停止並刪除</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>刪除</translation>
         </message>
     </context>
     <context>
@@ -5124,6 +5342,13 @@
         </message>
     </context>
     <context>
+        <name>sc::Anime</name>
+        <message>
+            <source>Another app</source>
+            <translation>其他應用程式</translation>
+        </message>
+    </context>
+    <context>
         <name>SeriesPage</name>
         <message>
             <source>Start reading</source>
@@ -6950,6 +7175,54 @@
         <message>
             <source>EP </source>
             <translation>EP </translation>
+        </message>
+        <message>
+            <source> · Downloaded</source>
+            <translation> · 已下載</translation>
+        </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>正在下載第 %1 集</translation>
+        </message>
+        <message>
+            <source>Downloading…</source>
+            <translation>正在下載…</translation>
+        </message>
+        <message>
+            <source>Download this episode</source>
+            <translation>下載這一集</translation>
+        </message>
+        <message>
+            <source>Could not open it there.</source>
+            <translation>無法在那裡開啟。</translation>
+        </message>
+        <message>
+            <source>Continue on %1</source>
+            <translation>在 %1 上繼續</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>已傳送到 %1</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>還沒有可傳送的內容：先讀一點或看一點吧。</translation>
+        </message>
+        <message>
+            <source>Open in another app</source>
+            <translation>用其他應用程式開啟</translation>
+        </message>
+        <message>
+            <source>Open in another player</source>
+            <translation>用其他播放器開啟</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>停止投放</translation>
+        </message>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>投放到電視</translation>
         </message>
     </context>
     <context>

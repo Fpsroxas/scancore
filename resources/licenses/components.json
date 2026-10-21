@@ -36,6 +36,12 @@
   "file": "LGPL-2.1-only.txt"
  },
  {
+  "name": "Anime4K",
+  "use": "Sharpening and upscaling shaders for anime (player)",
+  "licence": "MIT",
+  "file": "Anime4K.txt"
+ },
+ {
   "name": "Mihon and Tachiyomi source API",
   "use": "Comic extensions (extension host)",
   "licence": "Apache-2.0",

@@ -894,6 +894,46 @@
             <source>You might also like</source>
             <translation>Có thể bạn cũng thích</translation>
         </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>Đang tải tập %1</translation>
+        </message>
+        <message>
+            <source>Downloading %1 episodes</source>
+            <translation>Đang tải %1 tập</translation>
+        </message>
+        <message>
+            <source>Download episodes</source>
+            <translation>Tải các tập</translation>
+        </message>
+        <message>
+            <source>Next %1 unwatched</source>
+            <translation>%1 tập chưa xem tiếp theo</translation>
+        </message>
+        <message>
+            <source>All %1 unwatched</source>
+            <translation>Tất cả %1 tập chưa xem</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Tải xuống</translation>
+        </message>
+        <message>
+            <source>Downloaded: delete</source>
+            <translation>Đã tải: xóa</translation>
+        </message>
+        <message>
+            <source>Download failed: try again</source>
+            <translation>Tải xuống thất bại: thử lại</translation>
+        </message>
+        <message>
+            <source>: stop</source>
+            <translation>: dừng</translation>
+        </message>
+        <message>
+            <source>Waiting: stop</source>
+            <translation>Đang chờ: dừng</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1083,6 +1123,94 @@
             <source>Goes straight to the next episode&apos;s countdown when the credits start.</source>
             <translation>Khi phần credit bắt đầu, chuyển thẳng sang đếm ngược tập tiếp theo.</translation>
         </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>Phụ đề</translation>
+        </message>
+        <message>
+            <source>For SCANCORE's player. Subtitles with their own styling keep it, apart from the size.</source>
+            <translation>Cho trình phát của SCANCORE. Phụ đề có kiểu riêng giữ nguyên kiểu đó, trừ cỡ chữ.</translation>
+        </message>
+        <message>
+            <source>Size</source>
+            <translation>Kích thước</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Nhỏ</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>Bình thường</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>Lớn</translation>
+        </message>
+        <message>
+            <source>Huge</source>
+            <translation>Rất lớn</translation>
+        </message>
+        <message>
+            <source>Colour</source>
+            <translation>Màu</translation>
+        </message>
+        <message>
+            <source>White</source>
+            <translation>Trắng</translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <translation>Vàng</translation>
+        </message>
+        <message>
+            <source>Light blue</source>
+            <translation>Xanh nhạt</translation>
+        </message>
+        <message>
+            <source>Outline</source>
+            <translation>Viền chữ</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>Mỏng</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>Dày</translation>
+        </message>
+        <message>
+            <source>Dark box behind the lines</source>
+            <translation>Hộp tối sau chữ</translation>
+        </message>
+        <message>
+            <source>Easier to read over bright scenes.</source>
+            <translation>Dễ đọc hơn trong cảnh sáng.</translation>
+        </message>
+        <message>
+            <source>Picture</source>
+            <translation>Ảnh</translation>
+        </message>
+        <message>
+            <source>Sharpen (Anime4K)</source>
+            <translation>Làm nét (Anime4K)</translation>
+        </message>
+        <message>
+            <source>Cleaner lines and upscaling for lower-resolution episodes. Best needs a strong graphics card; on phones Fast is the most to try.</source>
+            <translation>Nét vẽ sạch hơn và tăng độ phân giải cho tập có độ phân giải thấp. Tốt nhất cần card đồ họa mạnh; trên điện thoại chỉ nên thử Nhanh.</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Tắt</translation>
+        </message>
+        <message>
+            <source>Fast</source>
+            <translation>Nhanh</translation>
+        </message>
+        <message>
+            <source>Best</source>
+            <translation>Tốt nhất</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1156,6 +1284,80 @@
         <message>
             <source>Back to top</source>
             <translation>Lên đầu trang</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastOverlay</name>
+        <message>
+            <source>Connecting…</source>
+            <translation>Đang kết nối…</translation>
+        </message>
+        <message>
+            <source>Loading…</source>
+            <translation>Đang tải…</translation>
+        </message>
+        <message>
+            <source>Paused</source>
+            <translation>Đã tạm dừng</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>Đã kết thúc</translation>
+        </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>Đã xảy ra lỗi</translation>
+        </message>
+        <message>
+            <source>Playing</source>
+            <translation>Đang phát</translation>
+        </message>
+        <message>
+            <source>Playing on %1</source>
+            <translation>Đang phát trên %1</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>Lùi 10 giây</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Tập tiếp theo</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>Dừng truyền</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastPicker</name>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>Truyền tới TV</translation>
+        </message>
+        <message>
+            <source>Chromecast</source>
+            <translation>Chromecast</translation>
+        </message>
+        <message>
+            <source>TV (DLNA)</source>
+            <translation>TV (DLNA)</translation>
+        </message>
+        <message>
+            <source>Looking on this network…</source>
+            <translation>Đang tìm trong mạng này…</translation>
+        </message>
+        <message>
+            <source>Nothing found. The TV or Chromecast needs to be on and on the same Wi-Fi as this device.</source>
+            <translation>Không tìm thấy. TV hoặc Chromecast cần bật và cùng Wi-Fi với thiết bị này.</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>Tìm lại</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
         </message>
     </context>
     <context>
@@ -2230,6 +2432,22 @@
         <message>
             <source>Open series</source>
             <translation>Mở bộ truyện</translation>
+        </message>
+        <message>
+            <source> saved · </source>
+            <translation> đã lưu · </translation>
+        </message>
+        <message>
+            <source>On a comic, novel or anime page, use the download button on a chapter or episode, or select several at once. Downloads open without a connection.</source>
+            <translation>Trên trang truyện tranh, tiểu thuyết hoặc anime, dùng nút tải xuống ở một chương hoặc tập, hoặc chọn nhiều cùng lúc. Nội dung đã tải mở được khi không có mạng.</translation>
+        </message>
+        <message>
+            <source>Stop and delete</source>
+            <translation>Dừng và xóa</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Xóa</translation>
         </message>
     </context>
     <context>
@@ -5124,6 +5342,13 @@
         </message>
     </context>
     <context>
+        <name>sc::Anime</name>
+        <message>
+            <source>Another app</source>
+            <translation>Ứng dụng khác</translation>
+        </message>
+    </context>
+    <context>
         <name>SeriesPage</name>
         <message>
             <source>Start reading</source>
@@ -6950,6 +7175,54 @@
         <message>
             <source>EP </source>
             <translation>TẬP </translation>
+        </message>
+        <message>
+            <source> · Downloaded</source>
+            <translation> · Đã tải xuống</translation>
+        </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>Đang tải tập %1</translation>
+        </message>
+        <message>
+            <source>Downloading…</source>
+            <translation>Đang tải…</translation>
+        </message>
+        <message>
+            <source>Download this episode</source>
+            <translation>Tải tập này</translation>
+        </message>
+        <message>
+            <source>Could not open it there.</source>
+            <translation>Không mở được ở đó.</translation>
+        </message>
+        <message>
+            <source>Continue on %1</source>
+            <translation>Tiếp tục trên %1</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>Đã gửi đến %1</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>Chưa có gì để gửi: hãy đọc hoặc xem một chút trước.</translation>
+        </message>
+        <message>
+            <source>Open in another app</source>
+            <translation>Mở bằng ứng dụng khác</translation>
+        </message>
+        <message>
+            <source>Open in another player</source>
+            <translation>Mở bằng trình phát khác</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>Dừng truyền</translation>
+        </message>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>Truyền tới TV</translation>
         </message>
     </context>
     <context>

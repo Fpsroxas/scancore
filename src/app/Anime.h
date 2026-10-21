@@ -101,6 +101,20 @@ public:
     Q_INVOKABLE sc::Task *hosterVideos(const QString &source, const QString &hosterId);
     // A video's final address, for the one about to play: video
     Q_INVOKABLE sc::Task *resolveVideo(const QString &source, const QString &videoId);
+
+    // Other players for anime from extensions: [{id, name}]: mpv, VLC and
+    // IINA where installed (not inside Flatpak), or the system's chooser of
+    // player apps on Android.
+    Q_INVOKABLE QVariantList externalPlayers() const;
+    // Opens `video` (as the player has it: url, headers, subtitles, audio,
+    // mpvArgs) there, from `startAt` seconds, with what each player takes
+    // of its headers and tracks.
+    Q_INVOKABLE bool openExternally(const QString &player, const QVariantMap &video, const QString &title, double startAt) const;
+
+    // For a download (blocking, on a worker): the episode's video as the
+    // player would pick it (the server used last, else the source's best),
+    // with its final address. Throws when there is none.
+    static QVariantMap videoForDownload(const QString &source, const QString &episodeUrl, const QString &animeUrl, double number);
 };
 
 } // namespace sc

@@ -894,6 +894,46 @@
             <source>You might also like</source>
             <translation>こちらもおすすめ</translation>
         </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>第 %1 話をダウンロード中</translation>
+        </message>
+        <message>
+            <source>Downloading %1 episodes</source>
+            <translation>%1 話をダウンロード中</translation>
+        </message>
+        <message>
+            <source>Download episodes</source>
+            <translation>エピソードをダウンロード</translation>
+        </message>
+        <message>
+            <source>Next %1 unwatched</source>
+            <translation>次の未視聴 %1 話</translation>
+        </message>
+        <message>
+            <source>All %1 unwatched</source>
+            <translation>未視聴の %1 話すべて</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>ダウンロード</translation>
+        </message>
+        <message>
+            <source>Downloaded: delete</source>
+            <translation>ダウンロード済み：削除</translation>
+        </message>
+        <message>
+            <source>Download failed: try again</source>
+            <translation>ダウンロードに失敗しました：再試行</translation>
+        </message>
+        <message>
+            <source>: stop</source>
+            <translation>：停止</translation>
+        </message>
+        <message>
+            <source>Waiting: stop</source>
+            <translation>待機中：停止</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1083,6 +1123,94 @@
             <source>Goes straight to the next episode&apos;s countdown when the credits start.</source>
             <translation>クレジットが始まるとすぐに次のエピソードのカウントダウンへ進みます。</translation>
         </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>字幕</translation>
+        </message>
+        <message>
+            <source>For SCANCORE's player. Subtitles with their own styling keep it, apart from the size.</source>
+            <translation>SCANCORE のプレーヤー用です。独自のスタイルを持つ字幕は、サイズ以外はそのままです。</translation>
+        </message>
+        <message>
+            <source>Size</source>
+            <translation>サイズ</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>小</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>標準</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>大</translation>
+        </message>
+        <message>
+            <source>Huge</source>
+            <translation>特大</translation>
+        </message>
+        <message>
+            <source>Colour</source>
+            <translation>色</translation>
+        </message>
+        <message>
+            <source>White</source>
+            <translation>白</translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <translation>黄色</translation>
+        </message>
+        <message>
+            <source>Light blue</source>
+            <translation>水色</translation>
+        </message>
+        <message>
+            <source>Outline</source>
+            <translation>縁取り</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>細い</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>太い</translation>
+        </message>
+        <message>
+            <source>Dark box behind the lines</source>
+            <translation>文字の後ろに暗い背景</translation>
+        </message>
+        <message>
+            <source>Easier to read over bright scenes.</source>
+            <translation>明るい場面でも読みやすくなります。</translation>
+        </message>
+        <message>
+            <source>Picture</source>
+            <translation>画像</translation>
+        </message>
+        <message>
+            <source>Sharpen (Anime4K)</source>
+            <translation>シャープ化 (Anime4K)</translation>
+        </message>
+        <message>
+            <source>Cleaner lines and upscaling for lower-resolution episodes. Best needs a strong graphics card; on phones Fast is the most to try.</source>
+            <translation>低解像度のエピソードの線をきれいにし、拡大します。「最高」には強力なグラフィックが必要です。スマホでは「高速」までをお試しください。</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>オフ</translation>
+        </message>
+        <message>
+            <source>Fast</source>
+            <translation>高速</translation>
+        </message>
+        <message>
+            <source>Best</source>
+            <translation>最高</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1156,6 +1284,80 @@
         <message>
             <source>Back to top</source>
             <translation>トップへ戻る</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastOverlay</name>
+        <message>
+            <source>Connecting…</source>
+            <translation>接続中…</translation>
+        </message>
+        <message>
+            <source>Loading…</source>
+            <translation>読み込み中…</translation>
+        </message>
+        <message>
+            <source>Paused</source>
+            <translation>一時停止中</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>完結</translation>
+        </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>問題が発生しました</translation>
+        </message>
+        <message>
+            <source>Playing</source>
+            <translation>再生中</translation>
+        </message>
+        <message>
+            <source>Playing on %1</source>
+            <translation>%1 で再生中</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>10秒戻る</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>次のエピソード</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>キャストを停止</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastPicker</name>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>テレビにキャスト</translation>
+        </message>
+        <message>
+            <source>Chromecast</source>
+            <translation>Chromecast</translation>
+        </message>
+        <message>
+            <source>TV (DLNA)</source>
+            <translation>テレビ (DLNA)</translation>
+        </message>
+        <message>
+            <source>Looking on this network…</source>
+            <translation>このネットワークを探しています…</translation>
+        </message>
+        <message>
+            <source>Nothing found. The TV or Chromecast needs to be on and on the same Wi-Fi as this device.</source>
+            <translation>見つかりませんでした。テレビや Chromecast の電源を入れ、このデバイスと同じ Wi-Fi に接続してください。</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>もう一度探す</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
         </message>
     </context>
     <context>
@@ -2230,6 +2432,22 @@
         <message>
             <source>Open series</source>
             <translation>作品を開く</translation>
+        </message>
+        <message>
+            <source> saved · </source>
+            <translation> 件保存 · </translation>
+        </message>
+        <message>
+            <source>On a comic, novel or anime page, use the download button on a chapter or episode, or select several at once. Downloads open without a connection.</source>
+            <translation>コミック・小説・アニメのページで、章やエピソードのダウンロードボタンを使うか、まとめて選んでください。ダウンロードしたものはオフラインで開けます。</translation>
+        </message>
+        <message>
+            <source>Stop and delete</source>
+            <translation>停止して削除</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>削除</translation>
         </message>
     </context>
     <context>
@@ -5124,6 +5342,13 @@
         </message>
     </context>
     <context>
+        <name>sc::Anime</name>
+        <message>
+            <source>Another app</source>
+            <translation>別のアプリ</translation>
+        </message>
+    </context>
+    <context>
         <name>SeriesPage</name>
         <message>
             <source>Start reading</source>
@@ -6950,6 +7175,54 @@
         <message>
             <source>EP </source>
             <translation>EP </translation>
+        </message>
+        <message>
+            <source> · Downloaded</source>
+            <translation> · ダウンロード済み</translation>
+        </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>第 %1 話をダウンロード中</translation>
+        </message>
+        <message>
+            <source>Downloading…</source>
+            <translation>ダウンロード中…</translation>
+        </message>
+        <message>
+            <source>Download this episode</source>
+            <translation>このエピソードをダウンロード</translation>
+        </message>
+        <message>
+            <source>Could not open it there.</source>
+            <translation>そこでは開けませんでした。</translation>
+        </message>
+        <message>
+            <source>Continue on %1</source>
+            <translation>%1 で続ける</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>%1 に送信しました</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>まだ送れるものがありません。少し読むか見てからお試しください。</translation>
+        </message>
+        <message>
+            <source>Open in another app</source>
+            <translation>別のアプリで開く</translation>
+        </message>
+        <message>
+            <source>Open in another player</source>
+            <translation>別のプレーヤーで開く</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>キャストを停止</translation>
+        </message>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>テレビにキャスト</translation>
         </message>
     </context>
     <context>

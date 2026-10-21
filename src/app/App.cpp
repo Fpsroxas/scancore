@@ -94,6 +94,13 @@ const QVariantMap kDefaults{
     {"autoNext", true},
     // The video player's volume (0-130) and speed, kept between episodes.
     {"playerVolume", 100},
+    // The player's subtitles (size, outline, colour, a box behind them) and
+    // Anime4K sharpening (off, fast, hq).
+    {"subtitleScale", 1.0},
+    {"subtitleOutline", 3},
+    {"subtitleColor", "#ffffff"},
+    {"subtitleBox", false},
+    {"animeSharpen", "off"},
     {"playerSpeed", 1},
     {"autoSkip", false},
     {"libraryCheckHours", 2},

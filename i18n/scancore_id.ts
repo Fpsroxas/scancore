@@ -894,6 +894,46 @@
             <source>You might also like</source>
             <translation>Mungkin Anda suka</translation>
         </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>Mengunduh episode %1</translation>
+        </message>
+        <message>
+            <source>Downloading %1 episodes</source>
+            <translation>Mengunduh %1 episode</translation>
+        </message>
+        <message>
+            <source>Download episodes</source>
+            <translation>Unduh episode</translation>
+        </message>
+        <message>
+            <source>Next %1 unwatched</source>
+            <translation>%1 berikutnya yang belum ditonton</translation>
+        </message>
+        <message>
+            <source>All %1 unwatched</source>
+            <translation>Semua %1 yang belum ditonton</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Unduh</translation>
+        </message>
+        <message>
+            <source>Downloaded: delete</source>
+            <translation>Sudah diunduh: hapus</translation>
+        </message>
+        <message>
+            <source>Download failed: try again</source>
+            <translation>Unduhan gagal: coba lagi</translation>
+        </message>
+        <message>
+            <source>: stop</source>
+            <translation>: hentikan</translation>
+        </message>
+        <message>
+            <source>Waiting: stop</source>
+            <translation>Menunggu: hentikan</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1083,6 +1123,94 @@
             <source>Goes straight to the next episode&apos;s countdown when the credits start.</source>
             <translation>Langsung ke hitung mundur episode berikutnya saat kredit dimulai.</translation>
         </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>Subtitle</translation>
+        </message>
+        <message>
+            <source>For SCANCORE's player. Subtitles with their own styling keep it, apart from the size.</source>
+            <translation>Untuk pemutar SCANCORE. Subtitel dengan gayanya sendiri tetap memakainya, kecuali ukuran.</translation>
+        </message>
+        <message>
+            <source>Size</source>
+            <translation>Ukuran</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Kecil</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>Normal</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>Besar</translation>
+        </message>
+        <message>
+            <source>Huge</source>
+            <translation>Sangat besar</translation>
+        </message>
+        <message>
+            <source>Colour</source>
+            <translation>Warna</translation>
+        </message>
+        <message>
+            <source>White</source>
+            <translation>Putih</translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <translation>Kuning</translation>
+        </message>
+        <message>
+            <source>Light blue</source>
+            <translation>Biru muda</translation>
+        </message>
+        <message>
+            <source>Outline</source>
+            <translation>Garis tepi</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>Tipis</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>Tebal</translation>
+        </message>
+        <message>
+            <source>Dark box behind the lines</source>
+            <translation>Kotak gelap di belakang teks</translation>
+        </message>
+        <message>
+            <source>Easier to read over bright scenes.</source>
+            <translation>Lebih mudah dibaca di adegan terang.</translation>
+        </message>
+        <message>
+            <source>Picture</source>
+            <translation>Gambar</translation>
+        </message>
+        <message>
+            <source>Sharpen (Anime4K)</source>
+            <translation>Pertajam (Anime4K)</translation>
+        </message>
+        <message>
+            <source>Cleaner lines and upscaling for lower-resolution episodes. Best needs a strong graphics card; on phones Fast is the most to try.</source>
+            <translation>Garis lebih bersih dan peningkatan resolusi untuk episode beresolusi rendah. Terbaik butuh kartu grafis yang kuat; di ponsel cukup coba Cepat.</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Mati</translation>
+        </message>
+        <message>
+            <source>Fast</source>
+            <translation>Cepat</translation>
+        </message>
+        <message>
+            <source>Best</source>
+            <translation>Terbaik</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1156,6 +1284,80 @@
         <message>
             <source>Back to top</source>
             <translation>Kembali ke atas</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastOverlay</name>
+        <message>
+            <source>Connecting…</source>
+            <translation>Menghubungkan…</translation>
+        </message>
+        <message>
+            <source>Loading…</source>
+            <translation>Memuat…</translation>
+        </message>
+        <message>
+            <source>Paused</source>
+            <translation>Dijeda</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>Selesai</translation>
+        </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>Terjadi kesalahan</translation>
+        </message>
+        <message>
+            <source>Playing</source>
+            <translation>Diputar</translation>
+        </message>
+        <message>
+            <source>Playing on %1</source>
+            <translation>Diputar di %1</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>Mundur 10 detik</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Episode berikutnya</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>Hentikan transmisi</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastPicker</name>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>Transmisikan ke TV</translation>
+        </message>
+        <message>
+            <source>Chromecast</source>
+            <translation>Chromecast</translation>
+        </message>
+        <message>
+            <source>TV (DLNA)</source>
+            <translation>TV (DLNA)</translation>
+        </message>
+        <message>
+            <source>Looking on this network…</source>
+            <translation>Mencari di jaringan ini…</translation>
+        </message>
+        <message>
+            <source>Nothing found. The TV or Chromecast needs to be on and on the same Wi-Fi as this device.</source>
+            <translation>Tidak ditemukan. TV atau Chromecast harus menyala dan berada di Wi-Fi yang sama dengan perangkat ini.</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>Cari lagi</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
         </message>
     </context>
     <context>
@@ -2230,6 +2432,22 @@
         <message>
             <source>Open series</source>
             <translation>Buka seri</translation>
+        </message>
+        <message>
+            <source> saved · </source>
+            <translation> tersimpan · </translation>
+        </message>
+        <message>
+            <source>On a comic, novel or anime page, use the download button on a chapter or episode, or select several at once. Downloads open without a connection.</source>
+            <translation>Di halaman komik, novel, atau anime, gunakan tombol unduh pada bab atau episode, atau pilih beberapa sekaligus. Unduhan bisa dibuka tanpa koneksi.</translation>
+        </message>
+        <message>
+            <source>Stop and delete</source>
+            <translation>Hentikan dan hapus</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Hapus</translation>
         </message>
     </context>
     <context>
@@ -5124,6 +5342,13 @@
         </message>
     </context>
     <context>
+        <name>sc::Anime</name>
+        <message>
+            <source>Another app</source>
+            <translation>Aplikasi lain</translation>
+        </message>
+    </context>
+    <context>
         <name>SeriesPage</name>
         <message>
             <source>Start reading</source>
@@ -6950,6 +7175,54 @@
         <message>
             <source>EP </source>
             <translation>EP </translation>
+        </message>
+        <message>
+            <source> · Downloaded</source>
+            <translation> · Diunduh</translation>
+        </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>Mengunduh episode %1</translation>
+        </message>
+        <message>
+            <source>Downloading…</source>
+            <translation>Mengunduh…</translation>
+        </message>
+        <message>
+            <source>Download this episode</source>
+            <translation>Unduh episode ini</translation>
+        </message>
+        <message>
+            <source>Could not open it there.</source>
+            <translation>Tidak bisa dibuka di sana.</translation>
+        </message>
+        <message>
+            <source>Continue on %1</source>
+            <translation>Lanjutkan di %1</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>Terkirim ke %1</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>Belum ada yang bisa dikirim: baca atau tonton sedikit dulu.</translation>
+        </message>
+        <message>
+            <source>Open in another app</source>
+            <translation>Buka di aplikasi lain</translation>
+        </message>
+        <message>
+            <source>Open in another player</source>
+            <translation>Buka di pemutar lain</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>Hentikan transmisi</translation>
+        </message>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>Transmisikan ke TV</translation>
         </message>
     </context>
     <context>

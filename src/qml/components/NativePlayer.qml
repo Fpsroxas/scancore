@@ -56,6 +56,9 @@ Item {
         headers: root.video.headers || ({})
         options: root.video.mpvArgs || ({})
         subtitles: root.video.subtitles || []
+        look: ({ subtitleScale: Number(App.settings.subtitleScale) || 1, subtitleOutline: Number(App.settings.subtitleOutline),
+                 subtitleColor: App.settings.subtitleColor || "#ffffff", subtitleBox: App.settings.subtitleBox === true,
+                 sharpen: App.settings.animeSharpen || "off" })
         audio: root.video.audio || []
         startAt: root.startAt
         // Above the controls while they show.

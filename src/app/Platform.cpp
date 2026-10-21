@@ -31,6 +31,8 @@ constexpr auto kWebPlayerClass = "com/mediumdev/scancore/WebPlayer";
 constexpr auto kScreenClass = "com/mediumdev/scancore/Screen";
 constexpr auto kVolumeKeysClass = "com/mediumdev/scancore/VolumeKeys";
 constexpr auto kImagesClass = "com/mediumdev/scancore/Images";
+constexpr auto kExternalPlayerClass = "com/mediumdev/scancore/ExternalPlayer";
+constexpr auto kMulticastClass = "com/mediumdev/scancore/Multicast";
 
 void jniVolumeKey(JNIEnv *, jclass, jboolean down) {
     QMetaObject::invokeMethod(
@@ -225,6 +227,48 @@ void askBatteryUnrestricted() {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>(kPowerClass, "ask", "(Landroid/content/Context;)V",
                                        QNativeInterface::QAndroidApplication::context().object());
+#endif
+}
+
+void holdMulticast(bool on) {
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>(kMulticastClass, "hold", "(Landroid/content/Context;Z)V",
+                                       QNativeInterface::QAndroidApplication::context().object(), jboolean(on));
+#else
+    Q_UNUSED(on)
+#endif
+}
+
+bool openExternalPlayer(const QString &url, const QString &title, const QStringList &headers, int positionMs,
+                        const QStringList &subtitles, const QStringList &subtitleNames) {
+#ifdef Q_OS_ANDROID
+    QJniEnvironment env;
+    const auto strings = [&](const QStringList &list) {
+        auto *array = env->NewObjectArray(jsize(list.size()), env.findClass("java/lang/String"), nullptr);
+        for (int i = 0; i < list.size(); ++i)
+            env->SetObjectArrayElement(array, i, QJniObject::fromString(list[i]).object<jstring>());
+        return array;
+    };
+    auto *headerArray = strings(headers);
+    auto *subtitleArray = strings(subtitles);
+    auto *nameArray = strings(subtitleNames);
+    const bool ok = QJniObject::callStaticMethod<jboolean>(
+        kExternalPlayerClass, "open",
+        "(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;I[Ljava/lang/String;[Ljava/lang/String;)Z",
+        QNativeInterface::QAndroidApplication::context().object(), QJniObject::fromString(url).object<jstring>(),
+        QJniObject::fromString(title).object<jstring>(), headerArray, jint(positionMs), subtitleArray, nameArray);
+    env->DeleteLocalRef(headerArray);
+    env->DeleteLocalRef(subtitleArray);
+    env->DeleteLocalRef(nameArray);
+    return ok;
+#else
+    Q_UNUSED(url)
+    Q_UNUSED(title)
+    Q_UNUSED(headers)
+    Q_UNUSED(positionMs)
+    Q_UNUSED(subtitles)
+    Q_UNUSED(subtitleNames)
+    return false;
 #endif
 }
 

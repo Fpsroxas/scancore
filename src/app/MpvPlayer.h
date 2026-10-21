@@ -48,6 +48,10 @@ class MpvPlayer : public QQuickFramebufferObject {
     // Where subtitles sit, in % of the height from the top (100: their
     // usual place); raised while controls cover the bottom.
     Q_PROPERTY(int subtitlePosition READ subtitlePosition WRITE setSubtitlePosition NOTIFY subtitlePositionChanged)
+    // How subtitles and the picture look (Settings → Anime): {subtitleScale,
+    // subtitleOutline, subtitleColor, subtitleBox, sharpen: off|fast|hq}.
+    // Subtitles with their own styling (ASS) keep it, apart from the size.
+    Q_PROPERTY(QVariantMap look READ look WRITE setLook NOTIFY lookChanged)
     // [{id, type: video|audio|sub, title, lang, selected, external}]
     Q_PROPERTY(QVariantList tracks READ tracks NOTIFY tracksChanged)
     // The hardware decoder in use ("vaapi", "d3d11va", …), empty when the
@@ -97,6 +101,8 @@ public:
     void setSpeed(double speed);
     int subtitlePosition() const { return m_subtitlePosition; }
     void setSubtitlePosition(int position);
+    QVariantMap look() const { return m_look; }
+    void setLook(const QVariantMap &look);
     QVariantList tracks() const { return m_tracks; }
     QString hwdec() const { return m_hwdec; }
     QString error() const { return m_error; }
@@ -131,6 +137,7 @@ signals:
     void mutedChanged();
     void speedChanged();
     void subtitlePositionChanged();
+    void lookChanged();
     void tracksChanged();
     void hwdecChanged();
     void errorChanged();
@@ -163,6 +170,7 @@ private:
     bool m_muted = false;
     double m_speed = 1;
     int m_subtitlePosition = 100;
+    QVariantMap m_look;
     QVariantList m_tracks;
     QString m_hwdec;
     QString m_error;

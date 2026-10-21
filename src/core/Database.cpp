@@ -198,6 +198,11 @@ const char *const kMigrations[] = {
     );
     ALTER TABLE series_settings ADD COLUMN changed_at INTEGER NOT NULL DEFAULT 0;
     )",
+    // 8: anime downloads (2.2): where an episode's video comes from
+    // ({source, episodeUrl, animeUrl, number}).
+    R"(
+    ALTER TABLE downloads ADD COLUMN extra TEXT;
+    )",
 };
 
 QSqlDatabase connection() {

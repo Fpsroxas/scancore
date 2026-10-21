@@ -9,6 +9,7 @@ add_library(scancore_core STATIC
     core/ImageCache.cpp
     core/Parallel.cpp
     core/Text.cpp
+    core/VideoSave.cpp
     core/UpdateRules.cpp
     core/ThemeLook.cpp
     core/Backups.cpp
@@ -132,6 +133,8 @@ qt_add_qml_module(scancore
         app/Sync.cpp app/Sync.h
         app/Library.cpp app/Library.h
         app/Live.cpp app/Live.h
+        app/Cast.cpp app/Cast.h
+        app/CastProxy.cpp app/CastProxy.h
         app/Lock.cpp app/Lock.h
         app/MpvPlayer.cpp app/MpvPlayer.h
         app/Novels.cpp app/Novels.h
@@ -186,6 +189,12 @@ qt_add_resources(scancore icons
     PREFIX /
     BASE ${PROJECT_SOURCE_DIR}/resources
     FILES ${SCANCORE_ICON_PATHS})
+# Anime4K's shaders for the player (Settings → Anime → Sharpen).
+file(GLOB SCANCORE_SHADERS CONFIGURE_DEPENDS ${PROJECT_SOURCE_DIR}/resources/shaders/anime4k/*.glsl)
+qt_add_resources(scancore anime4k
+    PREFIX /
+    BASE ${PROJECT_SOURCE_DIR}/resources
+    FILES ${SCANCORE_SHADERS})
 qt_add_resources(scancore lncrawl
     PREFIX /
     BASE ${PROJECT_SOURCE_DIR}/resources

@@ -34,7 +34,9 @@ Rectangle {
     readonly property bool fromSource: String(media.source || "").startsWith("aniyomi:")
     property var provider: fromSource ? { source: media.source, url: media.sourceUrl, sourceLabel: Anime.sourceLabel(media.source) }
                                       : Anime.provider(media.anilistId || 0)
-    readonly property bool nativeStream: !!provider.source
+    // A downloaded episode plays from its file, with SCANCORE's player.
+    property bool offline: false
+    readonly property bool nativeStream: !!provider.source || offline
     readonly property bool hasSources: { App.dependOn(Extensions.revision); return Anime.sources().some(s => s.enabled) }
     // "Watch from" is asked once, the first time an episode plays here.
     property bool asked: false
@@ -106,7 +108,7 @@ Rectangle {
     }
     readonly property bool showSkip: activeSkip !== null && !skipsItself(activeSkip)
     readonly property string episodeLine: qsTr("Episode ") + (episode.number || "") + (episode.title && !String(episode.title).startsWith("Episode") ? " · " + episode.title : "")
-        + (App.settings.incognito === true ? qsTr(" · Incognito") : "")
+        + (offline ? qsTr(" · Downloaded") : "") + (App.settings.incognito === true ? qsTr(" · Incognito") : "")
 
     color: "#000000"
     focus: true
@@ -133,7 +135,13 @@ Rectangle {
         pickGrace.stop()
         streamsTask = null
         videosTask = null
-        if (nativeStream)
+        const local = Downloads.localVideo(series.id || "", episodes[i].key || "")
+        offline = !!local.url
+        if (offline) {
+            currentVideo = local
+            currentId = "offline"
+            currentUrl = local.url
+        } else if (nativeStream)
             videosTask = Anime.videos(provider.source, fromSource ? episodes[i].url : "", fromSource ? "" : provider.url, Number(episodes[i].number))
         else if (!fromSource && !provider.builtIn && hasSources && !asked) {
             asked = true
@@ -155,6 +163,7 @@ Rectangle {
         Activity.setMedia("")
         Presence.clear()
         saveProgress(true)
+        if (castDevice) Cast.stop()
         if (phone && fullScreen) Window.window.showNormal()
         if (phone) App.setOrientation("")
     }
@@ -274,6 +283,94 @@ Rectangle {
             playError = message
     }
 
+    // This episode for watching offline: the video playing now (the source
+    // is asked again if its address has expired by then).
+    readonly property var downloadJob: { App.dependOn(Downloads.revision); return (Downloads.states(series.id || "")[episode.key] || null) }
+    function downloadEpisode() {
+        Downloads.enqueue(series, [{ key: episode.key, title: episode.title, url: episode.url || "",
+            download: Object.assign({ source: provider.source, video: currentVideo },
+                                    fromSource ? { episodeUrl: episode.url } : { animeUrl: provider.url, number: Number(episode.number) }) }])
+        Router.toast(qsTr("Downloading episode %1").arg(episode.number), "info")
+    }
+
+    // Other players (mpv, VLC, IINA; on Android the chooser of player apps).
+    readonly property var outsidePlayers: Anime.externalPlayers()
+    readonly property bool canOpenOutside: nativeStream && outsidePlayers.length > 0 && currentUrl.length > 0
+                                           && !(offline && App.platform === "android")
+    function openOutside(p) {
+        const video = Object.assign({}, currentVideo, { url: currentUrl })
+        if (Anime.openExternally(p.id, video, (series.title || "") + " · " + qsTr("Episode ") + (episode.number || ""), position)) {
+            saveProgress(true)
+            if (player.item && player.item.player) player.item.player.paused = true
+        } else
+            Router.toast(qsTr("Could not open it there."), "error")
+    }
+    function pickOutside(anchor) {
+        if (outsidePlayers.length === 1) return openOutside(outsidePlayers[0])
+        moreMenu.openAt(anchor, 0, anchor.height, outsidePlayers.map(p => ({ text: p.name, icon: "external-link", run: () => openOutside(p) })))
+    }
+    // Phones: what does not fit on the bar.
+    function moreItems() {
+        const items = []
+        if (!App.settings.incognito)
+            for (const d of Live.devices)
+                items.push({ text: qsTr("Continue on %1").arg(d.name), icon: d.platform === "android" ? "smartphone" : "monitor", run: () => {
+                    saveProgress(true)
+                    if (Live.handoff(d.id, series.id || "")) Router.toast(qsTr("Sent to %1").arg(d.name), "success")
+                    else Router.toast(qsTr("Nothing to send yet: read or watch a little first."), "info")
+                } })
+        if (nativeStream && !offline && !!provider.source && Anime.nativePlayerAvailable)
+            items.push({ text: downloadJob ? qsTr("Downloading…") : qsTr("Download this episode"), icon: "download",
+                         enabled: !downloadJob && currentUrl.length > 0, run: downloadEpisode })
+        if (nativeStream && (currentUrl.length > 0 || casting))
+            items.push(casting ? { text: qsTr("Stop casting"), icon: "cast", run: stopCasting }
+                               : { text: qsTr("Cast to a TV"), icon: "cast", run: () => castPicker.open() })
+        if (canOpenOutside)
+            items.push({ text: qsTr("Open in another app"), icon: "external-link", run: () => openOutside(outsidePlayers[0]) })
+        if (media.anilistId)
+            items.push({ text: qsTr("Comments"), icon: "message-circle", run: () => comments.open() })
+        return items
+    }
+    ActionMenu { id: moreMenu }
+
+    // Casting: the TV plays (through Cast) and this page follows it, saving
+    // progress; another episode goes to the same TV.
+    property string castDevice: ""
+    readonly property bool casting: castDevice !== "" && Cast.active
+    function castTo(device) {
+        castDevice = device.id
+        castCurrent()
+    }
+    function castCurrent() {
+        if (!castDevice || !currentUrl) return
+        Cast.play(castDevice, Object.assign({}, currentVideo, { url: currentUrl }),
+                  (series.title || "") + " · " + qsTr("Episode ") + (episode.number || ""), series.cover || media.cover || "",
+                  position > 5 ? position : resumeAt)
+    }
+    onCurrentUrlChanged: if (castDevice && currentUrl) castCurrent()
+    function stopCasting() {
+        // This device goes on from where the TV was.
+        if (Cast.position > 5) resumeAt = Cast.position
+        castDevice = ""
+        Cast.stop()
+    }
+    Connections {
+        target: Cast
+        function onPositionChanged() {
+            if (!watch.casting) return
+            watch.position = Cast.position
+            if (Cast.duration > 0) watch.duration = Cast.duration
+            watch.saveProgress(false)
+        }
+        function onStateChanged() {
+            if (!watch.casting || Cast.state !== "ended") return
+            watch.position = watch.duration
+            watch.saveProgress(true)
+            if (watch.hasNext && App.settings.autoNext !== false) watch.load(watch.index + 1)
+        }
+    }
+    CastPicker { id: castPicker; onPicked: (device) => watch.castTo(device) }
+
     function isCurrent(stream) {
         return stream.type === "video" ? currentId === stream.id : stream.type !== "hoster" && currentUrl === stream.url
     }
@@ -307,6 +404,7 @@ Rectangle {
     }
 
     function onPlayerTime(seconds, total, status) {
+        if (casting) return
         if (total > 0 && duration === 0) {
             duration = total
             if (media.anilistId)
@@ -430,7 +528,8 @@ Rectangle {
             // SCANCORE's player stays for the whole page (servers and
             // episodes change under it); a web player comes with its page.
             // One binding decides, so the two never mix while it changes.
-            source: watch.nativeStream ? "../components/NativePlayer.qml"
+            // Casting: the TV plays, so this one does not.
+            source: watch.casting ? "" : watch.nativeStream ? "../components/NativePlayer.qml"
                   : watch.currentUrl.length === 0 || Anime.playerEngine === "" ? ""
                   : watch.systemView ? "../components/WebPlayerSystem.qml" : "../components/WebPlayer.qml"
             onLoaded: {
@@ -452,6 +551,15 @@ Rectangle {
                 function onFailed(message) { watch.videoFailed(message, 0) }
                 function onFullScreenRequested() { watch.toggleFullScreen() }
             }
+        }
+        CastOverlay {
+            anchors.fill: parent
+            z: 3
+            visible: watch.casting
+            title: qsTr("Episode ") + (watch.episode.number || "")
+            hasNext: watch.hasNext
+            onStopRequested: watch.stopCasting()
+            onNextRequested: watch.load(watch.index + 1)
         }
 
         // This build's browser cannot play the video: say so, and offer the
@@ -730,7 +838,30 @@ Rectangle {
             IconButton { visible: !!watch.media.anilistId; iconName: "message-circle"; iconColor: "white"; tip: qsTr("Comments"); onClicked: comments.open() }
             ContinueOn { seriesId: watch.series.id || ""; iconColor: "white"; save: () => watch.saveProgress(true) }
             IconButton {
-                // A video from an extension needs its headers; only web players open elsewhere.
+                visible: watch.nativeStream && !watch.offline && !!watch.provider.source && Anime.nativePlayerAvailable
+                iconName: !watch.downloadJob ? "download" : watch.downloadJob.status === "done" ? "check" : "loader-circle"
+                iconColor: "white"
+                enabled: !watch.downloadJob && watch.currentUrl.length > 0
+                tip: watch.downloadJob ? qsTr("Downloading…") : qsTr("Download this episode")
+                onClicked: watch.downloadEpisode()
+            }
+            IconButton {
+                visible: watch.nativeStream && (watch.currentUrl.length > 0 || watch.casting)
+                iconName: "cast"
+                iconColor: watch.casting ? Theme.accent : "white"
+                tip: watch.casting ? qsTr("Stop casting") : qsTr("Cast to a TV")
+                onClicked: watch.casting ? watch.stopCasting() : castPicker.open()
+            }
+            IconButton {
+                id: outsideButton
+                visible: watch.canOpenOutside
+                iconName: "external-link"
+                iconColor: "white"
+                tip: qsTr("Open in another player")
+                onClicked: watch.pickOutside(outsideButton)
+            }
+            IconButton {
+                // A web player's page opens in the browser.
                 visible: !watch.nativeStream
                 iconName: "external-link"
                 iconColor: "white"
@@ -897,6 +1028,14 @@ Rectangle {
                     }
                     IconButton { iconName: "skip-back"; iconColor: "white"; diameter: 40; enabled: watch.hasPrev; onClicked: watch.load(watch.index - 1) }
                     IconButton { iconName: "skip-forward"; iconColor: "white"; diameter: 40; enabled: watch.hasNext; onClicked: watch.load(watch.index + 1) }
+                    IconButton {
+                        id: phoneMore
+                        iconName: "ellipsis"
+                        iconColor: "white"
+                        diameter: 40
+                        visible: watch.moreItems().length > 0
+                        onClicked: moreMenu.openAt(phoneMore, phoneMore.width - 240, phoneMore.height, watch.moreItems())
+                    }
                 }
             }
             Row {

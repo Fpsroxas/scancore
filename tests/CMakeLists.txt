@@ -18,6 +18,11 @@ qt_add_executable(scancore_library_tests tst_library.cpp)
 target_link_libraries(scancore_library_tests PRIVATE scancore_core Qt6::Test Qt6::CorePrivate)
 add_test(NAME library COMMAND scancore_library_tests)
 
+# Anime episodes saved for offline playback (HLS, files).
+qt_add_executable(scancore_video_tests tst_video.cpp)
+target_link_libraries(scancore_video_tests PRIVATE scancore_core Qt6::Test)
+add_test(NAME video COMMAND scancore_video_tests)
+
 # Extension repositories, trust, installs and extension sources.
 qt_add_executable(scancore_extension_tests tst_extensions.cpp)
 target_link_libraries(scancore_extension_tests PRIVATE scancore_core Qt6::Test Qt6::CorePrivate)

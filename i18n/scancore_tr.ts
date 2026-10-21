@@ -894,6 +894,46 @@
             <source>You might also like</source>
             <translation>Bunları da sevebilirsin</translation>
         </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>%1. bölüm indiriliyor</translation>
+        </message>
+        <message>
+            <source>Downloading %1 episodes</source>
+            <translation>%1 bölüm indiriliyor</translation>
+        </message>
+        <message>
+            <source>Download episodes</source>
+            <translation>Bölümleri indir</translation>
+        </message>
+        <message>
+            <source>Next %1 unwatched</source>
+            <translation>Sonraki %1 izlenmemiş</translation>
+        </message>
+        <message>
+            <source>All %1 unwatched</source>
+            <translation>İzlenmemiş %1 bölümün hepsi</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>İndir</translation>
+        </message>
+        <message>
+            <source>Downloaded: delete</source>
+            <translation>İndirildi: sil</translation>
+        </message>
+        <message>
+            <source>Download failed: try again</source>
+            <translation>İndirme başarısız: tekrar dene</translation>
+        </message>
+        <message>
+            <source>: stop</source>
+            <translation>: durdur</translation>
+        </message>
+        <message>
+            <source>Waiting: stop</source>
+            <translation>Bekliyor: durdur</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1083,6 +1123,94 @@
             <source>Goes straight to the next episode&apos;s countdown when the credits start.</source>
             <translation>Jenerik başlayınca doğrudan sonraki bölümün geri sayımına geçer.</translation>
         </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>Altyazılar</translation>
+        </message>
+        <message>
+            <source>For SCANCORE's player. Subtitles with their own styling keep it, apart from the size.</source>
+            <translation>SCANCORE oynatıcısı için. Kendi stili olan altyazılar boyut dışında stillerini korur.</translation>
+        </message>
+        <message>
+            <source>Size</source>
+            <translation>Boyut</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Küçük</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>Normal</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>Büyük</translation>
+        </message>
+        <message>
+            <source>Huge</source>
+            <translation>Çok büyük</translation>
+        </message>
+        <message>
+            <source>Colour</source>
+            <translation>Renk</translation>
+        </message>
+        <message>
+            <source>White</source>
+            <translation>Beyaz</translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <translation>Sarı</translation>
+        </message>
+        <message>
+            <source>Light blue</source>
+            <translation>Açık mavi</translation>
+        </message>
+        <message>
+            <source>Outline</source>
+            <translation>Dış çizgi</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>İnce</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>Kalın</translation>
+        </message>
+        <message>
+            <source>Dark box behind the lines</source>
+            <translation>Satırların arkasında koyu kutu</translation>
+        </message>
+        <message>
+            <source>Easier to read over bright scenes.</source>
+            <translation>Parlak sahnelerde okumayı kolaylaştırır.</translation>
+        </message>
+        <message>
+            <source>Picture</source>
+            <translation>Resim</translation>
+        </message>
+        <message>
+            <source>Sharpen (Anime4K)</source>
+            <translation>Keskinleştir (Anime4K)</translation>
+        </message>
+        <message>
+            <source>Cleaner lines and upscaling for lower-resolution episodes. Best needs a strong graphics card; on phones Fast is the most to try.</source>
+            <translation>Düşük çözünürlüklü bölümlerde daha temiz çizgiler ve büyütme. En iyi güçlü bir ekran kartı ister; telefonlarda en fazla Hızlı'yı dene.</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Kapalı</translation>
+        </message>
+        <message>
+            <source>Fast</source>
+            <translation>Hızlı</translation>
+        </message>
+        <message>
+            <source>Best</source>
+            <translation>En iyi</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1156,6 +1284,80 @@
         <message>
             <source>Back to top</source>
             <translation>Başa dön</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastOverlay</name>
+        <message>
+            <source>Connecting…</source>
+            <translation>Bağlanıyor…</translation>
+        </message>
+        <message>
+            <source>Loading…</source>
+            <translation>Yükleniyor…</translation>
+        </message>
+        <message>
+            <source>Paused</source>
+            <translation>Duraklatıldı</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>Bitti</translation>
+        </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>Bir şeyler ters gitti</translation>
+        </message>
+        <message>
+            <source>Playing</source>
+            <translation>Oynatılıyor</translation>
+        </message>
+        <message>
+            <source>Playing on %1</source>
+            <translation>%1 üzerinde oynatılıyor</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>10 saniye geri</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Sonraki bölüm</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>Yayını durdur</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastPicker</name>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>Bir TV'ye yayınla</translation>
+        </message>
+        <message>
+            <source>Chromecast</source>
+            <translation>Chromecast</translation>
+        </message>
+        <message>
+            <source>TV (DLNA)</source>
+            <translation>TV (DLNA)</translation>
+        </message>
+        <message>
+            <source>Looking on this network…</source>
+            <translation>Bu ağda aranıyor…</translation>
+        </message>
+        <message>
+            <source>Nothing found. The TV or Chromecast needs to be on and on the same Wi-Fi as this device.</source>
+            <translation>Hiçbir şey bulunamadı. TV ya da Chromecast açık ve bu cihazla aynı Wi-Fi'da olmalı.</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>Yeniden ara</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
         </message>
     </context>
     <context>
@@ -2230,6 +2432,22 @@
         <message>
             <source>Open series</source>
             <translation>Seriyi aç</translation>
+        </message>
+        <message>
+            <source> saved · </source>
+            <translation> kaydedildi · </translation>
+        </message>
+        <message>
+            <source>On a comic, novel or anime page, use the download button on a chapter or episode, or select several at once. Downloads open without a connection.</source>
+            <translation>Bir çizgi roman, roman ya da anime sayfasında bir bölümün indirme düğmesini kullan ya da birkaçını birden seç. İndirilenler bağlantı olmadan açılır.</translation>
+        </message>
+        <message>
+            <source>Stop and delete</source>
+            <translation>Durdur ve sil</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Sil</translation>
         </message>
     </context>
     <context>
@@ -5124,6 +5342,13 @@
         </message>
     </context>
     <context>
+        <name>sc::Anime</name>
+        <message>
+            <source>Another app</source>
+            <translation>Başka uygulama</translation>
+        </message>
+    </context>
+    <context>
         <name>SeriesPage</name>
         <message>
             <source>Start reading</source>
@@ -6950,6 +7175,54 @@
         <message>
             <source>EP </source>
             <translation>BLM </translation>
+        </message>
+        <message>
+            <source> · Downloaded</source>
+            <translation> · İndirildi</translation>
+        </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>%1. bölüm indiriliyor</translation>
+        </message>
+        <message>
+            <source>Downloading…</source>
+            <translation>İndiriliyor…</translation>
+        </message>
+        <message>
+            <source>Download this episode</source>
+            <translation>Bu bölümü indir</translation>
+        </message>
+        <message>
+            <source>Could not open it there.</source>
+            <translation>Orada açılamadı.</translation>
+        </message>
+        <message>
+            <source>Continue on %1</source>
+            <translation>%1 üzerinde devam et</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>%1 cihazına gönderildi</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>Henüz gönderilecek bir şey yok: önce biraz oku ya da izle.</translation>
+        </message>
+        <message>
+            <source>Open in another app</source>
+            <translation>Başka uygulamada aç</translation>
+        </message>
+        <message>
+            <source>Open in another player</source>
+            <translation>Başka oynatıcıda aç</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>Yayını durdur</translation>
+        </message>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>Bir TV'ye yayınla</translation>
         </message>
     </context>
     <context>

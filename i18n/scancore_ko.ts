@@ -894,6 +894,46 @@
             <source>You might also like</source>
             <translation>이런 작품도 좋아할 거예요</translation>
         </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>%1화 다운로드 중</translation>
+        </message>
+        <message>
+            <source>Downloading %1 episodes</source>
+            <translation>에피소드 %1개 다운로드 중</translation>
+        </message>
+        <message>
+            <source>Download episodes</source>
+            <translation>에피소드 다운로드</translation>
+        </message>
+        <message>
+            <source>Next %1 unwatched</source>
+            <translation>안 본 다음 %1개</translation>
+        </message>
+        <message>
+            <source>All %1 unwatched</source>
+            <translation>안 본 %1개 모두</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>다운로드</translation>
+        </message>
+        <message>
+            <source>Downloaded: delete</source>
+            <translation>다운로드됨: 삭제</translation>
+        </message>
+        <message>
+            <source>Download failed: try again</source>
+            <translation>다운로드 실패: 다시 시도</translation>
+        </message>
+        <message>
+            <source>: stop</source>
+            <translation>: 중지</translation>
+        </message>
+        <message>
+            <source>Waiting: stop</source>
+            <translation>대기 중: 중지</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1083,6 +1123,94 @@
             <source>Goes straight to the next episode&apos;s countdown when the credits start.</source>
             <translation>크레딧이 시작되면 바로 다음 에피소드 카운트다운으로 넘어갑니다.</translation>
         </message>
+        <message>
+            <source>Subtitles</source>
+            <translation>자막</translation>
+        </message>
+        <message>
+            <source>For SCANCORE's player. Subtitles with their own styling keep it, apart from the size.</source>
+            <translation>SCANCORE 플레이어용입니다. 자체 스타일이 있는 자막은 크기 외에는 그대로 유지됩니다.</translation>
+        </message>
+        <message>
+            <source>Size</source>
+            <translation>크기</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>작게</translation>
+        </message>
+        <message>
+            <source>Normal</source>
+            <translation>보통</translation>
+        </message>
+        <message>
+            <source>Large</source>
+            <translation>크게</translation>
+        </message>
+        <message>
+            <source>Huge</source>
+            <translation>아주 크게</translation>
+        </message>
+        <message>
+            <source>Colour</source>
+            <translation>색상</translation>
+        </message>
+        <message>
+            <source>White</source>
+            <translation>흰색</translation>
+        </message>
+        <message>
+            <source>Yellow</source>
+            <translation>노란색</translation>
+        </message>
+        <message>
+            <source>Light blue</source>
+            <translation>하늘색</translation>
+        </message>
+        <message>
+            <source>Outline</source>
+            <translation>외곽선</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>얇게</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>두껍게</translation>
+        </message>
+        <message>
+            <source>Dark box behind the lines</source>
+            <translation>자막 뒤 어두운 상자</translation>
+        </message>
+        <message>
+            <source>Easier to read over bright scenes.</source>
+            <translation>밝은 장면에서도 읽기 쉬워요.</translation>
+        </message>
+        <message>
+            <source>Picture</source>
+            <translation>사진</translation>
+        </message>
+        <message>
+            <source>Sharpen (Anime4K)</source>
+            <translation>선명하게 (Anime4K)</translation>
+        </message>
+        <message>
+            <source>Cleaner lines and upscaling for lower-resolution episodes. Best needs a strong graphics card; on phones Fast is the most to try.</source>
+            <translation>저해상도 에피소드의 선을 깔끔하게 하고 업스케일합니다. 최고는 강한 그래픽 카드가 필요하고, 휴대폰에서는 빠름까지만 써 보세요.</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>끔</translation>
+        </message>
+        <message>
+            <source>Fast</source>
+            <translation>빠름</translation>
+        </message>
+        <message>
+            <source>Best</source>
+            <translation>최고</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1156,6 +1284,80 @@
         <message>
             <source>Back to top</source>
             <translation>맨 위로</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastOverlay</name>
+        <message>
+            <source>Connecting…</source>
+            <translation>연결 중…</translation>
+        </message>
+        <message>
+            <source>Loading…</source>
+            <translation>불러오는 중…</translation>
+        </message>
+        <message>
+            <source>Paused</source>
+            <translation>일시정지됨</translation>
+        </message>
+        <message>
+            <source>Finished</source>
+            <translation>완결</translation>
+        </message>
+        <message>
+            <source>Something went wrong</source>
+            <translation>문제가 생겼습니다</translation>
+        </message>
+        <message>
+            <source>Playing</source>
+            <translation>재생 중</translation>
+        </message>
+        <message>
+            <source>Playing on %1</source>
+            <translation>%1에서 재생 중</translation>
+        </message>
+        <message>
+            <source>Back 10 seconds</source>
+            <translation>10초 뒤로</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>다음 에피소드</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>전송 중지</translation>
+        </message>
+    </context>
+    <context>
+        <name>CastPicker</name>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>TV로 전송</translation>
+        </message>
+        <message>
+            <source>Chromecast</source>
+            <translation>Chromecast</translation>
+        </message>
+        <message>
+            <source>TV (DLNA)</source>
+            <translation>TV (DLNA)</translation>
+        </message>
+        <message>
+            <source>Looking on this network…</source>
+            <translation>이 네트워크에서 찾는 중…</translation>
+        </message>
+        <message>
+            <source>Nothing found. The TV or Chromecast needs to be on and on the same Wi-Fi as this device.</source>
+            <translation>찾지 못했어요. TV나 Chromecast가 켜져 있고 이 기기와 같은 Wi-Fi에 있어야 해요.</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>다시 찾기</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
         </message>
     </context>
     <context>
@@ -2230,6 +2432,22 @@
         <message>
             <source>Open series</source>
             <translation>작품 열기</translation>
+        </message>
+        <message>
+            <source> saved · </source>
+            <translation>개 저장됨 · </translation>
+        </message>
+        <message>
+            <source>On a comic, novel or anime page, use the download button on a chapter or episode, or select several at once. Downloads open without a connection.</source>
+            <translation>만화, 소설, 애니메이션 페이지에서 회차나 에피소드의 다운로드 버튼을 누르거나 여러 개를 한 번에 고르세요. 다운로드한 항목은 연결 없이 열립니다.</translation>
+        </message>
+        <message>
+            <source>Stop and delete</source>
+            <translation>중지하고 삭제</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>지우기</translation>
         </message>
     </context>
     <context>
@@ -5124,6 +5342,13 @@
         </message>
     </context>
     <context>
+        <name>sc::Anime</name>
+        <message>
+            <source>Another app</source>
+            <translation>다른 앱</translation>
+        </message>
+    </context>
+    <context>
         <name>SeriesPage</name>
         <message>
             <source>Start reading</source>
@@ -6950,6 +7175,54 @@
         <message>
             <source>EP </source>
             <translation>EP </translation>
+        </message>
+        <message>
+            <source> · Downloaded</source>
+            <translation> · 다운로드됨</translation>
+        </message>
+        <message>
+            <source>Downloading episode %1</source>
+            <translation>%1화 다운로드 중</translation>
+        </message>
+        <message>
+            <source>Downloading…</source>
+            <translation>다운로드 중…</translation>
+        </message>
+        <message>
+            <source>Download this episode</source>
+            <translation>이 에피소드 다운로드</translation>
+        </message>
+        <message>
+            <source>Could not open it there.</source>
+            <translation>거기서 열 수 없어요.</translation>
+        </message>
+        <message>
+            <source>Continue on %1</source>
+            <translation>%1에서 이어 보기</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>%1(으)로 보냈어요</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>아직 보낼 내용이 없어요. 먼저 조금 읽거나 보세요.</translation>
+        </message>
+        <message>
+            <source>Open in another app</source>
+            <translation>다른 앱에서 열기</translation>
+        </message>
+        <message>
+            <source>Open in another player</source>
+            <translation>다른 플레이어에서 열기</translation>
+        </message>
+        <message>
+            <source>Stop casting</source>
+            <translation>전송 중지</translation>
+        </message>
+        <message>
+            <source>Cast to a TV</source>
+            <translation>TV로 전송</translation>
         </message>
     </context>
     <context>

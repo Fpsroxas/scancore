@@ -58,7 +58,7 @@ Item {
             spacing: 14
             PageHeader {
                 title: qsTr("Downloads")
-                subtitle: page.items.filter(i => i.status === "done").length + qsTr(" chapters saved · ") + page.sizeText
+                subtitle: page.items.filter(i => i.status === "done").length + qsTr(" saved · ") + page.sizeText
                 Row {
                     spacing: 8
                     ScButton { visible: page.failedCount > 0; text: qsTr("Retry failed"); iconName: "refresh-cw"; onClicked: Downloads.retryFailed() }
@@ -102,7 +102,7 @@ Item {
                 task: page.items.length === 0 ? page.task : null
                 empty: page.task && page.task.ok && page.items.length === 0
                 emptyTitle: qsTr("No downloads yet")
-                emptyText: qsTr("On a comic or novel page, use the download button on a chapter, or select several at once. Downloaded chapters open without a connection.")
+                emptyText: qsTr("On a comic, novel or anime page, use the download button on a chapter or episode, or select several at once. Downloads open without a connection.")
                 emptyIcon: "download"
             }
         }
@@ -171,7 +171,9 @@ Item {
                         }
                     }
                     Text {
-                        text: row.modelData.status === "running" ? (row.count.total ? row.count.done + qsTr(" of ") + row.count.total + qsTr(" pages") : qsTr("Starting…"))
+                        text: row.modelData.status === "running" ? (!row.count.total ? qsTr("Starting…")
+                                : row.modelData.media === "anime" ? Math.floor(row.count.done / row.count.total * 100) + "%"
+                                : row.count.done + qsTr(" of ") + row.count.total + qsTr(" pages"))
                             : row.modelData.status === "queued" ? qsTr("Waiting")
                             : row.modelData.status === "failed" ? (row.modelData.error || qsTr("Failed"))
                             : qsTr("Saved ") + App.relativeTime(row.modelData.createdAt)
@@ -194,9 +196,10 @@ Item {
                     visible: row.modelData.status === "done"
                     iconName: "book-open"
                     tip: qsTr("Open series")
-                    onClicked: Router.openSeries({ media: row.modelData.media, sourceUrl: row.modelData.sourceUrl, title: row.modelData.seriesTitle, cover: row.modelData.cover, source: row.modelData.source }, cover)
+                    onClicked: Router.openSeries({ media: row.modelData.media, sourceUrl: row.modelData.sourceUrl, title: row.modelData.seriesTitle, cover: row.modelData.cover, source: row.modelData.source, extra: row.modelData.extra || {} }, cover)
                 }
-                IconButton { visible: row.modelData.status !== "running"; iconName: "trash"; tip: "Delete"; onClicked: Downloads.remove(row.modelData.id) }
+                // While it runs: it stops, and what it had goes.
+                IconButton { iconName: "trash"; tip: row.modelData.status === "running" ? qsTr("Stop and delete") : qsTr("Delete"); onClicked: Downloads.remove(row.modelData.id) }
             }
         }
     }

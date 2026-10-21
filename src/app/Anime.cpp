@@ -2,6 +2,7 @@
 
 #include "App.h"
 #include "Library.h"
+#include "Platform.h"
 #include "MpvPlayer.h"
 #include "Resolve.h"
 #include "core/Database.h"
@@ -15,6 +16,9 @@
 #include "sources/anime/Registry.h"
 
 #include <QCryptographicHash>
+#include <QFileInfo>
+#include <QProcess>
+#include <QStandardPaths>
 #include <QDateTime>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -982,6 +986,194 @@ Task *Anime::videos(const QString &key, const QString &episodeUrl, const QString
                                                     : QStringLiteral("None of the servers had a video that plays here."));
         return out;
     });
+}
+
+namespace {
+
+struct Player {
+    QString id;
+    QString name;
+    QString program;
+};
+
+// Desktop players found once: on the PATH, or where their installers put them.
+QList<Player> desktopPlayers() {
+    static const QList<Player> found = [] {
+        QList<Player> out;
+        const auto first = [](const QStringList &names, const QStringList &paths) {
+            for (const auto &name : names)
+                if (const auto path = QStandardPaths::findExecutable(name); !path.isEmpty())
+                    return path;
+            for (const auto &path : paths)
+                if (QFileInfo(path).isExecutable())
+                    return path;
+            return QString();
+        };
+        const auto programFiles = qEnvironmentVariable("ProgramFiles", QStringLiteral("C:/Program Files"));
+        if (const auto mpv = first({QStringLiteral("mpv")}, {QStringLiteral("/opt/homebrew/bin/mpv"), QStringLiteral("/usr/local/bin/mpv"),
+                                                            QStringLiteral("/Applications/mpv.app/Contents/MacOS/mpv")});
+            !mpv.isEmpty())
+            out.append({QStringLiteral("mpv"), QStringLiteral("mpv"), mpv});
+        if (const auto iina = first({}, {QStringLiteral("/Applications/IINA.app/Contents/MacOS/iina-cli")}); !iina.isEmpty())
+            out.append({QStringLiteral("iina"), QStringLiteral("IINA"), iina});
+        if (const auto vlc = first({QStringLiteral("vlc")}, {programFiles + QStringLiteral("/VideoLAN/VLC/vlc.exe"),
+                                                            QStringLiteral("C:/Program Files (x86)/VideoLAN/VLC/vlc.exe"),
+                                                            QStringLiteral("/Applications/VLC.app/Contents/MacOS/VLC")});
+            !vlc.isEmpty())
+            out.append({QStringLiteral("vlc"), QStringLiteral("VLC"), vlc});
+        return out;
+    }();
+    return found;
+}
+
+} // namespace
+
+QVariantList Anime::externalPlayers() const {
+    QVariantList out;
+#ifdef Q_OS_ANDROID
+    out.append(QVariantMap{{"id", "android"}, {"name", tr("Another app")}});
+#else
+    for (const auto &player : desktopPlayers())
+        out.append(QVariantMap{{"id", player.id}, {"name", player.name}});
+#endif
+    return out;
+}
+
+bool Anime::openExternally(const QString &id, const QVariantMap &video, const QString &title, double startAt) const {
+    const auto url = video.value(QStringLiteral("url")).toString();
+    if (url.isEmpty())
+        return false;
+    QString agent = QString::fromUtf8(Http::userAgent());
+    QString referer;
+    QStringList others;
+    const auto headers = video.value(QStringLiteral("headers")).toMap();
+    for (auto it = headers.begin(); it != headers.end(); ++it) {
+        if (it.key().compare(QLatin1String("user-agent"), Qt::CaseInsensitive) == 0)
+            agent = it.value().toString();
+        else if (it.key().compare(QLatin1String("referer"), Qt::CaseInsensitive) == 0)
+            referer = it.value().toString();
+        else
+            others.append(it.key() + QStringLiteral(": ") + it.value().toString());
+    }
+    const auto tracks = [&](const char *kind) {
+        QStringList out;
+        for (const auto &value : video.value(QLatin1String(kind)).toList())
+            if (const auto track = value.toMap().value(QStringLiteral("url")).toString(); !track.isEmpty())
+                out.append(track);
+        return out;
+    };
+#ifdef Q_OS_ANDROID
+    Q_UNUSED(id)
+    // Other apps cannot read SCANCORE's own files.
+    if (QUrl(url).isLocalFile())
+        return false;
+    QStringList flat{QStringLiteral("User-Agent"), agent};
+    if (!referer.isEmpty())
+        flat << QStringLiteral("Referer") << referer;
+    for (const auto &header : std::as_const(others))
+        flat << header.section(QStringLiteral(": "), 0, 0) << header.section(QStringLiteral(": "), 1);
+    QStringList names;
+    for (const auto &value : video.value(QStringLiteral("subtitles")).toList())
+        names.append(value.toMap().value(QStringLiteral("lang")).toString());
+    return platform::openExternalPlayer(url, title, flat, int(startAt * 1000), tracks("subtitles"), names);
+#else
+    const auto players = desktopPlayers();
+    const auto it = std::find_if(players.begin(), players.end(), [&](const Player &p) { return p.id == id; });
+    if (it == players.end())
+        return false;
+    QStringList args;
+    if (it->id == QLatin1String("vlc")) {
+        // VLC takes the address's user agent and referrer, nothing more.
+        args << url << QStringLiteral(":http-user-agent=") + agent;
+        if (!referer.isEmpty())
+            args << QStringLiteral(":http-referrer=") + referer;
+        args << QStringLiteral("--meta-title=") + title;
+        if (startAt > 1)
+            args << QStringLiteral("--start-time=%1").arg(int(startAt));
+    } else {
+        // mpv, and IINA (mpv underneath) with its options prefixed.
+        const QString prefix = it->id == QLatin1String("iina") ? QStringLiteral("--mpv-") : QStringLiteral("--");
+        args << url << prefix + QStringLiteral("force-media-title=") + title << prefix + QStringLiteral("user-agent=") + agent;
+        if (!referer.isEmpty())
+            args << prefix + QStringLiteral("referrer=") + referer;
+        for (const auto &header : std::as_const(others))
+            args << prefix + QStringLiteral("http-header-fields-append=") + header;
+        if (startAt > 1)
+            args << prefix + QStringLiteral("start=%1").arg(int(startAt));
+        for (const auto &track : tracks("subtitles"))
+            args << prefix + QStringLiteral("sub-files-append=") + track;
+        for (const auto &track : tracks("audio"))
+            args << prefix + QStringLiteral("audio-files-append=") + track;
+        // How to read it (a downloaded HLS episode), as SCANCORE's player does.
+        const auto options = video.value(QStringLiteral("mpvArgs")).toMap();
+        for (const auto *name : {"demuxer", "demuxer-lavf-format", "demuxer-lavf-o", "stream-lavf-o"})
+            if (options.contains(QLatin1String(name)))
+                args << prefix + QLatin1String(name) + QLatin1Char('=') + options.value(QLatin1String(name)).toString();
+    }
+    return QProcess::startDetached(it->program, args);
+#endif
+}
+
+QVariantMap Anime::videoForDownload(const QString &key, const QString &episodeUrl, const QString &animeUrl, double number) {
+    auto source = requireSource(key);
+    auto url = episodeUrl;
+    if (url.isEmpty())
+        url = anime::episodeNumbered(cachedEpisodes(*source, animeUrl), number);
+    if (url.isEmpty())
+        throw Error(QStringLiteral("Episode %1 is not on %2 any more.").arg(number).arg(source->label()));
+    QVariantList hosters;
+    QList<int> waiting;
+    QList<std::function<QJsonArray()>> jobs;
+    for (const auto &value : source->hosters(url)) {
+        const auto h = value.toObject();
+        QVariantMap hoster{{"id", h.value("id").toString()}, {"name", h.value("name").toString()}};
+        if (h.contains("videos")) {
+            hoster.insert("state", QStringLiteral("ready"));
+            hoster.insert("videos", anime::videoList(h.value("videos").toArray()));
+        } else if (!h.value("lazy").toBool()) {
+            waiting.append(int(hosters.size()));
+            jobs.append([source, id = h.value("id").toString()] { return source->hosterVideos(id); });
+        }
+        hosters.append(hoster);
+    }
+    const auto answers = parallel<QJsonArray>(jobs);
+    for (int i = 0; i < answers.size(); ++i) {
+        if (!answers[i].ok())
+            continue;
+        auto hoster = hosters[waiting[i]].toMap();
+        hoster.insert("state", QStringLiteral("ready"));
+        hoster.insert("videos", anime::videoList(*answers[i].value));
+        hosters[waiting[i]] = hoster;
+    }
+    // The server picked last time in the player, else the source's best.
+    QVariantMap video;
+    const auto wanted = App::instance()->settings().value(QStringLiteral("animeHoster")).toString();
+    for (const auto &value : std::as_const(hosters)) {
+        const auto hoster = value.toMap();
+        if (wanted.isEmpty() || hoster.value("name").toString() != wanted)
+            continue;
+        for (const auto &v : hoster.value("videos").toList()) {
+            const auto m = v.toMap();
+            if (m.value("localServer").toBool())
+                continue;
+            if (video.isEmpty() || m.value("preferred").toBool())
+                video = m;
+            if (m.value("preferred").toBool())
+                break;
+        }
+    }
+    if (video.isEmpty()) {
+        const auto best = anime::bestVideo(hosters).toMap();
+        if (best.isEmpty())
+            throw Error(hosters.isEmpty() ? QStringLiteral("%1 has no videos for this episode.").arg(source->label())
+                                          : QStringLiteral("None of the servers had a video that can be downloaded."));
+        video = hosters[best.value("hoster").toInt()].toMap().value("videos").toList()[best.value("video").toInt()].toMap();
+    }
+    if (!video.value("initialized", true).toBool() || video.value("url").toString().isEmpty())
+        video = anime::videoMap(source->resolveVideo(video.value("id").toString()));
+    if (video.value("url").toString().isEmpty())
+        throw Error(QStringLiteral("The server gave no address for this episode's video."));
+    return video;
 }
 
 Task *Anime::hosterVideos(const QString &key, const QString &hosterId) {
