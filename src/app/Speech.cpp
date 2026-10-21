@@ -1,5 +1,7 @@
 #include "Speech.h"
 
+#include <atomic>
+
 #include <QCoreApplication>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -83,15 +85,31 @@ QString javaString(JNIEnv *env, jstring s) {
     return out;
 }
 
+// The engine's callbacks use this, never Speech::instance(): Android can
+// answer during TextToSpeech's own constructor (with no engine to bind, it
+// reports the failure at once), which would re-enter instance() while it
+// is still being initialised and abort (2.2.1 crash on opening Sources).
+std::atomic<Speech *> g_speech{nullptr};
+
 void jniReady(JNIEnv *env, jclass, jboolean ok, jstring voicesJson) {
     QVariantList voices;
     for (const auto &v : QJsonDocument::fromJson(javaString(env, voicesJson).toUtf8()).array())
         voices.append(v.toObject().toVariantMap());
-    Speech::instance()->engineReady(ok, voices);
+    if (auto *speech = g_speech.load())
+        speech->engineReady(ok, voices);
 }
-void jniStarted(JNIEnv *, jclass, jint chunk) { Speech::instance()->engineStarted(chunk); }
-void jniDone(JNIEnv *, jclass, jint chunk) { Speech::instance()->engineFinished(chunk); }
-void jniError(JNIEnv *env, jclass, jint chunk, jstring message) { Speech::instance()->engineFailed(chunk, javaString(env, message)); }
+void jniStarted(JNIEnv *, jclass, jint chunk) {
+    if (auto *speech = g_speech.load())
+        speech->engineStarted(chunk);
+}
+void jniDone(JNIEnv *, jclass, jint chunk) {
+    if (auto *speech = g_speech.load())
+        speech->engineFinished(chunk);
+}
+void jniError(JNIEnv *env, jclass, jint chunk, jstring message) {
+    if (auto *speech = g_speech.load())
+        speech->engineFailed(chunk, javaString(env, message));
+}
 #endif
 
 } // namespace
@@ -102,10 +120,17 @@ Speech *Speech::instance() {
         QJSEngine::setObjectOwnership(created, QJSEngine::CppOwnership);
         return created;
     }();
+    // Started once the singleton exists, outside its initialisation, so an
+    // engine answering straight away finds it whole.
+    speech->ensureEngine();
     return speech;
 }
 
-Speech::Speech(QObject *parent) : QObject(parent) { ensureEngine(); }
+Speech::Speech(QObject *parent) : QObject(parent) {
+#if defined(Q_OS_ANDROID) && !defined(SCANCORE_HAVE_TTS)
+    g_speech = this;
+#endif
+}
 
 Speech::~Speech() = default;
 
