@@ -2,6 +2,12 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.3.5 — 2026-10-21
+
+- **Extension anime plays again** ([#13](https://github.com/medium-gh/scancore/issues/13)): since 2.2.0 SCANCORE's player turned down most extension videos with "unrecognized file format". It now plays them.
+- **Servers that disguise their videos play**: some servers (such as HD-1 on AnimeKai, Anikoto, AniWave and Anichi) send each part of a video dressed up as a picture. SCANCORE now unwraps them on the way to the player, on every platform, and downloads of them play offline.
+- **AniZone loads** on desktop instead of failing with an error, and extensions that stream from a server of their own no longer stop about ten minutes into an episode.
+
 ## 2.3.4 — 2026-10-21
 
 - **Swipe the anime spotlight**: swipe or drag sideways for the next or previous title, as in most apps. The slide follows your finger, a quick flick is enough, and a swipe that drifts a little no longer scrolls the page instead. (Swiping was meant to work before, but never changed the slide.)

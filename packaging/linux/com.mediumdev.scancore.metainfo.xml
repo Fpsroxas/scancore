@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.3.5" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#235--2026-10-21</url>
+      <description>
+        <p>Extension anime plays again, including servers that disguise their videos as pictures, and AniZone loads on desktop.</p>
+      </description>
+    </release>
     <release version="2.3.4" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#234--2026-10-21</url>
       <description>
