@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.2.0" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#220--2026-10-21</url>
+      <description>
+        <p>SCANCORE Wrapped for your year in comics, novels and anime; live progress between your devices and Continue on another device; anime downloads; casting to Chromecasts and smart TVs; opening episodes in another player; subtitle style and Anime4K sharpening; an e-ink mode; SCANCORE's own video player in the Flatpak; and the interface in Polish, Thai, Filipino and Hindi.</p>
+      </description>
+    </release>
     <release version="2.1.1" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#211--2026-10-21</url>
       <description>

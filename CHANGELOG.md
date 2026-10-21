@@ -2,6 +2,22 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.2.0 — 2026-10-21
+
+SCANCORE 2.2 "Together": your devices and your TV, in step.
+
+- **SCANCORE Wrapped**: your year in comics, novels and anime as a story across the whole window (time spent, chapters and episodes, the series you came back to most and your number one of each, the genres and author you read most, your busiest month and weekday, your longest streak, where your year started) and a card to save as a picture. Home shows it from 1 December to 7 January, and the year review opens it any time.
+- **Live progress between your devices**: signed in to scancore.onl (or a SCANCORE sync server 1.1), where you are in a chapter or episode reaches your other open devices within seconds, not at the next sync. **Continue on another device** in the readers and the player sends your exact page or second to one of them, which offers to continue there. Settings → Sync shows which devices are open now.
+- **Anime downloads**: download one episode, the next five or every unwatched one from an anime source (or the one playing) and watch without a connection, with its subtitles. Streams are kept as they are, up to 1080p, and a download that stopped goes on where it was.
+- **Cast to a TV**: Chromecasts and smart TVs (DLNA) on your Wi-Fi. SCANCORE passes the TV what the video needs, so episodes from extensions and your downloads play there too; the player follows the TV with play, pause, seek and next and keeps your progress.
+- **Open in another player**: mpv, VLC or IINA on computers, or MX Player, mpv, VLC and others on Android, with the video's headers, start position and subtitles.
+- **Subtitle style** (size, colour, outline, a dark box behind the lines) and **Anime4K sharpening** for lower-resolution episodes, in Settings → Anime.
+- **E-ink mode** for Boox, Kobo and other e-paper devices: black on white, no animation, comics in pages with a flash on page turns to clear ghosting, and novels turned page by page with a tap on the sides (Settings → Interface).
+- **The Flatpak plays anime from extensions** with SCANCORE's own player, like the other packages, instead of only web players.
+- **Four more interface languages**: Polski, ไทย, Filipino and हिन्दी (eighteen besides English).
+- Bookmarks and each series' chapter-list settings (sort, filters) now sync between devices too.
+- On phones, the player's bar has a menu for the new actions, and the readers' top bars fit on 360 px screens.
+
 ## 2.1.1 — 2026-10-21
 
 - **Keiyoushi extensions work again.** Their current builds refused to start in SCANCORE ("CloudflareInterceptor must be present in default client") because SCANCORE's network setup was not exactly Mihon's; on desktop they also failed to load at all. Every one of them runs now, on Android and desktop.
