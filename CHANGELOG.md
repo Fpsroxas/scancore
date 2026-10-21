@@ -2,6 +2,15 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.2.1 — 2026-10-21
+
+- **Adding a second repository no longer closes SCANCORE.**
+- **Repository links work however you paste them**: a GitHub repository's page or just owner/name, a raw folder, jsDelivr, Codeberg or GitLab pages, or the link to an index.min.json, repo.json or LNReader plugin list (such as raw.githubusercontent.com/LNReader/lnreader-plugins/…/plugins.min.json). Paste several at once and they are added one after another.
+- **AniList connects inside SCANCORE**: sign in and allow it, and the account is connected; nothing to copy. When AniList, MyAnimeList or Comick signs SCANCORE out, you are told and can connect again in one tap.
+- **Watching updates your trackers reliably**: an episode counts as watched from 85%, in its last two minutes, once the ending starts, or when you go on to the next one.
+- **Continue watching and reading** show the episode or chapter you are really on, say which episode is next, and leave out series you only plan to watch, dropped or finished. Starting a planned series moves it to Watching or Reading.
+- **Crash reports**: if SCANCORE closes unexpectedly, the next start offers a report to copy, share or post on GitHub. Settings → About → Crash reports and diagnostics has past reports and a log to send for other problems.
+
 ## 2.2.0 — 2026-10-21
 
 SCANCORE 2.2 "Together": your devices and your TV, in step.

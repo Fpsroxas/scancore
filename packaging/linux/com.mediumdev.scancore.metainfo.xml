@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.2.1" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#221--2026-10-21</url>
+      <description>
+        <p>Adding a second repository no longer closes SCANCORE, and repository links work in every form (GitHub pages, owner/name, raw folders, LNReader plugin lists, several at once). AniList connects inside the app, watching updates trackers reliably, Continue watching shows the right episode and leaves out planned and finished series, and crash reports can be shared.</p>
+      </description>
+    </release>
     <release version="2.2.0" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#220--2026-10-21</url>
       <description>
