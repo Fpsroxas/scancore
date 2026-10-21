@@ -2,6 +2,22 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.3.0 — 2026-10-21
+
+SCANCORE 2.3 "One story": comic, novel and anime as one story, and a library that looks after itself.
+
+- **The story elsewhere**: a series page shows its other forms side by side (the manhwa an anime adapts, the web novel behind it, every season) with how far you are in each, and opens them in one tap.
+- **Where the anime leaves off**: anime pages say where the comic or novel goes on after that season ("Manhwa continues from chapter 46"), and comic and novel pages say where each season ends, with a button to go there. Readers suggest and vote on these on scancore.onl; SCANCORE's own list starts it off.
+- **Continue the story** on Home: after you finish a season, or catch up on a comic whose novel is further ahead, a card shows where to go on.
+- **Upcoming**: one calendar for what comes out next in your library, anime episodes from their schedule and comic and novel chapters guessed from each series' rhythm (Library → Upcoming).
+- **Library health**: sources that stopped answering or updating are listed with a move to another source, and series saved twice on different sources can be merged, keeping everything you read in either. Library shows when something needs a look.
+- **Five more trackers**: Kitsu, MangaUpdates and Bangumi (and Shikimori and Simkl in builds with their ids) in Settings → Connections.
+- **Read a title from your extensions**: a search result or a series on a built-in source can be looked up on your installed extensions alone.
+- **Home is yours to shape**: remove sections you do not want (they no longer load) and add shelves of an extension's latest or popular titles.
+- Update checks can send one notification for everything they found (Settings → Library).
+- The Flatpak builds again with SCANCORE's own player.
+- Android: opening Sources no longer closes SCANCORE on phones without a working text-to-speech engine.
+
 ## 2.2.1 — 2026-10-21
 
 - **Adding a second repository no longer closes SCANCORE.**

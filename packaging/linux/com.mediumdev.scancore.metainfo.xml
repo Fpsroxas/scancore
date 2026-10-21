@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.3.0" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#230--2026-10-21</url>
+      <description>
+        <p>One story across comic, novel and anime: a series page shows its other forms with your progress, anime pages say where the comic or novel goes on after each season (suggested and voted on by readers), and Home offers to continue the story. Upcoming shows what comes out next in your library, Library health finds sources that stopped and series saved twice, and Kitsu, MangaUpdates and Bangumi join the trackers. Titles can be looked up on your extensions, and Home sections can be removed or added from extensions.</p>
+      </description>
+    </release>
     <release version="2.2.1" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#221--2026-10-21</url>
       <description>
