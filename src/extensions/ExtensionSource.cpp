@@ -178,6 +178,9 @@ void ExtensionSource::installImageWriter() {
 
 void ExtensionSource::shareCookies(const QString &url) {
     const QUrl site(url);
+    // Never the account's own site (its cookies are the session).
+    if (CookieJar::isProtected(site))
+        return;
     // Comic and anime extensions share the host and its cookies. Every
     // site's, not only their listed one: an extension may read a mirror the
     // reader picked, or an API or image server on another domain.

@@ -331,15 +331,21 @@ void App::moveToBackground() const {
 }
 
 bool App::openSiteCheck(const QString &url, const QString &title, const QString &doneLabel) {
+    // Not SCANCORE's own site or the sync server: a check window there would
+    // hand the account's session to whoever asked for it.
+    if (CookieJar::isProtected(QUrl(url)))
+        return true;
     return platform::openSiteCheck(url, title, doneLabel);
 }
+
+bool App::protectedSite(const QString &url) const { return CookieJar::isProtected(QUrl(url)); }
 
 void App::cancelSiteCheck(const QString &url) { answerReader(url, false); }
 
 // One window per site: requests that meet the same check wait on it together.
 // Not while SCANCORE is in the background, and not longer than 90 seconds.
 void App::askReader(const QString &url, std::function<void(const QJsonValue &)> answer) {
-    if (qGuiApp->applicationState() != Qt::ApplicationActive)
+    if (qGuiApp->applicationState() != Qt::ApplicationActive || CookieJar::isProtected(QUrl(url)))
         return answer(QJsonObject{{"passed", false}});
     const auto host = QUrl(url).host();
     const bool open = m_readerChecks.contains(host);
@@ -356,8 +362,9 @@ void App::answerReader(const QString &url, bool passed) {
     if (waiting.isEmpty())
         return;
     QJsonArray cookies;
-    for (const auto &cookie : CookieJar::shared().cookiesForUrl(QUrl(QStringLiteral("https://%1/").arg(host))))
-        cookies.append(QString::fromUtf8(cookie.toRawForm()));
+    if (!CookieJar::isProtected(QUrl(url)))
+        for (const auto &cookie : CookieJar::shared().cookiesForUrl(QUrl(QStringLiteral("https://%1/").arg(host))))
+            cookies.append(QString::fromUtf8(cookie.toRawForm()));
     const QJsonObject result{{"passed", passed}, {"cookies", cookies}};
     for (const auto &answer : waiting)
         answer(result);

@@ -204,6 +204,12 @@ Response sendOnce(const Request &request) {
 
     QNetworkRequest req(request.url);
     req.setHeader(QNetworkRequest::UserAgentHeader, Http::userAgent());
+    // Covers come from extensions and plugins too: one pointing at SCANCORE's
+    // own site gets no session.
+    if (request.lane == Lane::Images && CookieJar::isProtected(request.url)) {
+        req.setAttribute(QNetworkRequest::CookieLoadControlAttribute, QNetworkRequest::Manual);
+        req.setAttribute(QNetworkRequest::CookieSaveControlAttribute, QNetworkRequest::Manual);
+    }
     req.setAttribute(QNetworkRequest::Http2AllowedAttribute, true);
     req.setTransferTimeout(request.timeoutMs);
     for (const auto &[name, value] : request.headers) {

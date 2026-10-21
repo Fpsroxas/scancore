@@ -58,6 +58,8 @@ public:
     // Android: a site's browser check in the system web view (see
     // Platform.h); siteChecked(url) follows. False where there is none.
     Q_INVOKABLE bool openSiteCheck(const QString &url, const QString &title, const QString &doneLabel);
+    // SCANCORE's own site or the sync server: no browser checks there.
+    Q_INVOKABLE bool protectedSite(const QString &url) const;
     // The user agent to pass a site's check with: the extension's own when
     // one met the check, else SCANCORE's (Cloudflare ties the clearance to it).
     Q_INVOKABLE QString siteAgent(const QString &url) const;

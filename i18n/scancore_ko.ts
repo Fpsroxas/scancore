@@ -5681,6 +5681,10 @@
             <source> is on</source>
             <translation>이(가) 켜졌습니다</translation>
         </message>
+        <message>
+            <source>SCANCORE does not open browser checks for its own site or your sync server.</source>
+            <translation>SCANCORE는 자체 사이트나 동기화 서버의 브라우저 확인을 열지 않습니다.</translation>
+        </message>
     </context>
     <context>
         <name>sc::Anime</name>

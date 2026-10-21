@@ -76,6 +76,7 @@ var FixturePlugin = (function () {
     FixturePlugin.prototype.recall = function () { return storage_1.storage.get("last") || null; };
     FixturePlugin.prototype.spin = function () { for (;;) {} };
     FixturePlugin.prototype.local = function () { return fetch_1.fetchApi("http://127.0.0.1:9/").then(function () { return "reached"; }); };
+    FixturePlugin.prototype.reach = function (url) { return fetch_1.fetchApi(url).then(function () { return "reached"; }); };
     FixturePlugin.prototype.fails = function () { return Promise.reject(new Error("The site changed.")); };
     // The bundled libraries, as plugins use them.
     FixturePlugin.prototype.scrape = function (html) {

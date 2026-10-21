@@ -5673,6 +5673,10 @@
             <source> is on</source>
             <translation> ay naka-on</translation>
         </message>
+        <message>
+            <source>SCANCORE does not open browser checks for its own site or your sync server.</source>
+            <translation>Hindi nagbubukas ang SCANCORE ng browser check para sa sarili nitong site o sa iyong sync server.</translation>
+        </message>
     </context>
     <context>
         <name>SeriesPage</name>

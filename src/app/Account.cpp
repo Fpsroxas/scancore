@@ -463,6 +463,7 @@ QString Account::setSite(const QString &address) {
                             (url.scheme() != QLatin1String("https") && url.scheme() != QLatin1String("http"))))
         return QStringLiteral("Enter the server's address, like http://192.168.1.20:8787 or https://sync.example.com.");
     Database::setPref(QStringLiteral("account.site"), text == kDefaultSite ? QString() : text);
+    CookieJar::refreshProtected();
     emit changed();
     return {};
 }

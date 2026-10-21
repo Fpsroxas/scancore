@@ -1,6 +1,7 @@
 // LNReader plugins in SCANCORE's runtime (src/plugins), offline: a fixture
 // plugin (tests/fixtures/plugins) against a fixture site on novels.test.
 
+#include "core/Cookies.h"
 #include "core/Database.h"
 #include "core/Http.h"
 #include "plugins/Runtime.h"
@@ -148,6 +149,26 @@ private slots:
         } catch (const Error &e) {
             QVERIFY(e.message().contains(QLatin1String("this device")));
         }
+        // Nor SCANCORE's own site or the sync server, whose cookies are the
+        // account's session; the same hosts get no cookies from browser
+        // checks or extensions.
+        QVERIFY(CookieJar::isProtected(QUrl(QStringLiteral("https://scancore.onl/api/auth/session"))));
+        QVERIFY(CookieJar::isProtected(QUrl(QStringLiteral("https://www.scancore.onl/"))));
+        QVERIFY(!CookieJar::isProtected(QUrl(QStringLiteral("https://notscancore.onl/"))));
+        QVERIFY(!CookieJar::isProtected(QUrl(QStringLiteral("https://sync.example.com/"))));
+        Database::setPref(QStringLiteral("account.site"), QStringLiteral("https://sync.example.com"));
+        CookieJar::refreshProtected();
+        QVERIFY(CookieJar::isProtected(QUrl(QStringLiteral("https://sync.example.com/api/sync"))));
+        for (const auto *url : {"https://scancore.onl/api/auth/session", "https://sync.example.com/api/sync"}) {
+            try {
+                Runtime::call(m_plugin, QStringLiteral("reach"), {QString::fromLatin1(url)});
+                QFAIL("reached SCANCORE's own site");
+            } catch (const Error &e) {
+                QVERIFY(e.message().contains(QLatin1String("own site")));
+            }
+        }
+        Database::setPref(QStringLiteral("account.site"), QString());
+        CookieJar::refreshProtected();
         // A plugin that never returns is stopped at its limit, and the
         // engine still works afterwards.
         QElapsedTimer timer;

@@ -5673,6 +5673,10 @@
             <source> is on</source>
             <translation> jest włączony</translation>
         </message>
+        <message>
+            <source>SCANCORE does not open browser checks for its own site or your sync server.</source>
+            <translation>SCANCORE nie otwiera weryfikacji przeglądarki dla własnej strony ani Twojego serwera synchronizacji.</translation>
+        </message>
     </context>
     <context>
         <name>SeriesPage</name>

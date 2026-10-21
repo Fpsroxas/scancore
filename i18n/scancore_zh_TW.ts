@@ -5681,6 +5681,10 @@
             <source> is on</source>
             <translation> 已開啟</translation>
         </message>
+        <message>
+            <source>SCANCORE does not open browser checks for its own site or your sync server.</source>
+            <translation>SCANCORE 不會為自己的網站或你的同步伺服器開啟瀏覽器驗證。</translation>
+        </message>
     </context>
     <context>
         <name>sc::Anime</name>

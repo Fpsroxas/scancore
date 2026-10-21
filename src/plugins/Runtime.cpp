@@ -1,6 +1,7 @@
 #include "Runtime.h"
 
 #include "Engine.h"
+#include "core/Cookies.h"
 #include "core/Database.h"
 #include "core/Parallel.h"
 
@@ -186,6 +187,9 @@ QString refusal(const QUrl &url) {
     if (url.scheme() != QLatin1String("https") && url.scheme() != QLatin1String("http"))
         return QStringLiteral("Plugins can only open web links.");
     const auto host = url.host().toLower();
+    // The session there is the user's account.
+    if (CookieJar::isProtected(url))
+        return QStringLiteral("Plugins cannot reach SCANCORE's own site or your sync server.");
     if (host.endsWith(QLatin1String(".test")) || loopbackAllowed())
         return {};
     static const QRegularExpression privateHost(

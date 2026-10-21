@@ -5681,6 +5681,10 @@
             <source> is on</source>
             <translation> açık</translation>
         </message>
+        <message>
+            <source>SCANCORE does not open browser checks for its own site or your sync server.</source>
+            <translation>SCANCORE kendi sitesi veya senkronizasyon sunucun için tarayıcı denetimi açmaz.</translation>
+        </message>
     </context>
     <context>
         <name>sc::Anime</name>

@@ -5673,6 +5673,10 @@
             <source> is on</source>
             <translation> เปิดอยู่</translation>
         </message>
+        <message>
+            <source>SCANCORE does not open browser checks for its own site or your sync server.</source>
+            <translation>SCANCORE ไม่เปิดการตรวจสอบเบราว์เซอร์สำหรับเว็บไซต์ของตัวเองหรือเซิร์ฟเวอร์ซิงก์ของคุณ</translation>
+        </message>
     </context>
     <context>
         <name>SeriesPage</name>

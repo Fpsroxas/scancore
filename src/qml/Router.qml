@@ -95,6 +95,11 @@ QtObject {
 
     // Lets the reader pass a site's browser check (see SiteCheck.qml).
     function openSiteCheck(url) {
+        // Never SCANCORE's own site or the sync server (the account's session).
+        if (App.protectedSite(url)) {
+            toast(qsTr("SCANCORE does not open browser checks for its own site or your sync server."), "error")
+            return
+        }
         if (App.platform === "android") {
             // Android's own web view; its cookies come back to SCANCORE.
             const host = url.replace(/^https?:\/\//, "").replace(/\/.*$/, "")
