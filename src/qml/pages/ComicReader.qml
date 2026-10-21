@@ -346,7 +346,7 @@ Rectangle {
                 source: panelItem.modelData.url
                 referer: reader.referer
                 filter: reader.imageFilter
-                maxDecodeWidth: Math.ceil(Math.min(2400, reader.stripWidth * Screen.devicePixelRatio))
+                maxDecodeWidth: 2400
                 opacity: status === PanelImage.Ready ? 1 : 0
                 Behavior on opacity { NumberAnimation { duration: Motion.normal } }
             }
@@ -545,8 +545,10 @@ Rectangle {
                     readonly property real total: pageImage.width + (two ? secondImage.width : 0)
                     PanelImage {
                         id: pageImage
-                        // Fitted pages are shown smaller than decoded.
-                        mipmap: true
+                        // Decoded for the width it is fitted to, again
+                        // sharper for a zoom.
+                        fitIn: Qt.size(pages.slot, pages.height)
+                        zoom: zoomLayer.scale
                         readonly property real ratio: sourceWidth > 0 ? sourceHeight / sourceWidth : 1.45
                         width: Math.min(pages.slot, pages.height / ratio)
                         height: width * ratio
@@ -564,8 +566,10 @@ Rectangle {
                     }
                     PanelImage {
                         id: secondImage
-                        // Fitted pages are shown smaller than decoded.
-                        mipmap: true
+                        // Decoded for the width it is fitted to, again
+                        // sharper for a zoom.
+                        fitIn: Qt.size(pages.slot, pages.height)
+                        zoom: zoomLayer.scale
                         readonly property real ratio: sourceWidth > 0 ? sourceHeight / sourceWidth : 1.45
                         visible: pages.two
                         width: Math.min(pages.slot, pages.height / ratio)
@@ -620,6 +624,8 @@ Rectangle {
                 visible: false
                 width: 1
                 height: 1
+                // Fetched and measured only: the page shown decodes its own.
+                preload: true
                 source: modelData >= 0 && modelData < reader.panels.length ? reader.panels[modelData].url : ""
                 referer: reader.referer
                 cropBorders: reader.crop

@@ -191,7 +191,9 @@ qt_add_resources(scancore assets
         ${PROJECT_SOURCE_DIR}/resources/fonts/Literata-Italic.ttf
         ${PROJECT_SOURCE_DIR}/resources/branding/scancore.svg
         ${PROJECT_SOURCE_DIR}/resources/branding/shadow.png
-        ${PROJECT_SOURCE_DIR}/resources/shaders/cover.frag.qsb)
+        ${PROJECT_SOURCE_DIR}/resources/shaders/cover.frag.qsb
+        ${PROJECT_SOURCE_DIR}/resources/shaders/panel.vert.qsb
+        ${PROJECT_SOURCE_DIR}/resources/shaders/panel.frag.qsb)
 foreach(icon ${SCANCORE_ICONS})
     list(APPEND SCANCORE_ICON_PATHS ${PROJECT_SOURCE_DIR}/${icon})
 endforeach()

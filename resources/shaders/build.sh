@@ -5,7 +5,9 @@
 set -e
 cd "$(dirname "$0")"
 QSB=${QSB:-$(command -v qsb || echo /usr/lib/qt6/bin/qsb)}
-for f in *.frag; do
-    # The current format; Qt 6.6 and later read it.
-    "$QSB" --glsl "100 es,120,150" --hlsl 50 --msl 12 -O -o "$f.qsb" "$f"
+for f in *.vert *.frag; do
+    # The current format; Qt 6.6 and later read it. Vertex shaders of scene
+    # graph materials also need the batchable variant (-b).
+    case "$f" in *.vert) batch=-b ;; *) batch= ;; esac
+    "$QSB" $batch --glsl "100 es,120,150" --hlsl 50 --msl 12 -O -o "$f.qsb" "$f"
 done
