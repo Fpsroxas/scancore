@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>최신</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>인기</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>섹션 추가</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>이 페이지에서 제거됨</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>내 확장 프로그램에서</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>둘러볼 수 있는 확장 프로그램을 설치하면 그 최신작이나 인기작을 여기에 추가할 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>애니메이션</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>만화</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>%1 추가함</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2593,6 +2640,10 @@
         <message>
             <source>Done</source>
             <translation>완료</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>섹션 추가</translation>
         </message>
     </context>
     <context>
@@ -4926,6 +4977,10 @@
             <source>Progress bars</source>
             <translation>진행 막대</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>제거</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5110,6 +5165,18 @@
         <message>
             <source>Close</source>
             <translation>닫기</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>확장 프로그램에서 찾는 중…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>어떤 확장 프로그램에도 없습니다.</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>내 확장 프로그램</translation>
         </message>
     </context>
     <context>
@@ -5867,6 +5934,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>챕터 %1은(는) 아직 이 소스에 없습니다</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>내 확장 프로그램에서 찾기</translation>
         </message>
     </context>
     <context>

@@ -9,9 +9,15 @@ Item {
 
     property var historyTask: Library.continueItems("", 24)
     property var libraryTask: Library.entries("")
-    property var latestTask: Comics.latest(30)
-    property var animeTask: Anime.home()
-    property var novelsTask: Novels.discover()
+    // A section removed in Edit page loads nothing.
+    readonly property bool comicsOn: (PageLayout.revision, !PageLayout.isRemoved("home", "comics"))
+    readonly property bool animeOn: (PageLayout.revision, !PageLayout.isRemoved("home", "anime"))
+    readonly property bool novelsOn: (PageLayout.revision, !PageLayout.isRemoved("home", "novels"))
+    // Only a change to the added shelves rebuilds them (not moving one).
+    readonly property string extrasJson: (PageLayout.revision, JSON.stringify(PageLayout.extras("home")))
+    property var latestTask: comicsOn ? Comics.latest(30) : null
+    property var animeTask: animeOn ? Anime.home() : null
+    property var novelsTask: novelsOn ? Novels.discover() : null
 
     // The last results, kept while a refresh runs.
     property var history: []
@@ -50,6 +56,7 @@ Item {
         page: "home"
         column: column
         editing: page.editing
+        removable: true
         defaults: ["greeting", "resume", "continue", "story", "updates", "comics", "anime", "novels"]
     }
 
@@ -352,6 +359,30 @@ Item {
                     }
                 }
             }
+
+            // Shelves of an extension's own listings, added in Edit page.
+            Repeater {
+                model: JSON.parse(page.extrasJson)
+                PageSection {
+                    id: extraSection
+                    required property var modelData
+                    arranger: layout
+                    key: modelData.key
+                    label: modelData.label
+                    readonly property var service: modelData.media === "anime" ? Anime : modelData.media === "novel" ? Novels : Comics
+                    property var task: service.browse(modelData.source, modelData.listing, 1)
+                    Shelf {
+                        title: extraSection.modelData.label
+                        items: extraSection.task && extraSection.task.ok ? extraSection.task.result.items : []
+                        loading: extraSection.task ? extraSection.task.loading : false
+                        error: extraSection.task && !extraSection.task.loading ? extraSection.task.error : ""
+                        actionText: qsTr("More")
+                        onAction: Router.openSource(extraSection.modelData.source)
+                        onRetry: extraSection.task = extraSection.service.browse(extraSection.modelData.source, extraSection.modelData.listing, 1)
+                        onOpened: (it, cover) => Router.openSeries(it, cover)
+                    }
+                }
+            }
         }
     }
 
@@ -359,6 +390,9 @@ Item {
     EditPageBar {
         editing: page.editing
         arrangers: [layout]
+        canAdd: true
         onDone: page.editing = false
+        onAdd: addSection.open()
     }
+    AddSectionSheet { id: addSection; arranger: layout }
 }

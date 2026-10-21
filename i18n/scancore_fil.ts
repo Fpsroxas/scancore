@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>Pinakabago</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>Sikat</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>Magdagdag ng seksyon</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Isara</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>Inalis sa pahinang ito</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>Mula sa mga extension mo</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>Mag-install ng extension na puwedeng i-browse para maidagdag dito ang pinakabago o sikat nitong mga pamagat.</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Nobela</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komiks</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>Naidagdag ang %1</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2585,6 +2632,10 @@
         <message>
             <source>Done</source>
             <translation>Tapos</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>Magdagdag ng seksyon</translation>
         </message>
     </context>
     <context>
@@ -4918,6 +4969,10 @@
             <source>Progress bars</source>
             <translation>Mga progress bar</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>Alisin</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5102,6 +5157,18 @@
         <message>
             <source>Close</source>
             <translation>Isara</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>Hinahanap sa mga extension mo…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>Wala ito sa alinman sa mga extension mo.</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>Mga extension ko</translation>
         </message>
     </context>
     <context>
@@ -5852,6 +5919,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>Wala pa sa source na ito ang kabanata %1</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>Hanapin sa mga extension ko</translation>
         </message>
     </context>
     <context>

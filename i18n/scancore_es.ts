@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>Recientes</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>Populares</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>Añadir una sección</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Cerrar</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>Quitadas de esta página</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>De tus extensiones</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>Instala una extensión que se pueda explorar para añadir aquí sus novedades o títulos populares.</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novelas</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Cómics</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>Se añadió %1</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2593,6 +2640,10 @@
         <message>
             <source>Done</source>
             <translation>Listo</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>Añadir sección</translation>
         </message>
     </context>
     <context>
@@ -4926,6 +4977,10 @@
             <source>Progress bars</source>
             <translation>Barras de progreso</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>Quitar</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5110,6 +5165,18 @@
         <message>
             <source>Close</source>
             <translation>Cerrar</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>Buscándolo en tus extensiones…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>Ninguna de tus extensiones lo tiene.</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>Mis extensiones</translation>
         </message>
     </context>
     <context>
@@ -5867,6 +5934,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>El capítulo %1 aún no está en esta fuente</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>Buscar en mis extensiones</translation>
         </message>
     </context>
     <context>

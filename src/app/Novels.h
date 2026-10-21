@@ -32,7 +32,10 @@ public:
     // {catalog, label, shelves: [{key, items}]}
     Q_INVOKABLE sc::Task *catalogFeeds(bool mature = false);
     // Where a catalogue novel can be read, as Comics.resolve.
-    Q_INVOKABLE sc::Task *resolve(const QVariantMap &item);
+    Q_INVOKABLE sc::Task *resolve(const QVariantMap &item, bool extensions = false);
+    // Whether an LNReader plugin is installed and on.
+    Q_INVOKABLE bool hasExtensions() const;
+    Q_INVOKABLE bool isExtension(const QString &sourceKey) const;
     // {books, providers}
     Q_INVOKABLE sc::Task *search(const QString &query, const QString &source = QStringLiteral("all"));
     // {series, chapters, offline}

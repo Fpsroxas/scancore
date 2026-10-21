@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>最新</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>熱門</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>新增欄目</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>已從此頁移除</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>來自你的擴充功能</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>安裝可瀏覽的擴充功能，就能把它的最新或熱門作品加到這裡。</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>動畫</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>漫畫</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>已新增%1</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2593,6 +2640,10 @@
         <message>
             <source>Done</source>
             <translation>完成</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>新增欄目</translation>
         </message>
     </context>
     <context>
@@ -4926,6 +4977,10 @@
             <source>Progress bars</source>
             <translation>進度條</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>移除</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5110,6 +5165,18 @@
         <message>
             <source>Close</source>
             <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>正在你的擴充功能中尋找…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>你的擴充功能都沒有這部作品。</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>我的擴充功能</translation>
         </message>
     </context>
     <context>
@@ -5867,6 +5934,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>這個來源還沒有第%1章</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>在我的擴充功能中尋找</translation>
         </message>
     </context>
     <context>

@@ -10,6 +10,8 @@ QtObject {
     property string page
     property Item column
     property bool editing: false
+    // Sections can be removed and added (Home).
+    property bool removable: false
 
     // The default order of the page's section keys. Sections made later
     // (by a Repeater) whose keys are not listed come after these.

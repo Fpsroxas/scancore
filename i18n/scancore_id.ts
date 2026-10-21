@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>Terbaru</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>Populer</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>Tambahkan bagian</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>Dihapus dari halaman ini</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>Dari ekstensi Anda</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>Pasang ekstensi yang bisa dijelajahi untuk menambahkan rilis terbaru atau judul populernya di sini.</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>%1 ditambahkan</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2593,6 +2640,10 @@
         <message>
             <source>Done</source>
             <translation>Selesai</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>Tambah bagian</translation>
         </message>
     </context>
     <context>
@@ -4926,6 +4977,10 @@
             <source>Progress bars</source>
             <translation>Bilah kemajuan</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>Hapus</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5110,6 +5165,18 @@
         <message>
             <source>Close</source>
             <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>Mencarinya di ekstensi Anda…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>Tidak ada ekstensi Anda yang memilikinya.</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>Ekstensi saya</translation>
         </message>
     </context>
     <context>
@@ -5867,6 +5934,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>Bab %1 belum ada di sumber ini</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>Cari di ekstensi saya</translation>
         </message>
     </context>
     <context>

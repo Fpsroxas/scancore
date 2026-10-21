@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>ล่าสุด</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>ยอดนิยม</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>เพิ่มส่วน</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>นำออกจากหน้านี้แล้ว</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>จากส่วนขยายของคุณ</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>ติดตั้งส่วนขยายที่เรียกดูได้ เพื่อเพิ่มเรื่องล่าสุดหรือเรื่องยอดนิยมของมันที่นี่</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>อนิเมะ</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>นิยาย</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>การ์ตูน</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>เพิ่ม %1 แล้ว</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2585,6 +2632,10 @@
         <message>
             <source>Done</source>
             <translation>เสร็จ</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>เพิ่มส่วน</translation>
         </message>
     </context>
     <context>
@@ -4918,6 +4969,10 @@
             <source>Progress bars</source>
             <translation>แถบความคืบหน้า</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>นำออก</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5102,6 +5157,18 @@
         <message>
             <source>Close</source>
             <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>กำลังหาในส่วนขยายของคุณ…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>ไม่มีส่วนขยายใดของคุณที่มีเรื่องนี้</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>ส่วนขยายของฉัน</translation>
         </message>
     </context>
     <context>
@@ -5852,6 +5919,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>แหล่งนี้ยังไม่มีตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>หาในส่วนขยายของฉัน</translation>
         </message>
     </context>
     <context>

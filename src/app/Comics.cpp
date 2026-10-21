@@ -416,25 +416,39 @@ QVariantList Comics::otherLanguages() const {
     return out;
 }
 
-Task *Comics::resolve(const QVariantMap &item, const QString &only) {
-    return Task::run([item, only]() -> QVariant {
+bool Comics::hasExtensions() const {
+    for (const auto &source : Registry::all())
+        if (source->enabled() && source->config().engine == QLatin1String("mihon"))
+            return true;
+    return false;
+}
+
+bool Comics::isExtension(const QString &sourceKey) const {
+    const auto source = Registry::byKey(sourceKey);
+    return source && source->config().engine == QLatin1String("mihon");
+}
+
+Task *Comics::resolve(const QVariantMap &item, const QString &only, bool extensions) {
+    return Task::run([item, only, extensions]() -> QVariant {
         const auto id = item.value("catalogId").toString().isEmpty() ? item.value("hid").toString()
                                                                        : item.value("catalogId").toString();
         const auto language = only.isEmpty() ? searchLanguage() : baseLanguage(only);
         QList<std::shared_ptr<Source>> sources;
         QStringList keys;
         for (const auto &source : Registry::all())
-            if ((source->enabled() || (!only.isEmpty() && source->config().languageOff)) && source->key() != QLatin1String("local") &&
-                inSearchLanguage(*source, language)) {
+            if (extensions ? source->enabled() && source->config().engine == QLatin1String("mihon")
+                           : (source->enabled() || (!only.isEmpty() && source->config().languageOff)) &&
+                                 source->key() != QLatin1String("local") && inSearchLanguage(*source, language)) {
                 sources.append(source);
                 keys.append(source->key());
             }
         // Matches depend on the sources switched on (extensions come and go)
         // and the language settings.
         const auto sourcesHash = QCryptographicHash::hash(keys.join(QLatin1Char(',')).toUtf8(), QCryptographicHash::Md5).toHex().left(12);
-        const auto cacheKey = QStringLiteral("resolve:comic:%1:%2:%3:%4:%5:%6")
+        const auto cacheKey = QStringLiteral("resolve:comic%7:%1:%2:%3:%4:%5:%6")
                                   .arg(Manifest::version())
-                                  .arg(QString::fromLatin1(sourcesHash), language, contentLanguage(), item.value("catalog").toString(), id);
+                                  .arg(QString::fromLatin1(sourcesHash), language, contentLanguage(), item.value("catalog").toString(), id,
+                                       extensions ? QStringLiteral(":ext") : QString());
         if (!id.isEmpty())
             if (auto cached = Database::cacheGet(cacheKey))
                 return QJsonDocument::fromJson(*cached).toVariant();

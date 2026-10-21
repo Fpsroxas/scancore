@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>En son</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>Popüler</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>Bölüm ekle</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>Bu sayfadan kaldırılanlar</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>Uzantılarından</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>Buraya en yeni veya popüler başlıklarını eklemek için göz atılabilen bir uzantı yükle.</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Romanlar</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Çizgi romanlar</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>%1 eklendi</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2593,6 +2640,10 @@
         <message>
             <source>Done</source>
             <translation>Tamam</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>Bölüm ekle</translation>
         </message>
     </context>
     <context>
@@ -4926,6 +4977,10 @@
             <source>Progress bars</source>
             <translation>İlerleme çubukları</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>Kaldır</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5110,6 +5165,18 @@
         <message>
             <source>Close</source>
             <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>Uzantılarında aranıyor…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>Uzantılarının hiçbirinde yok.</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>Uzantılarım</translation>
         </message>
     </context>
     <context>
@@ -5867,6 +5934,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>Bölüm %1 bu kaynakta henüz yok</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>Uzantılarımda bul</translation>
         </message>
     </context>
     <context>

@@ -163,13 +163,28 @@ Task *Novels::catalogFeeds(bool mature) {
     return Task::run([mature]() -> QVariant { return Comics::catalogShelves(QStringLiteral("novel"), mature); });
 }
 
-Task *Novels::resolve(const QVariantMap &item) {
-    return Task::run([item]() -> QVariant {
+bool Novels::hasExtensions() const {
+    for (const auto &s : Registry::all())
+        if (s->config().enabled && s->config().engine == QLatin1String("lnreader"))
+            return true;
+    return false;
+}
+
+bool Novels::isExtension(const QString &sourceKey) const {
+    for (const auto &s : Registry::all())
+        if (s->key() == sourceKey)
+            return s->config().engine == QLatin1String("lnreader");
+    return false;
+}
+
+Task *Novels::resolve(const QVariantMap &item, bool extensions) {
+    return Task::run([item, extensions]() -> QVariant {
         const auto names = Comics::catalogNames(item);
         QList<std::shared_ptr<Source>> sources;
         for (const auto &s : Registry::all())
-            if (s->config().enabled && s->config().searchable && s->key() != QLatin1String("local") &&
-                !s->config().options.value("extended").toBool())
+            if (extensions ? s->config().enabled && s->config().engine == QLatin1String("lnreader")
+                           : s->config().enabled && s->config().searchable && s->key() != QLatin1String("local") &&
+                                 !s->config().options.value("extended").toBool())
                 sources.append(s);
         return QVariantMap{{"matches", resolveAcross<std::shared_ptr<Source>>(sources, names)},
                            {"contentLanguage", contentLanguage()}};

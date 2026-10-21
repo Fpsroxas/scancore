@@ -9,7 +9,12 @@ import ScanCore
 //   { "order": ["continue", "trending", …],
 //     "hidden": { "popular": true },
 //     "look": { "continue": { "style": "grid", "size": "large", "count": 12,
-//                             "subtitles": false, "progress": false } } }
+//                             "subtitles": false, "progress": false } },
+//     "removed": { "comics": true },
+//     "extras": [{ "key": "src:<source>:latest", "source": "<source>",
+//                  "listing": "latest", "label": "Comix · Latest" }] }
+// A removed section is gone (and loads nothing) until added back; extras
+// are shelves of a source's own listing that the user added.
 // Sections a page adds later appear after the arranged ones.
 QtObject {
     id: layouts
@@ -60,7 +65,7 @@ QtObject {
 
     function isArranged(page) {
         const s = stored(page)
-        return !!(s.order || s.hidden || s.look)
+        return !!(s.order || s.hidden || s.look || s.removed || s.extras)
     }
 
     function setHidden(page, key, hidden) {
@@ -68,6 +73,33 @@ QtObject {
         s.hidden = s.hidden || {}
         if (hidden) s.hidden[key] = true
         else delete s.hidden[key]
+        save(page, s)
+    }
+
+    function isRemoved(page, key) { return !!(stored(page).removed || {})[key] }
+
+    function setRemoved(page, key, removed) {
+        const s = stored(page)
+        s.removed = s.removed || {}
+        if (removed) s.removed[key] = true
+        else delete s.removed[key]
+        if (s.hidden) delete s.hidden[key]
+        save(page, s)
+    }
+
+    function extras(page) { return stored(page).extras || [] }
+
+    function addExtra(page, extra) {
+        const s = stored(page)
+        s.extras = (s.extras || []).filter(e => e.key !== extra.key).concat([extra])
+        save(page, s)
+    }
+
+    function removeExtra(page, key) {
+        const s = stored(page)
+        s.extras = (s.extras || []).filter(e => e.key !== key)
+        if (s.order) s.order = s.order.filter(k => k !== key)
+        if (s.look) delete s.look[key]
         save(page, s)
     }
 

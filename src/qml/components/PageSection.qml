@@ -25,6 +25,11 @@ Item {
     readonly property bool hasLook: !!body && body.look !== undefined
 
     readonly property bool editing: !!arranger && arranger.editing
+    // Taken off the page: not shown even while arranging, and the page
+    // loads nothing for it.
+    readonly property bool removed: !!arranger && (PageLayout.revision, PageLayout.isRemoved(arranger.page, key))
+    // A source's listing the user added (removing it deletes it).
+    readonly property bool extra: key.startsWith("src:")
     readonly property bool userHidden: !!arranger && (PageLayout.revision, PageLayout.isHidden(arranger.page, key))
     readonly property var look: arranger ? (PageLayout.revision, PageLayout.look(arranger.page, key)) : PageLayout.defaultLook
     readonly property bool dragged: !!arranger && arranger.dragging === key
@@ -42,8 +47,8 @@ Item {
     }
 
     width: parent ? parent.width : 800
-    visible: editing || (!userHidden && shown)
-    height: (editing ? bar.height + (userHidden || !shown ? 0 : 10) : 0)
+    visible: !removed && (editing || (!userHidden && shown))
+    height: removed ? 0 : (editing ? bar.height + (userHidden || !shown ? 0 : 10) : 0)
             + (userHidden && editing ? 0 : (shown ? holder.childrenRect.height : 0))
     z: dragged ? 10 : 0
     opacity: editing && userHidden ? 0.55 : 1
@@ -171,9 +176,17 @@ Item {
                 onClicked: section.arranger.move(section.key, 1)
             }
             IconButton {
+                visible: !section.extra
                 iconName: section.userHidden ? "eye-off" : "eye"
                 tip: section.userHidden ? qsTr("Show") : qsTr("Hide")
                 onClicked: section.arranger.setHidden(section.key, !section.userHidden)
+            }
+            IconButton {
+                visible: section.arranger && section.arranger.removable
+                iconName: "trash"
+                tip: qsTr("Remove")
+                onClicked: section.extra ? PageLayout.removeExtra(section.arranger.page, section.key)
+                                         : PageLayout.setRemoved(section.arranger.page, section.key, true)
             }
         }
     }

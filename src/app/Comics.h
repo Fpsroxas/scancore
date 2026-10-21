@@ -39,7 +39,12 @@ public:
     // Finds a catalogue title on the sources: those "All sources" searches,
     // or with `language`, every source in that language (built-in ones
     // switched off for their language too).
-    Q_INVOKABLE sc::Task *resolve(const QVariantMap &item, const QString &language = QString());
+    // `extensions`: only installed extensions, in any language (a title
+    // that opened on a built-in source, to read it elsewhere).
+    Q_INVOKABLE sc::Task *resolve(const QVariantMap &item, const QString &language = QString(), bool extensions = false);
+    // Whether an extension for comics is installed and on.
+    Q_INVOKABLE bool hasExtensions() const;
+    Q_INVOKABLE bool isExtension(const QString &sourceKey) const;
     // Languages other than the content language that have comic sources:
     // [{value, label, count}], English first, then most sources first.
     Q_INVOKABLE QVariantList otherLanguages() const;

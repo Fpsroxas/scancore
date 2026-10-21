@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>Mới nhất</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>Phổ biến</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>Thêm một mục</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>Đã gỡ khỏi trang này</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>Từ tiện ích của bạn</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>Cài một tiện ích có thể duyệt để thêm truyện mới hoặc truyện phổ biến của nó vào đây.</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Truyện tranh</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>Đã thêm %1</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2593,6 +2640,10 @@
         <message>
             <source>Done</source>
             <translation>Xong</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>Thêm mục</translation>
         </message>
     </context>
     <context>
@@ -4926,6 +4977,10 @@
             <source>Progress bars</source>
             <translation>Thanh tiến độ</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>Gỡ</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5110,6 +5165,18 @@
         <message>
             <source>Close</source>
             <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>Đang tìm trong tiện ích của bạn…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>Không tiện ích nào của bạn có truyện này.</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>Tiện ích của tôi</translation>
         </message>
     </context>
     <context>
@@ -5867,6 +5934,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>Chương %1 chưa có trên nguồn này</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>Tìm trong tiện ích của tôi</translation>
         </message>
     </context>
     <context>

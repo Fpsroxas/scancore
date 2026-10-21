@@ -15,15 +15,27 @@ Dialog {
     // Another language to look in (comics), when the user's own has nothing.
     property string language: ""
     property bool choosing: false
+    // Looking only in installed extensions (a title found on a built-in
+    // source, to read it elsewhere).
+    property bool extensions: false
+    readonly property bool hasExtensions: novel ? Novels.hasExtensions() : Comics.hasExtensions()
     readonly property var otherLanguages: novel ? [] : Comics.otherLanguages().filter(l => l.value !== language)
-    readonly property bool showLanguages: !novel && !!task && task.ok && (matches.length === 0 || choosing) && otherLanguages.length > 0
+    readonly property bool showLanguages: !novel && !extensions && !!task && task.ok && (matches.length === 0 || choosing) && otherLanguages.length > 0
 
-    function start(entry) {
+    function start(entry, extensionsOnly) {
         item = entry
         language = ""
         choosing = false
-        task = entry.media === "novel" ? Novels.resolve(entry) : Comics.resolve(entry)
+        extensions = extensionsOnly === true
+        task = entry.media === "novel" ? Novels.resolve(entry, extensions) : Comics.resolve(entry, "", extensions)
         open()
+    }
+
+    function lookInExtensions() {
+        extensions = true
+        language = ""
+        choosing = false
+        task = novel ? Novels.resolve(item, true) : Comics.resolve(item, "", true)
     }
 
     function lookIn(code) {
@@ -116,8 +128,9 @@ Dialog {
                 }
                 Text {
                     width: parent.width
-                    text: !dialog.task || dialog.task.loading ? qsTr("Looking for it on your sources…")
+                    text: !dialog.task || dialog.task.loading ? (dialog.extensions ? qsTr("Looking for it in your extensions…") : qsTr("Looking for it on your sources…"))
                         : !dialog.task.ok ? dialog.task.error
+                        : dialog.matches.length === 0 && dialog.extensions ? qsTr("None of your extensions has it.")
                         : dialog.matches.length === 0 && dialog.language ? qsTr("No source in that language has it either.")
                         : dialog.matches.length === 0 ? qsTr("None of your sources has it yet.")
                         : qsTr("Read it from")
@@ -218,9 +231,21 @@ Dialog {
             }
         }
 
-        Row {
-            anchors.right: parent.right
+        Flow {
+            width: parent.width
+            layoutDirection: Qt.RightToLeft
             spacing: 8
+            ScButton {
+                text: qsTr("Close")
+                onClicked: dialog.close()
+            }
+            ScButton {
+                visible: !dialog.extensions && dialog.hasExtensions && !!dialog.task && !dialog.task.loading
+                text: qsTr("My extensions")
+                iconName: "puzzle"
+                variant: "ghost"
+                onClicked: dialog.lookInExtensions()
+            }
             ScButton {
                 visible: !dialog.novel && !!dialog.task && dialog.task.ok && dialog.matches.length > 0 && !dialog.choosing
                          && dialog.otherLanguages.length > 0
@@ -235,10 +260,6 @@ Dialog {
                 iconName: "external-link"
                 variant: "ghost"
                 onClicked: App.openUrl(dialog.item.catalogUrl)
-            }
-            ScButton {
-                text: qsTr("Close")
-                onClicked: dialog.close()
             }
         }
     }

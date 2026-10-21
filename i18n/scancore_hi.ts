@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>नवीनतम</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>लोकप्रिय</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>सेक्शन जोड़ें</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>बंद करें</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>इस पेज से हटाए गए</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>आपके एक्सटेंशन से</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>ऐसा एक्सटेंशन इंस्टॉल करें जिसे ब्राउज़ किया जा सके, ताकि उसके नए या लोकप्रिय टाइटल यहां जोड़ सकें।</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>एनीमे</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>उपन्यास</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>कॉमिक्स</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>%1 जोड़ा गया</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2585,6 +2632,10 @@
         <message>
             <source>Done</source>
             <translation>हो गया</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>सेक्शन जोड़ें</translation>
         </message>
     </context>
     <context>
@@ -4918,6 +4969,10 @@
             <source>Progress bars</source>
             <translation>प्रगति बार</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>हटाएं</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5102,6 +5157,18 @@
         <message>
             <source>Close</source>
             <translation>बंद करें</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>आपके एक्सटेंशन में खोजा जा रहा है…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>आपके किसी एक्सटेंशन में यह नहीं है।</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>मेरे एक्सटेंशन</translation>
         </message>
     </context>
     <context>
@@ -5852,6 +5919,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>चैप्टर %1 अभी इस स्रोत पर नहीं है</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>मेरे एक्सटेंशन में खोजें</translation>
         </message>
     </context>
     <context>

@@ -7,7 +7,10 @@ Rectangle {
     id: bar
     property var arrangers: []
     property bool editing: false
+    // Shows "Add section" (pages whose sections can be removed and added).
+    property bool canAdd: false
     signal done()
+    signal add()
 
     visible: editing
     anchors.horizontalCenter: parent.horizontalCenter
@@ -33,6 +36,14 @@ Rectangle {
             color: Theme.textMuted
             font.family: Theme.fontSans
             font.pixelSize: Theme.textSm
+        }
+        ScButton {
+            visible: bar.canAdd
+            text: qsTr("Add section")
+            iconName: "plus"
+            variant: "ghost"
+            compact: true
+            onClicked: bar.add()
         }
         ScButton {
             text: qsTr("Reset")

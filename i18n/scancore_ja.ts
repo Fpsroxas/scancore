@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>最新</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>人気</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>セクションを追加</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>このページから削除したもの</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>あなたの拡張機能から</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>閲覧できる拡張機能をインストールすると、その最新作や人気作をここに追加できます。</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>アニメ</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小説</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>コミック</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>%1を追加しました</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2593,6 +2640,10 @@
         <message>
             <source>Done</source>
             <translation>完了</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>セクションを追加</translation>
         </message>
     </context>
     <context>
@@ -4926,6 +4977,10 @@
             <source>Progress bars</source>
             <translation>進行バー</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>削除</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5110,6 +5165,18 @@
         <message>
             <source>Close</source>
             <translation>閉じる</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>拡張機能で探しています…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>どの拡張機能にもありません。</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>自分の拡張機能</translation>
         </message>
     </context>
     <context>
@@ -5867,6 +5934,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>チャプター %1 はこのソースにまだありません</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>自分の拡張機能で探す</translation>
         </message>
     </context>
     <context>

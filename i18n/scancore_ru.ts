@@ -674,6 +674,53 @@
         </message>
     </context>
     <context>
+        <name>AddSectionSheet</name>
+        <message>
+            <source>Latest</source>
+            <translation>Новое</translation>
+        </message>
+        <message>
+            <source>Popular</source>
+            <translation>Популярное</translation>
+        </message>
+        <message>
+            <source>Add a section</source>
+            <translation>Добавить раздел</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Закрыть</translation>
+        </message>
+        <message>
+            <source>Removed from this page</source>
+            <translation>Убрано с этой страницы</translation>
+        </message>
+        <message>
+            <source>From your extensions</source>
+            <translation>Из ваших расширений</translation>
+        </message>
+        <message>
+            <source>Install an extension that can be browsed to add its latest releases or popular titles here.</source>
+            <translation>Установите расширение с каталогом, чтобы добавить сюда его новинки или популярные тайтлы.</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Аниме</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Новеллы</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Комиксы</translation>
+        </message>
+        <message>
+            <source>Added %1</source>
+            <translation>Добавлено: %1</translation>
+        </message>
+    </context>
+    <context>
         <name>AniListSignIn</name>
         <message>
             <source>Connected to %1 as %2</source>
@@ -2593,6 +2640,10 @@
         <message>
             <source>Done</source>
             <translation>Готово</translation>
+        </message>
+        <message>
+            <source>Add section</source>
+            <translation>Добавить раздел</translation>
         </message>
     </context>
     <context>
@@ -4926,6 +4977,10 @@
             <source>Progress bars</source>
             <translation>Полосы прогресса</translation>
         </message>
+        <message>
+            <source>Remove</source>
+            <translation>Удалить</translation>
+        </message>
     </context>
     <context>
         <name>PinPad</name>
@@ -5110,6 +5165,18 @@
         <message>
             <source>Close</source>
             <translation>Закрыть</translation>
+        </message>
+        <message>
+            <source>Looking for it in your extensions…</source>
+            <translation>Ищем в ваших расширениях…</translation>
+        </message>
+        <message>
+            <source>None of your extensions has it.</source>
+            <translation>Ни в одном из ваших расширений этого нет.</translation>
+        </message>
+        <message>
+            <source>My extensions</source>
+            <translation>Мои расширения</translation>
         </message>
     </context>
     <context>
@@ -5867,6 +5934,10 @@
         <message>
             <source>Chapter %1 is not on this source yet</source>
             <translation>Главы %1 в этом источнике пока нет</translation>
+        </message>
+        <message>
+            <source>Find it on my extensions</source>
+            <translation>Найти в моих расширениях</translation>
         </message>
     </context>
     <context>

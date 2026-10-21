@@ -265,6 +265,8 @@ Item {
         seriesTitle: page.series.title || ""
     }
 
+    ReadFromDialog { id: readFrom }
+
     MigrateDialog {
         id: migrate
         onMigrated: (result) => {
@@ -334,6 +336,18 @@ Item {
                     filled: true
                     tip: qsTr("Tracking")
                     onClicked: tracking.open()
+                }
+                // Found on a built-in source: read it from an installed
+                // extension instead.
+                IconButton {
+                    readonly property bool builtIn: !!page.series.source
+                        && !(page.media === "novel" ? Novels.isExtension(page.series.source) : Comics.isExtension(page.series.source))
+                    visible: !page.local && builtIn && (page.media === "novel" ? Novels.hasExtensions() : Comics.hasExtensions())
+                    iconName: "puzzle"
+                    filled: true
+                    tip: qsTr("Find it on my extensions")
+                    onClicked: readFrom.start(migrate.itemFor({ media: page.media, title: page.series.title || "",
+                                                                cover: page.series.cover || "", extra: page.series.extra || {} }), true)
                 }
                 IconButton {
                     visible: !page.local
