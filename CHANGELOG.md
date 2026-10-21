@@ -2,6 +2,11 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.3.2 — 2026-10-21
+
+- **Settings → Sources is fast again**: it lists SCANCORE's built-in sources (extensions have their own page), those you have series on first, a dozen at a time with Show all and a search. With many extensions installed it used to build a row for each of their sources.
+- **Long lists elsewhere stay light**: the source chips on Comics and Novels, Anime's sources, Add a section, moving several series, Library health, chapter comments and reviews only build what is on screen or show the first ones with Show more.
+
 ## 2.3.1 — 2026-10-21
 
 - **Read from opens faster**: a catalogue title is looked up on SCANCORE's built-in sources only, not on every installed extension, and each match shows as soon as its source answers. **My extensions** lists your extensions (recently used first, with a search) and looks on the one you pick; moving a series still asks everything, showing built-in matches first.

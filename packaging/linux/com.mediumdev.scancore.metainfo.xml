@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.3.2" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#232--2026-10-21</url>
+      <description>
+        <p>Settings → Sources opens and scrolls quickly again, listing the built-in sources a dozen at a time with a search, and other long lists (source chips, Add a section, moving several series, Library health, comments and reviews) only build what is on screen.</p>
+      </description>
+    </release>
     <release version="2.3.1" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#231--2026-10-21</url>
       <description>
