@@ -9,6 +9,7 @@ add_library(scancore_core STATIC
     core/ImageCache.cpp
     core/Parallel.cpp
     core/Text.cpp
+    core/StreamRelay.cpp
     core/VideoSave.cpp
     core/UpdateRules.cpp
     core/ThemeLook.cpp

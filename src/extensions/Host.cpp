@@ -3,12 +3,18 @@
 #include <QHash>
 #include <QReadWriteLock>
 
+#include <atomic>
+
 namespace sc::ext {
 
 namespace {
 QReadWriteLock g_lock;
 QHash<int, std::shared_ptr<Host>> g_hosts;
+std::atomic<int> g_holds{0};
 } // namespace
+
+void holdHost(bool hold) { g_holds += hold ? 1 : -1; }
+bool hostHeld() { return g_holds.load() > 0; }
 
 QString sourceKey(Kind kind, const QString &id) { return kindName(kind) + QLatin1Char(':') + id; }
 

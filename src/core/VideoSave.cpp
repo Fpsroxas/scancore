@@ -1,6 +1,7 @@
 #include "VideoSave.h"
 
 #include "core/Parallel.h"
+#include "core/StreamRelay.h"
 
 #include <QDir>
 #include <QElapsedTimer>
@@ -99,6 +100,7 @@ struct Segment {
     QByteArray range;
     QString base;
     int line = 0;
+    bool encrypted = false;
 };
 
 // One media playlist: its segments, keys and init sections downloaded, and
@@ -117,6 +119,7 @@ void saveMedia(const QUrl &url, const Headers &headers, const QString &folder, c
     QByteArray pendingRange;
     qint64 rangeEnd = 0;
     int extras = 0;
+    bool encrypted = false;
     for (int i = 0; i < lines.size(); ++i) {
         auto line = lines[i].trimmed();
         lines[i] = line;
@@ -125,9 +128,11 @@ void saveMedia(const QUrl &url, const Headers &headers, const QString &folder, c
         if (line.startsWith(QLatin1String("#EXT-X-KEY:")) || line.startsWith(QLatin1String("#EXT-X-MAP:"))) {
             const auto a = attributes(line);
             const auto uri = a.value(QStringLiteral("URI"));
+            const bool map = line.startsWith(QLatin1String("#EXT-X-MAP:"));
+            if (!map)
+                encrypted = a.value(QStringLiteral("METHOD"), QStringLiteral("NONE")) != QLatin1String("NONE");
             if (uri.isEmpty() || a.value(QStringLiteral("METHOD")) == QLatin1String("NONE"))
                 continue;
-            const bool map = line.startsWith(QLatin1String("#EXT-X-MAP:"));
             QByteArray range;
             if (map && a.contains(QStringLiteral("BYTERANGE"))) {
                 const auto parts = a.value(QStringLiteral("BYTERANGE")).split(QLatin1Char('@'));
@@ -156,7 +161,7 @@ void saveMedia(const QUrl &url, const Headers &headers, const QString &folder, c
             lines[i].clear();
         } else if (!line.startsWith(QLatin1Char('#'))) {
             segments.append({base.resolved(QUrl(line)), std::exchange(pendingRange, QByteArray()),
-                             QStringLiteral("%1-%2").arg(prefix).arg(segments.size() + 1, 5, 10, QLatin1Char('0')), i});
+                             QStringLiteral("%1-%2").arg(prefix).arg(segments.size() + 1, 5, 10, QLatin1Char('0')), i, encrypted});
         }
     }
     if (segments.isEmpty())
@@ -171,7 +176,11 @@ void saveMedia(const QUrl &url, const Headers &headers, const QString &folder, c
                 const auto &segment = segments[s];
                 if (auto have = existingSegment(folder, segment.base); !have.isEmpty())
                     return have;
-                const auto body = fetch(segment.url, headers, segment.range).body;
+                auto body = fetch(segment.url, headers, segment.range).body;
+                // Saved without the picture some sites wrap parts in (see
+                // StreamRelay.h); encrypted parts and ranges stay as sent.
+                if (!segment.encrypted && segment.range.isEmpty())
+                    body.remove(0, mediaStart(body, true));
                 const auto name = segment.base + QLatin1Char('.') + segmentSuffix(body.left(16));
                 writeFile(folder + QLatin1Char('/') + name, body);
                 return name;

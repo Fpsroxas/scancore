@@ -118,7 +118,7 @@ struct ProcessHost::State {
             idle = new QTimer(context);
             idle->setSingleShot(true);
             QObject::connect(idle, &QTimer::timeout, context, [this] {
-                if (owner->busy())
+                if (owner->busy() || hostHeld())
                     idle->start(idleMs);
                 else
                     shutdown();
@@ -224,8 +224,11 @@ ProcessHost::Launch ProcessHost::find(const QString &runtimeDir, const QString &
             launch.libDir = developmentLibDir;
         }
     }
-    // Quick to start, small, enough for any extension's work.
-    launch.jvmArgs << QStringLiteral("-Xss2m") << QStringLiteral("-Xmx768m") << QStringLiteral("-XX:+UseSerialGC")
+    // Quick to start, small, enough for any extension's work. Thread
+    // stacks are large because Java's regular expressions recurse per
+    // character where Android's do not, and some extensions run theirs over
+    // whole pages (AniZone); only what is used is taken.
+    launch.jvmArgs << QStringLiteral("-Xss16m") << QStringLiteral("-Xmx768m") << QStringLiteral("-XX:+UseSerialGC")
                    << QStringLiteral("-XX:TieredStopAtLevel=1") << QStringLiteral("-Dfile.encoding=UTF-8");
     return launch;
 }

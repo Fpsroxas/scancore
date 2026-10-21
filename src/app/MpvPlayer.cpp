@@ -1,7 +1,9 @@
 #include "MpvPlayer.h"
 
 #include "core/Http.h"
+#include "core/StreamRelay.h"
 #include "core/Task.h"
+#include "extensions/Host.h"
 
 #include <QColor>
 #include <QDir>
@@ -9,6 +11,7 @@
 #include <QFileInfo>
 #include <QGuiApplication>
 #include <QHash>
+#include <QHostAddress>
 #include <QStandardPaths>
 #include <QMutex>
 #include <QOpenGLContext>
@@ -339,6 +342,8 @@ MpvPlayer::MpvPlayer(QQuickItem *parent) : QQuickFramebufferObject(parent), m_co
 }
 
 MpvPlayer::~MpvPlayer() {
+    if (m_holdsHost)
+        ext::holdHost(false);
     {
         QMutexLocker lock(&m_core->mutex);
         m_core->item = nullptr;
@@ -444,6 +449,14 @@ void MpvPlayer::load() {
     emit tracksChanged();
     setError({});
 #ifdef SCANCORE_HAVE_MPV
+    const QUrl url(m_source);
+    // A server on this device is one an extension runs in the host.
+    const bool fromHost =
+        !url.isLocalFile() && (QHostAddress(url.host()).isLoopback() || url.host() == QLatin1String("localhost"));
+    if (fromHost != m_holdsHost) {
+        m_holdsHost = fromHost;
+        ext::holdHost(fromHost);
+    }
     auto *mpv = m_core->mpv;
     if (!mpv)
         return;
@@ -451,7 +464,6 @@ void MpvPlayer::load() {
         command(mpv, {QStringLiteral("stop")});
         return;
     }
-    const QUrl url(m_source);
     if (url.scheme() != QLatin1String("https") && url.scheme() != QLatin1String("http") && !url.isLocalFile()) {
         setError(QStringLiteral("This video's address cannot be played."));
         return;
@@ -486,9 +498,10 @@ void MpvPlayer::load() {
     mpv_set_property(mpv, "http-header-fields", MPV_FORMAT_NODE, &value);
     // mpv keeps options from one file to the next: the last video's go back
     // to their defaults first (a downloaded episode's HLS demuxer must not
-    // reach the next stream).
+    // reach the next stream). An empty demuxer is mpv's own choice; there is
+    // no demuxer named "auto", and asking for it fails every file.
     static const QList<QPair<const char *, const char *>> defaults{
-        {"demuxer", "auto"}, {"demuxer-lavf-format", ""}, {"demuxer-lavf-o", ""}, {"stream-lavf-o", ""}, {"aid", "auto"}, {"sid", "auto"},
+        {"demuxer", ""}, {"demuxer-lavf-format", ""}, {"demuxer-lavf-o", ""}, {"stream-lavf-o", ""}, {"aid", "auto"}, {"sid", "auto"},
         {"vid", "auto"}, {"sub-delay", "0"}, {"audio-delay", "0"}};
     for (const auto &[name, value] : defaults)
         if (!m_options.contains(QLatin1String(name)))
@@ -504,7 +517,17 @@ void MpvPlayer::load() {
     setString(mpv, "pause", QStringLiteral("no"));
     m_buffering = true;
     emit bufferingChanged();
-    command(mpv, {QStringLiteral("loadfile"), m_source, QStringLiteral("replace")});
+    // Streams go through SCANCORE's relay, which undoes what anime CDNs
+    // dress HLS streams in (core/StreamRelay.h); SCANCORE_STREAM_RELAY=0
+    // plays them direct (e.g. to compare).
+    auto target = m_source;
+    if (video::StreamRelay::wanted(url) && qgetenv("SCANCORE_STREAM_RELAY") != "0") {
+        Headers headers;
+        for (auto it = m_headers.begin(); it != m_headers.end(); ++it)
+            headers.append({it.key().toUtf8(), it.value().toString().toUtf8()});
+        target = video::StreamRelay::wrap(url, headers).toString(QUrl::FullyEncoded);
+    }
+    command(mpv, {QStringLiteral("loadfile"), target, QStringLiteral("replace")});
 #endif
 }
 

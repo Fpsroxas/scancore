@@ -176,6 +176,8 @@ private:
     QString m_error;
     bool m_loadQueued = false;
     bool m_rendererReady = false;
+    // Playing from a server in the extension host (ext::holdHost).
+    bool m_holdsHost = false;
     bool m_loadWaiting = false;
 };
 

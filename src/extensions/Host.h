@@ -42,4 +42,10 @@ std::shared_ptr<Host> host(Kind kind);
 // The host for a kind, or an Error the user can act on.
 std::shared_ptr<Host> requireHost(Kind kind);
 
+// Some extensions serve their videos from a server of their own in the
+// host (an address on this device): while one plays, the host stays up
+// however long nothing is asked of it. Counted; any thread.
+void holdHost(bool hold);
+bool hostHeld();
+
 } // namespace sc::ext
