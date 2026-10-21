@@ -61,9 +61,12 @@ QByteArray readFile(const QString &path) {
     if (!file.open(QIODevice::ReadOnly))
         return {};
     auto data = file.readAll();
+    // Touched so trimming keeps recently viewed images; a day is close
+    // enough for that, and spares a write for every cover drawn.
+    const auto now = QDateTime::currentDateTime();
+    if (file.fileTime(QFileDevice::FileModificationTime).secsTo(now) > 24 * 3600)
+        file.setFileTime(now, QFileDevice::FileModificationTime);
     file.close();
-    // Touch so trimming keeps recently viewed images.
-    file.setFileTime(QDateTime::currentDateTime(), QFileDevice::FileModificationTime);
     return data;
 }
 

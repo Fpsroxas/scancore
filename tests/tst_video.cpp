@@ -2,10 +2,13 @@
 // keys, init sections and byte ranges, against a fixture server; and the
 // relay the player streams through (core/StreamRelay.h).
 #include "core/Http.h"
+#include "core/ImageCache.h"
 #include "core/StreamRelay.h"
 #include "core/VideoSave.h"
 
+#include <QDateTime>
 #include <QDir>
+#include <QDirIterator>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -204,6 +207,37 @@ private slots:
         QFile part(folder + QStringLiteral("/v-00001.ts"));
         QVERIFY(part.open(QIODevice::ReadOnly));
         QCOMPARE(part.readAll(), ts(3));
+    }
+
+    // Images read from the cache count as used, so trimming drops the ones
+    // nobody looked at first.
+    void imageCacheKeepsWhatWasRead() {
+        ImageCache::init(m_dir.filePath(QStringLiteral("images")), 1024 * 1024 * 1024);
+        const auto read = QStringLiteral("https://video.test/p/1.image?read");
+        const auto unread = QStringLiteral("https://video.test/p/1.image?unread");
+        const int before = m_hits.value(QStringLiteral("/p/1.image"));
+        ImageCache::fetch(read, {});
+        ImageCache::fetch(unread, {});
+        const auto old = QDateTime::currentDateTime().addDays(-3);
+        QStringList files;
+        QDirIterator it(m_dir.filePath(QStringLiteral("images")), QDir::Files, QDirIterator::Subdirectories);
+        while (it.hasNext())
+            files.append(it.next());
+        QCOMPARE(files.size(), 2);
+        for (const auto &path : files) {
+            QFile file(path);
+            QVERIFY(file.open(QIODevice::ReadWrite));
+            QVERIFY(file.setFileTime(old, QFileDevice::FileModificationTime));
+        }
+        ImageCache::fetch(read, {});
+        ImageCache::setBudget(ImageCache::sizeOnDisk() - 1);
+        ImageCache::trim();
+        QCOMPARE(m_hits.value(QStringLiteral("/p/1.image")), before + 2);
+        // The one read is still there: no new download for it.
+        ImageCache::fetch(read, {});
+        QCOMPARE(m_hits.value(QStringLiteral("/p/1.image")), before + 2);
+        ImageCache::fetch(unread, {});
+        QCOMPARE(m_hits.value(QStringLiteral("/p/1.image")), before + 3);
     }
 
     void findsWhereMediaStarts() {
