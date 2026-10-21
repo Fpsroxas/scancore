@@ -52,10 +52,10 @@
     </screenshot>
   </screenshots>
   <releases>
-    <release version="2.3.6" date="2026-10-21">
-      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#236--2026-10-21</url>
+    <release version="2.7.0" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#270--2026-10-21</url>
       <description>
-        <p>Sharper comic pages and webtoons, pages that sharpen again after a resize or zoom, less memory, and an image cache that keeps what you are reading.</p>
+        <p>Anime keeps working while AniList is down, with Kitsu and ani.zip standing in. Sharper comic pages and webtoons, a full screen button in the player, and an image cache that keeps what you are reading.</p>
       </description>
     </release>
     <release version="2.3.5" date="2026-10-21">

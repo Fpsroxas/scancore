@@ -2,8 +2,12 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
-## 2.3.6 — 2026-10-21
+## 2.7.0 — 2026-10-21
 
+- **Anime works while AniList is down**: AniList switched off its service on 21 October, leaving the Anime page saying "Anime details are unavailable right now". SCANCORE now fills the page, anime details, search, episode lists and the schedule from Kitsu and ani.zip whenever AniList does not answer, with the same anime, so your library, progress and sync carry on. Recommendations come back when AniList does. When nothing can be reached, the page shows what it loaded last time, or says why.
+- **The MyAnimeList catalogue keeps working too**: its lists and its spotlight fall back the same way when MyAnimeList or AniList is down.
+- **A full screen button in the player**: SCANCORE's own video player has one at the end of its controls; on phones it turns the video to landscape.
+- **The spotlight's shade covers the whole picture while swiping**: on phones, a bright strip of the banner showed at the edge as you swiped.
 - **Sharper comic pages**: pages are decoded at exactly the size they appear on screen and drawn pixel for pixel, instead of being shrunk or stretched by the graphics card. Paged reading is noticeably crisper, and pages no longer go slightly soft between screen pixels while a strip scrolls.
 - **Crisper webtoons on large screens**: art narrower than the strip (most webtoons on a computer or a phone) is enlarged with a sharper filter, with cleaner lines and text.
 - **Pages sharpen after a resize or zoom**: widening the strip, resizing the window or zooming in decodes the page again at the new size, keeping the old picture until it is ready. Before, a widened strip stayed blurry.
