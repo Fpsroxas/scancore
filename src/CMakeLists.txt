@@ -28,6 +28,7 @@ add_library(scancore_core STATIC
     plugins/PluginSource.cpp
     plugins/Runtime.cpp
     sources/Manifest.cpp
+    sources/anime/Kitsu.cpp
     sources/anime/Playback.cpp
     sources/anime/Registry.cpp
     sources/catalogue/Catalogue.cpp

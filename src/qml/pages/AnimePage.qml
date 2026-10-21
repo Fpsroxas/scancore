@@ -429,7 +429,8 @@ Item {
                     onAction: Router.openAnimeSchedule()
                     items: page.todayTask && page.todayTask.ok ? page.todayTask.result : []
                     loading: page.todayTask ? page.todayTask.loading : false
-                    subtitleFor: (it) => qsTr("Ep ") + it.airingEpisode + (it.airingEpisodeLast ? "–" + it.airingEpisodeLast : "") + " · " + Qt.formatTime(new Date(it.airingAt * 1000), "hh:mm")
+                    subtitleFor: (it) => (it.airingEpisode ? qsTr("Ep ") + it.airingEpisode + (it.airingEpisodeLast ? "–" + it.airingEpisodeLast : "") + " · " : "")
+                                         + Qt.formatTime(new Date(it.airingAt * 1000), "hh:mm")
                     onOpened: (it, cover) => Router.openSeries(it, cover)
                 }
             }

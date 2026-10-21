@@ -1,9 +1,12 @@
 // Offline tests for the tracker catalogues (Comick, AniList, MyAnimeList),
-// the content language, "Read from" matching and MangaDex takedowns.
+// the content language, "Read from" matching, MangaDex takedowns and the
+// anime pages' fallback when AniList is down (Kitsu, ani.zip).
 
 #include "app/Resolve.h"
 #include "core/Database.h"
+#include "core/Http.h"
 #include "core/Text.h"
+#include "sources/anime/Kitsu.h"
 #include "sources/catalogue/Catalogue.h"
 #include "sources/bundled/comics/Engines.h"
 
@@ -12,7 +15,9 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QMutex>
 #include <QTemporaryDir>
+#include <QUrlQuery>
 #include <QThread>
 #include <QtTest>
 
@@ -75,6 +80,129 @@ private slots:
     void initTestCase() {
         QVERIFY(m_dir.isValid());
         Database::open(m_dir.filePath(QStringLiteral("test.db")));
+    }
+
+    // Kitsu's anime in AniList's shape: AniList's ids from the mappings,
+    // AniList's names for formats, statuses and genres.
+    void kitsuInAniListShape() {
+        const auto doc = QJsonDocument::fromJson(fixture("kitsu-anime.json")).object();
+        const auto m = anime::kitsu::toAniList(doc.value("data").toObject(), doc.value("included").toArray());
+        QCOMPARE(m.value("id").toInt(), 21);
+        QCOMPARE(m.value("idMal").toInt(), 21);
+        QCOMPARE(m.value("title").toObject().value("english").toString(), QStringLiteral("One Piece"));
+        QCOMPARE(m.value("format").toString(), QStringLiteral("TV"));
+        QCOMPARE(m.value("status").toString(), QStringLiteral("RELEASING"));
+        QCOMPARE(m.value("startDate").toObject().value("year").toInt(), 1999);
+        QCOMPARE(m.value("season").toString(), QStringLiteral("FALL"));
+        QVERIFY(m.value("bannerImage").toString().startsWith(QStringLiteral("https://")));
+        QVERIFY(m.value("coverImage").toObject().value("extraLarge").toString().startsWith(QStringLiteral("https://")));
+        QCOMPARE(m.value("trailer").toObject().value("site").toString(), QStringLiteral("youtube"));
+        QCOMPARE(m.value("studios").toObject().value("nodes").toArray().first().toObject().value("name").toString(),
+                 QStringLiteral("Toei Animation"));
+        // Only AniList's genres, in AniList's words.
+        static const QStringList anilist{"Action", "Adventure", "Comedy", "Drama", "Ecchi", "Fantasy", "Horror", "Mahou Shoujo", "Mecha",
+                                         "Music", "Mystery", "Psychological", "Romance", "Sci-Fi", "Slice of Life", "Sports",
+                                         "Supernatural", "Thriller"};
+        const auto genres = m.value("genres").toArray();
+        QVERIFY(!genres.isEmpty());
+        for (const auto &g : genres)
+            QVERIFY2(anilist.contains(g.toString()), qPrintable(g.toString()));
+        // The next episode's time; which one it is Kitsu does not say.
+        const auto next = m.value("nextAiringEpisode").toObject();
+        QVERIFY(next.value("airingAt").toDouble() > 1.7e9);
+        QCOMPARE(next.value("episode").toInt(), 0);
+
+        // Without an AniList id it is left out.
+        auto bare = doc.value("data").toObject();
+        auto relationships = bare.value("relationships").toObject();
+        relationships.remove("mappings");
+        bare.insert("relationships", relationships);
+        QVERIFY(anime::kitsu::toAniList(bare, doc.value("included").toArray()).isEmpty());
+    }
+
+    // The fallback's requests, answered from fixtures: lists, search,
+    // details, the schedule and MyAnimeList ids.
+    void kitsuFallback() {
+        QMutex mutex;
+        QList<QUrl> asked;
+        Http::setTestHandler([&](const Request &request) -> std::optional<Response> {
+            const auto host = request.url.host();
+            if (host != QLatin1String("kitsu.io") && host != QLatin1String("api.ani.zip"))
+                return std::nullopt;
+            {
+                QMutexLocker lock(&mutex);
+                asked.append(request.url);
+            }
+            Response r;
+            r.status = 200;
+            r.finalUrl = request.url;
+            const auto path = request.url.path();
+            const QUrlQuery query(request.url);
+            if (host == QLatin1String("api.ani.zip")) {
+                r.body = query.hasQueryItem("mal_id") ? QByteArray(R"({"mappings":{"anilist_id":154587}})") : fixture("anizip-airing.json");
+            } else if (path == QLatin1String("/api/edge/anime")) {
+                // Two pages of three: the second one empty.
+                r.body = query.queryItemValue("page[offset]") == QLatin1String("0")
+                             ? fixture("kitsu-list.json")
+                             : QByteArray(R"({"data":[],"included":[]})");
+            } else if (path == QLatin1String("/api/edge/mappings")) {
+                r.body = R"({"data":[{"id":"1","type":"mappings","relationships":{"item":{"data":{"type":"anime","id":"12"}}}}]})";
+            } else if (path == QLatin1String("/api/edge/anime/12")) {
+                r.body = fixture("kitsu-anime.json");
+            } else {
+                r.status = 404;
+            }
+            return r;
+        });
+        const auto value = [&](const QString &name) {
+            QMutexLocker lock(&mutex);
+            for (const auto &url : asked)
+                if (const auto v = QUrlQuery(url).queryItemValue(name, QUrl::FullyDecoded); !v.isEmpty())
+                    return v;
+            return QString();
+        };
+
+        const auto popular = anime::kitsu::list(QStringLiteral("popular"));
+        QCOMPARE(popular.size(), 3);
+        QCOMPARE(popular.first().toObject().value("id").toInt(), 21);
+        QCOMPARE(value(QStringLiteral("sort")), QStringLiteral("-userCount"));
+        QVERIFY(value(QStringLiteral("include")).contains(QStringLiteral("mappings")));
+
+        asked.clear();
+        auto found = anime::kitsu::search({{"genres", QStringList{"Sci-Fi", "Slice of Life"}},
+                                           {"yearFrom", 2020},
+                                           {"status", "RELEASING"},
+                                           {"format", "MOVIE"},
+                                           {"sort", "SCORE_DESC"}});
+        QCOMPARE(value(QStringLiteral("filter[categories]")), QStringLiteral("science-fiction,slice-of-life"));
+        QCOMPARE(value(QStringLiteral("filter[seasonYear]")), QStringLiteral("2020..2100"));
+        QCOMPARE(value(QStringLiteral("filter[status]")), QStringLiteral("current"));
+        QCOMPARE(value(QStringLiteral("filter[subtype]")), QStringLiteral("movie"));
+        QCOMPARE(value(QStringLiteral("sort")), QStringLiteral("ratingRank"));
+        QVERIFY(found.value("hasNextPage").toBool());
+        asked.clear();
+        found = anime::kitsu::search({{"q", "one piece"}, {"page", 2}});
+        QCOMPARE(value(QStringLiteral("filter[text]")), QStringLiteral("one piece"));
+        QCOMPARE(value(QStringLiteral("page[offset]")), QStringLiteral("20"));
+        // Text matches come by relevance: no order asked for.
+        QVERIFY(value(QStringLiteral("sort")).isEmpty());
+
+        const auto media = anime::kitsu::media(21);
+        QCOMPARE(media.value("id").toInt(), 21);
+        QVERIFY(!media.value("description").toString().isEmpty());
+
+        // The schedule: ani.zip's air times and numbers within the range.
+        const auto from = QDateTime::fromString(QStringLiteral("2026-10-19T00:00:00Z"), Qt::ISODate).toSecsSinceEpoch();
+        const auto rows = anime::kitsu::airing(from, from + 7 * 86400);
+        QVERIFY(!rows.isEmpty());
+        for (const auto &row : rows) {
+            const auto r = row.toObject();
+            QVERIFY(r.value("airingAt").toDouble() >= from && r.value("airingAt").toDouble() < from + 7 * 86400);
+            QCOMPARE(r.value("episode").toInt(), 6);
+        }
+
+        QCOMPARE(anime::kitsu::anilistIdForMal(52991), 154587);
+        Http::setTestHandler({});
     }
 
     void contentLanguageOrder() {

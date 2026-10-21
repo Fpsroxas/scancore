@@ -12,10 +12,12 @@
 #include "extensions/ExtensionSource.h"
 #include "extensions/Host.h"
 #include "sources/Manifest.h"
+#include "sources/anime/Kitsu.h"
 #include "sources/anime/Playback.h"
 #include "sources/anime/Registry.h"
 
 #include <QCryptographicHash>
+#include <atomic>
 #include <QFileInfo>
 #include <QProcess>
 #include <QStandardPaths>
@@ -60,15 +62,30 @@ const char *kMediaFields = R"(
   relations { edges { relationType node { id type format title { romaji english } coverImage { large } } } }
 )";
 
+// Until when AniList is taken as down (Unix seconds): its calls then go
+// straight to what was cached or to the fallback (Kitsu) instead of waiting
+// on it each time.
+std::atomic<qint64> g_anilistDownUntil{0};
+
+void anilistFailed() { g_anilistDownUntil = QDateTime::currentSecsSinceEpoch() + 120; }
+
 QJsonObject graphql(const QString &query, const QJsonObject &variables, const QString &cacheKey, qint64 ttl) {
     if (!cacheKey.isEmpty())
         if (auto cached = Database::cacheGet(cacheKey))
             return QJsonDocument::fromJson(*cached).object();
+    if (QDateTime::currentSecsSinceEpoch() < g_anilistDownUntil) {
+        if (!cacheKey.isEmpty())
+            if (auto stale = Database::cacheGet(cacheKey, true))
+                return QJsonDocument::fromJson(*stale).object();
+        throw Error(QStringLiteral("AniList is not answering right now. Try again later."), 503);
+    }
     Response response;
     try {
         response = Http::postJson(kAniList, QJsonDocument(QJsonObject{{"query", query}, {"variables", variables}}).toJson(),
                                   {{"Accept", "application/json"}});
-    } catch (const Error &) {
+    } catch (const Error &e) {
+        if (e.status() != 499)
+            anilistFailed();
         if (!cacheKey.isEmpty())
             if (auto stale = Database::cacheGet(cacheKey, true))
                 return QJsonDocument::fromJson(*stale).object();
@@ -93,6 +110,7 @@ QJsonObject graphql(const QString &query, const QJsonObject &variables, const QS
         }
         // AniList is down or has switched its API off (it did so in October
         // 2026): what was fetched last time, however old, beats an error.
+        anilistFailed();
         if (!cacheKey.isEmpty())
             if (auto stale = Database::cacheGet(cacheKey, true))
                 return QJsonDocument::fromJson(*stale).object();
@@ -104,6 +122,25 @@ QJsonObject graphql(const QString &query, const QJsonObject &variables, const QS
     if (!cacheKey.isEmpty())
         Database::cachePut(cacheKey, QJsonDocument(data).toJson(QJsonDocument::Compact), ttl);
     return data;
+}
+
+// AniList's answer, else (AniList down, not "not found") the fallback's;
+// when that fails too, AniList's reason is the one given.
+template <typename T>
+T orFallback(const std::function<T()> &anilist, const std::function<T()> &fallback) {
+    try {
+        return anilist();
+    } catch (const Error &e) {
+        if (e.status() == 404 || e.status() == 499)
+            throw;
+        try {
+            return fallback();
+        } catch (const Error &f) {
+            if (f.status() == 499)
+                throw;
+            throw e;
+        }
+    }
 }
 
 QString title(const QJsonObject &media) {
@@ -196,13 +233,17 @@ int releasedCount(const QJsonObject &media) {
 }
 
 QJsonObject mediaObject(int id) {
-    const auto data = graphql(QStringLiteral("query ($id: Int) { Media(id: $id, type: ANIME) { %1 } }")
-                                  .arg(QString::fromLatin1(kMediaFields)),
-                              {{"id", id}}, QStringLiteral("anilist:media:%1").arg(id), 6 * 3600);
-    const auto media = data.value("Media").toObject();
-    if (media.isEmpty())
-        throw Error(QStringLiteral("Anime not found."), 404);
-    return media;
+    return orFallback<QJsonObject>(
+        [id] {
+            const auto data = graphql(QStringLiteral("query ($id: Int) { Media(id: $id, type: ANIME) { %1 } }")
+                                          .arg(QString::fromLatin1(kMediaFields)),
+                                      {{"id", id}}, QStringLiteral("anilist:media:%1").arg(id), 6 * 3600);
+            const auto media = data.value("Media").toObject();
+            if (media.isEmpty())
+                throw Error(QStringLiteral("Anime not found."), 404);
+            return media;
+        },
+        [id] { return anime::kitsu::media(id); });
 }
 
 QPair<QString, QString> currentSeason() {
@@ -365,9 +406,17 @@ QString Anime::malClientId() {
 
 Task *Anime::anilistIdFor(int malId) {
     return Task::run([malId]() -> QVariant {
-        const auto data = graphql(QStringLiteral("query ($id: Int) { Media(idMal: $id, type: ANIME) { id } }"), {{"id", malId}},
-                                  QStringLiteral("anilist:idmal:%1").arg(malId), 30 * 86400);
-        const int id = data.value("Media").toObject().value("id").toInt();
+        const int id = orFallback<int>(
+            [malId] {
+                const auto data = graphql(QStringLiteral("query ($id: Int) { Media(idMal: $id, type: ANIME) { id } }"),
+                                          {{"id", malId}}, QStringLiteral("anilist:idmal:%1").arg(malId), 30 * 86400);
+                return data.value("Media").toObject().value("id").toInt();
+            },
+            [malId] {
+                if (const int found = anime::kitsu::anilistIdForMal(malId))
+                    return found;
+                throw Error(QStringLiteral("AniList has no entry for this anime yet."), 404);
+            });
         if (!id)
             throw Error(QStringLiteral("AniList has no entry for this anime yet."), 404);
         return id;
@@ -379,20 +428,40 @@ Task *Anime::home() {
     if (catalog == QLatin1String("mal") && !malClientId().isEmpty())
         return Task::run([]() -> QVariant {
             const auto [season, year] = currentSeason();
+            // MyAnimeList's lists, Kitsu's like them when it is down.
+            const auto mal = [](const QString &path, QList<QPair<QString, QString>> params, const QString &kitsuList) {
+                return [=]() -> QVariant {
+                    try {
+                        return malList(path, params);
+                    } catch (const Error &e) {
+                        if (e.status() == 499)
+                            throw;
+                        try {
+                            return cards(anime::kitsu::list(kitsuList));
+                        } catch (const Error &) {
+                            throw e;
+                        }
+                    }
+                };
+            };
             QList<std::function<QVariant()>> jobs{
-                [] { return QVariant(malList(QStringLiteral("/anime/ranking"), {{"ranking_type", "airing"}})); },
-                [] { return QVariant(malList(QStringLiteral("/anime/ranking"), {{"ranking_type", "bypopularity"}})); },
-                [season = season, year = year] {
-                    return QVariant(malList(QStringLiteral("/anime/season/%1/%2").arg(year, season.toLower()), {{"sort", "anime_num_list_users"}}));
-                },
-                [] { return QVariant(malList(QStringLiteral("/anime/ranking"), {{"ranking_type", "all"}})); },
-                // The spotlight wants AniList's banners, which MyAnimeList has not.
+                mal(QStringLiteral("/anime/ranking"), {{"ranking_type", "airing"}}, QStringLiteral("trending")),
+                mal(QStringLiteral("/anime/ranking"), {{"ranking_type", "bypopularity"}}, QStringLiteral("popular")),
+                mal(QStringLiteral("/anime/season/%1/%2").arg(year, season.toLower()), {{"sort", "anime_num_list_users"}},
+                    QStringLiteral("season")),
+                mal(QStringLiteral("/anime/ranking"), {{"ranking_type", "all"}}, QStringLiteral("top")),
+                // The spotlight wants banners, which MyAnimeList has not:
+                // AniList's, else Kitsu's.
                 [] {
-                    const auto data = graphql(QStringLiteral("query { Page(page: 1, perPage: 12) { media(type: ANIME, isAdult: false, "
-                                                             "sort: [TRENDING_DESC]) { %1 } } }")
-                                                  .arg(QString::fromLatin1(kCardFields)),
-                                              {}, QStringLiteral("anilist:spotlight"), 3600);
-                    return QVariant(cards(data.value("Page").toObject().value("media").toArray()));
+                    return QVariant(cards(orFallback<QJsonArray>(
+                        [] {
+                            const auto data = graphql(QStringLiteral("query { Page(page: 1, perPage: 12) { media(type: ANIME, "
+                                                                     "isAdult: false, sort: [TRENDING_DESC]) { %1 } } }")
+                                                          .arg(QString::fromLatin1(kCardFields)),
+                                                      {}, QStringLiteral("anilist:spotlight"), 3600);
+                            return data.value("Page").toObject().value("media").toArray();
+                        },
+                        [] { return anime::kitsu::list(QStringLiteral("trending")); })));
                 },
             };
             const auto results = parallel(jobs);
@@ -406,30 +475,35 @@ Task *Anime::home() {
         });
     return Task::run([]() -> QVariant {
         const auto [season, year] = currentSeason();
+        // Each list from AniList, else Kitsu's like it.
         const auto list = [](const QString &sort, const QString &extraDecl, const QString &extraArgs,
-                             const QJsonObject &vars) {
+                             const QJsonObject &vars, const QString &kitsuList) {
             return [=]() -> QVariant {
-                QJsonObject variables = vars;
-                variables.insert("sort", QJsonArray::fromStringList(sort.split(',')));
-                variables.insert("perPage", 30);
-                const auto key = QStringLiteral("anilist:list:%1:%2")
-                                     .arg(sort, QString::fromUtf8(QJsonDocument(vars).toJson(QJsonDocument::Compact)));
-                const auto data = graphql(QStringLiteral("query ($sort: [MediaSort], $perPage: Int%1) { Page(page: 1, "
-                                                         "perPage: $perPage) { media(type: ANIME, isAdult: false, sort: "
-                                                         "$sort%2) { %3 } } }")
-                                              .arg(extraDecl, extraArgs, QString::fromLatin1(kCardFields)),
-                                          variables, key, 3600);
-                return cards(data.value("Page").toObject().value("media").toArray());
+                return cards(orFallback<QJsonArray>(
+                    [&] {
+                        QJsonObject variables = vars;
+                        variables.insert("sort", QJsonArray::fromStringList(sort.split(',')));
+                        variables.insert("perPage", 30);
+                        const auto key = QStringLiteral("anilist:list:%1:%2")
+                                             .arg(sort, QString::fromUtf8(QJsonDocument(vars).toJson(QJsonDocument::Compact)));
+                        const auto data = graphql(QStringLiteral("query ($sort: [MediaSort], $perPage: Int%1) { Page(page: 1, "
+                                                                 "perPage: $perPage) { media(type: ANIME, isAdult: false, sort: "
+                                                                 "$sort%2) { %3 } } }")
+                                                      .arg(extraDecl, extraArgs, QString::fromLatin1(kCardFields)),
+                                                  variables, key, 3600);
+                        return data.value("Page").toObject().value("media").toArray();
+                    },
+                    [&] { return anime::kitsu::list(kitsuList); }));
             };
         };
         QList<std::function<QVariant()>> jobs{
-            list(QStringLiteral("TRENDING_DESC,POPULARITY_DESC"), {}, {}, {}),
-            list(QStringLiteral("POPULARITY_DESC"), {}, {}, {}),
+            list(QStringLiteral("TRENDING_DESC,POPULARITY_DESC"), {}, {}, {}, QStringLiteral("trending")),
+            list(QStringLiteral("POPULARITY_DESC"), {}, {}, {}, QStringLiteral("popular")),
             list(QStringLiteral("POPULARITY_DESC,SCORE_DESC"),
                  QStringLiteral(", $season: MediaSeason, $seasonYear: Int"),
                  QStringLiteral(", season: $season, seasonYear: $seasonYear"),
-                 {{"season", season}, {"seasonYear", year.toInt()}}),
-            list(QStringLiteral("SCORE_DESC"), {}, {}, {}),
+                 {{"season", season}, {"seasonYear", year.toInt()}}, QStringLiteral("season")),
+            list(QStringLiteral("SCORE_DESC"), {}, {}, {}, QStringLiteral("top")),
         };
         const auto results = parallel(jobs);
         if (std::none_of(results.begin(), results.end(), [](auto &r) { return r.ok(); }))
@@ -463,7 +537,9 @@ Task *Anime::search(const QVariantMap &filters) {
             vars.insert("status", s);
         if (const auto f = filters.value("format").toString(); !f.isEmpty())
             vars.insert("format", f);
-        const auto data = graphql(
+        QJsonObject data;
+        try {
+            data = graphql(
             QStringLiteral("query ($search: String, $page: Int, $perPage: Int, $genres: [String], $yearGreater: "
                            "FuzzyDateInt, $yearLesser: FuzzyDateInt, $status: MediaStatus, $format: MediaFormat, $sort: "
                            "[MediaSort], $isAdult: Boolean) { Page(page: $page, perPage: $perPage) { pageInfo { "
@@ -472,6 +548,18 @@ Task *Anime::search(const QVariantMap &filters) {
                            "$format, isAdult: $isAdult) { %1 } } }")
                 .arg(QString::fromLatin1(kCardFields)),
             vars, QStringLiteral("anilist:search:") + QJsonDocument(vars).toJson(QJsonDocument::Compact), 3600);
+        } catch (const Error &e) {
+            if (e.status() == 499)
+                throw;
+            // AniList is down: Kitsu's search, its matches in AniList's shape.
+            try {
+                const auto found = anime::kitsu::search(filters);
+                return QVariantMap{{"results", cards(found.value("media").toArray())},
+                                   {"hasNextPage", found.value("hasNextPage").toBool()}};
+            } catch (const Error &) {
+                throw e;
+            }
+        }
         const auto page = data.value("Page").toObject();
         return QVariantMap{{"results", cards(page.value("media").toArray())},
                            {"hasNextPage", page.value("pageInfo").toObject().value("hasNextPage").toBool()}};
@@ -578,11 +666,19 @@ Task *Anime::episodes(int anilistId) {
 
 Task *Anime::recommendations(int anilistId) {
     return Task::run([anilistId]() -> QVariant {
-        const auto data = graphql(QStringLiteral("query ($id: Int) { Media(id: $id, type: ANIME) { recommendations(sort: "
+        QJsonObject data;
+        try {
+            data = graphql(QStringLiteral("query ($id: Int) { Media(id: $id, type: ANIME) { recommendations(sort: "
                                                  "[RATING_DESC, ID_DESC], page: 1, perPage: 20) { nodes { "
                                                  "mediaRecommendation { %1 } } } } }")
                                       .arg(QString::fromLatin1(kCardFields)),
                                   {{"id", anilistId}}, QStringLiteral("anilist:recs:%1").arg(anilistId), 86400);
+        } catch (const Error &e) {
+            // Only AniList has them; without it the page shows none.
+            if (e.status() == 499)
+                throw;
+            return QVariantList();
+        }
         QJsonArray media;
         for (const auto &n : data.value("Media").toObject().value("recommendations").toObject().value("nodes").toArray())
             if (const auto r = n.toObject().value("mediaRecommendation"); r.isObject())
@@ -597,16 +693,8 @@ Task *Anime::schedule(qint64 start, qint64 end) {
         // Episodes of one anime out at the same moment (a whole season at
         // once) are one entry: airingEpisode to airingEpisodeLast.
         QHash<QString, qsizetype> slot;
-        for (int page = 1; page <= 8; ++page) {
-            const auto data = graphql(QStringLiteral("query ($page: Int, $start: Int, $end: Int) { Page(page: $page, "
-                                                     "perPage: 50) { pageInfo { hasNextPage } airingSchedules(airingAt_greater: "
-                                                     "$start, airingAt_lesser: $end, sort: TIME) { id airingAt episode media "
-                                                     "{ %1 } } } }")
-                                          .arg(QString::fromLatin1(kCardFields)),
-                                      {{"page", page}, {"start", double(start)}, {"end", double(end)}},
-                                      QStringLiteral("anilist:schedule:%1:%2:%3").arg(start).arg(end).arg(page), 3600);
-            const auto p = data.value("Page").toObject();
-            for (const auto &row : p.value("airingSchedules").toArray()) {
+        const auto add = [&](const QJsonArray &rows) {
+            for (const auto &row : rows) {
                 const auto r = row.toObject();
                 const auto m = r.value("media").toObject();
                 if (m.isEmpty() || m.value("isAdult").toBool())
@@ -627,6 +715,31 @@ Task *Anime::schedule(qint64 start, qint64 end) {
                 slot.insert(key, out.size());
                 out.append(c);
             }
+        };
+        for (int page = 1; page <= 8; ++page) {
+            QJsonObject data;
+            try {
+                data = graphql(QStringLiteral("query ($page: Int, $start: Int, $end: Int) { Page(page: $page, "
+                                              "perPage: 50) { pageInfo { hasNextPage } airingSchedules(airingAt_greater: "
+                                              "$start, airingAt_lesser: $end, sort: TIME) { id airingAt episode media "
+                                              "{ %1 } } } }")
+                                   .arg(QString::fromLatin1(kCardFields)),
+                               {{"page", page}, {"start", double(start)}, {"end", double(end)}},
+                               QStringLiteral("anilist:schedule:%1:%2:%3").arg(start).arg(end).arg(page), 3600);
+            } catch (const Error &e) {
+                if (page > 1 || e.status() == 499)
+                    throw;
+                // AniList is down: when Kitsu says airing shows come next
+                // (episode numbers unknown).
+                try {
+                    add(anime::kitsu::airing(start, end));
+                } catch (const Error &) {
+                    throw e;
+                }
+                return out;
+            }
+            const auto p = data.value("Page").toObject();
+            add(p.value("airingSchedules").toArray());
             if (!p.value("pageInfo").toObject().value("hasNextPage").toBool())
                 break;
         }
