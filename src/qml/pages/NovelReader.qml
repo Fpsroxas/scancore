@@ -47,6 +47,8 @@ Rectangle {
     // Drawn under the phone's status bar in the reading theme's colour; the
     // bars and text are padded by the inset instead.
     readonly property bool edgeToEdge: true
+    // Hidden bars wait above the top edge: never let them show outside.
+    clip: true
     readonly property real insetTop: SafeArea.margins.top
     readonly property real insetBottom: SafeArea.margins.bottom
 
@@ -308,7 +310,7 @@ Rectangle {
             id: body
             x: (flick.width - width) / 2
             width: reader.columnWidth
-            topPadding: 110 + reader.insetTop
+            topPadding: 110 + (topBar.twoRows ? 46 : 0) + reader.insetTop
             bottomPadding: flick.spacing
             spacing: reader.fontSize * reader.paragraphSpacing
 
@@ -457,7 +459,7 @@ Rectangle {
 
     // Desktop: the bar returns when the mouse moves near the top.
     PointerMotion {
-        onMoved: (position) => { if (position.y < 90 + reader.insetTop) reader.barsShown = true }
+        onMoved: (position) => { if (position.y < 90 + (topBar.twoRows ? 46 : 0) + reader.insetTop) reader.barsShown = true }
     }
 
     // Dimmer than the screen allows, for reading in the dark.
@@ -507,13 +509,16 @@ Rectangle {
         }
     }
 
-    // The status bar area keeps the reading theme's colour.
+    // The status bar area keeps the reading theme's colour (the bar's while
+    // it is shown). It is drawn over the top bar, which slides away under
+    // it instead of across the phone's clock and icons.
     Rectangle {
-        z: 1
+        z: 3
         width: parent.width
         height: reader.insetTop
         visible: height > 0
-        color: reader.look.bg
+        color: reader.barsShown ? Theme.alpha(reader.look.chrome, 0.94) : reader.look.bg
+        Behavior on color { ColorAnimation { duration: Motion.slow } }
     }
 
     // Reading progress along the top edge.
@@ -530,52 +535,54 @@ Rectangle {
         id: topBar
         z: 1
         width: parent.width
-        height: 64 + reader.insetTop
+        // Phones: the buttons leave the title no room, so it gets a row of
+        // its own under them (as in the comic reader).
+        readonly property bool twoRows: reader.width - novelActions.width - 110 < 140
+        readonly property real rowY: reader.insetTop + 32
+        height: 64 + (twoRows ? 46 : 0) + reader.insetTop
         y: reader.barsShown ? 0 : -height
         color: Theme.alpha(reader.look.chrome, 0.94)
         Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.emphasized } }
         Rectangle { anchors.bottom: parent.bottom; width: parent.width; height: 1; color: Theme.alpha(reader.look.text, 0.08) }
 
-        Row {
+        IconButton {
+            id: closeButton
             x: 16
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: reader.insetTop / 2
-            spacing: 12
-            IconButton {
-                iconName: "arrow-left"
-                iconColor: reader.look.text
-                tip: qsTr("Close (Esc)")
-                onClicked: reader.exit()
+            y: topBar.rowY - height / 2
+            iconName: "arrow-left"
+            iconColor: reader.look.text
+            tip: qsTr("Close (Esc)")
+            onClicked: reader.exit()
+        }
+        Column {
+            x: topBar.twoRows ? 24 : closeButton.x + closeButton.width + 12
+            y: topBar.twoRows ? reader.insetTop + 60 : topBar.rowY - height / 2
+            width: topBar.twoRows ? topBar.width - 48 : Math.max(0, reader.width - 90 - novelActions.width)
+            Text {
+                text: reader.series.title || ""
+                color: reader.look.text
+                font.family: Theme.fontSans
+                font.pixelSize: Theme.textMd
+                font.weight: Font.DemiBold
+                width: Math.min(implicitWidth, parent.width)
+                elide: Text.ElideRight
             }
-            Column {
-                anchors.verticalCenter: parent.verticalCenter
-                Text {
-                    text: reader.series.title || ""
-                    color: reader.look.text
-                    font.family: Theme.fontSans
-                    font.pixelSize: Theme.textMd
-                    font.weight: Font.DemiBold
-                    width: Math.min(implicitWidth, reader.width - 90 - novelActions.width)
-                    elide: Text.ElideRight
-                }
-                Text {
-                    text: (reader.index + 1) + qsTr(" of ") + reader.chapters.length + " · " + (reader.unit.title || "")
-                        + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr(" · Downloaded") : "")
-                        + (App.settings.incognito === true ? qsTr(" · Incognito") : "")
-                    color: reader.look.muted
-                    font.family: Theme.fontSans
-                    font.pixelSize: Theme.textSm
-                    width: Math.min(implicitWidth, reader.width - 90 - novelActions.width)
-                    elide: Text.ElideRight
-                }
+            Text {
+                text: (reader.index + 1) + qsTr(" of ") + reader.chapters.length + " · " + (reader.unit.title || "")
+                    + (reader.task && reader.task.ok && reader.task.result.offline ? qsTr(" · Downloaded") : "")
+                    + (App.settings.incognito === true ? qsTr(" · Incognito") : "")
+                color: reader.look.muted
+                font.family: Theme.fontSans
+                font.pixelSize: Theme.textSm
+                width: Math.min(implicitWidth, parent.width)
+                elide: Text.ElideRight
             }
         }
         Row {
             id: novelActions
             anchors.right: parent.right
             anchors.rightMargin: 16
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: reader.insetTop / 2
+            y: topBar.rowY - height / 2
             // Phones: smaller buttons, no gaps, so all fit beside the close button.
             readonly property int button: reader.width < 420 ? 32 : 34
             spacing: reader.width < 420 ? 0 : 4
@@ -637,7 +644,7 @@ Rectangle {
     Popup {
         id: chapterPopup
         x: parent.width - width - 16
-        y: 70 + reader.insetTop
+        y: 70 + (topBar.twoRows ? 46 : 0) + reader.insetTop
         width: Math.min(360, parent.width - 32)
         height: Math.min(parent.height - 120, 600)
         padding: 6
@@ -674,18 +681,18 @@ Rectangle {
     Popup {
         id: typePopup
         x: parent.width - width - 16
-        y: 70 + reader.insetTop
+        y: 70 + (topBar.twoRows ? 46 : 0) + reader.insetTop
         width: Math.min(340, parent.width - 32)
         padding: 20
         background: Rectangle { radius: Theme.radiusLg; color: Theme.surface; border.width: 1; border.color: Theme.borderStrong }
         enter: Transition {
             ParallelAnimation {
                 NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.fast }
-                NumberAnimation { property: "y"; from: 58 + reader.insetTop; to: 70 + reader.insetTop; duration: Motion.normal; easing.type: Easing.OutCubic }
+                NumberAnimation { property: "y"; from: 58 + (topBar.twoRows ? 46 : 0) + reader.insetTop; to: 70 + (topBar.twoRows ? 46 : 0) + reader.insetTop; duration: Motion.normal; easing.type: Easing.OutCubic }
             }
         }
         contentItem: Flickable {
-            implicitHeight: Math.min(options.implicitHeight, reader.height - 140 - reader.insetTop)
+            implicitHeight: Math.min(options.implicitHeight, reader.height - 140 - (topBar.twoRows ? 46 : 0) - reader.insetTop)
             contentHeight: options.implicitHeight
             clip: true
             boundsBehavior: Flickable.StopAtBounds

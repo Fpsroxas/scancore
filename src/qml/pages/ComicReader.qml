@@ -83,6 +83,8 @@ Rectangle {
     // Drawn under the phone's status and navigation bars; the controls are
     // padded by these insets instead (see the immersive stack in Main.qml).
     readonly property bool edgeToEdge: true
+    // Hidden bars wait above the top edge: never let them show outside.
+    clip: true
     readonly property real insetTop: SafeArea.margins.top
     readonly property real insetBottom: SafeArea.margins.bottom
 
@@ -890,8 +892,11 @@ Rectangle {
         }
     }
 
-    // Keeps the status bar legible over light pages while the controls are hidden.
+    // Keeps the status bar legible over light pages while the controls are
+    // hidden. Drawn over the top bar, which slides away under it instead of
+    // across the phone's clock and icons.
     Rectangle {
+        z: 3
         width: parent.width
         height: reader.insetTop
         visible: height > 0

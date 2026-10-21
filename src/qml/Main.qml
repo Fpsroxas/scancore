@@ -404,6 +404,11 @@ ApplicationWindow {
         // Readers that set edgeToEdge draw under the system bars and pad
         // their own controls; everything else stays inside the safe area.
         readonly property bool edgeToEdge: currentItem !== null && currentItem.edgeToEdge === true
+        // The window's own root, not ApplicationWindow's content, which Qt
+        // (6.9 and later) pads by the safe area: inside it a reader could not
+        // reach under the status bar and was told its inset was 0, so its
+        // hidden top bar stuck out above it, over the phone's clock.
+        parent: window.contentItem.parent
         anchors.fill: parent
         // The parent's safe area, so these margins do not feed back into it.
         anchors.topMargin: edgeToEdge ? 0 : parent.SafeArea.margins.top
