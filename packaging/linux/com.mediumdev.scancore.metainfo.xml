@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.3.1" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#231--2026-10-21</url>
+      <description>
+        <p>Read from looks a title up on the built-in sources only and asks your extensions one at a time when you pick one; its list scrolls and opens from the bottom on phones. Buttons and choices no longer spill out of their cards on phones, a startup crash on systems whose Qt hashes through OpenSSL 3 is fixed, and the cookies of scancore.onl and your sync server are never shared with extensions.</p>
+      </description>
+    </release>
     <release version="2.3.0" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#230--2026-10-21</url>
       <description>

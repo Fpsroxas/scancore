@@ -2,6 +2,15 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.3.1 — 2026-10-21
+
+- **Read from opens faster**: a catalogue title is looked up on SCANCORE's built-in sources only, not on every installed extension, and each match shows as soon as its source answers. **My extensions** lists your extensions (recently used first, with a search) and looks on the one you pick; moving a series still asks everything, showing built-in matches first.
+- **The Read from list scrolls** when it is long, and opens as a sheet from the bottom on phones.
+- **Nothing spills out of its card on phones**: settings buttons beside long descriptions drop below them, wide choices stay inside, and the About, Activity and Sync buttons and tabs fit at 360 px.
+- **No more crashes at startup** on systems whose Qt hashes through OpenSSL 3 (such as Arch Linux).
+- **Your scancore.onl session stays yours**: the cookies of scancore.onl and your sync server are never shared with extensions, plugins or browser checks.
+- The welcome tour says adding a repository is optional: the built-in sources work without one.
+
 ## 2.3.0 — 2026-10-21
 
 SCANCORE 2.3 "One story": comic, novel and anime as one story, and a library that looks after itself.
