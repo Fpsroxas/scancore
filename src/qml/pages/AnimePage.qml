@@ -203,33 +203,43 @@ Item {
                 }
                 Item {
                     anchors.fill: parent
-                    transform: Translate { x: hero.dragX * 0.35 }
-                    opacity: 1 - Math.min(0.35, Math.abs(hero.dragX) / Math.max(1, hero.width))
                     layer.enabled: Theme.layered
                     layer.effect: MultiEffect {
                         maskEnabled: true
                         maskSource: heroFade
                     }
-                    Repeater {
-                        model: page.spotlight
-                        delegate: Item {
-                            id: slide
-                            required property var modelData
-                            required property int index
-                            readonly property bool current: index === page.spot
-                            anchors.fill: parent
-                            opacity: current ? 1 : 0
-                            visible: opacity > 0
-                            Behavior on opacity { NumberAnimation { duration: 900; easing.type: Easing.InOutQuad } }
-                            Image {
-                                id: banner
+                    // The pictures follow the finger under shades that stay
+                    // put (moving the shades with them uncovered the slowly
+                    // zooming banner's edge), a little wider than the
+                    // spotlight and never moved further than that, so no
+                    // edge of them shows either.
+                    Item {
+                        anchors.fill: parent
+                        anchors.leftMargin: -hero.width * 0.06
+                        anchors.rightMargin: -hero.width * 0.06
+                        transform: Translate { x: Math.max(-hero.width * 0.06, Math.min(hero.width * 0.06, hero.dragX * 0.35)) }
+                        opacity: 1 - Math.min(0.35, Math.abs(hero.dragX) / Math.max(1, hero.width))
+                        Repeater {
+                            model: page.spotlight
+                            delegate: Item {
+                                id: slide
+                                required property var modelData
+                                required property int index
+                                readonly property bool current: index === page.spot
                                 anchors.fill: parent
-                                source: App.image(slide.modelData.banner)
-                                fillMode: Image.PreserveAspectCrop
-                                asynchronous: true
-                                sourceSize.width: 1920
-                                scale: slide.current ? 1.08 : 1.0
-                                Behavior on scale { NumberAnimation { duration: 8000; easing.type: Easing.Linear } }
+                                opacity: current ? 1 : 0
+                                visible: opacity > 0
+                                Behavior on opacity { NumberAnimation { duration: 900; easing.type: Easing.InOutQuad } }
+                                Image {
+                                    id: banner
+                                    anchors.fill: parent
+                                    source: App.image(slide.modelData.banner)
+                                    fillMode: Image.PreserveAspectCrop
+                                    asynchronous: true
+                                    sourceSize.width: 1920
+                                    scale: slide.current ? 1.08 : 1.0
+                                    Behavior on scale { NumberAnimation { duration: 8000; easing.type: Easing.Linear } }
+                                }
                             }
                         }
                     }
