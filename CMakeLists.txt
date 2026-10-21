@@ -38,6 +38,11 @@ set(SCANCORE_DISCORD_APP_ID "" CACHE STRING "Discord application id, for Rich Pr
 set(SCANCORE_ANILIST_CLIENT_ID "54204" CACHE STRING "AniList API client id, for tracking")
 set(SCANCORE_MAL_CLIENT_ID "d85f703db50aa4add685b1f65eb8ad94" CACHE STRING "MyAnimeList API client id, for tracking")
 set(SCANCORE_COMICK_CLIENT_ID "DKZVIvYfXDqpWlEEBNfXDMqFKlAPsfaz" CACHE STRING "Comick public app client id, for tracking and imports")
+# Shikimori needs a confidential app (id and secret, both shipped like
+# Mihon's); Simkl only the id (PIN sign-in). Empty hides that tracker.
+set(SCANCORE_SHIKIMORI_CLIENT_ID "" CACHE STRING "Shikimori OAuth application id, for tracking")
+set(SCANCORE_SHIKIMORI_CLIENT_SECRET "" CACHE STRING "Shikimori OAuth application secret, for tracking")
+set(SCANCORE_SIMKL_CLIENT_ID "" CACHE STRING "Simkl API client id, for tracking")
 
 find_package(Qt6 6.9 REQUIRED COMPONENTS
     Core Gui Network Sql Qml Quick QuickControls2 Svg Concurrent OpenGL)

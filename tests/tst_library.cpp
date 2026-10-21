@@ -44,6 +44,58 @@ private slots:
         Database::open(m_dir.filePath(QStringLiteral("library.db")));
     }
 
+    // Release radar: the next chapter from a series' rhythm.
+    void releaseRhythm() {
+        constexpr qint64 day = 86400;
+        const qint64 now = 1'800'000'000;
+        QCOMPARE(*updates::releaseDate(QStringLiteral("2026-10-21T12:00:00Z")), qint64(1792584000));
+        QVERIFY(updates::releaseDate(QStringLiteral("2026-10-21")).has_value());
+        QVERIFY(!updates::releaseDate(QStringLiteral("3 days ago")));
+        // Weekly, last out two days ago: due in five days.
+        QList<qint64> weekly;
+        for (int i = 0; i < 8; ++i)
+            weekly.append(now - 2 * day - i * 7 * day);
+        auto r = updates::rhythm(weekly, now);
+        QVERIFY(r.known);
+        QCOMPARE(qRound(r.gapDays), 7);
+        QCOMPARE(r.next, now + 5 * day);
+        QVERIFY(!r.late);
+        // One late chapter does not move the median; two chapters on one day
+        // are one release.
+        weekly[3] -= 3 * day;
+        weekly.append(weekly[0] - 3600);
+        QCOMPARE(qRound(updates::rhythm(weekly, now).gapDays), 7);
+        // Due yesterday: late. Three weeks overdue: stopped keeping time.
+        QList<qint64> due;
+        for (int i = 0; i < 5; ++i)
+            due.append(now - 8 * day - i * 7 * day);
+        QVERIFY(updates::rhythm(due, now).late);
+        QList<qint64> stopped;
+        for (int i = 0; i < 5; ++i)
+            stopped.append(now - 21 * day - i * 7 * day);
+        QVERIFY(!updates::rhythm(stopped, now).known);
+        // Too few releases, or monthly-plus gaps: no guess.
+        QVERIFY(!updates::rhythm({now - day, now - 8 * day}, now).known);
+        QVERIFY(!updates::rhythm({now - day, now - 61 * day, now - 121 * day}, now).known);
+    }
+
+    // Library health: series saved twice share a title or tracker entry.
+    void duplicateGroups() {
+        const auto groups = updates::groupsSharingKeys({{"c:t:solo"}, {"c:t:other"}, {"c:t:sololeveling", "c:a:1"},
+                                                        {"c:a:1"}, {"c:t:solo"}, {}});
+        QCOMPARE(groups.size(), 2);
+        QCOMPARE(groups[0], QList<int>({0, 4}));
+        QCOMPARE(groups[1], QList<int>({2, 3}));
+        // A large library stays fast (one pass, no pairwise comparison).
+        QList<QStringList> many;
+        for (int i = 0; i < 50000; ++i)
+            many.append({QStringLiteral("c:t:%1").arg(i % 40000), QStringLiteral("c:a:%1").arg(i)});
+        QElapsedTimer timer;
+        timer.start();
+        QCOMPARE(updates::groupsSharingKeys(many).size(), 10000);
+        QVERIFY2(timer.elapsed() < 500, qPrintable(QStringLiteral("%1 ms").arg(timer.elapsed())));
+    }
+
     void chapterValues() {
         QCOMPARE(*migration::chapterValue(QStringLiteral("12")), 12.0);
         QCOMPARE(*migration::chapterValue(QStringLiteral(" 12.5 ")), 12.5);

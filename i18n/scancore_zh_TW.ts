@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>忘記這些標題？</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>Kitsu 上的漫畫、小說和動畫。</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>你在 MangaUpdates 的閱讀清單，適用於漫畫和小說。</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>Shikimori 上的漫畫、小說和動畫。</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>Bangumi 上的漫畫、小說和動畫。</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Simkl 上的動畫。</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3009,6 +3029,10 @@
             <source>Not now</source>
             <translation>稍後再說</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>繼續這個故事</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3499,6 +3523,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>已合併</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>書庫狀態</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>停止的來源和重複項</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1已經%2天沒有回應</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>你有1部作品在這裡。遷移會保留已讀內容。</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>你有%1部作品在這裡。遷移會保留已讀內容。</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>遷移</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>遷移</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>回到%1</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>已遷移</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>沒有回應</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>已失敗%1天</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>已停止更新</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>來源有回應，但已經幾個月沒有新章節。其他來源可能更新得更快。</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>去別處找</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>%1天沒有新內容</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>重複儲存</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>同一部作品存在於多個來源。合併後保留一部，包含你在兩處讀過的所有內容，並記住另一個來源以便遷回。</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>已讀%1/%2</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>保留</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>不是同一部</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>合併</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>一切正常</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>所有來源最近都有回應，也沒有重複儲存的作品。</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source>Favourites</source>
@@ -3680,6 +3803,23 @@
             <source>Choose a category on a saved series&apos; page to move it here.</source>
             <translation>在已儲存作品的頁面上選擇分類，即可移到這裡。</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>即將更新</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>書庫中有內容需要查看：停止回應的來源或重複儲存的作品。</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>書庫中有%1項需要查看：停止回應的來源或重複儲存的作品。</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>查看</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3838,6 +3978,14 @@
         <message>
             <source>Allow</source>
             <translation>允許</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>每次檢查一則通知</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>把一次檢查發現的所有新章節合成一則通知，而不是每部作品一則。</translation>
         </message>
     </context>
     <context>
@@ -5716,6 +5864,10 @@
             <source>Next page</source>
             <translation>下一頁</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>這個來源還沒有第%1章</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6573,6 +6725,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>韓漫</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>中國漫畫</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>日漫</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>漫畫</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>第%1卷</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>第%1章</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>你看完了%1</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>已追上%1</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1從%2繼續</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>原作小說進度更遠</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>你讀到第%1章</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>稍後再說</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>第%1卷</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>第%1章</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>登入後才能投票</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>輸入繼續的章節或集數</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>謝謝！讀者現在可以投票了。</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>故事的其他形式</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>動畫</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>韓漫</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>中國漫畫</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>日漫</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>漫畫</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>已看%1/%2</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>已讀%1/%2</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>已看%1</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>已讀%1</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>看完%1後，從%2繼續</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>來自 SCANCORE 清單</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>讀者推薦</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1票</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1票</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>前往</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>在哪裡結束</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>取消</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>推薦</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>登入後可推薦結束位置</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>還沒有人說明這之後的故事從哪裡繼續。你知道嗎？推薦一下章節吧。</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1從%2繼續</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>你的推薦</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>贊</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>踩</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>開啟</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>章節</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>卷</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>新增</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6991,6 +7341,38 @@
             <source>Connect again</source>
             <translation>重新連線</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>你的密碼只會傳送給%1。</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>在開啟的頁面中輸入%1。</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>正在向 Simkl 請求代碼…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>正在登入…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>郵箱</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>使用者名稱</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>密碼</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>登入</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7089,6 +7471,10 @@
             <source> chapters</source>
             <translation> 章</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>在 設定 → 連線 中連結 AniList、MyAnimeList 或 Kitsu 等追蹤服務，讓你在那裡的清單保持最新。</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7119,6 +7505,86 @@
         <message>
             <source>Mark read</source>
             <translation>標為已讀</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>今天</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>明天</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>第%1集</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>下一集</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>第%1章</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>下一章</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>應已更新，稍有延遲</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>通常每週</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>通常每天</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>通常每%1天</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>即將更新</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>書庫中接下來會更新的內容</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>全部</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>漫畫</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>動畫</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>漫畫和小說的日期是根據最近章節的發布時間推測的。</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>近期沒有更新</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>把作品儲存到書庫並檢查更新，它們的下一章會顯示在這裡。</translation>
         </message>
     </context>
     <context>
@@ -7899,6 +8365,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 個新章節</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>書庫中有1個新章節</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>書庫中有%1個新章節</translation>
         </message>
     </context>
     <context>

@@ -8,6 +8,7 @@
 #include "Novels.h"
 #include "Platform.h"
 #include "Trackers.h"
+#include "Upkeep.h"
 #include "core/Database.h"
 #include "core/Migration.h"
 #include "core/Parallel.h"
@@ -18,6 +19,7 @@
 #include <QJsonDocument>
 #include <QSet>
 #include <QJsonObject>
+#include <QLocale>
 #include <QNetworkInformation>
 
 namespace sc {
@@ -572,15 +574,27 @@ Task *Library::checkUpdates(bool automatic) {
         }
         QStringList updated;
         int total = 0;
+        const bool digest = Database::pref(QStringLiteral("setting.notifyDigest"), false).toBool();
         const auto results = parallel(jobs);
+        const qint64 now = Database::now();
         for (int i = 0; i < results.size(); ++i) {
-            if (!results[i].ok())
-                continue;
             const auto row = rows.at(i).toMap();
             const auto id = row.value(QStringLiteral("id")).toString();
-            const auto units = results[i].value->value(QStringLiteral("units")).toList();
-            if (units.isEmpty())
+            const auto units = results[i].ok() ? results[i].value->value(QStringLiteral("units")).toList() : QVariantList();
+            // Source health: when it last answered, and since when it fails.
+            if (units.isEmpty()) {
+                if (results[i].status == 499)
+                    continue;
+                Database::exec(QStringLiteral("INSERT INTO series_health(series_id, failing_since, failures, problem) VALUES(?, ?, 1, ?) "
+                                              "ON CONFLICT(series_id) DO UPDATE SET failing_since = COALESCE(failing_since, excluded.failing_since), "
+                                              "failures = failures + 1, problem = excluded.problem"),
+                               {id, now, results[i].ok() ? QStringLiteral("No chapters listed") : results[i].error.left(300)});
                 continue;
+            }
+            Database::exec(QStringLiteral("INSERT INTO series_health(series_id, last_ok, failures) VALUES(?, ?, 0) "
+                                          "ON CONFLICT(series_id) DO UPDATE SET last_ok = excluded.last_ok, failing_since = NULL, "
+                                          "failures = 0, problem = NULL"),
+                           {id, now});
             // Chapters not seen before, by key (a re-numbered list is not
             // news).
             QSet<QString> known;
@@ -603,24 +617,34 @@ Task *Library::checkUpdates(bool automatic) {
                            {Database::now(), fresh.size(), units.size(), units.last().toMap().value(QStringLiteral("title")), id});
             if (fresh.isEmpty())
                 continue;
+            Database::exec(QStringLiteral("UPDATE series_health SET last_new = ? WHERE series_id = ?"), {now, id});
             total += int(fresh.size());
             const auto title = row.value(QStringLiteral("title")).toString();
             updated.append(title);
             // One per series; more chapters later replace it.
             const auto latest = fresh.last().toMap().value(QStringLiteral("title")).toString();
-            Notifications::post({QStringLiteral("chapters"), QStringLiteral("chapters:") + id, title,
-                                 (fresh.size() == 1 ? tr("1 new chapter") : tr("%1 new chapters").arg(fresh.size()))
-                                     + (latest.isEmpty() ? QString() : QStringLiteral(" · ") + latest),
-                                 QVariantMap{{"seriesId", id}},
-                                 Database::pref(QStringLiteral("setting.notifyUpdates"), true).toBool()});
+            if (!digest)
+                Notifications::post({QStringLiteral("chapters"), QStringLiteral("chapters:") + id, title,
+                                     (fresh.size() == 1 ? tr("1 new chapter") : tr("%1 new chapters").arg(fresh.size()))
+                                         + (latest.isEmpty() ? QString() : QStringLiteral(" · ") + latest),
+                                     QVariantMap{{"seriesId", id}},
+                                     Database::pref(QStringLiteral("setting.notifyUpdates"), true).toBool()});
             const auto category = row.value(QStringLiteral("category")).toString();
             if (autoDownload.contains(category.isEmpty() ? QStringLiteral("reading") : category)) {
                 const QVariantMap series{{"id", id}, {"media", row.value(QStringLiteral("media"))}, {"title", title}};
                 QMetaObject::invokeMethod(Downloads::instance(), [series, fresh] { Downloads::instance()->enqueue(series, fresh); });
             }
         }
+        // One notification for the whole check, when chosen.
+        if (digest && total > 0)
+            Notifications::post({QStringLiteral("chapters"), QStringLiteral("chapters:digest"),
+                                 total == 1 ? tr("1 new chapter in your library") : tr("%1 new chapters in your library").arg(total),
+                                 QLocale().createSeparatedList(updated.mid(0, 4)) + (updated.size() > 4 ? QStringLiteral(" …") : QString()),
+                                 QVariantMap{{"section", "library"}},
+                                 Database::pref(QStringLiteral("setting.notifyUpdates"), true).toBool()});
         QMetaObject::invokeMethod(this, [this, total, updated] {
             notifyChanged();
+            Upkeep::instance()->recount();
             if (total > 0)
                 emit updatesFound(total, updated);
         });

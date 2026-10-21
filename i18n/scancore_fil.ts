@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>Kalimutan ang mga pamagat na ito?</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>Komiks, nobela at anime sa Kitsu.</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>Ang reading list mo sa MangaUpdates, para sa komiks at nobela.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>Komiks, nobela at anime sa Shikimori.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>Komiks, nobela at anime sa Bangumi.</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Anime sa Simkl.</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3001,6 +3021,10 @@
             <source> novels</source>
             <translation> nobela</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>Ituloy ang kuwento</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3491,6 +3515,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>Pinagsama</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>Kalagayan ng library</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>Mga tumigil na source at doble</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>Hindi sumasagot ang %1 nang %2 araw na</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>May 1 serye ka roon. Ang paglipat ay nagpapanatili sa nabasa mo.</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>May %1 serye ka roon. Ang paglipat ay nagpapanatili sa nabasa mo.</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Ilipat sila</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Ilipat</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>Bumalik sa %1</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Nailipat</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>Hindi sumasagot</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>pumapalya nang %1 araw</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>Tumigil mag-update</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>Sumasagot ang mga source nila pero ilang buwan nang walang bagong kabanata. Baka mas malayo na ang ibang source.</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>Maghanap sa iba</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>walang bago nang %1 araw</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>Dalawang beses na-save</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>Iisang serye sa higit sa isang source. Ang pagsasama ay nagpapanatili ng isa na may lahat ng nabasa mo sa dalawa, at tinatandaan ang isa pang source para makabalik doon.</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%1 sa %2 ang nabasa</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>Panatilihin</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>Hindi pareho</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>Pagsamahin</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>Maayos ang lahat</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>Sumagot kamakailan ang lahat ng source, at walang dalawang beses na-save.</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source>Favourites</source>
@@ -3672,6 +3795,23 @@
             <source>Choose a category on a saved series' page to move it here.</source>
             <translation>Pumili ng kategorya sa pahina ng naka-save na serye para ilipat ito rito.</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Paparating</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>May dapat tingnan sa iyong library: isang source na tumigil sumagot o isang seryeng dalawang beses na-save.</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>%1 bagay sa iyong library ang dapat tingnan: mga source na tumigil sumagot o mga seryeng dalawang beses na-save.</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>Suriin</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3830,6 +3970,14 @@
         <message>
             <source>Allow</source>
             <translation>Payagan</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>Isang notification bawat check</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>Pinagsasama ang lahat ng bagong kabanata ng isang check sa halip na isang notification bawat serye.</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +5849,10 @@
             <source>Next page</source>
             <translation>Susunod na pahina</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>Wala pa sa source na ito ang kabanata %1</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6558,6 +6710,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Nobela</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Komiks</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>volume %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>kabanata %1</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>Natapos mo ang %1</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>Nakahabol na sa %1</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>Ang %1 ay tuloy mula %2</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>Mas malayo na ang nobela nito</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>Nasa kabanata %1 ka</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Hindi muna</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>volume %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>kabanata %1</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>Mag-sign in para bumoto</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>Ilagay ang kabanata o volume kung saan ito tuloy</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>Salamat! Puwede na itong iboto ng mga mambabasa.</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>Ang kuwento sa ibang anyo</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Nobela</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Komiks</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>%1 sa %2 ang napanood</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%1 sa %2 ang nabasa</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>%1 ang napanood</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>%1 ang nabasa</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>Pagkatapos ng %1, ituloy mula %2</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>Mula sa listahan ng SCANCORE</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>Mungkahi ng mga mambabasa</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1 boto</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1 boto</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>Pumunta roon</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>Kung saan ito natatapos</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Kanselahin</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>Magmungkahi</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>Mag-sign in para magmungkahi kung saan ito natatapos</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>Wala pang nagsasabi kung saan tuloy ang kuwento pagkatapos nito. Alam mo? Imungkahi ang kabanata.</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>Ang %1 ay tuloy mula %2</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>Ang mungkahi mo</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>Upvote</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>Downvote</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Buksan</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>Kabanata</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>Volume</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Idagdag</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6976,6 +7326,38 @@
             <source>Connect again</source>
             <translation>Ikonekta ulit</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>Sa %1 lang napupunta ang password mo.</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>Ilagay ang %1 sa pahinang nagbukas.</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>Humihingi ng code sa Simkl…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>Nagsa-sign in…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>Email</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>User name</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Password</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>Mag-sign in</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7074,6 +7456,10 @@
             <source> chapters</source>
             <translation> kabanata</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>Ikonekta ang isang tracker gaya ng AniList, MyAnimeList o Kitsu sa Settings → Mga koneksyon para manatiling updated ang mga listahan mo roon.</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7104,6 +7490,86 @@
         <message>
             <source>Mark read</source>
             <translation>Markahang nabasa</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>Ngayon</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>Bukas</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>Episode %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Susunod na episode</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Kabanata %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Susunod na kabanata</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>dapat nang lumabas, medyo huli</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>karaniwang lingguhan</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>karaniwang araw-araw</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>karaniwang bawat %1 araw</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Paparating</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>Ang susunod na lalabas sa iyong library</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>Lahat</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komiks</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Nobela</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>Tantiya lang ang mga petsa ng komiks at nobela batay sa paglabas ng mga huling kabanata nila.</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>Walang inaasahan sa ngayon</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>I-save ang mga serye sa iyong library at mag-check ng update; dito lalabas ang mga susunod nilang kabanata.</translation>
         </message>
     </context>
     <context>
@@ -7891,6 +8357,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 bagong kabanata</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>1 bagong kabanata sa iyong library</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>%1 bagong kabanata sa iyong library</translation>
         </message>
     </context>
     <context>

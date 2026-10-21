@@ -1,4 +1,5 @@
 #include "Trackers.h"
+#include "TrackerCommon.h"
 
 #include "Notifications.h"
 
@@ -33,7 +34,7 @@
 
 namespace sc {
 
-namespace {
+namespace tracking {
 
 const QString kAniListId = QStringLiteral(SCANCORE_ANILIST_CLIENT_ID);
 const QString kMalId = QStringLiteral(SCANCORE_MAL_CLIENT_ID);
@@ -250,12 +251,18 @@ bool missedRecently(const QString &seriesId, const QString &service) {
 
 // AniList titles: [{id, idMal, title, titles: [...], detail, cover, total}].
 QVariantList anilistSearch(const QString &media, const QString &title) {
+    // Novels are AniList "manga" in the NOVEL format; a search for one would
+    // otherwise fill with its comic. (A null format finds nothing, so the
+    // filter is only written when used.)
+    const auto filter = media == QLatin1String("novel") ? QStringLiteral(", format: NOVEL")
+                        : media == QLatin1String("comic") ? QStringLiteral(", format_not: NOVEL")
+                                                          : QString();
     const auto data = anilistQuery(QStringLiteral(R"(
         query ($search: String, $type: MediaType) {
-          Page(perPage: 10) { media(search: $search, type: $type, sort: SEARCH_MATCH) {
+          Page(perPage: 10) { media(search: $search, type: $type%1, sort: SEARCH_MATCH) {
             id idMal format episodes chapters startDate { year }
             title { romaji english native } synonyms coverImage { medium } } }
-        })"),
+        })").arg(filter),
                                    {{"search", title}, {"type", media == QLatin1String("anime") ? "ANIME" : "MANGA"}});
     QVariantList out;
     for (const auto &value : data.value("Page").toObject().value("media").toArray()) {
@@ -400,6 +407,15 @@ QVariantMap matchByTitles(const std::function<QVariantList(const QString &)> &se
                 return match;
     }
     return {};
+}
+
+int anilistIdOf(const QString &seriesId) {
+    int id = allLinks().value(seriesId).toMap().value("anilist").toMap().value("id").toInt();
+    if (id <= 0 && seriesId.startsWith(QLatin1String("anime:anilist:")))
+        id = seriesId.section(QLatin1Char(':'), 2).toInt();
+    if (id <= 0)
+        id = seriesExtra(seriesId).value("anilist").toInt();
+    return std::max(id, 0);
 }
 
 // How far the series is: the highest chapter or episode number finished.
@@ -558,7 +574,9 @@ void updateComick(const QString &seriesId, const QString &media, const QString &
     comickCall("PUT", path, QJsonObject{{"status", status}, {"progress", QJsonObject{{"number", QString::number(progress)}}}});
 }
 
-} // namespace
+} // namespace tracking
+
+using namespace tracking;
 
 Trackers::Trackers(QObject *parent) : QObject(parent) {}
 
@@ -591,6 +609,137 @@ QVariantMap Trackers::comick() const {
     const auto account = Database::pref(QStringLiteral("tracker.comick")).toMap();
     return account.isEmpty() ? QVariantMap()
                              : QVariantMap{{"name", account.value("name")}, {"avatar", account.value("avatar")}, {"expired", account.value("expired").toBool()}};
+}
+
+QVariantMap Trackers::account(const QString &service) const {
+    const auto a = Database::pref(QStringLiteral("tracker.") + service).toMap();
+    return a.isEmpty() || a.value("name").toString().isEmpty() && !a.value("expired").toBool()
+               ? QVariantMap()
+               : QVariantMap{{"name", a.value("name")}, {"avatar", a.value("avatar")}, {"expired", a.value("expired").toBool()}};
+}
+
+QVariantList Trackers::services() const {
+    struct Builtin {
+        const char *key;
+        const char *label;
+        QStringList media;
+        const char *auth;
+        const char *site;
+        bool available;
+    };
+    const QList<Builtin> builtins{
+        {"anilist", "AniList", {"comic", "novel", "anime"}, "token", "https://anilist.co/", anilistAvailable()},
+        {"mal", "MyAnimeList", {"comic", "novel", "anime"}, "oauth", "https://myanimelist.net/", malAvailable()},
+        {"comick", "Comick", {"comic", "anime"}, "oauth", "https://comick.dev/", comickAvailable()},
+    };
+    const QHash<QString, QPair<const char *, const char *>> more{
+        {"kitsu", {"password", "https://kitsu.app/"}},
+        {"mangaupdates", {"password", "https://www.mangaupdates.com/"}},
+        {"shikimori", {"oauth", "https://shikimori.io/"}},
+        {"bangumi", {"token", "https://bgm.tv/"}},
+        {"simkl", {"pin", "https://simkl.com/"}},
+    };
+    QVariantList out;
+    auto add = [&](const QString &key, const QString &label, const QStringList &media, const QString &auth, const QString &site) {
+        const auto a = account(key);
+        out.append(QVariantMap{{"key", key}, {"label", label}, {"media", media}, {"auth", auth}, {"site", site},
+                               {"name", a.value("name")}, {"avatar", a.value("avatar")}, {"expired", a.value("expired").toBool()},
+                               {"connected", !a.value("name").toString().isEmpty() && !a.value("expired").toBool()}});
+    };
+    for (const auto &b : builtins)
+        if (b.available)
+            add(QString::fromLatin1(b.key), QString::fromLatin1(b.label), b.media, QString::fromLatin1(b.auth), QString::fromLatin1(b.site));
+    for (const auto &s : tracking::services())
+        if (s.available())
+            add(s.key, s.label, s.media, QString::fromLatin1(more.value(s.key).first), QString::fromLatin1(more.value(s.key).second));
+    return out;
+}
+
+bool Trackers::anyConnected() const {
+    for (const auto &value : services())
+        if (value.toMap().value("connected").toBool())
+            return true;
+    return false;
+}
+
+Task *Trackers::signIn(const QString &service) {
+    if (service == QLatin1String("mal"))
+        return malSignIn();
+    if (service == QLatin1String("comick"))
+        return comickSignIn();
+    if (service == QLatin1String("simkl")) {
+        auto *task = Task::run([]() -> QVariant {
+            const auto pin = simklPin();
+            QMetaObject::invokeMethod(Trackers::instance(), [pin] {
+                Trackers::instance()->m_pin = pin;
+                QDesktopServices::openUrl(QUrl(pin.value("url").toString()));
+                emit Trackers::instance()->changed();
+            });
+            return simklWait(pin.value("code").toString(), pin.value("seconds").toInt(), pin.value("interval").toInt());
+        });
+        connect(task, &Task::changed, this, [this, task] {
+            if (task->loading())
+                return;
+            m_pin.clear();
+            emit changed();
+        });
+        return task;
+    }
+    if (service == QLatin1String("shikimori")) {
+        QString problem;
+        const auto pending = std::static_pointer_cast<Pending>(listen(QStringLiteral("/shikimori"), &problem));
+        if (!pending)
+            return Task::run([problem]() -> QVariant { throw Error(problem); });
+        const auto redirect = QStringLiteral("http://127.0.0.1:%1/shikimori").arg(kRedirectPort);
+        QDesktopServices::openUrl(QUrl(shikimoriAuthorizeUrl(redirect, m_state)));
+        auto *task = Task::run([pending, redirect]() -> QVariant {
+            return shikimoriCode(waitForCode(pending, QStringLiteral("Shikimori")), redirect);
+        });
+        watch(task);
+        return task;
+    }
+    return Task::run([]() -> QVariant { throw Error(QStringLiteral("Unknown service.")); });
+}
+
+Task *Trackers::passwordSignIn(const QString &service, const QString &user, const QString &password) {
+    auto *task = Task::run([service, user, password]() -> QVariant { return tracking::passwordSignIn(service, user, password); });
+    task->then(this, [this](const QVariant &) { emit changed(); });
+    return task;
+}
+
+Task *Trackers::useToken(const QString &service, const QString &token) {
+    if (service == QLatin1String("anilist"))
+        return anilistUseToken(token);
+    auto *task = Task::run([service, token]() -> QVariant { return tokenSignIn(service, token); });
+    task->then(this, [this](const QVariant &) { emit changed(); });
+    return task;
+}
+
+QString Trackers::tokenPage(const QString &service) const {
+    return service == QLatin1String("bangumi") ? QStringLiteral("https://next.bgm.tv/demo/access-token") : anilistAuthorizeUrl();
+}
+
+QString Trackers::entryUrl(const QString &service, const QString &media, const QVariant &id) const {
+    const bool anime = media == QLatin1String("anime");
+    const auto key = id.toString();
+    if (service == QLatin1String("anilist"))
+        return QStringLiteral("https://anilist.co/%1/%2").arg(anime ? "anime" : "manga", key);
+    if (service == QLatin1String("mal"))
+        return QStringLiteral("https://myanimelist.net/%1/%2").arg(anime ? "anime" : "manga", key);
+    if (service == QLatin1String("comick"))
+        return QStringLiteral("https://comick.dev/%1/%2").arg(anime ? "anime" : "comic", key);
+    if (service == QLatin1String("kitsu"))
+        return QStringLiteral("https://kitsu.app/%1/%2").arg(anime ? "anime" : "manga", key);
+    // MangaUpdates' addresses carry the id in base 36.
+    if (service == QLatin1String("mangaupdates"))
+        return QStringLiteral("https://www.mangaupdates.com/series/") + QString::number(key.toLongLong(), 36);
+    if (service == QLatin1String("shikimori"))
+        return QStringLiteral("https://shikimori.io/%1/%2").arg(anime ? "animes" : media == QLatin1String("novel") ? "ranobe" : "mangas", key);
+    if (service == QLatin1String("bangumi"))
+        return QStringLiteral("https://bgm.tv/subject/") + key;
+    if (service == QLatin1String("simkl"))
+        return QStringLiteral("https://simkl.com/anime/") + key;
+    return {};
 }
 
 QString Trackers::anilistAuthorizeUrl() const {
@@ -770,13 +919,15 @@ Task *Trackers::comickSignIn() {
 }
 
 void Trackers::signOut(const QString &service) {
-    if (service == QLatin1String("mal") || service == QLatin1String("comick") || service == QLatin1String("anilist"))
+    if (service == QLatin1String("mal") || service == QLatin1String("comick") || service == QLatin1String("anilist") || tracking::service(service))
         Database::setPref(QStringLiteral("tracker.") + service, QVariantMap());
     emit changed();
 }
 
 Task *Trackers::search(const QString &service, const QString &media, const QString &title) {
     return Task::run([service, media, title]() -> QVariant {
+        if (const auto *other = tracking::service(service))
+            return other->search(media, title);
         return service == QLatin1String("mal")      ? malSearch(media, title)
                : service == QLatin1String("comick") ? comickSearch(media, title)
                                                     : anilistSearch(media, title);
@@ -875,9 +1026,10 @@ void signedOut(const QString &service, const QString &label) {
 } // namespace
 
 void Trackers::unitFinished(const QString &seriesId) {
-    if (Database::pref(QStringLiteral("tracker.anilist")).toMap().isEmpty() &&
-        Database::pref(QStringLiteral("tracker.mal")).toMap().isEmpty() &&
-        Database::pref(QStringLiteral("tracker.comick")).toMap().isEmpty())
+    bool any = false;
+    for (const auto *key : {"anilist", "mal", "comick", "kitsu", "mangaupdates", "shikimori", "bangumi", "simkl"})
+        any = any || !Database::pref(QStringLiteral("tracker.") + QLatin1String(key)).toMap().isEmpty();
+    if (!any)
         return;
     runInBackground([seriesId] {
         const auto row = Database::one(QStringLiteral("SELECT media, title FROM series WHERE id = ?"), {seriesId});
@@ -908,6 +1060,15 @@ void Trackers::unitFinished(const QString &seriesId) {
             if (e.status() == 401)
                 signedOut(QStringLiteral("comick"), QStringLiteral("Comick"));
             qWarning().noquote() << "Comick:" << e.message();
+        }
+        for (const auto &other : tracking::services()) {
+            try {
+                update(other, seriesId, media, title, progress);
+            } catch (const Error &e) {
+                if (e.status() == 401)
+                    signedOut(other.key, other.label);
+                qWarning().noquote() << other.label + QLatin1Char(':') << e.message();
+            }
         }
         QMetaObject::invokeMethod(instance(), [] { emit instance()->changed(); });
     });

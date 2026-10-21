@@ -35,9 +35,7 @@ SettingsPane {
 
     SettingsGroup {
         title: qsTr("Tracking")
-        note: Trackers.anilistAvailable || Trackers.malAvailable || Trackers.comickAvailable
-            ? qsTr("Finishing a chapter or episode moves the series forward on every tracker you connect. Anime are matched by their AniList entry, comics and novels by their catalogue entry or title; link one by hand from its page.")
-            : qsTr("This copy of SCANCORE was built without AniList, MyAnimeList and Comick ids, so tracking is off. Official downloads have them.")
+        note: qsTr("Finishing a chapter or episode moves the series forward on every tracker you connect. Anime are matched by their AniList entry, comics and novels by their catalogue entry or title; link one by hand from its page.")
 
         // The catalogues the Comics, Novels and Anime pages browse and search.
         SettingRow {
@@ -59,29 +57,27 @@ SettingsPane {
             description: qsTr("Whose lists the Anime page shows. Episodes, the schedule and search come from AniList either way.")
             CataloguePicker { media: "anime" }
         }
-        SettingRow {
-            visible: Trackers.anilistAvailable
-            iconName: "list"
-            iconTint: Theme.dark ? "#3db4f2" : "#0b7fc0"
-            title: "AniList"
-            description: anilistConnect.status || qsTr("Keep your AniList lists up to date.")
-            TrackerConnect { id: anilistConnect; service: "anilist" }
-        }
-        SettingRow {
-            visible: Trackers.malAvailable
-            iconName: "bookmark"
-            iconTint: Theme.dark ? "#6d8fe0" : "#2e51a2"
-            title: "MyAnimeList"
-            description: malConnect.status || qsTr("Keep your MyAnimeList lists up to date.")
-            TrackerConnect { id: malConnect; service: "mal" }
-        }
-        SettingRow {
-            visible: Trackers.comickAvailable
-            iconName: "book-open"
-            iconTint: Theme.dark ? "#a78bfa" : "#7c3aed"
-            title: qsTr("Comick")
-            description: comickConnect.status || qsTr("Keep your Comick library up to date, and bring it into SCANCORE.")
-            TrackerConnect { id: comickConnect; service: "comick" }
+        Repeater {
+            model: Trackers.services
+            SettingRow {
+                id: trackerRow
+                required property var modelData
+                readonly property var look: ({
+                    anilist: ["list", Theme.dark ? "#3db4f2" : "#0b7fc0", qsTr("Keep your AniList lists up to date.")],
+                    mal: ["bookmark", Theme.dark ? "#6d8fe0" : "#2e51a2", qsTr("Keep your MyAnimeList lists up to date.")],
+                    comick: ["book-open", Theme.dark ? "#a78bfa" : "#7c3aed", qsTr("Keep your Comick library up to date, and bring it into SCANCORE.")],
+                    kitsu: ["heart", Theme.dark ? "#f87171" : "#e0533b", qsTr("Comics, novels and anime on Kitsu.")],
+                    mangaupdates: ["book-open", Theme.dark ? "#fb923c" : "#c2410c", qsTr("Your MangaUpdates reading list, for comics and novels.")],
+                    shikimori: ["list", Theme.dark ? "#94a3b8" : "#475569", qsTr("Comics, novels and anime on Shikimori.")],
+                    bangumi: ["list", Theme.dark ? "#f472b6" : "#db2777", qsTr("Comics, novels and anime on Bangumi.")],
+                    simkl: ["play", Theme.dark ? "#a3a3a3" : "#262626", qsTr("Anime on Simkl.")]
+                }[modelData.key] || ["link", Theme.textMuted, ""])
+                iconName: look[0]
+                iconTint: look[1]
+                title: modelData.key === "comick" ? qsTr("Comick") : modelData.label
+                description: connector.status || look[2]
+                TrackerConnect { id: connector; service: trackerRow.modelData.key }
+            }
         }
     }
 

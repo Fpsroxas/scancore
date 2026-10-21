@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>Quên các bộ này?</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>Truyện tranh, tiểu thuyết và anime trên Kitsu.</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>Danh sách đọc MangaUpdates của bạn, cho truyện tranh và tiểu thuyết.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>Truyện tranh, tiểu thuyết và anime trên Shikimori.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>Truyện tranh, tiểu thuyết và anime trên Bangumi.</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Anime trên Simkl.</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3009,6 +3029,10 @@
             <source>Not now</source>
             <translation>Để sau</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>Đọc tiếp câu chuyện</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3499,6 +3523,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>Đã gộp</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>Tình trạng thư viện</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>Nguồn đã dừng và bản trùng</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1 không phản hồi đã %2 ngày</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>Bạn có 1 bộ ở nguồn này. Chuyển đi vẫn giữ những gì bạn đã đọc.</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>Bạn có %1 bộ ở nguồn này. Chuyển đi vẫn giữ những gì bạn đã đọc.</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Chuyển chúng</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Chuyển</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>Quay lại %1</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Đã chuyển</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>Không phản hồi</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>lỗi đã %1 ngày</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>Ngừng cập nhật</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>Nguồn vẫn phản hồi nhưng đã nhiều tháng không có chương mới. Nguồn khác có thể ra nhanh hơn.</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>Tìm nơi khác</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>không có gì mới đã %1 ngày</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>Lưu hai lần</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>Cùng một bộ trên nhiều nguồn. Gộp lại sẽ giữ một bộ với mọi thứ bạn đã đọc ở cả hai, và nhớ nguồn kia để quay lại.</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>Đã đọc %1/%2</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>Giữ</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>Không phải cùng một bộ</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>Gộp</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>Mọi thứ đều ổn</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>Mọi nguồn đều phản hồi gần đây và không có gì bị lưu hai lần.</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source>Favourites</source>
@@ -3680,6 +3803,23 @@
             <source>Choose a category on a saved series&apos; page to move it here.</source>
             <translation>Chọn một danh mục trên trang của bộ đã lưu để chuyển nó tới đây.</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Sắp ra</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>Có thứ trong thư viện cần xem lại: một nguồn ngừng phản hồi hoặc một bộ được lưu hai lần.</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>%1 mục trong thư viện cần xem lại: nguồn ngừng phản hồi hoặc bộ được lưu hai lần.</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>Xem lại</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3838,6 +3978,14 @@
         <message>
             <source>Allow</source>
             <translation>Cho phép</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>Một thông báo cho mỗi lần kiểm tra</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>Gộp mọi chương mới của một lần kiểm tra thay vì mỗi bộ một thông báo.</translation>
         </message>
     </context>
     <context>
@@ -5716,6 +5864,10 @@
             <source>Next page</source>
             <translation>Trang sau</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>Chương %1 chưa có trên nguồn này</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6573,6 +6725,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Truyện tranh</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>tập %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>chương %1</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>Bạn đã xem xong %1</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>Đã theo kịp %1</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 tiếp tục từ %2</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>Bản tiểu thuyết đã đi xa hơn</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>Bạn đang ở chương %1</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Để sau</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>tập %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>chương %1</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>Đăng nhập để bình chọn</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>Nhập chương hoặc tập để đọc tiếp</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>Cảm ơn! Người đọc giờ có thể bình chọn.</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>Câu chuyện ở nơi khác</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Truyện tranh</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>Đã xem %1/%2</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>Đã đọc %1/%2</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>Đã xem %1</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>Đã đọc %1</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>Sau %1, đọc tiếp từ %2</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>Từ danh sách của SCANCORE</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>Do người đọc gợi ý</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1 phiếu</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1 phiếu</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>Đến đó</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>Kết thúc ở đâu</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Hủy</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>Gợi ý</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>Đăng nhập để gợi ý chỗ kết thúc</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>Chưa ai cho biết câu chuyện tiếp tục ở đâu sau phần này. Bạn biết không? Hãy gợi ý chương.</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 tiếp tục từ %2</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>Gợi ý của bạn</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>Tán thành</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>Phản đối</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Mở</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>Chương</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>Tập</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Thêm</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6991,6 +7341,38 @@
             <source>Connect again</source>
             <translation>Kết nối lại</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>Mật khẩu của bạn chỉ gửi đến %1.</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>Nhập %1 trên trang vừa mở.</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>Đang xin mã từ Simkl…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>Đang đăng nhập…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>Email</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Tên người dùng</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Mật khẩu</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>Đăng nhập</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7089,6 +7471,10 @@
             <source> chapters</source>
             <translation> chương</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>Kết nối một trình theo dõi như AniList, MyAnimeList hoặc Kitsu trong Cài đặt → Kết nối để danh sách của bạn ở đó luôn cập nhật.</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7119,6 +7505,86 @@
         <message>
             <source>Mark read</source>
             <translation>Đánh dấu đã đọc</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>Hôm nay</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>Ngày mai</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>Tập %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Tập tiếp theo</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Chương %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Chương tiếp</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>đến hạn, hơi trễ</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>thường hằng tuần</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>thường hằng ngày</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>thường mỗi %1 ngày</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Sắp ra</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>Những gì sắp ra trong thư viện của bạn</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>Tất cả</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Truyện tranh</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>Ngày của truyện tranh và tiểu thuyết được ước đoán từ thời điểm các chương gần nhất ra mắt.</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>Sắp tới chưa có gì</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>Lưu bộ truyện vào thư viện và kiểm tra cập nhật; các chương tiếp theo sẽ hiện ở đây.</translation>
         </message>
     </context>
     <context>
@@ -7899,6 +8365,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 chương mới</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>1 chương mới trong thư viện của bạn</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>%1 chương mới trong thư viện của bạn</translation>
         </message>
     </context>
     <context>

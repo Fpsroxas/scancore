@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>ลืมชื่อเรื่องเหล่านี้หรือไม่</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>การ์ตูน นิยาย และอนิเมะบน Kitsu</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>รายการอ่านบน MangaUpdates สำหรับการ์ตูนและนิยาย</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>การ์ตูน นิยาย และอนิเมะบน Shikimori</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>การ์ตูน นิยาย และอนิเมะบน Bangumi</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>อนิเมะบน Simkl</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3001,6 +3021,10 @@
             <source> novels</source>
             <translation> นิยาย</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>อ่านเรื่องราวต่อ</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3491,6 +3515,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>รวมแล้ว</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>สุขภาพคลัง</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>แหล่งที่หยุดและรายการซ้ำ</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1 ไม่ตอบสนองมา %2 วันแล้ว</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>คุณมี 1 เรื่องอยู่ที่นั่น การย้ายจะเก็บสิ่งที่อ่านไว้</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>คุณมี %1 เรื่องอยู่ที่นั่น การย้ายจะเก็บสิ่งที่อ่านไว้</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>ย้ายเลย</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>ย้าย</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>กลับไปที่ %1</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>ย้ายแล้ว</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>ไม่ตอบสนอง</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>ล้มเหลวมา %1 วัน</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>หยุดอัปเดต</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>แหล่งยังตอบสนองแต่ไม่มีตอนใหม่มาหลายเดือน แหล่งอื่นอาจไปไกลกว่า</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>หาที่อื่น</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>ไม่มีอะไรใหม่มา %1 วัน</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>บันทึกซ้ำ</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>เรื่องเดียวกันในหลายแหล่ง การรวมจะเก็บไว้หนึ่งเรื่องพร้อมทุกอย่างที่คุณอ่านในทั้งสองแหล่ง และจำอีกแหล่งไว้เพื่อย้ายกลับได้</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>อ่านแล้ว %1 จาก %2</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>เก็บอันนี้</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>ไม่ใช่เรื่องเดียวกัน</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>รวม</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>ทุกอย่างเรียบร้อย</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>ทุกแหล่งตอบสนองเมื่อเร็ว ๆ นี้ และไม่มีอะไรบันทึกซ้ำ</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source>Favourites</source>
@@ -3672,6 +3795,23 @@
             <source>Choose a category on a saved series' page to move it here.</source>
             <translation>เลือกหมวดหมู่ในหน้าของเรื่องที่บันทึกไว้เพื่อย้ายมาที่นี่</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>กำลังจะออก</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>มีบางอย่างในคลังที่ควรตรวจดู: แหล่งที่หยุดตอบสนองหรือเรื่องที่บันทึกซ้ำ</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>มี %1 รายการในคลังที่ควรตรวจดู: แหล่งที่หยุดตอบสนองหรือเรื่องที่บันทึกซ้ำ</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>ตรวจดู</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3830,6 +3970,14 @@
         <message>
             <source>Allow</source>
             <translation>อนุญาต</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>การแจ้งเตือนเดียวต่อการตรวจ</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>สรุปตอนใหม่ทั้งหมดที่การตรวจหนึ่งครั้งพบ แทนการแจ้งเตือนแยกทีละเรื่อง</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +5849,10 @@
             <source>Next page</source>
             <translation>หน้าถัดไป</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>แหล่งนี้ยังไม่มีตอนที่ %1</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6558,6 +6710,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>มังฮวา</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>มังฮัว</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>มังงะ</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>นิยาย</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>การ์ตูน</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>เล่ม %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>ตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>คุณดู %1 จบแล้ว</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>ตามทัน %1 แล้ว</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 ต่อจาก%2</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>นิยายไปไกลกว่าแล้ว</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>คุณอยู่ที่ตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>ไว้ทีหลัง</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>เล่ม %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>ตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>ลงชื่อเข้าใช้เพื่อโหวต</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>ใส่ตอนหรือเล่มที่เรื่องดำเนินต่อ</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>ขอบคุณ! ผู้อ่านโหวตได้แล้ว</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>เรื่องราวในรูปแบบอื่น</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>อนิเมะ</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>มังฮวา</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>มังฮัว</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>มังงะ</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>นิยาย</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>การ์ตูน</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>ดูแล้ว %1 จาก %2</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>อ่านแล้ว %1 จาก %2</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>ดูแล้ว %1</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>อ่านแล้ว %1</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>หลังจาก %1 อ่านต่อจาก%2</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>จากรายการของ SCANCORE</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>ผู้อ่านเสนอ</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1 โหวต</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1 โหวต</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>ไปที่นั่น</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>จบตรงไหน</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>ยกเลิก</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>เสนอ</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>ลงชื่อเข้าใช้เพื่อเสนอว่าจบตรงไหน</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>ยังไม่มีใครบอกว่าเรื่องดำเนินต่อที่ไหนหลังจากนี้ รู้ไหม? เสนอตอนได้เลย</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 ต่อจาก%2</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>ข้อเสนอของคุณ</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>โหวตขึ้น</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>โหวตลง</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>เปิด</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>ตอน</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>เล่ม</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>เพิ่ม</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6976,6 +7326,38 @@
             <source>Connect again</source>
             <translation>เชื่อมต่ออีกครั้ง</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>รหัสผ่านของคุณส่งไปที่ %1 เท่านั้น</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>ใส่ %1 ในหน้าที่เปิดขึ้น</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>กำลังขอรหัสจาก Simkl…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>กำลังลงชื่อเข้าใช้…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>อีเมล</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>ชื่อผู้ใช้</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>รหัสผ่าน</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>ลงชื่อเข้าใช้</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7074,6 +7456,10 @@
             <source> chapters</source>
             <translation> ตอน</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>เชื่อมต่อตัวติดตามอย่าง AniList, MyAnimeList หรือ Kitsu ในการตั้งค่า → การเชื่อมต่อ เพื่อให้รายการของคุณที่นั่นเป็นปัจจุบัน</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7104,6 +7490,86 @@
         <message>
             <source>Mark read</source>
             <translation>ทำเครื่องหมายว่าอ่านแล้ว</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>วันนี้</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>พรุ่งนี้</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>ตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>ตอนถัดไป</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>ตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>ตอนถัดไป</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>ถึงกำหนดแล้ว ช้าไปนิด</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>มักออกทุกสัปดาห์</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>มักออกทุกวัน</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>มักออกทุก %1 วัน</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>กำลังจะออก</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>สิ่งที่จะออกต่อไปในคลังของคุณ</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>ทั้งหมด</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>การ์ตูน</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>นิยาย</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>อนิเมะ</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>วันที่ของการ์ตูนและนิยายเป็นการคาดเดาจากช่วงที่ตอนล่าสุดออก</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>ยังไม่มีอะไรจะออกเร็ว ๆ นี้</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>บันทึกเรื่องลงคลังและตรวจหาการอัปเดต ตอนถัดไปจะแสดงที่นี่</translation>
         </message>
     </context>
     <context>
@@ -7891,6 +8357,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 ตอนใหม่</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>ตอนใหม่ 1 ตอนในคลังของคุณ</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>ตอนใหม่ %1 ตอนในคลังของคุณ</translation>
         </message>
     </context>
     <context>

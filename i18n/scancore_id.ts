@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>Lupakan judul-judul ini?</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>Komik, novel, dan anime di Kitsu.</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>Daftar baca MangaUpdates Anda, untuk komik dan novel.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>Komik, novel, dan anime di Shikimori.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>Komik, novel, dan anime di Bangumi.</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Anime di Simkl.</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3009,6 +3029,10 @@
             <source>Not now</source>
             <translation>Nanti saja</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>Lanjutkan ceritanya</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3499,6 +3523,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>Digabungkan</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>Kesehatan pustaka</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>Sumber berhenti dan duplikat</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1 tidak merespons selama %2 hari</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>Ada 1 seri Anda di sana. Memindahkannya tetap menyimpan yang sudah Anda baca.</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>Ada %1 seri Anda di sana. Memindahkannya tetap menyimpan yang sudah Anda baca.</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Pindahkan</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Pindahkan</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>Kembali ke %1</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Dipindahkan</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>Tidak merespons</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>gagal selama %1 hari</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>Berhenti diperbarui</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>Sumbernya merespons tetapi tidak ada bab baru selama berbulan-bulan. Sumber lain mungkin lebih jauh.</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>Cari di tempat lain</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>tidak ada yang baru selama %1 hari</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>Tersimpan dua kali</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>Seri yang sama di lebih dari satu sumber. Menggabungkan menyimpan satu dengan semua yang Anda baca di keduanya, dan mengingat sumber lainnya untuk kembali ke sana.</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%1 dari %2 dibaca</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>Simpan yang ini</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>Bukan yang sama</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>Gabungkan</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>Semua baik</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>Semua sumber merespons akhir-akhir ini, dan tidak ada yang tersimpan dua kali.</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source> new chapters found</source>
@@ -3680,6 +3803,23 @@
             <source>Open any comic, novel or anime and choose “Add to library” to keep it here. SCANCORE checks saved series for new chapters in the background.</source>
             <translation>Buka komik, novel, atau anime apa pun lalu pilih “Tambah ke pustaka” untuk menyimpannya di sini. SCANCORE memeriksa bab baru dari seri tersimpan di latar belakang.</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Akan rilis</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>Ada yang perlu dicek di pustaka Anda: sumber yang berhenti merespons atau seri yang tersimpan dua kali.</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>%1 hal di pustaka Anda perlu dicek: sumber yang berhenti merespons atau seri yang tersimpan dua kali.</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>Tinjau</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3838,6 +3978,14 @@
         <message>
             <source>Allow</source>
             <translation>Izinkan</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>Satu notifikasi per pemeriksaan</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>Merangkum semua bab baru dari satu pemeriksaan, bukan satu notifikasi per seri.</translation>
         </message>
     </context>
     <context>
@@ -5716,6 +5864,10 @@
             <source>Next page</source>
             <translation>Halaman berikutnya</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>Bab %1 belum ada di sumber ini</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6573,6 +6725,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>volume %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>bab %1</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>Anda selesai menonton %1</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>Sudah mengejar %1</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 berlanjut dari %2</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>Novelnya sudah lebih jauh</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>Anda di bab %1</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Nanti saja</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>volume %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>bab %1</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>Masuk untuk memberi suara</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>Masukkan bab atau volume tempat cerita berlanjut</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>Terima kasih! Pembaca kini bisa memberi suara.</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>Cerita di tempat lain</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>%1 dari %2 ditonton</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%1 dari %2 dibaca</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>%1 ditonton</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>%1 dibaca</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>Setelah %1, lanjutkan dari %2</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>Dari daftar SCANCORE</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>Disarankan pembaca</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1 suara</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1 suara</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>Ke sana</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>Tempat berhentinya</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>Sarankan</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>Masuk untuk menyarankan di mana ceritanya berhenti</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>Belum ada yang memberi tahu di mana cerita berlanjut setelah ini. Tahu? Sarankan babnya.</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 berlanjut dari %2</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>Saran Anda</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>Suka</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>Tidak suka</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Buka</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>Bab</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>Volume</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Tambah</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6991,6 +7341,38 @@
             <source>Connect again</source>
             <translation>Hubungkan lagi</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>Kata sandi Anda hanya dikirim ke %1.</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>Masukkan %1 di halaman yang terbuka.</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>Meminta kode dari Simkl…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>Sedang masuk…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>Email</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Nama pengguna</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Kata sandi</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>Masuk</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7089,6 +7471,10 @@
             <source> chapters</source>
             <translation> bab</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>Hubungkan pelacak seperti AniList, MyAnimeList, atau Kitsu di Setelan → Koneksi agar daftar Anda di sana tetap terbaru.</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7119,6 +7505,86 @@
         <message>
             <source>Mark read</source>
             <translation>Tandai dibaca</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>Hari ini</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>Besok</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>Episode %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Episode berikutnya</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Bab %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Bab berikutnya</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>seharusnya rilis, agak terlambat</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>biasanya mingguan</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>biasanya harian</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>biasanya setiap %1 hari</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Akan rilis</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>Yang rilis berikutnya di pustaka Anda</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>Semua</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>Tanggal komik dan novel diperkirakan dari kapan bab terakhirnya rilis.</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>Belum ada yang segera rilis</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>Simpan seri ke pustaka dan periksa pembaruannya; bab berikutnya akan muncul di sini.</translation>
         </message>
     </context>
     <context>
@@ -7899,6 +8365,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 bab baru</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>1 bab baru di pustaka Anda</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>%1 bab baru di pustaka Anda</translation>
         </message>
     </context>
     <context>

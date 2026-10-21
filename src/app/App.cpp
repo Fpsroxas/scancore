@@ -141,6 +141,7 @@ const QVariantMap kDefaults{
     {"lockAfter", 1},
     {"lockBiometric", true},
     {"notifyUpdates", true},
+    {"notifyDigest", false},
     {"showNsfwSources", false},
     {"imageCacheMB", 1024},
     {"closeToTray", false},

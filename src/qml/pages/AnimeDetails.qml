@@ -167,7 +167,7 @@ Item {
                     onClicked: App.openUrl("https://anilist.co/anime/" + page.anilistId)
                 }
                 IconButton {
-                    visible: !!Trackers.anilist.name || !!Trackers.mal.name || !!Trackers.comick.name
+                    visible: Trackers.anyConnected
                     iconName: "link"
                     filled: true
                     tip: qsTr("Tracking")
@@ -414,6 +414,15 @@ Item {
                 items: page.seasons
                 subtitleFor: (it) => it.season >= 0 ? qsTr("Season %1").arg(it.season) : ""
                 onOpened: (it, cover) => Router.openSeries(it, cover)
+            }
+
+            // Its comic and novel, and where it leaves off in them.
+            StoryPanel {
+                width: parent.width
+                seriesId: page.seriesId
+                media: "anime"
+                title: page.media.title || ""
+                anilistId: page.fromSource ? 0 : page.anilistId
             }
 
             Shelf {

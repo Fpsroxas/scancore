@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>これらのタイトルを削除しますか？</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>Kitsuのコミック、小説、アニメ。</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>コミックと小説のためのMangaUpdatesの読書リスト。</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>Shikimoriのコミック、小説、アニメ。</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>Bangumiのコミック、小説、アニメ。</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Simklのアニメ。</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3009,6 +3029,10 @@
             <source>Not now</source>
             <translation>あとで</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>物語の続き</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3499,6 +3523,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>統合しました</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>ライブラリの状態</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>止まったソースと重複</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1は%2日間応答がありません</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>ここにあなたのシリーズが1件あります。移しても読んだ内容は残ります。</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>ここにあなたのシリーズが%1件あります。移しても読んだ内容は残ります。</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>移す</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>移す</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>%1に戻す</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>移しました</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>応答なし</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>%1日間失敗中</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>更新が止まっています</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>ソースは応答していますが、数か月新しいチャプターがありません。別のソースのほうが進んでいるかもしれません。</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>別の場所を探す</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>%1日間新着なし</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>二重に保存</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>同じシリーズが複数のソースにあります。統合すると、両方で読んだ内容をすべて持つ1つが残り、もう一方のソースは戻れるように記憶されます。</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%2中%1読了</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>これを残す</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>別の作品</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>統合</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>問題ありません</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>最近すべてのソースが応答し、二重に保存されたものもありません。</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source>Favourites</source>
@@ -3680,6 +3803,23 @@
             <source>Choose a category on a saved series&apos; page to move it here.</source>
             <translation>保存した作品のページでカテゴリーを選ぶと、ここに移ります。</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>近日公開</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>ライブラリで確認が必要なものがあります: 応答しなくなったソース、または二重に保存されたシリーズです。</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>ライブラリで確認が必要なものが%1件あります: 応答しなくなったソース、または二重に保存されたシリーズです。</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>確認</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3838,6 +3978,14 @@
         <message>
             <source>Allow</source>
             <translation>許可</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>チェックごとに1件の通知</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>シリーズごとに通知する代わりに、1回のチェックで見つかった新しいチャプターをまとめて知らせます。</translation>
         </message>
     </context>
     <context>
@@ -5716,6 +5864,10 @@
             <source>Next page</source>
             <translation>次のページ</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>チャプター %1 はこのソースにまだありません</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6573,6 +6725,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>韓国マンガ</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>中国マンガ</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>マンガ</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>小説</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>コミック</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>第%1巻</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>チャプター %1</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>%1を見終わりました</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>%1に追いつきました</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1は%2から続きます</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>原作小説はもっと先まで進んでいます</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>チャプター %1 まで読んでいます</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>あとで</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>第%1巻</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>チャプター %1</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>投票するにはログイン</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>続きのチャプターまたは巻を入力</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>ありがとうございます! 読者が投票できるようになりました。</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>ほかの形で読む物語</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>アニメ</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>韓国マンガ</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>中国マンガ</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>マンガ</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>小説</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>コミック</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>%2中%1視聴済み</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%2中%1読了</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>%1視聴済み</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>%1読了</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>%1の後は%2から</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>SCANCOREのリストより</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>読者の提案</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1票</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1票</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>そこへ移動</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>どこで終わるか</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>キャンセル</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>提案</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>どこで終わるかを提案するにはログイン</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>この後どこから物語が続くか、まだ誰も教えていません。知っていますか? チャプターを提案してください。</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1は%2から続きます</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>あなたの提案</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>高評価</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>低評価</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>開く</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>チャプター</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>巻</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>追加</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6991,6 +7341,38 @@
             <source>Connect again</source>
             <translation>もう一度接続</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>パスワードは%1にのみ送信されます。</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>開いたページで%1を入力してください。</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>Simklにコードを要求しています…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>ログイン中…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>メール</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>ユーザー名</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>パスワード</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>ログイン</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7089,6 +7471,10 @@
             <source> chapters</source>
             <translation> 章</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>設定 → 接続でAniList、MyAnimeList、Kitsuなどのトラッカーを接続すると、そちらのリストも最新に保たれます。</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7119,6 +7505,86 @@
         <message>
             <source>Mark read</source>
             <translation>既読にする</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>今日</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>明日</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>エピソード %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>次のエピソード</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>チャプター %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>次の章</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>予定日を過ぎています</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>ほぼ毎週</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>ほぼ毎日</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>ほぼ%1日ごと</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>近日公開</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>ライブラリで次に出るもの</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>すべて</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>コミック</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小説</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>アニメ</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>コミックと小説の日付は、最近のチャプターが出た時期からの推定です。</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>近日公開の予定はありません</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>シリーズをライブラリに保存して更新を確認すると、次のチャプターがここに表示されます。</translation>
         </message>
     </context>
     <context>
@@ -7899,6 +8365,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>新しい章 %1 件</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>ライブラリに新しいチャプターが1件</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>ライブラリに新しいチャプターが%1件</translation>
         </message>
     </context>
     <context>

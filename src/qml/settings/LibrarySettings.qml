@@ -27,6 +27,12 @@ SettingsPane {
             Toggle { checked: App.settings.notifyUpdates !== false; onToggled: App.setSetting("notifyUpdates", checked) }
         }
         SettingRow {
+            iconName: "list"
+            title: qsTr("One notification per check")
+            description: qsTr("Sums up every new chapter a check found, instead of one notification per series.")
+            Toggle { checked: App.settings.notifyDigest === true; onToggled: App.setSetting("notifyDigest", checked) }
+        }
+        SettingRow {
             iconName: "megaphone"
             title: qsTr("Announcements from SCANCORE")
             description: qsTr("News about SCANCORE from scancore.onl, in Notifications as soon as they are posted.")

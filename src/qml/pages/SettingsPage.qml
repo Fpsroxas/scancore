@@ -81,9 +81,8 @@ Item {
             return hours > 0 ? qsTr("Checks for new chapters every ") + (hours === 1 ? "hour" : hours === 24 ? "day" : hours + qsTr(" hours")) : qsTr("Update checks off")
         }
         case "connections": {
-            App.dependOn(Trackers.anilist)
-            const on = [Trackers.anilist.name ? "AniList" : "", Trackers.mal.name ? "MyAnimeList" : "", Trackers.comick.name ? qsTr("Comick") : "",
-                        Presence.available && App.settings.discordPresence === true ? qsTr("Discord") : ""].filter(s => s)
+            const on = Trackers.services.filter(s => s.connected).map(s => s.key === "comick" ? qsTr("Comick") : s.label).concat([
+                        Presence.available && App.settings.discordPresence === true ? qsTr("Discord") : ""]).filter(s => s)
             return on.length ? on.join(" · ") + qsTr(" connected") : qsTr("Tracking and imports")
         }
         case "sources": return qsTr("Source list version ") + App.manifestVersion

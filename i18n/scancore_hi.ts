@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>ये टाइटल भूल जाएं?</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>Kitsu पर कॉमिक, उपन्यास और एनीमे।</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>कॉमिक और उपन्यासों के लिए आपकी MangaUpdates रीडिंग लिस्ट।</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>Shikimori पर कॉमिक, उपन्यास और एनीमे।</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>Bangumi पर कॉमिक, उपन्यास और एनीमे।</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Simkl पर एनीमे।</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3001,6 +3021,10 @@
             <source> novels</source>
             <translation> उपन्यास</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>कहानी आगे पढ़ें</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3491,6 +3515,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>मिला दिया</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>लाइब्रेरी की सेहत</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>रुके हुए स्रोत और दोहराव</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1 %2 दिनों से जवाब नहीं दे रहा</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>इस पर आपकी 1 सीरीज़ है। इसे ले जाने पर आपका पढ़ा हुआ बना रहता है।</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>इस पर आपकी %1 सीरीज़ हैं। इन्हें ले जाने पर आपका पढ़ा हुआ बना रहता है।</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>इन्हें ले जाएं</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>ले जाएं</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>%1 पर वापस जाएं</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>ले जाया गया</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>जवाब नहीं दे रहा</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>%1 दिनों से नाकाम</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>अपडेट होना बंद</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>इनके स्रोत जवाब देते हैं पर महीनों से कोई नया चैप्टर नहीं। कोई दूसरा स्रोत आगे हो सकता है।</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>कहीं और देखें</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>%1 दिनों से कुछ नया नहीं</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>दो बार सेव</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>एक ही सीरीज़ एक से ज़्यादा स्रोतों पर। मिलाने से एक सीरीज़ रहती है जिसमें दोनों में पढ़ा सब कुछ होता है, और दूसरा स्रोत याद रखा जाता है ताकि वापस जा सकें।</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%2 में से %1 पढ़े</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>यही रखें</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>ये एक नहीं हैं</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>मिलाएं</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>सब ठीक है</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>हाल में हर स्रोत ने जवाब दिया, और कुछ भी दो बार सेव नहीं है।</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source>Favourites</source>
@@ -3672,6 +3795,23 @@
             <source>Choose a category on a saved series' page to move it here.</source>
             <translation>सहेजी सीरीज़ के पेज पर कोई श्रेणी चुनें, उसे यहां लाने के लिए।</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>आने वाला</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>आपकी लाइब्रेरी में कुछ देखने लायक है: जवाब देना बंद कर चुका स्रोत या दो बार सेव की गई सीरीज़।</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>आपकी लाइब्रेरी में %1 चीज़ें देखने लायक हैं: जवाब देना बंद कर चुके स्रोत या दो बार सेव की गई सीरीज़।</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>देखें</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3830,6 +3970,14 @@
         <message>
             <source>Allow</source>
             <translation>अनुमति दें</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>हर जांच पर एक सूचना</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>हर सीरीज़ की अलग सूचना के बजाय, एक जांच में मिले सभी नए चैप्टर एक साथ बताता है।</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +5849,10 @@
             <source>Next page</source>
             <translation>अगला पेज</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>चैप्टर %1 अभी इस स्रोत पर नहीं है</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6558,6 +6710,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>मनहवा</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>मनहुआ</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>मंगा</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>उपन्यास</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>कॉमिक</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>वॉल्यूम %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>चैप्टर %1</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>आपने %1 पूरा किया</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>%1 तक पहुंच गए</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 %2 से आगे बढ़ता है</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>इसका उपन्यास आगे है</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>आप चैप्टर %1 पर हैं</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>अभी नहीं</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>वॉल्यूम %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>चैप्टर %1</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>वोट करने के लिए साइन इन करें</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>वह चैप्टर या वॉल्यूम डालें जहां से कहानी आगे बढ़ती है</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>धन्यवाद! पाठक अब इस पर वोट कर सकते हैं।</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>कहानी दूसरी जगह</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>एनीमे</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>मनहवा</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>मनहुआ</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>मंगा</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>उपन्यास</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>कॉमिक</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>%2 में से %1 देखे</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%2 में से %1 पढ़े</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>%1 देखे</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>%1 पढ़े</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>%1 के बाद %2 से आगे पढ़ें</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>SCANCORE की सूची से</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>पाठकों का सुझाव</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1 वोट</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1 वोट</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>वहां जाएं</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>यह कहां खत्म होता है</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>रद्द करें</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>सुझाएं</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>यह कहां खत्म होता है, सुझाने के लिए साइन इन करें</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>अभी किसी ने नहीं बताया कि इसके बाद कहानी कहां से आगे बढ़ती है। आपको पता है? चैप्टर सुझाएं।</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 %2 से आगे बढ़ता है</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>आपका सुझाव</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>अपवोट</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>डाउनवोट</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>खोलें</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>चैप्टर</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>वॉल्यूम</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>जोड़ें</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6976,6 +7326,38 @@
             <source>Connect again</source>
             <translation>फिर से जोड़ें</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>आपका पासवर्ड सिर्फ़ %1 को जाता है।</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>खुले हुए पेज पर %1 डालें।</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>Simkl से कोड मांगा जा रहा है…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>साइन इन हो रहा है…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>ईमेल</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>यूज़र नेम</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>पासवर्ड</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>साइन इन करें</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7074,6 +7456,10 @@
             <source> chapters</source>
             <translation> चैप्टर</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>अपनी सूचियां वहां अपडेट रखने के लिए सेटिंग्स → कनेक्शन में AniList, MyAnimeList या Kitsu जैसा ट्रैकर कनेक्ट करें।</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7104,6 +7490,86 @@
         <message>
             <source>Mark read</source>
             <translation>पढ़ा मार्क करें</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>आज</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>कल</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>एपिसोड %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>अगला एपिसोड</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>चैप्टर %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>अगला चैप्टर</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>आना था, थोड़ी देर है</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>आमतौर पर हर हफ़्ते</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>आमतौर पर रोज़</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>आमतौर पर हर %1 दिन</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>आने वाला</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>आपकी लाइब्रेरी में आगे क्या आ रहा है</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>सब</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>कॉमिक्स</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>उपन्यास</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>एनीमे</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>कॉमिक और उपन्यास की तारीखें उनके पिछले चैप्टर कब आए, इससे अनुमानित हैं।</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>जल्द कुछ आने वाला नहीं</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>सीरीज़ को अपनी लाइब्रेरी में सेव करें और अपडेट जांचें; उनके अगले चैप्टर यहां दिखेंगे।</translation>
         </message>
     </context>
     <context>
@@ -7891,6 +8357,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 नए चैप्टर</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>आपकी लाइब्रेरी में 1 नया चैप्टर</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>आपकी लाइब्रेरी में %1 नए चैप्टर</translation>
         </message>
     </context>
     <context>

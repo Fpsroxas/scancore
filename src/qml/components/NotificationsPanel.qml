@@ -24,6 +24,8 @@ Popup {
             Router.openExtensions()
         } else if (a.settings) {
             Router.openSettings(a.settings)
+        } else if (a.section) {
+            Router.go(a.section)
         }
     }
     function iconFor(kind) {

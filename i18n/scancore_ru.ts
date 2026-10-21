@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>Забыть эти тайтлы?</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>Комиксы, новеллы и аниме на Kitsu.</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>Ваш список чтения на MangaUpdates — для комиксов и новелл.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>Комиксы, новеллы и аниме на Shikimori.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>Комиксы, новеллы и аниме на Bangumi.</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Аниме на Simkl.</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3009,6 +3029,10 @@
             <source>Not now</source>
             <translation>Не сейчас</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>Продолжение истории</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3499,6 +3523,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>Объединено</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>Состояние библиотеки</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>Остановившиеся источники и дубликаты</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1 не отвечает уже %2 дн.</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>Там 1 ваша серия. При переносе прочитанное сохранится.</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>Ваших серий там: %1. При переносе прочитанное сохранится.</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Перенести</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Перенести</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>Вернуться к %1</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Перенесено</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>Не отвечает</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>ошибки уже %1 дн.</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>Перестало обновляться</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>Источники отвечают, но новых глав нет уже несколько месяцев. Возможно, в другом источнике их больше.</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>Искать в другом месте</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>ничего нового уже %1 дн.</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>Сохранено дважды</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>Одна и та же серия в нескольких источниках. При объединении остаётся одна со всем, что вы прочитали в обеих, а другой источник запоминается, чтобы к нему можно было вернуться.</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>Прочитано %1 из %2</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>Оставить</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>Это разные серии</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>Объединить</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>Всё в порядке</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>Все источники недавно отвечали, и ничего не сохранено дважды.</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source>Favourites</source>
@@ -3680,6 +3803,23 @@
             <source>Choose a category on a saved series&apos; page to move it here.</source>
             <translation>Выберите категорию на странице сохранённого тайтла, чтобы переместить его сюда.</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Скоро выйдет</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>Кое-что в библиотеке требует внимания: источник, который перестал отвечать, или серия, сохранённая дважды.</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>В библиотеке требует внимания: %1. Это источники, которые перестали отвечать, или серии, сохранённые дважды.</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>Посмотреть</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3838,6 +3978,14 @@
         <message>
             <source>Allow</source>
             <translation>Разрешить</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>Одно уведомление за проверку</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>Объединяет все новые главы одной проверки вместо отдельного уведомления для каждой серии.</translation>
         </message>
     </context>
     <context>
@@ -5716,6 +5864,10 @@
             <source>Next page</source>
             <translation>Следующая страница</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>Главы %1 в этом источнике пока нет</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6573,6 +6725,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>Манхва</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Маньхуа</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Манга</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Новелла</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Комикс</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>тома %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>главы %1</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>Вы досмотрели «%1»</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>Вы догнали «%1»</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1: продолжение с %2</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>Новелла ушла дальше</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>Вы на главе %1</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Не сейчас</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>тома %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>главы %1</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>Войдите, чтобы голосовать</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>Введите главу или том, с которого продолжается</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>Спасибо! Теперь читатели могут за это проголосовать.</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>История в других форматах</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Аниме</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>Манхва</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Маньхуа</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Манга</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Новелла</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Комикс</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>Просмотрено %1 из %2</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>Прочитано %1 из %2</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>Просмотрено: %1</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>Прочитано: %1</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>После «%1» продолжайте с %2</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>Из списка SCANCORE</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>Предложено читателями</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1 голос</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>Голосов: %1</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>Перейти</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>Где заканчивается</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Отмена</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>Предложить</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>Войдите, чтобы предложить, где заканчивается</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>Пока никто не указал, где история продолжается после этого. Знаете? Предложите главу.</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1: продолжение с %2</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>Ваше предложение</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>Плюс</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>Минус</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Открыть</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>Глава</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>Том</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Добавить</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6991,6 +7341,38 @@
             <source>Connect again</source>
             <translation>Подключить заново</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>Ваш пароль отправляется только в %1.</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>Введите %1 на открывшейся странице.</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>Запрашиваем код у Simkl…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>Вход…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>Эл. почта</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Имя пользователя</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Пароль</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>Войти</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7089,6 +7471,10 @@
             <source> chapters</source>
             <translation> глав</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>Подключите трекер, например AniList, MyAnimeList или Kitsu, в разделе Настройки → Подключения, чтобы ваши списки там обновлялись.</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7119,6 +7505,86 @@
         <message>
             <source>Mark read</source>
             <translation>Отметить прочитанным</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>Сегодня</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>Завтра</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>Эпизод %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Следующий эпизод</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Глава %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Следующая глава</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>ожидалась, немного задерживается</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>обычно еженедельно</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>обычно ежедневно</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>обычно раз в %1 дн.</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Скоро выйдет</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>Что выйдет дальше в вашей библиотеке</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>Всё</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Комиксы</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Новеллы</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Аниме</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>Даты для комиксов и новелл — оценка по выходу их последних глав.</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>В ближайшее время ничего</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>Сохраняйте серии в библиотеку и проверяйте обновления — их следующие главы появятся здесь.</translation>
         </message>
     </context>
     <context>
@@ -7899,6 +8365,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>Новых глав: %1</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>1 новая глава в библиотеке</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>Новых глав в библиотеке: %1</translation>
         </message>
     </context>
     <context>

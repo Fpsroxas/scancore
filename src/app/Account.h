@@ -57,6 +57,8 @@ public:
     // A JSON request to the account's site with its session (comments and
     // reviews). Resolves to the response body; fails with the site's message.
     Q_INVOKABLE sc::Task *request(const QString &method, const QString &path, const QVariantMap &body = {});
+    // The same, blocking (on a worker thread); throws Error.
+    static QVariantMap call(const QByteArray &method, const QString &path, const QVariantMap &body = {});
     // Website rules, so the form can explain problems before submitting.
     Q_INVOKABLE QVariantList passwordChecks(const QString &password) const;
     Q_INVOKABLE QString usernameProblem(const QString &username) const;

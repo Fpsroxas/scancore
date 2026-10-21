@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>이 작품들을 잊을까요?</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>Kitsu의 만화, 소설, 애니메이션.</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>만화와 소설을 위한 MangaUpdates 읽기 목록.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>Shikimori의 만화, 소설, 애니메이션.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>Bangumi의 만화, 소설, 애니메이션.</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Simkl의 애니메이션.</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3009,6 +3029,10 @@
             <source>Not now</source>
             <translation>나중에</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>이야기 이어 보기</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3499,6 +3523,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>합쳤습니다</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>라이브러리 상태</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>멈춘 소스와 중복</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1이(가) %2일째 응답하지 않습니다</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>이 소스에 내 시리즈가 1개 있습니다. 옮겨도 읽은 내용은 유지됩니다.</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>이 소스에 내 시리즈가 %1개 있습니다. 옮겨도 읽은 내용은 유지됩니다.</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>옮기기</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>옮기기</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>%1(으)로 돌아가기</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>옮겼습니다</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>응답 없음</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>%1일째 실패</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>업데이트 중단</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>소스는 응답하지만 몇 달째 새 챕터가 없습니다. 다른 소스가 더 앞서 있을 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>다른 곳 찾기</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>%1일째 새 소식 없음</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>두 번 저장됨</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>같은 시리즈가 여러 소스에 있습니다. 합치면 양쪽에서 읽은 내용을 모두 가진 하나만 남고, 다른 소스는 되돌아갈 수 있도록 기억합니다.</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%2개 중 %1개 읽음</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>이것 유지</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>같은 작품 아님</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>합치기</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>모두 정상입니다</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>최근 모든 소스가 응답했고 두 번 저장된 것도 없습니다.</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source>Favourites</source>
@@ -3680,6 +3803,23 @@
             <source>Choose a category on a saved series&apos; page to move it here.</source>
             <translation>저장한 작품 페이지에서 카테고리를 고르면 여기로 옮겨집니다.</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>곧 공개</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>라이브러리에서 확인이 필요한 항목이 있습니다: 응답을 멈춘 소스 또는 두 번 저장된 시리즈.</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>라이브러리에서 확인이 필요한 항목이 %1개 있습니다: 응답을 멈춘 소스 또는 두 번 저장된 시리즈.</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>검토</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3838,6 +3978,14 @@
         <message>
             <source>Allow</source>
             <translation>허용</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>확인당 알림 하나</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>시리즈마다 알림을 보내는 대신 한 번의 확인에서 찾은 새 챕터를 모두 묶어 알려 줍니다.</translation>
         </message>
     </context>
     <context>
@@ -5716,6 +5864,10 @@
             <source>Next page</source>
             <translation>다음 페이지</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>챕터 %1은(는) 아직 이 소스에 없습니다</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6573,6 +6725,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>한국 만화</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>중국 만화</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>망가</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>만화</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>%1권</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>챕터 %1</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>%1을(를) 다 봤습니다</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>%1 따라잡음</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1은(는) %2부터 이어집니다</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>원작 소설이 더 앞서 있습니다</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>챕터 %1까지 읽었습니다</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>나중에</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>%1권</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>챕터 %1</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>투표하려면 로그인하세요</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>이어지는 챕터나 권을 입력하세요</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>고마워요! 이제 독자들이 투표할 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>다른 형태의 이야기</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>애니메이션</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>한국 만화</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>중국 만화</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>망가</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>만화</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>%2개 중 %1개 시청</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%2개 중 %1개 읽음</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>%1개 시청</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>%1개 읽음</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>%1 이후에는 %2부터</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>SCANCORE 목록에서</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>독자 제안</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1표</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1표</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>이동</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>어디서 끝나는지</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>취소</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>제안</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>어디서 끝나는지 제안하려면 로그인하세요</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>이 다음에 이야기가 어디서 이어지는지 아직 아무도 알려 주지 않았습니다. 아시나요? 챕터를 제안해 주세요.</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1은(는) %2부터 이어집니다</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>내 제안</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>추천</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>비추천</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>열기</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>챕터</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>권</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>추가</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6991,6 +7341,38 @@
             <source>Connect again</source>
             <translation>다시 연결</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>비밀번호는 %1에만 전송됩니다.</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>열린 페이지에 %1을(를) 입력하세요.</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>Simkl에 코드를 요청하는 중…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>로그인하는 중…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>이메일</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>사용자 이름</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>비밀번호</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>로그인</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7089,6 +7471,10 @@
             <source> chapters</source>
             <translation> 챕터</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>설정 → 연결에서 AniList, MyAnimeList, Kitsu 같은 트래커를 연결하면 그곳의 목록도 최신으로 유지됩니다.</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7119,6 +7505,86 @@
         <message>
             <source>Mark read</source>
             <translation>읽음으로 표시</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>오늘</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>내일</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>에피소드 %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>다음 에피소드</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>챕터 %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>다음 챕터</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>나올 때가 지났습니다</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>보통 매주</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>보통 매일</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>보통 %1일마다</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>곧 공개</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>라이브러리에서 다음에 나올 것</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>전체</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>만화</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>애니메이션</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>만화와 소설의 날짜는 최근 챕터가 나온 시기로 추정한 것입니다.</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>곧 나올 것이 없습니다</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>시리즈를 라이브러리에 저장하고 업데이트를 확인하면 다음 챕터가 여기에 표시됩니다.</translation>
         </message>
     </context>
     <context>
@@ -7899,6 +8365,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>새 챕터 %1개</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>라이브러리에 새 챕터 1개</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>라이브러리에 새 챕터 %1개</translation>
         </message>
     </context>
     <context>

@@ -109,6 +109,12 @@ QtObject {
         if (shell) shell.push("pages/AnimeBrowse.qml", { initialFilters: filters || {} })
     }
 
+    function openUpcoming() {
+        if (shell) shell.push("pages/Upcoming.qml", {})
+    }
+    function openLibraryCare() {
+        if (shell) shell.push("pages/LibraryCare.qml", {})
+    }
     function openAnimeSchedule() {
         if (shell) shell.push("pages/AnimeSchedule.qml", {})
     }

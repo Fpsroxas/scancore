@@ -36,8 +36,12 @@ Item {
         onTriggered: {
             page.historyTask = Library.continueItems("", 24)
             page.libraryTask = Library.entries("")
+            Story.refreshCards()
         }
     }
+
+    ReadFromDialog { id: storyReadFrom }
+    Component.onCompleted: Story.refreshCards()
 
     // Edit page: arrange the sections (PageLayout).
     property bool editing: false
@@ -46,7 +50,7 @@ Item {
         page: "home"
         column: column
         editing: page.editing
-        defaults: ["greeting", "resume", "continue", "updates", "comics", "anime", "novels"]
+        defaults: ["greeting", "resume", "continue", "story", "updates", "comics", "anime", "novels"]
     }
 
     function greeting() {
@@ -229,6 +233,47 @@ Item {
                     subtitleFor: (it) => it.media === "anime" ? qsTr("Episode ") + (it.unitNumber || it.unitKey) : (it.unitTitle || "")
                     progressFor: (it) => it.completed ? 1 : (it.percent || 0)
                     onOpened: (it, cover) => Router.resume(it)
+                }
+            }
+
+            // An anime season finished: where its comic or novel goes on.
+            PageSection {
+                arranger: layout
+                key: "story"
+                label: qsTr("Continue the story")
+                shown: Story.cards.length > 0
+                Column {
+                    width: parent.width
+                    spacing: 14
+                    visible: Story.cards.length > 0
+                    Text {
+                        x: Theme.gutter
+                        text: qsTr("Continue the story")
+                        color: Theme.text
+                        font.family: Theme.fontDisplay
+                        font.pixelSize: Theme.textXl
+                        font.weight: Font.DemiBold
+                    }
+                    ListView {
+                        WheelScroll {}
+                        width: parent.width
+                        height: Theme.compact ? 132 : 144
+                        orientation: ListView.Horizontal
+                        leftMargin: Theme.gutter
+                        rightMargin: Theme.gutter
+                        spacing: 12
+                        clip: true
+                        boundsBehavior: Flickable.StopAtBounds
+                        model: Story.cards
+                        delegate: StoryCard {
+                            required property var modelData
+                            entry: modelData
+                            onOpen: (e) => {
+                                if (e.seriesId) Router.openSeries(Library.seriesRow(e.seriesId), null)
+                                else if (e.entry) storyReadFrom.start(e.entry)
+                            }
+                        }
+                    }
                 }
             }
 

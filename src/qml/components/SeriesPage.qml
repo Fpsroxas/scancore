@@ -329,7 +329,7 @@ Item {
                     }
                 }
                 IconButton {
-                    visible: !page.local && (!!Trackers.anilist.name || !!Trackers.mal.name || !!Trackers.comick.name)
+                    visible: !page.local && Trackers.anyConnected
                     iconName: "link"
                     filled: true
                     tip: qsTr("Tracking")
@@ -357,8 +357,8 @@ Item {
             // titles: one tap to pick the entry.
             Rectangle {
                 id: missNotice
-                readonly property var misses: { App.dependOn(Trackers.anilist, Library.revision); return page.local ? [] : Trackers.misses(page.seriesId) }
-                readonly property var names: misses.map(k => k === "anilist" ? "AniList" : k === "mal" ? "MyAnimeList" : qsTr("Comick"))
+                readonly property var misses: { App.dependOn(Trackers.services, Library.revision); return page.local ? [] : Trackers.misses(page.seriesId) }
+                readonly property var names: misses.map(k => k === "comick" ? qsTr("Comick") : (Trackers.services.find(s => s.key === k) || { label: k }).label)
                 visible: misses.length > 0
                 x: Theme.gutter
                 width: list.width - 2 * Theme.gutter
@@ -390,6 +390,22 @@ Item {
                         text: qsTr("Pick the entry")
                         onClicked: tracking.pick(missNotice.misses[0])
                     }
+                }
+            }
+
+            // The same story as an anime or a novel, and where each season
+            // leaves off here.
+            StoryPanel {
+                visible: !page.local && forms.length > 0
+                width: list.width
+                bottomPadding: visible ? 8 : 0
+                seriesId: page.local ? "" : page.seriesId
+                media: page.media
+                title: page.series.title || ""
+                onOpenChapter: (number) => {
+                    const index = page.chapters.findIndex(c => Number(c.number) === number)
+                    if (index >= 0) page.openAt(index)
+                    else Router.toast(qsTr("Chapter %1 is not on this source yet").arg(number))
                 }
             }
 

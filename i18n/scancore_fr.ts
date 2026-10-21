@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>Oublier ces titres ?</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>BD, romans et anime sur Kitsu.</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>Votre liste de lecture MangaUpdates, pour les BD et les romans.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>BD, romans et anime sur Shikimori.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>BD, romans et anime sur Bangumi.</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Les anime sur Simkl.</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3009,6 +3029,10 @@
             <source>Not now</source>
             <translation>Pas maintenant</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>Poursuivre l'histoire</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3499,6 +3523,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>Fusionnées</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>Santé de la bibliothèque</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>Sources arrêtées et doublons</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1 ne répond plus depuis %2 jours</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>1 de vos séries y est. La déplacer conserve ce que vous avez lu.</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>%1 de vos séries y sont. Les déplacer conserve ce que vous avez lu.</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Les déplacer</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Déplacer</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>Revenir à %1</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Déplacée</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>Ne répond pas</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>en échec depuis %1 jours</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>Plus de mises à jour</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>Leurs sources répondent mais n'ont plus de nouveau chapitre depuis des mois. Une autre source est peut-être plus avancée.</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>Chercher ailleurs</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>rien de neuf depuis %1 jours</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>Enregistrées deux fois</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>La même série sur plusieurs sources. La fusion en garde une avec tout ce que vous avez lu dans chacune et retient l'autre source pour y revenir.</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%1 sur %2 lus</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>Garder</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>Pas la même</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>Fusionner</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>Tout va bien</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>Toutes les sources ont répondu récemment, et rien n'est enregistré deux fois.</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source> new chapters found</source>
@@ -3680,6 +3803,23 @@
             <source>Open any comic, novel or anime and choose “Add to library” to keep it here. SCANCORE checks saved series for new chapters in the background.</source>
             <translation>Ouvrez une BD, un roman ou un anime et choisissez « Ajouter à la bibliothèque » pour le garder ici. SCANCORE cherche les nouveaux chapitres des séries enregistrées en arrière-plan.</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>À venir</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>Un élément de votre bibliothèque demande un coup d'œil : une source qui ne répond plus ou une série enregistrée deux fois.</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>%1 éléments de votre bibliothèque demandent un coup d'œil : des sources qui ne répondent plus ou des séries enregistrées deux fois.</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>Examiner</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3838,6 +3978,14 @@
         <message>
             <source>Allow</source>
             <translation>Autoriser</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>Une notification par vérification</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>Résume tous les nouveaux chapitres d'une vérification au lieu d'une notification par série.</translation>
         </message>
     </context>
     <context>
@@ -5716,6 +5864,10 @@
             <source>Next page</source>
             <translation>Page suivante</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>Le chapitre %1 n'est pas encore sur cette source</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6573,6 +6725,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Roman</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>BD</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>volume %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>chapitre %1</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>Vous avez terminé %1</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>À jour sur %1</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 : suite au %2</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>Le roman va plus loin</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>Vous en êtes au chapitre %1</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Pas maintenant</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>volume %1</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>chapitre %1</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>Connectez-vous pour voter</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>Saisissez le chapitre ou le volume où reprendre</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>Merci ! Les lecteurs peuvent maintenant voter.</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>L'histoire ailleurs</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Roman</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>BD</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>%1 sur %2 vus</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%1 sur %2 lus</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>%1 vus</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>%1 lus</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>Après %1, reprenez au %2</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>Liste de SCANCORE</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>Proposé par des lecteurs</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1 vote</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1 votes</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>Y aller</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>Où ça s'arrête</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Annuler</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>Proposer</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>Connectez-vous pour proposer où l'histoire reprend</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>Personne n'a encore dit où l'histoire reprend après ceci. Vous le savez ? Proposez le chapitre.</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1 : suite au %2</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>Votre proposition</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>Vote positif</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>Vote négatif</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Ouvrir</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>Chapitre</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>Volume</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ajouter</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6991,6 +7341,38 @@
             <source>Connect again</source>
             <translation>Reconnecter</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>Votre mot de passe ne va qu'à %1.</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>Saisissez %1 sur la page qui s'est ouverte.</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>Demande d'un code à Simkl…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>Connexion…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>E-mail</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Nom d’utilisateur</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Mot de passe</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>Se connecter</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7089,6 +7471,10 @@
             <source> chapters</source>
             <translation> chapitres</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>Connectez un tracker comme AniList, MyAnimeList ou Kitsu dans Paramètres → Connexions pour garder vos listes à jour.</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7119,6 +7505,86 @@
         <message>
             <source>Mark read</source>
             <translation>Marquer comme lu</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>Aujourd’hui</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>Demain</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>Épisode %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Épisode suivant</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Chapitre %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Chapitre suivant</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>attendu, un peu en retard</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>en général chaque semaine</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>en général chaque jour</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>en général tous les %1 jours</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>À venir</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>Les prochaines sorties de votre bibliothèque</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>Tout</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>BD</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Romans</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>Les dates des BD et des romans sont estimées d'après la sortie de leurs derniers chapitres.</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>Rien de prévu prochainement</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>Enregistrez des séries dans votre bibliothèque et recherchez les mises à jour ; leurs prochains chapitres apparaîtront ici.</translation>
         </message>
     </context>
     <context>
@@ -7899,6 +8365,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 nouveaux chapitres</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>1 nouveau chapitre dans votre bibliothèque</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>%1 nouveaux chapitres dans votre bibliothèque</translation>
         </message>
     </context>
     <context>

@@ -2221,6 +2221,26 @@
             <source>Forget these titles?</source>
             <translation>Bu adlar unutulsun mu?</translation>
         </message>
+        <message>
+            <source>Comics, novels and anime on Kitsu.</source>
+            <translation>Kitsu'da çizgi roman, roman ve anime.</translation>
+        </message>
+        <message>
+            <source>Your MangaUpdates reading list, for comics and novels.</source>
+            <translation>Çizgi roman ve romanlar için MangaUpdates okuma listen.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Shikimori.</source>
+            <translation>Shikimori'de çizgi roman, roman ve anime.</translation>
+        </message>
+        <message>
+            <source>Comics, novels and anime on Bangumi.</source>
+            <translation>Bangumi'de çizgi roman, roman ve anime.</translation>
+        </message>
+        <message>
+            <source>Anime on Simkl.</source>
+            <translation>Simkl'de anime.</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -3009,6 +3029,10 @@
             <source>Not now</source>
             <translation>Şimdi değil</translation>
         </message>
+        <message>
+            <source>Continue the story</source>
+            <translation>Hikâyeye devam et</translation>
+        </message>
     </context>
     <context>
         <name>InterfaceSettings</name>
@@ -3499,6 +3523,105 @@
         </message>
     </context>
     <context>
+        <name>LibraryCare</name>
+        <message>
+            <source>Merged</source>
+            <translation>Birleştirildi</translation>
+        </message>
+        <message>
+            <source>Library health</source>
+            <translation>Kitaplık sağlığı</translation>
+        </message>
+        <message>
+            <source>Stopped sources and duplicates</source>
+            <translation>Duran kaynaklar ve kopyalar</translation>
+        </message>
+        <message>
+            <source>%1 has not answered for %2 days</source>
+            <translation>%1 %2 gündür yanıt vermiyor</translation>
+        </message>
+        <message>
+            <source>1 series of yours is on it. Moving it keeps what you read.</source>
+            <translation>Bu kaynakta 1 serin var. Taşımak okuduklarını korur.</translation>
+        </message>
+        <message>
+            <source>%1 series of yours are on it. Moving them keeps what you read.</source>
+            <translation>Bu kaynakta %1 serin var. Taşımak okuduklarını korur.</translation>
+        </message>
+        <message>
+            <source>Move them</source>
+            <translation>Taşı</translation>
+        </message>
+        <message>
+            <source>Move</source>
+            <translation>Taşı</translation>
+        </message>
+        <message>
+            <source>Back to %1</source>
+            <translation>%1 kaynağına dön</translation>
+        </message>
+        <message>
+            <source>Moved</source>
+            <translation>Taşındı</translation>
+        </message>
+        <message>
+            <source>Not answering</source>
+            <translation>Yanıt vermiyor</translation>
+        </message>
+        <message>
+            <source>failing for %1 days</source>
+            <translation>%1 gündür hata veriyor</translation>
+        </message>
+        <message>
+            <source>Stopped updating</source>
+            <translation>Güncellenmiyor</translation>
+        </message>
+        <message>
+            <source>Their sources answer but have had no new chapter for months. Another source may be further ahead.</source>
+            <translation>Kaynakları yanıt veriyor ama aylardır yeni bölüm yok. Başka bir kaynak daha ileride olabilir.</translation>
+        </message>
+        <message>
+            <source>Look elsewhere</source>
+            <translation>Başka yerde ara</translation>
+        </message>
+        <message>
+            <source>nothing new for %1 days</source>
+            <translation>%1 gündür yeni bir şey yok</translation>
+        </message>
+        <message>
+            <source>Saved twice</source>
+            <translation>İki kez kaydedilmiş</translation>
+        </message>
+        <message>
+            <source>The same series on more than one source. Merging keeps one with everything you read in either, and remembers the other source to move back to.</source>
+            <translation>Aynı seri birden fazla kaynakta. Birleştirmek, ikisinde de okuduğun her şeyle birini tutar ve geri dönmek için diğer kaynağı hatırlar.</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%1/%2 okundu</translation>
+        </message>
+        <message>
+            <source>Keep</source>
+            <translation>Bunu tut</translation>
+        </message>
+        <message>
+            <source>Not the same</source>
+            <translation>Aynı değil</translation>
+        </message>
+        <message>
+            <source>Merge</source>
+            <translation>Birleştir</translation>
+        </message>
+        <message>
+            <source>All is well</source>
+            <translation>Her şey yolunda</translation>
+        </message>
+        <message>
+            <source>Every source answered lately, and nothing is saved twice.</source>
+            <translation>Tüm kaynaklar son zamanlarda yanıt verdi ve hiçbir şey iki kez kaydedilmedi.</translation>
+        </message>
+    </context>
+    <context>
         <name>LibraryPage</name>
         <message>
             <source>Favourites</source>
@@ -3680,6 +3803,23 @@
             <source>Choose a category on a saved series&apos; page to move it here.</source>
             <translation>Buraya taşımak için kayıtlı bir serinin sayfasında bir kategori seç.</translation>
         </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Yakında</translation>
+        </message>
+        <message>
+            <source>Something in your library needs a look: a source that stopped answering or a series saved twice.</source>
+            <translation>Kitaplığında bir şeye bakmak gerekiyor: yanıt vermeyi bırakan bir kaynak veya iki kez kaydedilen bir seri.</translation>
+        </message>
+        <message>
+            <source>%1 things in your library need a look: sources that stopped answering or series saved twice.</source>
+            <translation>Kitaplığında %1 şeye bakmak gerekiyor: yanıt vermeyi bırakan kaynaklar veya iki kez kaydedilen seriler.</translation>
+        </message>
+        <message>
+            <source>Review</source>
+            <translation>İncele</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -3838,6 +3978,14 @@
         <message>
             <source>Allow</source>
             <translation>İzin ver</translation>
+        </message>
+        <message>
+            <source>One notification per check</source>
+            <translation>Kontrol başına tek bildirim</translation>
+        </message>
+        <message>
+            <source>Sums up every new chapter a check found, instead of one notification per series.</source>
+            <translation>Seri başına bir bildirim yerine bir kontrolün bulduğu tüm yeni bölümleri özetler.</translation>
         </message>
     </context>
     <context>
@@ -5716,6 +5864,10 @@
             <source>Next page</source>
             <translation>Sonraki sayfa</translation>
         </message>
+        <message>
+            <source>Chapter %1 is not on this source yet</source>
+            <translation>Bölüm %1 bu kaynakta henüz yok</translation>
+        </message>
     </context>
     <context>
         <name>SettingsPage</name>
@@ -6573,6 +6725,204 @@
         </message>
     </context>
     <context>
+        <name>StoryCard</name>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Roman</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Çizgi roman</translation>
+        </message>
+        <message>
+            <source>volume %1</source>
+            <translation>%1. cilt</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>%1. bölüm</translation>
+        </message>
+        <message>
+            <source>You finished %1</source>
+            <translation>%1 serisini bitirdin</translation>
+        </message>
+        <message>
+            <source>Caught up on %1</source>
+            <translation>%1 serisine yetiştin</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1: %2 itibarıyla devam ediyor</translation>
+        </message>
+        <message>
+            <source>Its novel goes further</source>
+            <translation>Romanı daha ileride</translation>
+        </message>
+        <message>
+            <source>You are at chapter %1</source>
+            <translation>%1. bölümdesin</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Şimdi değil</translation>
+        </message>
+    </context>
+    <context>
+        <name>StoryPanel</name>
+        <message>
+            <source>volume %1</source>
+            <translation>%1. cilt</translation>
+        </message>
+        <message>
+            <source>chapter %1</source>
+            <translation>%1. bölüm</translation>
+        </message>
+        <message>
+            <source>Sign in to vote</source>
+            <translation>Oy vermek için oturum aç</translation>
+        </message>
+        <message>
+            <source>Enter the chapter or volume to continue from</source>
+            <translation>Devam edilecek bölümü veya cildi gir</translation>
+        </message>
+        <message>
+            <source>Thanks! Readers can vote on it now.</source>
+            <translation>Teşekkürler! Okurlar artık oy verebilir.</translation>
+        </message>
+        <message>
+            <source>The story elsewhere</source>
+            <translation>Hikâye başka yerlerde</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Manhwa</source>
+            <translation>Manhwa</translation>
+        </message>
+        <message>
+            <source>Manhua</source>
+            <translation>Manhua</translation>
+        </message>
+        <message>
+            <source>Manga</source>
+            <translation>Manga</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Roman</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Çizgi roman</translation>
+        </message>
+        <message>
+            <source>%1 of %2 watched</source>
+            <translation>%1/%2 izlendi</translation>
+        </message>
+        <message>
+            <source>%1 of %2 read</source>
+            <translation>%1/%2 okundu</translation>
+        </message>
+        <message>
+            <source>%1 watched</source>
+            <translation>%1 izlendi</translation>
+        </message>
+        <message>
+            <source>%1 read</source>
+            <translation>%1 okundu</translation>
+        </message>
+        <message>
+            <source>After %1, continue from %2</source>
+            <translation>%1 sonrasında %2 itibarıyla devam et</translation>
+        </message>
+        <message>
+            <source>From SCANCORE's list</source>
+            <translation>SCANCORE listesinden</translation>
+        </message>
+        <message>
+            <source>Suggested by readers</source>
+            <translation>Okurlar önerdi</translation>
+        </message>
+        <message>
+            <source>1 vote</source>
+            <translation>1 oy</translation>
+        </message>
+        <message>
+            <source>%1 votes</source>
+            <translation>%1 oy</translation>
+        </message>
+        <message>
+            <source>Go there</source>
+            <translation>Oraya git</translation>
+        </message>
+        <message>
+            <source>Where it leaves off</source>
+            <translation>Nerede bitiyor</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>İptal</translation>
+        </message>
+        <message>
+            <source>Suggest</source>
+            <translation>Öner</translation>
+        </message>
+        <message>
+            <source>Sign in to suggest where it leaves off</source>
+            <translation>Nerede bittiğini önermek için oturum aç</translation>
+        </message>
+        <message>
+            <source>Nobody has said yet where the story goes on after this. Know it? Suggest the chapter.</source>
+            <translation>Bundan sonra hikâyenin nerede devam ettiğini henüz kimse söylemedi. Biliyor musun? Bölümü öner.</translation>
+        </message>
+        <message>
+            <source>%1 continues from %2</source>
+            <translation>%1: %2 itibarıyla devam ediyor</translation>
+        </message>
+        <message>
+            <source>Your suggestion</source>
+            <translation>Önerin</translation>
+        </message>
+        <message>
+            <source>Upvote</source>
+            <translation>Beğen</translation>
+        </message>
+        <message>
+            <source>Downvote</source>
+            <translation>Beğenme</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Aç</translation>
+        </message>
+        <message>
+            <source>Chapter</source>
+            <translation>Bölüm</translation>
+        </message>
+        <message>
+            <source>Volume</source>
+            <translation>Cilt</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ekle</translation>
+        </message>
+    </context>
+    <context>
         <name>TabBar</name>
         <message>
             <source>Home</source>
@@ -6991,6 +7341,38 @@
             <source>Connect again</source>
             <translation>Yeniden bağla</translation>
         </message>
+        <message>
+            <source>Your password goes only to %1.</source>
+            <translation>Şifren yalnızca %1 hizmetine gider.</translation>
+        </message>
+        <message>
+            <source>Enter %1 on the page that opened.</source>
+            <translation>Açılan sayfaya %1 kodunu gir.</translation>
+        </message>
+        <message>
+            <source>Asking Simkl for a code…</source>
+            <translation>Simkl'den kod isteniyor…</translation>
+        </message>
+        <message>
+            <source>Signing in…</source>
+            <translation>Oturum açılıyor…</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>E-posta</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Kullanıcı adı</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Parola</translation>
+        </message>
+        <message>
+            <source>Sign in</source>
+            <translation>Oturum aç</translation>
+        </message>
     </context>
     <context>
         <name>Trackers</name>
@@ -7089,6 +7471,10 @@
             <source> chapters</source>
             <translation> bölüm</translation>
         </message>
+        <message>
+            <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
+            <translation>Listelerini güncel tutmak için Ayarlar → Bağlantılar'dan AniList, MyAnimeList veya Kitsu gibi bir takipçi bağla.</translation>
+        </message>
     </context>
     <context>
         <name>UnitRow</name>
@@ -7119,6 +7505,86 @@
         <message>
             <source>Mark read</source>
             <translation>Okundu işaretle</translation>
+        </message>
+    </context>
+    <context>
+        <name>Upcoming</name>
+        <message>
+            <source>Today</source>
+            <translation>Bugün</translation>
+        </message>
+        <message>
+            <source>Tomorrow</source>
+            <translation>Yarın</translation>
+        </message>
+        <message>
+            <source>Episode %1</source>
+            <translation>Bölüm %1</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Sonraki bölüm</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Bölüm %1</translation>
+        </message>
+        <message>
+            <source>Next chapter</source>
+            <translation>Sonraki bölüm</translation>
+        </message>
+        <message>
+            <source>due, a little late</source>
+            <translation>beklenen, biraz gecikmeli</translation>
+        </message>
+        <message>
+            <source>usually weekly</source>
+            <translation>genelde haftalık</translation>
+        </message>
+        <message>
+            <source>usually daily</source>
+            <translation>genelde her gün</translation>
+        </message>
+        <message>
+            <source>usually every %1 days</source>
+            <translation>genelde %1 günde bir</translation>
+        </message>
+        <message>
+            <source>Upcoming</source>
+            <comment>release radar</comment>
+            <translation>Yakında</translation>
+        </message>
+        <message>
+            <source>What comes out next in your library</source>
+            <translation>Kitaplığında sırada ne çıkacak</translation>
+        </message>
+        <message>
+            <source>Everything</source>
+            <translation>Hepsi</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Çizgi romanlar</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Romanlar</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Comic and novel dates are guesses from when their last chapters came out.</source>
+            <translation>Çizgi roman ve roman tarihleri, son bölümlerinin ne zaman çıktığına göre tahmin edilir.</translation>
+        </message>
+        <message>
+            <source>Nothing expected soon</source>
+            <translation>Yakında bir şey beklenmiyor</translation>
+        </message>
+        <message>
+            <source>Save series to your library and check them for updates; their next chapters show here.</source>
+            <translation>Serileri kitaplığına kaydet ve güncellemeleri denetle; sonraki bölümleri burada görünür.</translation>
         </message>
     </context>
     <context>
@@ -7899,6 +8365,14 @@
         <message>
             <source>%1 new chapters</source>
             <translation>%1 yeni bölüm</translation>
+        </message>
+        <message>
+            <source>1 new chapter in your library</source>
+            <translation>Kitaplığında 1 yeni bölüm</translation>
+        </message>
+        <message>
+            <source>%1 new chapters in your library</source>
+            <translation>Kitaplığında %1 yeni bölüm</translation>
         </message>
     </context>
     <context>

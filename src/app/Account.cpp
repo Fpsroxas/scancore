@@ -567,33 +567,35 @@ Task *Account::signupOptions() {
     });
 }
 
+QVariantMap Account::call(const QByteArray &method, const QString &path, const QVariantMap &body) {
+    if (!path.startsWith(QLatin1String("/api/")))
+        throw Error(QStringLiteral("Not a site address."));
+    Request request;
+    request.url = QUrl(siteUrl() + path);
+    request.method = method;
+    request.headers = apiHeaders();
+    request.timeoutMs = 20000;
+    if (method != "GET" && method != "DELETE")
+        request.body = QJsonDocument(QJsonObject::fromVariantMap(body)).toJson(QJsonDocument::Compact);
+    const auto response = Http::send(request);
+    const auto json = response.json().object();
+    if (!response.ok()) {
+        auto message = json.value("error").toString();
+        if (message.isEmpty())
+            message = json.value("problem").toObject().value("message").toString();
+        if (response.status == 401)
+            message = QStringLiteral("Sign in to %1 to do that.").arg(siteName());
+        if (response.status == 429)
+            message = QStringLiteral("Too many attempts. Wait a few minutes and try again.");
+        throw Error(message.isEmpty() ? QStringLiteral("%1 responded with HTTP %2.").arg(siteName()).arg(response.status)
+                                      : message,
+                    response.status);
+    }
+    return json.toVariantMap();
+}
+
 Task *Account::request(const QString &method, const QString &path, const QVariantMap &body) {
-    return Task::run([method = method.toUpper().toUtf8(), path, body]() -> QVariant {
-        if (!path.startsWith(QLatin1String("/api/")))
-            throw Error(QStringLiteral("Not a site address."));
-        Request request;
-        request.url = QUrl(siteUrl() + path);
-        request.method = method;
-        request.headers = apiHeaders();
-        request.timeoutMs = 20000;
-        if (method != "GET" && method != "DELETE")
-            request.body = QJsonDocument(QJsonObject::fromVariantMap(body)).toJson(QJsonDocument::Compact);
-        const auto response = Http::send(request);
-        const auto json = response.json().object();
-        if (!response.ok()) {
-            auto message = json.value("error").toString();
-            if (message.isEmpty())
-                message = json.value("problem").toObject().value("message").toString();
-            if (response.status == 401)
-                message = QStringLiteral("Sign in to %1 to do that.").arg(siteName());
-            if (response.status == 429)
-                message = QStringLiteral("Too many attempts. Wait a few minutes and try again.");
-            throw Error(message.isEmpty() ? QStringLiteral("%1 responded with HTTP %2.").arg(siteName()).arg(response.status)
-                                          : message,
-                        response.status);
-        }
-        return json.toVariantMap();
-    });
+    return Task::run([method = method.toUpper().toUtf8(), path, body]() -> QVariant { return call(method, path, body); });
 }
 
 QVariantList Account::passwordChecks(const QString &password) const {

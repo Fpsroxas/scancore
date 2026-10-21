@@ -91,7 +91,10 @@ target_compile_definitions(scancore PRIVATE SCANCORE_VERSION="${SCANCORE_VERSION
     SCANCORE_DISCORD_APP_ID="${SCANCORE_DISCORD_APP_ID}"
     SCANCORE_ANILIST_CLIENT_ID="${SCANCORE_ANILIST_CLIENT_ID}"
     SCANCORE_MAL_CLIENT_ID="${SCANCORE_MAL_CLIENT_ID}"
-    SCANCORE_COMICK_CLIENT_ID="${SCANCORE_COMICK_CLIENT_ID}")
+    SCANCORE_COMICK_CLIENT_ID="${SCANCORE_COMICK_CLIENT_ID}"
+    SCANCORE_SHIKIMORI_CLIENT_ID="${SCANCORE_SHIKIMORI_CLIENT_ID}"
+    SCANCORE_SHIKIMORI_CLIENT_SECRET="${SCANCORE_SHIKIMORI_CLIENT_SECRET}"
+    SCANCORE_SIMKL_CLIENT_ID="${SCANCORE_SIMKL_CLIENT_ID}")
 if(NOT SCANCORE_WITH_NOVEL_PACK_INSTALLER)
     target_compile_definitions(scancore PRIVATE SCANCORE_DISABLE_NOVEL_PACK)
     target_compile_definitions(scancore_core PRIVATE SCANCORE_DISABLE_NOVEL_PACK)
@@ -129,7 +132,8 @@ qt_add_qml_module(scancore
         app/Platform.cpp app/Platform.h
         app/Profiler.cpp app/Profiler.h
         app/Speech.cpp app/Speech.h
-        app/Trackers.cpp app/Trackers.h
+        app/Trackers.cpp app/Trackers.h app/MoreTrackers.cpp app/TrackerCommon.h
+        app/Story.cpp app/Story.h app/Upkeep.cpp app/Upkeep.h
         app/Sync.cpp app/Sync.h
         app/Library.cpp app/Library.h
         app/Live.cpp app/Live.h

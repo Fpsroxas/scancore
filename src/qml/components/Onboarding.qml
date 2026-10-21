@@ -406,12 +406,11 @@ Rectangle {
                 Column {
                     width: parent.width
                     spacing: 4
-                    visible: Trackers.anilistAvailable || Trackers.malAvailable || Trackers.comickAvailable
+                    visible: Trackers.services.length > 0
                     Text { text: qsTr("Keep your lists in step"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
                     Repeater {
-                        model: [{ service: "anilist", available: Trackers.anilistAvailable },
-                                { service: "mal", available: Trackers.malAvailable },
-                                { service: "comick", available: Trackers.comickAvailable }].filter(t => t.available)
+                        // The three most used; the others are in Settings → Connections.
+                        model: Trackers.services.filter(t => ["anilist", "mal", "comick"].indexOf(t.key) >= 0).map(t => ({ service: t.key }))
                         Item {
                             required property var modelData
                             width: trackerColumn.width

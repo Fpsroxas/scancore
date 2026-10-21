@@ -203,6 +203,18 @@ const char *const kMigrations[] = {
     R"(
     ALTER TABLE downloads ADD COLUMN extra TEXT;
     )",
+    // 9: source health (2.3): how each library series' last update checks
+    // went, for "this source has not answered for a week" and moves.
+    R"(
+    CREATE TABLE series_health (
+        series_id TEXT PRIMARY KEY,
+        last_ok INTEGER,
+        failing_since INTEGER,
+        failures INTEGER NOT NULL DEFAULT 0,
+        last_new INTEGER,
+        problem TEXT
+    );
+    )",
 };
 
 QSqlDatabase connection() {

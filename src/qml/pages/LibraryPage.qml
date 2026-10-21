@@ -149,6 +149,13 @@ Item {
                 }
                 ScButton {
                     visible: !Theme.compact
+                    text: qsTr("Upcoming", "release radar")
+                    iconName: "calendar"
+                    variant: "ghost"
+                    onClicked: Router.openUpcoming()
+                }
+                ScButton {
+                    visible: !Theme.compact
                     text: page.checking ? qsTr("Checking…") : qsTr("Check for updates")
                     iconName: "refresh-cw"
                     loading: page.checking
@@ -166,6 +173,15 @@ Item {
                     onClicked: page.toggleSelecting()
                 }
                 IconButton {
+                    visible: Theme.compact
+                    diameter: 40
+                    filled: true
+                    iconName: "calendar"
+                    tip: qsTr("Upcoming", "release radar")
+                    Accessible.name: tip
+                    onClicked: Router.openUpcoming()
+                }
+                IconButton {
                     id: checkButton
                     visible: Theme.compact
                     diameter: 40
@@ -180,6 +196,49 @@ Item {
                         loops: Animation.Infinite
                         from: 0; to: 360; duration: 900
                         onRunningChanged: if (!running) checkButton.rotation = 0
+                    }
+                }
+            }
+
+            // Sources that stopped answering, or series saved twice.
+            Rectangle {
+                id: careBanner
+                visible: Upkeep.attention > 0
+                x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
+                height: visible ? careRow.height + 20 : 0
+                radius: Theme.radiusLg
+                color: Theme.surface
+                border.width: 1
+                border.color: Theme.border
+                Item {
+                    id: careRow
+                    x: 14
+                    y: 10
+                    width: parent.width - 28
+                    height: Math.max(careText.implicitHeight, reviewButton.height)
+                    Icon { id: careIcon; anchors.verticalCenter: parent.verticalCenter; name: "activity"; size: 18; color: Theme.warning }
+                    Text {
+                        id: careText
+                        anchors.left: careIcon.right
+                        anchors.leftMargin: 12
+                        anchors.right: reviewButton.left
+                        anchors.rightMargin: 12
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: Upkeep.attention === 1 ? qsTr("Something in your library needs a look: a source that stopped answering or a series saved twice.")
+                            : qsTr("%1 things in your library need a look: sources that stopped answering or series saved twice.").arg(Upkeep.attention)
+                        color: Theme.textMuted
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textSm
+                        wrapMode: Text.Wrap
+                    }
+                    ScButton {
+                        id: reviewButton
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        compact: true
+                        text: qsTr("Review")
+                        onClicked: Router.openLibraryCare()
                     }
                 }
             }
