@@ -74,6 +74,7 @@ public:
     // full screen (see Platform.h). Nothing elsewhere.
     Q_INVOKABLE void prepareWebPlayer() const;
     Q_INVOKABLE void setOrientation(const QString &mode) const;
+    Q_INVOKABLE void setBarIcons(bool darkScreen) const;
     // Android: volume keys come as volumeKey() instead of changing the
     // volume while on (the comic reader turns pages with them).
     Q_INVOKABLE void setVolumeKeys(bool on) const;

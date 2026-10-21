@@ -398,6 +398,8 @@ void App::prepareWebPlayer() const { platform::prepareWebPlayer(); }
 
 void App::setOrientation(const QString &mode) const { platform::setOrientation(mode); }
 
+void App::setBarIcons(bool darkScreen) const { platform::setBarIcons(darkScreen); }
+
 void App::setVolumeKeys(bool on) const { platform::setVolumeKeys(on); }
 
 bool App::profiling() const { return Profiler::enabled(); }

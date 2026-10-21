@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.7.1" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#271--2026-10-21</url>
+      <description>
+        <p>Android status bar icons follow SCANCORE's theme instead of the phone's light or dark mode.</p>
+      </description>
+    </release>
     <release version="2.7.0" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#270--2026-10-21</url>
       <description>

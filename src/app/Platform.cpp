@@ -334,4 +334,14 @@ void setOrientation(const QString &mode) {
 #endif
 }
 
+void setBarIcons(bool darkScreen) {
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>(kScreenClass, "barIcons", "(Landroid/app/Activity;Z)V",
+                                       QNativeInterface::QAndroidApplication::context().object(),
+                                       jboolean(darkScreen));
+#else
+    Q_UNUSED(darkScreen)
+#endif
+}
+
 } // namespace sc::platform

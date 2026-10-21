@@ -63,5 +63,7 @@ QImage decodeImage(const QByteArray &data);
 // The player's full screen on phones: "landscape", "portrait" (until the
 // phone is held upright) or "" (the system's rotation setting).
 void setOrientation(const QString &mode);
+// Light status/navigation bar icons for a dark screen, dark ones for a light one.
+void setBarIcons(bool darkScreen);
 
 } // namespace sc::platform

@@ -49,6 +49,7 @@ Rectangle {
     readonly property bool edgeToEdge: true
     // Hidden bars wait above the top edge: never let them show outside.
     clip: true
+    readonly property bool systemBarsDark: Theme.isDark(look.bg)
     readonly property real insetTop: SafeArea.margins.top
     readonly property real insetBottom: SafeArea.margins.bottom
 

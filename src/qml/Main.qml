@@ -64,7 +64,18 @@ ApplicationWindow {
     }
 
 
+    // Status bar icons for the screen under them: a reader or the player
+    // covers the window and may say (systemBarsDark), else they are dark
+    // screens; otherwise the app's theme decides, not the phone's mode.
+    readonly property bool darkBars: {
+        const page = immersive.currentItem
+        if (immersive.depth > 0 && page) return page.systemBarsDark !== undefined ? page.systemBarsDark === true : true
+        return Theme.dark
+    }
+    onDarkBarsChanged: App.setBarIcons(darkBars)
+
     Component.onCompleted: {
+        App.setBarIcons(darkBars)
         Theme.compact = Qt.binding(() => window.width < 720)
         Router.shell = shell
         const start = App.startAction

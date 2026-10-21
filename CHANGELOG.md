@@ -2,6 +2,10 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.7.1 — 2026-10-21
+
+- **Status bar icons match SCANCORE's theme on Android**: with the phone in light mode, the clock, battery and signal icons were dark on SCANCORE's dark screens and hard to see. They now follow the app's theme (light icons on dark, dark icons on light), including the navigation bar, and the readers and player choose by their own background (the novel reader by its reading theme).
+
 ## 2.7.0 — 2026-10-21
 
 - **Anime works while AniList is down**: AniList switched off its service on 21 October, leaving the Anime page saying "Anime details are unavailable right now". SCANCORE now fills the page, anime details, search, episode lists and the schedule from Kitsu and ani.zip whenever AniList does not answer, with the same anime, so your library, progress and sync carry on. Recommendations come back when AniList does. When nothing can be reached, the page shows what it loaded last time, or says why.
