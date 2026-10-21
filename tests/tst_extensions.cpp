@@ -455,6 +455,23 @@ private slots:
         QCOMPARE(Manager::preference(QStringLiteral("mihon:1"), QStringLiteral("quality")), QStringLiteral("[\"high\"]"));
     }
 
+    // Links in every form people paste: a folder without its slash, a
+    // folder holding a plugin list, a plugin list wrapped in an object.
+    void linkForms() {
+        QCOMPARE(Manager::preview(QStringLiteral("https://repo.test/mihon")).repo.name, QStringLiteral("Test Comics Repository"));
+        const auto novels = Manager::preview(QStringLiteral("https://repo.test/novels"));
+        QCOMPARE(novels.repo.kind, Kind::LNReader);
+        QCOMPARE(novels.repo.url, QStringLiteral("https://repo.test/novels/plugins.min.json"));
+        m_server->serve(QStringLiteral("wrapped/list.json"),
+                        "{\"name\": \"Wrapped plugins\", \"plugins\": [{\"id\": \"w\", \"name\": \"W\", \"site\": \"https://w.test/\", "
+                        "\"lang\": \"English\", \"version\": \"1.0.0\", \"url\": \"https://repo.test/wrapped/w.js\"}]}");
+        const auto wrapped = Manager::preview(QStringLiteral("https://repo.test/wrapped/list.json"));
+        QCOMPARE(wrapped.repo.kind, Kind::LNReader);
+        QCOMPARE(wrapped.repo.name, QStringLiteral("Wrapped plugins"));
+        QCOMPARE(wrapped.packages.size(), 1);
+        m_server->reset();
+    }
+
     void novelPlugins() {
         const auto preview = Manager::preview(QStringLiteral("https://repo.test/novels/plugins.min.json"));
         QCOMPARE(preview.repo.kind, Kind::LNReader);

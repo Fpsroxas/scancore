@@ -9,9 +9,13 @@
 // scancore_probe plugins <folder> [limit] runs LNReader plugin files from a
 // folder you give it: each one's popular list, its first book and that
 // book's first chapter.
+//
+// scancore_probe repo <link>... previews each extension or plugin repository
+// link as "Add a repository" would: its kind, name and how many extensions.
 
 #include "core/Database.h"
 #include "core/Http.h"
+#include "extensions/Manager.h"
 #include "plugins/Runtime.h"
 #include "sources/Manifest.h"
 #include "sources/catalogue/Catalogue.h"
@@ -62,6 +66,21 @@ int main(int argc, char **argv) {
     const auto only = args.value(3);
     const bool newest = args.value(4) == QLatin1String("latest");
     int failures = 0;
+
+    if (kind == QLatin1String("repo")) {
+        QTemporaryDir dir;
+        Database::open(dir.filePath(QStringLiteral("probe.db")));
+        for (int i = 2; i < args.size(); ++i)
+            if (!step(args.at(i), [&] {
+                    const auto p = ext::Manager::preview(args.at(i));
+                    return QStringLiteral("%1 \"%2\" %3 packages, list %4")
+                        .arg(ext::kindName(p.repo.kind), p.repo.name)
+                        .arg(p.packages.size())
+                        .arg(p.repo.listUrl);
+                }))
+                ++failures;
+        return failures ? 1 : 0;
+    }
 
     if (kind == QLatin1String("plugins")) {
         QTemporaryDir dir;

@@ -5,6 +5,7 @@
 #include "Index.h"
 #include "core/Database.h"
 #include "core/Http.h"
+#include "core/Parallel.h"
 #include "core/Text.h"
 
 #include <QCryptographicHash>
@@ -13,10 +14,12 @@
 #include <QHash>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QMutex>
 #include <QReadWriteLock>
 #include <QRegularExpression>
 #include <QSaveFile>
+#include <QVersionNumber>
 #include <QSet>
 #include <QUrlQuery>
 #include <QWaitCondition>
@@ -200,43 +203,138 @@ bool allowedHost(const QUrl &url) {
            (host == QLatin1String("localhost") || host == QLatin1String("127.0.0.1") || host.endsWith(QLatin1String(".test")));
 }
 
-QUrl repositoryUrl(QString text) {
-    text = text.trimmed();
-    if (!text.contains(QLatin1String("://")))
-        text.prepend(QStringLiteral("https://"));
-    QUrl url(text);
-    // A folder: its index.
-    if (url.path().isEmpty() || url.path().endsWith(QLatin1Char('/')))
-        url.setPath(url.path() + (url.path().isEmpty() ? QStringLiteral("/") : QString()) + QStringLiteral("index.min.json"));
-    return url;
+// The files a repository folder may hold, most likely first: Mihon and
+// Aniyomi indexes (and the repo.json beside them, or a store's index.pb),
+// and LNReader plugin lists (published under .dist/ on their own branch).
+const QStringList kIndexFiles{QStringLiteral("index.min.json"), QStringLiteral("repo.json"), QStringLiteral("index.json"),
+                              QStringLiteral("index.pb"),       QStringLiteral(".dist/plugins.min.json"),
+                              QStringLiteral("plugins.min.json"), QStringLiteral("plugins.json")};
+
+// A file (its name has an extension: index.min.json, index.pb, a page)
+// rather than a folder.
+bool looksLikeFile(const QString &path) {
+    const auto name = path.section(QLatin1Char('/'), -1);
+    return name.contains(QLatin1Char('.')) && !name.endsWith(QLatin1Char('.'));
 }
 
-// The files to try for a link: the link itself, or, for a repository's page
-// on GitHub (github.com/<owner>/<name>, perhaps /tree/<branch>), its index on
-// that branch, else on "repo" (where Mihon and Aniyomi repositories publish
-// it), "main" or "master".
-QList<QUrl> repositoryCandidates(const QString &text) {
-    const auto url = repositoryUrl(text);
-    const auto host = url.host().toLower();
-    if (host != QLatin1String("github.com") && host != QLatin1String("www.github.com"))
-        return {url};
-    auto parts = url.path().split(QLatin1Char('/'), Qt::SkipEmptyParts);
-    if (!parts.isEmpty() && parts.last() == QLatin1String("index.min.json") && parts.size() == 3)
-        parts.removeLast(); // github.com/<owner>/<name>/ became …/index.min.json above
-    if (parts.size() < 2 || (parts.size() > 2 && parts.at(2) != QLatin1String("tree")))
-        return {url};
-    const auto repo = parts.at(0) + QLatin1Char('/') + QString(parts.at(1)).remove(QRegularExpression(QStringLiteral("\\.git$")));
-    QStringList branches{QStringLiteral("repo"), QStringLiteral("main"), QStringLiteral("master")};
-    QString folder;
-    if (parts.size() > 3) {
-        branches.prepend(parts.at(3));
-        branches.removeDuplicates();
-        folder = parts.mid(4).join(QLatin1Char('/'));
+QUrl normalized(QString text) {
+    text = text.trimmed();
+    // "owner/repo": a GitHub repository.
+    static const QRegularExpression shorthand(QStringLiteral(R"(^[A-Za-z0-9-]+/[A-Za-z0-9._-]+/?$)"));
+    if (shorthand.match(text).hasMatch() && !text.section(QLatin1Char('/'), 0, 0).contains(QLatin1Char('.')))
+        text.prepend(QStringLiteral("https://github.com/"));
+    if (!text.contains(QLatin1String("://")))
+        text.prepend(QStringLiteral("https://"));
+    return QUrl(text);
+}
+
+// A GitHub repository's branches, the ones that hold repositories first:
+// "repo" (Mihon and Aniyomi publish there), LNReader's "plugins/vX" (newest
+// first), then the default and the rest. Empty when GitHub does not say
+// (offline, or its API's hourly limit).
+QStringList githubBranches(const QString &repo) {
+    QStringList names;
+    QString fallback;
+    try {
+        Request request;
+        request.url = QUrl(QStringLiteral("https://api.github.com/repos/%1/branches?per_page=100").arg(repo));
+        request.headers = {{"Accept", "application/vnd.github+json"}};
+        request.timeoutMs = 15000;
+        const auto response = Http::send(request);
+        if (!response.ok())
+            return {};
+        for (const auto &value : QJsonDocument::fromJson(response.body).array())
+            names.append(value.toObject().value("name").toString());
+        request.url = QUrl(QStringLiteral("https://api.github.com/repos/%1").arg(repo));
+        const auto info = Http::send(request);
+        if (info.ok())
+            fallback = QJsonDocument::fromJson(info.body).object().value("default_branch").toString();
+    } catch (const Error &) {
+        return {};
     }
-    QList<QUrl> out;
-    for (const auto &branch : branches)
-        out.append(QUrl(QStringLiteral("https://raw.githubusercontent.com/%1/%2/%3index.min.json")
-                            .arg(repo, branch, folder.isEmpty() ? QString() : folder + QLatin1Char('/'))));
+    QStringList plugins;
+    for (const auto &name : std::as_const(names))
+        if (name.startsWith(QLatin1String("plugins/")))
+            plugins.append(name);
+    std::sort(plugins.begin(), plugins.end(), [](const QString &a, const QString &b) {
+        return QVersionNumber::fromString(a.mid(9)) > QVersionNumber::fromString(b.mid(9));
+    });
+    QStringList out;
+    if (names.contains(QLatin1String("repo")))
+        out.append(QStringLiteral("repo"));
+    out += plugins;
+    if (!fallback.isEmpty())
+        out.append(fallback);
+    for (const auto *name : {"main", "master"})
+        if (names.contains(QLatin1String(name)))
+            out.append(QLatin1String(name));
+    out.removeDuplicates();
+    return out;
+}
+
+// The files to try for a link, most likely first. A link to a file is that
+// file (a GitHub page of one becomes its raw address); a folder, a raw
+// branch or a repository's page (GitHub, Codeberg/Forgejo/Gitea, GitLab,
+// jsDelivr) becomes every index file on every branch that may hold one.
+QList<QUrl> repositoryCandidates(const QString &text) {
+    auto url = normalized(text);
+    const auto host = url.host().toLower();
+    auto parts = url.path().split(QLatin1Char('/'), Qt::SkipEmptyParts);
+    const auto inFolder = [](const QString &base) {
+        QList<QUrl> out;
+        for (const auto &file : kIndexFiles)
+            out.append(QUrl(base + file));
+        return out;
+    };
+    const bool github = host == QLatin1String("github.com") || host == QLatin1String("www.github.com");
+    if (github && parts.size() >= 2) {
+        const auto repo = parts.at(0) + QLatin1Char('/') + QString(parts.at(1)).remove(QRegularExpression(QStringLiteral("\\.git$")));
+        // github.com/<owner>/<repo>/(blob|raw)/<branch>/<file>: the file itself.
+        if (parts.size() > 4 && (parts.at(2) == QLatin1String("blob") || parts.at(2) == QLatin1String("raw")) && looksLikeFile(url.path()))
+            return {QUrl(QStringLiteral("https://raw.githubusercontent.com/%1/%2").arg(repo, parts.mid(3).join(QLatin1Char('/'))))};
+        QStringList branches;
+        QString folder;
+        if (parts.size() > 3 && parts.at(2) == QLatin1String("tree")) {
+            // A branch name may hold slashes (plugins/v3.0.0): the rest is
+            // tried both as more of the branch and as a folder.
+            for (int cut = parts.size(); cut > 3; --cut)
+                branches.append(parts.mid(3, cut - 3).join(QLatin1Char('/')));
+            folder = parts.mid(4).join(QLatin1Char('/'));
+        }
+        branches += githubBranches(repo);
+        branches += {QStringLiteral("repo"), QStringLiteral("main"), QStringLiteral("master")};
+        branches.removeDuplicates();
+        QList<QUrl> out;
+        for (const auto &branch : std::as_const(branches)) {
+            out += inFolder(QStringLiteral("https://raw.githubusercontent.com/%1/%2/").arg(repo, branch));
+            if (!folder.isEmpty() && !branch.contains(QLatin1Char('/')))
+                out += inFolder(QStringLiteral("https://raw.githubusercontent.com/%1/%2/%3/").arg(repo, branch, folder));
+        }
+        return out;
+    }
+    if (looksLikeFile(url.path()))
+        return {url};
+    // A folder: its index files.
+    auto base = url.toString(QUrl::RemoveQuery | QUrl::RemoveFragment);
+    if (!base.endsWith(QLatin1Char('/')))
+        base += QLatin1Char('/');
+    QList<QUrl> out = inFolder(base);
+    // raw.githubusercontent.com/<owner>/<repo>: its branches.
+    if (host == QLatin1String("raw.githubusercontent.com") && parts.size() == 2) {
+        out.clear();
+        auto branches = githubBranches(parts.at(0) + QLatin1Char('/') + parts.at(1));
+        branches += {QStringLiteral("repo"), QStringLiteral("main"), QStringLiteral("master")};
+        branches.removeDuplicates();
+        for (const auto &branch : std::as_const(branches))
+            out += inFolder(base + branch + QLatin1Char('/'));
+    } else if (parts.size() == 2) {
+        // A repository's page elsewhere: Codeberg, Forgejo and Gitea serve
+        // files at /raw/branch/<branch>/, GitLab at /-/raw/<branch>/.
+        for (const auto *branch : {"main", "master", "repo"}) {
+            out += inFolder(base + QStringLiteral("raw/branch/%1/").arg(QLatin1String(branch)));
+            out += inFolder(base + QStringLiteral("-/raw/%1/").arg(QLatin1String(branch)));
+        }
+    }
     return out;
 }
 
@@ -366,20 +464,59 @@ void Manager::reload() {
 // ---------------------------------------------------------------- repositories
 
 RepositoryPreview Manager::preview(const QString &text, std::optional<Kind> hint) {
-    const auto candidates = repositoryCandidates(text);
-    const auto &url = candidates.first();
-    if (!url.isValid() || url.host().isEmpty())
+    const auto first = normalized(text);
+    if (!first.isValid() || first.host().isEmpty())
         throw Error(QStringLiteral("That is not a link."));
+    auto candidates = repositoryCandidates(text);
+    // Which of them exist, asked all at once (a HEAD each); a server that
+    // does not answer HEAD keeps its candidate.
+    if (candidates.size() > 1) {
+        QList<std::function<int()>> checks;
+        for (const auto &candidate : std::as_const(candidates))
+            checks.append([candidate] {
+                Request request;
+                request.url = candidate;
+                request.method = "HEAD";
+                request.timeoutMs = 15000;
+                return Http::send(request).status;
+            });
+        const auto answers = parallel<int>(checks);
+        QList<QUrl> existing;
+        for (int i = 0; i < candidates.size(); ++i)
+            if (!answers[i].ok() || (*answers[i].value != 404 && *answers[i].value != 410 && *answers[i].value != 400))
+                existing.append(candidates[i]);
+        if (existing.isEmpty())
+            throw Error(QStringLiteral("No extension or plugin repository was found at that link. Paste the repository's page, "
+                                       "or the link to its index.min.json, repo.json or plugins.min.json."),
+                        404);
+        candidates = existing;
+    }
     RepoState state;
-    for (int i = 0; i < candidates.size(); ++i) {
+    QString lastError;
+    bool found = false;
+    for (int i = 0; i < candidates.size() && !found; ++i) {
         try {
             state = read(candidates.at(i), hint);
-            break;
+            found = true;
         } catch (const Error &e) {
-            // A branch without the index: the next one.
-            if (e.status() != 404 || i + 1 == candidates.size())
+            // Not a repository there: the next one.
+            if (candidates.size() == 1)
                 throw;
+            lastError = e.message();
         }
+    }
+    if (!found)
+        throw Error(lastError.isEmpty() ? QStringLiteral("That link is not an extension or plugin repository.") : lastError);
+    // A plugin list names no repository: its GitHub owner and name do.
+    if (state.repo.kind == Kind::LNReader && (state.repo.name.isEmpty() || state.repo.name.contains(QLatin1Char('.')))) {
+        const QUrl list(state.repo.url);
+        const auto path = list.path().split(QLatin1Char('/'), Qt::SkipEmptyParts);
+        const auto host = list.host().toLower();
+        if ((host == QLatin1String("raw.githubusercontent.com") || host.endsWith(QLatin1String("github.com"))) && path.size() >= 2)
+            state.repo.name = path.at(0) + QLatin1Char('/') + path.at(1);
+        else if (host == QLatin1String("cdn.jsdelivr.net") && path.size() >= 3)
+            state.repo.name = path.at(1) + QLatin1Char('/') + path.at(2).section(QLatin1Char('@'), 0, 0);
+        state.repo.badge = state.repo.name;
     }
     RepositoryPreview preview;
     preview.repo = state.repo;

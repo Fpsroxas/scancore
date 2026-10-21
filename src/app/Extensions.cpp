@@ -30,6 +30,7 @@
 #include <QJsonArray>
 #include <QLocale>
 #include <QMutex>
+#include <QRegularExpression>
 
 namespace sc {
 
@@ -426,6 +427,10 @@ QVariantMap Extensions::repositoryLink(const QString &text) const {
     const auto trimmed = text.trimmed();
     if (const auto link = ext::Manager::parseLink(trimmed))
         return QVariantMap{{"url", link->url}, {"kind", link->kind ? ext::kindName(*link->kind) : QString()}};
+    // "owner/repo": a GitHub repository.
+    static const QRegularExpression shorthand(QStringLiteral(R"(^[A-Za-z0-9-]+/[A-Za-z0-9._-]+/?$)"));
+    if (shorthand.match(trimmed).hasMatch() && !trimmed.section(QLatin1Char('/'), 0, 0).contains(QLatin1Char('.')))
+        return QVariantMap{{"url", QStringLiteral("https://github.com/") + trimmed}, {"kind", QString()}};
     // A plain address: an index, a repo.json, a store or a plugin list.
     const QUrl url = QUrl::fromUserInput(trimmed);
     if (trimmed.contains(QLatin1Char(' ')) || !url.isValid() || url.host().isEmpty() || !url.host().contains(QLatin1Char('.')) ||
@@ -476,8 +481,8 @@ Task *Extensions::previewRepository(const QString &link, const QString &kind) {
                            {"autoInstall", autoNames},
                            {"language", language},
                            {"languageName", extensionLanguage(language)},
-                           {"added", std::any_of(ext::Manager::repositories().cbegin(), ext::Manager::repositories().cend(),
-                                                 [&](const ext::Repository &r) { return r.url == preview.repo.url; })}};
+                           {"added", std::ranges::any_of(ext::Manager::repositories(),
+                                                         [&](const ext::Repository &r) { return r.url == preview.repo.url; })}};
     });
 }
 

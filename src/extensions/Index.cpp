@@ -317,6 +317,13 @@ IndexDocument parseIndex(QByteArray body, const QUrl &from, std::optional<Kind> 
     }
     if (trimmed.startsWith('{')) {
         const auto o = QJsonDocument::fromJson(quoteLargeIds(trimmed)).object();
+        // A plugin list wrapped in an object ({"plugins": [...]}).
+        if (o.value("plugins").isArray()) {
+            doc = parseIndex(QJsonDocument(o.value("plugins").toArray()).toJson(QJsonDocument::Compact), from, Kind::LNReader);
+            if (doc.repo && !o.value("name").toString().isEmpty())
+                doc.repo->name = doc.repo->badge = o.value("name").toString();
+            return doc;
+        }
         if (o.contains("meta")) {
             doc.type = IndexDocument::Type::LegacyRepo;
             const auto meta = o.value("meta").toObject();

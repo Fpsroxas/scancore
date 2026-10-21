@@ -14,10 +14,19 @@ Dialog {
     readonly property var preview: task && task.ok ? task.result : null
     readonly property bool adding: addTask ? addTask.loading : false
     property bool withInstall: false
+    // Several links pasted at once go one after another: the ones still to
+    // come, and how many there were.
+    property var queue: []
+    property int queueTotal: 0
 
     // Opens the sheet for `text` (a link or an address); with no text it
     // asks for one.
     function start(text, kindHint) {
+        queue = []
+        queueTotal = 0
+        show(text, kindHint)
+    }
+    function show(text, kindHint) {
         link = text || ""
         kind = kindHint || ""
         addTask = null
@@ -26,14 +35,25 @@ Dialog {
         open()
         if (!link) Qt.callLater(() => field.forceActiveFocus())
     }
+    // The next pasted link, or false when there is none.
+    function next() {
+        if (queue.length === 0) return false
+        const rest = queue.slice()
+        const item = rest.shift()
+        queue = rest
+        show(item.url, item.kind)
+        return true
+    }
 
     function check() {
-        const parsed = Extensions.repositoryLink(field.text)
-        if (!parsed.url) {
+        const links = field.text.split(/[\s,]+/).map(t => Extensions.repositoryLink(t)).filter(p => !!p.url)
+        if (links.length === 0) {
             Router.toast(qsTr("That is not a repository link."), "error")
             return
         }
-        start(parsed.url, parsed.kind)
+        queue = links.slice(1)
+        queueTotal = links.length
+        show(links[0].url, links[0].kind)
     }
 
     function kindName(media, count) {
@@ -45,7 +65,7 @@ Dialog {
     Connections {
         target: dialog.addTask
         function onFinished(result) {
-            dialog.close()
+            if (!dialog.next()) dialog.close()
             let message = "“" + result.name + "”" + qsTr(" added")
             if (result.queued > 0)
                 message += qsTr("; installing %1 in the background").arg(result.queued)
@@ -100,8 +120,9 @@ Dialog {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
                 width: dialog.availableWidth - 52
-                text: dialog.preview ? qsTr("Add “") + dialog.preview.name + qsTr("” from ") + dialog.preview.domain + "?"
-                    : qsTr("Add a repository")
+                text: (dialog.preview ? qsTr("Add “") + dialog.preview.name + qsTr("” from ") + dialog.preview.domain + "?"
+                    : qsTr("Add a repository"))
+                    + (dialog.queueTotal > 1 ? "  " + qsTr("(%1 of %2)").arg(dialog.queueTotal - dialog.queue.length).arg(dialog.queueTotal) : "")
                 color: Theme.text
                 font.family: Theme.fontDisplay
                 font.pixelSize: Theme.textLg
@@ -117,7 +138,7 @@ Dialog {
             visible: !dialog.task
             Text {
                 width: parent.width
-                text: qsTr("Paste the link from the repository's page. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.")
+                text: qsTr("Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.")
                 color: Theme.textMuted
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textSm
@@ -205,6 +226,12 @@ Dialog {
                 onClicked: dialog.close()
             }
             ScButton {
+                visible: dialog.queue.length > 0
+                text: qsTr("Skip")
+                enabled: !dialog.adding
+                onClicked: dialog.next()
+            }
+            ScButton {
                 visible: !dialog.task
                 text: qsTr("Continue")
                 variant: "primary"
@@ -214,7 +241,7 @@ Dialog {
             ScButton {
                 visible: dialog.task !== null && !dialog.task.loading && !dialog.task.ok
                 text: qsTr("Try again")
-                onClicked: dialog.start(dialog.link, dialog.kind)
+                onClicked: dialog.show(dialog.link, dialog.kind)
             }
             // Adding is quick; any installs carry on in the background.
             readonly property int toInstall: dialog.preview && !dialog.preview.added ? dialog.preview.autoInstall.length : 0
