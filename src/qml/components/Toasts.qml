@@ -8,15 +8,21 @@ Item {
     id: root
     anchors.fill: parent
 
-    function show(message, kind) {
-        toasts.append({ message: message, kind: kind || "info", stamp: Date.now() })
-        if (toasts.count > 4) toasts.remove(0)
+    // action: optional {label, run}, a button on the toast, which then
+    // stays longer.
+    function show(message, kind, action) {
+        const stamp = Date.now() + Math.random()
+        if (action) actions[stamp] = action
+        toasts.append({ message: message, kind: kind || "info", stamp: stamp, actionLabel: action ? action.label : "" })
+        if (toasts.count > 4) removeStamp(toasts.get(0).stamp)
     }
+    property var actions: ({})
 
     function removeStamp(stamp) {
         for (let i = 0; i < toasts.count; ++i)
             if (toasts.get(i).stamp === stamp) {
                 toasts.remove(i)
+                delete actions[stamp]
                 return
             }
     }
@@ -55,7 +61,8 @@ Item {
                 required property string message
                 required property string kind
                 required property real stamp
-                readonly property int lifetime: kind === "error" ? 7000 : 4200
+                required property string actionLabel
+                readonly property int lifetime: actionLabel !== "" ? 30000 : kind === "error" ? 7000 : 4200
                 readonly property color tone: kind === "error" ? Theme.danger : kind === "success" ? Theme.success : Theme.accent
                 property real elapsed: 0
                 property bool leaving: false
@@ -99,13 +106,29 @@ Item {
                         id: label
                         anchors.left: badge.right
                         anchors.leftMargin: 12
-                        anchors.right: close.left
+                        anchors.right: act.visible ? act.left : close.left
+                        anchors.rightMargin: act.visible ? 8 : 0
                         anchors.verticalCenter: parent.verticalCenter
                         text: toast.message
                         color: Theme.text
                         font.family: Theme.fontSans
                         font.pixelSize: Theme.textSm
                         wrapMode: Text.Wrap
+                    }
+                    ScButton {
+                        id: act
+                        visible: toast.actionLabel !== ""
+                        anchors.right: close.left
+                        anchors.rightMargin: 2
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: toast.actionLabel
+                        variant: "primary"
+                        compact: true
+                        onClicked: {
+                            const action = root.actions[toast.stamp]
+                            toast.dismiss(1)
+                            if (action) action.run()
+                        }
                     }
                     IconButton {
                         id: close

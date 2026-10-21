@@ -728,6 +728,7 @@ Rectangle {
                 onClicked: watchFrom.start(watch.media, false)
             }
             IconButton { visible: !!watch.media.anilistId; iconName: "message-circle"; iconColor: "white"; tip: qsTr("Comments"); onClicked: comments.open() }
+            ContinueOn { seriesId: watch.series.id || ""; iconColor: "white"; save: () => watch.saveProgress(true) }
             IconButton {
                 // A video from an extension needs its headers; only web players open elsewhere.
                 visible: !watch.nativeStream

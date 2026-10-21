@@ -402,6 +402,10 @@
             <source>· updated </source>
             <translation>· actualizado </translation>
         </message>
+        <message>
+            <source>· open now</source>
+            <translation>· abierto ahora</translation>
+        </message>
     </context>
     <context>
         <name>ActivityPage</name>
@@ -1974,6 +1978,21 @@
         </message>
     </context>
     <context>
+        <name>ContinueOn</name>
+        <message>
+            <source>Continue on another device</source>
+            <translation>Continuar en otro dispositivo</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>Enviado a %1</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>Aún no hay nada que enviar: lee o mira un poco primero.</translation>
+        </message>
+    </context>
+    <context>
         <name>DetailsHeader</name>
         <message>
             <source>Start reading</source>
@@ -2653,6 +2672,18 @@
         <message>
             <source> novels</source>
             <translation> novelas</translation>
+        </message>
+        <message>
+            <source>Your %1 Wrapped is here</source>
+            <translation>Tu Wrapped %1 ya está aquí</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Tu año en cómics, novelas y anime</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Ahora no</translation>
         </message>
     </context>
     <context>
@@ -3576,6 +3607,14 @@
         <message>
             <source>Allow</source>
             <translation>Permitir</translation>
+        </message>
+        <message>
+            <source>From %1: %2, %3</source>
+            <translation>Desde %1: %2, %3</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Continuar</translation>
         </message>
     </context>
     <context>
@@ -6914,6 +6953,311 @@
         </message>
     </context>
     <context>
+        <name>Wrapped</name>
+        <message>
+            <source>January</source>
+            <translation>Enero</translation>
+        </message>
+        <message>
+            <source>February</source>
+            <translation>Febrero</translation>
+        </message>
+        <message>
+            <source>March</source>
+            <translation>Marzo</translation>
+        </message>
+        <message>
+            <source>April</source>
+            <translation>Abril</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Mayo</translation>
+        </message>
+        <message>
+            <source>June</source>
+            <translation>Junio</translation>
+        </message>
+        <message>
+            <source>July</source>
+            <translation>Julio</translation>
+        </message>
+        <message>
+            <source>August</source>
+            <translation>Agosto</translation>
+        </message>
+        <message>
+            <source>September</source>
+            <translation>Septiembre</translation>
+        </message>
+        <message>
+            <source>October</source>
+            <translation>Octubre</translation>
+        </message>
+        <message>
+            <source>November</source>
+            <translation>Noviembre</translation>
+        </message>
+        <message>
+            <source>December</source>
+            <translation>Diciembre</translation>
+        </message>
+        <message>
+            <source>Mondays</source>
+            <translation>Lunes</translation>
+        </message>
+        <message>
+            <source>Tuesdays</source>
+            <translation>Martes</translation>
+        </message>
+        <message>
+            <source>Wednesdays</source>
+            <translation>Miércoles</translation>
+        </message>
+        <message>
+            <source>Thursdays</source>
+            <translation>Jueves</translation>
+        </message>
+        <message>
+            <source>Fridays</source>
+            <translation>Viernes</translation>
+        </message>
+        <message>
+            <source>Saturdays</source>
+            <translation>Sábados</translation>
+        </message>
+        <message>
+            <source>Sundays</source>
+            <translation>Domingos</translation>
+        </message>
+        <message>
+            <source> hour</source>
+            <translation> hora</translation>
+        </message>
+        <message>
+            <source> hours</source>
+            <translation> horas</translation>
+        </message>
+        <message>
+            <source> minute</source>
+            <translation> minuto</translation>
+        </message>
+        <message>
+            <source> minutes</source>
+            <translation> minutos</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> episodio</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> episodios</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> capítulo</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> capítulos</translation>
+        </message>
+        <message>
+            <source>%1 %2</source>
+            <comment>day, month</comment>
+            <translation>%1 de %2</translation>
+        </message>
+        <message>
+            <source>SCANCORE Wrapped </source>
+            <translation>SCANCORE Wrapped </translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Cerrar</translation>
+        </message>
+        <message>
+            <source>Nothing yet in </source>
+            <translation>Aún nada en </translation>
+        </message>
+        <message>
+            <source>Chapters you finish and time spent reading and watching show up here.</source>
+            <translation>Aquí aparecen los capítulos que terminas y el tiempo que pasas leyendo y viendo.</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Tu año en cómics, novelas y anime</translation>
+        </message>
+        <message>
+            <source>Tap to begin</source>
+            <translation>Toca para empezar</translation>
+        </message>
+        <message>
+            <source>Click or press → to begin</source>
+            <translation>Haz clic o pulsa → para empezar</translation>
+        </message>
+        <message>
+            <source>This year you spent</source>
+            <translation>Este año pasaste</translation>
+        </message>
+        <message>
+            <source>reading and watching</source>
+            <translation>leyendo y viendo</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Cómics</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novelas</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>You finished</source>
+            <translation>Terminaste</translation>
+        </message>
+        <message>
+            <source>comic chapters</source>
+            <translation>capítulos de cómic</translation>
+        </message>
+        <message>
+            <source>novel chapters</source>
+            <translation>capítulos de novela</translation>
+        </message>
+        <message>
+            <source>anime episodes</source>
+            <translation>episodios de anime</translation>
+        </message>
+        <message>
+            <source>in one series</source>
+            <translation>en una serie</translation>
+        </message>
+        <message>
+            <source>across %1 series</source>
+            <translation>en %1 series</translation>
+        </message>
+        <message>
+            <source>The series you came back to most</source>
+            <translation>La serie a la que más volviste</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Cómic</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Novela</translation>
+        </message>
+        <message>
+            <source>Your number one of each</source>
+            <translation>Tu número uno de cada uno</translation>
+        </message>
+        <message>
+            <source>The genres you lived in</source>
+            <translation>Los géneros en los que viviste</translation>
+        </message>
+        <message>
+            <source>The author you read most</source>
+            <translation>El autor que más leíste</translation>
+        </message>
+        <message>
+            <source>Your busiest month was</source>
+            <translation>Tu mes más activo fue</translation>
+        </message>
+        <message>
+            <source>and you read and watched most on </source>
+            <translation>y lo que más leíste y viste fue en </translation>
+        </message>
+        <message>
+            <source>Your longest streak</source>
+            <translation>Tu racha más larga</translation>
+        </message>
+        <message>
+            <source> day</source>
+            <translation> día</translation>
+        </message>
+        <message>
+            <source> days</source>
+            <translation> días</translation>
+        </message>
+        <message>
+            <source>in a row, of %1 days with something read or watched</source>
+            <translation>seguidos, de %1 días en los que leíste o viste algo</translation>
+        </message>
+        <message>
+            <source>Your biggest day: </source>
+            <translation>Tu día más intenso: </translation>
+        </message>
+        <message>
+            <source>Where your year started</source>
+            <translation>Donde empezó tu año</translation>
+        </message>
+        <message>
+            <source>the first series you finished something in, on </source>
+            <translation>la primera serie en la que terminaste algo, el </translation>
+        </message>
+        <message>
+            <source>My %1 in SCANCORE</source>
+            <translation>Mi %1 en SCANCORE</translation>
+        </message>
+        <message>
+            <source>Top series</source>
+            <translation>Serie top</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>Tiempo</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>Capítulos</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>Episodios</translation>
+        </message>
+        <message>
+            <source>Longest streak</source>
+            <translation>Racha más larga</translation>
+        </message>
+        <message>
+            <source>Top genre</source>
+            <translation>Género top</translation>
+        </message>
+        <message>
+            <source>Series</source>
+            <translation>Series</translation>
+        </message>
+        <message>
+            <source>Busiest month</source>
+            <translation>Mes más activo</translation>
+        </message>
+        <message>
+            <source>Save picture</source>
+            <translation>Guardar imagen</translation>
+        </message>
+        <message>
+            <source>Watch again</source>
+            <translation>Ver de nuevo</translation>
+        </message>
+        <message>
+            <source>PNG picture (*.png)</source>
+            <translation>Imagen PNG (*.png)</translation>
+        </message>
+        <message>
+            <source>Picture saved</source>
+            <translation>Imagen guardada</translation>
+        </message>
+        <message>
+            <source>Could not save the picture</source>
+            <translation>No se pudo guardar la imagen</translation>
+        </message>
+    </context>
+    <context>
         <name>YearReview</name>
         <message>
             <source>January</source>
@@ -7090,6 +7434,15 @@
         <message>
             <source>Could not save the picture</source>
             <translation>No se pudo guardar la imagen</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Mayo</translation>
+        </message>
+        <message>
+            <source>Wrapped</source>
+            <translation>Wrapped</translation>
         </message>
     </context>
     <context>

@@ -402,6 +402,10 @@
             <source>· updated </source>
             <translation>· 更新 </translation>
         </message>
+        <message>
+            <source>· open now</source>
+            <translation>・今開いています</translation>
+        </message>
     </context>
     <context>
         <name>ActivityPage</name>
@@ -1974,6 +1978,21 @@
         </message>
     </context>
     <context>
+        <name>ContinueOn</name>
+        <message>
+            <source>Continue on another device</source>
+            <translation>別のデバイスで続ける</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>%1 に送信しました</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>まだ送れるものがありません。少し読むか見てからお試しください。</translation>
+        </message>
+    </context>
+    <context>
         <name>DetailsHeader</name>
         <message>
             <source>Start reading</source>
@@ -2653,6 +2672,18 @@
         <message>
             <source> novels</source>
             <translation> の小説</translation>
+        </message>
+        <message>
+            <source>Your %1 Wrapped is here</source>
+            <translation>%1 年の Wrapped が届きました</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>コミック、小説、アニメで振り返るあなたの1年</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>あとで</translation>
         </message>
     </context>
     <context>
@@ -3576,6 +3607,14 @@
         <message>
             <source>Allow</source>
             <translation>許可</translation>
+        </message>
+        <message>
+            <source>From %1: %2, %3</source>
+            <translation>%1 から: %2、%3</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>続ける</translation>
         </message>
     </context>
     <context>
@@ -6914,6 +6953,311 @@
         </message>
     </context>
     <context>
+        <name>Wrapped</name>
+        <message>
+            <source>January</source>
+            <translation>1月</translation>
+        </message>
+        <message>
+            <source>February</source>
+            <translation>2月</translation>
+        </message>
+        <message>
+            <source>March</source>
+            <translation>3月</translation>
+        </message>
+        <message>
+            <source>April</source>
+            <translation>4月</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>5月</translation>
+        </message>
+        <message>
+            <source>June</source>
+            <translation>6月</translation>
+        </message>
+        <message>
+            <source>July</source>
+            <translation>7月</translation>
+        </message>
+        <message>
+            <source>August</source>
+            <translation>8月</translation>
+        </message>
+        <message>
+            <source>September</source>
+            <translation>9月</translation>
+        </message>
+        <message>
+            <source>October</source>
+            <translation>10月</translation>
+        </message>
+        <message>
+            <source>November</source>
+            <translation>11月</translation>
+        </message>
+        <message>
+            <source>December</source>
+            <translation>12月</translation>
+        </message>
+        <message>
+            <source>Mondays</source>
+            <translation>毎週月曜</translation>
+        </message>
+        <message>
+            <source>Tuesdays</source>
+            <translation>毎週火曜</translation>
+        </message>
+        <message>
+            <source>Wednesdays</source>
+            <translation>毎週水曜</translation>
+        </message>
+        <message>
+            <source>Thursdays</source>
+            <translation>毎週木曜</translation>
+        </message>
+        <message>
+            <source>Fridays</source>
+            <translation>毎週金曜</translation>
+        </message>
+        <message>
+            <source>Saturdays</source>
+            <translation>毎週土曜</translation>
+        </message>
+        <message>
+            <source>Sundays</source>
+            <translation>毎週日曜</translation>
+        </message>
+        <message>
+            <source> hour</source>
+            <translation> 時間</translation>
+        </message>
+        <message>
+            <source> hours</source>
+            <translation> 時間</translation>
+        </message>
+        <message>
+            <source> minute</source>
+            <translation> 分</translation>
+        </message>
+        <message>
+            <source> minutes</source>
+            <translation> 分</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> 話</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> 話</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> 章</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> 章</translation>
+        </message>
+        <message>
+            <source>%1 %2</source>
+            <comment>day, month</comment>
+            <translation>%2%1日</translation>
+        </message>
+        <message>
+            <source>SCANCORE Wrapped </source>
+            <translation>SCANCORE Wrapped </translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
+        </message>
+        <message>
+            <source>Nothing yet in </source>
+            <translation>まだ何もありません: </translation>
+        </message>
+        <message>
+            <source>Chapters you finish and time spent reading and watching show up here.</source>
+            <translation>読み終えた章と、読書や視聴の時間がここに表示されます。</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>コミック、小説、アニメで振り返るあなたの1年</translation>
+        </message>
+        <message>
+            <source>Tap to begin</source>
+            <translation>タップして始める</translation>
+        </message>
+        <message>
+            <source>Click or press → to begin</source>
+            <translation>クリックするか → を押して始める</translation>
+        </message>
+        <message>
+            <source>This year you spent</source>
+            <translation>今年あなたが使った時間は</translation>
+        </message>
+        <message>
+            <source>reading and watching</source>
+            <translation>（読書と視聴）</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>コミック</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小説</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>アニメ</translation>
+        </message>
+        <message>
+            <source>You finished</source>
+            <translation>読み終えた・見終えたもの</translation>
+        </message>
+        <message>
+            <source>comic chapters</source>
+            <translation>コミックの章</translation>
+        </message>
+        <message>
+            <source>novel chapters</source>
+            <translation>小説の章</translation>
+        </message>
+        <message>
+            <source>anime episodes</source>
+            <translation>アニメのエピソード</translation>
+        </message>
+        <message>
+            <source>in one series</source>
+            <translation>1つのシリーズで</translation>
+        </message>
+        <message>
+            <source>across %1 series</source>
+            <translation>%1 シリーズにわたって</translation>
+        </message>
+        <message>
+            <source>The series you came back to most</source>
+            <translation>最も何度も戻ってきたシリーズ</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>コミック</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>小説</translation>
+        </message>
+        <message>
+            <source>Your number one of each</source>
+            <translation>それぞれのナンバーワン</translation>
+        </message>
+        <message>
+            <source>The genres you lived in</source>
+            <translation>よく読んだジャンル</translation>
+        </message>
+        <message>
+            <source>The author you read most</source>
+            <translation>最もよく読んだ作者</translation>
+        </message>
+        <message>
+            <source>Your busiest month was</source>
+            <translation>最も活動した月は</translation>
+        </message>
+        <message>
+            <source>and you read and watched most on </source>
+            <translation>最もよく読んで見た曜日: </translation>
+        </message>
+        <message>
+            <source>Your longest streak</source>
+            <translation>最長の連続記録</translation>
+        </message>
+        <message>
+            <source> day</source>
+            <translation> 日</translation>
+        </message>
+        <message>
+            <source> days</source>
+            <translation> 日</translation>
+        </message>
+        <message>
+            <source>in a row, of %1 days with something read or watched</source>
+            <translation>連続（読んだり見たりした日は全部で %1 日）</translation>
+        </message>
+        <message>
+            <source>Your biggest day: </source>
+            <translation>最も活動した日: </translation>
+        </message>
+        <message>
+            <source>Where your year started</source>
+            <translation>あなたの1年の始まり</translation>
+        </message>
+        <message>
+            <source>the first series you finished something in, on </source>
+            <translation>何かを最初に読み終えたシリーズ: </translation>
+        </message>
+        <message>
+            <source>My %1 in SCANCORE</source>
+            <translation>SCANCORE での %1 年</translation>
+        </message>
+        <message>
+            <source>Top series</source>
+            <translation>トップシリーズ</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>時間</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>章</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>エピソード</translation>
+        </message>
+        <message>
+            <source>Longest streak</source>
+            <translation>最長の連続記録</translation>
+        </message>
+        <message>
+            <source>Top genre</source>
+            <translation>トップジャンル</translation>
+        </message>
+        <message>
+            <source>Series</source>
+            <translation>シリーズ</translation>
+        </message>
+        <message>
+            <source>Busiest month</source>
+            <translation>最も忙しかった月</translation>
+        </message>
+        <message>
+            <source>Save picture</source>
+            <translation>画像を保存</translation>
+        </message>
+        <message>
+            <source>Watch again</source>
+            <translation>もう一度見る</translation>
+        </message>
+        <message>
+            <source>PNG picture (*.png)</source>
+            <translation>PNG 画像 (*.png)</translation>
+        </message>
+        <message>
+            <source>Picture saved</source>
+            <translation>画像を保存しました</translation>
+        </message>
+        <message>
+            <source>Could not save the picture</source>
+            <translation>画像を保存できませんでした</translation>
+        </message>
+    </context>
+    <context>
         <name>YearReview</name>
         <message>
             <source>January</source>
@@ -7090,6 +7434,15 @@
         <message>
             <source>Could not save the picture</source>
             <translation>画像を保存できませんでした</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>5月</translation>
+        </message>
+        <message>
+            <source>Wrapped</source>
+            <translation>Wrapped</translation>
         </message>
     </context>
     <context>

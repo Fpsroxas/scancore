@@ -534,7 +534,10 @@ SettingsPane {
         Repeater {
             model: devices
             Row {
+                id: deviceRow
                 required property var modelData
+                // Open right now, so live progress reaches it in seconds.
+                readonly property bool live: !modelData.self && Live.devices.some(d => d.id === modelData.id)
                 spacing: 10
                 Icon {
                     anchors.verticalCenter: parent.verticalCenter
@@ -551,9 +554,9 @@ SettingsPane {
                 }
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
-                    visible: !modelData.self && Number(modelData.updatedAt) > 0
-                    text: qsTr("· updated ") + App.relativeTime(Number(modelData.updatedAt))
-                    color: Theme.textFaint
+                    visible: deviceRow.live || (!modelData.self && Number(modelData.updatedAt) > 0)
+                    text: deviceRow.live ? qsTr("· open now") : qsTr("· updated ") + App.relativeTime(Number(modelData.updatedAt))
+                    color: deviceRow.live ? Theme.success : Theme.textFaint
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textSm
                 }

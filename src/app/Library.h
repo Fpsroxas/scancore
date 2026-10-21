@@ -96,6 +96,8 @@ signals:
     // The user saved or removed a series (not sync, which writes directly).
     void saved(const QString &seriesId);
     void removed(const QString &seriesId);
+    // Reading or watching moved on in a chapter or episode (recordProgress).
+    void progressRecorded(const QString &seriesId, const QString &unitKey);
 
 private:
     void saveProgress(const QVariantMap &series, const QVariantMap &unit, const QVariantMap &position, double percent,

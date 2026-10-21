@@ -402,6 +402,10 @@
             <source>· updated </source>
             <translation>· 업데이트됨 </translation>
         </message>
+        <message>
+            <source>· open now</source>
+            <translation>· 지금 열려 있음</translation>
+        </message>
     </context>
     <context>
         <name>ActivityPage</name>
@@ -1974,6 +1978,21 @@
         </message>
     </context>
     <context>
+        <name>ContinueOn</name>
+        <message>
+            <source>Continue on another device</source>
+            <translation>다른 기기에서 이어 보기</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>%1(으)로 보냈어요</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>아직 보낼 내용이 없어요. 먼저 조금 읽거나 보세요.</translation>
+        </message>
+    </context>
+    <context>
         <name>DetailsHeader</name>
         <message>
             <source>Start reading</source>
@@ -2653,6 +2672,18 @@
         <message>
             <source> novels</source>
             <translation> 소설</translation>
+        </message>
+        <message>
+            <source>Your %1 Wrapped is here</source>
+            <translation>%1 Wrapped가 도착했어요</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>만화, 소설, 애니메이션으로 본 나의 한 해</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>나중에</translation>
         </message>
     </context>
     <context>
@@ -3576,6 +3607,14 @@
         <message>
             <source>Allow</source>
             <translation>허용</translation>
+        </message>
+        <message>
+            <source>From %1: %2, %3</source>
+            <translation>%1에서: %2, %3</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>계속</translation>
         </message>
     </context>
     <context>
@@ -6914,6 +6953,311 @@
         </message>
     </context>
     <context>
+        <name>Wrapped</name>
+        <message>
+            <source>January</source>
+            <translation>1월</translation>
+        </message>
+        <message>
+            <source>February</source>
+            <translation>2월</translation>
+        </message>
+        <message>
+            <source>March</source>
+            <translation>3월</translation>
+        </message>
+        <message>
+            <source>April</source>
+            <translation>4월</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>5월</translation>
+        </message>
+        <message>
+            <source>June</source>
+            <translation>6월</translation>
+        </message>
+        <message>
+            <source>July</source>
+            <translation>7월</translation>
+        </message>
+        <message>
+            <source>August</source>
+            <translation>8월</translation>
+        </message>
+        <message>
+            <source>September</source>
+            <translation>9월</translation>
+        </message>
+        <message>
+            <source>October</source>
+            <translation>10월</translation>
+        </message>
+        <message>
+            <source>November</source>
+            <translation>11월</translation>
+        </message>
+        <message>
+            <source>December</source>
+            <translation>12월</translation>
+        </message>
+        <message>
+            <source>Mondays</source>
+            <translation>매주 월요일</translation>
+        </message>
+        <message>
+            <source>Tuesdays</source>
+            <translation>매주 화요일</translation>
+        </message>
+        <message>
+            <source>Wednesdays</source>
+            <translation>매주 수요일</translation>
+        </message>
+        <message>
+            <source>Thursdays</source>
+            <translation>매주 목요일</translation>
+        </message>
+        <message>
+            <source>Fridays</source>
+            <translation>매주 금요일</translation>
+        </message>
+        <message>
+            <source>Saturdays</source>
+            <translation>매주 토요일</translation>
+        </message>
+        <message>
+            <source>Sundays</source>
+            <translation>매주 일요일</translation>
+        </message>
+        <message>
+            <source> hour</source>
+            <translation>시간</translation>
+        </message>
+        <message>
+            <source> hours</source>
+            <translation>시간</translation>
+        </message>
+        <message>
+            <source> minute</source>
+            <translation>분</translation>
+        </message>
+        <message>
+            <source> minutes</source>
+            <translation>분</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> 에피소드</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> 에피소드</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> 챕터</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> 챕터</translation>
+        </message>
+        <message>
+            <source>%1 %2</source>
+            <comment>day, month</comment>
+            <translation>%2 %1일</translation>
+        </message>
+        <message>
+            <source>SCANCORE Wrapped </source>
+            <translation>SCANCORE Wrapped </translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
+        </message>
+        <message>
+            <source>Nothing yet in </source>
+            <translation>아직 아무것도 없습니다: </translation>
+        </message>
+        <message>
+            <source>Chapters you finish and time spent reading and watching show up here.</source>
+            <translation>끝낸 챕터와 읽고 본 시간이 여기에 표시됩니다.</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>만화, 소설, 애니메이션으로 본 나의 한 해</translation>
+        </message>
+        <message>
+            <source>Tap to begin</source>
+            <translation>탭해서 시작</translation>
+        </message>
+        <message>
+            <source>Click or press → to begin</source>
+            <translation>클릭하거나 →를 눌러 시작</translation>
+        </message>
+        <message>
+            <source>This year you spent</source>
+            <translation>올해 사용한 시간</translation>
+        </message>
+        <message>
+            <source>reading and watching</source>
+            <translation>(읽고 본 시간)</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>만화</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>애니메이션</translation>
+        </message>
+        <message>
+            <source>You finished</source>
+            <translation>완료한 항목</translation>
+        </message>
+        <message>
+            <source>comic chapters</source>
+            <translation>만화 회차</translation>
+        </message>
+        <message>
+            <source>novel chapters</source>
+            <translation>소설 회차</translation>
+        </message>
+        <message>
+            <source>anime episodes</source>
+            <translation>애니메이션 에피소드</translation>
+        </message>
+        <message>
+            <source>in one series</source>
+            <translation>한 시리즈에서</translation>
+        </message>
+        <message>
+            <source>across %1 series</source>
+            <translation>%1개 시리즈에서</translation>
+        </message>
+        <message>
+            <source>The series you came back to most</source>
+            <translation>가장 자주 다시 찾은 시리즈</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>만화</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Your number one of each</source>
+            <translation>종류별 1위</translation>
+        </message>
+        <message>
+            <source>The genres you lived in</source>
+            <translation>가장 많이 머문 장르</translation>
+        </message>
+        <message>
+            <source>The author you read most</source>
+            <translation>가장 많이 읽은 작가</translation>
+        </message>
+        <message>
+            <source>Your busiest month was</source>
+            <translation>가장 바빴던 달</translation>
+        </message>
+        <message>
+            <source>and you read and watched most on </source>
+            <translation>가장 많이 읽고 본 날: </translation>
+        </message>
+        <message>
+            <source>Your longest streak</source>
+            <translation>최장 연속 기록</translation>
+        </message>
+        <message>
+            <source> day</source>
+            <translation>일</translation>
+        </message>
+        <message>
+            <source> days</source>
+            <translation>일</translation>
+        </message>
+        <message>
+            <source>in a row, of %1 days with something read or watched</source>
+            <translation>연속 (읽거나 본 날은 모두 %1일)</translation>
+        </message>
+        <message>
+            <source>Your biggest day: </source>
+            <translation>가장 많이 한 날: </translation>
+        </message>
+        <message>
+            <source>Where your year started</source>
+            <translation>한 해의 시작</translation>
+        </message>
+        <message>
+            <source>the first series you finished something in, on </source>
+            <translation>처음으로 무언가를 끝낸 시리즈, 날짜: </translation>
+        </message>
+        <message>
+            <source>My %1 in SCANCORE</source>
+            <translation>SCANCORE에서의 %1년</translation>
+        </message>
+        <message>
+            <source>Top series</source>
+            <translation>최고 시리즈</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>시간</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>챕터</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>에피소드</translation>
+        </message>
+        <message>
+            <source>Longest streak</source>
+            <translation>최장 연속 기록</translation>
+        </message>
+        <message>
+            <source>Top genre</source>
+            <translation>최고 장르</translation>
+        </message>
+        <message>
+            <source>Series</source>
+            <translation>시리즈</translation>
+        </message>
+        <message>
+            <source>Busiest month</source>
+            <translation>가장 바빴던 달</translation>
+        </message>
+        <message>
+            <source>Save picture</source>
+            <translation>사진 저장</translation>
+        </message>
+        <message>
+            <source>Watch again</source>
+            <translation>다시 보기</translation>
+        </message>
+        <message>
+            <source>PNG picture (*.png)</source>
+            <translation>PNG 사진 (*.png)</translation>
+        </message>
+        <message>
+            <source>Picture saved</source>
+            <translation>사진을 저장했습니다</translation>
+        </message>
+        <message>
+            <source>Could not save the picture</source>
+            <translation>사진을 저장하지 못했습니다</translation>
+        </message>
+    </context>
+    <context>
         <name>YearReview</name>
         <message>
             <source>January</source>
@@ -7090,6 +7434,15 @@
         <message>
             <source>Could not save the picture</source>
             <translation>사진을 저장하지 못했습니다</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>5월</translation>
+        </message>
+        <message>
+            <source>Wrapped</source>
+            <translation>Wrapped</translation>
         </message>
     </context>
     <context>

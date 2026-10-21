@@ -2,6 +2,7 @@
 
 #include "Activity.h"
 #include "Library.h"
+#include "Live.h"
 #include "core/Database.h"
 
 #include <QCoreApplication>
@@ -300,6 +301,63 @@ QJsonObject Sync::snapshot() {
             {"activity", Activity::rowsForSync()}};
 }
 
+QString Sync::platform() { return platformName(); }
+
+QJsonObject Sync::unitPayload(const QString &seriesId, const QString &unitKey) {
+    if (seriesId.contains(QLatin1String(":local:")))
+        return {};
+    const auto rows = Database::query(QStringLiteral("SELECT unit_title, unit_number, unit_url, position, percent, completed, updated_at "
+                                                     "FROM progress WHERE series_id = ? AND unit_key = ?"),
+                                      {seriesId, unitKey});
+    const auto series = Database::query(QStringLiteral("SELECT media, source, source_url AS sourceUrl, title, cover, author, status, genres, "
+                                                       "extra FROM series WHERE id = ? AND source != 'local'"),
+                                        {seriesId});
+    if (rows.isEmpty() || series.isEmpty())
+        return {};
+    const auto row = rows.first().toMap();
+    return {{"seriesId", seriesId},
+            {"series", seriesJson(series.first().toMap())},
+            {"unitKey", unitKey},
+            {"unit", QJsonArray{row.value("unit_title").toString(), row.value("unit_number").toString(), row.value("unit_url").toString(),
+                                row.value("position").toString(), row.value("percent").toDouble(), row.value("completed").toInt(),
+                                row.value("updated_at").toLongLong()}}};
+}
+
+bool Sync::mergeUnit(const QJsonObject &payload) {
+    const auto id = payload.value("seriesId").toString();
+    const auto key = payload.value("unitKey").toString();
+    const auto p = payload.value("unit").toArray();
+    if (id.isEmpty() || key.isEmpty() || p.size() < 7 || id.contains(QLatin1String(":local:")))
+        return false;
+    const qint64 at = p.at(6).toInteger();
+    const auto local = Database::scalar(QStringLiteral("SELECT updated_at FROM progress WHERE series_id = ? AND unit_key = ?"), {id, key});
+    if (local.isValid() && at <= local.toLongLong())
+        return false;
+    bool merged = false;
+    Database::transaction([&] {
+        if (!Database::scalar(QStringLiteral("SELECT 1 FROM series WHERE id = ?"), {id}).isValid()) {
+            auto map = payload.value("series").toObject().toVariantMap();
+            if (map.value(QStringLiteral("title")).toString().isEmpty())
+                return;
+            map.insert(QStringLiteral("id"), id);
+            Library::upsertSeries(map);
+        }
+        Database::query(QStringLiteral(R"(
+            INSERT INTO progress(series_id, unit_key, unit_title, unit_number, unit_url, position, percent, completed, updated_at)
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(series_id, unit_key) DO UPDATE SET unit_title = excluded.unit_title,
+                unit_number = excluded.unit_number, unit_url = excluded.unit_url, position = excluded.position,
+                percent = excluded.percent, completed = MAX(progress.completed, excluded.completed),
+                updated_at = excluded.updated_at
+        )"),
+                        {id, key, p.at(0).toString(), p.at(1).toString(), p.at(2).toString(),
+                         p.at(3).toString().isEmpty() ? QVariant() : QVariant(p.at(3).toString()), std::clamp(p.at(4).toDouble(), 0.0, 1.0),
+                         p.at(5).toInt() ? 1 : 0, at});
+        merged = true;
+    });
+    return merged;
+}
+
 int Sync::merge(const QJsonObject &s) {
     if (s.value("format").toString() != QLatin1String("scancore-sync"))
         throw Error(QStringLiteral("That is not a SCANCORE sync file."));
@@ -558,7 +616,7 @@ std::unique_ptr<Sync::Store> Sync::currentStore() const {
 }
 
 void Sync::schedule() {
-    if (kind().isEmpty())
+    if (kind().isEmpty() || Live::applying())
         return;
     if (m_syncing) {
         m_dirty = true;

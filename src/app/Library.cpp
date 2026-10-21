@@ -323,6 +323,7 @@ void Library::recordProgress(const QVariantMap &series, const QVariantMap &unit,
     // the app.
     try {
         saveProgress(series, unit, position, percent, completed);
+        emit progressRecorded(seriesId, key);
     } catch (const Error &e) {
         qWarning() << "Progress not saved:" << e.message();
     }

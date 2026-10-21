@@ -131,6 +131,7 @@ qt_add_qml_module(scancore
         app/Trackers.cpp app/Trackers.h
         app/Sync.cpp app/Sync.h
         app/Library.cpp app/Library.h
+        app/Live.cpp app/Live.h
         app/Lock.cpp app/Lock.h
         app/MpvPlayer.cpp app/MpvPlayer.h
         app/Novels.cpp app/Novels.h

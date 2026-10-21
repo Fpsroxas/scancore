@@ -84,58 +84,124 @@ Item {
                 arranger: layout
                 key: "greeting"
                 label: qsTr("Greeting")
-            Item {
-                width: parent.width
-                height: Theme.compact ? 70 : 110
                 Column {
-                    id: heading
-                    x: Theme.gutter
-                    anchors.bottom: parent.bottom
-                    spacing: 6
-                    Text {
-                        text: Qt.formatDate(new Date(), "dddd, d MMMM")
-                        color: Theme.textFaint
-                        font.family: Theme.fontSans
-                        font.pixelSize: Theme.textSm
-                        font.weight: Font.Medium
-                        font.capitalization: Font.AllUppercase
-                        font.letterSpacing: 1.2
+                    width: parent.width
+                    spacing: 18
+                    Item {
+                        width: parent.width
+                        height: Theme.compact ? 70 : 110
+                        Column {
+                            id: heading
+                            x: Theme.gutter
+                            anchors.bottom: parent.bottom
+                            spacing: 6
+                            Text {
+                                text: Qt.formatDate(new Date(), "dddd, d MMMM")
+                                color: Theme.textFaint
+                                font.family: Theme.fontSans
+                                font.pixelSize: Theme.textSm
+                                font.weight: Font.Medium
+                                font.capitalization: Font.AllUppercase
+                                font.letterSpacing: 1.2
+                            }
+                            Text {
+                                text: page.greeting()
+                                color: Theme.text
+                                font.family: Theme.fontDisplay
+                                font.pixelSize: Theme.compact ? 32 : 42
+                                font.weight: Font.Bold
+                                font.letterSpacing: -1
+                            }
+                        }
+                        // Only when it fits beside the greeting (not on landscape phones).
+                        Row {
+                            id: quickLinks
+                            visible: !Theme.compact && heading.width + width + 3 * Theme.gutter <= parent.width
+                            anchors.right: parent.right
+                            anchors.rightMargin: Theme.gutter
+                            anchors.bottom: parent.bottom
+                            anchors.bottomMargin: 6
+                            spacing: 10
+                            ScButton {
+                                text: qsTr("Comics")
+                                iconName: "book-open"
+                                onClicked: Router.go("comics")
+                            }
+                            ScButton {
+                                text: qsTr("Novels")
+                                iconName: "book-text"
+                                onClicked: Router.go("novels")
+                            }
+                            ScButton {
+                                text: qsTr("Anime")
+                                iconName: "tv"
+                                onClicked: Router.go("anime")
+                            }
+                        }
                     }
-                    Text {
-                        text: page.greeting()
-                        color: Theme.text
-                        font.family: Theme.fontDisplay
-                        font.pixelSize: Theme.compact ? 32 : 42
-                        font.weight: Font.Bold
-                        font.letterSpacing: -1
+                    // December to 7 January: the year's Wrapped.
+                    Rectangle {
+                        id: wrappedBanner
+                        readonly property int year: Router.wrappedYear()
+                        visible: year > 0 && Number(App.settings.wrappedDismissed) !== year
+                        x: Theme.gutter
+                        width: parent.width - 2 * Theme.gutter
+                        height: visible ? Math.max(76, bannerText.height + 32) : 0
+                        radius: Theme.radiusXl
+                        gradient: Gradient {
+                            orientation: Gradient.Horizontal
+                            GradientStop { position: 0; color: "#3b1d8f" }
+                            GradientStop { position: 0.6; color: "#7a1f5c" }
+                            GradientStop { position: 1; color: "#b4361f" }
+                        }
+                        TapHandler { onTapped: Router.openWrapped(wrappedBanner.year) }
+                        Image {
+                            id: bannerMark
+                            x: 18
+                            anchors.verticalCenter: parent.verticalCenter
+                            source: App.icon("sparkles", "#ffffff")
+                            sourceSize: Qt.size(26, 26)
+                            width: 26
+                            height: 26
+                        }
+                        Column {
+                            id: bannerText
+                            anchors.left: bannerMark.right
+                            anchors.leftMargin: 14
+                            anchors.right: bannerClose.left
+                            anchors.rightMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 2
+                            Text {
+                                width: parent.width
+                                wrapMode: Text.Wrap
+                                text: qsTr("Your %1 Wrapped is here").arg(wrappedBanner.year)
+                                color: "white"
+                                font.family: Theme.fontDisplay
+                                font.pixelSize: Theme.textXl
+                                font.weight: Font.Bold
+                            }
+                            Text {
+                                width: parent.width
+                                wrapMode: Text.Wrap
+                                text: qsTr("Your year in comics, novels and anime")
+                                color: Qt.rgba(1, 1, 1, 0.8)
+                                font.family: Theme.fontSans
+                                font.pixelSize: Theme.textSm
+                            }
+                        }
+                        IconButton {
+                            id: bannerClose
+                            anchors.right: parent.right
+                            anchors.rightMargin: 8
+                            anchors.verticalCenter: parent.verticalCenter
+                            iconName: "x"
+                            iconColor: "white"
+                            tip: qsTr("Not now")
+                            onClicked: App.setSetting("wrappedDismissed", wrappedBanner.year)
+                        }
                     }
                 }
-                // Only when it fits beside the greeting (not on landscape phones).
-                Row {
-                    id: quickLinks
-                    visible: !Theme.compact && heading.width + width + 3 * Theme.gutter <= parent.width
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.gutter
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 6
-                    spacing: 10
-                    ScButton {
-                        text: qsTr("Comics")
-                        iconName: "book-open"
-                        onClicked: Router.go("comics")
-                    }
-                    ScButton {
-                        text: qsTr("Novels")
-                        iconName: "book-text"
-                        onClicked: Router.go("novels")
-                    }
-                    ScButton {
-                        text: qsTr("Anime")
-                        iconName: "tv"
-                        onClicked: Router.go("anime")
-                    }
-                }
-            }
             }
 
             // The latest of them, large.

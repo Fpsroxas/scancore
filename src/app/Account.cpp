@@ -1,6 +1,7 @@
 #include "Account.h"
 
 #include "Library.h"
+#include "Live.h"
 #include "Sync.h"
 #include "core/Cookies.h"
 #include "core/Database.h"
@@ -467,7 +468,8 @@ QString Account::setSite(const QString &address) {
 }
 
 void Account::scheduleSync() {
-    if (!signedIn() || !active())
+    // Progress that live sync just brought in is not a change to send.
+    if (!signedIn() || !active() || Live::applying())
         return;
     if (m_syncing) {
         m_dirty = true;

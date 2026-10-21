@@ -402,6 +402,10 @@
             <source>· updated </source>
             <translation>· diperbarui </translation>
         </message>
+        <message>
+            <source>· open now</source>
+            <translation>· sedang terbuka</translation>
+        </message>
     </context>
     <context>
         <name>ActivityPage</name>
@@ -1974,6 +1978,21 @@
         </message>
     </context>
     <context>
+        <name>ContinueOn</name>
+        <message>
+            <source>Continue on another device</source>
+            <translation>Lanjutkan di perangkat lain</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>Terkirim ke %1</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>Belum ada yang bisa dikirim: baca atau tonton sedikit dulu.</translation>
+        </message>
+    </context>
+    <context>
         <name>DetailsHeader</name>
         <message>
             <source>Start reading</source>
@@ -2653,6 +2672,18 @@
         <message>
             <source> novels</source>
             <translation> novel</translation>
+        </message>
+        <message>
+            <source>Your %1 Wrapped is here</source>
+            <translation>Wrapped %1 Anda sudah tiba</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Tahun Anda dalam komik, novel, dan anime</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Nanti saja</translation>
         </message>
     </context>
     <context>
@@ -3576,6 +3607,14 @@
         <message>
             <source>Allow</source>
             <translation>Izinkan</translation>
+        </message>
+        <message>
+            <source>From %1: %2, %3</source>
+            <translation>Dari %1: %2, %3</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Lanjut</translation>
         </message>
     </context>
     <context>
@@ -6914,6 +6953,311 @@
         </message>
     </context>
     <context>
+        <name>Wrapped</name>
+        <message>
+            <source>January</source>
+            <translation>Januari</translation>
+        </message>
+        <message>
+            <source>February</source>
+            <translation>Februari</translation>
+        </message>
+        <message>
+            <source>March</source>
+            <translation>Maret</translation>
+        </message>
+        <message>
+            <source>April</source>
+            <translation>April</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Mei</translation>
+        </message>
+        <message>
+            <source>June</source>
+            <translation>Juni</translation>
+        </message>
+        <message>
+            <source>July</source>
+            <translation>Juli</translation>
+        </message>
+        <message>
+            <source>August</source>
+            <translation>Agustus</translation>
+        </message>
+        <message>
+            <source>September</source>
+            <translation>September</translation>
+        </message>
+        <message>
+            <source>October</source>
+            <translation>Oktober</translation>
+        </message>
+        <message>
+            <source>November</source>
+            <translation>November</translation>
+        </message>
+        <message>
+            <source>December</source>
+            <translation>Desember</translation>
+        </message>
+        <message>
+            <source>Mondays</source>
+            <translation>Senin</translation>
+        </message>
+        <message>
+            <source>Tuesdays</source>
+            <translation>Selasa</translation>
+        </message>
+        <message>
+            <source>Wednesdays</source>
+            <translation>Rabu</translation>
+        </message>
+        <message>
+            <source>Thursdays</source>
+            <translation>Kamis</translation>
+        </message>
+        <message>
+            <source>Fridays</source>
+            <translation>Jumat</translation>
+        </message>
+        <message>
+            <source>Saturdays</source>
+            <translation>Sabtu</translation>
+        </message>
+        <message>
+            <source>Sundays</source>
+            <translation>Minggu</translation>
+        </message>
+        <message>
+            <source> hour</source>
+            <translation> jam</translation>
+        </message>
+        <message>
+            <source> hours</source>
+            <translation> jam</translation>
+        </message>
+        <message>
+            <source> minute</source>
+            <translation> menit</translation>
+        </message>
+        <message>
+            <source> minutes</source>
+            <translation> menit</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> episode</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> episode</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> bab</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> bab</translation>
+        </message>
+        <message>
+            <source>%1 %2</source>
+            <comment>day, month</comment>
+            <translation>%1 %2</translation>
+        </message>
+        <message>
+            <source>SCANCORE Wrapped </source>
+            <translation>SCANCORE Wrapped </translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Nothing yet in </source>
+            <translation>Belum ada di </translation>
+        </message>
+        <message>
+            <source>Chapters you finish and time spent reading and watching show up here.</source>
+            <translation>Bab yang selesai dan waktu membaca serta menonton muncul di sini.</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Tahun Anda dalam komik, novel, dan anime</translation>
+        </message>
+        <message>
+            <source>Tap to begin</source>
+            <translation>Ketuk untuk memulai</translation>
+        </message>
+        <message>
+            <source>Click or press → to begin</source>
+            <translation>Klik atau tekan → untuk memulai</translation>
+        </message>
+        <message>
+            <source>This year you spent</source>
+            <translation>Tahun ini Anda menghabiskan</translation>
+        </message>
+        <message>
+            <source>reading and watching</source>
+            <translation>untuk membaca dan menonton</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>You finished</source>
+            <translation>Anda menyelesaikan</translation>
+        </message>
+        <message>
+            <source>comic chapters</source>
+            <translation>bab komik</translation>
+        </message>
+        <message>
+            <source>novel chapters</source>
+            <translation>bab novel</translation>
+        </message>
+        <message>
+            <source>anime episodes</source>
+            <translation>episode anime</translation>
+        </message>
+        <message>
+            <source>in one series</source>
+            <translation>dalam satu seri</translation>
+        </message>
+        <message>
+            <source>across %1 series</source>
+            <translation>di %1 seri</translation>
+        </message>
+        <message>
+            <source>The series you came back to most</source>
+            <translation>Seri yang paling sering Anda kunjungi lagi</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Your number one of each</source>
+            <translation>Nomor satu Anda di tiap jenis</translation>
+        </message>
+        <message>
+            <source>The genres you lived in</source>
+            <translation>Genre favorit Anda</translation>
+        </message>
+        <message>
+            <source>The author you read most</source>
+            <translation>Penulis yang paling banyak Anda baca</translation>
+        </message>
+        <message>
+            <source>Your busiest month was</source>
+            <translation>Bulan tersibuk Anda</translation>
+        </message>
+        <message>
+            <source>and you read and watched most on </source>
+            <translation>dan Anda paling banyak membaca dan menonton pada hari </translation>
+        </message>
+        <message>
+            <source>Your longest streak</source>
+            <translation>Rentetan terpanjang Anda</translation>
+        </message>
+        <message>
+            <source> day</source>
+            <translation> hari</translation>
+        </message>
+        <message>
+            <source> days</source>
+            <translation> hari</translation>
+        </message>
+        <message>
+            <source>in a row, of %1 days with something read or watched</source>
+            <translation>berturut-turut, dari %1 hari dengan sesuatu dibaca atau ditonton</translation>
+        </message>
+        <message>
+            <source>Your biggest day: </source>
+            <translation>Hari tersibuk Anda: </translation>
+        </message>
+        <message>
+            <source>Where your year started</source>
+            <translation>Awal tahun Anda</translation>
+        </message>
+        <message>
+            <source>the first series you finished something in, on </source>
+            <translation>seri pertama tempat Anda menyelesaikan sesuatu, pada </translation>
+        </message>
+        <message>
+            <source>My %1 in SCANCORE</source>
+            <translation>%1 saya di SCANCORE</translation>
+        </message>
+        <message>
+            <source>Top series</source>
+            <translation>Seri teratas</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>Waktu</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>Bab</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>Episode</translation>
+        </message>
+        <message>
+            <source>Longest streak</source>
+            <translation>Rentetan terpanjang</translation>
+        </message>
+        <message>
+            <source>Top genre</source>
+            <translation>Genre teratas</translation>
+        </message>
+        <message>
+            <source>Series</source>
+            <translation>Seri</translation>
+        </message>
+        <message>
+            <source>Busiest month</source>
+            <translation>Bulan tersibuk</translation>
+        </message>
+        <message>
+            <source>Save picture</source>
+            <translation>Simpan gambar</translation>
+        </message>
+        <message>
+            <source>Watch again</source>
+            <translation>Tonton lagi</translation>
+        </message>
+        <message>
+            <source>PNG picture (*.png)</source>
+            <translation>Gambar PNG (*.png)</translation>
+        </message>
+        <message>
+            <source>Picture saved</source>
+            <translation>Gambar disimpan</translation>
+        </message>
+        <message>
+            <source>Could not save the picture</source>
+            <translation>Gambar tidak dapat disimpan</translation>
+        </message>
+    </context>
+    <context>
         <name>YearReview</name>
         <message>
             <source>January</source>
@@ -7090,6 +7434,15 @@
         <message>
             <source>Could not save the picture</source>
             <translation>Gambar tidak dapat disimpan</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Mei</translation>
+        </message>
+        <message>
+            <source>Wrapped</source>
+            <translation>Wrapped</translation>
         </message>
     </context>
     <context>

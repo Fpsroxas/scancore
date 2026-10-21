@@ -402,6 +402,10 @@
             <source>· updated </source>
             <translation>· güncellendi </translation>
         </message>
+        <message>
+            <source>· open now</source>
+            <translation>· şu an açık</translation>
+        </message>
     </context>
     <context>
         <name>ActivityPage</name>
@@ -1974,6 +1978,21 @@
         </message>
     </context>
     <context>
+        <name>ContinueOn</name>
+        <message>
+            <source>Continue on another device</source>
+            <translation>Başka bir cihazda devam et</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>%1 cihazına gönderildi</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>Henüz gönderilecek bir şey yok: önce biraz oku ya da izle.</translation>
+        </message>
+    </context>
+    <context>
         <name>DetailsHeader</name>
         <message>
             <source>Start reading</source>
@@ -2653,6 +2672,18 @@
         <message>
             <source> novels</source>
             <translation> romanları</translation>
+        </message>
+        <message>
+            <source>Your %1 Wrapped is here</source>
+            <translation>%1 Wrapped'in hazır</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Çizgi roman, roman ve animeyle yılın</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Şimdi değil</translation>
         </message>
     </context>
     <context>
@@ -3576,6 +3607,14 @@
         <message>
             <source>Allow</source>
             <translation>İzin ver</translation>
+        </message>
+        <message>
+            <source>From %1: %2, %3</source>
+            <translation>%1 cihazından: %2, %3</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Devam</translation>
         </message>
     </context>
     <context>
@@ -6914,6 +6953,311 @@
         </message>
     </context>
     <context>
+        <name>Wrapped</name>
+        <message>
+            <source>January</source>
+            <translation>Ocak</translation>
+        </message>
+        <message>
+            <source>February</source>
+            <translation>Şubat</translation>
+        </message>
+        <message>
+            <source>March</source>
+            <translation>Mart</translation>
+        </message>
+        <message>
+            <source>April</source>
+            <translation>Nisan</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Mayıs</translation>
+        </message>
+        <message>
+            <source>June</source>
+            <translation>Haziran</translation>
+        </message>
+        <message>
+            <source>July</source>
+            <translation>Temmuz</translation>
+        </message>
+        <message>
+            <source>August</source>
+            <translation>Ağustos</translation>
+        </message>
+        <message>
+            <source>September</source>
+            <translation>Eylül</translation>
+        </message>
+        <message>
+            <source>October</source>
+            <translation>Ekim</translation>
+        </message>
+        <message>
+            <source>November</source>
+            <translation>Kasım</translation>
+        </message>
+        <message>
+            <source>December</source>
+            <translation>Aralık</translation>
+        </message>
+        <message>
+            <source>Mondays</source>
+            <translation>Pazartesileri</translation>
+        </message>
+        <message>
+            <source>Tuesdays</source>
+            <translation>Salıları</translation>
+        </message>
+        <message>
+            <source>Wednesdays</source>
+            <translation>Çarşambaları</translation>
+        </message>
+        <message>
+            <source>Thursdays</source>
+            <translation>Perşembeleri</translation>
+        </message>
+        <message>
+            <source>Fridays</source>
+            <translation>Cumaları</translation>
+        </message>
+        <message>
+            <source>Saturdays</source>
+            <translation>Cumartesileri</translation>
+        </message>
+        <message>
+            <source>Sundays</source>
+            <translation>Pazarları</translation>
+        </message>
+        <message>
+            <source> hour</source>
+            <translation> saat</translation>
+        </message>
+        <message>
+            <source> hours</source>
+            <translation> saat</translation>
+        </message>
+        <message>
+            <source> minute</source>
+            <translation> dakika</translation>
+        </message>
+        <message>
+            <source> minutes</source>
+            <translation> dakika</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> bölüm</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> bölüm</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> bölüm</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> bölüm</translation>
+        </message>
+        <message>
+            <source>%1 %2</source>
+            <comment>day, month</comment>
+            <translation>%1 %2</translation>
+        </message>
+        <message>
+            <source>SCANCORE Wrapped </source>
+            <translation>SCANCORE Wrapped </translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Nothing yet in </source>
+            <translation>Henüz bir şey yok: </translation>
+        </message>
+        <message>
+            <source>Chapters you finish and time spent reading and watching show up here.</source>
+            <translation>Bitirdiğin bölümler ve okuyup izlemeye harcadığın süre burada görünür.</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Çizgi roman, roman ve animeyle yılın</translation>
+        </message>
+        <message>
+            <source>Tap to begin</source>
+            <translation>Başlamak için dokun</translation>
+        </message>
+        <message>
+            <source>Click or press → to begin</source>
+            <translation>Başlamak için tıkla ya da → tuşuna bas</translation>
+        </message>
+        <message>
+            <source>This year you spent</source>
+            <translation>Bu yıl harcadığın süre</translation>
+        </message>
+        <message>
+            <source>reading and watching</source>
+            <translation>okuma ve izlemeye</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Çizgi romanlar</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Romanlar</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>You finished</source>
+            <translation>Bitirdiklerin</translation>
+        </message>
+        <message>
+            <source>comic chapters</source>
+            <translation>çizgi roman bölümü</translation>
+        </message>
+        <message>
+            <source>novel chapters</source>
+            <translation>roman bölümü</translation>
+        </message>
+        <message>
+            <source>anime episodes</source>
+            <translation>anime bölümü</translation>
+        </message>
+        <message>
+            <source>in one series</source>
+            <translation>tek bir seride</translation>
+        </message>
+        <message>
+            <source>across %1 series</source>
+            <translation>%1 seride</translation>
+        </message>
+        <message>
+            <source>The series you came back to most</source>
+            <translation>En çok geri döndüğün seri</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Çizgi roman</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Roman</translation>
+        </message>
+        <message>
+            <source>Your number one of each</source>
+            <translation>Her birinde bir numaran</translation>
+        </message>
+        <message>
+            <source>The genres you lived in</source>
+            <translation>İçinde yaşadığın türler</translation>
+        </message>
+        <message>
+            <source>The author you read most</source>
+            <translation>En çok okuduğun yazar</translation>
+        </message>
+        <message>
+            <source>Your busiest month was</source>
+            <translation>En yoğun ayın</translation>
+        </message>
+        <message>
+            <source>and you read and watched most on </source>
+            <translation>ve en çok okuyup izlediğin gün: </translation>
+        </message>
+        <message>
+            <source>Your longest streak</source>
+            <translation>En uzun serin</translation>
+        </message>
+        <message>
+            <source> day</source>
+            <translation> gün</translation>
+        </message>
+        <message>
+            <source> days</source>
+            <translation> gün</translation>
+        </message>
+        <message>
+            <source>in a row, of %1 days with something read or watched</source>
+            <translation>üst üste; toplam %1 gün bir şey okudun ya da izledin</translation>
+        </message>
+        <message>
+            <source>Your biggest day: </source>
+            <translation>En yoğun günün: </translation>
+        </message>
+        <message>
+            <source>Where your year started</source>
+            <translation>Yılın nerede başladı</translation>
+        </message>
+        <message>
+            <source>the first series you finished something in, on </source>
+            <translation>bir şeyi ilk bitirdiğin seri, tarih: </translation>
+        </message>
+        <message>
+            <source>My %1 in SCANCORE</source>
+            <translation>SCANCORE'da %1 yılım</translation>
+        </message>
+        <message>
+            <source>Top series</source>
+            <translation>En iyi seri</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>Süre</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>Bölümler</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>Bölümler</translation>
+        </message>
+        <message>
+            <source>Longest streak</source>
+            <translation>En uzun seri</translation>
+        </message>
+        <message>
+            <source>Top genre</source>
+            <translation>En iyi tür</translation>
+        </message>
+        <message>
+            <source>Series</source>
+            <translation>Seriler</translation>
+        </message>
+        <message>
+            <source>Busiest month</source>
+            <translation>En yoğun ay</translation>
+        </message>
+        <message>
+            <source>Save picture</source>
+            <translation>Resmi kaydet</translation>
+        </message>
+        <message>
+            <source>Watch again</source>
+            <translation>Yeniden izle</translation>
+        </message>
+        <message>
+            <source>PNG picture (*.png)</source>
+            <translation>PNG resmi (*.png)</translation>
+        </message>
+        <message>
+            <source>Picture saved</source>
+            <translation>Resim kaydedildi</translation>
+        </message>
+        <message>
+            <source>Could not save the picture</source>
+            <translation>Resim kaydedilemedi</translation>
+        </message>
+    </context>
+    <context>
         <name>YearReview</name>
         <message>
             <source>January</source>
@@ -7090,6 +7434,15 @@
         <message>
             <source>Could not save the picture</source>
             <translation>Resim kaydedilemedi</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Mayıs</translation>
+        </message>
+        <message>
+            <source>Wrapped</source>
+            <translation>Wrapped</translation>
         </message>
     </context>
     <context>

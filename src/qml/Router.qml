@@ -48,7 +48,7 @@ QtObject {
     // One source's own popular, latest and filtered lists.
     function openSource(key) { push("pages/SourcePage.qml", { sourceKey: key }) }
     function openExtensions() { push("pages/ExtensionsPage.qml", {}) }
-    function toast(message, kind) { if (shell) shell.toast(message, kind || "info") }
+    function toast(message, kind, action) { if (shell) shell.toast(message, kind || "info", action) }
 
     // item: a search/library map with id, media, sourceUrl, title, cover.
     function openSeries(item, fromCover) {
@@ -69,6 +69,19 @@ QtObject {
 
     function openNovelReader(series, chapters, index) {
         if (shell) shell.openImmersive("pages/NovelReader.qml", { series: series, chapters: chapters, index: index })
+    }
+
+    // SCANCORE Wrapped for a year, as a story over the whole window.
+    function openWrapped(year) {
+        if (shell) shell.openImmersive("pages/Wrapped.qml", { year: year })
+    }
+    // The year Wrapped is in season for: December and the first week of
+    // January show the year just ending; any other time -1.
+    function wrappedYear(now) {
+        const d = now || new Date()
+        if (d.getMonth() === 11) return d.getFullYear()
+        if (d.getMonth() === 0 && d.getDate() <= 7) return d.getFullYear() - 1
+        return -1
     }
 
     function openWatch(media, episodes, index) {

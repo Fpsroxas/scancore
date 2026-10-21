@@ -570,18 +570,28 @@ Rectangle {
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: reader.insetTop / 2
-            spacing: 4
-            IconButton { iconName: "chevron-left"; iconColor: reader.look.text; enabled: reader.hasPrev; tip: qsTr("Previous chapter") + reader.keyHint("reader.prev"); onClicked: reader.load(reader.index - 1) }
-            IconButton { iconName: "chevron-right"; iconColor: reader.look.text; enabled: reader.hasNext; tip: qsTr("Next chapter") + reader.keyHint("reader.next"); onClicked: reader.load(reader.index + 1) }
-            IconButton { iconName: "list"; iconColor: reader.look.text; tip: qsTr("Chapters"); onClicked: chapterPopup.open() }
+            // Phones: smaller buttons, no gaps, so all fit beside the close button.
+            readonly property int button: reader.width < 420 ? 32 : 34
+            spacing: reader.width < 420 ? 0 : 4
+            IconButton { diameter: novelActions.button; iconName: "chevron-left"; iconColor: reader.look.text; enabled: reader.hasPrev; tip: qsTr("Previous chapter") + reader.keyHint("reader.prev"); onClicked: reader.load(reader.index - 1) }
+            IconButton { diameter: novelActions.button; iconName: "chevron-right"; iconColor: reader.look.text; enabled: reader.hasNext; tip: qsTr("Next chapter") + reader.keyHint("reader.next"); onClicked: reader.load(reader.index + 1) }
+            IconButton { diameter: novelActions.button; iconName: "list"; iconColor: reader.look.text; tip: qsTr("Chapters"); onClicked: chapterPopup.open() }
             IconButton {
+                diameter: novelActions.button
                 visible: !String(reader.series.sourceUrl || "").startsWith("file:")
                 iconName: "message-circle"
                 iconColor: reader.look.text
                 tip: qsTr("Comments")
                 onClicked: comments.open()
             }
+            ContinueOn {
+                diameter: novelActions.button
+                seriesId: reader.series.id || ""
+                iconColor: reader.look.text
+                save: () => reader.savePosition(true)
+            }
             IconButton {
+                diameter: novelActions.button
                 iconName: reader.speaking ? "pause" : "volume-2"
                 iconColor: reader.speaking ? Theme.accent : reader.look.text
                 enabled: Speech.available && reader.blocks.length > 0
@@ -591,14 +601,16 @@ Rectangle {
                     : reader.startSpeaking(flick.contentY - flick.originY < 40 ? -1 : reader.firstVisibleBlock())
             }
             IconButton {
+                diameter: novelActions.button
                 iconName: "move-vertical"
                 iconColor: reader.autoScrolling ? Theme.accent : reader.look.text
                 enabled: reader.blocks.length > 0 && !reader.speaking
                 tip: reader.autoScrolling ? qsTr("Stop scrolling") : qsTr("Scroll by itself")
                 onClicked: reader.autoScrolling = !reader.autoScrolling
             }
-            IconButton { iconName: "type"; iconColor: reader.look.text; tip: qsTr("Text settings"); onClicked: typePopup.open() }
+            IconButton { diameter: novelActions.button; iconName: "type"; iconColor: reader.look.text; tip: qsTr("Text settings"); onClicked: typePopup.open() }
             IconButton {
+                diameter: novelActions.button
                 iconName: fullScreen.fullScreen ? "minimize" : "maximize"
                 iconColor: reader.look.text
                 tip: qsTr("Full screen") + reader.keyHint("reader.fullscreen")

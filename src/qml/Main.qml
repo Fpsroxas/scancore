@@ -106,6 +106,18 @@ ApplicationWindow {
         target: Downloads
         function onFinished(title) { shell.toast(qsTr("Downloaded ") + title, "success") }
     }
+    // Another of the account's apps sent where it is (Continue on…).
+    Connections {
+        target: Live
+        function onHandoffReceived(entry, from) {
+            shell.toast(qsTr("From %1: %2, %3").arg(from.name).arg(entry.title).arg(entry.unitTitle), "info",
+                        { label: qsTr("Continue"), run: () => shell.resume(entry) })
+            // Sent on purpose from the other device: bring this one forward.
+            if (!window.visible) window.show()
+            window.raise()
+            window.requestActivate()
+        }
+    }
     // A file or link given on the command line or by a second launch.
     Connections {
         target: App
@@ -235,7 +247,7 @@ ApplicationWindow {
         }
 
         function addRepository(link) { repositorySheet.start(link) }
-        function toast(message, kind) { toasts.show(message, kind) }
+        function toast(message, kind, action) { toasts.show(message, kind, action) }
 
         function land(target) { hero.land(target) }
 

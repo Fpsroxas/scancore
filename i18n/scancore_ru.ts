@@ -402,6 +402,10 @@
             <source>· updated </source>
             <translation>· обновлено </translation>
         </message>
+        <message>
+            <source>· open now</source>
+            <translation>· открыто сейчас</translation>
+        </message>
     </context>
     <context>
         <name>ActivityPage</name>
@@ -1974,6 +1978,21 @@
         </message>
     </context>
     <context>
+        <name>ContinueOn</name>
+        <message>
+            <source>Continue on another device</source>
+            <translation>Продолжить на другом устройстве</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>Отправлено на %1</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>Пока нечего отправить: сначала немного почитайте или посмотрите.</translation>
+        </message>
+    </context>
+    <context>
         <name>DetailsHeader</name>
         <message>
             <source>Start reading</source>
@@ -2653,6 +2672,18 @@
         <message>
             <source> novels</source>
             <translation> новеллы</translation>
+        </message>
+        <message>
+            <source>Your %1 Wrapped is here</source>
+            <translation>Ваш Wrapped %1 готов</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Ваш год в комиксах, новеллах и аниме</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Не сейчас</translation>
         </message>
     </context>
     <context>
@@ -3576,6 +3607,14 @@
         <message>
             <source>Allow</source>
             <translation>Разрешить</translation>
+        </message>
+        <message>
+            <source>From %1: %2, %3</source>
+            <translation>С %1: %2, %3</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Продолжить</translation>
         </message>
     </context>
     <context>
@@ -6914,6 +6953,311 @@
         </message>
     </context>
     <context>
+        <name>Wrapped</name>
+        <message>
+            <source>January</source>
+            <translation>Январь</translation>
+        </message>
+        <message>
+            <source>February</source>
+            <translation>Февраль</translation>
+        </message>
+        <message>
+            <source>March</source>
+            <translation>Март</translation>
+        </message>
+        <message>
+            <source>April</source>
+            <translation>Апрель</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Май</translation>
+        </message>
+        <message>
+            <source>June</source>
+            <translation>Июнь</translation>
+        </message>
+        <message>
+            <source>July</source>
+            <translation>Июль</translation>
+        </message>
+        <message>
+            <source>August</source>
+            <translation>Август</translation>
+        </message>
+        <message>
+            <source>September</source>
+            <translation>Сентябрь</translation>
+        </message>
+        <message>
+            <source>October</source>
+            <translation>Октябрь</translation>
+        </message>
+        <message>
+            <source>November</source>
+            <translation>Ноябрь</translation>
+        </message>
+        <message>
+            <source>December</source>
+            <translation>Декабрь</translation>
+        </message>
+        <message>
+            <source>Mondays</source>
+            <translation>По понедельникам</translation>
+        </message>
+        <message>
+            <source>Tuesdays</source>
+            <translation>По вторникам</translation>
+        </message>
+        <message>
+            <source>Wednesdays</source>
+            <translation>По средам</translation>
+        </message>
+        <message>
+            <source>Thursdays</source>
+            <translation>По четвергам</translation>
+        </message>
+        <message>
+            <source>Fridays</source>
+            <translation>По пятницам</translation>
+        </message>
+        <message>
+            <source>Saturdays</source>
+            <translation>По субботам</translation>
+        </message>
+        <message>
+            <source>Sundays</source>
+            <translation>По воскресеньям</translation>
+        </message>
+        <message>
+            <source> hour</source>
+            <translation> час</translation>
+        </message>
+        <message>
+            <source> hours</source>
+            <translation> часов</translation>
+        </message>
+        <message>
+            <source> minute</source>
+            <translation> минута</translation>
+        </message>
+        <message>
+            <source> minutes</source>
+            <translation> минут</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> эпизод</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> эпизодов</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> глава</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> глав</translation>
+        </message>
+        <message>
+            <source>%1 %2</source>
+            <comment>day, month</comment>
+            <translation>%1 %2</translation>
+        </message>
+        <message>
+            <source>SCANCORE Wrapped </source>
+            <translation>SCANCORE Wrapped </translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Закрыть</translation>
+        </message>
+        <message>
+            <source>Nothing yet in </source>
+            <translation>Пока ничего за </translation>
+        </message>
+        <message>
+            <source>Chapters you finish and time spent reading and watching show up here.</source>
+            <translation>Прочитанные главы и время чтения и просмотра появятся здесь.</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Ваш год в комиксах, новеллах и аниме</translation>
+        </message>
+        <message>
+            <source>Tap to begin</source>
+            <translation>Коснитесь, чтобы начать</translation>
+        </message>
+        <message>
+            <source>Click or press → to begin</source>
+            <translation>Щёлкните или нажмите →, чтобы начать</translation>
+        </message>
+        <message>
+            <source>This year you spent</source>
+            <translation>В этом году вы провели</translation>
+        </message>
+        <message>
+            <source>reading and watching</source>
+            <translation>за чтением и просмотром</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Комиксы</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Новеллы</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Аниме</translation>
+        </message>
+        <message>
+            <source>You finished</source>
+            <translation>Вы завершили</translation>
+        </message>
+        <message>
+            <source>comic chapters</source>
+            <translation>глав комиксов</translation>
+        </message>
+        <message>
+            <source>novel chapters</source>
+            <translation>глав новелл</translation>
+        </message>
+        <message>
+            <source>anime episodes</source>
+            <translation>эпизодов аниме</translation>
+        </message>
+        <message>
+            <source>in one series</source>
+            <translation>в одной серии</translation>
+        </message>
+        <message>
+            <source>across %1 series</source>
+            <translation>в %1 сериях</translation>
+        </message>
+        <message>
+            <source>The series you came back to most</source>
+            <translation>Серия, к которой вы возвращались чаще всего</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Комикс</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Новелла</translation>
+        </message>
+        <message>
+            <source>Your number one of each</source>
+            <translation>Ваш номер один в каждом виде</translation>
+        </message>
+        <message>
+            <source>The genres you lived in</source>
+            <translation>Жанры, в которых вы жили</translation>
+        </message>
+        <message>
+            <source>The author you read most</source>
+            <translation>Автор, которого вы читали больше всего</translation>
+        </message>
+        <message>
+            <source>Your busiest month was</source>
+            <translation>Ваш самый активный месяц —</translation>
+        </message>
+        <message>
+            <source>and you read and watched most on </source>
+            <translation>и больше всего вы читали и смотрели </translation>
+        </message>
+        <message>
+            <source>Your longest streak</source>
+            <translation>Ваша самая длинная серия</translation>
+        </message>
+        <message>
+            <source> day</source>
+            <translation> день</translation>
+        </message>
+        <message>
+            <source> days</source>
+            <translation> дней</translation>
+        </message>
+        <message>
+            <source>in a row, of %1 days with something read or watched</source>
+            <translation>подряд, из %1 дней, когда вы что-то читали или смотрели</translation>
+        </message>
+        <message>
+            <source>Your biggest day: </source>
+            <translation>Ваш самый активный день: </translation>
+        </message>
+        <message>
+            <source>Where your year started</source>
+            <translation>С чего начался ваш год</translation>
+        </message>
+        <message>
+            <source>the first series you finished something in, on </source>
+            <translation>первая серия, в которой вы что-то завершили, — </translation>
+        </message>
+        <message>
+            <source>My %1 in SCANCORE</source>
+            <translation>Мой %1 в SCANCORE</translation>
+        </message>
+        <message>
+            <source>Top series</source>
+            <translation>Главная серия</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>Время</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>Главы</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>Эпизоды</translation>
+        </message>
+        <message>
+            <source>Longest streak</source>
+            <translation>Самая длинная серия</translation>
+        </message>
+        <message>
+            <source>Top genre</source>
+            <translation>Главный жанр</translation>
+        </message>
+        <message>
+            <source>Series</source>
+            <translation>Серии</translation>
+        </message>
+        <message>
+            <source>Busiest month</source>
+            <translation>Самый активный месяц</translation>
+        </message>
+        <message>
+            <source>Save picture</source>
+            <translation>Сохранить картинку</translation>
+        </message>
+        <message>
+            <source>Watch again</source>
+            <translation>Смотреть снова</translation>
+        </message>
+        <message>
+            <source>PNG picture (*.png)</source>
+            <translation>Изображение PNG (*.png)</translation>
+        </message>
+        <message>
+            <source>Picture saved</source>
+            <translation>Картинка сохранена</translation>
+        </message>
+        <message>
+            <source>Could not save the picture</source>
+            <translation>Не удалось сохранить картинку</translation>
+        </message>
+    </context>
+    <context>
         <name>YearReview</name>
         <message>
             <source>January</source>
@@ -7090,6 +7434,15 @@
         <message>
             <source>Could not save the picture</source>
             <translation>Не удалось сохранить картинку</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Май</translation>
+        </message>
+        <message>
+            <source>Wrapped</source>
+            <translation>Wrapped</translation>
         </message>
     </context>
     <context>

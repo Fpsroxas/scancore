@@ -4,6 +4,7 @@
 #include "Images.h"
 #include "Announcements.h"
 #include "Library.h"
+#include "Live.h"
 #include "Notifications.h"
 #include "Platform.h"
 #include "Profiler.h"
@@ -137,6 +138,8 @@ const QVariantMap kDefaults{
     {"announcements", true},
     {"checkAppUpdates", true},
     {"sidebarCollapsed", false},
+    // The year whose Wrapped banner on Home was closed (December to 7 January).
+    {"wrappedDismissed", 0},
     {"comicSource", "all"},
     // The library: which media, category ("all", "favourites" or one of
     // Router.libraryCategories) and view (grid, compact, list).
@@ -593,6 +596,8 @@ void App::startBackgroundWork() {
     });
     // Announcements from scancore.onl, live while online.
     QTimer::singleShot(6000, this, [] { Announcements::instance()->start(); });
+    // Live progress with the account's other open apps.
+    QTimer::singleShot(5000, this, [] { Live::instance()->update(); });
     scheduleLibraryCheck();
     QTimer::singleShot(4000, this, [this] {
         refreshSources();

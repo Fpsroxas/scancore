@@ -64,6 +64,8 @@ public:
     // {libraryImported, historyImported, pushed, morePending}. While a sync
     // runs, returns that one.
     Q_INVOKABLE sc::Task *sync();
+    // Account sync rests while WebDAV or folder sync is on (see Sync).
+    bool active() const;
 
 signals:
     void changed();
@@ -79,8 +81,6 @@ private:
     // A sync soon after a change in the library or progress, but not more
     // than about once a minute.
     void scheduleSync();
-    // Account sync rests while WebDAV or folder sync is on (see Sync).
-    bool active() const;
     static QVariantMap importAll(const QJsonObject &session);
 
     QVariantMap m_user;

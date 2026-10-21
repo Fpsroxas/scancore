@@ -402,6 +402,10 @@
             <source>· updated </source>
             <translation>· cập nhật lúc </translation>
         </message>
+        <message>
+            <source>· open now</source>
+            <translation>· đang mở</translation>
+        </message>
     </context>
     <context>
         <name>ActivityPage</name>
@@ -1974,6 +1978,21 @@
         </message>
     </context>
     <context>
+        <name>ContinueOn</name>
+        <message>
+            <source>Continue on another device</source>
+            <translation>Tiếp tục trên thiết bị khác</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>Đã gửi đến %1</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>Chưa có gì để gửi: hãy đọc hoặc xem một chút trước.</translation>
+        </message>
+    </context>
+    <context>
         <name>DetailsHeader</name>
         <message>
             <source>Start reading</source>
@@ -2653,6 +2672,18 @@
         <message>
             <source> novels</source>
             <translation> tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Your %1 Wrapped is here</source>
+            <translation>Wrapped %1 của bạn đã đến</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Năm của bạn qua truyện tranh, tiểu thuyết và anime</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>Để sau</translation>
         </message>
     </context>
     <context>
@@ -3576,6 +3607,14 @@
         <message>
             <source>Allow</source>
             <translation>Cho phép</translation>
+        </message>
+        <message>
+            <source>From %1: %2, %3</source>
+            <translation>Từ %1: %2, %3</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>Tiếp tục</translation>
         </message>
     </context>
     <context>
@@ -6914,6 +6953,311 @@
         </message>
     </context>
     <context>
+        <name>Wrapped</name>
+        <message>
+            <source>January</source>
+            <translation>Tháng 1</translation>
+        </message>
+        <message>
+            <source>February</source>
+            <translation>Tháng 2</translation>
+        </message>
+        <message>
+            <source>March</source>
+            <translation>Tháng 3</translation>
+        </message>
+        <message>
+            <source>April</source>
+            <translation>Tháng 4</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Tháng 5</translation>
+        </message>
+        <message>
+            <source>June</source>
+            <translation>Tháng 6</translation>
+        </message>
+        <message>
+            <source>July</source>
+            <translation>Tháng 7</translation>
+        </message>
+        <message>
+            <source>August</source>
+            <translation>Tháng 8</translation>
+        </message>
+        <message>
+            <source>September</source>
+            <translation>Tháng 9</translation>
+        </message>
+        <message>
+            <source>October</source>
+            <translation>Tháng 10</translation>
+        </message>
+        <message>
+            <source>November</source>
+            <translation>Tháng 11</translation>
+        </message>
+        <message>
+            <source>December</source>
+            <translation>Tháng 12</translation>
+        </message>
+        <message>
+            <source>Mondays</source>
+            <translation>Thứ Hai hằng tuần</translation>
+        </message>
+        <message>
+            <source>Tuesdays</source>
+            <translation>Thứ Ba hằng tuần</translation>
+        </message>
+        <message>
+            <source>Wednesdays</source>
+            <translation>Thứ Tư hằng tuần</translation>
+        </message>
+        <message>
+            <source>Thursdays</source>
+            <translation>Thứ Năm hằng tuần</translation>
+        </message>
+        <message>
+            <source>Fridays</source>
+            <translation>Thứ Sáu hằng tuần</translation>
+        </message>
+        <message>
+            <source>Saturdays</source>
+            <translation>Thứ Bảy hằng tuần</translation>
+        </message>
+        <message>
+            <source>Sundays</source>
+            <translation>Chủ Nhật hằng tuần</translation>
+        </message>
+        <message>
+            <source> hour</source>
+            <translation> giờ</translation>
+        </message>
+        <message>
+            <source> hours</source>
+            <translation> giờ</translation>
+        </message>
+        <message>
+            <source> minute</source>
+            <translation> phút</translation>
+        </message>
+        <message>
+            <source> minutes</source>
+            <translation> phút</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> tập</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> tập</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> chương</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> chương</translation>
+        </message>
+        <message>
+            <source>%1 %2</source>
+            <comment>day, month</comment>
+            <translation>%1 %2</translation>
+        </message>
+        <message>
+            <source>SCANCORE Wrapped </source>
+            <translation>SCANCORE Wrapped </translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Nothing yet in </source>
+            <translation>Chưa có gì trong </translation>
+        </message>
+        <message>
+            <source>Chapters you finish and time spent reading and watching show up here.</source>
+            <translation>Các chương bạn đọc xong và thời gian đọc, xem sẽ hiện ở đây.</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>Năm của bạn qua truyện tranh, tiểu thuyết và anime</translation>
+        </message>
+        <message>
+            <source>Tap to begin</source>
+            <translation>Chạm để bắt đầu</translation>
+        </message>
+        <message>
+            <source>Click or press → to begin</source>
+            <translation>Nhấp hoặc nhấn → để bắt đầu</translation>
+        </message>
+        <message>
+            <source>This year you spent</source>
+            <translation>Năm nay bạn đã dành</translation>
+        </message>
+        <message>
+            <source>reading and watching</source>
+            <translation>để đọc và xem</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Truyện tranh</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>You finished</source>
+            <translation>Bạn đã hoàn thành</translation>
+        </message>
+        <message>
+            <source>comic chapters</source>
+            <translation>chương truyện tranh</translation>
+        </message>
+        <message>
+            <source>novel chapters</source>
+            <translation>chương tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>anime episodes</source>
+            <translation>tập anime</translation>
+        </message>
+        <message>
+            <source>in one series</source>
+            <translation>trong một bộ</translation>
+        </message>
+        <message>
+            <source>across %1 series</source>
+            <translation>trong %1 bộ</translation>
+        </message>
+        <message>
+            <source>The series you came back to most</source>
+            <translation>Bộ truyện bạn quay lại nhiều nhất</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Truyện tranh</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Your number one of each</source>
+            <translation>Số một của bạn ở mỗi loại</translation>
+        </message>
+        <message>
+            <source>The genres you lived in</source>
+            <translation>Những thể loại bạn đắm chìm</translation>
+        </message>
+        <message>
+            <source>The author you read most</source>
+            <translation>Tác giả bạn đọc nhiều nhất</translation>
+        </message>
+        <message>
+            <source>Your busiest month was</source>
+            <translation>Tháng bận rộn nhất của bạn là</translation>
+        </message>
+        <message>
+            <source>and you read and watched most on </source>
+            <translation>và bạn đọc và xem nhiều nhất vào </translation>
+        </message>
+        <message>
+            <source>Your longest streak</source>
+            <translation>Chuỗi ngày dài nhất của bạn</translation>
+        </message>
+        <message>
+            <source> day</source>
+            <translation> ngày</translation>
+        </message>
+        <message>
+            <source> days</source>
+            <translation> ngày</translation>
+        </message>
+        <message>
+            <source>in a row, of %1 days with something read or watched</source>
+            <translation>liên tiếp, trong %1 ngày có đọc hoặc xem</translation>
+        </message>
+        <message>
+            <source>Your biggest day: </source>
+            <translation>Ngày sôi nổi nhất: </translation>
+        </message>
+        <message>
+            <source>Where your year started</source>
+            <translation>Nơi năm của bạn bắt đầu</translation>
+        </message>
+        <message>
+            <source>the first series you finished something in, on </source>
+            <translation>bộ truyện đầu tiên bạn hoàn thành một phần, vào </translation>
+        </message>
+        <message>
+            <source>My %1 in SCANCORE</source>
+            <translation>%1 của tôi trên SCANCORE</translation>
+        </message>
+        <message>
+            <source>Top series</source>
+            <translation>Bộ truyện hàng đầu</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>Thời gian</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>Chương</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>Tập</translation>
+        </message>
+        <message>
+            <source>Longest streak</source>
+            <translation>Chuỗi ngày dài nhất</translation>
+        </message>
+        <message>
+            <source>Top genre</source>
+            <translation>Thể loại hàng đầu</translation>
+        </message>
+        <message>
+            <source>Series</source>
+            <translation>Bộ truyện</translation>
+        </message>
+        <message>
+            <source>Busiest month</source>
+            <translation>Tháng bận rộn nhất</translation>
+        </message>
+        <message>
+            <source>Save picture</source>
+            <translation>Lưu ảnh</translation>
+        </message>
+        <message>
+            <source>Watch again</source>
+            <translation>Xem lại</translation>
+        </message>
+        <message>
+            <source>PNG picture (*.png)</source>
+            <translation>Ảnh PNG (*.png)</translation>
+        </message>
+        <message>
+            <source>Picture saved</source>
+            <translation>Đã lưu ảnh</translation>
+        </message>
+        <message>
+            <source>Could not save the picture</source>
+            <translation>Không lưu được ảnh</translation>
+        </message>
+    </context>
+    <context>
         <name>YearReview</name>
         <message>
             <source>January</source>
@@ -7090,6 +7434,15 @@
         <message>
             <source>Could not save the picture</source>
             <translation>Không lưu được ảnh</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>Tháng 5</translation>
+        </message>
+        <message>
+            <source>Wrapped</source>
+            <translation>Wrapped</translation>
         </message>
     </context>
     <context>

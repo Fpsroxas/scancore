@@ -402,6 +402,10 @@
             <source>· updated </source>
             <translation>· 更新於 </translation>
         </message>
+        <message>
+            <source>· open now</source>
+            <translation>· 正在開啟</translation>
+        </message>
     </context>
     <context>
         <name>ActivityPage</name>
@@ -1974,6 +1978,21 @@
         </message>
     </context>
     <context>
+        <name>ContinueOn</name>
+        <message>
+            <source>Continue on another device</source>
+            <translation>在其他裝置上繼續</translation>
+        </message>
+        <message>
+            <source>Sent to %1</source>
+            <translation>已傳送到 %1</translation>
+        </message>
+        <message>
+            <source>Nothing to send yet: read or watch a little first.</source>
+            <translation>還沒有可傳送的內容：先讀一點或看一點吧。</translation>
+        </message>
+    </context>
+    <context>
         <name>DetailsHeader</name>
         <message>
             <source>Start reading</source>
@@ -2653,6 +2672,18 @@
         <message>
             <source> novels</source>
             <translation> 小說</translation>
+        </message>
+        <message>
+            <source>Your %1 Wrapped is here</source>
+            <translation>你的 %1 年 Wrapped 來了</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>你在漫畫、小說和動畫中的一年</translation>
+        </message>
+        <message>
+            <source>Not now</source>
+            <translation>稍後再說</translation>
         </message>
     </context>
     <context>
@@ -3576,6 +3607,14 @@
         <message>
             <source>Allow</source>
             <translation>允許</translation>
+        </message>
+        <message>
+            <source>From %1: %2, %3</source>
+            <translation>來自 %1：%2，%3</translation>
+        </message>
+        <message>
+            <source>Continue</source>
+            <translation>繼續</translation>
         </message>
     </context>
     <context>
@@ -6914,6 +6953,311 @@
         </message>
     </context>
     <context>
+        <name>Wrapped</name>
+        <message>
+            <source>January</source>
+            <translation>一月</translation>
+        </message>
+        <message>
+            <source>February</source>
+            <translation>二月</translation>
+        </message>
+        <message>
+            <source>March</source>
+            <translation>三月</translation>
+        </message>
+        <message>
+            <source>April</source>
+            <translation>四月</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>五月</translation>
+        </message>
+        <message>
+            <source>June</source>
+            <translation>六月</translation>
+        </message>
+        <message>
+            <source>July</source>
+            <translation>七月</translation>
+        </message>
+        <message>
+            <source>August</source>
+            <translation>八月</translation>
+        </message>
+        <message>
+            <source>September</source>
+            <translation>九月</translation>
+        </message>
+        <message>
+            <source>October</source>
+            <translation>十月</translation>
+        </message>
+        <message>
+            <source>November</source>
+            <translation>十一月</translation>
+        </message>
+        <message>
+            <source>December</source>
+            <translation>十二月</translation>
+        </message>
+        <message>
+            <source>Mondays</source>
+            <translation>每週一</translation>
+        </message>
+        <message>
+            <source>Tuesdays</source>
+            <translation>每週二</translation>
+        </message>
+        <message>
+            <source>Wednesdays</source>
+            <translation>每週三</translation>
+        </message>
+        <message>
+            <source>Thursdays</source>
+            <translation>每週四</translation>
+        </message>
+        <message>
+            <source>Fridays</source>
+            <translation>每週五</translation>
+        </message>
+        <message>
+            <source>Saturdays</source>
+            <translation>每週六</translation>
+        </message>
+        <message>
+            <source>Sundays</source>
+            <translation>每週日</translation>
+        </message>
+        <message>
+            <source> hour</source>
+            <translation> 小時</translation>
+        </message>
+        <message>
+            <source> hours</source>
+            <translation> 小時</translation>
+        </message>
+        <message>
+            <source> minute</source>
+            <translation> 分鐘</translation>
+        </message>
+        <message>
+            <source> minutes</source>
+            <translation> 分鐘</translation>
+        </message>
+        <message>
+            <source> episode</source>
+            <translation> 集</translation>
+        </message>
+        <message>
+            <source> episodes</source>
+            <translation> 集</translation>
+        </message>
+        <message>
+            <source> chapter</source>
+            <translation> 章</translation>
+        </message>
+        <message>
+            <source> chapters</source>
+            <translation> 章</translation>
+        </message>
+        <message>
+            <source>%1 %2</source>
+            <comment>day, month</comment>
+            <translation>%2%1日</translation>
+        </message>
+        <message>
+            <source>SCANCORE Wrapped </source>
+            <translation>SCANCORE Wrapped </translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Nothing yet in </source>
+            <translation>還沒有內容： </translation>
+        </message>
+        <message>
+            <source>Chapters you finish and time spent reading and watching show up here.</source>
+            <translation>你讀完的章節和閱讀、觀看的時間會顯示在這裡。</translation>
+        </message>
+        <message>
+            <source>Your year in comics, novels and anime</source>
+            <translation>你在漫畫、小說和動畫中的一年</translation>
+        </message>
+        <message>
+            <source>Tap to begin</source>
+            <translation>輕觸開始</translation>
+        </message>
+        <message>
+            <source>Click or press → to begin</source>
+            <translation>點擊或按 → 開始</translation>
+        </message>
+        <message>
+            <source>This year you spent</source>
+            <translation>今年你花了</translation>
+        </message>
+        <message>
+            <source>reading and watching</source>
+            <translation>在閱讀和觀看上</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>漫畫</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>動畫</translation>
+        </message>
+        <message>
+            <source>You finished</source>
+            <translation>你完成了</translation>
+        </message>
+        <message>
+            <source>comic chapters</source>
+            <translation>話漫畫</translation>
+        </message>
+        <message>
+            <source>novel chapters</source>
+            <translation>章小說</translation>
+        </message>
+        <message>
+            <source>anime episodes</source>
+            <translation>集動畫</translation>
+        </message>
+        <message>
+            <source>in one series</source>
+            <translation>都在一個系列中</translation>
+        </message>
+        <message>
+            <source>across %1 series</source>
+            <translation>共 %1 個系列</translation>
+        </message>
+        <message>
+            <source>The series you came back to most</source>
+            <translation>你最常回來看的系列</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>漫畫</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>Your number one of each</source>
+            <translation>每類中的第一名</translation>
+        </message>
+        <message>
+            <source>The genres you lived in</source>
+            <translation>你最愛的類型</translation>
+        </message>
+        <message>
+            <source>The author you read most</source>
+            <translation>你讀得最多的作者</translation>
+        </message>
+        <message>
+            <source>Your busiest month was</source>
+            <translation>你最活躍的月份是</translation>
+        </message>
+        <message>
+            <source>and you read and watched most on </source>
+            <translation>你讀得和看得最多的是 </translation>
+        </message>
+        <message>
+            <source>Your longest streak</source>
+            <translation>你的最長連續天數</translation>
+        </message>
+        <message>
+            <source> day</source>
+            <translation> 天</translation>
+        </message>
+        <message>
+            <source> days</source>
+            <translation> 天</translation>
+        </message>
+        <message>
+            <source>in a row, of %1 days with something read or watched</source>
+            <translation>連續，全年共有 %1 天在讀或在看</translation>
+        </message>
+        <message>
+            <source>Your biggest day: </source>
+            <translation>你最投入的一天：</translation>
+        </message>
+        <message>
+            <source>Where your year started</source>
+            <translation>你這一年的起點</translation>
+        </message>
+        <message>
+            <source>the first series you finished something in, on </source>
+            <translation>你第一個完成內容的系列，日期：</translation>
+        </message>
+        <message>
+            <source>My %1 in SCANCORE</source>
+            <translation>我在 SCANCORE 的 %1 年</translation>
+        </message>
+        <message>
+            <source>Top series</source>
+            <translation>最愛系列</translation>
+        </message>
+        <message>
+            <source>Time</source>
+            <translation>時間</translation>
+        </message>
+        <message>
+            <source>Chapters</source>
+            <translation>章節</translation>
+        </message>
+        <message>
+            <source>Episodes</source>
+            <translation>劇集</translation>
+        </message>
+        <message>
+            <source>Longest streak</source>
+            <translation>最長連續天數</translation>
+        </message>
+        <message>
+            <source>Top genre</source>
+            <translation>最愛類型</translation>
+        </message>
+        <message>
+            <source>Series</source>
+            <translation>系列</translation>
+        </message>
+        <message>
+            <source>Busiest month</source>
+            <translation>最忙的月份</translation>
+        </message>
+        <message>
+            <source>Save picture</source>
+            <translation>儲存圖片</translation>
+        </message>
+        <message>
+            <source>Watch again</source>
+            <translation>再看一次</translation>
+        </message>
+        <message>
+            <source>PNG picture (*.png)</source>
+            <translation>PNG 圖片 (*.png)</translation>
+        </message>
+        <message>
+            <source>Picture saved</source>
+            <translation>圖片已儲存</translation>
+        </message>
+        <message>
+            <source>Could not save the picture</source>
+            <translation>無法儲存圖片</translation>
+        </message>
+    </context>
+    <context>
         <name>YearReview</name>
         <message>
             <source>January</source>
@@ -7090,6 +7434,15 @@
         <message>
             <source>Could not save the picture</source>
             <translation>無法儲存圖片</translation>
+        </message>
+        <message>
+            <source>May</source>
+            <comment>month</comment>
+            <translation>五月</translation>
+        </message>
+        <message>
+            <source>Wrapped</source>
+            <translation>Wrapped</translation>
         </message>
     </context>
     <context>

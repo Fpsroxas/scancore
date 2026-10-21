@@ -948,9 +948,12 @@ Rectangle {
             anchors.right: parent.right
             anchors.rightMargin: 18
             y: topBar.pad + reader.insetTop
-            spacing: 4
+            // Phones: smaller buttons, no gaps, so all fit beside the close button.
+            readonly property int button: reader.width < 420 ? 32 : 34
+            spacing: reader.width < 420 ? 0 : 4
             // Pages are on the progress bar at the left edge; chapters here.
             IconButton {
+                diameter: topActions.button
                 iconName: "skip-back"
                 iconColor: "white"
                 enabled: reader.hasPrev
@@ -959,6 +962,7 @@ Rectangle {
                 onClicked: reader.load(reader.index - 1)
             }
             IconButton {
+                diameter: topActions.button
                 iconName: "skip-forward"
                 iconColor: "white"
                 enabled: reader.hasNext
@@ -967,31 +971,42 @@ Rectangle {
                 onClicked: reader.load(reader.index + 1)
             }
             IconButton {
+                diameter: topActions.button
                 iconName: "list"
                 iconColor: "white"
                 tip: qsTr("Chapters")
                 onClicked: chapterPopup.open()
             }
             IconButton {
+                diameter: topActions.button
                 iconName: reader.mode === "strip" ? "move-vertical" : "layers"
                 iconColor: "white"
                 tip: (reader.mode === "strip" ? qsTr("Switch to pages") : qsTr("Switch to vertical strip")) + reader.keyHint("reader.mode")
                 onClicked: reader.setOpt("readerMode", reader.mode === "strip" ? "paged" : "strip")
             }
             IconButton {
+                diameter: topActions.button
                 visible: !String(reader.series.sourceUrl || "").startsWith("file:")
                 iconName: "message-circle"
                 iconColor: "white"
                 tip: qsTr("Comments")
                 onClicked: comments.open()
             }
+            ContinueOn {
+                diameter: topActions.button
+                seriesId: reader.series.id || ""
+                iconColor: "white"
+                save: () => reader.saveProgress(true)
+            }
             IconButton {
+                diameter: topActions.button
                 iconName: "sliders-horizontal"
                 iconColor: "white"
                 tip: qsTr("Reader settings")
                 onClicked: settingsPopup.open()
             }
             IconButton {
+                diameter: topActions.button
                 iconName: fullScreen.fullScreen ? "minimize" : "maximize"
                 iconColor: "white"
                 tip: qsTr("Full screen") + reader.keyHint("reader.fullscreen")
