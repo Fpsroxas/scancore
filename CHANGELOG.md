@@ -2,6 +2,14 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.3.6 — 2026-10-21
+
+- **Sharper comic pages**: pages are decoded at exactly the size they appear on screen and drawn pixel for pixel, instead of being shrunk or stretched by the graphics card. Paged reading is noticeably crisper, and pages no longer go slightly soft between screen pixels while a strip scrolls.
+- **Crisper webtoons on large screens**: art narrower than the strip (most webtoons on a computer or a phone) is enlarged with a sharper filter, with cleaner lines and text.
+- **Pages sharpen after a resize or zoom**: widening the strip, resizing the window or zooming in decodes the page again at the new size, keeping the old picture until it is ready. Before, a widened strip stayed blurry.
+- **Lighter on memory**: paged reading no longer decodes the pages it reads ahead only to learn their shape, and pages use far less video memory.
+- **The image cache keeps what you are reading**: when it trims itself it now drops the images you looked at least recently, not the oldest downloads (pages you were still reading could go), and it writes to disk far less while you scroll.
+
 ## 2.3.5 — 2026-10-21
 
 - **Extension anime plays again** ([#13](https://github.com/medium-gh/scancore/issues/13)): since 2.2.0 SCANCORE's player turned down most extension videos with "unrecognized file format". It now plays them.
