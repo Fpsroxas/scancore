@@ -72,22 +72,45 @@ Dialog {
                  catalog: extra.catalog || "", catalogId: extra.catalogId || "", hid: extra.hid || "", ids: ids }
     }
 
+    // Built-in sources answer first and their matches show straight away;
+    // installed extensions (slower, through the extension host) are asked
+    // at the same time and their matches added when they come.
     function findNext() {
         const i = finding
         if (i >= entries.length) return
         finding = i + 1
         const entry = entries[i]
-        const task = hold(entry.media === "novel" ? Novels.resolve(itemFor(entry)) : Comics.resolve(itemFor(entry)))
-        task.finished.connect((result) => {
-            if (!dialog.visible) return
-            const matches = (result.matches || []).filter(m => m.source !== entry.source)
-            setRow(i, { state: matches.length ? "found" : "none", matches: matches, pick: 0 })
+        const novel = entry.media === "novel"
+        const item = itemFor(entry)
+        const searches = [hold(novel ? Novels.resolve(item) : Comics.resolve(item))]
+        if (novel ? Novels.hasExtensions() : Comics.hasExtensions())
+            searches.push(hold(novel ? Novels.resolve(item, "extensions") : Comics.resolve(item, "", "extensions")))
+        let left = searches.length
+        let error = ""
+        let answered = false
+        const settle = () => {
+            if (--left > 0) return
+            if (rows[i].state === "finding") setRow(i, { state: "none", error: answered ? "" : error })
             findNext()
-        })
-        task.failed.connect((error) => {
-            setRow(i, { state: "none", matches: [], error: error })
-            findNext()
-        })
+        }
+        for (const task of searches) {
+            task.finished.connect((result) => {
+                if (!dialog.visible) return
+                answered = true
+                const found = (result.matches || []).filter(m => m.source !== entry.source)
+                if (found.length) {
+                    const row = rows[i]
+                    // A move already under way keeps the list it chose from.
+                    if (row.state === "finding" || row.state === "found")
+                        setRow(i, { state: "found", matches: (row.matches || []).concat(found) })
+                }
+                settle()
+            })
+            task.failed.connect((message) => {
+                error = message
+                settle()
+            })
+        }
     }
 
     // How many chapters will count as read: everything up to the furthest

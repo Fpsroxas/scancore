@@ -4895,6 +4895,10 @@
             <source>Start exploring</source>
             <translation>探しに行く</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>これは任意です。SCANCORE にはコミック・小説・アニメの組み込みソースがあるので、この手順は飛ばして、もっと欲しくなったら後でリポジトリを追加できます。</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5177,6 +5181,34 @@
         <message>
             <source>My extensions</source>
             <translation>自分の拡張機能</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>探す拡張機能を選んでください</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>これに使える拡張機能がインストールされていないか、オフになっています。</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>%1 で探しています…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>%1 にはありません。</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>%1 で読む</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>拡張機能を探す</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>戻る</translation>
         </message>
     </context>
     <context>

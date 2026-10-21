@@ -465,6 +465,36 @@ Rectangle {
                     title: qsTr("Have a repository link?")
                     body: qsTr("SCANCORE runs extensions made for Mihon and Tachiyomi. Paste a repository link and SCANCORE shows what it holds before adding anything. Extensions are other people's code, so you choose whether to trust each one.")
                 }
+                // Optional: the built-in sources work without any of this.
+                Rectangle {
+                    width: parent.width
+                    height: optionalText.implicitHeight + 24
+                    radius: Theme.radiusMd
+                    color: Theme.alpha(Theme.accent, 0.08)
+                    border.width: 1
+                    border.color: Theme.alpha(Theme.accent, 0.25)
+                    Icon {
+                        id: optionalIcon
+                        x: 14
+                        y: 13
+                        name: "info"
+                        size: 16
+                        color: Theme.accent
+                    }
+                    Text {
+                        id: optionalText
+                        anchors.left: optionalIcon.right
+                        anchors.leftMargin: 10
+                        anchors.right: parent.right
+                        anchors.rightMargin: 14
+                        y: 12
+                        text: qsTr("This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.")
+                        color: Theme.text
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textSm
+                        wrapMode: Text.Wrap
+                    }
+                }
                 Row {
                     width: parent.width
                     spacing: 10

@@ -4895,6 +4895,10 @@
             <source>Start exploring</source>
             <translation>Keşfetmeye başla</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>Bu isteğe bağlıdır. SCANCORE'un çizgi roman, roman ve anime için kendi yerleşik kaynakları var; bu adımı atlayıp daha fazlasını isterseniz sonra bir depo ekleyebilirsiniz.</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5177,6 +5181,34 @@
         <message>
             <source>My extensions</source>
             <translation>Uzantılarım</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>Aranacak bir eklenti seçin</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>Bunun için yüklü ve açık bir eklenti yok.</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>%1 üzerinde aranıyor…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>%1 bunu içermiyor.</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>%1 üzerinden oku</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Eklenti bul</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Geri</translation>
         </message>
     </context>
     <context>

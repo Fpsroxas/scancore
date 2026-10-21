@@ -588,6 +588,7 @@ Task *Extensions::refreshRepositories() {
 
 QVariantList Extensions::installed(const QString &kind) const {
     const auto sources = ext::Manager::sources(kindOf(kind));
+    const auto language = contentLanguage();
     QVariantList out;
     auto list = ext::Manager::installed(kindOf(kind));
     std::sort(list.begin(), list.end(), [](const ext::Installed &a, const ext::Installed &b) {
@@ -612,6 +613,7 @@ QVariantList Extensions::installed(const QString &kind) const {
                                        {"name", s.name},
                                        {"lang", s.lang},
                                        {"languageName", extensionLanguage(s.lang)},
+                                       {"preferred", baseLanguage(s.lang) == language},
                                        {"baseUrl", s.baseUrl},
                                        {"enabled", s.enabled},
                                        {"blocked", s.blocked},

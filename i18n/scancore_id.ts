@@ -4895,6 +4895,10 @@
             <source>Start exploring</source>
             <translation>Mulai menjelajah</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>Ini opsional. SCANCORE punya sumber bawaan sendiri untuk komik, novel, dan anime, jadi kamu bisa melewati langkah ini dan menambahkan repositori nanti kalau ingin lebih.</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5177,6 +5181,34 @@
         <message>
             <source>My extensions</source>
             <translation>Ekstensi saya</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>Pilih ekstensi untuk mencari</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>Tidak ada ekstensi untuk ini yang terpasang dan aktif.</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>Mencarinya di %1…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>%1 tidak memilikinya.</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>Baca di %1</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Cari ekstensi</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
         </message>
     </context>
     <context>

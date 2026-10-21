@@ -4887,6 +4887,10 @@
             <source>Start exploring</source>
             <translation>เริ่มสำรวจ</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>ขั้นตอนนี้ไม่บังคับ SCANCORE มีแหล่งในตัวสำหรับการ์ตูน นิยาย และอนิเมะอยู่แล้ว คุณจึงข้ามขั้นตอนนี้และเพิ่มคลังภายหลังได้หากต้องการมากกว่านี้</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5169,6 +5173,34 @@
         <message>
             <source>My extensions</source>
             <translation>ส่วนขยายของฉัน</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>เลือกส่วนขยายที่จะค้นหา</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>ไม่มีส่วนขยายสำหรับสิ่งนี้ที่ติดตั้งและเปิดไว้</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>กำลังค้นหาใน %1…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>%1 ไม่มีเรื่องนี้</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>อ่านจาก %1</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>ค้นหาส่วนขยาย</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>ย้อนกลับ</translation>
         </message>
     </context>
     <context>

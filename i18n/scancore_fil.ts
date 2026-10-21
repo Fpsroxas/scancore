@@ -4887,6 +4887,10 @@
             <source>Start exploring</source>
             <translation>Magsimulang mag-explore</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>Opsyonal ito. May sariling built-in na sources ang SCANCORE para sa comics, nobela at anime, kaya puwede mong laktawan ang hakbang na ito at magdagdag ng repository mamaya kung gusto mo pa.</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5169,6 +5173,34 @@
         <message>
             <source>My extensions</source>
             <translation>Mga extension ko</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>Pumili ng extension na hahanapan</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>Walang extension para rito na naka-install at naka-on.</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>Hinahanap sa %1…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>Wala nito sa %1.</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>Basahin sa %1</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Maghanap ng extension</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Bumalik</translation>
         </message>
     </context>
     <context>

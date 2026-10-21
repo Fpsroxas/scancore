@@ -34,6 +34,7 @@
 #include <QMenu>
 #include <QSystemTrayIcon>
 #endif
+#include <QCryptographicHash>
 #include <QDir>
 #include <QElapsedTimer>
 #include <QFile>
@@ -200,6 +201,14 @@ static void startStep(const char *step) {
 
 int main(int argc, char *argv[]) {
     g_startClock.start();
+    // Where Qt hashes through OpenSSL 3 (Arch's own Qt, for one), every hash
+    // loads OpenSSL's default provider and unloads it when done; the last
+    // unload frees it while another thread may be using it (decoding the
+    // TLS certificates for a request), and the app crashed at startup. A
+    // hash kept for the whole run (never destroyed, not even at exit, when
+    // worker threads may still be hashing) holds one load, so it is never
+    // freed.
+    [[maybe_unused]] static const auto *providerHold = new QCryptographicHash(QCryptographicHash::Sha256);
 #ifdef SCANCORE_HAVE_WEBENGINE
 #ifdef Q_OS_LINUX
     // Chromium's GPU compositor shares textures with Qt Quick through GBM;

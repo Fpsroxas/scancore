@@ -4895,6 +4895,10 @@
             <source>Start exploring</source>
             <translation>둘러보기 시작</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>선택 사항입니다. SCANCORE에는 만화, 소설, 애니메이션용 내장 소스가 있으니 이 단계는 건너뛰고, 더 필요하면 나중에 저장소를 추가해도 됩니다.</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5177,6 +5181,34 @@
         <message>
             <source>My extensions</source>
             <translation>내 확장 프로그램</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>찾아볼 확장 프로그램을 고르세요</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>이에 맞는 확장 프로그램이 설치되어 있지 않거나 꺼져 있습니다.</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>%1에서 찾는 중…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>%1에는 없습니다.</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>%1에서 읽기</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>확장 프로그램 찾기</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>뒤로</translation>
         </message>
     </context>
     <context>

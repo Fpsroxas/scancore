@@ -91,7 +91,7 @@ public:
     // Installed extensions of one kind ("mihon", "aniyomi", "lnreader"; empty
     // for all): [{id, kind, media, pkg, name, version, lang, languageName,
     // icon, nsfw, trusted, problem, update, repo, signer, sources: [{key,
-    // name, lang, languageName, baseUrl, enabled, error}]}]
+    // name, lang, languageName, preferred, baseUrl, enabled, error}]}]
     Q_INVOKABLE QVariantList installed(const QString &kind = QString()) const;
     // Extensions the repositories list that are not installed, content
     // language first: [{id, kind, media, pkg, name, version, lang,

@@ -4895,6 +4895,10 @@
             <source>Start exploring</source>
             <translation>Bắt đầu khám phá</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>Bước này không bắt buộc. SCANCORE có sẵn nguồn tích hợp cho truyện tranh, tiểu thuyết và anime, nên bạn có thể bỏ qua và thêm kho sau nếu muốn nhiều hơn.</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5177,6 +5181,34 @@
         <message>
             <source>My extensions</source>
             <translation>Tiện ích của tôi</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>Chọn một tiện ích mở rộng để tìm</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>Không có tiện ích mở rộng nào cho mục này được cài và bật.</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>Đang tìm trên %1…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>%1 không có.</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>Đọc trên %1</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Tìm tiện ích</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Quay lại</translation>
         </message>
     </context>
     <context>

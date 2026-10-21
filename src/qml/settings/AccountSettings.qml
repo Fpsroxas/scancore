@@ -15,11 +15,12 @@ SettingsPane {
     readonly property string active: Sync.kind !== "" ? Sync.kind : Account.customSite ? "server" : "scancore"
     // The tab shown; starts on the one in use.
     property string view: active
+    // Phones: labels only, so the tabs fit beside each other.
     readonly property var methods: [
-        { value: "scancore", label: "scancore.onl", icon: "cloud" },
-        { value: "server", label: qsTr("Your server"), icon: "server" },
-        { value: "webdav", label: "WebDAV", icon: "globe" }
-    ].concat(App.platform === "android" ? [] : [{ value: "folder", label: qsTr("Folder"), icon: "folder-open" }])
+        { value: "scancore", label: "scancore.onl", icon: Theme.compact ? "" : "cloud" },
+        { value: "server", label: qsTr("Your server"), icon: Theme.compact ? "" : "server" },
+        { value: "webdav", label: "WebDAV", icon: Theme.compact ? "" : "globe" }
+    ].concat(App.platform === "android" ? [] : [{ value: "folder", label: qsTr("Folder"), icon: Theme.compact ? "" : "folder-open" }])
 
     readonly property string name: Account.user.username || Account.user.email || ""
     readonly property string avatarUrl: {
@@ -37,10 +38,21 @@ SettingsPane {
         task.failed.connect((error) => Router.toast(error, "error"))
     }
 
-    Segmented {
-        options: pane.methods
-        value: pane.view
-        onPicked: (v) => pane.view = v
+    // Scrolls sideways when the tabs are wider than the pane.
+    Flickable {
+        width: parent.width
+        height: methodTabs.height
+        contentWidth: methodTabs.width
+        interactive: contentWidth > width
+        flickableDirection: Flickable.HorizontalFlick
+        boundsBehavior: Flickable.StopAtBounds
+        clip: true
+        Segmented {
+            id: methodTabs
+            options: pane.methods
+            value: pane.view
+            onPicked: (v) => pane.view = v
+        }
     }
 
     // ------------------------------------------------------------ accounts

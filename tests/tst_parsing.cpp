@@ -585,6 +585,20 @@ private slots:
         QCOMPARE(matches[0].toMap().value("url").toString(), QStringLiteral("ru:1"));
         QCOMPARE(matches[1].toMap().value("url").toString(), QStringLiteral("es:1"));
     }
+
+    // "Read from" asks built-in sources unless an extension is picked.
+    void resolveScope() {
+        const QString mangadex = QStringLiteral("mihon:2499283573021220255");
+        QVERIFY(resolveAsks({}, QStringLiteral("asura"), true, false, true));
+        QVERIFY(!resolveAsks({}, QStringLiteral("asura"), true, false, false));
+        QVERIFY(!resolveAsks({}, mangadex, true, true, true));
+        QVERIFY(resolveAsks(QStringLiteral("extensions"), mangadex, true, true, false));
+        QVERIFY(!resolveAsks(QStringLiteral("extensions"), mangadex, false, true, false));
+        QVERIFY(!resolveAsks(QStringLiteral("extensions"), QStringLiteral("asura"), true, false, true));
+        QVERIFY(resolveAsks(mangadex, mangadex, true, true, false));
+        QVERIFY(!resolveAsks(mangadex, QStringLiteral("mihon:1"), true, true, true));
+        QVERIFY(!resolveAsks(mangadex, QStringLiteral("asura"), true, false, true));
+    }
 };
 
 QTEST_GUILESS_MAIN(Parsing)

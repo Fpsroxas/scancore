@@ -4895,6 +4895,10 @@
             <source>Start exploring</source>
             <translation>Commencer à explorer</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>C’est facultatif. SCANCORE a ses propres sources intégrées pour les comics, les romans et les animés : vous pouvez passer cette étape et ajouter un dépôt plus tard si vous en voulez davantage.</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5177,6 +5181,34 @@
         <message>
             <source>My extensions</source>
             <translation>Mes extensions</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>Choisissez une extension où chercher</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>Aucune extension pour cela n’est installée et activée.</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>Recherche sur %1…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>%1 ne l’a pas.</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>Le lire sur %1</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>Chercher une extension</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Retour</translation>
         </message>
     </context>
     <context>

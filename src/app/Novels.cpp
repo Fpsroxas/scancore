@@ -177,16 +177,22 @@ bool Novels::isExtension(const QString &sourceKey) const {
     return false;
 }
 
-Task *Novels::resolve(const QVariantMap &item, bool extensions) {
-    return Task::run([item, extensions]() -> QVariant {
+Task *Novels::resolve(const QVariantMap &item, const QString &scope) {
+    return Task::run([item, scope]() -> QVariant {
         const auto names = Comics::catalogNames(item);
         QList<std::shared_ptr<Source>> sources;
         for (const auto &s : Registry::all())
-            if (extensions ? s->config().enabled && s->config().engine == QLatin1String("lnreader")
-                           : s->config().enabled && s->config().searchable && s->key() != QLatin1String("local") &&
-                                 !s->config().options.value("extended").toBool())
+            if (resolveAsks(scope, s->key(), s->config().enabled, s->config().engine == QLatin1String("lnreader"),
+                            s->config().enabled && s->config().searchable && s->key() != QLatin1String("local") &&
+                                !s->config().options.value("extended").toBool()))
                 sources.append(s);
-        return QVariantMap{{"matches", resolveAcross<std::shared_ptr<Source>>(sources, names)},
+        if (sources.isEmpty() && !scope.isEmpty() && scope != QLatin1String("extensions"))
+            throw Error(QStringLiteral("That source is unavailable."));
+        // Matches show as sources answer, not after the slowest.
+        const auto report = [](const QVariantList &sofar) {
+            Task::report(QVariantMap{{"matches", sofar}, {"contentLanguage", contentLanguage()}});
+        };
+        return QVariantMap{{"matches", resolveAcross<std::shared_ptr<Source>>(sources, names, {}, {}, report)},
                            {"contentLanguage", contentLanguage()}};
     });
 }

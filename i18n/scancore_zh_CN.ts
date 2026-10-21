@@ -4895,6 +4895,10 @@
             <source>Start exploring</source>
             <translation>开始探索</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>这是可选的。SCANCORE 自带漫画、小说和动画的内置来源，你可以跳过这一步，以后想要更多时再添加仓库。</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5177,6 +5181,34 @@
         <message>
             <source>My extensions</source>
             <translation>我的扩展</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>选择要查找的扩展</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>没有为此安装并启用的扩展。</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>正在 %1 上查找…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>%1 上没有。</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>在 %1 上阅读</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>查找扩展</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>返回</translation>
         </message>
     </context>
     <context>

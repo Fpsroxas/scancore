@@ -45,13 +45,15 @@ SettingsPane {
 
         Flow {
             id: card
+            // The buttons go under the name when beside it would squeeze it.
+            readonly property bool stacked: Theme.compact || width - updateButtons.wanted - 16 < 300
             x: 20
             y: 20
             width: parent.width - 40
             spacing: 16
             Row {
                 spacing: 16
-                width: Theme.compact ? card.width : Math.max(0, card.width - updateButtons.width - 16)
+                width: card.stacked ? card.width : Math.max(0, card.width - updateButtons.width - 16)
                 Rectangle {
                     width: 56
                     height: 56
@@ -113,17 +115,23 @@ SettingsPane {
                     }
                 }
             }
-            Row {
+            // Wraps under the name on phones and in a narrow pane, so
+            // "Update" and "Check for updates" never run out of the card.
+            Flow {
                 id: updateButtons
+                readonly property real wanted: (updateNow.visible ? updateNow.implicitWidth + spacing : 0) + checkNow.implicitWidth
                 visible: !Updater.managedByFlatpak
+                width: card.stacked ? card.width : wanted
                 spacing: 8
                 ScButton {
+                    id: updateNow
                     visible: Updater.state === "available" || Updater.state === "ready"
                     variant: "primary"
                     text: Updater.state === "ready" ? qsTr("Restart to update") : Updater.canInstall ? qsTr("Update") : qsTr("Download")
                     onClicked: Updater.canInstall ? (Updater.state === "ready" ? Updater.install() : Updater.download()) : App.openUrl(Updater.pageUrl)
                 }
                 ScButton {
+                    id: checkNow
                     text: qsTr("Check for updates")
                     iconName: "refresh-cw"
                     loading: Updater.state === "checking"

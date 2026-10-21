@@ -14,6 +14,18 @@
 
 namespace sc {
 
+// Which sources a "Read from" lookup asks. No scope: built-in sources only
+// (one tap must not wait on every installed extension), those `builtIn`
+// accepts; "extensions": every extension that is on (moving a series); any
+// other scope: the one source with that key (an extension the reader picked).
+inline bool resolveAsks(const QString &scope, const QString &key, bool enabled, bool extension, bool builtIn) {
+    if (scope.isEmpty())
+        return !extension && builtIn;
+    if (scope == QLatin1String("extensions"))
+        return enabled && extension;
+    return enabled && key == scope;
+}
+
 // Search results that carry the other names a source lists a series under.
 // A named concept on the type: MSVC gets a requires-expression on a local
 // variable inside a lambda wrong (always false).
@@ -27,10 +39,13 @@ concept HasOtherNames = requires(const T &item) { item.names; };
 // language come first, then the sources' own order; each says whether it is
 // in that language ("preferred"), so the caller can open the only one.
 // `known` gives a source's series straight away (a tracker's link to it).
+// `progress` gets the matches so far each time a source answers with one
+// (not yet checked with `readable`), so they show before the slowest source.
 template <typename SourcePtr>
 QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &titles,
                            const std::function<bool(const SourcePtr &, const QString &url)> &readable = {},
-                           const std::function<QString(const SourcePtr &)> &known = {}) {
+                           const std::function<QString(const SourcePtr &)> &known = {},
+                           const std::function<void(const QVariantList &)> &progress = {}) {
     QStringList names;
     QSet<QString> wanted;
     for (const auto &title : titles) {
@@ -49,6 +64,26 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
     };
     QList<Found> found;
     QSet<QString> done;
+    const auto language = contentLanguage();
+    const auto preferred = [&](const Found &f) { return baseLanguage(f.source->config().language) == language; };
+    const auto build = [&] {
+        auto order = found;
+        std::stable_sort(order.begin(), order.end(), [&](const Found &a, const Found &b) {
+            if (preferred(a) != preferred(b))
+                return preferred(a);
+            return a.order < b.order;
+        });
+        QVariantList matches;
+        for (const auto &f : order)
+            matches.append(QVariantMap{{"source", f.source->key()},
+                                       {"sourceLabel", f.source->label()},
+                                       {"language", f.source->config().language},
+                                       {"preferred", preferred(f)},
+                                       {"url", f.url},
+                                       {"title", f.title},
+                                       {"cover", f.cover}});
+        return matches;
+    };
     // Series a tracker links to on a source: no need to search there.
     if (known && !names.isEmpty())
         for (const auto &source : sources)
@@ -56,6 +91,8 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
                 done.insert(source->key());
                 found.append({source, url, names.first(), QString(), int(sources.indexOf(source))});
             }
+    if (progress && !found.isEmpty())
+        progress(build());
     for (int round = 0; round < std::min<int>(names.size(), 3) && done.size() < sources.size(); ++round) {
         QList<SourcePtr> asked;
         using Hit = QList<QStringList>;
@@ -98,6 +135,8 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
             if (pick) {
                 done.insert(asked[i]->key());
                 found.append({asked[i], pick->at(1), pick->at(0), pick->at(2), int(sources.indexOf(asked[i]))});
+                if (progress)
+                    progress(build());
             }
         });
     }
@@ -113,23 +152,7 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
                 kept.append(found[i]);
         found = kept;
     }
-    const auto language = contentLanguage();
-    const auto preferred = [&](const Found &f) { return baseLanguage(f.source->config().language) == language; };
-    std::stable_sort(found.begin(), found.end(), [&](const Found &a, const Found &b) {
-        if (preferred(a) != preferred(b))
-            return preferred(a);
-        return a.order < b.order;
-    });
-    QVariantList matches;
-    for (const auto &f : found)
-        matches.append(QVariantMap{{"source", f.source->key()},
-                                   {"sourceLabel", f.source->label()},
-                                   {"language", f.source->config().language},
-                                   {"preferred", preferred(f)},
-                                   {"url", f.url},
-                                   {"title", f.title},
-                                   {"cover", f.cover}});
-    return matches;
+    return build();
 }
 
 } // namespace sc

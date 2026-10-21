@@ -4887,6 +4887,10 @@
             <source>Start exploring</source>
             <translation>खोजना शुरू करें</translation>
         </message>
+        <message>
+            <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
+            <translation>यह वैकल्पिक है। SCANCORE में कॉमिक्स, उपन्यासों और एनीमे के अपने बिल्ट-इन सोर्स हैं, इसलिए आप यह चरण छोड़ सकते हैं और ज़्यादा चाहिए तो बाद में रिपॉज़िटरी जोड़ सकते हैं।</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5169,6 +5173,34 @@
         <message>
             <source>My extensions</source>
             <translation>मेरे एक्सटेंशन</translation>
+        </message>
+        <message>
+            <source>Pick an extension to look in</source>
+            <translation>खोजने के लिए एक एक्सटेंशन चुनें</translation>
+        </message>
+        <message>
+            <source>No extension for this is installed and on.</source>
+            <translation>इसके लिए कोई एक्सटेंशन इंस्टॉल और चालू नहीं है।</translation>
+        </message>
+        <message>
+            <source>Looking for it on %1…</source>
+            <translation>%1 पर खोजा जा रहा है…</translation>
+        </message>
+        <message>
+            <source>%1 does not have it.</source>
+            <translation>%1 पर यह नहीं है।</translation>
+        </message>
+        <message>
+            <source>Read it from %1</source>
+            <translation>%1 पर पढ़ें</translation>
+        </message>
+        <message>
+            <source>Find an extension</source>
+            <translation>एक्सटेंशन खोजें</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>पीछे</translation>
         </message>
     </context>
     <context>

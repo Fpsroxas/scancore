@@ -428,27 +428,29 @@ bool Comics::isExtension(const QString &sourceKey) const {
     return source && source->config().engine == QLatin1String("mihon");
 }
 
-Task *Comics::resolve(const QVariantMap &item, const QString &only, bool extensions) {
-    return Task::run([item, only, extensions]() -> QVariant {
+Task *Comics::resolve(const QVariantMap &item, const QString &only, const QString &scope) {
+    return Task::run([item, only, scope]() -> QVariant {
         const auto id = item.value("catalogId").toString().isEmpty() ? item.value("hid").toString()
                                                                        : item.value("catalogId").toString();
         const auto language = only.isEmpty() ? searchLanguage() : baseLanguage(only);
         QList<std::shared_ptr<Source>> sources;
         QStringList keys;
         for (const auto &source : Registry::all())
-            if (extensions ? source->enabled() && source->config().engine == QLatin1String("mihon")
-                           : (source->enabled() || (!only.isEmpty() && source->config().languageOff)) &&
-                                 source->key() != QLatin1String("local") && inSearchLanguage(*source, language)) {
+            if (resolveAsks(scope, source->key(), source->enabled(), source->config().engine == QLatin1String("mihon"),
+                            (source->enabled() || (!only.isEmpty() && source->config().languageOff)) &&
+                                source->key() != QLatin1String("local") && inSearchLanguage(*source, language))) {
                 sources.append(source);
                 keys.append(source->key());
             }
+        if (sources.isEmpty() && !scope.isEmpty() && scope != QLatin1String("extensions"))
+            throw Error(QStringLiteral("That source is unavailable."));
         // Matches depend on the sources switched on (extensions come and go)
         // and the language settings.
         const auto sourcesHash = QCryptographicHash::hash(keys.join(QLatin1Char(',')).toUtf8(), QCryptographicHash::Md5).toHex().left(12);
         const auto cacheKey = QStringLiteral("resolve:comic%7:%1:%2:%3:%4:%5:%6")
                                   .arg(Manifest::version())
                                   .arg(QString::fromLatin1(sourcesHash), language, contentLanguage(), item.value("catalog").toString(), id,
-                                       extensions ? QStringLiteral(":ext") : QString());
+                                       scope.isEmpty() ? QString() : QLatin1Char(':') + scope);
         if (!id.isEmpty())
             if (auto cached = Database::cacheGet(cacheKey))
                 return QJsonDocument::fromJson(*cached).toVariant();
@@ -464,26 +466,31 @@ Task *Comics::resolve(const QVariantMap &item, const QString &only, bool extensi
         for (const auto &link : catalogue::readingLinks(anilistId))
             links.append(QUrl(link));
         const auto cover = item.value("cover").toString();
-        auto matches = resolveAcross<std::shared_ptr<Source>>(
+        // The catalogue's cover where a source has none, and the referer
+        // covers some sites only send to their own pages (or extensions).
+        const auto dress = [&cover](QVariantList matches) {
+            for (auto &match : matches) {
+                auto map = match.toMap();
+                if (map.value("cover").toString().isEmpty())
+                    map.insert(QStringLiteral("cover"), cover);
+                if (const auto source = Registry::byKey(map.value("source").toString()))
+                    map.insert(QStringLiteral("referer"), source->imageReferer());
+                match = map;
+            }
+            return matches;
+        };
+        const auto matches = dress(resolveAcross<std::shared_ptr<Source>>(
             sources, names, [](const std::shared_ptr<Source> &source, const QString &url) { return source->readable(url); },
             [&links](const std::shared_ptr<Source> &source) {
                 for (const auto &link : links)
                     if (const auto url = source->seriesLink(link); !url.isEmpty())
                         return url;
                 return QString();
-            });
-        for (auto &match : matches)
-            if (auto map = match.toMap(); map.value("cover").toString().isEmpty()) {
-                map.insert(QStringLiteral("cover"), cover);
-                match = map;
-            }
-        // Covers some sites only send to their own pages (or extensions).
-        for (auto &match : matches) {
-            auto map = match.toMap();
-            if (const auto source = Registry::byKey(map.value("source").toString()))
-                map.insert(QStringLiteral("referer"), source->imageReferer());
-            match = map;
-        }
+            },
+            // Matches show as sources answer, not after the slowest.
+            [&](const QVariantList &sofar) {
+                Task::report(QVariantMap{{"matches", dress(sofar)}, {"contentLanguage", contentLanguage()}, {"language", language}});
+            }));
         const QVariantMap result{{"matches", matches}, {"contentLanguage", contentLanguage()}, {"language", language}};
         if (!id.isEmpty() && !matches.isEmpty())
             Database::cachePut(cacheKey, QJsonDocument::fromVariant(result).toJson(QJsonDocument::Compact), 86400);
