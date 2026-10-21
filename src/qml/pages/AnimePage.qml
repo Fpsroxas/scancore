@@ -102,7 +102,7 @@ Item {
         to: 1
         duration: 7000
         running: page.spotlight.length > 1 && page.visible && !Motion.reduced
-        paused: running && heroHover.hovered
+        paused: running && (heroHover.hovered || swipe.active)
         onFinished: page.showSlide(page.spot + 1)
     }
 
@@ -130,14 +130,63 @@ Item {
                 clip: true
 
                 HoverHandler { id: heroHover; enabled: !Theme.touch }
-                // Swipe (or drag) sideways for the next or previous title.
+                // Swipe (or drag) sideways for the next or previous title, as
+                // in most apps: the slide follows the finger, a long drag or a
+                // quick flick changes it, and a sideways swipe wins over the
+                // page's scrolling even when the finger drifts a little.
                 DragHandler {
+                    id: swipe
                     target: null
                     yAxis.enabled: false
-                    onActiveChanged: {
-                        if (active || Math.abs(translation.x) < 60) return
-                        page.showSlide(page.spot + (translation.x < 0 ? 1 : -1))
+                    dragThreshold: 12
+                    grabPermissions: PointerHandler.CanTakeOverFromAnything
+                    // The last pull while the finger was down, and its speed.
+                    property real lastX: 0
+                    property double lastTime: 0
+                    property double startTime: 0
+                    property real velocity: 0
+                    onTranslationChanged: {
+                        if (active) {
+                            settle.stop()
+                            hero.dragX = translation.x
+                        }
+                        const now = Date.now()
+                        if (lastTime > 0) velocity = (translation.x - lastX) * 1000 / Math.max(1, now - lastTime)
+                        lastX = translation.x
+                        lastTime = now
                     }
+                    onActiveChanged: {
+                        if (active) {
+                            lastX = 0
+                            lastTime = 0
+                            velocity = 0
+                            startTime = Date.now()
+                            return
+                        }
+                        // Not translation: Qt has reset it by now (0 on
+                        // release, which is why swiping never changed slides).
+                        const dx = lastX
+                        // A quick flick may bring only one or two moves, so
+                        // a short swipe done fast counts as well.
+                        const quick = Math.abs(dx) >= 30 && Date.now() - startTime < 250
+                        const flick = quick || (Math.abs(dx) > 20 && Math.abs(velocity) > 500 && (velocity < 0) === (dx < 0))
+                        if (Math.abs(dx) >= 60 || flick) {
+                            // The next title comes in from the side swiped from.
+                            hero.dragX = (dx < 0 ? 1 : -1) * Math.min(120, hero.width * 0.25)
+                            page.showSlide(page.spot + (dx < 0 ? 1 : -1))
+                        }
+                        settle.restart()
+                    }
+                }
+                // How far the finger has pulled the slide; settles back to 0.
+                property real dragX: 0
+                NumberAnimation {
+                    id: settle
+                    target: hero
+                    property: "dragX"
+                    to: 0
+                    duration: Motion.slow
+                    easing.type: Easing.OutCubic
                 }
 
                 // Over a background picture or a see-through window there is no
@@ -154,6 +203,8 @@ Item {
                 }
                 Item {
                     anchors.fill: parent
+                    transform: Translate { x: hero.dragX * 0.35 }
+                    opacity: 1 - Math.min(0.35, Math.abs(hero.dragX) / Math.max(1, hero.width))
                     layer.enabled: Theme.layered
                     layer.effect: MultiEffect {
                         maskEnabled: true
@@ -217,7 +268,7 @@ Item {
                         NumberAnimation { target: heroText; property: "opacity"; from: 0; to: 1; duration: Motion.page; easing.type: Easing.OutCubic }
                         NumberAnimation { target: heroShift; property: "x"; from: -20; to: 0; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
                     }
-                    transform: Translate { id: heroShift }
+                    transform: [Translate { id: heroShift }, Translate { x: hero.dragX }]
 
                     Text {
                         text: "#" + (page.spot + 1) + qsTr(" trending")

@@ -2,6 +2,10 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.3.4 — 2026-10-21
+
+- **Swipe the anime spotlight**: swipe or drag sideways for the next or previous title, as in most apps. The slide follows your finger, a quick flick is enough, and a swipe that drifts a little no longer scrolls the page instead. (Swiping was meant to work before, but never changed the slide.)
+
 ## 2.3.3 — 2026-10-21
 
 - **Reader controls stay out of the status bar**: on phones, the novel reader's top bar no longer slides up over the clock and icons when it hides as you scroll. Both readers now draw under the status bar and keep their controls below it.

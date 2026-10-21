@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.3.4" date="2026-10-21">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#234--2026-10-21</url>
+      <description>
+        <p>The anime spotlight can be swiped: the slide follows your finger and a quick flick changes the title.</p>
+      </description>
+    </release>
     <release version="2.3.3" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#233--2026-10-21</url>
       <description>
