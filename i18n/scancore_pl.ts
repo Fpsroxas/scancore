@@ -163,6 +163,14 @@
             <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
             <translation>Licencja MIT · github.com/medium-gh/scancore. Czcionki: DM Sans, Space Grotesk, Literata (OFL). Ikony: Lucide (ISC). Parsowanie HTML: lexbor (Apache 2.0). Odtwarzacz wideo: mpv i FFmpeg (LGPL), zbudowane przez tools/libmpv/build.sh.</translation>
         </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Raporty awarii i diagnostyka</translation>
+        </message>
+        <message>
+            <source>To send to the developer when something goes wrong</source>
+            <translation>Do wysłania twórcy, gdy coś pójdzie nie tak</translation>
+        </message>
     </context>
     <context>
         <name>AccountSettings</name>
@@ -651,6 +659,41 @@
         <message>
             <source>Add and install %1</source>
             <translation>Dodaj i zainstaluj %1</translation>
+        </message>
+        <message>
+            <source>(%1 of %2)</source>
+            <translation>(%1 z %2)</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>Wklej link ze strony repozytorium albo link do jego indeksu, repo.json lub listy wtyczek; kilka naraz też zadziała. SCANCORE czyta repozytoria Mihon, Tachiyomi, Aniyomi i LNReader.</translation>
+        </message>
+        <message>
+            <source>Skip</source>
+            <translation>Pomiń</translation>
+        </message>
+    </context>
+    <context>
+        <name>AniListSignIn</name>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>Połączono z %1 jako %2</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Zamknij</translation>
+        </message>
+        <message>
+            <source>Connect AniList</source>
+            <translation>Połącz AniList</translation>
+        </message>
+        <message>
+            <source>Connecting…</source>
+            <translation>Łączenie…</translation>
+        </message>
+        <message>
+            <source>Sign in and allow SCANCORE; this page closes by itself.</source>
+            <translation>Zaloguj się i zezwól SCANCORE; ta strona zamknie się sama.</translation>
         </message>
     </context>
     <context>
@@ -2192,6 +2235,69 @@
         <message>
             <source>Nothing to send yet: read or watch a little first.</source>
             <translation>Jeszcze nie ma czego wysłać: najpierw trochę poczytaj lub obejrzyj.</translation>
+        </message>
+    </context>
+    <context>
+        <name>CrashReportsDialog</name>
+        <message>
+            <source>Copied. Paste it in a message to the developer, on Discord or GitHub.</source>
+            <translation>Skopiowano. Wklej to w wiadomości do twórcy, na Discordzie lub GitHubie.</translation>
+        </message>
+        <message>
+            <source>SCANCORE closed unexpectedly</source>
+            <translation>SCANCORE nieoczekiwanie się zamknął</translation>
+        </message>
+        <message>
+            <source>Crash report</source>
+            <translation>Raport awarii</translation>
+        </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Raporty awarii i diagnostyka</translation>
+        </message>
+        <message>
+            <source>Sending this report to the developer helps fix it. It holds the app's version, your system, where it stopped and the app's recent log: no library, history or account details.</source>
+            <translation>Wysłanie tego raportu twórcy pomaga to naprawić. Zawiera wersję aplikacji, twój system, miejsce zatrzymania i ostatni dziennik: bez biblioteki, historii i danych konta.</translation>
+        </message>
+        <message>
+            <source>Reports from times SCANCORE closed unexpectedly. Diagnostics hold the app's recent log, for problems that are not crashes.</source>
+            <translation>Raporty z chwil, gdy SCANCORE nieoczekiwanie się zamknął. Diagnostyka zawiera ostatni dziennik aplikacji, do problemów, które nie są awariami.</translation>
+        </message>
+        <message>
+            <source>No crash reports. Good news.</source>
+            <translation>Brak raportów awarii. Dobre wieści.</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Zamknij</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Udostępnij</translation>
+        </message>
+        <message>
+            <source>Copy</source>
+            <translation>Kopiuj</translation>
+        </message>
+        <message>
+            <source>SCANCORE crash report</source>
+            <translation>Raport awarii SCANCORE</translation>
+        </message>
+        <message>
+            <source>Report on GitHub</source>
+            <translation>Zgłoś na GitHubie</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Usuń</translation>
+        </message>
+        <message>
+            <source>Copy diagnostics</source>
+            <translation>Kopiuj diagnostykę</translation>
+        </message>
+        <message>
+            <source>SCANCORE diagnostics</source>
+            <translation>Diagnostyka SCANCORE</translation>
         </message>
     </context>
     <context>
@@ -5202,6 +5308,10 @@
             <source>Continue</source>
             <translation>Dalej</translation>
         </message>
+        <message>
+            <source>Up next: episode %1</source>
+            <translation>Następny: odcinek %1</translation>
+        </message>
     </context>
     <context>
         <name>Reviews</name>
@@ -6853,6 +6963,29 @@
         <message>
             <source>Use token</source>
             <translation>Użyj tokenu</translation>
+        </message>
+        <message>
+            <source>%1 signed SCANCORE out, so progress is not reaching it. Connect again.</source>
+            <translation>%1 wylogował SCANCORE, więc postępy tam nie docierają. Połącz ponownie.</translation>
+        </message>
+        <message>
+            <source>Sign in to AniList and allow SCANCORE; this closes by itself.</source>
+            <translation>Zaloguj się do AniList i zezwól SCANCORE; to zamknie się samo.</translation>
+        </message>
+        <message>
+            <source>Connect again</source>
+            <translation>Połącz ponownie</translation>
+        </message>
+    </context>
+    <context>
+        <name>Trackers</name>
+        <message>
+            <source>%1 needs you to connect again</source>
+            <translation>%1 wymaga ponownego połączenia</translation>
+        </message>
+        <message>
+            <source>Your progress is not reaching %1. Connect it again in Settings → Connections.</source>
+            <translation>Twoje postępy nie docierają do %1. Połącz ponownie w Ustawienia → Połączenia.</translation>
         </message>
     </context>
     <context>

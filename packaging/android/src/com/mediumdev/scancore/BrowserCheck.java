@@ -26,6 +26,9 @@ public final class BrowserCheck extends Activity {
     private WebView web;
     private String url;
     private boolean reported;
+    // A sign-in that hands back a token in its address (AniList): the
+    // address to report instead of the one it started at.
+    private String handedBack;
 
     static native void nativeDone(String url, String cookies);
 
@@ -96,7 +99,11 @@ public final class BrowserCheck extends Activity {
             public void run() {
                 if (isFinishing() || isDestroyed()) return;
                 String now = clearance(cookies, url);
-                if (now != null && !now.equals(before)) finish();
+                String address = web.getUrl();
+                if (address != null && address.contains("access_token=")) {
+                    handedBack = address;
+                    finish();
+                } else if (now != null && !now.equals(before)) finish();
                 else main.postDelayed(this, 250);
             }
         }, 250);
@@ -137,7 +144,7 @@ public final class BrowserCheck extends Activity {
         CookieManager cookies = CookieManager.getInstance();
         cookies.flush();
         String header = cookies.getCookie(url);
-        nativeDone(url, header == null ? "" : header);
+        nativeDone(handedBack != null ? handedBack : url, header == null ? "" : header);
     }
 
     @Override

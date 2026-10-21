@@ -163,6 +163,14 @@
             <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
             <translation>สัญญาอนุญาต MIT · github.com/medium-gh/scancore ฟอนต์: DM Sans, Space Grotesk, Literata (OFL) ไอคอน: Lucide (ISC) การแยกวิเคราะห์ HTML: lexbor (Apache 2.0) เครื่องเล่นวิดีโอ: mpv และ FFmpeg (LGPL) สร้างโดย tools/libmpv/build.sh</translation>
         </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>รายงานข้อขัดข้องและข้อมูลวินิจฉัย</translation>
+        </message>
+        <message>
+            <source>To send to the developer when something goes wrong</source>
+            <translation>สำหรับส่งให้ผู้พัฒนาเมื่อมีปัญหา</translation>
+        </message>
     </context>
     <context>
         <name>AccountSettings</name>
@@ -651,6 +659,41 @@
         <message>
             <source>Add and install %1</source>
             <translation>เพิ่มและติดตั้ง %1</translation>
+        </message>
+        <message>
+            <source>(%1 of %2)</source>
+            <translation>(%1 จาก %2)</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>วางลิงก์จากหน้าของคลัง หรือลิงก์ไปยัง index, repo.json หรือรายการปลั๊กอิน วางหลายลิงก์พร้อมกันก็ได้ SCANCORE อ่านคลังของ Mihon, Tachiyomi, Aniyomi และ LNReader</translation>
+        </message>
+        <message>
+            <source>Skip</source>
+            <translation>ข้าม</translation>
+        </message>
+    </context>
+    <context>
+        <name>AniListSignIn</name>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>เชื่อมต่อกับ %1 ในชื่อ %2</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>Connect AniList</source>
+            <translation>เชื่อมต่อ AniList</translation>
+        </message>
+        <message>
+            <source>Connecting…</source>
+            <translation>กำลังเชื่อมต่อ…</translation>
+        </message>
+        <message>
+            <source>Sign in and allow SCANCORE; this page closes by itself.</source>
+            <translation>ลงชื่อเข้าใช้และอนุญาต SCANCORE หน้านี้จะปิดเอง</translation>
         </message>
     </context>
     <context>
@@ -2192,6 +2235,69 @@
         <message>
             <source>Nothing to send yet: read or watch a little first.</source>
             <translation>ยังไม่มีอะไรให้ส่ง: อ่านหรือดูสักหน่อยก่อน</translation>
+        </message>
+    </context>
+    <context>
+        <name>CrashReportsDialog</name>
+        <message>
+            <source>Copied. Paste it in a message to the developer, on Discord or GitHub.</source>
+            <translation>คัดลอกแล้ว วางในข้อความถึงผู้พัฒนาใน Discord หรือ GitHub</translation>
+        </message>
+        <message>
+            <source>SCANCORE closed unexpectedly</source>
+            <translation>SCANCORE ปิดไปโดยไม่คาดคิด</translation>
+        </message>
+        <message>
+            <source>Crash report</source>
+            <translation>รายงานข้อขัดข้อง</translation>
+        </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>รายงานข้อขัดข้องและข้อมูลวินิจฉัย</translation>
+        </message>
+        <message>
+            <source>Sending this report to the developer helps fix it. It holds the app's version, your system, where it stopped and the app's recent log: no library, history or account details.</source>
+            <translation>การส่งรายงานนี้ให้ผู้พัฒนาช่วยให้แก้ไขได้ มีเวอร์ชันแอป ระบบของคุณ จุดที่หยุด และบันทึกล่าสุดของแอป ไม่มีคลัง ประวัติ หรือข้อมูลบัญชี</translation>
+        </message>
+        <message>
+            <source>Reports from times SCANCORE closed unexpectedly. Diagnostics hold the app's recent log, for problems that are not crashes.</source>
+            <translation>รายงานจากครั้งที่ SCANCORE ปิดไปโดยไม่คาดคิด ข้อมูลวินิจฉัยมีบันทึกล่าสุดของแอป สำหรับปัญหาที่ไม่ใช่ข้อขัดข้อง</translation>
+        </message>
+        <message>
+            <source>No crash reports. Good news.</source>
+            <translation>ไม่มีรายงานข้อขัดข้อง ข่าวดี</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>แชร์</translation>
+        </message>
+        <message>
+            <source>Copy</source>
+            <translation>คัดลอก</translation>
+        </message>
+        <message>
+            <source>SCANCORE crash report</source>
+            <translation>รายงานข้อขัดข้องของ SCANCORE</translation>
+        </message>
+        <message>
+            <source>Report on GitHub</source>
+            <translation>รายงานบน GitHub</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>ลบ</translation>
+        </message>
+        <message>
+            <source>Copy diagnostics</source>
+            <translation>คัดลอกข้อมูลวินิจฉัย</translation>
+        </message>
+        <message>
+            <source>SCANCORE diagnostics</source>
+            <translation>ข้อมูลวินิจฉัยของ SCANCORE</translation>
         </message>
     </context>
     <context>
@@ -5202,6 +5308,10 @@
             <source>Continue</source>
             <translation>ดำเนินการต่อ</translation>
         </message>
+        <message>
+            <source>Up next: episode %1</source>
+            <translation>ถัดไป: ตอนที่ %1</translation>
+        </message>
     </context>
     <context>
         <name>Reviews</name>
@@ -6853,6 +6963,29 @@
         <message>
             <source>Use token</source>
             <translation>ใช้โทเค็น</translation>
+        </message>
+        <message>
+            <source>%1 signed SCANCORE out, so progress is not reaching it. Connect again.</source>
+            <translation>%1 ออกจากระบบ SCANCORE แล้ว ความคืบหน้าจึงไม่ส่งไปที่นั่น เชื่อมต่ออีกครั้ง</translation>
+        </message>
+        <message>
+            <source>Sign in to AniList and allow SCANCORE; this closes by itself.</source>
+            <translation>ลงชื่อเข้าใช้ AniList และอนุญาต SCANCORE จะปิดเอง</translation>
+        </message>
+        <message>
+            <source>Connect again</source>
+            <translation>เชื่อมต่ออีกครั้ง</translation>
+        </message>
+    </context>
+    <context>
+        <name>Trackers</name>
+        <message>
+            <source>%1 needs you to connect again</source>
+            <translation>ต้องเชื่อมต่อ %1 อีกครั้ง</translation>
+        </message>
+        <message>
+            <source>Your progress is not reaching %1. Connect it again in Settings → Connections.</source>
+            <translation>ความคืบหน้าของคุณไม่ไปถึง %1 เชื่อมต่ออีกครั้งใน การตั้งค่า → การเชื่อมต่อ</translation>
         </message>
     </context>
     <context>

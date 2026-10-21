@@ -1,8 +1,12 @@
 #include "Trackers.h"
 
+#include "Notifications.h"
+
 #include "App.h"
 #include "core/Database.h"
 #include "core/Text.h"
+
+#include <QCoreApplication>
 
 #include <QCryptographicHash>
 #include <QDateTime>
@@ -422,7 +426,9 @@ void updateAniList(const QString &seriesId, const QString &media, const QString 
         return;
     const auto token = account.value("token").toString();
     int id = allLinks().value(seriesId).toMap().value("anilist").toMap().value("id").toInt();
-    if (id <= 0 && media == QLatin1String("anime"))
+    // An AniList anime's own id ("anime:anilist:<id>"); an extension's
+    // anime has none and is matched by title.
+    if (id <= 0 && seriesId.startsWith(QLatin1String("anime:anilist:")))
         id = seriesId.section(QLatin1Char(':'), 2).toInt();
     if (id <= 0 && media == QLatin1String("comic")) {
         id = seriesExtra(seriesId).value("anilist").toInt();
@@ -465,7 +471,7 @@ void updateMal(const QString &seriesId, const QString &media, const QString &tit
     if (id <= 0) {
         // Through AniList, which knows MyAnimeList's ids.
         int anilistId = links.value("anilist").toMap().value("id").toInt();
-        if (anilistId <= 0 && anime)
+        if (anilistId <= 0 && seriesId.startsWith(QLatin1String("anime:anilist:")))
             anilistId = seriesId.section(QLatin1Char(':'), 2).toInt();
         if (anilistId <= 0)
             anilistId = extra.value("anilist").toInt();
@@ -514,7 +520,7 @@ void updateComick(const QString &seriesId, const QString &media, const QString &
     }
     if (hid.isEmpty()) {
         int anilistId = links.value("anilist").toMap().value("id").toInt();
-        if (anilistId <= 0 && media == QLatin1String("anime"))
+        if (anilistId <= 0 && seriesId.startsWith(QLatin1String("anime:anilist:")))
             anilistId = seriesId.section(QLatin1Char(':'), 2).toInt();
         if (anilistId <= 0)
             anilistId = extra.value("anilist").toInt();
@@ -571,22 +577,27 @@ bool Trackers::comickAvailable() const { return !kComickId.isEmpty(); }
 
 QVariantMap Trackers::anilist() const {
     const auto account = Database::pref(QStringLiteral("tracker.anilist")).toMap();
-    return account.isEmpty() ? QVariantMap() : QVariantMap{{"name", account.value("name")}, {"avatar", account.value("avatar")}};
+    return account.isEmpty() ? QVariantMap()
+                             : QVariantMap{{"name", account.value("name")}, {"avatar", account.value("avatar")}, {"expired", account.value("expired").toBool()}};
 }
 
 QVariantMap Trackers::mal() const {
     const auto account = Database::pref(QStringLiteral("tracker.mal")).toMap();
-    return account.isEmpty() ? QVariantMap() : QVariantMap{{"name", account.value("name")}, {"avatar", account.value("avatar")}};
+    return account.isEmpty() ? QVariantMap()
+                             : QVariantMap{{"name", account.value("name")}, {"avatar", account.value("avatar")}, {"expired", account.value("expired").toBool()}};
 }
 
 QVariantMap Trackers::comick() const {
     const auto account = Database::pref(QStringLiteral("tracker.comick")).toMap();
-    return account.isEmpty() ? QVariantMap() : QVariantMap{{"name", account.value("name")}, {"avatar", account.value("avatar")}};
+    return account.isEmpty() ? QVariantMap()
+                             : QVariantMap{{"name", account.value("name")}, {"avatar", account.value("avatar")}, {"expired", account.value("expired").toBool()}};
 }
 
-void Trackers::anilistSignIn() const {
-    QDesktopServices::openUrl(QUrl(QStringLiteral("https://anilist.co/api/v2/oauth/authorize?client_id=%1&response_type=token").arg(kAniListId)));
+QString Trackers::anilistAuthorizeUrl() const {
+    return QStringLiteral("https://anilist.co/api/v2/oauth/authorize?client_id=%1&response_type=token").arg(kAniListId);
 }
+
+void Trackers::anilistSignIn() const { QDesktopServices::openUrl(QUrl(anilistAuthorizeUrl())); }
 
 Task *Trackers::anilistUseToken(const QString &pasted) {
     // The whole address bar works too: …#access_token=…&token_type=…
@@ -841,6 +852,28 @@ void Trackers::moveLinks(const QString &fromId, const QString &toId, bool keepOl
     moveLinkEntries(QStringLiteral("tracker.misses"), fromId, toId, keepOld);
 }
 
+namespace {
+
+// A service that refused SCANCORE's sign-in (the token was revoked or ran
+// out): kept, marked, and the reader told once, so it can be connected again.
+void signedOut(const QString &service, const QString &label) {
+    const auto key = QStringLiteral("tracker.") + service;
+    auto account = Database::pref(key).toMap();
+    if (account.isEmpty() || account.value("expired").toBool())
+        return;
+    account.insert(QStringLiteral("expired"), true);
+    Database::setPref(key, account);
+    QMetaObject::invokeMethod(Trackers::instance(), [service, label] {
+        Notifications::post({QStringLiteral("app"), QStringLiteral("tracker:") + service,
+                             QCoreApplication::translate("Trackers", "%1 needs you to connect again").arg(label),
+                             QCoreApplication::translate("Trackers", "Your progress is not reaching %1. Connect it again in Settings → Connections.").arg(label),
+                             QVariantMap{{"settings", "connections"}}, true});
+        emit Trackers::instance()->changed();
+    });
+}
+
+} // namespace
+
 void Trackers::unitFinished(const QString &seriesId) {
     if (Database::pref(QStringLiteral("tracker.anilist")).toMap().isEmpty() &&
         Database::pref(QStringLiteral("tracker.mal")).toMap().isEmpty() &&
@@ -858,16 +891,22 @@ void Trackers::unitFinished(const QString &seriesId) {
         try {
             updateAniList(seriesId, media, title, progress);
         } catch (const Error &e) {
+            if (e.status() == 401)
+                signedOut(QStringLiteral("anilist"), QStringLiteral("AniList"));
             qWarning().noquote() << "AniList:" << e.message();
         }
         try {
             updateMal(seriesId, media, title, progress);
         } catch (const Error &e) {
+            if (e.status() == 401)
+                signedOut(QStringLiteral("mal"), QStringLiteral("MyAnimeList"));
             qWarning().noquote() << "MyAnimeList:" << e.message();
         }
         try {
             updateComick(seriesId, media, title, progress);
         } catch (const Error &e) {
+            if (e.status() == 401)
+                signedOut(QStringLiteral("comick"), QStringLiteral("Comick"));
             qWarning().noquote() << "Comick:" << e.message();
         }
         QMetaObject::invokeMethod(instance(), [] { emit instance()->changed(); });

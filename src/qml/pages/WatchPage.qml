@@ -400,7 +400,7 @@ Rectangle {
         lastSaved = Date.now()
         const percent = Math.min(1, position / duration)
         Library.recordProgress(series, { key: episode.key, title: episode.title, number: String(episode.number) },
-                               { type: "video", seconds: position, duration: duration }, percent, percent > 0.9)
+                               { type: "video", seconds: position, duration: duration }, percent, watched())
     }
 
     function onPlayerTime(seconds, total, status) {
@@ -461,9 +461,22 @@ Rectangle {
         else exit()
     }
 
+    // Watched: most of it, or into the credits (the last two minutes, or the
+    // ending's skip time). Moving on to the next episode past 70% counts too.
+    property bool movedOn: false
+    function watched() {
+        if (duration <= 0) return false
+        const percent = position / duration
+        const ending = skips.find(s => s.type === "ed" || s.type === "mixed-ed")
+        return percent >= 0.85 || (duration > 600 && duration - position <= 120) || (ending && position >= ending.start - 2)
+            || (movedOn && percent >= 0.7)
+    }
     function nextEpisode() {
         if (!hasNext) return
         nextCountdown.stop()
+        movedOn = true
+        saveProgress(true)
+        movedOn = false
         load(index + 1)
     }
 

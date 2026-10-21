@@ -134,6 +134,7 @@ qt_add_qml_module(scancore
         app/Library.cpp app/Library.h
         app/Live.cpp app/Live.h
         app/Cast.cpp app/Cast.h
+        app/CrashLog.cpp app/CrashLog.h
         app/CastProxy.cpp app/CastProxy.h
         app/Lock.cpp app/Lock.h
         app/MpvPlayer.cpp app/MpvPlayer.h

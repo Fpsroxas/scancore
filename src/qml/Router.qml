@@ -88,6 +88,11 @@ QtObject {
         if (shell) shell.openImmersive("pages/WatchPage.qml", { media: media, episodes: episodes, index: index })
     }
 
+    // AniList's sign-in inside SCANCORE (see AniListSignIn.qml).
+    function openAniListSignIn() {
+        if (shell) shell.openImmersive("pages/AniListSignIn.qml", {})
+    }
+
     // Lets the reader pass a site's browser check (see SiteCheck.qml).
     function openSiteCheck(url) {
         if (App.platform === "android") {

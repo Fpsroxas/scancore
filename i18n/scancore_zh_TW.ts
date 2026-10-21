@@ -163,6 +163,14 @@
             <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
             <translation>MIT 許可證 · github.com/medium-gh/scancore。字型：DM Sans、Space Grotesk、Literata (OFL)。圖示：Lucide (ISC)。HTML 解析：lexbor (Apache 2.0)。影片播放器：mpv 和 FFmpeg (LGPL)，由 tools/libmpv/build.sh 構建。</translation>
         </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>當機報告與診斷資訊</translation>
+        </message>
+        <message>
+            <source>To send to the developer when something goes wrong</source>
+            <translation>出問題時寄給開發者</translation>
+        </message>
     </context>
     <context>
         <name>AccountSettings</name>
@@ -651,6 +659,41 @@
         <message>
             <source>Add</source>
             <translation>新增</translation>
+        </message>
+        <message>
+            <source>(%1 of %2)</source>
+            <translation>（%1/%2）</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>貼上儲存庫頁面的連結，或其 index、repo.json、外掛清單的連結；一次貼上多個也可以。SCANCORE 可讀取 Mihon、Tachiyomi、Aniyomi 和 LNReader 儲存庫。</translation>
+        </message>
+        <message>
+            <source>Skip</source>
+            <translation>略過</translation>
+        </message>
+    </context>
+    <context>
+        <name>AniListSignIn</name>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>已以 %2 身份連線到 %1</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Connect AniList</source>
+            <translation>連線 AniList</translation>
+        </message>
+        <message>
+            <source>Connecting…</source>
+            <translation>正在連線…</translation>
+        </message>
+        <message>
+            <source>Sign in and allow SCANCORE; this page closes by itself.</source>
+            <translation>登入並允許 SCANCORE；此頁面會自動關閉。</translation>
         </message>
     </context>
     <context>
@@ -2192,6 +2235,69 @@
         <message>
             <source>Nothing to send yet: read or watch a little first.</source>
             <translation>還沒有可傳送的內容：先讀一點或看一點吧。</translation>
+        </message>
+    </context>
+    <context>
+        <name>CrashReportsDialog</name>
+        <message>
+            <source>Copied. Paste it in a message to the developer, on Discord or GitHub.</source>
+            <translation>已複製。請貼到給開發者的訊息中，Discord 或 GitHub 皆可。</translation>
+        </message>
+        <message>
+            <source>SCANCORE closed unexpectedly</source>
+            <translation>SCANCORE 意外關閉</translation>
+        </message>
+        <message>
+            <source>Crash report</source>
+            <translation>當機報告</translation>
+        </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>當機報告與診斷資訊</translation>
+        </message>
+        <message>
+            <source>Sending this report to the developer helps fix it. It holds the app's version, your system, where it stopped and the app's recent log: no library, history or account details.</source>
+            <translation>把這份報告寄給開發者有助於修正問題。內容包含 App 版本、你的系統、停止的位置與 App 最近的記錄，不含書庫、紀錄或帳號資訊。</translation>
+        </message>
+        <message>
+            <source>Reports from times SCANCORE closed unexpectedly. Diagnostics hold the app's recent log, for problems that are not crashes.</source>
+            <translation>SCANCORE 意外關閉時產生的報告。診斷資訊包含 App 最近的記錄，用於非當機類問題。</translation>
+        </message>
+        <message>
+            <source>No crash reports. Good news.</source>
+            <translation>沒有當機報告。好消息。</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>分享</translation>
+        </message>
+        <message>
+            <source>Copy</source>
+            <translation>複製</translation>
+        </message>
+        <message>
+            <source>SCANCORE crash report</source>
+            <translation>SCANCORE 當機報告</translation>
+        </message>
+        <message>
+            <source>Report on GitHub</source>
+            <translation>在 GitHub 上回報</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>刪除</translation>
+        </message>
+        <message>
+            <source>Copy diagnostics</source>
+            <translation>複製診斷資訊</translation>
+        </message>
+        <message>
+            <source>SCANCORE diagnostics</source>
+            <translation>SCANCORE 診斷資訊</translation>
         </message>
     </context>
     <context>
@@ -5210,6 +5316,10 @@
             <source>Continue</source>
             <translation>繼續</translation>
         </message>
+        <message>
+            <source>Up next: episode %1</source>
+            <translation>接下來：第 %1 集</translation>
+        </message>
     </context>
     <context>
         <name>Reviews</name>
@@ -6868,6 +6978,29 @@
         <message>
             <source>Use token</source>
             <translation>使用令牌</translation>
+        </message>
+        <message>
+            <source>%1 signed SCANCORE out, so progress is not reaching it. Connect again.</source>
+            <translation>%1 已將 SCANCORE 登出，進度無法同步過去。請重新連線。</translation>
+        </message>
+        <message>
+            <source>Sign in to AniList and allow SCANCORE; this closes by itself.</source>
+            <translation>登入 AniList 並允許 SCANCORE；會自動關閉。</translation>
+        </message>
+        <message>
+            <source>Connect again</source>
+            <translation>重新連線</translation>
+        </message>
+    </context>
+    <context>
+        <name>Trackers</name>
+        <message>
+            <source>%1 needs you to connect again</source>
+            <translation>%1 需要重新連線</translation>
+        </message>
+        <message>
+            <source>Your progress is not reaching %1. Connect it again in Settings → Connections.</source>
+            <translation>你的進度無法同步到 %1。請在 設定 → 連線 中重新連線。</translation>
         </message>
     </context>
     <context>

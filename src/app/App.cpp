@@ -3,6 +3,7 @@
 #include "WebBridge.h"
 #include "Images.h"
 #include "Announcements.h"
+#include "CrashLog.h"
 #include "Library.h"
 #include "Live.h"
 #include "Notifications.h"
@@ -21,6 +22,7 @@
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
 
+#include <QUrlQuery>
 #include <QNetworkInformation>
 #include <QClipboard>
 #include <QDateTime>
@@ -641,6 +643,30 @@ void App::startBackgroundWork() {
     extensionTimer->setInterval(12 * 3600 * 1000);
     connect(extensionTimer, &QTimer::timeout, this, checkExtensions);
     extensionTimer->start();
+}
+
+} // namespace sc
+
+namespace sc {
+
+QVariantList App::crashReports() const { return crashlog::reports(); }
+QString App::crashReport(const QString &file) const { return crashlog::read(file); }
+QStringList App::unseenCrashReports() const { return crashlog::unseen(); }
+void App::markCrashReportSeen(const QString &file) { crashlog::markSeen(file); }
+void App::removeCrashReport(const QString &file) { crashlog::remove(file); }
+QString App::diagnostics() const { return crashlog::diagnostics(); }
+bool App::shareText(const QString &text, const QString &subject) const { return platform::shareText(text, subject); }
+
+QString App::reportIssueUrl(const QString &text) const {
+    // GitHub takes links of about 8 KB: the report's start (what happened
+    // and the backtrace); the rest is pasted.
+    const auto title = text.section(QLatin1Char('\n'), 0, 0).contains(QLatin1String("crash")) ? QStringLiteral("Crash: ") +
+            text.section(QStringLiteral("What: "), 1).section(QLatin1Char('\n'), 0, 0)
+                                                                                         : QStringLiteral("Problem report");
+    auto body = QStringLiteral("What I was doing:\n\n\n```\n%1\n```").arg(text.left(5000));
+    QUrl url(QStringLiteral("https://github.com/medium-gh/scancore/issues/new"));
+    url.setQuery(QUrlQuery{{QStringLiteral("title"), title}, {QStringLiteral("body"), body}});
+    return url.toString(QUrl::FullyEncoded);
 }
 
 } // namespace sc

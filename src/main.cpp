@@ -7,6 +7,7 @@
 #include "app/Images.h"
 #include "app/MpvPlayer.h"
 #include "app/Presence.h"
+#include "app/CrashLog.h"
 #include "app/SingleInstance.h"
 #include "app/Sync.h"
 #include "app/Updater.h"
@@ -44,6 +45,8 @@
 #include <QQuickWindow>
 #include <QStandardPaths>
 #include <QTimer>
+
+#include <stdexcept>
 #include <QUrl>
 
 #ifdef SCANCORE_HAVE_WEBENGINE
@@ -251,6 +254,20 @@ int main(int argc, char *argv[]) {
     if (qEnvironmentVariableIsSet("SCANCORE_PRETEND_VERSION"))
         Application::setApplicationVersion(qEnvironmentVariable("SCANCORE_PRETEND_VERSION"));
     Application::setDesktopFileName(QStringLiteral("com.mediumdev.scancore"));
+    // Crash reports (Settings → About), and the recent log they carry.
+    sc::crashlog::install();
+    // Development hook: SCANCORE_CRASH_TEST=segv|abort|throw crashes on
+    // purpose a few seconds after starting, to check the reports.
+    if (const auto test = qEnvironmentVariable("SCANCORE_CRASH_TEST"); !test.isEmpty())
+        QTimer::singleShot(4000, [test] {
+            qWarning("Crash test: %s", qPrintable(test));
+            if (test == QLatin1String("abort"))
+                qFatal("Crash test");
+            if (test == QLatin1String("throw"))
+                throw std::runtime_error("crash test");
+            volatile int *nowhere = nullptr;
+            *nowhere = 1;
+        });
     Application::setWindowIcon(QIcon(QStringLiteral(":/branding/scancore.svg")));
 #ifndef Q_OS_ANDROID
     QApplication::setQuitOnLastWindowClosed(false);

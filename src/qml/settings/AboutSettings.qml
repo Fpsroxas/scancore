@@ -154,11 +154,13 @@ SettingsPane {
         SettingRow { iconName: "globe"; title: "scancore.onl"; description: qsTr("The SCANCORE website"); clickable: true; external: true; onClicked: App.openUrl("https://scancore.onl") }
         SettingRow { iconName: "message-circle"; title: qsTr("Discord"); description: qsTr("Questions, feedback and updates"); clickable: true; external: true; onClicked: App.openUrl("https://scancore.onl/discord") }
         SettingRow { iconName: "triangle-alert"; title: qsTr("Report a problem"); description: qsTr("Opens GitHub Issues"); clickable: true; external: true; onClicked: App.openUrl("https://github.com/medium-gh/scancore/issues/new/choose") }
+        SettingRow { iconName: "file-text"; title: qsTr("Crash reports and diagnostics"); description: qsTr("To send to the developer when something goes wrong"); clickable: true; onClicked: crashReports.showAll() }
         SettingRow { iconName: "sparkles"; title: qsTr("Welcome tour"); description: qsTr("See the introduction again"); clickable: true; onClicked: Router.shell.showWelcome() }
         SettingRow { iconName: "file-text"; title: qsTr("Licences"); description: qsTr("The open-source software inside SCANCORE"); clickable: true; onClicked: licences.start() }
     }
 
     LicencesDialog { id: licences }
+    CrashReportsDialog { id: crashReports }
 
     SettingsGroup {
         visible: !Theme.compact

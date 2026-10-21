@@ -33,6 +33,7 @@ constexpr auto kVolumeKeysClass = "com/mediumdev/scancore/VolumeKeys";
 constexpr auto kImagesClass = "com/mediumdev/scancore/Images";
 constexpr auto kExternalPlayerClass = "com/mediumdev/scancore/ExternalPlayer";
 constexpr auto kMulticastClass = "com/mediumdev/scancore/Multicast";
+constexpr auto kShareClass = "com/mediumdev/scancore/Share";
 
 void jniVolumeKey(JNIEnv *, jclass, jboolean down) {
     QMetaObject::invokeMethod(
@@ -227,6 +228,18 @@ void askBatteryUnrestricted() {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>(kPowerClass, "ask", "(Landroid/content/Context;)V",
                                        QNativeInterface::QAndroidApplication::context().object());
+#endif
+}
+
+bool shareText(const QString &text, const QString &subject) {
+#ifdef Q_OS_ANDROID
+    return QJniObject::callStaticMethod<jboolean>(kShareClass, "text", "(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;)Z",
+                                                  QNativeInterface::QAndroidApplication::context().object(),
+                                                  QJniObject::fromString(text).object<jstring>(), QJniObject::fromString(subject).object<jstring>());
+#else
+    Q_UNUSED(text)
+    Q_UNUSED(subject)
+    return false;
 #endif
 }
 

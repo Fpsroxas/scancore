@@ -163,6 +163,14 @@
             <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
             <translation>MIT lisansı · github.com/medium-gh/scancore. Yazı tipleri: DM Sans, Space Grotesk, Literata (OFL). Simgeler: Lucide (ISC). HTML ayrıştırma: lexbor (Apache 2.0). Video oynatıcı: mpv ve FFmpeg (LGPL), tools/libmpv/build.sh ile derlendi.</translation>
         </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Çökme raporları ve tanılama</translation>
+        </message>
+        <message>
+            <source>To send to the developer when something goes wrong</source>
+            <translation>Bir şeyler ters gittiğinde geliştiriciye göndermek için</translation>
+        </message>
     </context>
     <context>
         <name>AccountSettings</name>
@@ -651,6 +659,41 @@
         <message>
             <source>Add</source>
             <translation>Ekle</translation>
+        </message>
+        <message>
+            <source>(%1 of %2)</source>
+            <translation>(%1 / %2)</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>Deponun sayfasındaki bağlantıyı ya da index, repo.json veya eklenti listesi bağlantısını yapıştır; birkaçı birden de olur. SCANCORE; Mihon, Tachiyomi, Aniyomi ve LNReader depolarını okur.</translation>
+        </message>
+        <message>
+            <source>Skip</source>
+            <translation>Atla</translation>
+        </message>
+    </context>
+    <context>
+        <name>AniListSignIn</name>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>%1'e %2 olarak bağlanıldı</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Connect AniList</source>
+            <translation>AniList'i bağla</translation>
+        </message>
+        <message>
+            <source>Connecting…</source>
+            <translation>Bağlanıyor…</translation>
+        </message>
+        <message>
+            <source>Sign in and allow SCANCORE; this page closes by itself.</source>
+            <translation>Giriş yap ve SCANCORE'a izin ver; bu sayfa kendiliğinden kapanır.</translation>
         </message>
     </context>
     <context>
@@ -2192,6 +2235,69 @@
         <message>
             <source>Nothing to send yet: read or watch a little first.</source>
             <translation>Henüz gönderilecek bir şey yok: önce biraz oku ya da izle.</translation>
+        </message>
+    </context>
+    <context>
+        <name>CrashReportsDialog</name>
+        <message>
+            <source>Copied. Paste it in a message to the developer, on Discord or GitHub.</source>
+            <translation>Kopyalandı. Discord ya da GitHub'da geliştiriciye yazacağın mesaja yapıştır.</translation>
+        </message>
+        <message>
+            <source>SCANCORE closed unexpectedly</source>
+            <translation>SCANCORE beklenmedik şekilde kapandı</translation>
+        </message>
+        <message>
+            <source>Crash report</source>
+            <translation>Çökme raporu</translation>
+        </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Çökme raporları ve tanılama</translation>
+        </message>
+        <message>
+            <source>Sending this report to the developer helps fix it. It holds the app's version, your system, where it stopped and the app's recent log: no library, history or account details.</source>
+            <translation>Bu raporu geliştiriciye göndermek sorunun düzeltilmesine yardım eder. Uygulama sürümünü, sistemini, nerede durduğunu ve son günlüğü içerir: kütüphane, geçmiş ya da hesap bilgisi yok.</translation>
+        </message>
+        <message>
+            <source>Reports from times SCANCORE closed unexpectedly. Diagnostics hold the app's recent log, for problems that are not crashes.</source>
+            <translation>SCANCORE'un beklenmedik şekilde kapandığı zamanların raporları. Tanılama, çökme olmayan sorunlar için uygulamanın son günlüğünü içerir.</translation>
+        </message>
+        <message>
+            <source>No crash reports. Good news.</source>
+            <translation>Çökme raporu yok. İyi haber.</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Paylaş</translation>
+        </message>
+        <message>
+            <source>Copy</source>
+            <translation>Kopyala</translation>
+        </message>
+        <message>
+            <source>SCANCORE crash report</source>
+            <translation>SCANCORE çökme raporu</translation>
+        </message>
+        <message>
+            <source>Report on GitHub</source>
+            <translation>GitHub'da bildir</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Sil</translation>
+        </message>
+        <message>
+            <source>Copy diagnostics</source>
+            <translation>Tanılamayı kopyala</translation>
+        </message>
+        <message>
+            <source>SCANCORE diagnostics</source>
+            <translation>SCANCORE tanılaması</translation>
         </message>
     </context>
     <context>
@@ -5210,6 +5316,10 @@
             <source>Continue</source>
             <translation>Devam</translation>
         </message>
+        <message>
+            <source>Up next: episode %1</source>
+            <translation>Sıradaki: %1. bölüm</translation>
+        </message>
     </context>
     <context>
         <name>Reviews</name>
@@ -6868,6 +6978,29 @@
         <message>
             <source>Use token</source>
             <translation>Belirteci kullan</translation>
+        </message>
+        <message>
+            <source>%1 signed SCANCORE out, so progress is not reaching it. Connect again.</source>
+            <translation>%1, SCANCORE oturumunu kapattı; ilerleme oraya ulaşmıyor. Yeniden bağla.</translation>
+        </message>
+        <message>
+            <source>Sign in to AniList and allow SCANCORE; this closes by itself.</source>
+            <translation>AniList'e giriş yap ve SCANCORE'a izin ver; kendiliğinden kapanır.</translation>
+        </message>
+        <message>
+            <source>Connect again</source>
+            <translation>Yeniden bağla</translation>
+        </message>
+    </context>
+    <context>
+        <name>Trackers</name>
+        <message>
+            <source>%1 needs you to connect again</source>
+            <translation>%1 yeniden bağlanmalı</translation>
+        </message>
+        <message>
+            <source>Your progress is not reaching %1. Connect it again in Settings → Connections.</source>
+            <translation>İlerlemen %1 hizmetine ulaşmıyor. Ayarlar → Bağlantılar'dan yeniden bağla.</translation>
         </message>
     </context>
     <context>

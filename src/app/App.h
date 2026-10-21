@@ -83,6 +83,18 @@ public:
     // A file dialog's address as a path to show or store.
     Q_INVOKABLE QString localPath(const QUrl &url) const { return url.isLocalFile() ? url.toLocalFile() : url.toString(); }
     Q_INVOKABLE void copy(const QString &text) const;
+    // Crash reports and diagnostics (see CrashLog): [{file, when, summary,
+    // seen}], one report's text, the unseen ones, and sharing a text (the
+    // system's share sheet on Android; false elsewhere).
+    Q_INVOKABLE QVariantList crashReports() const;
+    Q_INVOKABLE QString crashReport(const QString &file) const;
+    Q_INVOKABLE QStringList unseenCrashReports() const;
+    Q_INVOKABLE void markCrashReportSeen(const QString &file);
+    Q_INVOKABLE void removeCrashReport(const QString &file);
+    Q_INVOKABLE QString diagnostics() const;
+    Q_INVOKABLE bool shareText(const QString &text, const QString &subject) const;
+    // A new GitHub issue for a report, its first part filled in.
+    Q_INVOKABLE QString reportIssueUrl(const QString &text) const;
     Q_INVOKABLE void notify(const QString &title, const QString &body);
     Q_INVOKABLE QString relativeTime(const QVariant &when) const;
     Q_INVOKABLE QString formatBytes(qint64 bytes) const;

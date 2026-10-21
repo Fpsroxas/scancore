@@ -9,8 +9,12 @@ Item {
     property var entry: ({})
     readonly property bool anime: entry.media === "anime"
     readonly property real percent: entry.completed ? 1 : (entry.percent || 0)
-    readonly property string unitLine: anime ? qsTr("Episode ") + (entry.unitNumber || entry.unitKey || "")
-                                             : (entry.unitTitle || "")
+    // A finished episode: the next one is what continues.
+    readonly property real unitNumber: Number(entry.unitNumber)
+    readonly property bool upNext: anime && entry.completed && unitNumber > 0
+    readonly property string unitLine: upNext ? qsTr("Up next: episode %1").arg(Math.floor(unitNumber) + 1)
+                                       : anime ? qsTr("Episode ") + (entry.unitNumber || entry.unitKey || "")
+                                       : (entry.unitTitle || "")
 
     width: parent ? parent.width : 800
     implicitHeight: Theme.compact ? 148 : 176
@@ -157,7 +161,7 @@ Item {
                 }
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
-                    text: card.entry.completed ? qsTr("Finished") : Math.round(card.percent * 100) + "%"
+                    text: card.upNext ? "" : card.entry.completed ? qsTr("Finished") : Math.round(card.percent * 100) + "%"
                     color: Theme.textFaint
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textXs + 1

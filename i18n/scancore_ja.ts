@@ -163,6 +163,14 @@
             <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
             <translation>MIT ライセンス · github.com/medium-gh/scancore。フォント: DM Sans、Space Grotesk、Literata (OFL)。アイコン: Lucide (ISC)。HTML 解析: lexbor (Apache 2.0)。動画プレーヤー: mpv と FFmpeg (LGPL)、tools/libmpv/build.sh でビルド。</translation>
         </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>クラッシュレポートと診断情報</translation>
+        </message>
+        <message>
+            <source>To send to the developer when something goes wrong</source>
+            <translation>問題が起きたとき開発者に送るためのもの</translation>
+        </message>
     </context>
     <context>
         <name>AccountSettings</name>
@@ -651,6 +659,41 @@
         <message>
             <source>Add</source>
             <translation>追加</translation>
+        </message>
+        <message>
+            <source>(%1 of %2)</source>
+            <translation>(%1 / %2)</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>リポジトリのページのリンク、またはその index、repo.json、プラグイン一覧へのリンクを貼り付けてください。複数まとめても使えます。SCANCORE は Mihon、Tachiyomi、Aniyomi、LNReader のリポジトリを読み込めます。</translation>
+        </message>
+        <message>
+            <source>Skip</source>
+            <translation>スキップ</translation>
+        </message>
+    </context>
+    <context>
+        <name>AniListSignIn</name>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>%1 に %2 として接続しました</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
+        </message>
+        <message>
+            <source>Connect AniList</source>
+            <translation>AniList を接続</translation>
+        </message>
+        <message>
+            <source>Connecting…</source>
+            <translation>接続中…</translation>
+        </message>
+        <message>
+            <source>Sign in and allow SCANCORE; this page closes by itself.</source>
+            <translation>サインインして SCANCORE を許可してください。このページは自動で閉じます。</translation>
         </message>
     </context>
     <context>
@@ -2192,6 +2235,69 @@
         <message>
             <source>Nothing to send yet: read or watch a little first.</source>
             <translation>まだ送れるものがありません。少し読むか見てからお試しください。</translation>
+        </message>
+    </context>
+    <context>
+        <name>CrashReportsDialog</name>
+        <message>
+            <source>Copied. Paste it in a message to the developer, on Discord or GitHub.</source>
+            <translation>コピーしました。Discord や GitHub で開発者へのメッセージに貼り付けてください。</translation>
+        </message>
+        <message>
+            <source>SCANCORE closed unexpectedly</source>
+            <translation>SCANCORE が予期せず終了しました</translation>
+        </message>
+        <message>
+            <source>Crash report</source>
+            <translation>クラッシュレポート</translation>
+        </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>クラッシュレポートと診断情報</translation>
+        </message>
+        <message>
+            <source>Sending this report to the developer helps fix it. It holds the app's version, your system, where it stopped and the app's recent log: no library, history or account details.</source>
+            <translation>このレポートを開発者に送ると修正に役立ちます。アプリのバージョン、お使いのシステム、停止した箇所、最近のログを含みます。ライブラリ、履歴、アカウント情報は含みません。</translation>
+        </message>
+        <message>
+            <source>Reports from times SCANCORE closed unexpectedly. Diagnostics hold the app's recent log, for problems that are not crashes.</source>
+            <translation>SCANCORE が予期せず終了したときのレポートです。診断情報にはアプリの最近のログが含まれ、クラッシュ以外の問題に使えます。</translation>
+        </message>
+        <message>
+            <source>No crash reports. Good news.</source>
+            <translation>クラッシュレポートはありません。よかったです。</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>共有</translation>
+        </message>
+        <message>
+            <source>Copy</source>
+            <translation>コピー</translation>
+        </message>
+        <message>
+            <source>SCANCORE crash report</source>
+            <translation>SCANCORE クラッシュレポート</translation>
+        </message>
+        <message>
+            <source>Report on GitHub</source>
+            <translation>GitHub で報告</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>削除</translation>
+        </message>
+        <message>
+            <source>Copy diagnostics</source>
+            <translation>診断情報をコピー</translation>
+        </message>
+        <message>
+            <source>SCANCORE diagnostics</source>
+            <translation>SCANCORE 診断情報</translation>
         </message>
     </context>
     <context>
@@ -5210,6 +5316,10 @@
             <source>Continue</source>
             <translation>続ける</translation>
         </message>
+        <message>
+            <source>Up next: episode %1</source>
+            <translation>次: 第 %1 話</translation>
+        </message>
     </context>
     <context>
         <name>Reviews</name>
@@ -6868,6 +6978,29 @@
         <message>
             <source>Use token</source>
             <translation>トークンを使う</translation>
+        </message>
+        <message>
+            <source>%1 signed SCANCORE out, so progress is not reaching it. Connect again.</source>
+            <translation>%1 が SCANCORE をサインアウトしたため、進捗が届いていません。もう一度接続してください。</translation>
+        </message>
+        <message>
+            <source>Sign in to AniList and allow SCANCORE; this closes by itself.</source>
+            <translation>AniList にサインインして SCANCORE を許可してください。自動で閉じます。</translation>
+        </message>
+        <message>
+            <source>Connect again</source>
+            <translation>もう一度接続</translation>
+        </message>
+    </context>
+    <context>
+        <name>Trackers</name>
+        <message>
+            <source>%1 needs you to connect again</source>
+            <translation>%1 の再接続が必要です</translation>
+        </message>
+        <message>
+            <source>Your progress is not reaching %1. Connect it again in Settings → Connections.</source>
+            <translation>進捗が %1 に届いていません。設定 → 連携 から再接続してください。</translation>
         </message>
     </context>
     <context>

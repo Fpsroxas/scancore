@@ -43,6 +43,9 @@ void setWebPlayerPrepared(std::function<void()> prepared);
 void setVolumeKeys(bool on);
 void setVolumeKeyPressed(std::function<void(bool down)> pressed);
 
+// The system's share sheet for a text (Android); false elsewhere.
+bool shareText(const QString &text, const QString &subject);
+
 // Lets multicast packets in on Wi-Fi (Android drops them otherwise), while
 // looking for cast devices.
 void holdMulticast(bool on);

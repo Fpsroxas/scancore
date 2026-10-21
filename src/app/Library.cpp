@@ -257,13 +257,20 @@ Task *Library::entries(const QString &media, bool brief) {
 
 namespace {
 
+// Each series once, at its latest progress. Imports, syncs and "mark as
+// read" save many chapters or episodes at the same moment: then the furthest
+// one counts, not whichever the database happens to list first.
 QVariantList historyRows(const QString &media, int limit) {
-    const auto rows = Database::query(kEntrySelect + QStringLiteral(R"(
-        FROM progress p JOIN series s ON s.id = p.series_id
+    const auto rows = Database::query(QStringLiteral(R"(
+        WITH latest AS (
+            SELECT *, ROW_NUMBER() OVER (PARTITION BY series_id
+                ORDER BY updated_at DESC, CAST(unit_number AS REAL) DESC, completed DESC, rowid DESC) AS rank
+            FROM progress WHERE (? = '' OR series_id LIKE ? || ':%')
+        )
+    )") + kEntrySelect + QStringLiteral(R"(
+        FROM latest p JOIN series s ON s.id = p.series_id
         LEFT JOIN library l ON l.series_id = s.id
-        WHERE (? = '' OR s.media = ?) AND p.updated_at =
-            (SELECT MAX(updated_at) FROM progress WHERE series_id = s.id)
-        GROUP BY s.id
+        WHERE p.rank = 1
         ORDER BY p.updated_at DESC LIMIT ?
     )"),
                                       {media, media, limit});
@@ -292,6 +299,16 @@ Task *Library::continueItems(const QString &media, int limit) {
             if (seen.contains(key))
                 continue;
             seen.insert(key);
+            // Not something being read or watched: planned, dropped or
+            // finished lists, and anime watched to their last episode.
+            const auto category = entry.value(QStringLiteral("category")).toString();
+            if (category == QLatin1String("planned") || category == QLatin1String("dropped") || category == QLatin1String("completed"))
+                continue;
+            if (entry.value(QStringLiteral("media")).toString() == QLatin1String("anime") && entry.value(QStringLiteral("completed")).toBool()) {
+                const int episodes = entry.value(QStringLiteral("extra")).toMap().value(QStringLiteral("episodes")).toInt();
+                if (episodes > 0 && entry.value(QStringLiteral("unitNumber")).toString().toDouble() >= episodes)
+                    continue;
+            }
             out.append(entry);
             if (out.size() >= limit)
                 break;
@@ -350,6 +367,9 @@ void Library::saveProgress(const QVariantMap &series, const QVariantMap &unit, c
                    {seriesId, key, unit.value(QStringLiteral("title")).toString(),
                     unit.value(QStringLiteral("number")).toString(), unit.value(QStringLiteral("url")).toString(),
                     json(position), std::clamp(percent, 0.0, 1.0), completed ? 1 : 0, Database::now()});
+    // Started: a series planned in the library is being read or watched now.
+    Database::exec(QStringLiteral("UPDATE library SET category = 'reading', changed_at = ? WHERE series_id = ? AND category = 'planned'"),
+                   {Database::now(), seriesId});
     // Finished just now, by reading or watching (not marked by hand).
     if (completed && !wasCompleted) {
         Activity::unitFinished(seriesId.section(QLatin1Char(':'), 0, 0));

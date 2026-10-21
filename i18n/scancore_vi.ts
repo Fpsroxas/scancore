@@ -163,6 +163,14 @@
             <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
             <translation>Giấy phép MIT · github.com/medium-gh/scancore. Phông chữ: DM Sans, Space Grotesk, Literata (OFL). Biểu tượng: Lucide (ISC). Phân tích HTML: lexbor (Apache 2.0). Trình phát video: mpv và FFmpeg (LGPL), được dựng bằng tools/libmpv/build.sh.</translation>
         </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Báo cáo sự cố và chẩn đoán</translation>
+        </message>
+        <message>
+            <source>To send to the developer when something goes wrong</source>
+            <translation>Để gửi cho nhà phát triển khi có lỗi</translation>
+        </message>
     </context>
     <context>
         <name>AccountSettings</name>
@@ -651,6 +659,41 @@
         <message>
             <source>Add</source>
             <translation>Thêm</translation>
+        </message>
+        <message>
+            <source>(%1 of %2)</source>
+            <translation>(%1/%2)</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>Dán liên kết từ trang kho, hoặc liên kết tới index, repo.json hay danh sách plugin; dán nhiều cái một lúc cũng được. SCANCORE đọc kho của Mihon, Tachiyomi, Aniyomi và LNReader.</translation>
+        </message>
+        <message>
+            <source>Skip</source>
+            <translation>Bỏ qua</translation>
+        </message>
+    </context>
+    <context>
+        <name>AniListSignIn</name>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>Đã kết nối %1 với tên %2</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Connect AniList</source>
+            <translation>Kết nối AniList</translation>
+        </message>
+        <message>
+            <source>Connecting…</source>
+            <translation>Đang kết nối…</translation>
+        </message>
+        <message>
+            <source>Sign in and allow SCANCORE; this page closes by itself.</source>
+            <translation>Đăng nhập và cho phép SCANCORE; trang này sẽ tự đóng.</translation>
         </message>
     </context>
     <context>
@@ -2192,6 +2235,69 @@
         <message>
             <source>Nothing to send yet: read or watch a little first.</source>
             <translation>Chưa có gì để gửi: hãy đọc hoặc xem một chút trước.</translation>
+        </message>
+    </context>
+    <context>
+        <name>CrashReportsDialog</name>
+        <message>
+            <source>Copied. Paste it in a message to the developer, on Discord or GitHub.</source>
+            <translation>Đã sao chép. Dán vào tin nhắn gửi nhà phát triển trên Discord hoặc GitHub.</translation>
+        </message>
+        <message>
+            <source>SCANCORE closed unexpectedly</source>
+            <translation>SCANCORE đã đóng bất ngờ</translation>
+        </message>
+        <message>
+            <source>Crash report</source>
+            <translation>Báo cáo sự cố</translation>
+        </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Báo cáo sự cố và chẩn đoán</translation>
+        </message>
+        <message>
+            <source>Sending this report to the developer helps fix it. It holds the app's version, your system, where it stopped and the app's recent log: no library, history or account details.</source>
+            <translation>Gửi báo cáo này cho nhà phát triển giúp sửa lỗi. Nó gồm phiên bản ứng dụng, hệ thống của bạn, chỗ bị dừng và nhật ký gần đây: không có thư viện, lịch sử hay thông tin tài khoản.</translation>
+        </message>
+        <message>
+            <source>Reports from times SCANCORE closed unexpectedly. Diagnostics hold the app's recent log, for problems that are not crashes.</source>
+            <translation>Báo cáo những lần SCANCORE bị đóng bất ngờ. Chẩn đoán chứa nhật ký gần đây của ứng dụng, cho các vấn đề không phải sự cố.</translation>
+        </message>
+        <message>
+            <source>No crash reports. Good news.</source>
+            <translation>Không có báo cáo sự cố. Tin vui.</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Chia sẻ</translation>
+        </message>
+        <message>
+            <source>Copy</source>
+            <translation>Sao chép</translation>
+        </message>
+        <message>
+            <source>SCANCORE crash report</source>
+            <translation>Báo cáo sự cố SCANCORE</translation>
+        </message>
+        <message>
+            <source>Report on GitHub</source>
+            <translation>Báo cáo trên GitHub</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Xóa</translation>
+        </message>
+        <message>
+            <source>Copy diagnostics</source>
+            <translation>Sao chép chẩn đoán</translation>
+        </message>
+        <message>
+            <source>SCANCORE diagnostics</source>
+            <translation>Chẩn đoán SCANCORE</translation>
         </message>
     </context>
     <context>
@@ -5210,6 +5316,10 @@
             <source>Continue</source>
             <translation>Tiếp tục</translation>
         </message>
+        <message>
+            <source>Up next: episode %1</source>
+            <translation>Tiếp theo: tập %1</translation>
+        </message>
     </context>
     <context>
         <name>Reviews</name>
@@ -6868,6 +6978,29 @@
         <message>
             <source>Use token</source>
             <translation>Dùng token</translation>
+        </message>
+        <message>
+            <source>%1 signed SCANCORE out, so progress is not reaching it. Connect again.</source>
+            <translation>%1 đã đăng xuất SCANCORE nên tiến độ không đến được đó. Hãy kết nối lại.</translation>
+        </message>
+        <message>
+            <source>Sign in to AniList and allow SCANCORE; this closes by itself.</source>
+            <translation>Đăng nhập AniList và cho phép SCANCORE; cửa sổ sẽ tự đóng.</translation>
+        </message>
+        <message>
+            <source>Connect again</source>
+            <translation>Kết nối lại</translation>
+        </message>
+    </context>
+    <context>
+        <name>Trackers</name>
+        <message>
+            <source>%1 needs you to connect again</source>
+            <translation>%1 cần được kết nối lại</translation>
+        </message>
+        <message>
+            <source>Your progress is not reaching %1. Connect it again in Settings → Connections.</source>
+            <translation>Tiến độ của bạn không đến được %1. Kết nối lại trong Cài đặt → Kết nối.</translation>
         </message>
     </context>
     <context>

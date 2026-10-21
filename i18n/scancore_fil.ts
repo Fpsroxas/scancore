@@ -163,6 +163,14 @@
             <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
             <translation>Lisensyang MIT · github.com/medium-gh/scancore. Mga font: DM Sans, Space Grotesk, Literata (OFL). Mga icon: Lucide (ISC). Pag-parse ng HTML: lexbor (Apache 2.0). Video player: mpv at FFmpeg (LGPL), binuo ng tools/libmpv/build.sh.</translation>
         </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Mga crash report at diagnostics</translation>
+        </message>
+        <message>
+            <source>To send to the developer when something goes wrong</source>
+            <translation>Para ipadala sa developer kapag may nagkaproblema</translation>
+        </message>
     </context>
     <context>
         <name>AccountSettings</name>
@@ -651,6 +659,41 @@
         <message>
             <source>Add and install %1</source>
             <translation>Idagdag at i-install ang %1</translation>
+        </message>
+        <message>
+            <source>(%1 of %2)</source>
+            <translation>(%1 sa %2)</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>I-paste ang link mula sa pahina ng repository, o ang link sa index, repo.json o plugin list nito; gumagana rin ang ilan nang sabay. Nababasa ng SCANCORE ang mga repository ng Mihon, Tachiyomi, Aniyomi at LNReader.</translation>
+        </message>
+        <message>
+            <source>Skip</source>
+            <translation>Laktawan</translation>
+        </message>
+    </context>
+    <context>
+        <name>AniListSignIn</name>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>Nakakonekta sa %1 bilang %2</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Isara</translation>
+        </message>
+        <message>
+            <source>Connect AniList</source>
+            <translation>Ikonekta ang AniList</translation>
+        </message>
+        <message>
+            <source>Connecting…</source>
+            <translation>Kumokonekta…</translation>
+        </message>
+        <message>
+            <source>Sign in and allow SCANCORE; this page closes by itself.</source>
+            <translation>Mag-sign in at payagan ang SCANCORE; kusang magsasara ang pahinang ito.</translation>
         </message>
     </context>
     <context>
@@ -2192,6 +2235,69 @@
         <message>
             <source>Nothing to send yet: read or watch a little first.</source>
             <translation>Wala pang maipapadala: magbasa o manood muna nang kaunti.</translation>
+        </message>
+    </context>
+    <context>
+        <name>CrashReportsDialog</name>
+        <message>
+            <source>Copied. Paste it in a message to the developer, on Discord or GitHub.</source>
+            <translation>Nakopya. I-paste ito sa mensahe sa developer, sa Discord o GitHub.</translation>
+        </message>
+        <message>
+            <source>SCANCORE closed unexpectedly</source>
+            <translation>Biglang nagsara ang SCANCORE</translation>
+        </message>
+        <message>
+            <source>Crash report</source>
+            <translation>Crash report</translation>
+        </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Mga crash report at diagnostics</translation>
+        </message>
+        <message>
+            <source>Sending this report to the developer helps fix it. It holds the app's version, your system, where it stopped and the app's recent log: no library, history or account details.</source>
+            <translation>Nakakatulong sa pag-ayos ang pagpapadala ng report na ito sa developer. Nasa loob ang bersyon ng app, ang system mo, kung saan ito huminto at ang kamakailang log: walang library, history o detalye ng account.</translation>
+        </message>
+        <message>
+            <source>Reports from times SCANCORE closed unexpectedly. Diagnostics hold the app's recent log, for problems that are not crashes.</source>
+            <translation>Mga report mula sa mga pagkakataong biglang nagsara ang SCANCORE. Nasa diagnostics ang kamakailang log ng app, para sa mga problemang hindi crash.</translation>
+        </message>
+        <message>
+            <source>No crash reports. Good news.</source>
+            <translation>Walang crash report. Magandang balita.</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Isara</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Ibahagi</translation>
+        </message>
+        <message>
+            <source>Copy</source>
+            <translation>Kopyahin</translation>
+        </message>
+        <message>
+            <source>SCANCORE crash report</source>
+            <translation>Crash report ng SCANCORE</translation>
+        </message>
+        <message>
+            <source>Report on GitHub</source>
+            <translation>I-report sa GitHub</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Burahin</translation>
+        </message>
+        <message>
+            <source>Copy diagnostics</source>
+            <translation>Kopyahin ang diagnostics</translation>
+        </message>
+        <message>
+            <source>SCANCORE diagnostics</source>
+            <translation>Diagnostics ng SCANCORE</translation>
         </message>
     </context>
     <context>
@@ -5202,6 +5308,10 @@
             <source>Continue</source>
             <translation>Magpatuloy</translation>
         </message>
+        <message>
+            <source>Up next: episode %1</source>
+            <translation>Susunod: episode %1</translation>
+        </message>
     </context>
     <context>
         <name>Reviews</name>
@@ -6853,6 +6963,29 @@
         <message>
             <source>Use token</source>
             <translation>Gamitin ang token</translation>
+        </message>
+        <message>
+            <source>%1 signed SCANCORE out, so progress is not reaching it. Connect again.</source>
+            <translation>Ini-sign out ng %1 ang SCANCORE, kaya hindi nakakarating doon ang progreso. Ikonekta ulit.</translation>
+        </message>
+        <message>
+            <source>Sign in to AniList and allow SCANCORE; this closes by itself.</source>
+            <translation>Mag-sign in sa AniList at payagan ang SCANCORE; kusang magsasara ito.</translation>
+        </message>
+        <message>
+            <source>Connect again</source>
+            <translation>Ikonekta ulit</translation>
+        </message>
+    </context>
+    <context>
+        <name>Trackers</name>
+        <message>
+            <source>%1 needs you to connect again</source>
+            <translation>Kailangang ikonekta ulit ang %1</translation>
+        </message>
+        <message>
+            <source>Your progress is not reaching %1. Connect it again in Settings → Connections.</source>
+            <translation>Hindi nakakarating sa %1 ang progreso mo. Ikonekta ulit sa Settings → Connections.</translation>
         </message>
     </context>
     <context>

@@ -22,6 +22,8 @@ Popup {
             App.openUrl(a.url)
         } else if (a.page === "extensions") {
             Router.openExtensions()
+        } else if (a.settings) {
+            Router.openSettings(a.settings)
         }
     }
     function iconFor(kind) {

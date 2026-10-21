@@ -163,6 +163,14 @@
             <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
             <translation>Lisensi MIT · github.com/medium-gh/scancore. Fon: DM Sans, Space Grotesk, Literata (OFL). Ikon: Lucide (ISC). Penguraian HTML: lexbor (Apache 2.0). Pemutar video: mpv dan FFmpeg (LGPL), dibangun dengan tools/libmpv/build.sh.</translation>
         </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Laporan crash dan diagnostik</translation>
+        </message>
+        <message>
+            <source>To send to the developer when something goes wrong</source>
+            <translation>Untuk dikirim ke pengembang saat ada masalah</translation>
+        </message>
     </context>
     <context>
         <name>AccountSettings</name>
@@ -651,6 +659,41 @@
         <message>
             <source>Add</source>
             <translation>Tambah</translation>
+        </message>
+        <message>
+            <source>(%1 of %2)</source>
+            <translation>(%1 dari %2)</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>Tempel tautan dari halaman repositori, atau tautan ke index, repo.json, atau daftar pluginnya; beberapa sekaligus juga bisa. SCANCORE membaca repositori Mihon, Tachiyomi, Aniyomi, dan LNReader.</translation>
+        </message>
+        <message>
+            <source>Skip</source>
+            <translation>Lewati</translation>
+        </message>
+    </context>
+    <context>
+        <name>AniListSignIn</name>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>Terhubung ke %1 sebagai %2</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Connect AniList</source>
+            <translation>Hubungkan AniList</translation>
+        </message>
+        <message>
+            <source>Connecting…</source>
+            <translation>Menghubungkan…</translation>
+        </message>
+        <message>
+            <source>Sign in and allow SCANCORE; this page closes by itself.</source>
+            <translation>Masuk dan izinkan SCANCORE; halaman ini menutup sendiri.</translation>
         </message>
     </context>
     <context>
@@ -2192,6 +2235,69 @@
         <message>
             <source>Nothing to send yet: read or watch a little first.</source>
             <translation>Belum ada yang bisa dikirim: baca atau tonton sedikit dulu.</translation>
+        </message>
+    </context>
+    <context>
+        <name>CrashReportsDialog</name>
+        <message>
+            <source>Copied. Paste it in a message to the developer, on Discord or GitHub.</source>
+            <translation>Tersalin. Tempel di pesan untuk pengembang, di Discord atau GitHub.</translation>
+        </message>
+        <message>
+            <source>SCANCORE closed unexpectedly</source>
+            <translation>SCANCORE tertutup tiba-tiba</translation>
+        </message>
+        <message>
+            <source>Crash report</source>
+            <translation>Laporan crash</translation>
+        </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>Laporan crash dan diagnostik</translation>
+        </message>
+        <message>
+            <source>Sending this report to the developer helps fix it. It holds the app's version, your system, where it stopped and the app's recent log: no library, history or account details.</source>
+            <translation>Mengirim laporan ini ke pengembang membantu memperbaikinya. Isinya versi aplikasi, sistem Anda, di mana berhentinya, dan log terbaru aplikasi: tanpa pustaka, riwayat, atau detail akun.</translation>
+        </message>
+        <message>
+            <source>Reports from times SCANCORE closed unexpectedly. Diagnostics hold the app's recent log, for problems that are not crashes.</source>
+            <translation>Laporan saat SCANCORE tertutup tiba-tiba. Diagnostik berisi log terbaru aplikasi, untuk masalah yang bukan crash.</translation>
+        </message>
+        <message>
+            <source>No crash reports. Good news.</source>
+            <translation>Tidak ada laporan crash. Kabar baik.</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Bagikan</translation>
+        </message>
+        <message>
+            <source>Copy</source>
+            <translation>Salin</translation>
+        </message>
+        <message>
+            <source>SCANCORE crash report</source>
+            <translation>Laporan crash SCANCORE</translation>
+        </message>
+        <message>
+            <source>Report on GitHub</source>
+            <translation>Laporkan di GitHub</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Hapus</translation>
+        </message>
+        <message>
+            <source>Copy diagnostics</source>
+            <translation>Salin diagnostik</translation>
+        </message>
+        <message>
+            <source>SCANCORE diagnostics</source>
+            <translation>Diagnostik SCANCORE</translation>
         </message>
     </context>
     <context>
@@ -5210,6 +5316,10 @@
             <source>Continue</source>
             <translation>Lanjutkan</translation>
         </message>
+        <message>
+            <source>Up next: episode %1</source>
+            <translation>Berikutnya: episode %1</translation>
+        </message>
     </context>
     <context>
         <name>Reviews</name>
@@ -6868,6 +6978,29 @@
         <message>
             <source>Use token</source>
             <translation>Gunakan token</translation>
+        </message>
+        <message>
+            <source>%1 signed SCANCORE out, so progress is not reaching it. Connect again.</source>
+            <translation>%1 mengeluarkan SCANCORE, jadi progres tidak sampai ke sana. Hubungkan lagi.</translation>
+        </message>
+        <message>
+            <source>Sign in to AniList and allow SCANCORE; this closes by itself.</source>
+            <translation>Masuk ke AniList dan izinkan SCANCORE; ini menutup sendiri.</translation>
+        </message>
+        <message>
+            <source>Connect again</source>
+            <translation>Hubungkan lagi</translation>
+        </message>
+    </context>
+    <context>
+        <name>Trackers</name>
+        <message>
+            <source>%1 needs you to connect again</source>
+            <translation>%1 perlu dihubungkan lagi</translation>
+        </message>
+        <message>
+            <source>Your progress is not reaching %1. Connect it again in Settings → Connections.</source>
+            <translation>Progres Anda tidak sampai ke %1. Hubungkan lagi di Pengaturan → Koneksi.</translation>
         </message>
     </context>
     <context>

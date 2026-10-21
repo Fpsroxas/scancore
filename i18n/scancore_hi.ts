@@ -163,6 +163,14 @@
             <source>MIT licence · github.com/medium-gh/scancore. Fonts: DM Sans, Space Grotesk, Literata (OFL). Icons: Lucide (ISC). HTML parsing: lexbor (Apache 2.0). Video player: mpv and FFmpeg (LGPL), built by tools/libmpv/build.sh.</source>
             <translation>MIT लाइसेंस · github.com/medium-gh/scancore. फ़ॉन्ट: DM Sans, Space Grotesk, Literata (OFL). आइकन: Lucide (ISC). HTML पार्सिंग: lexbor (Apache 2.0). वीडियो प्लेयर: mpv और FFmpeg (LGPL), tools/libmpv/build.sh से बना।</translation>
         </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>क्रैश रिपोर्ट और डायग्नोस्टिक्स</translation>
+        </message>
+        <message>
+            <source>To send to the developer when something goes wrong</source>
+            <translation>कुछ गड़बड़ होने पर डेवलपर को भेजने के लिए</translation>
+        </message>
     </context>
     <context>
         <name>AccountSettings</name>
@@ -651,6 +659,41 @@
         <message>
             <source>Add and install %1</source>
             <translation>जोड़ें और %1 इंस्टॉल करें</translation>
+        </message>
+        <message>
+            <source>(%1 of %2)</source>
+            <translation>(%2 में से %1)</translation>
+        </message>
+        <message>
+            <source>Paste the link from the repository's page, or the link to its index, repo.json or plugin list; several at once work too. SCANCORE reads Mihon, Tachiyomi, Aniyomi and LNReader repositories.</source>
+            <translation>रिपॉज़िटरी के पेज का लिंक, या उसके index, repo.json या प्लगइन सूची का लिंक पेस्ट करें; एक साथ कई भी चलते हैं। SCANCORE Mihon, Tachiyomi, Aniyomi और LNReader रिपॉज़िटरी पढ़ता है।</translation>
+        </message>
+        <message>
+            <source>Skip</source>
+            <translation>छोड़ें</translation>
+        </message>
+    </context>
+    <context>
+        <name>AniListSignIn</name>
+        <message>
+            <source>Connected to %1 as %2</source>
+            <translation>%1 से %2 के रूप में जुड़ा</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>बंद करें</translation>
+        </message>
+        <message>
+            <source>Connect AniList</source>
+            <translation>AniList जोड़ें</translation>
+        </message>
+        <message>
+            <source>Connecting…</source>
+            <translation>कनेक्ट हो रहा है…</translation>
+        </message>
+        <message>
+            <source>Sign in and allow SCANCORE; this page closes by itself.</source>
+            <translation>साइन इन करें और SCANCORE को अनुमति दें; यह पेज अपने आप बंद हो जाएगा।</translation>
         </message>
     </context>
     <context>
@@ -2192,6 +2235,69 @@
         <message>
             <source>Nothing to send yet: read or watch a little first.</source>
             <translation>अभी भेजने को कुछ नहीं: पहले थोड़ा पढ़ें या देखें।</translation>
+        </message>
+    </context>
+    <context>
+        <name>CrashReportsDialog</name>
+        <message>
+            <source>Copied. Paste it in a message to the developer, on Discord or GitHub.</source>
+            <translation>कॉपी हुआ। Discord या GitHub पर डेवलपर को भेजे संदेश में पेस्ट करें।</translation>
+        </message>
+        <message>
+            <source>SCANCORE closed unexpectedly</source>
+            <translation>SCANCORE अचानक बंद हो गया</translation>
+        </message>
+        <message>
+            <source>Crash report</source>
+            <translation>क्रैश रिपोर्ट</translation>
+        </message>
+        <message>
+            <source>Crash reports and diagnostics</source>
+            <translation>क्रैश रिपोर्ट और डायग्नोस्टिक्स</translation>
+        </message>
+        <message>
+            <source>Sending this report to the developer helps fix it. It holds the app's version, your system, where it stopped and the app's recent log: no library, history or account details.</source>
+            <translation>यह रिपोर्ट डेवलपर को भेजने से इसे ठीक करने में मदद मिलती है। इसमें ऐप का संस्करण, आपका सिस्टम, यह कहां रुका और ऐप का हाल का लॉग है: लाइब्रेरी, इतिहास या खाते की कोई जानकारी नहीं।</translation>
+        </message>
+        <message>
+            <source>Reports from times SCANCORE closed unexpectedly. Diagnostics hold the app's recent log, for problems that are not crashes.</source>
+            <translation>उन बार की रिपोर्ट जब SCANCORE अचानक बंद हुआ। डायग्नोस्टिक्स में ऐप का हाल का लॉग होता है, उन समस्याओं के लिए जो क्रैश नहीं हैं।</translation>
+        </message>
+        <message>
+            <source>No crash reports. Good news.</source>
+            <translation>कोई क्रैश रिपोर्ट नहीं। अच्छी खबर।</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>बंद करें</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>शेयर करें</translation>
+        </message>
+        <message>
+            <source>Copy</source>
+            <translation>कॉपी करें</translation>
+        </message>
+        <message>
+            <source>SCANCORE crash report</source>
+            <translation>SCANCORE क्रैश रिपोर्ट</translation>
+        </message>
+        <message>
+            <source>Report on GitHub</source>
+            <translation>GitHub पर रिपोर्ट करें</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>हटाएं</translation>
+        </message>
+        <message>
+            <source>Copy diagnostics</source>
+            <translation>डायग्नोस्टिक्स कॉपी करें</translation>
+        </message>
+        <message>
+            <source>SCANCORE diagnostics</source>
+            <translation>SCANCORE डायग्नोस्टिक्स</translation>
         </message>
     </context>
     <context>
@@ -5202,6 +5308,10 @@
             <source>Continue</source>
             <translation>जारी रखें</translation>
         </message>
+        <message>
+            <source>Up next: episode %1</source>
+            <translation>आगे: एपिसोड %1</translation>
+        </message>
     </context>
     <context>
         <name>Reviews</name>
@@ -6853,6 +6963,29 @@
         <message>
             <source>Use token</source>
             <translation>टोकन इस्तेमाल करें</translation>
+        </message>
+        <message>
+            <source>%1 signed SCANCORE out, so progress is not reaching it. Connect again.</source>
+            <translation>%1 ने SCANCORE को साइन आउट कर दिया, इसलिए प्रगति वहां नहीं पहुंच रही। फिर से जोड़ें।</translation>
+        </message>
+        <message>
+            <source>Sign in to AniList and allow SCANCORE; this closes by itself.</source>
+            <translation>AniList में साइन इन करें और SCANCORE को अनुमति दें; यह अपने आप बंद हो जाएगा।</translation>
+        </message>
+        <message>
+            <source>Connect again</source>
+            <translation>फिर से जोड़ें</translation>
+        </message>
+    </context>
+    <context>
+        <name>Trackers</name>
+        <message>
+            <source>%1 needs you to connect again</source>
+            <translation>%1 को फिर से जोड़ना होगा</translation>
+        </message>
+        <message>
+            <source>Your progress is not reaching %1. Connect it again in Settings → Connections.</source>
+            <translation>आपकी प्रगति %1 तक नहीं पहुंच रही। सेटिंग → कनेक्शन में फिर से जोड़ें।</translation>
         </message>
     </context>
     <context>

@@ -106,6 +106,10 @@ ApplicationWindow {
         target: Downloads
         function onFinished(title) { shell.toast(qsTr("Downloaded ") + title, "success") }
     }
+    // A crash last time: the report, to send.
+    CrashReportsDialog { id: crashPrompt }
+    Timer { running: true; interval: 2500; onTriggered: crashPrompt.showLatest() }
+
     // Another of the account's apps sent where it is (Continue on…).
     Connections {
         target: Live

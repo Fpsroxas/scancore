@@ -43,6 +43,8 @@ public:
 
     // AniList: opens its sign-in page, which shows a token to paste here.
     Q_INVOKABLE void anilistSignIn() const;
+    // AniList's sign-in page for SCANCORE (it shows a token when allowed).
+    Q_INVOKABLE QString anilistAuthorizeUrl() const;
     Q_INVOKABLE sc::Task *anilistUseToken(const QString &token);
     // MyAnimeList: opens its sign-in page; it comes back to SCANCORE itself.
     Q_INVOKABLE sc::Task *malSignIn();
