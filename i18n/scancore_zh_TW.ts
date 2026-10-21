@@ -4345,6 +4345,14 @@
             <source>Normal</source>
             <translation>正常</translation>
         </message>
+        <message>
+            <source>Exit full screen</source>
+            <translation>退出全屏</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>全屏</translation>
+        </message>
     </context>
     <context>
         <name>NextChapterCard</name>

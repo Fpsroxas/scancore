@@ -4337,6 +4337,14 @@
             <source>Normal</source>
             <translation>सामान्य</translation>
         </message>
+        <message>
+            <source>Exit full screen</source>
+            <translation>फ़ुल स्क्रीन से बाहर</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>फ़ुल स्क्रीन</translation>
+        </message>
     </context>
     <context>
         <name>NextChapterCard</name>

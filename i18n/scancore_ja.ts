@@ -4345,6 +4345,14 @@
             <source>Normal</source>
             <translation>標準</translation>
         </message>
+        <message>
+            <source>Exit full screen</source>
+            <translation>全画面を終了</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>全画面</translation>
+        </message>
     </context>
     <context>
         <name>NextChapterCard</name>

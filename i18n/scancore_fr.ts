@@ -4345,6 +4345,14 @@
             <source>Normal</source>
             <translation>Normale</translation>
         </message>
+        <message>
+            <source>Exit full screen</source>
+            <translation>Quitter le plein écran</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>Plein écran</translation>
+        </message>
     </context>
     <context>
         <name>NextChapterCard</name>

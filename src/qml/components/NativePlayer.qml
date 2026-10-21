@@ -301,6 +301,15 @@ Item {
                     label: s === 1 ? qsTr("Normal") : s + "×", selected: Math.abs(mpv.speed - s) < 0.01,
                     pick: () => { mpv.speed = s; App.setSetting("playerSpeed", s) } })))
             }
+            // Phones: landscape is full screen (WatchPage turns the phone).
+            IconButton {
+                readonly property bool full: root.phone ? root.width > root.height
+                                                        : root.Window.window !== null && root.Window.window.visibility === Window.FullScreen
+                iconName: full ? "minimize" : "maximize"
+                iconColor: "white"
+                tip: full ? qsTr("Exit full screen") : qsTr("Full screen")
+                onClicked: { root.fullScreenRequested(); root.interacted() }
+            }
         }
     }
 

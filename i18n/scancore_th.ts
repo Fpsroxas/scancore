@@ -4337,6 +4337,14 @@
             <source>Normal</source>
             <translation>ปกติ</translation>
         </message>
+        <message>
+            <source>Exit full screen</source>
+            <translation>ออกจากเต็มจอ</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>เต็มจอ</translation>
+        </message>
     </context>
     <context>
         <name>NextChapterCard</name>

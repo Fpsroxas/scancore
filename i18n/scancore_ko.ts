@@ -4345,6 +4345,14 @@
             <source>Normal</source>
             <translation>보통</translation>
         </message>
+        <message>
+            <source>Exit full screen</source>
+            <translation>전체 화면 나가기</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>전체 화면</translation>
+        </message>
     </context>
     <context>
         <name>NextChapterCard</name>

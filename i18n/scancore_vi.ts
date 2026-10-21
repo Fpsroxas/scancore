@@ -4345,6 +4345,14 @@
             <source>Normal</source>
             <translation>Bình thường</translation>
         </message>
+        <message>
+            <source>Exit full screen</source>
+            <translation>Thoát toàn màn hình</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>Toàn màn hình</translation>
+        </message>
     </context>
     <context>
         <name>NextChapterCard</name>

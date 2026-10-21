@@ -4337,6 +4337,14 @@
             <source>Normal</source>
             <translation>Normal</translation>
         </message>
+        <message>
+            <source>Exit full screen</source>
+            <translation>Lumabas sa full screen</translation>
+        </message>
+        <message>
+            <source>Full screen</source>
+            <translation>Full screen</translation>
+        </message>
     </context>
     <context>
         <name>NextChapterCard</name>
