@@ -194,8 +194,10 @@ struct Tally {
 };
 
 // Into the library (when not there yet), with its chapters or episodes done.
-int store(const QVariantMap &series, const QString &category, const QVariantList &units, const Item &item) {
+int store(const QVariantMap &series, const QString &list, const QVariantList &units, const Item &item) {
     const auto id = series.value("id").toString();
+    // A backup's own list becomes one of the user's (made once, by name).
+    const auto category = list.startsWith(QLatin1String("custom:")) ? Library::categoryNamed(list.mid(7)) : list;
     const auto when = item.updatedAt > 0 ? std::min(item.updatedAt, Database::now()) : Database::now();
     QSet<qint64> numbers;
     for (const double n : item.numbers)
@@ -622,6 +624,10 @@ Task *Importer::exportMihon(const QUrl &file) {
         ProtoWriter backup;
         QHash<QString, QString> sourceNames;
         int exported = 0, skipped = 0;
+        // The built-in lists, then the user's own.
+        auto lists = kMihonCategories;
+        for (const auto &c : Library::storedCategories())
+            lists.append({c.toMap().value("id").toString(), c.toMap().value("name").toString()});
         for (const auto &value : rows) {
             const auto row = value.toMap();
             const auto key = row.value("source").toString();
@@ -680,8 +686,8 @@ Task *Importer::exportMihon(const QUrl &file) {
                 }
                 manga.message(16, chapter);
             }
-            for (int c = 0; c < kMihonCategories.size(); ++c)
-                if (kMihonCategories[c].first == row.value("category").toString())
+            for (int c = 0; c < lists.size(); ++c)
+                if (lists[c].first == row.value("category").toString())
                     manga.varint(17, quint64(c + 1));
             manga.boolean(100, true);
             for (const auto &read : history)
@@ -691,9 +697,9 @@ Task *Importer::exportMihon(const QUrl &file) {
         }
         if (exported == 0)
             throw Error(QStringLiteral("No comics from extensions to export. Mihon cannot open series from SCANCORE's built-in sources."));
-        for (int c = 0; c < kMihonCategories.size(); ++c) {
+        for (int c = 0; c < lists.size(); ++c) {
             ProtoWriter category;
-            category.text(1, kMihonCategories[c].second);
+            category.text(1, lists[c].second);
             category.varint(2, quint64(c + 1));
             backup.message(2, category);
         }

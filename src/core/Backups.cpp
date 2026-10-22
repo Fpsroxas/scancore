@@ -208,11 +208,22 @@ QList<Item> parseMihon(const QByteArray &data) {
             item.sourceName = names.value(entry.source);
             item.sourceId = entry.source;
             item.extensionKey = entry.source ? QStringLiteral("%1:%2").arg(kind).arg(entry.source) : QString();
-            for (const auto order : entry.categories)
-                if (const auto list = categoryNamed(categories.value(order)); !list.isEmpty()) {
+            // A list SCANCORE has, else the first of the backup's own
+            // ("custom:<name>", made into a custom list on import).
+            QString custom;
+            bool known = false;
+            for (const auto order : entry.categories) {
+                const auto name = categories.value(order);
+                if (const auto list = categoryNamed(name); !list.isEmpty()) {
                     item.category = list;
+                    known = true;
                     break;
                 }
+                if (custom.isEmpty() && !name.trimmed().isEmpty() && name.compare(QLatin1String("Default"), Qt::CaseInsensitive) != 0)
+                    custom = name.trimmed();
+            }
+            if (!known && !custom.isEmpty())
+                item.category = QStringLiteral("custom:") + custom;
             out.append(item);
         }
     };
@@ -232,7 +243,10 @@ QList<Item> parseLNReader(const QByteArray &zip) {
     QHash<qint64, QString> categoryOf;
     for (const auto &value : QJsonDocument::fromJson(files.value(QStringLiteral("Category.json"))).array()) {
         const auto category = value.toObject();
-        const auto list = categoryNamed(category.value("name").toString());
+        const auto name = category.value("name").toString().trimmed();
+        auto list = categoryNamed(name);
+        if (list.isEmpty() && !name.isEmpty() && name.compare(QLatin1String("Default"), Qt::CaseInsensitive) != 0)
+            list = QStringLiteral("custom:") + name;
         if (list.isEmpty())
             continue;
         for (const auto &id : category.value("novelIds").toArray())
