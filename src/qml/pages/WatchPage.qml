@@ -152,6 +152,14 @@ Rectangle {
         if (phone && !landscape) phoneList.positionViewAtIndex(i, ListView.Contain)
     }
 
+    // The screen stays on while the episode plays: SCANCORE's player says
+    // so, a web player while its ticks keep coming and it is not paused.
+    property bool webPlaying: false
+    readonly property bool keepScreenOn: !casting && Qt.application.state === Qt.ApplicationActive
+        && (player.item && player.item.playing !== undefined ? player.item.playing : webPlaying)
+    onKeepScreenOnChanged: App.keepAwake("watch", keepScreenOn)
+    Timer { id: webTick; interval: 5000; onTriggered: watch.webPlaying = false }
+
     Component.onCompleted: {
         load(index)
         if (phone && landscape) Window.window.showFullScreen()
@@ -160,6 +168,7 @@ Rectangle {
     }
     // However the player is closed (Back, Esc, the arrow), leave full screen.
     Component.onDestruction: {
+        App.keepAwake("watch", false)
         Activity.setMedia("")
         Presence.clear()
         saveProgress(true)
@@ -404,6 +413,9 @@ Rectangle {
     }
 
     function onPlayerTime(seconds, total, status) {
+        // Web players say how they are doing with every tick.
+        webPlaying = status !== "Paused" && status !== "Ended"
+        webTick.restart()
         if (casting) return
         if (total > 0 && duration === 0) {
             duration = total

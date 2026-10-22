@@ -1,4 +1,5 @@
 #include "App.h"
+#include "KeepAwake.h"
 
 #include "WebBridge.h"
 #include "Images.h"
@@ -160,6 +161,10 @@ const QVariantMap kDefaults{
     {"libraryMedia", "comic"},
     {"libraryCategory", "all"},
     {"libraryView", "grid"},
+    // A series' chapters: one list ("list") or ten a page ("pages").
+    {"chapterList", "list"},
+    // The screen stays on while a reader is open.
+    {"readerKeepAwake", true},
     {"librarySort", "updates"},
     {"comickCatalog", true},
     // The tracker catalogue each page browses and searches: comick,
@@ -399,6 +404,7 @@ void App::prepareWebPlayer() const { platform::prepareWebPlayer(); }
 void App::setOrientation(const QString &mode) const { platform::setOrientation(mode); }
 
 void App::setBarIcons(bool darkScreen) const { platform::setBarIcons(darkScreen); }
+void App::keepAwake(const QString &holder, bool on) const { keepAwake::hold(holder, on); }
 
 void App::setVolumeKeys(bool on) const { platform::setVolumeKeys(on); }
 

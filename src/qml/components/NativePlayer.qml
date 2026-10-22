@@ -15,8 +15,13 @@ Item {
     property real startAt: 0
     // WatchPage's chrome: the controls show and hide with it.
     property bool chromeShown: true
+    // The same server's other videos ([{id, label, height, current}]),
+    // offered beside the stream's own variants under Quality.
+    property var alternatives: []
     readonly property bool phone: App.platform === "android"
     readonly property alias player: mpv
+    // Playing now (WatchPage keeps the screen on meanwhile).
+    readonly property bool playing: mpv.loaded && !mpv.paused && !mpv.ended
     readonly property bool controlsShown: chromeShown || mpv.paused || mpv.buffering || seekBar.pressed || menu.visible
 
     signal time(real seconds, real total, string status)

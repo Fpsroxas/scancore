@@ -26,6 +26,26 @@ SettingsPane {
     }
 
     SettingsGroup {
+        title: qsTr("Chapters and screen")
+        SettingRow {
+            iconName: "list"
+            title: qsTr("Show chapters")
+            description: qsTr("On a comic's or novel's page: every chapter in one list, or ten at a time with page numbers.")
+            Segmented {
+                options: [{ value: "list", label: qsTr("One list") }, { value: "pages", label: qsTr("Pages of 10") }]
+                value: App.settings.chapterList || "list"
+                onPicked: (v) => App.setSetting("chapterList", v)
+            }
+        }
+        SettingRow {
+            iconName: "sun"
+            title: qsTr("Keep the screen on while reading")
+            description: qsTr("The screen does not dim or lock while a reader is open. Videos always keep it on while they play.")
+            Toggle { checked: App.settings.readerKeepAwake !== false; onToggled: App.setSetting("readerKeepAwake", checked) }
+        }
+    }
+
+    SettingsGroup {
         title: qsTr("Comic reader")
         note: qsTr("While reading: M switches layout, Ctrl + scroll changes the strip width (or zooms a page), and F goes full screen. Each series can keep its own settings from the reader's settings button.")
 

@@ -109,12 +109,18 @@ Rectangle {
     }
     property int nextFor: -1
 
+    // The screen stays on while reading (a setting, on by default).
+    readonly property bool keepScreenOn: App.settings.readerKeepAwake !== false && Qt.application.state === Qt.ApplicationActive
+    onKeepScreenOnChanged: App.keepAwake("reader", keepScreenOn)
+
     Component.onCompleted: {
         load(index)
+        App.keepAwake("reader", keepScreenOn)
         Activity.setMedia("comic")
         App.setVolumeKeys(volumeKeys)
     }
     Component.onDestruction: {
+        App.keepAwake("reader", false)
         App.setVolumeKeys(false)
         Activity.setMedia("")
         Presence.clear()
