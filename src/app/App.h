@@ -75,6 +75,8 @@ public:
     Q_INVOKABLE void prepareWebPlayer() const;
     Q_INVOKABLE void setOrientation(const QString &mode) const;
     Q_INVOKABLE void setBarIcons(bool darkScreen) const;
+    // Keeps the screen on while `holder` wants it (a playing video).
+    Q_INVOKABLE void keepAwake(const QString &holder, bool on) const;
     // Android: volume keys come as volumeKey() instead of changing the
     // volume while on (the comic reader turns pages with them).
     Q_INVOKABLE void setVolumeKeys(bool on) const;
