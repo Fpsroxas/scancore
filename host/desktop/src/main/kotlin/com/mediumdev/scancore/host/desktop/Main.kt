@@ -27,7 +27,7 @@ import java.io.OutputStreamWriter
 import java.io.PrintStream
 import kotlin.system.exitProcess
 
-const val HOST_VERSION = "1"
+const val HOST_VERSION = "2"
 
 fun main(args: Array<String>) {
     val options = args.toList().zipWithNext().filter { it.first.startsWith("--") }.associate { it.first.removePrefix("--") to it.second }
