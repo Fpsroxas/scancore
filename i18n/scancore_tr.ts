@@ -1317,6 +1317,30 @@
             <source>Best</source>
             <translation>En iyi</translation>
         </message>
+        <message>
+            <source>Quality and audio</source>
+            <translation>Kalite ve ses</translation>
+        </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's Quality and Audio buttons.</source>
+            <translation>Önce ne oynatılır. Bir kaynağın videoları adlarına göre seçilir ve birden çok çözünürlük ya da ses parçası olan bir yayın istenenlerle başlar. İzlerken oynatıcının Kalite ve Ses düğmeleriyle değiştirin.</translation>
+        </message>
+        <message>
+            <source>Preferred quality</source>
+            <translation>Tercih edilen kalite</translation>
+        </message>
+        <message>
+            <source>The highest resolution at or under this one; lower ones save data.</source>
+            <translation>Bu çözünürlüğe kadar olan en yüksek çözünürlük; düşük olanlar veri tasarrufu sağlar.</translation>
+        </message>
+        <message>
+            <source>Preferred audio</source>
+            <translation>Tercih edilen ses</translation>
+        </message>
+        <message>
+            <source>A dub when the source has one, or the original language with subtitles.</source>
+            <translation>Kaynakta varsa dublaj, yoksa altyazılı orijinal dil.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -3899,6 +3923,46 @@
             <source>Review</source>
             <translation>İncele</translation>
         </message>
+        <message>
+            <source>Rename list</source>
+            <translation>Listeyi yeniden adlandır</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>Yeni liste</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>Ad, örneğin Isekai veya Haftalık</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>Yeniden adlandır</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ekle</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>%1 listesi kaldırılsın mı?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>Serileri Okunuyor'a taşınır; kitaplığınızdan hiçbir şey kaldırılmaz.</translation>
+        </message>
+        <message>
+            <source>Move left</source>
+            <translation>Sola taşı</translation>
+        </message>
+        <message>
+            <source>Move right</source>
+            <translation>Sağa taşı</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>Listeyi kaldır</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4065,6 +4129,66 @@
         <message>
             <source>Sums up every new chapter a check found, instead of one notification per series.</source>
             <translation>Seri başına bir bildirim yerine bir kontrolün bulduğu tüm yeni bölümleri özetler.</translation>
+        </message>
+        <message>
+            <source>Rename list</source>
+            <translation>Listeyi yeniden adlandır</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>Yeni liste</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>Ad, örneğin Isekai veya Haftalık</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>Yeniden adlandır</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ekle</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>%1 listesi kaldırılsın mı?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>Serileri Okunuyor'a taşınır; kitaplığınızdan hiçbir şey kaldırılmaz.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Kaldır</translation>
+        </message>
+        <message>
+            <source>Your lists</source>
+            <translation>Listeleriniz</translation>
+        </message>
+        <message>
+            <source>Lists of your own sit beside Reading, Plan to read, On hold, Completed and Dropped, for comics, novels and anime. Mihon and LNReader backups bring theirs along. Long-press or right-click one in the library to change it there.</source>
+            <translation>Kendi listeleriniz Okunuyor, Okunacak, Beklemede, Tamamlandı ve Bırakıldı'nın yanında yer alır; çizgi roman, roman ve anime için. Mihon ve LNReader yedekleri kendi listelerini getirir. Değiştirmek için kitaplıkta birine uzun basın veya sağ tıklayın.</translation>
+        </message>
+        <message>
+            <source>Move up</source>
+            <translation>Yukarı taşı</translation>
+        </message>
+        <message>
+            <source>Move down</source>
+            <translation>Aşağı taşı</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>Listeyi kaldır</translation>
+        </message>
+        <message>
+            <source>Add another list</source>
+            <translation>Başka bir liste ekle</translation>
+        </message>
+        <message>
+            <source>Add a list</source>
+            <translation>Liste ekle</translation>
         </message>
     </context>
     <context>
@@ -4352,6 +4476,10 @@
         <message>
             <source>Full screen</source>
             <translation>Tam ekran</translation>
+        </message>
+        <message>
+            <source>Quality</source>
+            <translation>Kalite</translation>
         </message>
     </context>
     <context>
@@ -4711,6 +4839,18 @@
         <message>
             <source>Discover</source>
             <translation>Keşfet</translation>
+        </message>
+        <message>
+            <source>Open a book file (EPUB or PDF)</source>
+            <translation>Kitap dosyası aç (EPUB veya PDF)</translation>
+        </message>
+        <message>
+            <source>Books (*.epub *.pdf)</source>
+            <translation>Kitaplar (*.epub *.pdf)</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>Tüm dosyalar (*)</translation>
         </message>
     </context>
     <context>
@@ -5560,6 +5700,34 @@
         <message>
             <source>Keep the spoken paragraph on screen</source>
             <translation>Okunan paragrafı ekranda tut</translation>
+        </message>
+        <message>
+            <source>Chapters and screen</source>
+            <translation>Bölümler ve ekran</translation>
+        </message>
+        <message>
+            <source>Show chapters</source>
+            <translation>Bölümleri göster</translation>
+        </message>
+        <message>
+            <source>On a comic's or novel's page: every chapter in one list, or ten at a time with page numbers.</source>
+            <translation>Bir çizgi roman ya da roman sayfasında: tüm bölümler tek listede veya sayfa numaralarıyla onar onar.</translation>
+        </message>
+        <message>
+            <source>One list</source>
+            <translation>Tek liste</translation>
+        </message>
+        <message>
+            <source>Pages of 10</source>
+            <translation>10'luk sayfalar</translation>
+        </message>
+        <message>
+            <source>Keep the screen on while reading</source>
+            <translation>Okurken ekranı açık tut</translation>
+        </message>
+        <message>
+            <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
+            <translation>Bir okuyucu açıkken ekran kararmaz veya kilitlenmez. Videolar oynarken ekranı her zaman açık tutar.</translation>
         </message>
     </context>
     <context>
@@ -7794,6 +7962,49 @@
         <message>
             <source>Later</source>
             <translation>Sonra</translation>
+        </message>
+    </context>
+    <context>
+        <name>VideoPrefs</name>
+        <message>
+            <source>As the source plays it</source>
+            <translation>Kaynağın oynattığı gibi</translation>
+        </message>
+        <message>
+            <source>Japanese (original)</source>
+            <translation>Japonca (orijinal)</translation>
+        </message>
+        <message>
+            <source>English dub</source>
+            <translation>İngilizce dublaj</translation>
+        </message>
+        <message>
+            <source>Spanish dub</source>
+            <translation>İspanyolca dublaj</translation>
+        </message>
+        <message>
+            <source>Portuguese dub</source>
+            <translation>Portekizce dublaj</translation>
+        </message>
+        <message>
+            <source>French dub</source>
+            <translation>Fransızca dublaj</translation>
+        </message>
+        <message>
+            <source>German dub</source>
+            <translation>Almanca dublaj</translation>
+        </message>
+        <message>
+            <source>Italian dub</source>
+            <translation>İtalyanca dublaj</translation>
+        </message>
+        <message>
+            <source>Hindi dub</source>
+            <translation>Hintçe dublaj</translation>
+        </message>
+        <message>
+            <source>Best available</source>
+            <translation>En iyi mevcut</translation>
         </message>
     </context>
     <context>

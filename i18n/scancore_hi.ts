@@ -1317,6 +1317,30 @@
             <source>Best</source>
             <translation>सबसे अच्छा</translation>
         </message>
+        <message>
+            <source>Quality and audio</source>
+            <translation>क्वालिटी और ऑडियो</translation>
+        </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's Quality and Audio buttons.</source>
+            <translation>पहले क्या चले। स्रोत के वीडियो उनके नाम से चुने जाते हैं, और कई रिज़ॉल्यूशन या ऑडियो ट्रैक वाली स्ट्रीम चुने गए से शुरू होती है। देखते समय प्लेयर के क्वालिटी और ऑडियो बटन से बदलें।</translation>
+        </message>
+        <message>
+            <source>Preferred quality</source>
+            <translation>पसंदीदा क्वालिटी</translation>
+        </message>
+        <message>
+            <source>The highest resolution at or under this one; lower ones save data.</source>
+            <translation>इस तक की सबसे ऊँची रिज़ॉल्यूशन; कम वाली डेटा बचाती हैं।</translation>
+        </message>
+        <message>
+            <source>Preferred audio</source>
+            <translation>पसंदीदा ऑडियो</translation>
+        </message>
+        <message>
+            <source>A dub when the source has one, or the original language with subtitles.</source>
+            <translation>स्रोत में डब हो तो डब, नहीं तो सबटाइटल के साथ मूल भाषा।</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -3891,6 +3915,46 @@
             <source>Review</source>
             <translation>देखें</translation>
         </message>
+        <message>
+            <source>Rename list</source>
+            <translation>सूची का नाम बदलें</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>नई सूची</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>नाम, जैसे इसेकाई या साप्ताहिक</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>नाम बदलें</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>जोड़ें</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>सूची %1 हटाएँ?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>इसकी सीरीज़ 'पढ़ रहे हैं' में चली जाएँगी; आपकी लाइब्रेरी से कुछ नहीं हटेगा।</translation>
+        </message>
+        <message>
+            <source>Move left</source>
+            <translation>बाएँ ले जाएँ</translation>
+        </message>
+        <message>
+            <source>Move right</source>
+            <translation>दाएँ ले जाएँ</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>सूची हटाएँ</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4057,6 +4121,66 @@
         <message>
             <source>Sums up every new chapter a check found, instead of one notification per series.</source>
             <translation>हर सीरीज़ की अलग सूचना के बजाय, एक जांच में मिले सभी नए चैप्टर एक साथ बताता है।</translation>
+        </message>
+        <message>
+            <source>Rename list</source>
+            <translation>सूची का नाम बदलें</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>नई सूची</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>नाम, जैसे इसेकाई या साप्ताहिक</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>नाम बदलें</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>जोड़ें</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>सूची %1 हटाएँ?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>इसकी सीरीज़ 'पढ़ रहे हैं' में चली जाएँगी; आपकी लाइब्रेरी से कुछ नहीं हटेगा।</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>हटाएं</translation>
+        </message>
+        <message>
+            <source>Your lists</source>
+            <translation>आपकी सूचियाँ</translation>
+        </message>
+        <message>
+            <source>Lists of your own sit beside Reading, Plan to read, On hold, Completed and Dropped, for comics, novels and anime. Mihon and LNReader backups bring theirs along. Long-press or right-click one in the library to change it there.</source>
+            <translation>आपकी अपनी सूचियाँ पढ़ रहे हैं, पढ़ने की योजना, रुका हुआ, पूरा और छोड़ा के साथ रहती हैं, कॉमिक्स, उपन्यास और एनीमे के लिए। Mihon और LNReader बैकअप अपनी सूचियाँ साथ लाते हैं। लाइब्रेरी में किसी सूची को देर तक दबाएँ या राइट-क्लिक करें ताकि उसे वहीं बदल सकें।</translation>
+        </message>
+        <message>
+            <source>Move up</source>
+            <translation>ऊपर ले जाएं</translation>
+        </message>
+        <message>
+            <source>Move down</source>
+            <translation>नीचे ले जाएं</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>सूची हटाएँ</translation>
+        </message>
+        <message>
+            <source>Add another list</source>
+            <translation>एक और सूची जोड़ें</translation>
+        </message>
+        <message>
+            <source>Add a list</source>
+            <translation>सूची जोड़ें</translation>
         </message>
     </context>
     <context>
@@ -4344,6 +4468,10 @@
         <message>
             <source>Full screen</source>
             <translation>फ़ुल स्क्रीन</translation>
+        </message>
+        <message>
+            <source>Quality</source>
+            <translation>क्वालिटी</translation>
         </message>
     </context>
     <context>
@@ -4703,6 +4831,18 @@
         <message>
             <source>Discover</source>
             <translation>खोजें</translation>
+        </message>
+        <message>
+            <source>Open a book file (EPUB or PDF)</source>
+            <translation>किताब फ़ाइल खोलें (EPUB या PDF)</translation>
+        </message>
+        <message>
+            <source>Books (*.epub *.pdf)</source>
+            <translation>किताबें (*.epub *.pdf)</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>सभी फ़ाइलें (*)</translation>
         </message>
     </context>
     <context>
@@ -5552,6 +5692,34 @@
         <message>
             <source>Keep the spoken paragraph on screen</source>
             <translation>बोला जा रहा पैराग्राफ़ स्क्रीन पर रखें</translation>
+        </message>
+        <message>
+            <source>Chapters and screen</source>
+            <translation>अध्याय और स्क्रीन</translation>
+        </message>
+        <message>
+            <source>Show chapters</source>
+            <translation>अध्याय दिखाएँ</translation>
+        </message>
+        <message>
+            <source>On a comic's or novel's page: every chapter in one list, or ten at a time with page numbers.</source>
+            <translation>किसी कॉमिक या उपन्यास के पेज पर: सभी अध्याय एक सूची में, या पेज नंबरों के साथ एक बार में दस।</translation>
+        </message>
+        <message>
+            <source>One list</source>
+            <translation>एक सूची</translation>
+        </message>
+        <message>
+            <source>Pages of 10</source>
+            <translation>10 के पेज</translation>
+        </message>
+        <message>
+            <source>Keep the screen on while reading</source>
+            <translation>पढ़ते समय स्क्रीन चालू रखें</translation>
+        </message>
+        <message>
+            <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
+            <translation>रीडर खुला रहने तक स्क्रीन धुंधली या लॉक नहीं होती। वीडियो चलते समय स्क्रीन हमेशा चालू रहती है।</translation>
         </message>
     </context>
     <context>
@@ -7779,6 +7947,49 @@
         <message>
             <source>Later</source>
             <translation>बाद में</translation>
+        </message>
+    </context>
+    <context>
+        <name>VideoPrefs</name>
+        <message>
+            <source>As the source plays it</source>
+            <translation>जैसा स्रोत चलाता है</translation>
+        </message>
+        <message>
+            <source>Japanese (original)</source>
+            <translation>जापानी (मूल)</translation>
+        </message>
+        <message>
+            <source>English dub</source>
+            <translation>अंग्रेज़ी डब</translation>
+        </message>
+        <message>
+            <source>Spanish dub</source>
+            <translation>स्पेनिश डब</translation>
+        </message>
+        <message>
+            <source>Portuguese dub</source>
+            <translation>पुर्तगाली डब</translation>
+        </message>
+        <message>
+            <source>French dub</source>
+            <translation>फ़्रेंच डब</translation>
+        </message>
+        <message>
+            <source>German dub</source>
+            <translation>जर्मन डब</translation>
+        </message>
+        <message>
+            <source>Italian dub</source>
+            <translation>इतालवी डब</translation>
+        </message>
+        <message>
+            <source>Hindi dub</source>
+            <translation>हिंदी डब</translation>
+        </message>
+        <message>
+            <source>Best available</source>
+            <translation>सबसे अच्छी उपलब्ध</translation>
         </message>
     </context>
     <context>

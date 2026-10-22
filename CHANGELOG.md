@@ -2,6 +2,22 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.8.0 — 2026-10-23
+
+Your own library lists, a quality and dub choice for anime, and the screen stays on.
+
+- **Extensions work on Windows, macOS and Linux again** ([#14](https://github.com/medium-gh/scancore/issues/14)): every extension from Keiyoushi's repository said "This extension uses lib {4:1070386381}, which this SCANCORE does not run" (in Source settings and when loading). The fix was in the app since 2.1.1, but the Extensions runtime that computers download separately was older than it, so it never arrived; that older runtime could not run anime extensions either. SCANCORE now asks for a new runtime and replaces an older one by itself in the background, and a release can no longer go out with a runtime older than its extension host.
+- **The screen stays on while you watch or read**: phones no longer dim and lock in the middle of an episode, and computers do not start the screensaver while a video plays (Android, Windows, macOS, and Linux desktops that offer the screensaver or portal inhibit). Readers keep the screen on too; Settings → Reading → Keep the screen on while reading turns that off.
+- **Choose the quality** (asked on Discord): Settings → Anime → Preferred quality (best, 1080p, 720p, 480p or 360p) picks which of a source's videos plays first and which resolution a stream with several starts on. A new Quality button on SCANCORE's player lists the stream's resolutions and the server's other videos while you watch.
+- **Dubs** ([#15](https://github.com/medium-gh/scancore/issues/15)): Settings → Anime → Preferred audio picks a dub (English, Spanish, Portuguese, French, German, Italian or Hindi) or the original Japanese. Videos and servers are chosen by their names (Dub, Sub, English…), and streams with several audio tracks start on that language.
+- **Your own library lists** ([#9](https://github.com/medium-gh/scancore/issues/9)): add lists beside Reading, Plan to read, On hold, Completed and Dropped with New list in the library or Settings → Library → Your lists; rename, reorder or remove them by long-pressing or right-clicking their chip. They sync between your devices, new ones are checked for new chapters, and Mihon and LNReader backups bring their own categories along (and SCANCORE's Mihon export takes yours).
+- **Compact grid with titles on the covers** ([#9](https://github.com/medium-gh/scancore/issues/9)): the library's compact grid now shows each title over the foot of its cover, more covers to a row.
+- **One chapter list** ([#17](https://github.com/medium-gh/scancore/issues/17)): a comic's or novel's chapters are one list that loads as you scroll, as anime episodes are, instead of ten to a page. Settings → Reading → Show chapters brings the pages of ten back.
+- **Reversing the chapter order keeps your place** ([#18](https://github.com/medium-gh/scancore/issues/18)): it no longer jumps to the top of the page, and the page stays at its top while its details load.
+- **32-bit Android phones** ([#19](https://github.com/medium-gh/scancore/issues/19)): a separate `android-armv7.apk` for older phones that cannot install the arm64 one, which then updates itself like the other.
+- **Open a book file from the Novels page** ([#16](https://github.com/medium-gh/scancore/issues/16)): the folder button opens an EPUB in the novel reader (or a PDF as pages), beside the folders in Settings → Sources → On this device.
+- The Flatpak is published again (2.7.1's build pointed at a lexbor tag that does not exist).
+
 ## 2.7.1 — 2026-10-21
 
 - **Status bar icons match SCANCORE's theme on Android**: with the phone in light mode, the clock, battery and signal icons were dark on SCANCORE's dark screens and hard to see. They now follow the app's theme (light icons on dark, dark icons on light), including the navigation bar, and the readers and player choose by their own background (the novel reader by its reading theme).

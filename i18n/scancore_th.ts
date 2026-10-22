@@ -1317,6 +1317,30 @@
             <source>Best</source>
             <translation>ดีที่สุด</translation>
         </message>
+        <message>
+            <source>Quality and audio</source>
+            <translation>คุณภาพและเสียง</translation>
+        </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's Quality and Audio buttons.</source>
+            <translation>สิ่งที่เล่นก่อน วิดีโอของแหล่งจะถูกเลือกตามชื่อ และสตรีมที่มีหลายความละเอียดหรือหลายแทร็กเสียงจะเริ่มที่ตัวที่เลือก เปลี่ยนได้ระหว่างดูด้วยปุ่มคุณภาพและเสียงของเครื่องเล่น</translation>
+        </message>
+        <message>
+            <source>Preferred quality</source>
+            <translation>คุณภาพที่ต้องการ</translation>
+        </message>
+        <message>
+            <source>The highest resolution at or under this one; lower ones save data.</source>
+            <translation>ความละเอียดสูงสุดที่ไม่เกินค่านี้ ค่าที่ต่ำกว่าช่วยประหยัดข้อมูล</translation>
+        </message>
+        <message>
+            <source>Preferred audio</source>
+            <translation>เสียงที่ต้องการ</translation>
+        </message>
+        <message>
+            <source>A dub when the source has one, or the original language with subtitles.</source>
+            <translation>เสียงพากย์เมื่อแหล่งมีให้ หรือภาษาต้นฉบับพร้อมคำบรรยาย</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -3891,6 +3915,46 @@
             <source>Review</source>
             <translation>ตรวจดู</translation>
         </message>
+        <message>
+            <source>Rename list</source>
+            <translation>เปลี่ยนชื่อรายการ</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>รายการใหม่</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>ชื่อ เช่น ต่างโลก หรือ รายสัปดาห์</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>เปลี่ยนชื่อ</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>เพิ่ม</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>ลบรายการ %1 ไหม</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>เรื่องในรายการนี้จะย้ายไปที่กำลังอ่าน ไม่มีอะไรถูกลบออกจากคลัง</translation>
+        </message>
+        <message>
+            <source>Move left</source>
+            <translation>ย้ายไปซ้าย</translation>
+        </message>
+        <message>
+            <source>Move right</source>
+            <translation>ย้ายไปขวา</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>ลบรายการ</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4057,6 +4121,66 @@
         <message>
             <source>Sums up every new chapter a check found, instead of one notification per series.</source>
             <translation>สรุปตอนใหม่ทั้งหมดที่การตรวจหนึ่งครั้งพบ แทนการแจ้งเตือนแยกทีละเรื่อง</translation>
+        </message>
+        <message>
+            <source>Rename list</source>
+            <translation>เปลี่ยนชื่อรายการ</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>รายการใหม่</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>ชื่อ เช่น ต่างโลก หรือ รายสัปดาห์</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>เปลี่ยนชื่อ</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>เพิ่ม</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>ลบรายการ %1 ไหม</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>เรื่องในรายการนี้จะย้ายไปที่กำลังอ่าน ไม่มีอะไรถูกลบออกจากคลัง</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>นำออก</translation>
+        </message>
+        <message>
+            <source>Your lists</source>
+            <translation>รายการของคุณ</translation>
+        </message>
+        <message>
+            <source>Lists of your own sit beside Reading, Plan to read, On hold, Completed and Dropped, for comics, novels and anime. Mihon and LNReader backups bring theirs along. Long-press or right-click one in the library to change it there.</source>
+            <translation>รายการของคุณเองอยู่ข้างกำลังอ่าน วางแผนจะอ่าน พักไว้ อ่านจบ และเลิกอ่าน สำหรับการ์ตูน นิยาย และอนิเมะ ข้อมูลสำรองของ Mihon และ LNReader จะนำรายการของตัวเองมาด้วย กดค้างหรือคลิกขวาที่รายการในคลังเพื่อเปลี่ยนแปลง</translation>
+        </message>
+        <message>
+            <source>Move up</source>
+            <translation>เลื่อนขึ้น</translation>
+        </message>
+        <message>
+            <source>Move down</source>
+            <translation>เลื่อนลง</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>ลบรายการ</translation>
+        </message>
+        <message>
+            <source>Add another list</source>
+            <translation>เพิ่มรายการอื่น</translation>
+        </message>
+        <message>
+            <source>Add a list</source>
+            <translation>เพิ่มรายการ</translation>
         </message>
     </context>
     <context>
@@ -4344,6 +4468,10 @@
         <message>
             <source>Full screen</source>
             <translation>เต็มจอ</translation>
+        </message>
+        <message>
+            <source>Quality</source>
+            <translation>คุณภาพ</translation>
         </message>
     </context>
     <context>
@@ -4703,6 +4831,18 @@
         <message>
             <source>Discover</source>
             <translation>ค้นพบ</translation>
+        </message>
+        <message>
+            <source>Open a book file (EPUB or PDF)</source>
+            <translation>เปิดไฟล์หนังสือ (EPUB หรือ PDF)</translation>
+        </message>
+        <message>
+            <source>Books (*.epub *.pdf)</source>
+            <translation>หนังสือ (*.epub *.pdf)</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>ไฟล์ทั้งหมด (*)</translation>
         </message>
     </context>
     <context>
@@ -5552,6 +5692,34 @@
         <message>
             <source>Keep the spoken paragraph on screen</source>
             <translation>ให้ย่อหน้าที่กำลังอ่านอยู่บนหน้าจอ</translation>
+        </message>
+        <message>
+            <source>Chapters and screen</source>
+            <translation>ตอนและหน้าจอ</translation>
+        </message>
+        <message>
+            <source>Show chapters</source>
+            <translation>แสดงตอน</translation>
+        </message>
+        <message>
+            <source>On a comic's or novel's page: every chapter in one list, or ten at a time with page numbers.</source>
+            <translation>ในหน้าของการ์ตูนหรือนิยาย: ทุกตอนในรายการเดียว หรือทีละสิบตอนพร้อมเลขหน้า</translation>
+        </message>
+        <message>
+            <source>One list</source>
+            <translation>รายการเดียว</translation>
+        </message>
+        <message>
+            <source>Pages of 10</source>
+            <translation>หน้าละ 10</translation>
+        </message>
+        <message>
+            <source>Keep the screen on while reading</source>
+            <translation>เปิดหน้าจอค้างไว้ขณะอ่าน</translation>
+        </message>
+        <message>
+            <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
+            <translation>หน้าจอจะไม่หรี่หรือล็อกขณะเปิดตัวอ่าน วิดีโอจะเปิดหน้าจอค้างไว้เสมอขณะเล่น</translation>
         </message>
     </context>
     <context>
@@ -7779,6 +7947,49 @@
         <message>
             <source>Later</source>
             <translation>ภายหลัง</translation>
+        </message>
+    </context>
+    <context>
+        <name>VideoPrefs</name>
+        <message>
+            <source>As the source plays it</source>
+            <translation>ตามที่แหล่งเล่น</translation>
+        </message>
+        <message>
+            <source>Japanese (original)</source>
+            <translation>ญี่ปุ่น (ต้นฉบับ)</translation>
+        </message>
+        <message>
+            <source>English dub</source>
+            <translation>พากย์อังกฤษ</translation>
+        </message>
+        <message>
+            <source>Spanish dub</source>
+            <translation>พากย์สเปน</translation>
+        </message>
+        <message>
+            <source>Portuguese dub</source>
+            <translation>พากย์โปรตุเกส</translation>
+        </message>
+        <message>
+            <source>French dub</source>
+            <translation>พากย์ฝรั่งเศส</translation>
+        </message>
+        <message>
+            <source>German dub</source>
+            <translation>พากย์เยอรมัน</translation>
+        </message>
+        <message>
+            <source>Italian dub</source>
+            <translation>พากย์อิตาลี</translation>
+        </message>
+        <message>
+            <source>Hindi dub</source>
+            <translation>พากย์ฮินดี</translation>
+        </message>
+        <message>
+            <source>Best available</source>
+            <translation>ดีที่สุดที่มี</translation>
         </message>
     </context>
     <context>
