@@ -30,6 +30,7 @@ Item {
     signal unsupported()
     signal failed(string message)
     signal fullScreenRequested()
+    signal alternativePicked(string id)
 
     function seek(seconds) { mpv.seek(seconds) }
     function togglePause() { mpv.togglePause(); interacted() }
@@ -66,6 +67,9 @@ Item {
                  sharpen: App.settings.animeSharpen || "off" })
         audio: root.video.audio || []
         startAt: root.startAt
+        // Settings → Anime: the variant and audio language to start with.
+        preferredHeight: VideoPrefs.height
+        audioLanguages: VideoPrefs.audioLanguages
         // Above the controls while they show.
         subtitlePosition: root.controlsShown && bar.visible ? Math.round(100 - (bar.height + 6) / Math.max(1, root.height) * 100) : 100
         Component.onCompleted: {
@@ -296,6 +300,28 @@ Item {
                 iconColor: "white"
                 tip: qsTr("Audio")
                 onClicked: menu.show(audioButton, tracks.map(t => ({ label: t.title || t.lang || qsTr("Track ") + t.id, selected: t.selected, pick: () => mpv.setTrack("audio", t.id) })))
+            }
+            // Quality: the stream's own variants (an HLS stream's
+            // resolutions) and the server's other videos.
+            IconButton {
+                id: qualityButton
+                readonly property var variants: mpv.tracks.filter(t => t.type === "video" && t.height > 0)
+                    .sort((a, b) => b.height - a.height || (b.bitrate || 0) - (a.bitrate || 0))
+                readonly property var others: root.alternatives.length > 1 ? root.alternatives : []
+                visible: variants.length > 1 || others.length > 0
+                iconName: "settings"
+                iconColor: "white"
+                tip: qsTr("Quality")
+                function label(t) {
+                    const rate = t.bitrate > 0 ? " · " + (t.bitrate >= 1e6 ? (t.bitrate / 1e6).toFixed(1) + " Mb/s" : Math.round(t.bitrate / 1e3) + " kb/s") : ""
+                    return t.height + "p" + rate
+                }
+                onClicked: {
+                    const items = variants.length > 1 ? variants.map(t => ({ label: label(t), selected: t.selected, pick: () => mpv.setTrack("video", t.id) })) : []
+                    for (const o of others)
+                        items.push({ label: o.label, selected: o.current, pick: () => root.alternativePicked(o.id) })
+                    menu.show(qualityButton, items)
+                }
             }
             IconButton {
                 id: speedButton

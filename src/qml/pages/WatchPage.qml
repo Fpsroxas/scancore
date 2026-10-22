@@ -188,13 +188,17 @@ Rectangle {
     Connections {
         target: watch.streamsTask
         function onFinished(result) {
-            // The server picked last time, when this episode has it.
-            const preferred = result.streams.find(s => s.quality === App.settings.animeServer)
-            if (result.streams.length > 0) watch.currentUrl = (preferred || result.streams[0]).url
+            // The server picked last time, when this episode has it and it
+            // is not the other audio (Settings → Anime); else the first with
+            // the audio asked for.
+            const preferred = result.streams.find(s => s.quality === App.settings.animeServer && VideoPrefs.audioFit(s.quality) >= 0)
+            const byAudio = VideoPrefs.audio ? result.streams.find(s => VideoPrefs.audioFit(s.quality) > 0) : null
+            if (result.streams.length > 0) watch.currentUrl = (preferred || byAudio || result.streams[0]).url
         }
     }
 
     function pickServer(stream) {
+        if (!stream) return
         if (stream.type === "hoster") return loadHoster(stream)
         if (stream.type === "video") {
             // A new server goes on from where this one was.
@@ -205,36 +209,61 @@ Rectangle {
         App.setSetting("animeServer", stream.quality)
     }
 
-    // What plays first: a video of the server picked last time (when the
-    // episode has it), else the source's best, as Aniyomi picks it: a
-    // preferred video at once, otherwise once the hosters have answered (or
-    // a few seconds after the first video that plays).
+    // What plays first, from the hosters that answered: the audio asked
+    // for (Settings → Anime) above all, then the server picked last time,
+    // then the picture height asked for (else the tallest), as
+    // VideoPrefs.score ranks names. It plays once every hoster answered, or
+    // the server picked last time did, or (with no audio asked for) the
+    // source marks a video as its preferred one; otherwise a few seconds
+    // after the first video turns up.
+    function rankVideos(state) {
+        const wanted = App.settings.animeHoster || ""
+        let top = null
+        let topScore = -Infinity
+        for (const h of (state ? state.hosters : [])) {
+            if (h.state !== "ready") continue
+            for (const v of (h.videos || [])) {
+                if (v.localServer || failedIds[v.id]) continue
+                const s = VideoPrefs.score((h.name || "") + " " + (v.title || ""), v.preferred) + (wanted && h.name === wanted ? 300 : 0)
+                if (s > topScore) {
+                    top = { video: v, hoster: h.name || "" }
+                    topScore = s
+                }
+            }
+        }
+        return top
+    }
     function applyVideos(result, done) {
         videoState = result
         if (currentId) return
         const wanted = App.settings.animeHoster || ""
         const h = wanted ? result.hosters.findIndex(x => x.name === wanted) : -1
         if (h >= 0 && result.hosters[h].state === "loading" && !done) return
-        let choice = null
-        if (h >= 0 && result.hosters[h].state === "ready") {
-            const videos = (result.hosters[h].videos || []).filter(v => !v.localServer)
-            choice = videos.find(v => v.preferred) || videos[0] || null
-        }
-        const best = result.best ? result.hosters[result.best.hoster].videos[result.best.video] : null
-        if (!choice && best && (best.preferred || done)) choice = best
-        if (choice) {
+        const top = rankVideos(result)
+        if (!top) return
+        const settled = done || (h >= 0 && top.hoster === wanted) || (top.video.preferred && !VideoPrefs.audio)
+        if (settled) {
             pickGrace.stop()
-            playVideo(streams.find(s => s.id === choice.id))
-        } else if (best && !pickGrace.running)
+            playVideo(streams.find(s => s.id === top.video.id))
+        } else if (!pickGrace.running)
             pickGrace.start()
     }
     Timer {
         id: pickGrace
         interval: 4000
-        onTriggered: if (!watch.currentId && watch.videoState && watch.videoState.best) {
-            const b = watch.videoState.best
-            watch.playVideo(watch.streams.find(s => s.id === watch.videoState.hosters[b.hoster].videos[b.video].id))
+        onTriggered: if (!watch.currentId) {
+            const top = watch.rankVideos(watch.videoState)
+            if (top) watch.playVideo(watch.streams.find(s => s.id === top.video.id))
         }
+    }
+
+    // The playing server's other videos (its resolutions, usually), for
+    // the player's Quality menu.
+    readonly property var alternatives: {
+        const playing = streams.find(s => s.id === currentId)
+        if (!playing || playing.type !== "video") return []
+        return streams.filter(s => s.type === "video" && s.hoster === playing.hoster && !failedIds[s.id])
+            .map(s => ({ id: s.id, label: s.video.title || s.quality, height: VideoPrefs.heightOf(s.video.title || ""), current: s.id === currentId }))
     }
 
     function playVideo(stream) {
@@ -563,6 +592,7 @@ Rectangle {
                 item.video = Qt.binding(() => watch.currentVideo)
                 item.startAt = Qt.binding(() => watch.resumeAt > 5 ? watch.resumeAt : 0)
                 item.chromeShown = Qt.binding(() => watch.chromeShown)
+                item.alternatives = Qt.binding(() => watch.alternatives)
             }
             function seek(seconds) { if (item) item.seek(seconds) }
             Connections {
@@ -575,6 +605,7 @@ Rectangle {
                 function onUnsupported() { watch.unsupported = true }
                 function onFailed(message) { watch.videoFailed(message, 0) }
                 function onFullScreenRequested() { watch.toggleFullScreen() }
+                function onAlternativePicked(id) { watch.pickServer(watch.streams.find(s => s.id === id)) }
             }
         }
         CastOverlay {
