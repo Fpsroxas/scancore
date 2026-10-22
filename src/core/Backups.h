@@ -17,6 +17,7 @@ struct Item {
     QString media; // comic, novel or anime
     QStringList titles;
     QString cover;
+    // A SCANCORE list, or "custom:<name>" for one of the backup's own.
     QString category = QStringLiteral("reading");
     QString sourceName; // Mihon's name for its source
     QString url;        // Mihon's address on that source (often a path)

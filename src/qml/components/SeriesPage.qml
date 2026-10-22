@@ -16,7 +16,9 @@ Item {
     property bool selecting: false
     // Chapters, Reviews or Discussion.
     property string tab: "chapters"
-    // Chapters are listed ten at a time.
+    // Chapters are one list that fills in as it scrolls, or (a setting)
+    // ten at a time (issue #17).
+    readonly property bool paged: App.settings.chapterList === "pages"
     readonly property int perPage: 10
     property int pageIndex: 0
     // A comic or book file on this device: nothing to download or open online.
@@ -91,15 +93,17 @@ Item {
         }
         return descending ? out.reverse() : out
     }
-    readonly property int pageCount: Math.max(1, Math.ceil(rows.length / perPage))
-    readonly property var pageRows: rows.slice(pageIndex * perPage, (pageIndex + 1) * perPage)
+    readonly property int pageCount: paged ? Math.max(1, Math.ceil(rows.length / perPage)) : 1
+    readonly property var pageRows: paged ? rows.slice(pageIndex * perPage, (pageIndex + 1) * perPage) : rows
+    readonly property var shownRows: tab === "chapters" ? pageRows : []
+    onShownRowsChanged: list.show(shownRows)
     // Opens on the page of the chapter you are on.
     function showCurrentPage() {
         if (!rows || !resumeInfo) return
         // Nothing read yet: the first page.
         const last = Library.lastProgress(seriesId)
         const at = last && last.unitKey ? rows.findIndex(r => r.index === resumeInfo.index) : -1
-        pageIndex = filter.trim() || at < 0 ? 0 : Math.floor(at / perPage)
+        pageIndex = !paged || filter.trim() || at < 0 ? 0 : Math.floor(at / perPage)
     }
     onFilterChanged: showCurrentPage()
     onFiltersOnChanged: showCurrentPage()
@@ -107,7 +111,12 @@ Item {
     onPageCountChanged: if (pageIndex >= pageCount) pageIndex = pageCount - 1
     onDescendingChanged: showCurrentPage()
     onChaptersChanged: showCurrentPage()
-    onPageIndexChanged: if (list.contentY - list.originY > (list.headerItem ? list.headerItem.height : 0)) list.positionViewAtBeginning()
+    onPagedChanged: showCurrentPage()
+    // Another page: its first chapter at the top, if the list was scrolled
+    // past it (positionViewAtBeginning would go above the details).
+    onPageIndexChanged: Qt.callLater(() => {
+        if (list.contentY - list.originY > (list.headerItem ? list.headerItem.height : 0)) list.positionViewAtIndex(0, ListView.Beginning)
+    })
 
     function openAt(index) {
         if (index < 0 || index >= chapters.length) return
@@ -280,7 +289,6 @@ Item {
         WheelScroll {}
         id: list
         anchors.fill: parent
-        model: page.tab === "chapters" ? page.pageRows : []
         clip: true
         boundsBehavior: Flickable.StopAtBounds
         maximumFlickVelocity: 5000
@@ -289,12 +297,33 @@ Item {
         ScrollBar.vertical: ScScrollBar {}
         bottomMargin: 40
 
-        Component.onCompleted: Qt.callLater(() => { if (headerItem) Router.shell.land(headerItem.details.coverItem) })
+        Component.onCompleted: {
+            show(page.shownRows)
+            Qt.callLater(() => { if (headerItem) Router.shell.land(headerItem.details.coverItem) })
+        }
+
+        // A new model array puts a ListView back at its very top, above the
+        // details, so reversing the order or a fresh chapter list jumped
+        // there (issue #18): keep where the reader was.
+        // The header grows as details and pictures arrive; until the
+        // reader scrolls, the page stays at its top.
+        property bool touched: false
+        onMovementStarted: touched = true
+        property bool shown: false
+        function show(rows) {
+            const y = contentY
+            const atTop = !shown || y <= originY + 1
+            model = rows
+            shown = true
+            if (atTop) positionViewAtBeginning()
+            else contentY = Math.max(originY, Math.min(y, originY + contentHeight + bottomMargin - height))
+        }
 
         header: Column {
             readonly property alias details: details
             width: list.width
             spacing: 0
+            onHeightChanged: if (!list.touched) Qt.callLater(() => { if (!list.touched) list.positionViewAtBeginning() })
 
             DetailsHeader {
                 id: details
@@ -705,7 +734,7 @@ Item {
             height: pager.visible ? 64 : 0
             Row {
                 id: pager
-                visible: page.tab === "chapters" && page.pageCount > 1
+                visible: page.tab === "chapters" && page.paged && page.pageCount > 1
                 anchors.centerIn: parent
                 spacing: 4
                 IconButton {
