@@ -109,7 +109,7 @@ endif()
 if(NOT SCANCORE_WITH_SYSTEM_WEBVIEW)
     list(REMOVE_ITEM SCANCORE_QML qml/components/WebPlayerSystem.qml)
 endif()
-set_source_files_properties(qml/theme/Theme.qml qml/theme/Motion.qml qml/Router.qml qml/Keymap.qml qml/PageLayout.qml
+set_source_files_properties(qml/theme/Theme.qml qml/theme/Motion.qml qml/Router.qml qml/Keymap.qml qml/PageLayout.qml qml/VideoPrefs.qml
     PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 qt_add_qml_module(scancore

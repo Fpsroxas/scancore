@@ -110,6 +110,10 @@ const QVariantMap kDefaults{
     {"animeSharpen", "off"},
     {"playerSpeed", 1},
     {"autoSkip", false},
+    // What plays first: a picture height (0 for the best) and the audio
+    // (VideoPrefs.languages: "" for the source's choice, "ja", "en", …).
+    {"animeQuality", 0},
+    {"animeAudio", ""},
     {"libraryCheckHours", 2},
     // Which saved series the check looks at, and when it runs by itself.
     {"updateLists", QVariantList{"reading", "planned", "paused", "completed"}},
