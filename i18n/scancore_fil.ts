@@ -1317,6 +1317,30 @@
             <source>Best</source>
             <translation>Pinakamahusay</translation>
         </message>
+        <message>
+            <source>Quality and audio</source>
+            <translation>Kalidad at audio</translation>
+        </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's Quality and Audio buttons.</source>
+            <translation>Kung ano ang unang magpe-play. Pinipili ang mga video ng source ayon sa pangalan nila, at nagsisimula ang stream na may ilang resolution o audio track sa mga hiniling. Palitan ang alinman habang nanonood gamit ang mga button na Kalidad at Audio ng player.</translation>
+        </message>
+        <message>
+            <source>Preferred quality</source>
+            <translation>Gustong kalidad</translation>
+        </message>
+        <message>
+            <source>The highest resolution at or under this one; lower ones save data.</source>
+            <translation>Ang pinakamataas na resolution hanggang dito; nakakatipid ng data ang mas mababa.</translation>
+        </message>
+        <message>
+            <source>Preferred audio</source>
+            <translation>Gustong audio</translation>
+        </message>
+        <message>
+            <source>A dub when the source has one, or the original language with subtitles.</source>
+            <translation>Dub kapag mayroon ang source, o ang orihinal na wika na may subtitle.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -3891,6 +3915,46 @@
             <source>Review</source>
             <translation>Suriin</translation>
         </message>
+        <message>
+            <source>Rename list</source>
+            <translation>Palitan ang pangalan ng listahan</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>Bagong listahan</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>Pangalan, gaya ng Isekai o Lingguhan</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>Palitan ang pangalan</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Idagdag</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>Alisin ang listahang %1?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>Ililipat ang mga serye nito sa Binabasa; walang aalisin sa library mo.</translation>
+        </message>
+        <message>
+            <source>Move left</source>
+            <translation>Ilipat pakaliwa</translation>
+        </message>
+        <message>
+            <source>Move right</source>
+            <translation>Ilipat pakanan</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>Alisin ang listahan</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4057,6 +4121,66 @@
         <message>
             <source>Sums up every new chapter a check found, instead of one notification per series.</source>
             <translation>Pinagsasama ang lahat ng bagong kabanata ng isang check sa halip na isang notification bawat serye.</translation>
+        </message>
+        <message>
+            <source>Rename list</source>
+            <translation>Palitan ang pangalan ng listahan</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>Bagong listahan</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>Pangalan, gaya ng Isekai o Lingguhan</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>Palitan ang pangalan</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Idagdag</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>Alisin ang listahang %1?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>Ililipat ang mga serye nito sa Binabasa; walang aalisin sa library mo.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Alisin</translation>
+        </message>
+        <message>
+            <source>Your lists</source>
+            <translation>Iyong mga listahan</translation>
+        </message>
+        <message>
+            <source>Lists of your own sit beside Reading, Plan to read, On hold, Completed and Dropped, for comics, novels and anime. Mihon and LNReader backups bring theirs along. Long-press or right-click one in the library to change it there.</source>
+            <translation>Katabi ng Binabasa, Babasahin, Naka-hold, Tapos na at Itinigil ang sarili mong mga listahan, para sa comics, nobela at anime. Dala ng mga backup ng Mihon at LNReader ang kanila. Pindutin nang matagal o i-right-click ang isa sa library para baguhin ito roon.</translation>
+        </message>
+        <message>
+            <source>Move up</source>
+            <translation>Iakyat</translation>
+        </message>
+        <message>
+            <source>Move down</source>
+            <translation>Ibaba</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>Alisin ang listahan</translation>
+        </message>
+        <message>
+            <source>Add another list</source>
+            <translation>Magdagdag ng isa pang listahan</translation>
+        </message>
+        <message>
+            <source>Add a list</source>
+            <translation>Magdagdag ng listahan</translation>
         </message>
     </context>
     <context>
@@ -4344,6 +4468,10 @@
         <message>
             <source>Full screen</source>
             <translation>Full screen</translation>
+        </message>
+        <message>
+            <source>Quality</source>
+            <translation>Kalidad</translation>
         </message>
     </context>
     <context>
@@ -4703,6 +4831,18 @@
         <message>
             <source>Discover</source>
             <translation>Tuklasin</translation>
+        </message>
+        <message>
+            <source>Open a book file (EPUB or PDF)</source>
+            <translation>Magbukas ng file ng libro (EPUB o PDF)</translation>
+        </message>
+        <message>
+            <source>Books (*.epub *.pdf)</source>
+            <translation>Mga libro (*.epub *.pdf)</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>Lahat ng file (*)</translation>
         </message>
     </context>
     <context>
@@ -5552,6 +5692,34 @@
         <message>
             <source>Keep the spoken paragraph on screen</source>
             <translation>Panatilihin sa screen ang binabasang talata</translation>
+        </message>
+        <message>
+            <source>Chapters and screen</source>
+            <translation>Mga kabanata at screen</translation>
+        </message>
+        <message>
+            <source>Show chapters</source>
+            <translation>Ipakita ang mga kabanata</translation>
+        </message>
+        <message>
+            <source>On a comic's or novel's page: every chapter in one list, or ten at a time with page numbers.</source>
+            <translation>Sa page ng comic o nobela: lahat ng kabanata sa isang listahan, o sampu-sampu na may mga numero ng page.</translation>
+        </message>
+        <message>
+            <source>One list</source>
+            <translation>Isang listahan</translation>
+        </message>
+        <message>
+            <source>Pages of 10</source>
+            <translation>Mga page na tig-10</translation>
+        </message>
+        <message>
+            <source>Keep the screen on while reading</source>
+            <translation>Panatilihing bukas ang screen habang nagbabasa</translation>
+        </message>
+        <message>
+            <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
+            <translation>Hindi lalabo o magla-lock ang screen habang bukas ang isang reader. Laging pinapanatiling bukas ito ng mga video habang nagpe-play.</translation>
         </message>
     </context>
     <context>
@@ -7779,6 +7947,49 @@
         <message>
             <source>Later</source>
             <translation>Mamaya</translation>
+        </message>
+    </context>
+    <context>
+        <name>VideoPrefs</name>
+        <message>
+            <source>As the source plays it</source>
+            <translation>Gaya ng pag-play ng source</translation>
+        </message>
+        <message>
+            <source>Japanese (original)</source>
+            <translation>Japanese (orihinal)</translation>
+        </message>
+        <message>
+            <source>English dub</source>
+            <translation>English dub</translation>
+        </message>
+        <message>
+            <source>Spanish dub</source>
+            <translation>Spanish dub</translation>
+        </message>
+        <message>
+            <source>Portuguese dub</source>
+            <translation>Portuguese dub</translation>
+        </message>
+        <message>
+            <source>French dub</source>
+            <translation>French dub</translation>
+        </message>
+        <message>
+            <source>German dub</source>
+            <translation>German dub</translation>
+        </message>
+        <message>
+            <source>Italian dub</source>
+            <translation>Italian dub</translation>
+        </message>
+        <message>
+            <source>Hindi dub</source>
+            <translation>Hindi dub</translation>
+        </message>
+        <message>
+            <source>Best available</source>
+            <translation>Pinakamahusay na mayroon</translation>
         </message>
     </context>
     <context>

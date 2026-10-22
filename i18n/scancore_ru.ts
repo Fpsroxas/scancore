@@ -1317,6 +1317,30 @@
             <source>Best</source>
             <translation>Лучшее</translation>
         </message>
+        <message>
+            <source>Quality and audio</source>
+            <translation>Качество и звук</translation>
+        </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's Quality and Audio buttons.</source>
+            <translation>Что включается первым. Видео источника выбираются по названиям, а поток с несколькими разрешениями или звуковыми дорожками начинается с выбранных. Меняйте их во время просмотра кнопками «Качество» и «Звук» в плеере.</translation>
+        </message>
+        <message>
+            <source>Preferred quality</source>
+            <translation>Предпочитаемое качество</translation>
+        </message>
+        <message>
+            <source>The highest resolution at or under this one; lower ones save data.</source>
+            <translation>Самое высокое разрешение не выше этого; более низкие экономят трафик.</translation>
+        </message>
+        <message>
+            <source>Preferred audio</source>
+            <translation>Предпочитаемый звук</translation>
+        </message>
+        <message>
+            <source>A dub when the source has one, or the original language with subtitles.</source>
+            <translation>Озвучка, если она есть у источника, или оригинальный язык с субтитрами.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -3899,6 +3923,46 @@
             <source>Review</source>
             <translation>Посмотреть</translation>
         </message>
+        <message>
+            <source>Rename list</source>
+            <translation>Переименовать список</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>Новый список</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>Название, например Исекай или Еженедельные</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>Переименовать</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Добавить</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>Удалить список %1?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>Его серии перейдут в «Читаю»; из библиотеки ничего не удаляется.</translation>
+        </message>
+        <message>
+            <source>Move left</source>
+            <translation>Влево</translation>
+        </message>
+        <message>
+            <source>Move right</source>
+            <translation>Вправо</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>Удалить список</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4065,6 +4129,66 @@
         <message>
             <source>Sums up every new chapter a check found, instead of one notification per series.</source>
             <translation>Объединяет все новые главы одной проверки вместо отдельного уведомления для каждой серии.</translation>
+        </message>
+        <message>
+            <source>Rename list</source>
+            <translation>Переименовать список</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>Новый список</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>Название, например Исекай или Еженедельные</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>Переименовать</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Добавить</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>Удалить список %1?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>Его серии перейдут в «Читаю»; из библиотеки ничего не удаляется.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Удалить</translation>
+        </message>
+        <message>
+            <source>Your lists</source>
+            <translation>Ваши списки</translation>
+        </message>
+        <message>
+            <source>Lists of your own sit beside Reading, Plan to read, On hold, Completed and Dropped, for comics, novels and anime. Mihon and LNReader backups bring theirs along. Long-press or right-click one in the library to change it there.</source>
+            <translation>Ваши списки стоят рядом с «Читаю», «В планах», «Отложено», «Прочитано» и «Брошено» — для комиксов, новелл и аниме. Резервные копии Mihon и LNReader приносят свои. Нажмите и удерживайте список в библиотеке или щёлкните правой кнопкой, чтобы изменить его.</translation>
+        </message>
+        <message>
+            <source>Move up</source>
+            <translation>Выше</translation>
+        </message>
+        <message>
+            <source>Move down</source>
+            <translation>Ниже</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>Удалить список</translation>
+        </message>
+        <message>
+            <source>Add another list</source>
+            <translation>Добавить ещё список</translation>
+        </message>
+        <message>
+            <source>Add a list</source>
+            <translation>Добавить список</translation>
         </message>
     </context>
     <context>
@@ -4352,6 +4476,10 @@
         <message>
             <source>Full screen</source>
             <translation>Полный экран</translation>
+        </message>
+        <message>
+            <source>Quality</source>
+            <translation>Качество</translation>
         </message>
     </context>
     <context>
@@ -4711,6 +4839,18 @@
         <message>
             <source>Discover</source>
             <translation>Открытия</translation>
+        </message>
+        <message>
+            <source>Open a book file (EPUB or PDF)</source>
+            <translation>Открыть файл книги (EPUB или PDF)</translation>
+        </message>
+        <message>
+            <source>Books (*.epub *.pdf)</source>
+            <translation>Книги (*.epub *.pdf)</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>Все файлы (*)</translation>
         </message>
     </context>
     <context>
@@ -5560,6 +5700,34 @@
         <message>
             <source>Keep the spoken paragraph on screen</source>
             <translation>Держать читаемый абзац на экране</translation>
+        </message>
+        <message>
+            <source>Chapters and screen</source>
+            <translation>Главы и экран</translation>
+        </message>
+        <message>
+            <source>Show chapters</source>
+            <translation>Показ глав</translation>
+        </message>
+        <message>
+            <source>On a comic's or novel's page: every chapter in one list, or ten at a time with page numbers.</source>
+            <translation>На странице комикса или новеллы: все главы одним списком или по десять со страницами.</translation>
+        </message>
+        <message>
+            <source>One list</source>
+            <translation>Один список</translation>
+        </message>
+        <message>
+            <source>Pages of 10</source>
+            <translation>По 10 на странице</translation>
+        </message>
+        <message>
+            <source>Keep the screen on while reading</source>
+            <translation>Не выключать экран при чтении</translation>
+        </message>
+        <message>
+            <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
+            <translation>Экран не гаснет и не блокируется, пока открыта читалка. Видео всегда не дают ему погаснуть во время воспроизведения.</translation>
         </message>
     </context>
     <context>
@@ -7794,6 +7962,49 @@
         <message>
             <source>Later</source>
             <translation>Позже</translation>
+        </message>
+    </context>
+    <context>
+        <name>VideoPrefs</name>
+        <message>
+            <source>As the source plays it</source>
+            <translation>Как воспроизводит источник</translation>
+        </message>
+        <message>
+            <source>Japanese (original)</source>
+            <translation>Японский (оригинал)</translation>
+        </message>
+        <message>
+            <source>English dub</source>
+            <translation>Английская озвучка</translation>
+        </message>
+        <message>
+            <source>Spanish dub</source>
+            <translation>Испанская озвучка</translation>
+        </message>
+        <message>
+            <source>Portuguese dub</source>
+            <translation>Португальская озвучка</translation>
+        </message>
+        <message>
+            <source>French dub</source>
+            <translation>Французская озвучка</translation>
+        </message>
+        <message>
+            <source>German dub</source>
+            <translation>Немецкая озвучка</translation>
+        </message>
+        <message>
+            <source>Italian dub</source>
+            <translation>Итальянская озвучка</translation>
+        </message>
+        <message>
+            <source>Hindi dub</source>
+            <translation>Озвучка на хинди</translation>
+        </message>
+        <message>
+            <source>Best available</source>
+            <translation>Лучшее доступное</translation>
         </message>
     </context>
     <context>

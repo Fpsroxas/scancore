@@ -1317,6 +1317,30 @@
             <source>Best</source>
             <translation>Melhor</translation>
         </message>
+        <message>
+            <source>Quality and audio</source>
+            <translation>Qualidade e áudio</translation>
+        </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's Quality and Audio buttons.</source>
+            <translation>O que toca primeiro. Os vídeos de uma fonte são escolhidos pelo nome, e uma transmissão com várias resoluções ou faixas de áudio começa nas escolhidas. Mude qualquer uma enquanto assiste pelos botões Qualidade e Áudio do player.</translation>
+        </message>
+        <message>
+            <source>Preferred quality</source>
+            <translation>Qualidade preferida</translation>
+        </message>
+        <message>
+            <source>The highest resolution at or under this one; lower ones save data.</source>
+            <translation>A maior resolução até esta; as menores economizam dados.</translation>
+        </message>
+        <message>
+            <source>Preferred audio</source>
+            <translation>Áudio preferido</translation>
+        </message>
+        <message>
+            <source>A dub when the source has one, or the original language with subtitles.</source>
+            <translation>Uma dublagem quando a fonte tiver, ou o idioma original com legendas.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -3899,6 +3923,46 @@
             <source>Review</source>
             <translation>Revisar</translation>
         </message>
+        <message>
+            <source>Rename list</source>
+            <translation>Renomear lista</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>Nova lista</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>Nome, como Isekai ou Semanais</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>Renomear</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Adicionar</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>Remover a lista %1?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>As séries dela vão para Lendo; nada é removido da sua biblioteca.</translation>
+        </message>
+        <message>
+            <source>Move left</source>
+            <translation>Mover para a esquerda</translation>
+        </message>
+        <message>
+            <source>Move right</source>
+            <translation>Mover para a direita</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>Remover lista</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4065,6 +4129,66 @@
         <message>
             <source>Sums up every new chapter a check found, instead of one notification per series.</source>
             <translation>Resume todos os capítulos novos de uma verificação em vez de uma notificação por série.</translation>
+        </message>
+        <message>
+            <source>Rename list</source>
+            <translation>Renomear lista</translation>
+        </message>
+        <message>
+            <source>New list</source>
+            <translation>Nova lista</translation>
+        </message>
+        <message>
+            <source>Name, like Isekai or Weekly</source>
+            <translation>Nome, como Isekai ou Semanais</translation>
+        </message>
+        <message>
+            <source>Rename</source>
+            <translation>Renomear</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Adicionar</translation>
+        </message>
+        <message>
+            <source>Remove the list %1?</source>
+            <translation>Remover a lista %1?</translation>
+        </message>
+        <message>
+            <source>Its series move to Reading; nothing is removed from your library.</source>
+            <translation>As séries dela vão para Lendo; nada é removido da sua biblioteca.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Remover</translation>
+        </message>
+        <message>
+            <source>Your lists</source>
+            <translation>Suas listas</translation>
+        </message>
+        <message>
+            <source>Lists of your own sit beside Reading, Plan to read, On hold, Completed and Dropped, for comics, novels and anime. Mihon and LNReader backups bring theirs along. Long-press or right-click one in the library to change it there.</source>
+            <translation>Suas próprias listas ficam ao lado de Lendo, Planejo ler, Em pausa, Concluído e Abandonado, para quadrinhos, novels e animes. Backups do Mihon e do LNReader trazem as deles. Toque e segure ou clique com o botão direito em uma na biblioteca para alterá-la.</translation>
+        </message>
+        <message>
+            <source>Move up</source>
+            <translation>Mover para cima</translation>
+        </message>
+        <message>
+            <source>Move down</source>
+            <translation>Mover para baixo</translation>
+        </message>
+        <message>
+            <source>Remove list</source>
+            <translation>Remover lista</translation>
+        </message>
+        <message>
+            <source>Add another list</source>
+            <translation>Adicionar outra lista</translation>
+        </message>
+        <message>
+            <source>Add a list</source>
+            <translation>Adicionar uma lista</translation>
         </message>
     </context>
     <context>
@@ -4352,6 +4476,10 @@
         <message>
             <source>Full screen</source>
             <translation>Tela cheia</translation>
+        </message>
+        <message>
+            <source>Quality</source>
+            <translation>Qualidade</translation>
         </message>
     </context>
     <context>
@@ -4711,6 +4839,18 @@
         <message>
             <source>Discover</source>
             <translation>Descobrir</translation>
+        </message>
+        <message>
+            <source>Open a book file (EPUB or PDF)</source>
+            <translation>Abrir um arquivo de livro (EPUB ou PDF)</translation>
+        </message>
+        <message>
+            <source>Books (*.epub *.pdf)</source>
+            <translation>Livros (*.epub *.pdf)</translation>
+        </message>
+        <message>
+            <source>All files (*)</source>
+            <translation>Todos os arquivos (*)</translation>
         </message>
     </context>
     <context>
@@ -5560,6 +5700,34 @@
         <message>
             <source>Keep the spoken paragraph on screen</source>
             <translation>Manter na tela o parágrafo lido</translation>
+        </message>
+        <message>
+            <source>Chapters and screen</source>
+            <translation>Capítulos e tela</translation>
+        </message>
+        <message>
+            <source>Show chapters</source>
+            <translation>Mostrar capítulos</translation>
+        </message>
+        <message>
+            <source>On a comic's or novel's page: every chapter in one list, or ten at a time with page numbers.</source>
+            <translation>Na página de um quadrinho ou novel: todos os capítulos em uma lista, ou dez por vez com números de página.</translation>
+        </message>
+        <message>
+            <source>One list</source>
+            <translation>Uma lista</translation>
+        </message>
+        <message>
+            <source>Pages of 10</source>
+            <translation>Páginas de 10</translation>
+        </message>
+        <message>
+            <source>Keep the screen on while reading</source>
+            <translation>Manter a tela ligada durante a leitura</translation>
+        </message>
+        <message>
+            <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
+            <translation>A tela não escurece nem bloqueia enquanto um leitor está aberto. Os vídeos sempre a mantêm ligada enquanto tocam.</translation>
         </message>
     </context>
     <context>
@@ -7794,6 +7962,49 @@
         <message>
             <source>Later</source>
             <translation>Depois</translation>
+        </message>
+    </context>
+    <context>
+        <name>VideoPrefs</name>
+        <message>
+            <source>As the source plays it</source>
+            <translation>Como a fonte reproduz</translation>
+        </message>
+        <message>
+            <source>Japanese (original)</source>
+            <translation>Japonês (original)</translation>
+        </message>
+        <message>
+            <source>English dub</source>
+            <translation>Dublagem em inglês</translation>
+        </message>
+        <message>
+            <source>Spanish dub</source>
+            <translation>Dublagem em espanhol</translation>
+        </message>
+        <message>
+            <source>Portuguese dub</source>
+            <translation>Dublagem em português</translation>
+        </message>
+        <message>
+            <source>French dub</source>
+            <translation>Dublagem em francês</translation>
+        </message>
+        <message>
+            <source>German dub</source>
+            <translation>Dublagem em alemão</translation>
+        </message>
+        <message>
+            <source>Italian dub</source>
+            <translation>Dublagem em italiano</translation>
+        </message>
+        <message>
+            <source>Hindi dub</source>
+            <translation>Dublagem em hindi</translation>
+        </message>
+        <message>
+            <source>Best available</source>
+            <translation>A melhor disponível</translation>
         </message>
     </context>
     <context>

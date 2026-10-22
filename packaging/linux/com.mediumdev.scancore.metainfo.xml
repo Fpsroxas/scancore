@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.8.0" date="2026-10-23">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#280--2026-10-23</url>
+      <description>
+        <p>Your own library lists, a preferred quality and audio (dubs) for anime, a quality menu in the player, the screen kept on while watching and reading, one scrolling chapter list, and extensions working again on computers.</p>
+      </description>
+    </release>
     <release version="2.7.1" date="2026-10-21">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#271--2026-10-21</url>
       <description>
