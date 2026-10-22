@@ -127,7 +127,7 @@ jobs:
             exit 0
           fi
           HAVE=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN/artifacts?per_page=100" -q '[.artifacts[] | select(.expired | not) | .name] | join(" ")')
-          for NAME in scancore-Windows scancore-macOS scancore-AppImage scancore-Android scancore-Flatpak; do
+          for NAME in scancore-Windows scancore-macOS scancore-AppImage scancore-Android scancore-Android-armv7 scancore-Flatpak; do
             case " $HAVE " in
               *" $NAME "*) ;;
               *) echo "Test build $RUN has no $NAME: building."; exit 0 ;;
@@ -453,11 +453,19 @@ jobs:
           path: dist/*.flatpak
           if-no-files-found: error
 
+  # One APK per processor: arm64 (most phones) and armv7 (32-bit phones,
+  # issue #19).
   android:
-    name: Android
+    name: Android ${{ matrix.name }}
     needs: version
     if: needs.version.outputs.reuse == ''
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: arm64, qtArch: android_arm64_v8a, mpv: android-arm64, artifact: scancore-Android }
+          - { name: armv7, qtArch: android_armv7, mpv: android-armv7, artifact: scancore-Android-armv7 }
     steps:
       - uses: actions/checkout@v5
         with:
@@ -491,7 +499,7 @@ jobs:
           # Qt 6.7+ publishes Android packages under the all_os host.
           host: all_os
           target: android
-          arch: android_arm64_v8a
+          arch: ${{ matrix.qtArch }}
           modules: qtwebview qtimageformats qtwebchannel qtpositioning
           cache: true
 
@@ -501,15 +509,15 @@ jobs:
         id: libmpv
         uses: actions/cache@v4
         with:
-          path: build/libmpv/android-arm64
-          key: libmpv-android-arm64-${{ hashFiles('tools/libmpv/build.sh') }}
+          path: build/libmpv/${{ matrix.mpv }}
+          key: libmpv-${{ matrix.mpv }}-${{ hashFiles('tools/libmpv/build.sh') }}
 
       - name: libmpv
         if: steps.libmpv.outputs.cache-hit != 'true'
         run: |
           sudo apt-get install -y nasm gperf python3-jinja2
           pipx install meson
-          tools/libmpv/build.sh android-arm64
+          tools/libmpv/build.sh ${{ matrix.mpv }}
 
       - name: Signed APK
         env:
@@ -527,11 +535,11 @@ jobs:
           cmake --build build --target apk
           mkdir -p dist
           cp build/src/android-build/build/outputs/apk/release/android-build-release-signed.apk \
-            "dist/SCANCORE-$VERSION-android-arm64.apk"
+            "dist/SCANCORE-$VERSION-android-${{ matrix.name }}.apk"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: scancore-Android
+          name: ${{ matrix.artifact }}
           path: dist/*.apk
           if-no-files-found: error
 
@@ -587,7 +595,7 @@ jobs:
           | Windows | \`windows-x64-setup.exe\` or portable \`.zip\` |
           | macOS 13+ | \`macos-universal.dmg\` |
           | Linux | \`linux-x86_64.AppImage\` or \`.flatpak\` |
-          | Android 9+ | \`android-arm64.apk\` |
+          | Android 9+ | \`android-arm64.apk\` (32-bit phones: \`android-armv7.apk\`) |
           EOF
           cat notes.md
       - name: Publish release
