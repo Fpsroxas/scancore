@@ -17,6 +17,9 @@ class Library : public QObject {
     QML_SINGLETON
     // Bumped on every change so bindings that read the library re-evaluate.
     Q_PROPERTY(int revision READ revision NOTIFY changed)
+    // Only the lists (names, order, hidden ones): what list pickers follow,
+    // as revision moves on every page read.
+    Q_PROPERTY(int listsRevision READ listsRevision NOTIFY listsChanged)
     Q_PROPERTY(int unreadUpdates READ unreadUpdates NOTIFY changed)
 
 public:
@@ -24,6 +27,7 @@ public:
     static Library *create(QQmlEngine *, QJSEngine *) { return instance(); }
 
     int revision() const { return m_revision; }
+    int listsRevision() const { return m_listsRevision; }
     int unreadUpdates() const;
 
     Q_INVOKABLE static QString idFor(const QString &media, const QString &source, const QString &key);
@@ -124,6 +128,7 @@ public:
 
 signals:
     void changed();
+    void listsChanged();
     void updatesFound(int count, const QStringList &titles);
     // The user saved or removed a series (not sync, which writes directly).
     void saved(const QString &seriesId);
@@ -140,6 +145,7 @@ private:
     explicit Library(QObject *parent = nullptr);
 
     int m_revision = 0;
+    int m_listsRevision = 0;
 };
 
 } // namespace sc

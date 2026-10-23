@@ -42,7 +42,7 @@ QtObject {
     // hidden, renamed}]. Hidden ones only with includeHidden (Settings) or
     // when `keep` is one of them (the list a series is on).
     function libraryCategories(media, includeHidden, keep) {
-        App.dependOn(Library.revision)
+        App.dependOn(Library.listsRevision)
         const anime = media === "anime"
         const layout = Library.listLayout()
         const names = layout.names || {}
@@ -145,8 +145,14 @@ QtObject {
     // For pages that refresh a list in the background: the old list when
     // the new one holds the same, so views keep their items (and scroll
     // position) instead of rebuilding them.
+    // Each list remembers its own text, so a refresh writes only the new one
+    // (a 2000-series library took a noticeable moment on phones).
     function keep(old, fresh) {
-        return JSON.stringify(old) === JSON.stringify(fresh) ? old : fresh
+        if (!fresh || typeof fresh !== "object") return fresh
+        const text = JSON.stringify(fresh)
+        if (old && typeof old === "object" && (old.__keepText || JSON.stringify(old)) === text) return old
+        try { Object.defineProperty(fresh, "__keepText", { value: text, enumerable: false, writable: true }) } catch (e) {}
+        return fresh
     }
 
     // A catalogue shelf's title by its key (Comics.catalogFeeds).

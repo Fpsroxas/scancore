@@ -28,6 +28,7 @@
 #include <QNetworkInformation>
 #include <QClipboard>
 #include <QDateTime>
+#include <QHash>
 #include <QDesktopServices>
 #include <QDir>
 #include <QDirIterator>
@@ -448,14 +449,31 @@ QStringList App::chapterParts(const QStringList &titles) const {
 }
 
 QString App::relativeTime(const QVariant &when) const {
+    // Chapter lists ask for every row they show as they scroll: answers are
+    // kept for a minute, as parsing a date and reading the local time zone
+    // each time made rows slow to appear on phones.
+    static QHash<QString, QString> cache;
+    static qint64 cachedAt = 0;
+    const auto now = QDateTime::currentSecsSinceEpoch();
+    if (now - cachedAt > 60 || cache.size() > 4000) {
+        cache.clear();
+        cachedAt = now;
+    }
+    const auto key = when.toString();
+    if (const auto hit = cache.constFind(key); hit != cache.cend())
+        return hit.value();
     QDateTime time;
     if (when.typeId() == QMetaType::QString)
-        time = QDateTime::fromString(when.toString(), Qt::ISODate);
+        time = QDateTime::fromString(key, Qt::ISODate);
     else if (when.toLongLong() > 0)
         time = QDateTime::fromSecsSinceEpoch(when.toLongLong());
-    if (!time.isValid())
-        return {};
-    const auto secs = time.secsTo(QDateTime::currentDateTime());
+    const auto text = time.isValid() ? relativeText(time, now) : QString();
+    cache.insert(key, text);
+    return text;
+}
+
+QString App::relativeText(const QDateTime &time, qint64 now) {
+    const auto secs = now - time.toSecsSinceEpoch();
     if (secs < 0) {
         const auto ahead = -secs;
         if (ahead < 3600)

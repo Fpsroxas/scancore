@@ -158,36 +158,80 @@ QImage decode(const QByteArray &data, const QSize &requested, int maxWidth = 0, 
     return image;
 }
 
-class RemoteResponse : public QQuickImageResponse, public QRunnable {
+// A cover being fetched. The engine deletes a response it no longer wants
+// (the cover scrolled away) whenever it likes, also while the fetch runs or
+// before it starts, so the fetch is a job of its own: it shares this state
+// with the response and tells the response it is done only while the
+// response is known to be alive. Signalling from the response itself, on the
+// pool's thread, used a deleted object when a fast scroll dropped covers
+// (crash at 0x20 on a slow phone).
+struct RemoteState {
+    QMutex mutex;
+    QQuickImageResponse *response = nullptr; // null once it is deleted
+    QImage image;
+    QString error;
+};
+
+class RemoteResponse : public QQuickImageResponse {
 public:
-    RemoteResponse(QString url, QString referer, QSize size)
-        : m_url(std::move(url)), m_referer(std::move(referer)), m_size(size),
-          m_cancel(std::make_shared<std::atomic_bool>(false)) {
-        setAutoDelete(false);
+    RemoteResponse(std::shared_ptr<RemoteState> state, CancelFlag cancel) : m_state(std::move(state)), m_cancel(std::move(cancel)) {
+        m_state->response = this;
     }
+    ~RemoteResponse() override {
+        m_cancel->store(true);
+        QMutexLocker lock(&m_state->mutex);
+        m_state->response = nullptr;
+    }
+
+    QQuickTextureFactory *textureFactory() const override {
+        QMutexLocker lock(&m_state->mutex);
+        return QQuickTextureFactory::textureFactoryForImage(m_state->image);
+    }
+    QString errorString() const override {
+        QMutexLocker lock(&m_state->mutex);
+        return m_state->error;
+    }
+    void cancel() override { m_cancel->store(true); }
+
+private:
+    std::shared_ptr<RemoteState> m_state;
+    CancelFlag m_cancel;
+};
+
+class RemoteJob : public QRunnable {
+public:
+    RemoteJob(QString url, QString referer, QSize size, std::shared_ptr<RemoteState> state, CancelFlag cancel)
+        : m_url(std::move(url)), m_referer(std::move(referer)), m_size(size), m_state(std::move(state)), m_cancel(std::move(cancel)) {}
 
     void run() override {
-        CancelScope scope(m_cancel);
-        try {
-            m_image = decode(ImageCache::fetch(m_url, m_referer), m_size);
-        } catch (const Error &e) {
-            m_error = e.message();
-        } catch (const std::exception &e) {
-            m_error = QString::fromUtf8(e.what());
+        QImage image;
+        QString error;
+        if (m_cancel->load()) {
+            error = QStringLiteral("Cancelled");
+        } else {
+            CancelScope scope(m_cancel);
+            try {
+                image = decode(ImageCache::fetch(m_url, m_referer), m_size);
+            } catch (const Error &e) {
+                error = e.message();
+            } catch (const std::exception &e) {
+                error = QString::fromUtf8(e.what());
+            }
         }
-        emit finished();
+        QMutexLocker lock(&m_state->mutex);
+        m_state->image = std::move(image);
+        m_state->error = error;
+        // Posted while the response cannot go away; a response deleted
+        // later drops the event with it.
+        if (auto *response = m_state->response)
+            QMetaObject::invokeMethod(response, &QQuickImageResponse::finished, Qt::QueuedConnection);
     }
-
-    QQuickTextureFactory *textureFactory() const override { return QQuickTextureFactory::textureFactoryForImage(m_image); }
-    QString errorString() const override { return m_error; }
-    void cancel() override { m_cancel->store(true); }
 
 private:
     QString m_url;
     QString m_referer;
     QSize m_size;
-    QImage m_image;
-    QString m_error;
+    std::shared_ptr<RemoteState> m_state;
     CancelFlag m_cancel;
 };
 
@@ -229,8 +273,10 @@ QString RemoteImageProvider::encode(const QString &url, const QString &referer) 
 
 QQuickImageResponse *RemoteImageProvider::requestImageResponse(const QString &id, const QSize &requestedSize) {
     const auto parts = id.split(QLatin1Char('~'));
-    auto *response = new RemoteResponse(unb64(parts.value(0)), unb64(parts.value(1)), requestedSize);
-    coverPool().start(response);
+    auto state = std::make_shared<RemoteState>();
+    auto cancel = std::make_shared<std::atomic_bool>(false);
+    auto *response = new RemoteResponse(state, cancel);
+    coverPool().start(new RemoteJob(unb64(parts.value(0)), unb64(parts.value(1)), requestedSize, state, cancel));
     return response;
 }
 

@@ -395,12 +395,18 @@ private slots:
         const comics::KaganeSource source(kaganeConfig(QStringLiteral("https://kagane.si")));
         const auto results = source.parseSearch(QJsonDocument::fromJson(fixture("kagane-search.json")).object());
         QCOMPARE(results.size(), 2);
-        QCOMPARE(results[0].title, QStringLiteral("One Piece"));
-        QCOMPARE(results[0].url, QStringLiteral("https://kagane.si/series/019c3a10-837e-7d7c-bf6c-006df658a021#es"));
+        // The same series from two uploaders: the fuller first, with its
+        // chapter count for matching ("Read from") and the results.
+        QCOMPARE(results[0].title, QStringLiteral("ONE PIECE"));
+        QCOMPARE(results[0].units, 1170);
+        const auto &first = results[1];
+        QCOMPARE(first.units, 12);
+        QCOMPARE(first.title, QStringLiteral("One Piece"));
+        QCOMPARE(first.url, QStringLiteral("https://kagane.si/series/019c3a10-837e-7d7c-bf6c-006df658a021#es"));
         // The site's own cover size, not the original.
-        QCOMPARE(results[0].cover, QStringLiteral("https://kagane.si/api/v2/image/019e2c21-50db-789e-95a9-c20199434cf3/compressed"));
-        QCOMPARE(results[0].type, QStringLiteral("Manga"));
-        QVERIFY(results[0].names.contains(QString::fromUtf8("ワンピース")));
+        QCOMPARE(first.cover, QStringLiteral("https://kagane.si/api/v2/image/019e2c21-50db-789e-95a9-c20199434cf3/compressed"));
+        QCOMPARE(first.type, QStringLiteral("Manga"));
+        QVERIFY(first.names.contains(QString::fromUtf8("ワンピース")));
 
         const auto latest = source.parseLatest(QJsonDocument::fromJson(fixture("kagane-latest.json")).object());
         QCOMPARE(latest.size(), 2);

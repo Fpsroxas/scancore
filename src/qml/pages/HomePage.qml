@@ -32,9 +32,14 @@ Item {
         function onFinished(result) { page.library = Router.keep(page.library, result) }
     }
 
+    // Library changes come every couple of seconds while reading (progress):
+    // a page out of sight (another section, under a reader or the player)
+    // only notes them and reloads once it shows again.
+    property bool libraryStale: false
+    onVisibleChanged: if (visible && libraryStale) { libraryStale = false; refresh.restart() }
     Connections {
         target: Library
-        function onChanged() { refresh.restart() }
+        function onChanged() { if (page.visible) refresh.restart(); else page.libraryStale = true }
     }
     Timer {
         id: refresh

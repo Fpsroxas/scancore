@@ -267,7 +267,14 @@ void Library::storeCategories(const QVariantList &categories, qint64 changedAt, 
     if (!layout.isEmpty())
         value.insert(QStringLiteral("layout"), layout);
     Database::setPref(kCategoriesKey, value);
-    QMetaObject::invokeMethod(instance(), [] { instance()->notifyChanged(); }, Qt::QueuedConnection);
+    QMetaObject::invokeMethod(
+        instance(),
+        [] {
+            ++instance()->m_listsRevision;
+            emit instance()->listsChanged();
+            instance()->notifyChanged();
+        },
+        Qt::QueuedConnection);
 }
 
 namespace {

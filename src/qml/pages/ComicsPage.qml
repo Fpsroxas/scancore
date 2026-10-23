@@ -26,9 +26,14 @@ Item {
         target: page.historyTask
         function onFinished(result) { page.history = Router.keep(page.history, result) }
     }
+    // Library changes come every couple of seconds while reading (progress):
+    // a page out of sight (another section, under a reader or the player)
+    // only notes them and reloads once it shows again.
+    property bool libraryStale: false
+    onVisibleChanged: if (visible && libraryStale) { libraryStale = false; refreshHistory.restart() }
     Connections {
         target: Library
-        function onChanged() { refreshHistory.restart() }
+        function onChanged() { if (page.visible) refreshHistory.restart(); else page.libraryStale = true }
     }
     Timer { id: refreshHistory; interval: 500; onTriggered: page.historyTask = Library.continueItems("comic", 16) }
     // Files on this device are listed without a search.
@@ -223,7 +228,7 @@ Item {
                     items: page.found ? page.found.comics : []
                     subtitleFor: (it) => it.catalog
                         ? [it.type, it.status, it.lastChapter ? qsTr("Ch. ") + it.lastChapter : ""].filter(s => s).join(" · ")
-                        : it.sourceLabel + (it.type ? " · " + it.type : "")
+                        : [it.sourceLabel, it.type, it.units ? qsTr("%n chapters", "", it.units) : ""].filter(s => s).join(" · ")
                     onOpened: (it, cover) => it.catalog ? readFrom.start(it) : Router.openSeries(it, cover)
                 }
 

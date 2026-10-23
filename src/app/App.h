@@ -106,6 +106,7 @@ public:
     Q_INVOKABLE QString reportIssueUrl(const QString &text) const;
     Q_INVOKABLE void notify(const QString &title, const QString &body);
     Q_INVOKABLE QString relativeTime(const QVariant &when) const;
+    static QString relativeText(const QDateTime &time, qint64 now);
     // The part each chapter title names ("volume", "chapter", "extra"; see
     // chapterPart in core/Text.h), for the Volumes / Chapters / Extras tabs.
     Q_INVOKABLE QStringList chapterParts(const QStringList &titles) const;

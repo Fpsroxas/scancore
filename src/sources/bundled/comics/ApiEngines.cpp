@@ -1932,8 +1932,20 @@ QList<Summary> KaganeSource::parseSearch(const QJsonObject &root) const {
         for (const auto &name : arr(m.value("alternate_titles")))
             if (const auto n = str(name).trimmed(); !n.isEmpty() && n != item.title && !item.names.contains(n))
                 item.names.append(n);
+        item.units = m.value("current_books").toInt();
         out.append(item);
     }
+    // Kagane lists a series once per uploader (4 chapters here, 309 there):
+    // of the ones named alike, the fullest first.
+    QHash<QString, int> firstAt;
+    for (int i = 0; i < out.size(); ++i)
+        firstAt.insert(normalizedTitle(out[i].title), std::min(firstAt.value(normalizedTitle(out[i].title), i), i));
+    std::stable_sort(out.begin(), out.end(), [&](const Summary &a, const Summary &b) {
+        const auto na = normalizedTitle(a.title), nb = normalizedTitle(b.title);
+        if (na != nb)
+            return firstAt.value(na) < firstAt.value(nb);
+        return a.units > b.units;
+    });
     return out;
 }
 

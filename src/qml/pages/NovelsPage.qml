@@ -51,9 +51,14 @@ Item {
     readonly property var moreSources: allSources.filter(s => s.enabled && s.searchable && s.extended)
         .sort((a, b) => a.label.localeCompare(b.label))
 
+    // Library changes come every couple of seconds while reading (progress):
+    // a page out of sight (another section, under a reader or the player)
+    // only notes them and reloads once it shows again.
+    property bool libraryStale: false
+    onVisibleChanged: if (visible && libraryStale) { libraryStale = false; refresh.restart() }
     Connections {
         target: Library
-        function onChanged() { refresh.restart() }
+        function onChanged() { if (page.visible) refresh.restart(); else page.libraryStale = true }
     }
     Timer {
         id: refresh

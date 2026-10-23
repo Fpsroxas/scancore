@@ -32,8 +32,19 @@ Item {
     readonly property var episodes: !episodesTask || !episodesTask.ok ? [] : fromSource ? episodesTask.result.episodes : episodesTask.result
     readonly property var seasons: fromSource && episodesTask && episodesTask.ok ? episodesTask.result.seasons : []
     readonly property bool hasSources: { App.dependOn(Extensions.revision); return Anime.sources().some(s => s.enabled) }
-    readonly property var progress: { App.dependOn(Library.revision); return Library.progressMap(seriesId) }
-    readonly property bool saved: { App.dependOn(Library.revision); return Library.isSaved(seriesId) }
+    // The library as of when this page was last in sight: while a reader or
+    // the player sits on top, progress saves every few seconds and would
+    // re-query and re-sort this page each time, out of sight.
+    property int libraryRevision: Library.revision
+    Connections {
+        target: Library
+        function onChanged() { if (page.visible) page.libraryRevision = Library.revision }
+    }
+    onVisibleChanged: if (visible) libraryRevision = Library.revision
+    // A value from here on, not a binding that follows every change.
+    Component.onCompleted: libraryRevision = Library.revision
+    readonly property var progress: { App.dependOn(page.libraryRevision); return Library.progressMap(seriesId) }
+    readonly property bool saved: { App.dependOn(page.libraryRevision); return Library.isSaved(seriesId) }
     property bool descending: false
     // Episodes, Reviews or Discussion.
     property string tab: "episodes"
@@ -51,7 +62,7 @@ Item {
     onDescendingChanged: range = 0
 
     readonly property var resumeInfo: {
-        App.dependOn(Library.revision)
+        App.dependOn(page.libraryRevision)
         if (episodes.length === 0) return { index: 0, label: qsTr("Watch"), detail: "" }
         const last = Library.lastProgress(seriesId)
         if (last && last.unitKey) {

@@ -26,6 +26,10 @@ struct Summary {
     // The source's other names for it (other languages), for "Read from" to
     // recognise a catalogue title shown under a translated name.
     QStringList names;
+    // How many chapters it has, when the search says (0: unknown).
+    // Aggregators list a series once per uploader, some with a handful of
+    // chapters: matching prefers the fullest.
+    int units = 0;
     QVariantMap toMap() const;
 };
 
