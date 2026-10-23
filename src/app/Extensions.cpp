@@ -28,6 +28,7 @@
 #include <QSysInfo>
 #include <QCoreApplication>
 #include <QJsonArray>
+#include <QJSValue>
 #include <QLocale>
 #include <QMutex>
 #include <QRegularExpression>
@@ -743,7 +744,10 @@ Task *Extensions::sourceSettings(const QString &key) {
     });
 }
 
-Task *Extensions::setSourceSetting(const QString &key, const QString &setting, const QVariant &value) {
+Task *Extensions::setSourceSetting(const QString &key, const QString &setting, const QVariant &input) {
+    // A JS array (a multiselect's choices) arrives as a QJSValue, which
+    // QJsonValue::fromVariant turns into null (#21).
+    const QVariant value = input.metaType() == QMetaType::fromType<QJSValue>() ? input.value<QJSValue>().toVariant() : input;
     return Task::run([key, setting, value]() -> QVariant {
         if (auto novel = novels::Registry::byKey(key)) {
             novel->setPreference(setting, QJsonValue::fromVariant(value));
