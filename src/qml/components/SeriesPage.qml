@@ -60,6 +60,28 @@ Item {
         return Object.keys(counts).sort((a, b) => counts[b] - counts[a])
     }
     function setChapterSetting(key, value) { Library.setSeriesSetting(seriesId, key, value) }
+    // Volumes, chapters and extras, told apart by their titles: tabs above
+    // the list when there is more than one kind.
+    readonly property var unitParts: chapters.length ? App.chapterParts(chapters.map(c => c.title || "")) : []
+    readonly property var partOptions: {
+        const counts = { volume: 0, chapter: 0, extra: 0 }
+        for (const p of unitParts) counts[p]++
+        const labels = { volume: qsTr("Volumes"), chapter: qsTr("Chapters"), extra: qsTr("Extras") }
+        return ["volume", "chapter", "extra"].filter(k => counts[k] > 0).map(k => ({ value: k, label: labels[k] + " " + counts[k] }))
+    }
+    // The one chosen for this series, else the one you are reading in,
+    // else Chapters.
+    readonly property string part: {
+        if (partOptions.length < 2) return ""
+        const chosen = chapterSettings.part || ""
+        if (partOptions.some(o => o.value === chosen)) return chosen
+        const last = Library.lastProgress(seriesId)
+        if (last && last.unitKey && unitParts[resumeInfo.index]) return unitParts[resumeInfo.index]
+        return partOptions.some(o => o.value === "chapter") ? "chapter" : partOptions[0].value
+    }
+    // Rows, or a grid: two or more chapters to a line.
+    readonly property bool grid: (chapterSettings.layout || App.settings.chapterLayout || "list") === "grid"
+    readonly property int columns: grid ? Math.max(2, Math.floor((list.width - 2 * Theme.gutter) / 240)) : 1
     readonly property string coverReferer: media === "comic" ? Comics.imageReferer(url) : ""
     // Comick's catalogue id when the comic was opened from the catalogue; it
     // ties the series to its comments, reviews and tracking.
@@ -95,6 +117,7 @@ Item {
             if (onlyBookmarked && !bookmarks[c.key]) continue
             if (scanlator && c.scanlator !== scanlator) continue
             if (hidden[c.scanlator]) continue
+            if (part && unitParts[i] !== part) continue
             out.push({ unit: c, index: i })
         }
         return descending ? out.reverse() : out
@@ -102,7 +125,14 @@ Item {
     readonly property int pageCount: paged ? Math.max(1, Math.ceil(rows.length / perPage)) : 1
     readonly property var pageRows: paged ? rows.slice(pageIndex * perPage, (pageIndex + 1) * perPage) : rows
     readonly property var shownRows: tab === "chapters" ? pageRows : []
-    onShownRowsChanged: list.show(shownRows)
+    // What the list shows: one row each, or lines of `columns` cells.
+    readonly property var shownLines: {
+        if (columns < 2) return shownRows
+        const out = []
+        for (let i = 0; i < shownRows.length; i += columns) out.push({ cells: shownRows.slice(i, i + columns) })
+        return out
+    }
+    onShownLinesChanged: list.show(shownLines)
     // Opens on the page of the chapter you are on.
     function showCurrentPage() {
         if (!rows || !resumeInfo) return
@@ -114,6 +144,7 @@ Item {
     onFilterChanged: showCurrentPage()
     onFiltersOnChanged: showCurrentPage()
     onScanlatorChanged: showCurrentPage()
+    onPartChanged: showCurrentPage()
     onPageCountChanged: if (pageIndex >= pageCount) pageIndex = pageCount - 1
     onDescendingChanged: showCurrentPage()
     onChaptersChanged: showCurrentPage()
@@ -333,7 +364,7 @@ Item {
         bottomMargin: 40
 
         Component.onCompleted: {
-            show(page.shownRows)
+            show(page.shownLines)
             Qt.callLater(() => { if (headerItem) Router.shell.land(headerItem.details.coverItem) })
         }
 
@@ -571,6 +602,11 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 4
                     IconButton {
+                        iconName: page.grid ? "rows-3" : "layout-grid"
+                        tip: page.grid ? qsTr("Show as rows") : qsTr("Show as a grid")
+                        onClicked: page.setChapterSetting("layout", page.grid ? "list" : "grid")
+                    }
+                    IconButton {
                         id: filterButton
                         iconName: "funnel"
                         active: page.filtersOn > 0
@@ -602,6 +638,20 @@ Item {
                         Behavior on rotation { NumberAnimation { duration: Motion.normal; easing.type: Easing.OutCubic } }
                         onClicked: page.setChapterSetting("sort", page.descending ? "asc" : null)
                     }
+                }
+            }
+
+            // Volumes / Chapters / Extras.
+            Item {
+                visible: page.tab === "chapters" && page.partOptions.length > 1
+                width: list.width
+                height: visible ? 48 : 0
+                Segmented {
+                    x: Theme.gutter
+                    anchors.verticalCenter: parent.verticalCenter
+                    options: page.partOptions
+                    value: page.part
+                    onPicked: (v) => page.setChapterSetting("part", v)
                 }
             }
 
@@ -736,32 +786,63 @@ Item {
             }
         }
 
-        delegate: UnitRow {
-            id: unitRow
+        delegate: Item {
+            id: line
             required property var modelData
+            // A row, or a line of grid cells.
+            readonly property var cells: modelData.cells || [modelData]
             width: list.width
-            unit: modelData.unit
-            progress: page.progress[modelData.unit.key] || null
-            download: page.downloads[modelData.unit.key] || null
-            canDownload: !page.local
-            current: page.resumeInfo.index === modelData.index
-            selecting: page.selecting
-            selected: page.selection[modelData.unit.key] === true
-            bookmarked: page.bookmarks[modelData.unit.key] === true
-            onMenuRequested: (x, y) => page.showMenu(unitRow, x, y, unitRow.modelData.unit, unitRow.modelData.index)
-            onClicked: {
-                if (page.selecting) {
-                    const s = Object.assign({}, page.selection)
-                    if (s[modelData.unit.key]) delete s[modelData.unit.key]
-                    else s[modelData.unit.key] = true
-                    page.selection = s
-                } else {
-                    page.openAt(modelData.index)
+            height: lineHeight
+            // As tall as its tallest cell (titles take one or two lines).
+            property real lineHeight: 54
+            function measure() {
+                let h = 0
+                for (let i = 0; i < cellRepeater.count; ++i) {
+                    const cell = cellRepeater.itemAt(i)
+                    if (cell) h = Math.max(h, cell.implicitHeight)
+                }
+                if (h > 0) lineHeight = h
+            }
+            Row {
+                id: cellRow
+                x: line.modelData.cells ? Theme.gutter - 3 : 0
+                height: line.lineHeight
+                Repeater {
+                    id: cellRepeater
+                    onItemAdded: line.measure()
+                    model: line.cells
+                    delegate: UnitRow {
+                        id: unitRow
+                        required property var modelData
+                        cell: !!line.modelData.cells
+                        width: cell ? (list.width - 2 * Theme.gutter + 6) / page.columns : list.width
+                        height: line.lineHeight
+                        onImplicitHeightChanged: line.measure()
+                        unit: modelData.unit
+                        progress: page.progress[modelData.unit.key] || null
+                        download: page.downloads[modelData.unit.key] || null
+                        canDownload: !page.local
+                        current: page.resumeInfo.index === modelData.index
+                        selecting: page.selecting
+                        selected: page.selection[modelData.unit.key] === true
+                        bookmarked: page.bookmarks[modelData.unit.key] === true
+                        onMenuRequested: (x, y) => page.showMenu(unitRow, x, y, unitRow.modelData.unit, unitRow.modelData.index)
+                        onClicked: {
+                            if (page.selecting) {
+                                const s = Object.assign({}, page.selection)
+                                if (s[modelData.unit.key]) delete s[modelData.unit.key]
+                                else s[modelData.unit.key] = true
+                                page.selection = s
+                            } else {
+                                page.openAt(modelData.index)
+                            }
+                        }
+                        onToggleRead: Library.markUnits(page.series, [modelData.unit], !(progress && progress.completed))
+                        onRequestDownload: page.download([modelData.unit])
+                        onRemoveDownload: Downloads.removeUnit(page.seriesId, modelData.unit.key)
+                    }
                 }
             }
-            onToggleRead: Library.markUnits(page.series, [modelData.unit], !(progress && progress.completed))
-            onRequestDownload: page.download([modelData.unit])
-            onRemoveDownload: Downloads.removeUnit(page.seriesId, modelData.unit.key)
         }
 
         footer: Item {

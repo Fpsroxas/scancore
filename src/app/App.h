@@ -106,6 +106,9 @@ public:
     Q_INVOKABLE QString reportIssueUrl(const QString &text) const;
     Q_INVOKABLE void notify(const QString &title, const QString &body);
     Q_INVOKABLE QString relativeTime(const QVariant &when) const;
+    // The part each chapter title names ("volume", "chapter", "extra"; see
+    // chapterPart in core/Text.h), for the Volumes / Chapters / Extras tabs.
+    Q_INVOKABLE QStringList chapterParts(const QStringList &titles) const;
     Q_INVOKABLE QString formatBytes(qint64 bytes) const;
     // Makes a binding depend on values it does not use, as in
     // `{ App.dependOn(Library.revision); return Library.isSaved(id) }`. The

@@ -439,6 +439,14 @@ void App::notify(const QString &title, const QString &body) {
 #endif
 }
 
+QStringList App::chapterParts(const QStringList &titles) const {
+    QStringList out;
+    out.reserve(titles.size());
+    for (const auto &title : titles)
+        out.append(chapterPart(title));
+    return out;
+}
+
 QString App::relativeTime(const QVariant &when) const {
     QDateTime time;
     if (when.typeId() == QMetaType::QString)

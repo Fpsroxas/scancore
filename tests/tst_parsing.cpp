@@ -368,6 +368,15 @@ private slots:
         QCOMPARE(chapters[2].released, QStringLiteral("2026-06-01T00:00:00Z"));
     }
 
+    // Volumes, chapters and extras from their titles, in the ways Chinese,
+    // Japanese, Korean and English sources write them.
+    void chapterParts() {
+        for (const auto &value : QJsonDocument::fromJson(fixture("chapter-parts.json")).array()) {
+            const auto pair = value.toArray();
+            QCOMPARE(chapterPart(pair.at(0).toString()), pair.at(1).toString());
+        }
+    }
+
     static comics::SourceConfig kaganeConfig(const QString &base) {
         comics::SourceConfig config;
         config.key = QStringLiteral("kagane-es");
