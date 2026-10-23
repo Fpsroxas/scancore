@@ -23,6 +23,7 @@
 #include "sources/comics/Registry.h"
 #include "sources/novels/Registry.h"
 
+#include <QJSValue>
 #include <QUrlQuery>
 #include <QNetworkInformation>
 #include <QClipboard>
@@ -280,7 +281,12 @@ QVariantMap App::startAction() const {
     return QJsonDocument::fromJson(qgetenv("SCANCORE_START")).object().toVariantMap();
 }
 
-void App::setSetting(const QString &key, const QVariant &value) {
+QVariant App::plain(const QVariant &value) {
+    return value.metaType() == QMetaType::fromType<QJSValue>() ? value.value<QJSValue>().toVariant() : value;
+}
+
+void App::setSetting(const QString &key, const QVariant &input) {
+    const auto value = plain(input);
     if (m_settings.value(key) == value)
         return;
     m_settings.insert(key, value);

@@ -582,9 +582,10 @@ QVariantMap Library::seriesSettings(const QString &seriesId) const {
     return parse(Database::scalar(QStringLiteral("SELECT value FROM series_settings WHERE series_id = ?"), {seriesId})).toMap();
 }
 
-void Library::setSeriesSetting(const QString &seriesId, const QString &key, const QVariant &value) {
+void Library::setSeriesSetting(const QString &seriesId, const QString &key, const QVariant &input) {
     if (seriesId.isEmpty())
         return;
+    const auto value = App::plain(input);
     auto settings = seriesSettings(seriesId);
     if (value.isNull() || !value.isValid())
         settings.remove(key);

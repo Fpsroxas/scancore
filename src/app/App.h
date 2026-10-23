@@ -47,6 +47,10 @@ public:
     QVariantMap startAction() const;
 
     Q_INVOKABLE void setSetting(const QString &key, const QVariant &value);
+    // A value QML handed to a QVariant parameter, as plain data: JS arrays
+    // and objects arrive as QJSValue, which JSON (the database, sync) turns
+    // into null.
+    static QVariant plain(const QVariant &value);
     Q_INVOKABLE QString image(const QString &url, const QString &referer = QString()) const;
     Q_INVOKABLE QString icon(const QString &name, const QString &color) const;
     Q_INVOKABLE void openUrl(const QString &url) const;

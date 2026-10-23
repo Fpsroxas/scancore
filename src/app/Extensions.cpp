@@ -743,7 +743,9 @@ Task *Extensions::sourceSettings(const QString &key) {
     });
 }
 
-Task *Extensions::setSourceSetting(const QString &key, const QString &setting, const QVariant &value) {
+Task *Extensions::setSourceSetting(const QString &key, const QString &setting, const QVariant &input) {
+    // A multiselect's choices are a JS array (#21).
+    const auto value = App::plain(input);
     return Task::run([key, setting, value]() -> QVariant {
         if (auto novel = novels::Registry::byKey(key)) {
             novel->setPreference(setting, QJsonValue::fromVariant(value));
