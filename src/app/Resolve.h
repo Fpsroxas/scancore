@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/Parallel.h"
+#include "core/QuietSites.h"
 #include "core/Text.h"
 
 #include <QSet>
@@ -10,6 +11,7 @@
 #include <algorithm>
 #include <functional>
 #include <memory>
+#include <optional>
 #include <type_traits>
 
 namespace sc {
@@ -24,6 +26,18 @@ inline bool resolveAsks(const QString &scope, const QString &key, bool enabled, 
     if (scope == QLatin1String("extensions"))
         return enabled && extension;
     return enabled && key == scope;
+}
+
+// A source's site, for QuietSite (comic sources keep it in their config,
+// anime sources answer it themselves).
+template <typename SourcePtr>
+QString siteOf(const SourcePtr &source) {
+    if constexpr (requires { source->baseUrl(); })
+        return source->baseUrl();
+    else if constexpr (requires { source->config().base; })
+        return source->config().base;
+    else
+        return {};
 }
 
 // Search results that carry the other names a source lists a series under,
@@ -103,7 +117,12 @@ QVariantList resolveAcross(const QList<SourcePtr> &sources, const QStringList &t
         for (const auto &source : sources)
             if (!done.contains(source->key())) {
                 asked.append(source);
-                jobs.append([source, name = names[round]] {
+                jobs.append([source, name = names[round], many = sources.size() > 1] {
+                    // Many sites at once: a browser check waits for its own
+                    // button, for as long as this source's call runs.
+                    std::optional<QuietSite> quiet;
+                    if (many)
+                        quiet.emplace(siteOf(source));
                     Hit hits;
                     for (const auto &item : source->search(name)) {
                         QStringList hit{item.title, item.url, item.cover, QStringLiteral("0")};
