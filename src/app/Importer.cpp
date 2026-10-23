@@ -731,8 +731,17 @@ Task *Importer::previewMihon(const QUrl &file) {
             extensions.append(QVariantMap{{"kind", ext::kindName(package.kind)}, {"pkg", package.pkg}, {"name", package.name}, {"series", count}});
         std::sort(extensions.begin(), extensions.end(),
                   [](const QVariant &a, const QVariant &b) { return a.toMap().value("series").toInt() > b.toMap().value("series").toInt(); });
+        // Komikku and TachiyomiSY write the same backups with more in
+        // them; their file names say which app made them.
+        const auto name = file.fileName().toLower();
+        const auto app = name.contains(QLatin1String("komikku")) ? QStringLiteral("Komikku")
+                         : name.contains(QLatin1String(".sy_")) || name.contains(QLatin1String("tachiyomisy")) ? QStringLiteral("TachiyomiSY")
+                         : name.contains(QLatin1String("aniyomi")) ? QStringLiteral("Aniyomi")
+                         : name.contains(QLatin1String("tachiyomi")) ? QStringLiteral("Tachiyomi")
+                                                                     : QStringLiteral("Mihon");
         return QVariantMap{{"comics", comics},
                            {"anime", anime},
+                           {"app", app},
                            {"lists", backup.lists},
                            {"repositories", repos},
                            {"extensions", extensions},
@@ -794,14 +803,28 @@ Task *Importer::importMihon(const QUrl &file, const QVariantMap &prepare) {
                     },
                     Qt::BlockingQueuedConnection);
         }
-        // The backup's own lists, in its order, empty ones too.
+        // The backup's own lists, in its order, empty ones too, and the
+        // ones it hides (Komikku) hidden here.
         for (const auto &name : backup.lists)
             Library::categoryNamed(name);
+        QStringList hide;
+        for (const auto &list : backup.hiddenLists)
+            hide.append(list.startsWith(QLatin1String("custom:")) ? Library::categoryNamed(list.mid(7)) : list);
+        if (!hide.isEmpty())
+            QMetaObject::invokeMethod(Library::instance(), [hide] {
+                for (const auto &id : hide)
+                    Library::instance()->setCategoryHidden(id, true);
+            });
         Tally outcome;
         // Only the sources the backup names; the rest wait for matchAll.
         storeAll(backup.items, outcome, false);
         auto result = summary(outcome);
         result.insert("lists", int(backup.lists.size()));
+        result.insert("hiddenLists", int(backup.hiddenLists.size()));
+        // TachiyomiSY / Komikku extras SCANCORE has no place for.
+        result.insert("savedSearches", backup.savedSearches);
+        result.insert("customInfo", backup.customInfo);
+        result.insert("merged", backup.merged);
         result.insert("repositoriesAdded", reposAdded);
         result.insert("extensionsInstalled", installed);
         return result;
@@ -878,10 +901,12 @@ Task *Importer::exportMihon(const QUrl &file) {
         for (const auto &value : rows)
             if (value.toMap().value("source").toString().startsWith(QLatin1String("mihon:")))
                 used.insert(value.toMap().value("category").toString());
+        // Under the name given here, if any (an import back finds it again).
+        const auto names = Library::storedListLayout().value("names").toMap();
         QList<QPair<QString, QString>> lists;
         for (const auto &list : kMihonCategories)
             if (used.contains(list.first))
-                lists.append(list);
+                lists.append({list.first, names.value(list.first, list.second).toString()});
         for (const auto &c : Library::storedCategories())
             lists.append({c.toMap().value("id").toString(), c.toMap().value("name").toString()});
         const auto trackerLinks = Database::pref(QStringLiteral("tracker.links")).toMap();

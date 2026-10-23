@@ -195,7 +195,8 @@ Item {
             Select {
                 visible: header.saved && !!header.series.id
                 implicitWidth: 168
-                model: Router.libraryCategories(header.series.media)
+                // Visible lists, and the one the series is on even if hidden.
+                model: Router.libraryCategories(header.series.media, false, value)
                 value: { App.dependOn(Library.revision); return header.saved ? (Library.category(header.series.id) || "reading") : "reading" }
                 onPicked: (v) => Library.setCategory(header.series.id, v)
             }

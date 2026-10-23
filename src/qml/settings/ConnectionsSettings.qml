@@ -28,6 +28,11 @@ SettingsPane {
             if (r.unmatched > 0) parts.push(r.unmatched + qsTr(" waiting to be found"))
             if (r.extensionsInstalled > 0) parts.push(qsTr("%1 extensions installed").arg(r.extensionsInstalled))
             if (r.inSeveral > 0) parts.push(qsTr("%1 were in several lists and are in the first").arg(r.inSeveral))
+            if (r.hiddenLists > 0) parts.push(qsTr("%1 hidden lists stay hidden").arg(r.hiddenLists))
+            if (r.merged > 0) parts.push(qsTr("%1 merged entries came in as their main source").arg(r.merged))
+            // Komikku / TachiyomiSY extras without a place here.
+            if (r.customInfo > 0) parts.push(qsTr("edited titles, covers and descriptions of %1 series stay in the other app").arg(r.customInfo))
+            if (r.savedSearches > 0) parts.push(qsTr("%1 saved searches stay in the other app").arg(r.savedSearches))
             Router.toast(parts.join(" · "), "success")
         })
         task.failed.connect((error) => Router.toast(error, "error"))
@@ -112,8 +117,8 @@ SettingsPane {
         note: qsTr("Anime come in with the episodes you watched. Comics and novels come in with the chapters you read when one of your sources has them; the others wait below until they are found.")
         SettingRow {
             iconName: "book-open"
-            title: qsTr("Mihon, Tachiyomi or Aniyomi backup")
-            description: qsTr("A .tachibk file from More → Backup and restore. Series from an extension you have here come back exactly as they were.")
+            title: qsTr("Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup")
+            description: qsTr("A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.")
             ScButton {
                 text: qsTr("Choose file")
                 iconName: "folder-open"
@@ -206,7 +211,7 @@ SettingsPane {
     FileDialog {
         id: mihonDialog
         fileMode: FileDialog.OpenFile
-        nameFilters: [qsTr("Mihon, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)"), qsTr("All files (*)")]
+        nameFilters: [qsTr("Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)"), qsTr("All files (*)")]
         onAccepted: {
             mihonImport.start(selectedFile)
             pane.importTask = mihonImport.task

@@ -38,15 +38,30 @@ QtObject {
     }
     // The library's categories, as anime or reading media call them.
     // The built-in lists, then the user's own (custom: true).
-    function libraryCategories(media) {
+    // The library's lists in the user's order: [{value, label, custom,
+    // hidden, renamed}]. Hidden ones only with includeHidden (Settings) or
+    // when `keep` is one of them (the list a series is on).
+    function libraryCategories(media, includeHidden, keep) {
         App.dependOn(Library.revision)
         const anime = media === "anime"
-        return [{ value: "reading", label: anime ? qsTr("Watching") : qsTr("Reading") },
-                { value: "planned", label: anime ? qsTr("Plan to watch") : qsTr("Plan to read") },
-                { value: "paused", label: qsTr("On hold") },
-                { value: "completed", label: qsTr("Completed") },
-                { value: "dropped", label: qsTr("Dropped") }]
-            .concat(Array.from(Library.customCategories()).map(c => ({ value: c.id, label: c.name, custom: true })))
+        const layout = Library.listLayout()
+        const names = layout.names || {}
+        const hidden = Array.from(layout.hidden || [])
+        const builtin = { reading: anime ? qsTr("Watching") : qsTr("Reading"),
+                          planned: anime ? qsTr("Plan to watch") : qsTr("Plan to read"),
+                          paused: qsTr("On hold"), completed: qsTr("Completed"), dropped: qsTr("Dropped") }
+        const own = {}
+        for (const c of Array.from(Library.customCategories())) own[c.id] = c.name
+        const out = []
+        for (const id of Array.from(layout.order || [])) {
+            const isBuiltin = builtin[id] !== undefined
+            if (!isBuiltin && own[id] === undefined) continue
+            const isHidden = hidden.indexOf(id) >= 0
+            if (isHidden && !includeHidden && id !== keep) continue
+            out.push({ value: id, label: isBuiltin ? (names[id] || builtin[id]) : own[id], custom: !isBuiltin,
+                       hidden: isHidden, renamed: isBuiltin && !!names[id], defaultLabel: isBuiltin ? builtin[id] : "" })
+        }
+        return out
     }
     // One source's own popular, latest and filtered lists.
     function openSource(key) { push("pages/SourcePage.qml", { sourceKey: key }) }

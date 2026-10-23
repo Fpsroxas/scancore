@@ -99,7 +99,7 @@ Dialog {
 
             Text {
                 width: parent.width
-                text: qsTr("Bring back everything from Mihon")
+                text: qsTr("Bring back everything from %1").arg(dialog.preview ? dialog.preview.app : "Mihon")
                 color: Theme.text
                 font.family: Theme.fontDisplay
                 font.pixelSize: Theme.textLg
@@ -111,7 +111,7 @@ Dialog {
                 visible: dialog.preview !== null
                 text: !dialog.preview ? ""
                     : qsTr("%1 comics and %2 anime.").arg(dialog.preview.comics).arg(dialog.preview.anime)
-                      + (dialog.preview.lists.length > 0 ? " " + qsTr("Your lists come along in Mihon's order: %1.").arg(dialog.preview.lists.join(", ")) : "")
+                      + (dialog.preview.lists.length > 0 ? " " + qsTr("Your lists come along in %1's order: %2.").arg(dialog.preview.app).arg(dialog.preview.lists.join(", ")) : "")
                 color: Theme.textMuted
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textSm

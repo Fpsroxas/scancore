@@ -35,13 +35,25 @@ public:
     // reading (watching, for anime), planned, paused (on hold), completed,
     // dropped.
     Q_INVOKABLE void setCategory(const QString &seriesId, const QString &category);
-    // The user's own lists, after the built-in ones (issue #9): [{id, name}]
-    // in their order. Removing one moves its series to reading.
+    // The user's own lists (issue #9): [{id, name}] in their order.
+    // Removing one moves its series to reading.
     Q_INVOKABLE QVariantList customCategories() const { return storedCategories(); }
     Q_INVOKABLE QString addCategory(const QString &name);
+    // Built-in lists keep their ids (trackers, sync and backups rely on
+    // them); renaming one changes only its display name, and an empty name
+    // gives it back its own.
     Q_INVOKABLE void renameCategory(const QString &id, const QString &name);
     Q_INVOKABLE void removeCategory(const QString &id);
-    Q_INVOKABLE void moveCategory(const QString &id, int by);
+    // Moves a list (built-in or own) `by` places among all lists; with
+    // skipHidden, hidden ones are passed over as the library does not show
+    // them.
+    Q_INVOKABLE void moveCategory(const QString &id, int by, bool skipHidden = false);
+    // A hidden list leaves the library's chips and pickers; its series stay
+    // on it (and under All).
+    Q_INVOKABLE void setCategoryHidden(const QString &id, bool hidden);
+    // How the lists are shown: {order: [every list id], hidden: [ids],
+    // names: {builtinId: name}}.
+    Q_INVOKABLE QVariantMap listLayout() const;
     Q_INVOKABLE bool isFavourite(const QString &seriesId) const;
     Q_INVOKABLE void setFavourite(const QString &seriesId, bool favourite);
     Q_INVOKABLE void markSeen(const QString &seriesId);
@@ -98,6 +110,11 @@ public:
     static QVariantList storedCategories();
     static qint64 categoriesChangedAt();
     static void storeCategories(const QVariantList &categories, qint64 changedAt);
+    // With the lists' order, hidden ones and built-in names (synced along).
+    static QVariantMap storedListLayout();
+    static void storeCategories(const QVariantList &categories, qint64 changedAt, const QVariantMap &layout);
+    // reading, planned, paused, completed, dropped.
+    static const QStringList &builtinCategories();
     // The custom list with this name (case aside), made when there is none
     // (imports from other apps); any thread.
     static QString categoryNamed(const QString &name);

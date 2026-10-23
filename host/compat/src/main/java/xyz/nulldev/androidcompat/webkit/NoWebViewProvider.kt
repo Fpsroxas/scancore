@@ -22,7 +22,8 @@ object NoWebViewProvider {
                 "hashCode" -> view.hashCode()
                 "equals" -> false
                 else -> throw UnsupportedOperationException(
-                    "This extension needs a web view, which SCANCORE's extension host does not have.",
+                    "This source runs the site in Android's web view, which SCANCORE on this computer " +
+                        "cannot offer. It works in SCANCORE for Android.",
                 )
             }
         } as WebViewProvider

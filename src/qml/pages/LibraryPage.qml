@@ -17,7 +17,11 @@ Item {
     onMediaChanged: { selecting = false; selection = ({}) }
 
     readonly property string media: App.settings.libraryMedia || "comic"
-    readonly property string category: App.settings.libraryCategory || "all"
+    // A list hidden or removed (on another device too) shows All.
+    readonly property string category: {
+        const c = App.settings.libraryCategory || "all"
+        return c === "all" || c === "favourites" || categories.some(x => x.value === c) ? c : "all"
+    }
     readonly property string view: App.settings.libraryView || "grid"
     readonly property string sort: App.settings.librarySort || "updates"
     readonly property var categories: Router.libraryCategories(media)
@@ -128,20 +132,33 @@ Item {
         id: listRemove
         property var list: null
         heading: list ? qsTr("Remove the list %1?").arg(list.label) : ""
-        message: qsTr("Its series move to Reading; nothing is removed from your library.")
+        message: qsTr("Its series move to %1; nothing is removed from your library.")
+            .arg((page.categories.find(c => c.value === "reading") || { label: qsTr("Reading") }).label)
         confirmText: qsTr("Remove")
         destructive: true
         onConfirmed: Library.removeCategory(list.value)
     }
+    // Every list: rename, move or hide it; the user's own can be removed.
+    // Built-in lists keep their meaning (trackers, sync and backups use
+    // them), so they are hidden rather than removed.
     function listMenu(chip, x, y, list) {
-        const own = page.categories.filter(c => c.custom)
-        const at = own.findIndex(c => c.value === list.value)
+        const at = page.categories.findIndex(c => c.value === list.value)
         menu.openAt(chip, x, y, [
             { text: qsTr("Rename"), icon: "pencil", run: () => listName.ask(list.value, list.label) },
-            { text: qsTr("Move left"), icon: "chevron-left", enabled: at > 0, run: () => Library.moveCategory(list.value, -1) },
-            { text: qsTr("Move right"), icon: "chevron-right", enabled: at < own.length - 1, run: () => Library.moveCategory(list.value, 1) },
+            list.renamed ? { text: qsTr("Use the name %1").arg(list.defaultLabel), icon: "rotate-ccw",
+                             run: () => Library.renameCategory(list.value, "") } : undefined,
+            { text: qsTr("Move left"), icon: "chevron-left", enabled: at > 0, run: () => Library.moveCategory(list.value, -1, true) },
+            { text: qsTr("Move right"), icon: "chevron-right", enabled: at < page.categories.length - 1,
+              run: () => Library.moveCategory(list.value, 1, true) },
             null,
-            { text: qsTr("Remove list"), icon: "trash", danger: true, run: () => { listRemove.list = list; listRemove.open() } }])
+            { text: qsTr("Hide list"), icon: "eye-off", run: () => page.hideList(list) },
+            list.custom ? { text: qsTr("Remove list"), icon: "trash", danger: true, run: () => { listRemove.list = list; listRemove.open() } }
+                        : undefined].filter(i => i !== undefined))
+    }
+    function hideList(list) {
+        Library.setCategoryHidden(list.value, true)
+        Router.toast(qsTr("%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.").arg(list.label), "info",
+                     { label: qsTr("Undo"), run: () => Library.setCategoryHidden(list.value, false) })
     }
     MigrateDialog {
         id: migrate
@@ -375,10 +392,9 @@ Item {
                         detail: String(page.counts[modelData.value] || 0)
                         selected: page.category === modelData.value
                         onClicked: App.setSetting("libraryCategory", modelData.value)
-                        // The user's own lists: rename, move or remove them.
-                        onPressAndHold: if (modelData.custom) page.listMenu(listChip, width / 2, height, modelData)
+                        // Rename, move, hide (or remove) the list.
+                        onPressAndHold: page.listMenu(listChip, width / 2, height, modelData)
                         TapHandler {
-                            enabled: listChip.modelData.custom === true
                             acceptedButtons: Qt.RightButton
                             onTapped: (point) => page.listMenu(listChip, point.position.x, point.position.y, listChip.modelData)
                         }
