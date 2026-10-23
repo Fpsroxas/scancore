@@ -54,11 +54,18 @@ Dialog {
         function onFinished(result) {
             dialog.chosenRepos = result.repositories.filter(r => !r.added && !r.error).map(r => r.url)
             dialog.installExtensions = true
-            // Nothing to offer: straight in.
-            if (result.repositories.every(r => r.added) && result.extensions.length === 0) dialog.go({})
+            // Nothing to offer: straight in. Mihon's downloads are offered
+            // until a folder of them is chosen.
+            if (result.repositories.every(r => r.added) && result.extensions.length === 0
+                    && (folderPicker.linked || result.comics === 0)) dialog.go({})
             else dialog.open()
         }
         function onFailed(error) { Router.toast(error, "error") }
+    }
+
+    MihonFolderPicker {
+        id: folderPicker
+        quiet: true
     }
 
     parent: Overlay.overlay
@@ -234,6 +241,48 @@ Dialog {
                 font.family: Theme.fontSans
                 font.pixelSize: Theme.textXs
                 wrapMode: Text.Wrap
+            }
+            // The chapters it downloaded, read where they are.
+            Item {
+                width: parent.width
+                height: Math.max(40, folderText.implicitHeight + 12)
+                visible: dialog.preview !== null && dialog.preview.comics > 0
+                Column {
+                    id: folderText
+                    anchors.left: parent.left
+                    anchors.right: folderButton.left
+                    anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 2
+                    Text {
+                        width: parent.width
+                        text: qsTr("Chapters %1 downloaded").arg(dialog.preview ? dialog.preview.app : "Mihon")
+                        color: Theme.text
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textSm
+                        wrapMode: Text.Wrap
+                    }
+                    Text {
+                        width: parent.width
+                        text: folderPicker.linking ? qsTr("Looking through the folder…")
+                            : folderPicker.linked ? qsTr("Read from its folder after the import, offline and with your progress. Nothing is copied.")
+                            : qsTr("Choose its storage folder (More → Settings → Data and storage) to read them here offline. Nothing is copied.")
+                        color: Theme.textFaint
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textXs
+                        wrapMode: Text.Wrap
+                    }
+                }
+                ScButton {
+                    id: folderButton
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    compact: true
+                    text: folderPicker.linked ? qsTr("Chosen") : qsTr("Choose")
+                    iconName: folderPicker.linked ? "check" : "folder-open"
+                    loading: folderPicker.linking
+                    onClicked: folderPicker.open()
+                }
             }
             Text {
                 width: parent.width

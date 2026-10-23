@@ -2,6 +2,7 @@
 
 #include "Anime.h"
 #include "Comics.h"
+#include "Downloads.h"
 #include "Library.h"
 #include "Novels.h"
 #include "Trackers.h"
@@ -440,6 +441,16 @@ bool storeFound(const Item &item, Tally &outcome, bool searchEverywhere) {
     return true;
 }
 
+// Chapters in Mihon's downloads folder (when one is chosen) as downloads of
+// the series that came in: how many.
+int linkDownloads() {
+    if (local::folders().isEmpty())
+        return 0;
+    const auto result = Downloads::linkMihonNow();
+    QMetaObject::invokeMethod(Downloads::instance(), [result] { Downloads::instance()->linked(result); });
+    return result.value(QStringLiteral("chapters")).toInt();
+}
+
 // Anime whose extension is not installed here: their AniList entry (by the
 // tracker link the backup has, else by title), with the episodes watched.
 void storeAnimeOnAniList(const QList<Item> &items, Tally &outcome) {
@@ -827,6 +838,7 @@ Task *Importer::importMihon(const QUrl &file, const QVariantMap &prepare) {
         result.insert("merged", backup.merged);
         result.insert("repositoriesAdded", reposAdded);
         result.insert("extensionsInstalled", installed);
+        result.insert("downloadsLinked", linkDownloads());
         return result;
     }));
 }
@@ -1192,7 +1204,7 @@ Task *Importer::matchAll() {
             Database::setPref(kUnmatched, left);
         }
         return QVariantMap{{"matched", outcome.imported}, {"left", outcome.unmatched.size()}, {"progress", outcome.progress},
-                           {"saved", outcome.saved}};
+                           {"saved", outcome.saved}, {"downloadsLinked", outcome.imported > 0 ? linkDownloads() : 0}};
     }));
 }
 

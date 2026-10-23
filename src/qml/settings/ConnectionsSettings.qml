@@ -26,6 +26,7 @@ SettingsPane {
             const parts = [r.imported === 1 ? qsTr("1 series added") : r.imported + qsTr(" series added")]
             if (r.progress > 0) parts.push(r.progress + (r.progress === 1 ? qsTr(" chapter or episode") : qsTr(" chapters and episodes")) + qsTr(" marked"))
             if (r.unmatched > 0) parts.push(r.unmatched + qsTr(" waiting to be found"))
+            if (r.downloadsLinked > 0) parts.push(qsTr("%1 downloaded chapters read from Mihon's folder").arg(r.downloadsLinked))
             if (r.extensionsInstalled > 0) parts.push(qsTr("%1 extensions installed").arg(r.extensionsInstalled))
             if (r.inSeveral > 0) parts.push(qsTr("%1 were in several lists and are in the first").arg(r.inSeveral))
             if (r.hiddenLists > 0) parts.push(qsTr("%1 hidden lists stay hidden").arg(r.hiddenLists))
@@ -128,6 +129,28 @@ SettingsPane {
             }
         }
         SettingRow {
+            iconName: "download"
+            title: qsTr("Chapters Mihon downloaded")
+            description: mihonFolder.summary
+            Row {
+                spacing: 8
+                IconButton {
+                    visible: mihonFolder.linked
+                    anchors.verticalCenter: parent.verticalCenter
+                    iconName: "refresh-cw"
+                    tip: qsTr("Look again")
+                    enabled: !mihonFolder.linking
+                    onClicked: Downloads.relinkMihon()
+                }
+                ScButton {
+                    text: mihonFolder.linked ? qsTr("Add folder") : qsTr("Choose folder")
+                    iconName: "folder-open"
+                    loading: mihonFolder.pending !== "" && mihonFolder.linking
+                    onClicked: mihonFolder.open()
+                }
+            }
+        }
+        SettingRow {
             iconName: "book-text"
             title: qsTr("LNReader backup")
             description: qsTr("A backup .zip from LNReader's More → Backup. Novels from a plugin you have here come back exactly as they were.")
@@ -218,6 +241,7 @@ SettingsPane {
             pane.importing = "mihon"
         }
     }
+    MihonFolderPicker { id: mihonFolder }
     MihonImportDialog {
         id: mihonImport
         onImportStarted: (task) => pane.imported(task, "mihon")

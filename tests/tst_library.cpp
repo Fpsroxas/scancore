@@ -8,6 +8,7 @@
 #include "core/Migration.h"
 #include "core/Proto.h"
 #include "sources/local/Local.h"
+#include "sources/local/MihonLayout.h"
 #include "core/ThemeLook.h"
 #include "core/UpdateRules.h"
 
@@ -63,6 +64,54 @@ private slots:
         QCOMPARE(lists::moved(order, {}, "reading", -1, false), order);
         QCOMPARE(lists::moved(order, {"planned", "paused", "completed", "dropped"}, "reading", 1, true),
                  (QStringList{"planned", "paused", "completed", "dropped", "c-a", "reading"}));
+    }
+
+    // Mihon's downloads folder: sources, series, chapter folders and CBZ,
+    // matched to the chapters of a library entry by hash, name or number.
+    void mihonDownloads() {
+        QTemporaryDir tree;
+        QVERIFY(tree.isValid());
+        const auto touch = [&](const QString &relative) {
+            const auto path = tree.filePath(relative);
+            QVERIFY(QDir().mkpath(QFileInfo(path).path()));
+            QFile file(path);
+            QVERIFY(file.open(QIODevice::WriteOnly));
+            file.write("x");
+        };
+        const QString url1 = QStringLiteral("/chapter/one"), url2 = QStringLiteral("/chapter/two");
+        const auto hash1 = local::mihon::hashesFor(url1).first();
+        touch(QStringLiteral("downloads/Comix (EN)/Solo Leveling/Group_Chapter 1_%1/001.jpg").arg(hash1));
+        touch(QStringLiteral("downloads/Comix (EN)/Solo Leveling/Chapter 2.cbz"));
+        touch(QStringLiteral("downloads/Comix (EN)/Solo Leveling/Group_Chapter 3_ffffff.cbz"));
+        touch(QStringLiteral("downloads/Comix (EN)/Solo Leveling/Chapter 9_tmp/001.jpg"));
+        QVERIFY(local::mihon::isDownloads(tree.filePath(QStringLiteral("downloads"))));
+        QVERIFY(local::mihon::isDownloads(tree.filePath(QStringLiteral("downloads/Comix (EN)"))));
+        QVERIFY(!local::mihon::isDownloads(tree.filePath(QStringLiteral("downloads/Comix (EN)/Solo Leveling"))));
+        const auto sources = local::mihon::sources(tree.filePath(QStringLiteral("downloads")));
+        QCOMPARE(sources.size(), 1);
+        QCOMPARE(sources[0].name, QStringLiteral("Comix"));
+        QCOMPARE(sources[0].lang, QStringLiteral("en"));
+        const auto series = local::mihon::series(sources[0]);
+        QCOMPARE(series.size(), 1);
+        auto chapters = local::mihon::chapters(series[0].path);
+        QCOMPARE(chapters.size(), 3); // the unfinished "_tmp" one is left out
+        std::sort(chapters.begin(), chapters.end(), [](const auto &a, const auto &b) { return a.path < b.path; });
+        const QList<local::mihon::Unit> units{{url1, QStringLiteral("Chapter 1 renamed"), QStringLiteral("Group"), QStringLiteral("1")},
+                                              {url2, QStringLiteral("Chapter 2"), {}, QStringLiteral("2")},
+                                              {QStringLiteral("/chapter/three"), QStringLiteral("Chapter 3"), QStringLiteral("Group"), QStringLiteral("3")}};
+        QList<int> matched;
+        for (const auto &c : chapters)
+            matched.append(local::mihon::matchChapters({c}, units).first());
+        // "Chapter 2.cbz" (no scanlator), "Group_Chapter 1_<hash>" (by hash,
+        // though the title changed), "Group_Chapter 3_ffffff" (a hash that is
+        // not the address's, by name).
+        for (int i = 0; i < chapters.size(); ++i) {
+            const auto name = QFileInfo(chapters[i].path).fileName();
+            QCOMPARE(matched[i], name.contains(QLatin1String("Chapter 1")) ? 0 : name.contains(QLatin1String("Chapter 2")) ? 1 : 2);
+        }
+        QCOMPARE(local::mihon::chapterTitle(QStringLiteral("Group_Chapter 1_%1").arg(hash1)), QStringLiteral("Chapter 1"));
+        QCOMPARE(local::mihon::chapterTitle(QStringLiteral("Chapter 2.cbz")), QStringLiteral("Chapter 2"));
+        QCOMPARE(local::mihon::normalized(QStringLiteral("Re:Zero — Starting Life!")), local::mihon::normalized(QStringLiteral("Re_Zero  Starting Life")));
     }
 
     // Release radar: the next chapter from a series' rhythm.

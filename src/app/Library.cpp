@@ -580,13 +580,14 @@ void Library::saveProgress(const QVariantMap &series, const QVariantMap &unit, c
         Activity::unitFinished(seriesId.section(QLatin1Char(':'), 0, 0));
         Trackers::unitFinished(seriesId);
         // "Delete once read": the downloads of chapters finished before this
-        // one go (this one may still be open).
+        // one go (this one may still be open). Mihon's files stay.
         if (App::instance()->settings().value(QStringLiteral("deleteAfterRead")).toBool())
-            for (const auto &value : Database::query(QStringLiteral("SELECT d.unit_key FROM downloads d JOIN progress p ON p.series_id = d.series_id "
+            for (const auto &value : Database::query(QStringLiteral("SELECT d.unit_key, d.path FROM downloads d JOIN progress p ON p.series_id = d.series_id "
                                                                     "AND p.unit_key = d.unit_key WHERE d.series_id = ? AND d.status = 'done' "
                                                                     "AND p.completed = 1 AND d.unit_key != ?"),
                                                      {seriesId, key}))
-                Downloads::instance()->removeUnit(seriesId, value.toMap().value(QStringLiteral("unit_key")).toString());
+                if (!Downloads::isExternal(value.toMap().value(QStringLiteral("path")).toString()))
+                    Downloads::instance()->removeUnit(seriesId, value.toMap().value(QStringLiteral("unit_key")).toString());
     }
     notifyChanged();
 }
