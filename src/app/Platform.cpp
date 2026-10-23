@@ -310,6 +310,15 @@ void askNotificationPermission() {
 #endif
 }
 
+bool notificationsAllowed() {
+#ifdef Q_OS_ANDROID
+    return QJniObject::callStaticMethod<jboolean>(kNotifyClass, "allowed", "(Landroid/content/Context;)Z",
+                                                  QNativeInterface::QAndroidApplication::context().object());
+#else
+    return true;
+#endif
+}
+
 void setWebPlayerPrepared(std::function<void()> prepared) { g_webPlayerPrepared = std::move(prepared); }
 
 void prepareWebPlayer() {

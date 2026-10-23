@@ -192,14 +192,78 @@ SettingsPane {
                 Readout { text: (App.settings.readerGap || 0) + qsTr(" px") }
             }
         }
-        SettingRow {
-            title: qsTr("Progress rail")
-            description: qsTr("A thin line on the left edge showing how far through the chapter you are.")
-            Toggle { checked: App.settings.readerProgressBar !== false; onToggled: App.setSetting("readerProgressBar", checked) }
+    }
+
+    // The comic reader's progress bar: picked by looking at it, then shaped.
+    readonly property bool barOn: App.settings.readerProgressBar !== false
+    readonly property var railPresets: [
+        { label: qsTr("Grey"), unread: "#e4e4e7", read: "#8b8b94", current: "#000000" },
+        { label: qsTr("Accent"), unread: "#3f3f46", read: String(Theme.accent), current: "#ffffff" },
+        { label: qsTr("Ocean"), unread: "#1e293b", read: "#38bdf8", current: "#f0f9ff" },
+        { label: qsTr("Rose"), unread: "#3b1d25", read: "#fb7185", current: "#fff1f2" },
+        { label: qsTr("Mint"), unread: "#1c2b25", read: "#34d399", current: "#ecfdf5" }]
+    SettingsGroup {
+        title: qsTr("Comic progress bar")
+        note: qsTr("How far through the chapter you are. Tap or drag along it in the reader to go to a page.")
+        Item {
+            width: parent.width
+            height: barPicker.height + 28
+            ProgressBarPicker {
+                id: barPicker
+                x: 16
+                y: 14
+                width: parent.width - 32
+                // Phones: two by two, big enough to tell the bars apart.
+                tileWidth: Theme.compact ? Math.min(170, Math.floor((width - spacing) / 2)) : Math.min(140, Math.floor((width - 3 * spacing) / 4))
+            }
         }
         SettingRow {
-            visible: App.settings.readerProgressBar !== false
-            title: qsTr("Progress rail colours")
+            visible: pane.barOn
+            title: qsTr("Show it")
+            Segmented {
+                options: [{ value: true, label: qsTr("Always") }, { value: "controls", label: qsTr("With controls") }]
+                value: App.settings.readerProgressBar === "controls" ? "controls" : true
+                onPicked: (v) => App.setSetting("readerProgressBar", v)
+            }
+        }
+        SettingRow {
+            visible: pane.barOn
+            title: qsTr("Edge")
+            Segmented {
+                options: [{ value: "left", label: qsTr("Left") }, { value: "right", label: qsTr("Right") }, { value: "bottom", label: qsTr("Bottom") }]
+                value: App.settings.readerProgressEdge || "left"
+                onPicked: (v) => App.setSetting("readerProgressEdge", v)
+            }
+        }
+        SettingRow {
+            visible: pane.barOn
+            title: qsTr("Thickness")
+            Segmented {
+                options: [{ value: 3, label: qsTr("Thin") }, { value: 6, label: qsTr("Medium") }, { value: 10, label: qsTr("Thick") }]
+                value: Number(App.settings.readerProgressWidth) || 3
+                onPicked: (v) => App.setSetting("readerProgressWidth", v)
+            }
+        }
+        SettingRow {
+            visible: pane.barOn
+            title: qsTr("Strength")
+            description: qsTr("Lower lets the page show through.")
+            Row {
+                spacing: 12
+                ScSlider {
+                    width: pane.sliderWidth
+                    from: 0.3
+                    to: 1
+                    stepSize: 0.05
+                    value: App.settings.readerProgressOpacity !== undefined ? Number(App.settings.readerProgressOpacity) : 0.85
+                    onMoved: App.setSetting("readerProgressOpacity", Math.round(value * 100) / 100)
+                }
+                Readout { text: Math.round((App.settings.readerProgressOpacity !== undefined ? Number(App.settings.readerProgressOpacity) : 0.85) * 100) + "%" }
+            }
+        }
+        SettingRow {
+            visible: pane.barOn
+            title: qsTr("Colours")
             description: qsTr("Pages not read yet, pages read, and the page you are on.")
             Row {
                 spacing: 10
@@ -230,6 +294,32 @@ SettingsPane {
                     tip: qsTr("Reset colours")
                     Accessible.name: tip
                     onClicked: { for (const c of pane.railColours) App.setSetting(c.key, c.fallback) }
+                }
+            }
+        }
+        // Sets of colours that go together.
+        Item {
+            visible: pane.barOn
+            width: parent.width
+            height: visible ? presetRow.height + 20 : 0
+            ChipRow {
+                id: presetRow
+                y: 4
+                padding: 16
+                Repeater {
+                    model: pane.railPresets
+                    Chip {
+                        required property var modelData
+                        text: modelData.label
+                        dot: modelData.read
+                        selected: App.settings.readerRailUnread === modelData.unread && App.settings.readerRailRead === modelData.read
+                                  && App.settings.readerRailCurrent === modelData.current
+                        onClicked: {
+                            App.setSetting("readerRailUnread", modelData.unread)
+                            App.setSetting("readerRailRead", modelData.read)
+                            App.setSetting("readerRailCurrent", modelData.current)
+                        }
+                    }
                 }
             }
         }

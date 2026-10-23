@@ -852,10 +852,9 @@ Rectangle {
         onMoved: reader.showControls()
     }
 
-    // The page progress bar: one thin, flat segment per page flush with the
-    // left edge: pages not read yet very light, read pages a heavier grey,
-    // the page you are on black (each colour set in Settings > Reading). Tap
-    // one to go to that page, or drag along it.
+    // The page progress bar (ReaderProgress): its look, edge, size, colours
+    // and strength are set in Settings → Reading. Tap or drag along it to go
+    // to a page.
     function jumpTo(i) {
         if (i < 0 || i >= reader.panels.length) return
         if (reader.mode === "strip") strip.positionViewAtIndex(i, ListView.Beginning)
@@ -865,55 +864,36 @@ Rectangle {
         id: rail
         // Above the controls' shading, so it reads the same with them shown.
         z: 50
+        anchors.fill: parent
         // Full screen (or the "with controls" setting) keeps it out of the way
         // until the controls come up.
         readonly property var mode: App.settings.readerProgressBar
         readonly property bool shown: mode !== false && reader.panels.length > 0
                                       && (mode !== "controls" && !fullScreen.fullScreen || reader.controlsShown)
         readonly property int thickness: Number(App.settings.readerProgressWidth) || 3
-        readonly property color unread: App.settings.readerRailUnread || "#e4e4e7"
-        readonly property color read: App.settings.readerRailRead || "#8b8b94"
-        readonly property color current: App.settings.readerRailCurrent || "#000000"
         opacity: shown ? 1 : 0
         visible: opacity > 0
         Behavior on opacity { NumberAnimation { duration: Motion.normal } }
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.topMargin: reader.insetTop
-        // Wider than what it paints, so the segments are easy to hit.
-        width: thickness * 2 + 6
-        readonly property int count: reader.panels.length
-        readonly property real gap: count > 0 && (height - (count - 1)) / count >= 3 ? 1 : 0
-        readonly property real segment: count > 0 ? (height - (count - 1) * gap) / count : 0
-        Repeater {
-            model: rail.count
-            Rectangle {
-                required property int index
-                // Whole pixels, so the 1 px gaps stay visible.
-                readonly property int startY: Math.round(index * (rail.segment + rail.gap))
-                readonly property int endY: Math.round((index + 1) * (rail.segment + rail.gap))
-                y: startY
-                width: rail.thickness
-                height: Math.max(1, endY - startY - rail.gap)
-                color: index === reader.currentPanel ? rail.current
-                     : index < reader.currentPanel || reader.finished ? rail.read : rail.unread
-                Behavior on color { ColorAnimation { duration: Motion.fast } }
-            }
-        }
-        MouseArea {
+        ReaderProgress {
             anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            // The page moves with the finger; the strip does not take the drag.
-            preventStealing: true
-            function pick(y) {
-                const i = Math.max(0, Math.min(rail.count - 1, Math.floor(y / (rail.segment + rail.gap))))
+            inset: reader.insetTop
+            insetBottom: reader.insetBottom
+            count: reader.panels.length
+            current: reader.currentPanel
+            finished: reader.finished
+            look: App.settings.readerProgressLook || "segments"
+            edge: App.settings.readerProgressEdge || "left"
+            reversed: reader.direction === "rtl"
+            thickness: rail.thickness
+            unread: App.settings.readerRailUnread || "#e4e4e7"
+            read: App.settings.readerRailRead || "#8b8b94"
+            currentColor: App.settings.readerRailCurrent || "#000000"
+            strength: App.settings.readerProgressOpacity !== undefined ? Number(App.settings.readerProgressOpacity) : 0.85
+            onPicked: (i) => {
                 if (i !== reader.currentPanel) reader.jumpTo(i)
                 // Shown controls (and with them the bar) stay while it is used.
                 if (reader.controlsShown) reader.showControls()
             }
-            onPressed: (mouse) => pick(mouse.y)
-            onPositionChanged: (mouse) => { if (pressed) pick(mouse.y) }
         }
     }
 
@@ -1297,6 +1277,18 @@ Rectangle {
                     options: [{ value: 3, label: qsTr("Thin") }, { value: 6, label: qsTr("Medium") }, { value: 10, label: qsTr("Thick") }]
                     value: rail.thickness
                     onPicked: (v) => App.setSetting("readerProgressWidth", v)
+                }
+                Segmented {
+                    visible: rail.mode !== false
+                    options: [{ value: "segments", label: qsTr("Pages") }, { value: "line", label: qsTr("Line") }, { value: "floating", label: qsTr("Floating") }]
+                    value: App.settings.readerProgressLook || "segments"
+                    onPicked: (v) => App.setSetting("readerProgressLook", v)
+                }
+                Segmented {
+                    visible: rail.mode !== false
+                    options: [{ value: "left", label: qsTr("Left") }, { value: "right", label: qsTr("Right") }, { value: "bottom", label: qsTr("Bottom") }]
+                    value: App.settings.readerProgressEdge || "left"
+                    onPicked: (v) => App.setSetting("readerProgressEdge", v)
                 }
                 Row {
                     spacing: 10

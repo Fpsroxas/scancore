@@ -32,6 +32,8 @@ bool charging();
 bool notify(const QString &title, const QString &body, const QString &tag);
 // Android 13 and later: ask once to allow notifications.
 void askNotificationPermission();
+// Whether the system shows SCANCORE's notifications (Android 13+ asks).
+bool notificationsAllowed();
 
 // The anime player's web view, just created: lets its video start with sound
 // and the page go full screen (see WebPlayer.java). `prepared` runs on the GUI

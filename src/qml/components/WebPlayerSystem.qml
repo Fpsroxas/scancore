@@ -7,8 +7,9 @@ import ScanCore
 // WebEngine in Qt's own packages cannot. Like any native view it is drawn
 // above everything Qt renders, so nothing can overlap it.
 //
-// Phones load the player inside a small page of ours, as WebPlayer does, and
-// read its time through getTime/seek messages. The page reports back through
+// Phones load the player inside a small page of ours (PlayerPage, with its
+// tap shield), as WebPlayer does, and read its time through getTime/seek
+// messages. The page reports back through
 // its title, never through runJavaScript callbacks: on Android, Qt WebView
 // runs those callbacks on the Android UI thread, alongside the QML engine on
 // Qt's own thread, which crashes the app (a SIGSEGV in the JavaScript engine,
@@ -43,24 +44,6 @@ Item {
             web.runJavaScript("window.scSeek && window.scSeek(" + Number(seconds) + ")") // no callback: see above
     }
 
-    function wrapper(src) {
-        const safe = String(src).replace(/"/g, "&quot;").replace(/</g, "&lt;")
-        return "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
-            + "<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}iframe{border:0;width:100%;height:100%}</style>"
-            + "</head><body><iframe id='f' src=\"" + safe + "\" allow='autoplay; fullscreen; encrypted-media' allowfullscreen referrerpolicy='origin'></iframe>"
-            + "<script>"
-            + "window.__sc={t:0,d:0,s:'',taps:0};var f=document.getElementById('f');"
-            + "function pub(){var v='sc:'+JSON.stringify(__sc);if(document.title!==v)document.title=v}"
-            + "addEventListener('message',function(e){if(e.source!==f.contentWindow)return;var x=e.data;"
-            + "if(typeof x==='string'){try{x=JSON.parse(x)}catch(_){return}}if(!x)return;"
-            + "if(x.currentTime!==undefined){__sc.t=+x.currentTime||0;__sc.d=+x.duration||0}"
-            + "if(x.playerStatus)__sc.s=String(x.playerStatus);pub()});"
-            + "setInterval(function(){try{f.contentWindow.postMessage({command:'getTime'},'*')}catch(_){}},1000);"
-            + "window.scSeek=function(v){f.contentWindow.postMessage({command:'seek',value:v},'*')};"
-            + "addEventListener('blur',function(){__sc.taps++;pub();setTimeout(function(){try{document.activeElement.blur();window.focus()}catch(_){}},200)});"
-            + "</script></body></html>"
-    }
-
     // Desktop: the video's state, plus the keys pressed since the last call.
     readonly property string probe: "(function(){var w=window;if(!w.__sc){w.__sc={k:[]};"
         + "w.addEventListener('keydown',function(e){if(e.repeat||/^(Control|Shift|Alt|Meta)$/.test(e.key))return;"
@@ -85,7 +68,7 @@ Item {
     function load() {
         if (!url || !ready) return
         if (direct) web.url = url
-        else web.loadHtml(wrapper(url), "https://reanime.to/")
+        else web.loadHtml(PlayerPage.wrapper(url, true, true), "https://reanime.to/")
     }
     onReadyChanged: load()
     onUrlChanged: {

@@ -41,8 +41,10 @@ Rectangle {
     property bool offline: false
     readonly property bool nativeStream: !!provider.source || offline
     readonly property bool hasSources: { App.dependOn(Extensions.revision); return Anime.sources().some(s => s.enabled) }
-    // "Watch from" is asked once, the first time an episode plays here.
+    // "Watch from" is asked once, the first time an episode plays here, unless
+    // tracker anime play from the built-in servers (Settings → Anime).
     property bool asked: false
+    readonly property string trackerPlayer: Anime.playerEngine === "" ? "extensions" : (App.settings.animeTrackerPlayer || "builtin")
     readonly property bool finding: watchFrom.quiet && !!watchFrom.task && watchFrom.task.loading
     readonly property var series: fromSource ? media : Anime.seriesFor(media)
     property var streamsTask: null
@@ -157,9 +159,10 @@ Rectangle {
             currentUrl = local.url
         } else if (nativeStream)
             videosTask = Anime.videos(provider.source, fromSource ? episodes[i].url : "", fromSource ? "" : provider.url, Number(episodes[i].number))
-        else if (!fromSource && !provider.builtIn && hasSources && !asked) {
+        else if (!fromSource && !provider.builtIn && hasSources && !asked && trackerPlayer !== "builtin") {
             asked = true
-            watchFrom.start(media, true)
+            // Extensions: picks by itself when one clearly has it; ask: shows the choice.
+            watchFrom.start(media, trackerPlayer === "extensions")
         } else
             streamsTask = Anime.streams(media.anilistId, episodes[i].number)
         Presence.show("anime", series.title || "", qsTr("Episode ") + (episodes[i].number || ""))

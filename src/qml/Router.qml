@@ -183,6 +183,7 @@ QtObject {
     // readers' colours.
     readonly property var lookSettings: ["navStyle", "navSide", "dockSide", "pageSpacing", "roundness", "coverSize",
         "motionSpeed", "textScale", "readerProgressWidth", "readerRailUnread", "readerRailRead", "readerRailCurrent",
+        "readerProgressLook", "readerProgressEdge", "readerProgressOpacity",
         "novelTheme", "novelCustomBg", "novelCustomText"]
     readonly property var arrangedPages: ["home", "comics", "comics-top", "novels", "novels-top", "anime"]
     // What the ones with no stored value look like, so a file resets them too.

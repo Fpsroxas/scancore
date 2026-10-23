@@ -116,18 +116,46 @@ Item {
         }
     }
 
+    // Wide windows: the details in a column of their own on the left, the
+    // episodes beside them; each scrolls by itself.
+    readonly property bool wide: !Theme.compact && width >= 1100
+    SmoothFlickable {
+        id: side
+        visible: page.wide
+        width: page.wide ? Math.round(Math.min(520, Math.max(400, page.width * 0.36))) : 0
+        height: parent.height
+        contentHeight: page.wide ? header.height + 40 : 0
+    }
+    Rectangle {
+        visible: page.wide
+        x: side.width
+        width: 1
+        height: parent.height
+        color: Theme.border
+    }
+
     SmoothFlickable {
         id: flick
-        anchors.fill: parent
+        anchors.left: page.wide ? side.right : parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
         contentHeight: column.height + 60
 
         Column {
             id: column
             width: parent.width
             spacing: 30
+            topPadding: page.wide ? 36 : 0
 
+            Item {
+                id: headerSlot
+                width: parent.width
+                height: page.wide ? 0 : header.height
             DetailsHeader {
                 id: header
+                parent: page.wide ? side.contentItem : headerSlot
+                stacked: Theme.compact || page.wide
                 series: Object.assign({}, page.media, { author: page.fromSource ? ((page.media.extra || {}).author || "") : (page.media.studios || []).join(", ") })
                 kicker: qsTr("Anime") + (page.fromSource ? " · " + (page.media.sourceLabel || "") : page.media.format ? " · " + page.media.format : "")
                 meta: page.fromSource ? [page.media.status, page.seasons.length ? page.seasons.length + qsTr(" seasons") : page.episodes.length ? page.episodes.length + qsTr(" episodes") : ""] : [
@@ -185,6 +213,7 @@ Item {
                     onClicked: tracking.open()
                 }
                 Component.onCompleted: Qt.callLater(() => Router.shell.land(header.coverItem))
+            }
             }
 
             Segmented {
