@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>소스에 더빙이 있으면 더빙, 없으면 자막이 있는 원어.</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>먼저 재생할 것. 소스의 영상은 이름으로 고르며, 여러 해상도나 오디오 트랙이 있는 스트림은 지정한 것으로 시작합니다. 시청 중 플레이어 설정(톱니바퀴)에서 바꿀 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>맞춤</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>영상이 플레이어를 채우는 방식. 시청 중 플레이어 설정에서도 바꿀 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>잘라서 채우기</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>늘이기</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>원본 크기</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>제스처</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>탭하면 컨트롤을 표시하거나 숨깁니다. 밝기는 SCANCORE가 열려 있는 동안만 바뀝니다.</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>스와이프로 밝기, 볼륨, 탐색</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>왼쪽 위아래로 밝기, 오른쪽으로 볼륨, 옆으로 탐색합니다.</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>양옆을 두 번 탭해 10초 건너뛰기</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>가운데를 두 번 탭하면 항상 일시정지합니다.</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>길게 눌러 2배속</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>손가락을 대고 있는 동안 2배 빠르게 재생합니다.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>더 보기</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>챕터 1개</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>챕터 %1개</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1개는 여러 목록에 있어서 첫 번째 목록에 넣었습니다</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>숨긴 목록 %1개는 계속 숨겨집니다</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>병합된 항목 %1개는 기본 소스로 가져왔습니다</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>작품 %1개의 편집한 제목, 표지, 설명은 다른 앱에 남습니다</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>저장한 검색 %1개는 다른 앱에 남습니다</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>Mihon, Komikku, TachiyomiSY, Tachiyomi 또는 Aniyomi 백업</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>더보기 → 백업 및 복원의 .tachibk 파일 (Komikku: 더보기 → 데이터 및 저장공간). 여기에 있는 확장 프로그램의 작품은 그대로 돌아옵니다.</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Mihon, Komikku, TachiyomiSY, Tachiyomi 또는 Aniyomi 백업 (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3971,6 +4063,30 @@
             <source>Remove list</source>
             <translation>목록 삭제</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>작품은 %1(으)로 옮겨집니다. 라이브러리에서 삭제되는 것은 없습니다.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>읽기</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>%1 이름 사용</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>목록 숨기기</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>%1 목록을 숨겼습니다. 작품은 그 목록과 전체에 그대로 있습니다. 설정 → 라이브러리에서 다시 표시할 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>실행 취소</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4197,6 +4313,38 @@
         <message>
             <source>Add a list</source>
             <translation>목록 추가</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>작품은 %1(으)로 옮겨집니다. 라이브러리에서 삭제되는 것은 없습니다.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>읽기</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>모든 목록의 이름을 바꾸거나 순서를 바꾸거나 숨길 수 있고, 직접 목록을 추가할 수 있습니다. 숨긴 목록의 작품은 그 목록과 전체에 그대로 있습니다. 읽기, 읽을 예정, 보류, 완료, 중단은 이름이 무엇이든 트래커와 백업에서 같은 의미를 유지합니다. Mihon과 LNReader 백업은 목록도 함께 가져옵니다.</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>라이브러리에서 숨김</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>기본 목록, 원래 이름 %1</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>라이브러리에 표시</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>라이브러리에서 숨기기</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>%1 이름 사용</translation>
         </message>
     </context>
     <context>
@@ -4485,6 +4633,14 @@
             <source>Import</source>
             <translation>가져오기</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>%1에서 모두 가져오기</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>목록은 %1의 순서대로 가져옵니다: %2.</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4543,6 +4699,54 @@
         <message>
             <source>Quality</source>
             <translation>화질</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>맞춤</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>영상 전체</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>잘라서 채우기</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>검은 띠 없음</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>늘이기</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>화면을 채움, 비율이 바뀜</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>원본 크기</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>원본 픽셀 그대로</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>2배속</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>이전 에피소드</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>다음 에피소드</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>설정</translation>
         </message>
     </context>
     <context>
@@ -5234,6 +5438,21 @@
         <message>
             <source>Done</source>
             <translation>완료</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>뒤로</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>설정</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
         </message>
     </context>
     <context>
@@ -8350,6 +8569,18 @@
         <message>
             <source>Cast to a TV</source>
             <translation>TV로 전송</translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>서버</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>설정</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>플레이어 닫기</translation>
         </message>
     </context>
     <context>

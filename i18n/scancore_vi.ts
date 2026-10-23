@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>Bản lồng tiếng khi nguồn có, hoặc ngôn ngữ gốc kèm phụ đề.</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>Thứ được phát trước. Video của nguồn được chọn theo tên, và luồng có nhiều độ phân giải hoặc rãnh âm thanh bắt đầu ở cái được yêu cầu. Đổi khi đang xem từ cài đặt trình phát (bánh răng).</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Vừa khung</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>Cách hình lấp đầy trình phát. Cũng có trong cài đặt trình phát khi đang xem.</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>Cắt để lấp đầy</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Kéo giãn</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Kích thước gốc</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>Cử chỉ</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>Chạm để hiện hoặc ẩn điều khiển. Độ sáng chỉ thay đổi khi SCANCORE đang mở.</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>Vuốt để chỉnh độ sáng, âm lượng và tua</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>Lên hoặc xuống bên trái để chỉnh độ sáng, bên phải để chỉnh âm lượng; ngang để tua.</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>Chạm hai lần hai bên để tua 10 giây</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>Chạm hai lần ở giữa luôn tạm dừng.</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>Giữ để phát 2×</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>Phát nhanh gấp đôi khi bạn còn giữ ngón tay.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>Xem thêm</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 chương</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 chương</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1 bộ nằm trong nhiều danh sách và được đặt vào danh sách đầu</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>%1 danh sách ẩn vẫn được ẩn</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>%1 mục gộp được nhập theo nguồn chính</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>tiêu đề, ảnh bìa và mô tả đã sửa của %1 truyện vẫn ở ứng dụng kia</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>%1 tìm kiếm đã lưu vẫn ở ứng dụng kia</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>Bản sao lưu Mihon, Komikku, TachiyomiSY, Tachiyomi hoặc Aniyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>Một tệp .tachibk từ Thêm → Sao lưu và khôi phục (Komikku: Thêm → Dữ liệu và bộ nhớ). Truyện từ tiện ích bạn có ở đây trở lại đúng như cũ.</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Bản sao lưu Mihon, Komikku, TachiyomiSY, Tachiyomi hoặc Aniyomi (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3971,6 +4063,30 @@
             <source>Remove list</source>
             <translation>Xóa danh sách</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Truyện trong đó chuyển sang %1; không gì bị xóa khỏi thư viện.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Đọc</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>Dùng tên %1</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>Ẩn danh sách</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>Đã ẩn %1. Truyện trong đó vẫn ở đó và trong Tất cả; Cài đặt → Thư viện để hiện lại.</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>Hoàn tác</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4197,6 +4313,38 @@
         <message>
             <source>Add a list</source>
             <translation>Thêm danh sách</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Truyện trong đó chuyển sang %1; không gì bị xóa khỏi thư viện.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Đọc</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>Đổi tên, sắp xếp lại hoặc ẩn bất kỳ danh sách nào, và thêm danh sách riêng. Truyện của danh sách ẩn vẫn ở đó và trong Tất cả. Đọc, Dự định đọc, Tạm hoãn, Hoàn thành và Bỏ dở giữ nguyên ý nghĩa với trình theo dõi và bản sao lưu dù đặt tên gì. Bản sao lưu Mihon và LNReader mang theo danh sách.</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>Ẩn khỏi thư viện</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>Danh sách có sẵn, tên gốc %1</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>Hiện trong thư viện</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>Ẩn khỏi thư viện</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>Dùng tên %1</translation>
         </message>
     </context>
     <context>
@@ -4485,6 +4633,14 @@
             <source>Import</source>
             <translation>Nhập</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>Đưa mọi thứ về từ %1</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>Danh sách của bạn đến theo thứ tự của %1: %2.</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4543,6 +4699,54 @@
         <message>
             <source>Quality</source>
             <translation>Chất lượng</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Vừa khung</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>Toàn bộ hình</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>Cắt để lấp đầy</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>Không có viền đen</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Kéo giãn</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>Lấp đầy màn hình, méo hình</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Kích thước gốc</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>Điểm ảnh gốc</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>Tốc độ 2×</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>Tập trước</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Tập tiếp theo</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Cài đặt</translation>
         </message>
     </context>
     <context>
@@ -5234,6 +5438,21 @@
         <message>
             <source>Done</source>
             <translation>Xong</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>Quay lại</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Cài đặt</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
         </message>
     </context>
     <context>
@@ -8350,6 +8569,18 @@
         <message>
             <source>Cast to a TV</source>
             <translation>Truyền tới TV</translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>Máy chủ</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Cài đặt</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>Đóng trình phát</translation>
         </message>
     </context>
     <context>

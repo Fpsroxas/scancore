@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>स्रोत में डब हो तो डब, नहीं तो सबटाइटल के साथ मूल भाषा।</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>पहले क्या चलेगा। किसी सोर्स के वीडियो उनके नाम से चुने जाते हैं, और कई रिज़ॉल्यूशन या ऑडियो ट्रैक वाली स्ट्रीम मांगे गए पर शुरू होती है। देखते समय प्लेयर की सेटिंग (गियर) से कोई भी बदलें।</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>फ़िट</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>तस्वीर प्लेयर को कैसे भरती है। देखते समय प्लेयर की सेटिंग में भी।</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>भरने के लिए काटें</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>खींचें</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>असली आकार</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>जेस्चर</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>एक टैप कंट्रोल दिखाता या छिपाता है। चमक सिर्फ़ तब तक बदलती है जब तक SCANCORE खुला है।</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>चमक, वॉल्यूम और आगे-पीछे के लिए स्वाइप</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>बाईं ओर ऊपर या नीचे चमक के लिए, दाईं ओर वॉल्यूम के लिए; आगे-पीछे जाने के लिए बगल में।</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>10 सेकंड छोड़ने के लिए किनारों पर डबल टैप</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>बीच में डबल टैप हर हाल में रोकता है।</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>2× गति के लिए दबाए रखें</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>जब तक उंगली टिकी रहे, दोगुनी गति से चलता है।</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>और दिखाएं</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 चैप्टर</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 चैप्टर</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1 कई सूचियों में थीं और अब पहली में हैं</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>%1 छिपी सूचियां छिपी ही रहेंगी</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>%1 जोड़ी गई एंट्री अपने मुख्य सोर्स के रूप में आईं</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>%1 सीरीज़ के बदले गए शीर्षक, कवर और विवरण दूसरे ऐप में रहेंगे</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>%1 सहेजी गई खोजें दूसरे ऐप में रहेंगी</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>Mihon, Komikku, TachiyomiSY, Tachiyomi या Aniyomi बैकअप</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>मोर → बैकअप और रिस्टोर से एक .tachibk फ़ाइल (Komikku: मोर → डेटा और स्टोरेज)। यहां मौजूद एक्सटेंशन की सीरीज़ ठीक वैसी ही लौटती हैं जैसी थीं।</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Mihon, Komikku, TachiyomiSY, Tachiyomi या Aniyomi बैकअप (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3963,6 +4055,30 @@
             <source>Remove list</source>
             <translation>सूची हटाएँ</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>इसकी सीरीज़ %1 में चली जाती हैं; आपकी लाइब्रेरी से कुछ नहीं हटता।</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>पढ़ना</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>नाम %1 इस्तेमाल करें</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>सूची छिपाएँ</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>%1 छिपी है। इसकी सीरीज़ इसी पर और सभी में रहती हैं; सेटिंग → लाइब्रेरी इसे फिर दिखाती है।</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>वापस लें</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4189,6 +4305,38 @@
         <message>
             <source>Add a list</source>
             <translation>सूची जोड़ें</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>इसकी सीरीज़ %1 में चली जाती हैं; आपकी लाइब्रेरी से कुछ नहीं हटता।</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>पढ़ना</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>किसी भी सूची का नाम बदलें, क्रम बदलें या छिपाएँ, और अपनी सूचियां जोड़ें। छिपी सूची की सीरीज़ उसी पर और सभी में रहती हैं। पढ़ना, पढ़ने की योजना, रुका हुआ, पूरा हुआ और छोड़ दिया का मतलब ट्रैकर और बैकअप के लिए वही रहता है, नाम चाहे जो हो। Mihon और LNReader के बैकअप अपनी सूचियां साथ लाते हैं।</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>लाइब्रेरी में छिपी</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>बिल्ट-इन सूची, पहले नाम %1</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>लाइब्रेरी में दिखाएँ</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>लाइब्रेरी में छिपाएँ</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>नाम %1 इस्तेमाल करें</translation>
         </message>
     </context>
     <context>
@@ -4477,6 +4625,14 @@
             <source>Import</source>
             <translation>इंपोर्ट करें</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>%1 से सब कुछ वापस लाएँ</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>आपकी सूचियां %1 के क्रम में आती हैं: %2।</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4535,6 +4691,54 @@
         <message>
             <source>Quality</source>
             <translation>क्वालिटी</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>फ़िट</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>पूरी तस्वीर</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>भरने के लिए काटें</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>कोई काली पट्टी नहीं</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>खींचें</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>स्क्रीन भरता है, आकार बिगड़ता है</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>असली आकार</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>इसके अपने पिक्सेल</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>2× गति</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>पिछला एपिसोड</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>अगला एपिसोड</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>सेटिंग</translation>
         </message>
     </context>
     <context>
@@ -5226,6 +5430,21 @@
         <message>
             <source>Done</source>
             <translation>हो गया</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>पीछे</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>सेटिंग</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>बंद करें</translation>
         </message>
     </context>
     <context>
@@ -8335,6 +8554,18 @@
         <message>
             <source>EP </source>
             <translation>एपि. </translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>सर्वर</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>सेटिंग</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>प्लेयर बंद करें</translation>
         </message>
     </context>
     <context>

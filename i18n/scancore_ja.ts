@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>ソースにあれば吹き替え、なければ字幕付きの原語。</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>最初に再生するもの。ソースの動画は名前で選ばれ、複数の解像度や音声トラックがあるストリームは指定したもので始まります。視聴中はプレーヤーの設定（歯車）からどちらも変更できます。</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>全体を表示</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>映像をプレーヤーにどう収めるか。視聴中はプレーヤーの設定からも変えられます。</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>切り抜いて全体表示</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>引き伸ばす</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>元のサイズ</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>ジェスチャー</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>タップでコントロールを表示・非表示。明るさは SCANCORE を開いている間だけ変わります。</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>スワイプで明るさ・音量・シーク</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>左側の上下で明るさ、右側で音量、横でシーク。</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>左右をダブルタップで10秒スキップ</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>中央のダブルタップはいつでも一時停止です。</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>長押しで2倍速</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>指を置いている間、2倍速で再生します。</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>もっと見る</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1チャプター</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1チャプター</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1件は複数のリストに入っていたため、最初のリストに入れました</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>非表示のリスト %1 件は非表示のままです</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>統合エントリ %1 件はメインのソースとして取り込まれました</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>%1 作品の編集したタイトル・表紙・説明は元のアプリに残ります</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>保存した検索 %1 件は元のアプリに残ります</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>Mihon・Komikku・TachiyomiSY・Tachiyomi・Aniyomi のバックアップ</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>「その他 → バックアップと復元」の .tachibk ファイル（Komikku：「その他 → データとストレージ」）。ここにある拡張機能の作品は元のまま戻ります。</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Mihon・Komikku・TachiyomiSY・Tachiyomi・Aniyomi のバックアップ (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3971,6 +4063,30 @@
             <source>Remove list</source>
             <translation>リストを削除</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>作品は %1 に移ります。ライブラリからは何も削除されません。</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>読書</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>%1 の名前を使う</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>リストを非表示</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>%1 を非表示にしました。作品はそのリストと「すべて」に残ります。設定 → ライブラリで再表示できます。</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>元に戻す</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4197,6 +4313,38 @@
         <message>
             <source>Add a list</source>
             <translation>リストを追加</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>作品は %1 に移ります。ライブラリからは何も削除されません。</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>読書</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>どのリストも名前の変更・並べ替え・非表示ができ、自分のリストも追加できます。非表示リストの作品はそのリストと「すべて」に残ります。読書・読む予定・保留・完了・中断は、名前を変えてもトラッカーやバックアップでの意味は変わりません。Mihon と LNReader のバックアップはリストも持ってきます。</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>ライブラリで非表示</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>内蔵リスト（元の名前：%1）</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>ライブラリに表示</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>ライブラリで非表示にする</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>%1 の名前を使う</translation>
         </message>
     </context>
     <context>
@@ -4485,6 +4633,14 @@
             <source>Import</source>
             <translation>インポート</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>%1 からすべて戻す</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>リストは %1 の順に取り込まれます：%2。</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4543,6 +4699,54 @@
         <message>
             <source>Quality</source>
             <translation>画質</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>全体を表示</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>映像全体</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>切り抜いて全体表示</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>黒帯なし</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>引き伸ばす</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>画面いっぱいに引き伸ばし（縦横比が変わります）</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>元のサイズ</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>元のピクセルのまま</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>2倍速</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>前のエピソード</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>次のエピソード</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>設定</translation>
         </message>
     </context>
     <context>
@@ -5234,6 +5438,21 @@
         <message>
             <source>Done</source>
             <translation>完了</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>戻る</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>設定</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
         </message>
     </context>
     <context>
@@ -8350,6 +8569,18 @@
         <message>
             <source>Cast to a TV</source>
             <translation>テレビにキャスト</translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>サーバー</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>設定</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>プレーヤーを閉じる</translation>
         </message>
     </context>
     <context>

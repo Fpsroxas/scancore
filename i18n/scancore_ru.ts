@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>Озвучка, если она есть у источника, или оригинальный язык с субтитрами.</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>Что играет первым. Видео источника выбираются по названиям, а поток с несколькими разрешениями или звуковыми дорожками начинается с выбранных. Меняйте их во время просмотра в настройках плеера (шестерёнка).</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Вписать</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>Как картинка заполняет плеер. Также в настройках плеера во время просмотра.</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>Обрезать по экрану</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Растянуть</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Исходный размер</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>Жесты</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>Касание показывает или скрывает управление. Яркость меняется, только пока SCANCORE открыт.</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>Свайпы: яркость, громкость и перемотка</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>Вверх или вниз слева — яркость, справа — громкость; вбок — перемотка.</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>Двойное касание по краям — перемотка на 10 секунд</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>Двойное касание в центре всегда ставит на паузу.</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>Удержание — скорость 2×</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>Воспроизводит вдвое быстрее, пока палец на экране.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>Показать ещё</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 глава</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>Глав: %1</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1 были в нескольких списках и попали в первый</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>Скрытые списки (%1) остаются скрытыми</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>Объединённые записи (%1) пришли как их основной источник</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>изменённые названия, обложки и описания серий (%1) остаются в другом приложении</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>Сохранённые поиски (%1) остаются в другом приложении</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>Резервная копия Mihon, Komikku, TachiyomiSY, Tachiyomi или Aniyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>Файл .tachibk из Ещё → Резервное копирование (Komikku: Ещё → Данные и хранилище). Серии из расширения, которое есть здесь, вернутся точно такими, какими были.</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Резервная копия Mihon, Komikku, TachiyomiSY, Tachiyomi или Aniyomi (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3971,6 +4063,30 @@
             <source>Remove list</source>
             <translation>Удалить список</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Его серии переходят в «%1»; из библиотеки ничего не удаляется.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Чтение</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>Использовать название «%1»</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>Скрыть список</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>Список «%1» скрыт. Его серии остаются в нём и во «Все»; вернуть его можно в Настройки → Библиотека.</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>Отменить</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4197,6 +4313,38 @@
         <message>
             <source>Add a list</source>
             <translation>Добавить список</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Его серии переходят в «%1»; из библиотеки ничего не удаляется.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Чтение</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>Переименовывайте, переставляйте или скрывайте любые списки и добавляйте свои. Серии скрытого списка остаются в нём и во «Все». Чтение, Буду читать, Отложено, Завершено и Брошено сохраняют своё значение для трекеров и резервных копий, как бы они ни назывались. Копии Mihon и LNReader переносят свои списки.</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>Скрыт в библиотеке</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>Встроенный список, исходно «%1»</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>Показать в библиотеке</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>Скрыть в библиотеке</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>Использовать название «%1»</translation>
         </message>
     </context>
     <context>
@@ -4485,6 +4633,14 @@
             <source>Import</source>
             <translation>Импорт</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>Вернуть всё из %1</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>Ваши списки приходят в порядке %1: %2.</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4543,6 +4699,54 @@
         <message>
             <source>Quality</source>
             <translation>Качество</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Вписать</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>Вся картинка</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>Обрезать по экрану</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>Без чёрных полос</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Растянуть</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>Заполняет экран, с искажением</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Исходный размер</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>Собственные пиксели</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>Скорость 2×</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>Предыдущий эпизод</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Следующий эпизод</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Настройки</translation>
         </message>
     </context>
     <context>
@@ -5234,6 +5438,21 @@
         <message>
             <source>Done</source>
             <translation>Готово</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>Назад</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Настройки</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Закрыть</translation>
         </message>
     </context>
     <context>
@@ -8350,6 +8569,18 @@
         <message>
             <source>Cast to a TV</source>
             <translation>Транслировать на ТВ</translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>Сервер</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Настройки</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>Закрыть плеер</translation>
         </message>
     </context>
     <context>

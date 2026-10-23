@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>来源有配音时用配音，否则用带字幕的原语言。</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>先播放什么。来源的视频按名称选择，有多种分辨率或音轨的流会从所选的开始。观看时可在播放器设置（齿轮）中更改。</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>适应</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>画面如何填充播放器。观看时也可在播放器设置中更改。</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>裁剪填充</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>拉伸</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>原始大小</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>手势</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>轻点显示或隐藏控件。亮度仅在 SCANCORE 打开时改变。</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>滑动调节亮度、音量和进度</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>左侧上下滑动调亮度，右侧调音量；横向滑动调进度。</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>双击两侧快进/快退 10 秒</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>无论如何，双击中间都会暂停。</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>长按 2 倍速</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>手指按住时以 2 倍速播放。</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>显示更多</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 章</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 章</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1 部在多个列表中，已放入第一个</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>%1 个隐藏列表保持隐藏</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>%1 个合并条目以其主来源导入</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>%1 部作品编辑过的标题、封面和简介留在原应用中</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>%1 个已保存的搜索留在原应用中</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>Mihon、Komikku、TachiyomiSY、Tachiyomi 或 Aniyomi 备份</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>来自 更多 → 备份与恢复 的 .tachibk 文件（Komikku：更多 → 数据与存储）。这里已有扩展的作品会原样恢复。</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Mihon、Komikku、TachiyomiSY、Tachiyomi 或 Aniyomi 备份 (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3971,6 +4063,30 @@
             <source>Remove list</source>
             <translation>删除列表</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>其中作品将移到 %1；不会从书库中删除任何内容。</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>阅读</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>使用名称 %1</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>隐藏列表</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>已隐藏 %1。其中作品仍在该列表和“全部”中；在 设置 → 书库 中可重新显示。</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>撤销</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4197,6 +4313,38 @@
         <message>
             <source>Add a list</source>
             <translation>添加列表</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>其中作品将移到 %1；不会从书库中删除任何内容。</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>阅读</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>可重命名、排序或隐藏任意列表，也可添加自己的列表。隐藏列表中的作品仍在该列表和“全部”中。阅读、想读、搁置、已完成和已弃无论叫什么名字，对追踪和备份的含义都不变。Mihon 和 LNReader 备份会带上它们的列表。</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>已在书库中隐藏</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>内置列表，原名 %1</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>在书库中显示</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>在书库中隐藏</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>使用名称 %1</translation>
         </message>
     </context>
     <context>
@@ -4485,6 +4633,14 @@
             <source>Import</source>
             <translation>导入</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>从 %1 恢复全部</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>你的列表按 %1 的顺序导入：%2。</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4543,6 +4699,54 @@
         <message>
             <source>Quality</source>
             <translation>画质</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>适应</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>完整画面</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>裁剪填充</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>无黑边</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>拉伸</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>铺满屏幕，画面变形</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>原始大小</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>原始像素</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>2 倍速</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>上一集</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>下一集</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>设置</translation>
         </message>
     </context>
     <context>
@@ -5234,6 +5438,21 @@
         <message>
             <source>Done</source>
             <translation>完成</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>返回</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>设置</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>关闭</translation>
         </message>
     </context>
     <context>
@@ -8350,6 +8569,18 @@
         <message>
             <source>Cast to a TV</source>
             <translation>投屏到电视</translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>服务器</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>设置</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>关闭播放器</translation>
         </message>
     </context>
     <context>

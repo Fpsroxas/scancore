@@ -228,7 +228,7 @@ Item {
                     items: page.found ? page.found.comics : []
                     subtitleFor: (it) => it.catalog
                         ? [it.type, it.status, it.lastChapter ? qsTr("Ch. ") + it.lastChapter : ""].filter(s => s).join(" · ")
-                        : [it.sourceLabel, it.type, it.units ? qsTr("%n chapters", "", it.units) : ""].filter(s => s).join(" · ")
+                        : [it.sourceLabel, it.type, it.units ? (it.units === 1 ? qsTr("1 chapter") : qsTr("%1 chapters").arg(it.units)) : ""].filter(s => s).join(" · ")
                     onOpened: (it, cover) => it.catalog ? readFrom.start(it) : Router.openSeries(it, cover)
                 }
 

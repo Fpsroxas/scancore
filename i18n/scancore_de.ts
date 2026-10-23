@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>Eine Synchronfassung, wenn die Quelle eine hat, oder die Originalsprache mit Untertiteln.</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>Was zuerst abgespielt wird. Die Videos einer Quelle werden nach ihren Namen gewählt, und ein Stream mit mehreren Auflösungen oder Tonspuren beginnt mit den gewünschten. Beides lässt sich beim Schauen in den Einstellungen des Players (Zahnrad) ändern.</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Einpassen</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>Wie das Bild den Player füllt. Auch beim Schauen in den Einstellungen des Players.</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>Zuschneiden und füllen</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Strecken</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Originalgröße</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>Gesten</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>Ein Tippen zeigt oder verbirgt die Steuerung. Die Helligkeit ändert sich nur, solange SCANCORE offen ist.</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>Wischen für Helligkeit, Lautstärke und Spulen</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>Links hoch oder runter für die Helligkeit, rechts für die Lautstärke; seitwärts zum Spulen.</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>Doppeltippen an den Seiten springt 10 Sekunden</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>Ein Doppeltippen in der Mitte pausiert in jedem Fall.</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>Halten für 2× Geschwindigkeit</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>Spielt doppelt so schnell, solange dein Finger liegen bleibt.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>Mehr anzeigen</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 Kapitel</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 Kapitel</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1 waren in mehreren Listen und sind jetzt in der ersten</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>%1 ausgeblendete Listen bleiben ausgeblendet</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>%1 zusammengeführte Einträge kamen als ihre Hauptquelle</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>bearbeitete Titel, Cover und Beschreibungen von %1 Serien bleiben in der anderen App</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>%1 gespeicherte Suchen bleiben in der anderen App</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>Backup von Mihon, Komikku, TachiyomiSY, Tachiyomi oder Aniyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>Eine .tachibk-Datei aus Mehr → Sichern und wiederherstellen (Komikku: Mehr → Daten und Speicher). Serien von einer Erweiterung, die du hier hast, kommen genau so zurück, wie sie waren.</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Backup von Mihon, Komikku, TachiyomiSY, Tachiyomi oder Aniyomi (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3971,6 +4063,30 @@
             <source>Remove list</source>
             <translation>Liste entfernen</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Ihre Serien wandern nach %1; nichts wird aus deiner Bibliothek entfernt.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Lesen</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>Den Namen %1 verwenden</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>Liste ausblenden</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>%1 ist ausgeblendet. Ihre Serien bleiben darauf und unter Alle; unter Einstellungen → Bibliothek lässt sie sich wieder einblenden.</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>Rückgängig</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4197,6 +4313,38 @@
         <message>
             <source>Add a list</source>
             <translation>Liste hinzufügen</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Ihre Serien wandern nach %1; nichts wird aus deiner Bibliothek entfernt.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Lesen</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>Benenne jede Liste um, ordne sie neu oder blende sie aus, und füge eigene hinzu. Die Serien einer ausgeblendeten Liste bleiben darauf und unter Alle. Lesen, Will ich lesen, Pausiert, Abgeschlossen und Abgebrochen behalten ihre Bedeutung für Tracker und Backups, wie auch immer sie heißen. Backups von Mihon und LNReader bringen ihre Listen mit.</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>In der Bibliothek ausgeblendet</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>Eingebaute Liste, ursprünglich %1</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>In der Bibliothek zeigen</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>In der Bibliothek ausblenden</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>Den Namen %1 verwenden</translation>
         </message>
     </context>
     <context>
@@ -4485,6 +4633,14 @@
             <source>Import</source>
             <translation>Importieren</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>Alles aus %1 zurückholen</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>Deine Listen kommen in der Reihenfolge von %1: %2.</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4543,6 +4699,54 @@
         <message>
             <source>Quality</source>
             <translation>Qualität</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Einpassen</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>Das ganze Bild</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>Zuschneiden und füllen</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>Keine schwarzen Balken</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Strecken</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>Füllt den Bildschirm, verzerrt</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Originalgröße</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>Seine eigenen Pixel</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>2× Geschwindigkeit</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>Vorherige Folge</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Nächste Folge</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Einstellungen</translation>
         </message>
     </context>
     <context>
@@ -5234,6 +5438,21 @@
         <message>
             <source>Done</source>
             <translation>Fertig</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>Zurück</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Einstellungen</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Schließen</translation>
         </message>
     </context>
     <context>
@@ -8350,6 +8569,18 @@
         <message>
             <source>Cast to a TV</source>
             <translation>Auf einen Fernseher streamen</translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>Server</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Einstellungen</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>Player schließen</translation>
         </message>
     </context>
     <context>

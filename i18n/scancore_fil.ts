@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>Dub kapag mayroon ang source, o ang orihinal na wika na may subtitle.</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>Ano ang unang ipe-play. Pinipili ang mga video ng isang source ayon sa pangalan nila, at nagsisimula ang stream na may ilang resolution o audio track sa mga hiniling. Palitan ang alinman habang nanonood mula sa settings ng player (ang gear).</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Fit</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>Kung paano pinupuno ng larawan ang player. Nasa settings din ng player habang nanonood.</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>I-crop para mapuno</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Stretch</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Orihinal na laki</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>Mga galaw</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>Ipinapakita o itinatago ng isang tap ang mga kontrol. Nagbabago lang ang liwanag habang bukas ang SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>Mag-swipe para sa liwanag, volume at pag-seek</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>Pataas o pababa sa kaliwa para sa liwanag, sa kanan para sa volume; patagilid para mag-seek.</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>I-double tap ang gilid para lumaktaw ng 10 segundo</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>Pinapahinto ng double tap sa gitna sa alinmang kaso.</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>I-hold para sa 2× bilis</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>Dobleng bilis habang nakadiin ang daliri mo.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>Ipakita pa</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 kabanata</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 kabanata</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1 ang nasa ilang listahan at nasa una na</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>%1 nakatagong listahan ang mananatiling nakatago</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>%1 pinagsamang entry ang pumasok bilang pangunahing source nila</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>maiiwan sa kabilang app ang mga in-edit na pamagat, cover at paglalarawan ng %1 serye</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>%1 naka-save na search ang maiiwan sa kabilang app</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>Backup ng Mihon, Komikku, TachiyomiSY, Tachiyomi o Aniyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>Isang .tachibk file mula sa More → Backup and restore (Komikku: More → Data and storage). Babalik nang eksakto ang mga serye mula sa extension na mayroon ka rito.</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Backup ng Mihon, Komikku, TachiyomiSY, Tachiyomi o Aniyomi (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3963,6 +4055,30 @@
             <source>Remove list</source>
             <translation>Alisin ang listahan</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Lilipat sa %1 ang mga serye nito; walang aalisin sa library mo.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Pagbabasa</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>Gamitin ang pangalang %1</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>Itago ang listahan</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>Nakatago ang %1. Nananatili roon at sa Lahat ang mga serye nito; ipinapakita itong muli ng Settings → Library.</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>I-undo</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4189,6 +4305,38 @@
         <message>
             <source>Add a list</source>
             <translation>Magdagdag ng listahan</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Lilipat sa %1 ang mga serye nito; walang aalisin sa library mo.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Pagbabasa</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>Palitan ang pangalan, ayusin, o itago ang anumang listahan, at magdagdag ng sarili mo. Nananatili roon at sa Lahat ang mga serye ng nakatagong listahan. Pinapanatili ng Pagbabasa, Balak basahin, Naka-hold, Natapos at Itinigil ang kahulugan nila para sa mga tracker at backup, anuman ang pangalan nila. Dala ng mga backup ng Mihon at LNReader ang mga listahan nila.</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>Nakatago sa library</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>Built-in na listahan, dating tinawag na %1</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>Ipakita sa library</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>Itago sa library</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>Gamitin ang pangalang %1</translation>
         </message>
     </context>
     <context>
@@ -4477,6 +4625,14 @@
             <source>Import</source>
             <translation>I-import</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>Ibalik ang lahat mula sa %1</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>Darating ang mga listahan mo sa pagkakasunod ng %1: %2.</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4535,6 +4691,54 @@
         <message>
             <source>Quality</source>
             <translation>Kalidad</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Fit</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>Ang buong larawan</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>I-crop para mapuno</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>Walang itim na bar</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Stretch</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>Pinupuno ang screen, hindi tama ang hugis</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Orihinal na laki</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>Sarili nitong mga pixel</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>2× bilis</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>Nakaraang episode</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Susunod na episode</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Settings</translation>
         </message>
     </context>
     <context>
@@ -5226,6 +5430,21 @@
         <message>
             <source>Done</source>
             <translation>Tapos</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>Bumalik</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Settings</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Isara</translation>
         </message>
     </context>
     <context>
@@ -8335,6 +8554,18 @@
         <message>
             <source>EP </source>
             <translation>EP </translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>Server</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Settings</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>Isara ang player</translation>
         </message>
     </context>
     <context>

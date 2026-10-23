@@ -52,6 +52,12 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.10.0" date="2026-10-23">
+      <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#2100--2026-10-23</url>
+      <description>
+        <p>Built-in lists you can rename, reorder and hide, Komikku and TachiyomiSY backups, an anime player that no longer closes when pressed, with one settings panel, fit modes and touch gestures, smoother scrolling on slow phones, and chapters from newer Keiyoushi extensions.</p>
+      </description>
+    </release>
     <release version="2.9.0" date="2026-10-23">
       <url type="details">https://github.com/medium-gh/scancore/blob/main/CHANGELOG.md#290--2026-10-23</url>
       <description>

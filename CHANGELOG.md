@@ -2,6 +2,22 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.10.0 — 2026-10-23
+
+Lists your way, Komikku backups, a player that stays open, and smoother on slow phones.
+
+- **Built-in lists can be renamed, reordered and hidden** ([#9](https://github.com/medium-gh/scancore/issues/9)): Reading, Plan to read, On hold, Completed and Dropped can't be deleted, because trackers, sync and backups rely on them. You can now give them your own name, move them among your own lists and hide them from the library (long-press or right-click a list chip, or Settings → Library → Your lists). A hidden list's series stay on it and under All. The layout syncs between your devices, and Mihon backups keep the names you chose.
+- **Komikku and TachiyomiSY backups** ([#9](https://github.com/medium-gh/scancore/issues/9)): merged entries come in as their main source, series written twice in the backup come in once with everything both copies knew, hidden categories become hidden lists, and edited titles still find their series. Saved searches and edited covers and descriptions stay in the other app, and the import summary says how many. The import dialog and file picker name Komikku and TachiyomiSY.
+- **Smoother on slow phones** ([#9](https://github.com/medium-gh/scancore/issues/9)): saving your place while reading made every page behind the reader reload its list. Pages now catch up once when you return. Long chapter lists reuse their rows (about 70% less work per scroll step in our measurements), and a crash when scrolling covers fast is fixed.
+- **The anime player no longer closes when you press it**: the hidden back button took clicks at the top-left of the video, and the back arrow on the landscape rail sat where double taps seek. Hidden controls now ignore presses, and the first tap only shows them. The side rail is gone: close is at the top-left, and previous and next episode sit with the other controls. Android's Back leaves full screen before it closes the player.
+- **One player settings panel**: Quality, Audio, Subtitles, Speed, the server, episodes and the page's actions (download, cast, other app…) are in one dark panel. It opens as a bottom sheet on phones and scrolls instead of running off a short screen.
+- **Fit the picture** (asked on Discord): Fit, Crop to fill (no black bars), Stretch or Original size, from the player's settings or Settings → Anime.
+- **Player gestures on phones**: swipe up or down on the left for brightness and on the right for volume, swipe sideways to seek (with a time preview), double tap the sides to skip 10 seconds or the middle to pause, and hold for 2× speed. Each one can be turned off in Settings → Anime → Gestures.
+- **Series listed once per uploader** (Kagane): search, "Read from" and moving a series now pick the fullest edition, not the first one found, and results show how many chapters each has.
+- **Keiyoushi extensions show their chapters**: Comix and other newer Keiyoushi sources failed with "getMangaUpdate must not be called concurrently for same manga". Details and chapters for a series are now one request. Sources that page through a site slowly get five minutes instead of two. Computers get the new Extensions runtime 4 by themselves.
+- **Sources that need Android's web view** (such as Comix) now say on computers that they work on Android, instead of failing with a vague error.
+- Not yet checked on real devices: the player gestures (tested on the Android emulator), keeping the screen on with Android, Windows and macOS, the 32-bit ARM (armv7) Android package, and the Quality menu with a real extension's stream.
+
 ## 2.9.0 — 2026-10-23
 
 Mihon backups that bring back everything, Kagane, and chapters your way.

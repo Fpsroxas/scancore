@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>เสียงพากย์เมื่อแหล่งมีให้ หรือภาษาต้นฉบับพร้อมคำบรรยาย</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>สิ่งที่เล่นก่อน วิดีโอของแหล่งจะเลือกจากชื่อ และสตรีมที่มีหลายความละเอียดหรือแทร็กเสียงจะเริ่มที่ตัวที่ขอไว้ เปลี่ยนได้ขณะดูจากการตั้งค่าเครื่องเล่น (ไอคอนเฟือง)</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>พอดี</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>ภาพเต็มเครื่องเล่นแบบไหน ปรับได้ในการตั้งค่าเครื่องเล่นขณะดูด้วย</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>ครอปให้เต็ม</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>ยืด</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>ขนาดเดิม</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>ท่าทาง</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>แตะเพื่อแสดงหรือซ่อนปุ่มควบคุม ความสว่างเปลี่ยนเฉพาะตอนที่ SCANCORE เปิดอยู่</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>ปัดเพื่อปรับความสว่าง เสียง และเลื่อน</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>ขึ้นหรือลงทางซ้ายเพื่อปรับความสว่าง ทางขวาเพื่อปรับเสียง ปัดด้านข้างเพื่อเลื่อน</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>แตะสองครั้งด้านข้างเพื่อข้าม 10 วินาที</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>แตะสองครั้งตรงกลางเพื่อหยุดชั่วคราวเสมอ</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>กดค้างเพื่อเล่น 2×</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>เล่นเร็วขึ้นสองเท่าขณะที่นิ้วยังแตะอยู่</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>แสดงเพิ่มเติม</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 ตอน</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 ตอน</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1 เรื่องอยู่หลายรายการ จึงใส่ไว้ในรายการแรก</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>รายการที่ซ่อน %1 รายการยังคงซ่อนอยู่</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>รายการที่รวมกัน %1 รายการเข้ามาเป็นแหล่งหลัก</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>ชื่อเรื่อง ปก และคำอธิบายที่แก้ไขของ %1 เรื่องอยู่ในแอปเดิม</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>การค้นหาที่บันทึกไว้ %1 รายการอยู่ในแอปเดิม</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>ไฟล์สำรองของ Mihon, Komikku, TachiyomiSY, Tachiyomi หรือ Aniyomi</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>ไฟล์ .tachibk จาก เพิ่มเติม → สำรองและกู้คืน (Komikku: เพิ่มเติม → ข้อมูลและพื้นที่เก็บ) เรื่องจากส่วนขยายที่คุณมีที่นี่จะกลับมาเหมือนเดิมทุกอย่าง</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>ไฟล์สำรองของ Mihon, Komikku, TachiyomiSY, Tachiyomi หรือ Aniyomi (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3963,6 +4055,30 @@
             <source>Remove list</source>
             <translation>ลบรายการ</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>เรื่องในนั้นจะย้ายไป %1 ไม่มีอะไรถูกลบออกจากคลัง</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>การอ่าน</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>ใช้ชื่อ %1</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>ซ่อนรายการ</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>ซ่อน %1 แล้ว เรื่องในนั้นยังอยู่ในรายการนั้นและใน ทั้งหมด; การตั้งค่า → คลัง แสดงกลับได้</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>เลิกทำ</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4189,6 +4305,38 @@
         <message>
             <source>Add a list</source>
             <translation>เพิ่มรายการ</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>เรื่องในนั้นจะย้ายไป %1 ไม่มีอะไรถูกลบออกจากคลัง</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>การอ่าน</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>เปลี่ยนชื่อ จัดลำดับ หรือซ่อนรายการใดก็ได้ และเพิ่มรายการของคุณเอง เรื่องในรายการที่ซ่อนยังอยู่ในรายการนั้นและใน ทั้งหมด การอ่าน วางแผนจะอ่าน พักไว้ จบแล้ว และเลิกแล้ว ยังมีความหมายเดิมสำหรับตัวติดตามและไฟล์สำรองไม่ว่าจะตั้งชื่ออะไร ไฟล์สำรองของ Mihon และ LNReader นำรายการมาด้วย</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>ซ่อนจากคลัง</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>รายการในตัว เดิมชื่อ %1</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>แสดงในคลัง</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>ซ่อนจากคลัง</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>ใช้ชื่อ %1</translation>
         </message>
     </context>
     <context>
@@ -4477,6 +4625,14 @@
             <source>Import</source>
             <translation>นำเข้า</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>นำทุกอย่างกลับมาจาก %1</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>รายการของคุณมาตามลำดับของ %1: %2</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4535,6 +4691,54 @@
         <message>
             <source>Quality</source>
             <translation>คุณภาพ</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>พอดี</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>ภาพทั้งหมด</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>ครอปให้เต็ม</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>ไม่มีแถบดำ</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>ยืด</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>เต็มจอ แต่ภาพผิดสัดส่วน</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>ขนาดเดิม</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>พิกเซลเดิมของภาพ</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>ความเร็ว 2×</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>ตอนก่อนหน้า</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>ตอนถัดไป</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>การตั้งค่า</translation>
         </message>
     </context>
     <context>
@@ -5226,6 +5430,21 @@
         <message>
             <source>Done</source>
             <translation>เสร็จ</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>ย้อนกลับ</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>การตั้งค่า</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>ปิด</translation>
         </message>
     </context>
     <context>
@@ -8335,6 +8554,18 @@
         <message>
             <source>EP </source>
             <translation>ตอน </translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>เซิร์ฟเวอร์</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>การตั้งค่า</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>ปิดเครื่องเล่น</translation>
         </message>
     </context>
     <context>

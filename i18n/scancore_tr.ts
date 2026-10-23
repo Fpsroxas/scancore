@@ -1341,6 +1341,62 @@
             <source>A dub when the source has one, or the original language with subtitles.</source>
             <translation>Kaynakta varsa dublaj, yoksa altyazılı orijinal dil.</translation>
         </message>
+        <message>
+            <source>What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).</source>
+            <translation>Önce ne oynatılacağı. Bir kaynağın videoları adlarına göre seçilir; birkaç çözünürlük veya ses parçası olan bir yayın istenenlerle başlar. İzlerken oynatıcının ayarlarından (dişli) ikisini de değiştir.</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Sığdır</translation>
+        </message>
+        <message>
+            <source>How the picture fills the player. Also in the player's settings while watching.</source>
+            <translation>Görüntünün oynatıcıyı nasıl doldurduğu. İzlerken oynatıcının ayarlarında da var.</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>Doldurmak için kırp</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Uzat</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Orijinal boyut</translation>
+        </message>
+        <message>
+            <source>Gestures</source>
+            <translation>Hareketler</translation>
+        </message>
+        <message>
+            <source>A tap shows or hides the controls. Brightness changes only while SCANCORE is open.</source>
+            <translation>Bir dokunuş kontrolleri gösterir veya gizler. Parlaklık yalnızca SCANCORE açıkken değişir.</translation>
+        </message>
+        <message>
+            <source>Swipe for brightness, volume and seeking</source>
+            <translation>Parlaklık, ses ve sarma için kaydır</translation>
+        </message>
+        <message>
+            <source>Up or down on the left for brightness, on the right for volume; sideways to seek.</source>
+            <translation>Solda yukarı veya aşağı parlaklık, sağda ses; yana doğru sarma.</translation>
+        </message>
+        <message>
+            <source>Double tap the sides to skip 10 seconds</source>
+            <translation>10 saniye atlamak için kenarlara çift dokun</translation>
+        </message>
+        <message>
+            <source>A double tap in the middle pauses either way.</source>
+            <translation>Ortaya çift dokunmak her durumda duraklatır.</translation>
+        </message>
+        <message>
+            <source>Hold for 2× speed</source>
+            <translation>2× hız için basılı tut</translation>
+        </message>
+        <message>
+            <source>Plays twice as fast while your finger stays down.</source>
+            <translation>Parmağın ekranda kaldıkça iki kat hızlı oynatır.</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1884,6 +1940,14 @@
             <source>Show more</source>
             <translation>Daha fazla göster</translation>
         </message>
+        <message>
+            <source>1 chapter</source>
+            <translation>1 bölüm</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 bölüm</translation>
+        </message>
     </context>
     <context>
         <name>CommandPalette</name>
@@ -2335,6 +2399,34 @@
         <message>
             <source>%1 were in several lists and are in the first</source>
             <translation>%1 seri birkaç listedeydi ve ilkine kondu</translation>
+        </message>
+        <message>
+            <source>%1 hidden lists stay hidden</source>
+            <translation>Gizli %1 liste gizli kalır</translation>
+        </message>
+        <message>
+            <source>%1 merged entries came in as their main source</source>
+            <translation>Birleştirilmiş %1 kayıt ana kaynağı olarak geldi</translation>
+        </message>
+        <message>
+            <source>edited titles, covers and descriptions of %1 series stay in the other app</source>
+            <translation>%1 serinin düzenlenmiş başlıkları, kapakları ve açıklamaları diğer uygulamada kalır</translation>
+        </message>
+        <message>
+            <source>%1 saved searches stay in the other app</source>
+            <translation>Kaydedilmiş %1 arama diğer uygulamada kalır</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup</source>
+            <translation>Mihon, Komikku, TachiyomiSY, Tachiyomi veya Aniyomi yedeği</translation>
+        </message>
+        <message>
+            <source>A .tachibk file from More → Backup and restore (Komikku: More → Data and storage). Series from an extension you have here come back exactly as they were.</source>
+            <translation>Daha fazla → Yedekle ve geri yükle'den bir .tachibk dosyası (Komikku: Daha fazla → Veri ve depolama). Burada sahip olduğun bir eklentideki seriler tam olarak eskisi gibi geri gelir.</translation>
+        </message>
+        <message>
+            <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
+            <translation>Mihon, Komikku, TachiyomiSY, Tachiyomi veya Aniyomi yedeği (*.tachibk *.proto.gz)</translation>
         </message>
     </context>
     <context>
@@ -3971,6 +4063,30 @@
             <source>Remove list</source>
             <translation>Listeyi kaldır</translation>
         </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Serileri %1 listesine geçer; kitaplığından hiçbir şey kaldırılmaz.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Okuma</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>%1 adını kullan</translation>
+        </message>
+        <message>
+            <source>Hide list</source>
+            <translation>Listeyi gizle</translation>
+        </message>
+        <message>
+            <source>%1 is hidden. Its series stay on it and under All; Settings → Library shows it again.</source>
+            <translation>%1 gizlendi. Serileri üzerinde ve Tümü altında kalır; Ayarlar → Kitaplık onu yeniden gösterir.</translation>
+        </message>
+        <message>
+            <source>Undo</source>
+            <translation>Geri al</translation>
+        </message>
     </context>
     <context>
         <name>LibrarySettings</name>
@@ -4197,6 +4313,38 @@
         <message>
             <source>Add a list</source>
             <translation>Liste ekle</translation>
+        </message>
+        <message>
+            <source>Its series move to %1; nothing is removed from your library.</source>
+            <translation>Serileri %1 listesine geçer; kitaplığından hiçbir şey kaldırılmaz.</translation>
+        </message>
+        <message>
+            <source>Reading</source>
+            <translation>Okuma</translation>
+        </message>
+        <message>
+            <source>Rename, reorder or hide any list, and add your own. A hidden list's series stay on it and under All. Reading, Plan to read, On hold, Completed and Dropped keep their meaning for trackers and backups whatever they are called. Mihon and LNReader backups bring their lists along.</source>
+            <translation>Herhangi bir listeyi yeniden adlandır, sırala veya gizle, kendi listelerini ekle. Gizli bir listenin serileri üzerinde ve Tümü altında kalır. Okuma, Okuyacağım, Beklemede, Tamamlandı ve Bırakıldı adları ne olursa olsun takipçiler ve yedekler için anlamlarını korur. Mihon ve LNReader yedekleri listelerini de getirir.</translation>
+        </message>
+        <message>
+            <source>Hidden from the library</source>
+            <translation>Kitaplıkta gizli</translation>
+        </message>
+        <message>
+            <source>Built-in list, first called %1</source>
+            <translation>Yerleşik liste, ilk adı %1</translation>
+        </message>
+        <message>
+            <source>Show in the library</source>
+            <translation>Kitaplıkta göster</translation>
+        </message>
+        <message>
+            <source>Hide from the library</source>
+            <translation>Kitaplıkta gizle</translation>
+        </message>
+        <message>
+            <source>Use the name %1</source>
+            <translation>%1 adını kullan</translation>
         </message>
     </context>
     <context>
@@ -4485,6 +4633,14 @@
             <source>Import</source>
             <translation>İçe aktar</translation>
         </message>
+        <message>
+            <source>Bring back everything from %1</source>
+            <translation>%1 içinden her şeyi geri getir</translation>
+        </message>
+        <message>
+            <source>Your lists come along in %1's order: %2.</source>
+            <translation>Listelerin %1 sırasıyla gelir: %2.</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -4543,6 +4699,54 @@
         <message>
             <source>Quality</source>
             <translation>Kalite</translation>
+        </message>
+        <message>
+            <source>Fit</source>
+            <translation>Sığdır</translation>
+        </message>
+        <message>
+            <source>The whole picture</source>
+            <translation>Görüntünün tamamı</translation>
+        </message>
+        <message>
+            <source>Crop to fill</source>
+            <translation>Doldurmak için kırp</translation>
+        </message>
+        <message>
+            <source>No black bars</source>
+            <translation>Siyah bant yok</translation>
+        </message>
+        <message>
+            <source>Stretch</source>
+            <translation>Uzat</translation>
+        </message>
+        <message>
+            <source>Fills the screen, out of shape</source>
+            <translation>Ekranı doldurur, oranı bozulur</translation>
+        </message>
+        <message>
+            <source>Original size</source>
+            <translation>Orijinal boyut</translation>
+        </message>
+        <message>
+            <source>Its own pixels</source>
+            <translation>Kendi pikselleri</translation>
+        </message>
+        <message>
+            <source>2× speed</source>
+            <translation>2× hız</translation>
+        </message>
+        <message>
+            <source>Previous episode</source>
+            <translation>Önceki bölüm</translation>
+        </message>
+        <message>
+            <source>Next episode</source>
+            <translation>Sonraki bölüm</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Ayarlar</translation>
         </message>
     </context>
     <context>
@@ -5234,6 +5438,21 @@
         <message>
             <source>Done</source>
             <translation>Bitti</translation>
+        </message>
+    </context>
+    <context>
+        <name>PlayerPanel</name>
+        <message>
+            <source>Back</source>
+            <translation>Geri</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Ayarlar</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
         </message>
     </context>
     <context>
@@ -8350,6 +8569,18 @@
         <message>
             <source>Cast to a TV</source>
             <translation>Bir TV'ye yayınla</translation>
+        </message>
+        <message>
+            <source>Server</source>
+            <translation>Sunucu</translation>
+        </message>
+        <message>
+            <source>Settings</source>
+            <translation>Ayarlar</translation>
+        </message>
+        <message>
+            <source>Close player</source>
+            <translation>Oynatıcıyı kapat</translation>
         </message>
     </context>
     <context>
