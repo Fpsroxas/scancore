@@ -111,6 +111,12 @@ const QVariantMap kDefaults{
     {"subtitleBox", false},
     {"animeSharpen", "off"},
     {"playerSpeed", 1},
+    // How the picture fills the player (fit, crop, stretch, original) and
+    // the phone gestures in full screen (NativePlayer.qml).
+    {"playerFit", "fit"},
+    {"playerSwipes", true},
+    {"playerDoubleTapSeek", true},
+    {"playerHoldSpeed", true},
     {"autoSkip", false},
     // What plays first: a picture height (0 for the best) and the audio
     // (VideoPrefs.languages: "" for the source's choice, "ja", "en", …).
@@ -254,6 +260,12 @@ App *App::instance() {
 QString App::version() const { return QCoreApplication::applicationVersion(); }
 
 QString App::platform() const {
+    // Development hook: SCANCORE_LOOK_AS=android lays the interface out as
+    // on a phone (screenshots of phone layouts on a computer); the phone's
+    // own services stay absent.
+    static const auto lookAs = qEnvironmentVariable("SCANCORE_LOOK_AS");
+    if (!lookAs.isEmpty())
+        return lookAs;
 #if defined(Q_OS_ANDROID)
     return QStringLiteral("android");
 #elif defined(Q_OS_WIN)
@@ -279,6 +291,20 @@ bool App::webEngine() const {
 void App::prepareWeb() const { installWebBridge(); }
 
 QVariantMap App::startAction() const {
+#if defined(Q_OS_ANDROID) && defined(QT_DEBUG)
+    // Android debug builds have no environment to pass: the same JSON in
+    // files/start.json (adb shell run-as …), read once and removed.
+    static const auto fromFile = [] {
+        QFile file(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/start.json"));
+        if (!file.open(QIODevice::ReadOnly))
+            return QVariantMap();
+        const auto map = QJsonDocument::fromJson(file.readAll()).object().toVariantMap();
+        file.remove();
+        return map;
+    }();
+    if (!fromFile.isEmpty())
+        return fromFile;
+#endif
     return QJsonDocument::fromJson(qgetenv("SCANCORE_START")).object().toVariantMap();
 }
 
@@ -427,6 +453,11 @@ void App::openFolder(const QString &path) const {
     QDir().mkpath(path);
     QDesktopServices::openUrl(QUrl::fromLocalFile(path));
 }
+
+double App::screenBrightness() const { return platform::brightness(); }
+void App::setScreenBrightness(double level) const { platform::setBrightness(level); }
+double App::mediaVolume() const { return platform::mediaVolume(); }
+void App::setMediaVolume(double level) const { platform::setMediaVolume(level); }
 
 void App::copy(const QString &text) const { QGuiApplication::clipboard()->setText(text); }
 

@@ -334,6 +334,42 @@ void setOrientation(const QString &mode) {
 #endif
 }
 
+double brightness() {
+#ifdef Q_OS_ANDROID
+    return QJniObject::callStaticMethod<jfloat>(kScreenClass, "brightness", "(Landroid/app/Activity;)F",
+                                                QNativeInterface::QAndroidApplication::context().object());
+#else
+    return -1;
+#endif
+}
+
+void setBrightness(double level) {
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>(kScreenClass, "setBrightness", "(Landroid/app/Activity;F)V",
+                                       QNativeInterface::QAndroidApplication::context().object(), jfloat(level));
+#else
+    Q_UNUSED(level)
+#endif
+}
+
+double mediaVolume() {
+#ifdef Q_OS_ANDROID
+    return QJniObject::callStaticMethod<jfloat>(kScreenClass, "mediaVolume", "(Landroid/app/Activity;)F",
+                                                QNativeInterface::QAndroidApplication::context().object());
+#else
+    return -1;
+#endif
+}
+
+void setMediaVolume(double level) {
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>(kScreenClass, "setMediaVolume", "(Landroid/app/Activity;F)V",
+                                       QNativeInterface::QAndroidApplication::context().object(), jfloat(level));
+#else
+    Q_UNUSED(level)
+#endif
+}
+
 void setBarIcons(bool darkScreen) {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>(kScreenClass, "barIcons", "(Landroid/app/Activity;Z)V",

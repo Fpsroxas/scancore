@@ -42,7 +42,7 @@ SettingsPane {
 
     SettingsGroup {
         title: qsTr("Quality and audio")
-        note: qsTr("What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's Quality and Audio buttons.")
+        note: qsTr("What plays first. A source's videos are chosen by their names, and a stream with several resolutions or audio tracks starts on the ones asked for. Change either while watching from the player's settings (the gear).")
         SettingRow {
             iconName: "settings"
             title: qsTr("Preferred quality")
@@ -119,6 +119,42 @@ SettingsPane {
                 value: App.settings.animeSharpen || "off"
                 onPicked: (v) => App.setSetting("animeSharpen", v)
             }
+        }
+        SettingRow {
+            iconName: "crop"
+            title: qsTr("Fit")
+            description: qsTr("How the picture fills the player. Also in the player's settings while watching.")
+            Select {
+                model: [{ value: "fit", label: qsTr("Fit") }, { value: "crop", label: qsTr("Crop to fill") },
+                        { value: "stretch", label: qsTr("Stretch") }, { value: "original", label: qsTr("Original size") }]
+                value: App.settings.playerFit || "fit"
+                onPicked: (v) => App.setSetting("playerFit", v)
+            }
+        }
+    }
+
+    // Touch gestures on the picture (SCANCORE's player on phones).
+    SettingsGroup {
+        visible: Anime.nativePlayerAvailable && App.platform === "android"
+        title: qsTr("Gestures")
+        note: qsTr("A tap shows or hides the controls. Brightness changes only while SCANCORE is open.")
+        SettingRow {
+            iconName: "move-vertical"
+            title: qsTr("Swipe for brightness, volume and seeking")
+            description: qsTr("Up or down on the left for brightness, on the right for volume; sideways to seek.")
+            Toggle { checked: App.settings.playerSwipes !== false; onToggled: App.setSetting("playerSwipes", checked) }
+        }
+        SettingRow {
+            iconName: "rotate-ccw"
+            title: qsTr("Double tap the sides to skip 10 seconds")
+            description: qsTr("A double tap in the middle pauses either way.")
+            Toggle { checked: App.settings.playerDoubleTapSeek !== false; onToggled: App.setSetting("playerDoubleTapSeek", checked) }
+        }
+        SettingRow {
+            iconName: "gauge"
+            title: qsTr("Hold for 2× speed")
+            description: qsTr("Plays twice as fast while your finger stays down.")
+            Toggle { checked: App.settings.playerHoldSpeed !== false; onToggled: App.setSetting("playerHoldSpeed", checked) }
         }
     }
 }
