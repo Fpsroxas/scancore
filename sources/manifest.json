@@ -1,6 +1,6 @@
 {
-  "version": 6,
-  "updated": "2026-10-20",
+  "version": 7,
+  "updated": "2026-10-23",
   "comics": [
     {
       "key": "asura",
@@ -1067,6 +1067,336 @@
       ],
       "language": "vi",
       "minVersion": "2.0.0"
+    },
+    {
+      "key": "kagane",
+      "label": "Kagane",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "en"
+        ]
+      }
+    },
+    {
+      "key": "kagane-es",
+      "label": "Kagane (Español)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "es",
+      "urlTag": "es",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "es",
+          "es-419"
+        ]
+      }
+    },
+    {
+      "key": "kagane-pt",
+      "label": "Kagane (Português)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "pt",
+      "urlTag": "pt",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "pt-BR",
+          "pt"
+        ]
+      }
+    },
+    {
+      "key": "kagane-fr",
+      "label": "Kagane (Français)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "fr",
+      "urlTag": "fr",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "fr"
+        ]
+      }
+    },
+    {
+      "key": "kagane-de",
+      "label": "Kagane (Deutsch)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "de",
+      "urlTag": "de",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "de"
+        ]
+      }
+    },
+    {
+      "key": "kagane-it",
+      "label": "Kagane (Italiano)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "it",
+      "urlTag": "it",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "it"
+        ]
+      }
+    },
+    {
+      "key": "kagane-id",
+      "label": "Kagane (Bahasa Indonesia)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "id",
+      "urlTag": "id",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "id"
+        ]
+      }
+    },
+    {
+      "key": "kagane-ru",
+      "label": "Kagane (Русский)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "ru",
+      "urlTag": "ru",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "ru"
+        ]
+      }
+    },
+    {
+      "key": "kagane-vi",
+      "label": "Kagane (Tiếng Việt)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "vi",
+      "urlTag": "vi",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "vi"
+        ]
+      }
+    },
+    {
+      "key": "kagane-pl",
+      "label": "Kagane (Polski)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "pl",
+      "urlTag": "pl",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "pl"
+        ]
+      }
+    },
+    {
+      "key": "kagane-tr",
+      "label": "Kagane (Türkçe)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "tr",
+      "urlTag": "tr",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "tr"
+        ]
+      }
+    },
+    {
+      "key": "kagane-ko",
+      "label": "Kagane (한국어)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "ko",
+      "urlTag": "ko",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "ko"
+        ]
+      }
+    },
+    {
+      "key": "kagane-zh",
+      "label": "Kagane (中文)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "zh",
+      "urlTag": "zh",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "zh"
+        ]
+      }
+    },
+    {
+      "key": "kagane-th",
+      "label": "Kagane (ไทย)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "th",
+      "urlTag": "th",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "th"
+        ]
+      }
+    },
+    {
+      "key": "kagane-ar",
+      "label": "Kagane (العربية)",
+      "engine": "kagane",
+      "base": "https://kagane.si",
+      "api": "https://kagane.si/api/v2",
+      "hosts": [
+        "kagane.si",
+        "kagane.cx",
+        "kagane.moe",
+        "kagane.net",
+        "kagane.org"
+      ],
+      "language": "ar",
+      "urlTag": "ar",
+      "minVersion": "2.9.0",
+      "options": {
+        "languages": [
+          "ar"
+        ]
+      }
     }
   ],
   "novels": [
