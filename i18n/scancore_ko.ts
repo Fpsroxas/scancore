@@ -1397,6 +1397,58 @@
             <source>Plays twice as fast while your finger stays down.</source>
             <translation>손가락을 대고 있는 동안 2배 빠르게 재생합니다.</translation>
         </message>
+        <message>
+            <source>Anime from AniList and MyAnimeList</source>
+            <translation>AniList와 MyAnimeList의 애니메이션</translation>
+        </message>
+        <message>
+            <source>What you pick under Watch from for an anime is remembered for it, whatever is set here.</source>
+            <translation>애니메이션마다 시청 출처에서 고른 것은 여기 설정과 상관없이 기억돼요.</translation>
+        </message>
+        <message>
+            <source>Play from</source>
+            <translation>재생 출처</translation>
+        </message>
+        <message>
+            <source>The built-in servers. Extensions are looked in only when you choose Watch from.</source>
+            <translation>내장 서버예요. 시청 출처를 고를 때만 확장 프로그램을 검색해요.</translation>
+        </message>
+        <message>
+            <source>Your anime extensions, when one clearly has it; otherwise you choose.</source>
+            <translation>애니메이션 확장 프로그램이요. 하나가 확실히 가지고 있으면 그걸, 아니면 직접 골라요.</translation>
+        </message>
+        <message>
+            <source>Asks the first time each anime plays.</source>
+            <translation>애니메이션을 처음 재생할 때마다 물어봐요.</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>내장</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>확장 프로그램</translation>
+        </message>
+        <message>
+            <source>Ask</source>
+            <translation>물어보기</translation>
+        </message>
+        <message>
+            <source>Extensions to look in</source>
+            <translation>검색할 확장 프로그램</translation>
+        </message>
+        <message>
+            <source>All of them</source>
+            <translation>전체</translation>
+        </message>
+        <message>
+            <source>%1 chosen</source>
+            <translation>%1개 선택됨</translation>
+        </message>
+        <message>
+            <source>All extensions</source>
+            <translation>모든 확장 프로그램</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1817,6 +1869,26 @@
             <source>it</source>
             <translation>이 시리즈</translation>
         </message>
+        <message>
+            <source>Line</source>
+            <translation>선</translation>
+        </message>
+        <message>
+            <source>Floating</source>
+            <translation>떠 있는</translation>
+        </message>
+        <message>
+            <source>Left</source>
+            <translation>왼쪽</translation>
+        </message>
+        <message>
+            <source>Right</source>
+            <translation>오른쪽</translation>
+        </message>
+        <message>
+            <source>Bottom</source>
+            <translation>아래</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -1947,6 +2019,14 @@
         <message>
             <source>%1 chapters</source>
             <translation>챕터 %1개</translation>
+        </message>
+        <message>
+            <source>%1 from your extensions</source>
+            <translation>내 확장 프로그램에서 %1개</translation>
+        </message>
+        <message>
+            <source>%1 still searching</source>
+            <translation>%1개가 아직 검색 중</translation>
         </message>
     </context>
     <context>
@@ -2428,6 +2508,26 @@
             <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
             <translation>Mihon, Komikku, TachiyomiSY, Tachiyomi 또는 Aniyomi 백업 (*.tachibk *.proto.gz)</translation>
         </message>
+        <message>
+            <source>%1 downloaded chapters read from Mihon's folder</source>
+            <translation>Mihon 폴더에서 읽는 다운로드한 챕터 %1개</translation>
+        </message>
+        <message>
+            <source>Chapters Mihon downloaded</source>
+            <translation>Mihon에서 다운로드한 챕터</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>다시 찾기</translation>
+        </message>
+        <message>
+            <source>Add folder</source>
+            <translation>폴더 추가</translation>
+        </message>
+        <message>
+            <source>Choose folder</source>
+            <translation>폴더 선택</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -2766,6 +2866,22 @@
             <source>Delete</source>
             <translation>지우기</translation>
         </message>
+        <message>
+            <source>%1 in Mihon's folder</source>
+            <translation>Mihon 폴더에 %1개</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>챕터 %1개</translation>
+        </message>
+        <message>
+            <source>In Mihon's folder</source>
+            <translation>Mihon 폴더에 있음</translation>
+        </message>
+        <message>
+            <source>Stop reading these from Mihon's folder (the files stay)</source>
+            <translation>Mihon 폴더에서 그만 읽기(파일은 남아요)</translation>
+        </message>
     </context>
     <context>
         <name>EditPageBar</name>
@@ -3003,6 +3119,74 @@
         <message>
             <source>Link copied</source>
             <translation>링크 복사됨</translation>
+        </message>
+        <message>
+            <source>All repositories</source>
+            <translation>모든 저장소</translation>
+        </message>
+        <message>
+            <source>1 update ready</source>
+            <translation>업데이트 1개 준비됨</translation>
+        </message>
+        <message>
+            <source>%1 updates ready</source>
+            <translation>업데이트 %1개 준비됨</translation>
+        </message>
+        <message>
+            <source>Extensions are up to date</source>
+            <translation>확장 프로그램이 최신이에요</translation>
+        </message>
+        <message>
+            <source>Checking the repositories…</source>
+            <translation>저장소를 확인하는 중…</translation>
+        </message>
+        <message>
+            <source>Checked %1</source>
+            <translation>%1 확인함</translation>
+        </message>
+        <message>
+            <source>Not checked yet</source>
+            <translation>아직 확인 안 함</translation>
+        </message>
+        <message>
+            <source>trusted ones update by themselves</source>
+            <translation>신뢰하는 것은 자동으로 업데이트돼요</translation>
+        </message>
+        <message>
+            <source>Update all</source>
+            <translation>모두 업데이트</translation>
+        </message>
+        <message>
+            <source>Check for updates</source>
+            <translation>업데이트 확인</translation>
+        </message>
+        <message>
+            <source>All kinds</source>
+            <translation>모든 종류</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>만화</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>애니메이션</translation>
+        </message>
+        <message>
+            <source>Repository</source>
+            <translation>저장소</translation>
+        </message>
+        <message>
+            <source>18+</source>
+            <translation>18+</translation>
+        </message>
+        <message>
+            <source>Its extensions</source>
+            <translation>이 저장소의 확장 프로그램</translation>
         </message>
     </context>
     <context>
@@ -4580,6 +4764,41 @@
         </message>
     </context>
     <context>
+        <name>MihonFolderPicker</name>
+        <message>
+            <source>Looking through Mihon's downloads…</source>
+            <translation>Mihon 다운로드를 살펴보는 중…</translation>
+        </message>
+        <message>
+            <source>Choose Mihon's storage folder, or the downloads folder in it. Its chapters then open offline from your library, with your progress. Nothing is copied.</source>
+            <translation>Mihon의 저장 폴더나 그 안의 downloads 폴더를 고르세요. 그러면 챕터가 라이브러리에서 진행 상황과 함께 오프라인으로 열려요. 아무것도 복사하지 않아요.</translation>
+        </message>
+        <message>
+            <source>%1 chapters of %2 series open offline from Mihon's folder</source>
+            <translation>%2개 시리즈 %1개 챕터를 Mihon 폴더에서 오프라인으로 열 수 있어요</translation>
+        </message>
+        <message>
+            <source>%1 series not in your library are under On this device</source>
+            <translation>라이브러리에 없는 시리즈 %1개는 이 기기에 있어요</translation>
+        </message>
+        <message>
+            <source>Mihon's storage folder</source>
+            <translation>Mihon 저장 폴더</translation>
+        </message>
+        <message>
+            <source>No Mihon downloads in that folder. Choose the folder Mihon keeps its data in (Mihon: More → Settings → Data and storage → Storage location), or the downloads folder inside it.</source>
+            <translation>그 폴더에 Mihon 다운로드가 없어요. Mihon이 데이터를 두는 폴더(Mihon: 더 보기 → 설정 → 데이터 및 저장소 → 저장 위치)나 그 안의 downloads 폴더를 고르세요.</translation>
+        </message>
+        <message>
+            <source>%1 chapters of %2 series from Mihon now open offline</source>
+            <translation>Mihon의 %2개 시리즈 %1개 챕터를 이제 오프라인으로 열 수 있어요</translation>
+        </message>
+        <message>
+            <source>Mihon's downloads are under On this device. Import a Mihon backup to link them to your library.</source>
+            <translation>Mihon 다운로드는 이 기기에 있어요. Mihon 백업을 가져오면 라이브러리와 연결돼요.</translation>
+        </message>
+    </context>
+    <context>
         <name>MihonImportDialog</name>
         <message>
             <source>Bring back everything from Mihon</source>
@@ -4640,6 +4859,30 @@
         <message>
             <source>Your lists come along in %1's order: %2.</source>
             <translation>목록은 %1의 순서대로 가져옵니다: %2.</translation>
+        </message>
+        <message>
+            <source>Chapters %1 downloaded</source>
+            <translation>%1에서 다운로드한 챕터</translation>
+        </message>
+        <message>
+            <source>Looking through the folder…</source>
+            <translation>폴더를 살펴보는 중…</translation>
+        </message>
+        <message>
+            <source>Read from its folder after the import, offline and with your progress. Nothing is copied.</source>
+            <translation>가져오기 후 그 폴더에서 오프라인으로, 진행 상황과 함께 읽어요. 아무것도 복사하지 않아요.</translation>
+        </message>
+        <message>
+            <source>Choose its storage folder (More → Settings → Data and storage) to read them here offline. Nothing is copied.</source>
+            <translation>여기서 오프라인으로 읽으려면 저장 폴더(더 보기 → 설정 → 데이터 및 저장소)를 고르세요. 아무것도 복사하지 않아요.</translation>
+        </message>
+        <message>
+            <source>Chosen</source>
+            <translation>선택됨</translation>
+        </message>
+        <message>
+            <source>Choose</source>
+            <translation>선택</translation>
         </message>
     </context>
     <context>
@@ -5342,6 +5585,58 @@
             <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
             <translation>선택 사항입니다. SCANCORE에는 만화, 소설, 애니메이션용 내장 소스가 있으니 이 단계는 건너뛰고, 더 필요하면 나중에 저장소를 추가해도 됩니다.</translation>
         </message>
+        <message>
+            <source>Reading comics</source>
+            <translation>만화 읽기</translation>
+        </message>
+        <message>
+            <source>Pick a progress bar</source>
+            <translation>진행 막대 고르기</translation>
+        </message>
+        <message>
+            <source>It shows how far through a chapter you are, and takes you to a page. Colours, edge and strength are in Settings → Reading.</source>
+            <translation>챕터를 얼마나 읽었는지 보여주고 페이지로 이동해요. 색상, 위치, 진하기는 설정 → 읽기에 있어요.</translation>
+        </message>
+        <message>
+            <source>Stay in the loop</source>
+            <translation>소식 받기</translation>
+        </message>
+        <message>
+            <source>Get notified</source>
+            <translation>알림 받기</translation>
+        </message>
+        <message>
+            <source>New chapters of what you follow, extension updates and news, in your phone's or computer's notifications.</source>
+            <translation>팔로우하는 작품의 새 챕터, 확장 프로그램 업데이트, 소식을 휴대폰이나 컴퓨터 알림으로 받아요.</translation>
+        </message>
+        <message>
+            <source>New chapters</source>
+            <translation>새 챕터</translation>
+        </message>
+        <message>
+            <source>When the series in your library get new chapters or episodes.</source>
+            <translation>라이브러리의 시리즈에 새 챕터나 에피소드가 나올 때.</translation>
+        </message>
+        <message>
+            <source>News from SCANCORE</source>
+            <translation>SCANCORE 소식</translation>
+        </message>
+        <message>
+            <source>Announcements from scancore.onl.</source>
+            <translation>scancore.onl의 공지.</translation>
+        </message>
+        <message>
+            <source>Allow notifications</source>
+            <translation>알림 허용</translation>
+        </message>
+        <message>
+            <source>Notifications are allowed</source>
+            <translation>알림이 허용됐어요</translation>
+        </message>
+        <message>
+            <source>Your system shows them</source>
+            <translation>시스템이 보여줘요</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5592,6 +5887,25 @@
         <message>
             <source>Cancel</source>
             <translation>취소</translation>
+        </message>
+    </context>
+    <context>
+        <name>ProgressBarPicker</name>
+        <message>
+            <source>Pages</source>
+            <translation>페이지</translation>
+        </message>
+        <message>
+            <source>Line</source>
+            <translation>선</translation>
+        </message>
+        <message>
+            <source>Floating</source>
+            <translation>떠 있는</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>없음</translation>
         </message>
     </context>
     <context>
@@ -6054,6 +6368,86 @@
         <message>
             <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
             <translation>페이지에서: 가운데를 두 번 탭하면 확대, 다시 하면 축소.</translation>
+        </message>
+        <message>
+            <source>Grey</source>
+            <translation>회색</translation>
+        </message>
+        <message>
+            <source>Accent</source>
+            <translation>강조색</translation>
+        </message>
+        <message>
+            <source>Ocean</source>
+            <translation>바다</translation>
+        </message>
+        <message>
+            <source>Rose</source>
+            <translation>로즈</translation>
+        </message>
+        <message>
+            <source>Mint</source>
+            <translation>민트</translation>
+        </message>
+        <message>
+            <source>Comic progress bar</source>
+            <translation>만화 진행 막대</translation>
+        </message>
+        <message>
+            <source>How far through the chapter you are. Tap or drag along it in the reader to go to a page.</source>
+            <translation>챕터를 얼마나 읽었는지 보여줘요. 리더에서 탭하거나 끌어서 페이지로 이동해요.</translation>
+        </message>
+        <message>
+            <source>Show it</source>
+            <translation>표시</translation>
+        </message>
+        <message>
+            <source>Always</source>
+            <translation>항상</translation>
+        </message>
+        <message>
+            <source>With controls</source>
+            <translation>컨트롤과 함께</translation>
+        </message>
+        <message>
+            <source>Edge</source>
+            <translation>위치</translation>
+        </message>
+        <message>
+            <source>Left</source>
+            <translation>왼쪽</translation>
+        </message>
+        <message>
+            <source>Right</source>
+            <translation>오른쪽</translation>
+        </message>
+        <message>
+            <source>Bottom</source>
+            <translation>아래</translation>
+        </message>
+        <message>
+            <source>Thickness</source>
+            <translation>두께</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>얇게</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>두껍게</translation>
+        </message>
+        <message>
+            <source>Strength</source>
+            <translation>진하기</translation>
+        </message>
+        <message>
+            <source>Lower lets the page show through.</source>
+            <translation>낮추면 페이지가 비쳐 보여요.</translation>
+        </message>
+        <message>
+            <source>Colours</source>
+            <translation>색상</translation>
         </message>
     </context>
     <context>
@@ -7285,6 +7679,26 @@
             <source>No built-in source matches. Extension sources are on the Extensions page.</source>
             <translation>일치하는 내장 소스가 없습니다. 확장 프로그램의 소스는 확장 프로그램 페이지에 있습니다.</translation>
         </message>
+        <message>
+            <source>Extension log</source>
+            <translation>확장 프로그램 로그</translation>
+        </message>
+        <message>
+            <source>What the extensions reported since they last started, errors included. Attach it to a bug report.</source>
+            <translation>확장 프로그램이 마지막으로 시작된 뒤 보고한 내용이에요(오류 포함). 버그 신고에 첨부하세요.</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>열기</translation>
+        </message>
+        <message>
+            <source>Mihon's storage folder works too: the chapters it downloaded open from your library.</source>
+            <translation>Mihon 저장 폴더도 돼요: 다운로드한 챕터가 라이브러리에서 열려요.</translation>
+        </message>
+        <message>
+            <source>Mihon's downloads · </source>
+            <translation>Mihon 다운로드 · </translation>
+        </message>
     </context>
     <context>
         <name>StateView</name>
@@ -8395,6 +8809,10 @@
             <source>Close</source>
             <translation>닫기</translation>
         </message>
+        <message>
+            <source>All extensions</source>
+            <translation>모든 확장 프로그램</translation>
+        </message>
     </context>
     <context>
         <name>WatchPage</name>
@@ -9097,6 +9515,14 @@
         <message>
             <source>Open Extensions to update them.</source>
             <translation>확장 프로그램을 열어 업데이트하세요.</translation>
+        </message>
+        <message>
+            <source>%1 was updated</source>
+            <translation>%1 업데이트됨</translation>
+        </message>
+        <message>
+            <source>%1 extensions were updated</source>
+            <translation>확장 프로그램 %1개를 업데이트했어요</translation>
         </message>
     </context>
     <context>

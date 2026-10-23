@@ -2,6 +2,24 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.11.0 — 2026-10-24
+
+Switch from Mihon without losing your downloads, a progress bar you can make your own, and web views for extensions on computers.
+
+- **Mihon and Komikku downloads, read where they are**: choose Mihon's storage folder (or its `downloads` folder) in Settings → Connections → Chapters Mihon downloaded, or right in the backup import. Each downloaded series is matched to the same series from your Mihon backup (by source and title, and by Mihon's own chapter fingerprints when a title was renamed), and each chapter to its chapter. They then count as downloads: they open offline, your progress is kept, and nothing is copied, so 50 GB of chapters do not take another 50 GB. Series not in your library show up under On this device. Works with Android's folder picker too (one quick look per folder: 9,000 chapters are linked in about 6 seconds on a slow test phone), and SCANCORE looks again at each start for chapters Mihon added. The Downloads page shows them as one row per series, and removing one there only stops using the files; Mihon's files are never deleted.
+- **The built-in anime player no longer turns into an ad site**: on Android, tapping the player could open an advertiser's page inside it instead of the episode. Pop-ups are refused, the player page cannot be sent elsewhere, and taps on web players now go to SCANCORE's controls (double tap the sides to skip 10 seconds, the middle to pause; hold to reach the site's own menus for a few seconds).
+- **A progress bar your way**: three looks for the comic reader's progress bar (a piece per page, one line, or a floating bar with the page number), on the left, right or bottom edge, three thicknesses, your own colours for pages read, unread and current (or one of five sets), and how see-through it is. Settings → Reading shows each one as you change it.
+- **Welcome screens**: pick your progress bar (or none) by looking at them, then choose which notifications you want and allow them.
+- **Extensions that open a web view now work on computers** (Comix and other newer Keiyoushi sources): SCANCORE downloads the browser they need (about 250 MB, once, the first time such a source is used) and runs it out of sight, as Suwayomi does. Comix's search and chapter lists work on Windows, macOS and Linux. Its chapter pages fail everywhere right now (Android too) after a change on the site; that needs a new version of the extension. Computers get the new Extensions runtime 5 by themselves.
+- **Extension updates are easy to find**: Extensions → Installed starts with what is ready to update and an Update all button, or says everything is up to date with when it last checked and a Check for updates button. You get a notification when trusted extensions update by themselves.
+- **Browse extensions your way**: under Available, filter by comics, novels or anime, by repository and 18+, beside the language. A repository opens its own list.
+- **All sources finds titles in your extensions too**: a search through the catalogue (Comick, AniList or MyAnimeList) now also searches your installed extensions and shows what they have below, as it comes in. Searching many sources at once no longer opens browser checks over the app; a source that needs one gets a button instead.
+- **Anime from AniList and MyAnimeList play from the built-in servers** by default, without first searching every installed extension. Settings → Anime → Play from switches to your extensions or to asking, and which extensions to look in. Watch from lets you tick the extensions it searches.
+- **Anime pages on wide screens** show the details in a column beside the episodes, each scrolling by itself.
+- **Extension log** (computers): Settings → Sources → Extension log opens what extensions reported, errors included, for bug reports.
+- Fixed: a second grid of covers lower on a page (such as extension results) stayed empty while scrolling.
+- Not yet checked on real devices: Mihon downloads in a real Mihon folder on a phone (tested with Mihon's layout on the Android emulator and on Linux), the extension web view on Windows and macOS (tested on Linux), the ad fix on a phone where an ad appears (the emulator showed none), and Watch from's extension choices with real anime extensions.
+
 ## 2.10.0 — 2026-10-23
 
 Lists your way, Komikku backups, a player that stays open, and smoother on slow phones.

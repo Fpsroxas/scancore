@@ -1397,6 +1397,58 @@
             <source>Plays twice as fast while your finger stays down.</source>
             <translation>जब तक उंगली टिकी रहे, दोगुनी गति से चलता है।</translation>
         </message>
+        <message>
+            <source>Anime from AniList and MyAnimeList</source>
+            <translation>AniList और MyAnimeList के एनीमे</translation>
+        </message>
+        <message>
+            <source>What you pick under Watch from for an anime is remembered for it, whatever is set here.</source>
+            <translation>किसी एनीमे के लिए यहां से देखें में जो चुनते हैं वह उसके लिए याद रहता है, यहां की सेटिंग जो भी हो।</translation>
+        </message>
+        <message>
+            <source>Play from</source>
+            <translation>यहां से चलाएं</translation>
+        </message>
+        <message>
+            <source>The built-in servers. Extensions are looked in only when you choose Watch from.</source>
+            <translation>बिल्ट-इन सर्वर। एक्सटेंशन तभी खोजे जाते हैं जब आप यहां से देखें चुनते हैं।</translation>
+        </message>
+        <message>
+            <source>Your anime extensions, when one clearly has it; otherwise you choose.</source>
+            <translation>आपके एनीमे एक्सटेंशन, जब किसी एक में वह साफ़ तौर पर हो; नहीं तो आप चुनते हैं।</translation>
+        </message>
+        <message>
+            <source>Asks the first time each anime plays.</source>
+            <translation>हर एनीमे के पहली बार चलने पर पूछता है।</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>बिल्ट-इन</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>एक्सटेंशन</translation>
+        </message>
+        <message>
+            <source>Ask</source>
+            <translation>पूछें</translation>
+        </message>
+        <message>
+            <source>Extensions to look in</source>
+            <translation>खोजने के लिए एक्सटेंशन</translation>
+        </message>
+        <message>
+            <source>All of them</source>
+            <translation>सभी</translation>
+        </message>
+        <message>
+            <source>%1 chosen</source>
+            <translation>%1 चुने गए</translation>
+        </message>
+        <message>
+            <source>All extensions</source>
+            <translation>सभी एक्सटेंशन</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1817,6 +1869,26 @@
             <source>it</source>
             <translation>इसी</translation>
         </message>
+        <message>
+            <source>Line</source>
+            <translation>रेखा</translation>
+        </message>
+        <message>
+            <source>Floating</source>
+            <translation>तैरता हुआ</translation>
+        </message>
+        <message>
+            <source>Left</source>
+            <translation>बाएं</translation>
+        </message>
+        <message>
+            <source>Right</source>
+            <translation>दाएं</translation>
+        </message>
+        <message>
+            <source>Bottom</source>
+            <translation>नीचे</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -1947,6 +2019,14 @@
         <message>
             <source>%1 chapters</source>
             <translation>%1 चैप्टर</translation>
+        </message>
+        <message>
+            <source>%1 from your extensions</source>
+            <translation>आपके एक्सटेंशन से %1</translation>
+        </message>
+        <message>
+            <source>%1 still searching</source>
+            <translation>%1 अभी खोज रहे हैं</translation>
         </message>
     </context>
     <context>
@@ -2428,6 +2508,26 @@
             <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
             <translation>Mihon, Komikku, TachiyomiSY, Tachiyomi या Aniyomi बैकअप (*.tachibk *.proto.gz)</translation>
         </message>
+        <message>
+            <source>%1 downloaded chapters read from Mihon's folder</source>
+            <translation>Mihon के फ़ोल्डर से पढ़े जाने वाले %1 डाउनलोड किए अध्याय</translation>
+        </message>
+        <message>
+            <source>Chapters Mihon downloaded</source>
+            <translation>Mihon में डाउनलोड किए अध्याय</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>फिर से खोजें</translation>
+        </message>
+        <message>
+            <source>Add folder</source>
+            <translation>फ़ोल्डर जोड़ें</translation>
+        </message>
+        <message>
+            <source>Choose folder</source>
+            <translation>फ़ोल्डर चुनें</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -2758,6 +2858,22 @@
             <source>Delete</source>
             <translation>हटाएं</translation>
         </message>
+        <message>
+            <source>%1 in Mihon's folder</source>
+            <translation>Mihon के फ़ोल्डर में %1</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 चैप्टर</translation>
+        </message>
+        <message>
+            <source>In Mihon's folder</source>
+            <translation>Mihon के फ़ोल्डर में</translation>
+        </message>
+        <message>
+            <source>Stop reading these from Mihon's folder (the files stay)</source>
+            <translation>इन्हें Mihon के फ़ोल्डर से पढ़ना बंद करें (फ़ाइलें बनी रहेंगी)</translation>
+        </message>
     </context>
     <context>
         <name>EditPageBar</name>
@@ -2995,6 +3111,74 @@
         <message>
             <source>Link copied</source>
             <translation>लिंक कॉपी हुआ</translation>
+        </message>
+        <message>
+            <source>All repositories</source>
+            <translation>सभी रिपॉज़िटरी</translation>
+        </message>
+        <message>
+            <source>1 update ready</source>
+            <translation>1 अपडेट तैयार</translation>
+        </message>
+        <message>
+            <source>%1 updates ready</source>
+            <translation>%1 अपडेट तैयार</translation>
+        </message>
+        <message>
+            <source>Extensions are up to date</source>
+            <translation>एक्सटेंशन अप-टू-डेट हैं</translation>
+        </message>
+        <message>
+            <source>Checking the repositories…</source>
+            <translation>रिपॉज़िटरी जांची जा रही हैं…</translation>
+        </message>
+        <message>
+            <source>Checked %1</source>
+            <translation>जांचा गया %1</translation>
+        </message>
+        <message>
+            <source>Not checked yet</source>
+            <translation>अभी जांचा नहीं गया</translation>
+        </message>
+        <message>
+            <source>trusted ones update by themselves</source>
+            <translation>भरोसेमंद अपने आप अपडेट होते हैं</translation>
+        </message>
+        <message>
+            <source>Update all</source>
+            <translation>सभी अपडेट करें</translation>
+        </message>
+        <message>
+            <source>Check for updates</source>
+            <translation>अपडेट खोजें</translation>
+        </message>
+        <message>
+            <source>All kinds</source>
+            <translation>सभी प्रकार</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>कॉमिक्स</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>उपन्यास</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>एनीमे</translation>
+        </message>
+        <message>
+            <source>Repository</source>
+            <translation>रिपॉज़िटरी</translation>
+        </message>
+        <message>
+            <source>18+</source>
+            <translation>18+</translation>
+        </message>
+        <message>
+            <source>Its extensions</source>
+            <translation>इसके एक्सटेंशन</translation>
         </message>
     </context>
     <context>
@@ -4572,6 +4756,41 @@
         </message>
     </context>
     <context>
+        <name>MihonFolderPicker</name>
+        <message>
+            <source>Looking through Mihon's downloads…</source>
+            <translation>Mihon के डाउनलोड देखे जा रहे हैं…</translation>
+        </message>
+        <message>
+            <source>Choose Mihon's storage folder, or the downloads folder in it. Its chapters then open offline from your library, with your progress. Nothing is copied.</source>
+            <translation>Mihon का स्टोरेज फ़ोल्डर या उसके अंदर का डाउनलोड फ़ोल्डर चुनें। फिर उसके अध्याय आपकी लाइब्रेरी से ऑफ़लाइन, आपकी प्रगति के साथ खुलेंगे। कुछ भी कॉपी नहीं होता।</translation>
+        </message>
+        <message>
+            <source>%1 chapters of %2 series open offline from Mihon's folder</source>
+            <translation>%2 सीरीज़ के %1 अध्याय Mihon के फ़ोल्डर से ऑफ़लाइन खुलते हैं</translation>
+        </message>
+        <message>
+            <source>%1 series not in your library are under On this device</source>
+            <translation>आपकी लाइब्रेरी से बाहर की %1 सीरीज़ इस डिवाइस पर में हैं</translation>
+        </message>
+        <message>
+            <source>Mihon's storage folder</source>
+            <translation>Mihon का स्टोरेज फ़ोल्डर</translation>
+        </message>
+        <message>
+            <source>No Mihon downloads in that folder. Choose the folder Mihon keeps its data in (Mihon: More → Settings → Data and storage → Storage location), or the downloads folder inside it.</source>
+            <translation>उस फ़ोल्डर में Mihon के डाउनलोड नहीं हैं। वह फ़ोल्डर चुनें जिसमें Mihon अपना डेटा रखता है (Mihon: More → Settings → Data and storage → Storage location), या उसके अंदर का डाउनलोड फ़ोल्डर।</translation>
+        </message>
+        <message>
+            <source>%1 chapters of %2 series from Mihon now open offline</source>
+            <translation>Mihon से %2 सीरीज़ के %1 अध्याय अब ऑफ़लाइन खुलते हैं</translation>
+        </message>
+        <message>
+            <source>Mihon's downloads are under On this device. Import a Mihon backup to link them to your library.</source>
+            <translation>Mihon के डाउनलोड इस डिवाइस पर में हैं। उन्हें अपनी लाइब्रेरी से जोड़ने के लिए Mihon बैकअप इम्पोर्ट करें।</translation>
+        </message>
+    </context>
+    <context>
         <name>MihonImportDialog</name>
         <message>
             <source>Bring back everything from Mihon</source>
@@ -4632,6 +4851,30 @@
         <message>
             <source>Your lists come along in %1's order: %2.</source>
             <translation>आपकी सूचियां %1 के क्रम में आती हैं: %2।</translation>
+        </message>
+        <message>
+            <source>Chapters %1 downloaded</source>
+            <translation>%1 में डाउनलोड किए अध्याय</translation>
+        </message>
+        <message>
+            <source>Looking through the folder…</source>
+            <translation>फ़ोल्डर देखा जा रहा है…</translation>
+        </message>
+        <message>
+            <source>Read from its folder after the import, offline and with your progress. Nothing is copied.</source>
+            <translation>इम्पोर्ट के बाद उसके फ़ोल्डर से पढ़े जाते हैं, ऑफ़लाइन और आपकी प्रगति के साथ। कुछ भी कॉपी नहीं होता।</translation>
+        </message>
+        <message>
+            <source>Choose its storage folder (More → Settings → Data and storage) to read them here offline. Nothing is copied.</source>
+            <translation>यहां ऑफ़लाइन पढ़ने के लिए उसका स्टोरेज फ़ोल्डर चुनें (More → Settings → Data and storage)। कुछ भी कॉपी नहीं होता।</translation>
+        </message>
+        <message>
+            <source>Chosen</source>
+            <translation>चुना गया</translation>
+        </message>
+        <message>
+            <source>Choose</source>
+            <translation>चुनें</translation>
         </message>
     </context>
     <context>
@@ -5334,6 +5577,58 @@
             <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
             <translation>यह वैकल्पिक है। SCANCORE में कॉमिक्स, उपन्यासों और एनीमे के अपने बिल्ट-इन सोर्स हैं, इसलिए आप यह चरण छोड़ सकते हैं और ज़्यादा चाहिए तो बाद में रिपॉज़िटरी जोड़ सकते हैं।</translation>
         </message>
+        <message>
+            <source>Reading comics</source>
+            <translation>कॉमिक पढ़ना</translation>
+        </message>
+        <message>
+            <source>Pick a progress bar</source>
+            <translation>प्रगति पट्टी चुनें</translation>
+        </message>
+        <message>
+            <source>It shows how far through a chapter you are, and takes you to a page. Colours, edge and strength are in Settings → Reading.</source>
+            <translation>यह दिखाता है कि आप अध्याय में कितना आगे हैं और आपको किसी पेज पर ले जाता है। रंग, किनारा और तीव्रता सेटिंग्स → पढ़ना में हैं।</translation>
+        </message>
+        <message>
+            <source>Stay in the loop</source>
+            <translation>अपडेट रहें</translation>
+        </message>
+        <message>
+            <source>Get notified</source>
+            <translation>सूचना पाएं</translation>
+        </message>
+        <message>
+            <source>New chapters of what you follow, extension updates and news, in your phone's or computer's notifications.</source>
+            <translation>आप जो फ़ॉलो करते हैं उसके नए अध्याय, एक्सटेंशन अपडेट और खबरें, आपके फ़ोन या कंप्यूटर की सूचनाओं में।</translation>
+        </message>
+        <message>
+            <source>New chapters</source>
+            <translation>नए अध्याय</translation>
+        </message>
+        <message>
+            <source>When the series in your library get new chapters or episodes.</source>
+            <translation>जब आपकी लाइब्रेरी की सीरीज़ में नए अध्याय या एपिसोड आते हैं।</translation>
+        </message>
+        <message>
+            <source>News from SCANCORE</source>
+            <translation>SCANCORE की खबरें</translation>
+        </message>
+        <message>
+            <source>Announcements from scancore.onl.</source>
+            <translation>scancore.onl की घोषणाएं।</translation>
+        </message>
+        <message>
+            <source>Allow notifications</source>
+            <translation>सूचनाएं चालू करें</translation>
+        </message>
+        <message>
+            <source>Notifications are allowed</source>
+            <translation>सूचनाएं चालू हैं</translation>
+        </message>
+        <message>
+            <source>Your system shows them</source>
+            <translation>आपका सिस्टम इन्हें दिखाता है</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5584,6 +5879,25 @@
         <message>
             <source>Cancel</source>
             <translation>रद्द करें</translation>
+        </message>
+    </context>
+    <context>
+        <name>ProgressBarPicker</name>
+        <message>
+            <source>Pages</source>
+            <translation>पेज</translation>
+        </message>
+        <message>
+            <source>Line</source>
+            <translation>रेखा</translation>
+        </message>
+        <message>
+            <source>Floating</source>
+            <translation>तैरता हुआ</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>कोई नहीं</translation>
         </message>
     </context>
     <context>
@@ -6046,6 +6360,86 @@
         <message>
             <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
             <translation>पेजों पर: बीच में दो बार टैप ज़ूम इन करता है, फिर से करने पर ज़ूम आउट।</translation>
+        </message>
+        <message>
+            <source>Grey</source>
+            <translation>धूसर</translation>
+        </message>
+        <message>
+            <source>Accent</source>
+            <translation>एक्सेंट</translation>
+        </message>
+        <message>
+            <source>Ocean</source>
+            <translation>समुद्र</translation>
+        </message>
+        <message>
+            <source>Rose</source>
+            <translation>गुलाबी</translation>
+        </message>
+        <message>
+            <source>Mint</source>
+            <translation>पुदीना</translation>
+        </message>
+        <message>
+            <source>Comic progress bar</source>
+            <translation>कॉमिक प्रगति पट्टी</translation>
+        </message>
+        <message>
+            <source>How far through the chapter you are. Tap or drag along it in the reader to go to a page.</source>
+            <translation>आप अध्याय में कितना आगे हैं। किसी पेज पर जाने के लिए रीडर में इस पर टैप करें या खींचें।</translation>
+        </message>
+        <message>
+            <source>Show it</source>
+            <translation>दिखाएं</translation>
+        </message>
+        <message>
+            <source>Always</source>
+            <translation>हमेशा</translation>
+        </message>
+        <message>
+            <source>With controls</source>
+            <translation>कंट्रोल के साथ</translation>
+        </message>
+        <message>
+            <source>Edge</source>
+            <translation>किनारा</translation>
+        </message>
+        <message>
+            <source>Left</source>
+            <translation>बाएं</translation>
+        </message>
+        <message>
+            <source>Right</source>
+            <translation>दाएं</translation>
+        </message>
+        <message>
+            <source>Bottom</source>
+            <translation>नीचे</translation>
+        </message>
+        <message>
+            <source>Thickness</source>
+            <translation>मोटाई</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>पतली</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>मोटी</translation>
+        </message>
+        <message>
+            <source>Strength</source>
+            <translation>तीव्रता</translation>
+        </message>
+        <message>
+            <source>Lower lets the page show through.</source>
+            <translation>कम करने पर पेज आर-पार दिखता है।</translation>
+        </message>
+        <message>
+            <source>Colours</source>
+            <translation>रंग</translation>
         </message>
     </context>
     <context>
@@ -7270,6 +7664,26 @@
             <source>No built-in source matches. Extension sources are on the Extensions page.</source>
             <translation>कोई बिल्ट-इन सोर्स मेल नहीं खाता। एक्सटेंशन के सोर्स एक्सटेंशन पेज पर हैं।</translation>
         </message>
+        <message>
+            <source>Extension log</source>
+            <translation>एक्सटेंशन लॉग</translation>
+        </message>
+        <message>
+            <source>What the extensions reported since they last started, errors included. Attach it to a bug report.</source>
+            <translation>एक्सटेंशन ने पिछली बार शुरू होने के बाद से क्या बताया, त्रुटियों सहित। इसे बग रिपोर्ट के साथ जोड़ें।</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>खोलें</translation>
+        </message>
+        <message>
+            <source>Mihon's storage folder works too: the chapters it downloaded open from your library.</source>
+            <translation>Mihon का स्टोरेज फ़ोल्डर भी चलता है: उसके डाउनलोड किए अध्याय आपकी लाइब्रेरी से खुलते हैं।</translation>
+        </message>
+        <message>
+            <source>Mihon's downloads · </source>
+            <translation>Mihon के डाउनलोड · </translation>
+        </message>
     </context>
     <context>
         <name>StateView</name>
@@ -8380,6 +8794,10 @@
             <source>Close</source>
             <translation>बंद करें</translation>
         </message>
+        <message>
+            <source>All extensions</source>
+            <translation>सभी एक्सटेंशन</translation>
+        </message>
     </context>
     <context>
         <name>WatchPage</name>
@@ -9089,6 +9507,14 @@
         <message>
             <source>Open Extensions to update them.</source>
             <translation>उन्हें अपडेट करने के लिए एक्सटेंशन खोलें।</translation>
+        </message>
+        <message>
+            <source>%1 was updated</source>
+            <translation>%1 अपडेट हुआ</translation>
+        </message>
+        <message>
+            <source>%1 extensions were updated</source>
+            <translation>%1 एक्सटेंशन अपडेट हुए</translation>
         </message>
     </context>
     <context>

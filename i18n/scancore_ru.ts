@@ -1397,6 +1397,58 @@
             <source>Plays twice as fast while your finger stays down.</source>
             <translation>Воспроизводит вдвое быстрее, пока палец на экране.</translation>
         </message>
+        <message>
+            <source>Anime from AniList and MyAnimeList</source>
+            <translation>Аниме из AniList и MyAnimeList</translation>
+        </message>
+        <message>
+            <source>What you pick under Watch from for an anime is remembered for it, whatever is set here.</source>
+            <translation>Выбор в Смотреть на для аниме запоминается для него, что бы ни было задано здесь.</translation>
+        </message>
+        <message>
+            <source>Play from</source>
+            <translation>Источник воспроизведения</translation>
+        </message>
+        <message>
+            <source>The built-in servers. Extensions are looked in only when you choose Watch from.</source>
+            <translation>Встроенные серверы. Расширения просматриваются, только когда вы выбираете Смотреть на.</translation>
+        </message>
+        <message>
+            <source>Your anime extensions, when one clearly has it; otherwise you choose.</source>
+            <translation>Ваши расширения аниме, когда одно точно его содержит; иначе выбираете вы.</translation>
+        </message>
+        <message>
+            <source>Asks the first time each anime plays.</source>
+            <translation>Спрашивает при первом запуске каждого аниме.</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>Встроенные</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Расширения</translation>
+        </message>
+        <message>
+            <source>Ask</source>
+            <translation>Спрашивать</translation>
+        </message>
+        <message>
+            <source>Extensions to look in</source>
+            <translation>Расширения для поиска</translation>
+        </message>
+        <message>
+            <source>All of them</source>
+            <translation>Все</translation>
+        </message>
+        <message>
+            <source>%1 chosen</source>
+            <translation>Выбрано: %1</translation>
+        </message>
+        <message>
+            <source>All extensions</source>
+            <translation>Все расширения</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1817,6 +1869,26 @@
             <source>it</source>
             <translation>неё</translation>
         </message>
+        <message>
+            <source>Line</source>
+            <translation>Линия</translation>
+        </message>
+        <message>
+            <source>Floating</source>
+            <translation>Плавающая</translation>
+        </message>
+        <message>
+            <source>Left</source>
+            <translation>Слева</translation>
+        </message>
+        <message>
+            <source>Right</source>
+            <translation>Справа</translation>
+        </message>
+        <message>
+            <source>Bottom</source>
+            <translation>Снизу</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -1947,6 +2019,14 @@
         <message>
             <source>%1 chapters</source>
             <translation>Глав: %1</translation>
+        </message>
+        <message>
+            <source>%1 from your extensions</source>
+            <translation>%1 из ваших расширений</translation>
+        </message>
+        <message>
+            <source>%1 still searching</source>
+            <translation>Ещё ищут: %1</translation>
         </message>
     </context>
     <context>
@@ -2428,6 +2508,26 @@
             <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
             <translation>Резервная копия Mihon, Komikku, TachiyomiSY, Tachiyomi или Aniyomi (*.tachibk *.proto.gz)</translation>
         </message>
+        <message>
+            <source>%1 downloaded chapters read from Mihon's folder</source>
+            <translation>%1 загруженных глав читаются из папки Mihon</translation>
+        </message>
+        <message>
+            <source>Chapters Mihon downloaded</source>
+            <translation>Главы, загруженные в Mihon</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>Искать снова</translation>
+        </message>
+        <message>
+            <source>Add folder</source>
+            <translation>Добавить папку</translation>
+        </message>
+        <message>
+            <source>Choose folder</source>
+            <translation>Выбрать папку</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -2766,6 +2866,22 @@
             <source>Delete</source>
             <translation>Удалить</translation>
         </message>
+        <message>
+            <source>%1 in Mihon's folder</source>
+            <translation>%1 в папке Mihon</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>Глав: %1</translation>
+        </message>
+        <message>
+            <source>In Mihon's folder</source>
+            <translation>В папке Mihon</translation>
+        </message>
+        <message>
+            <source>Stop reading these from Mihon's folder (the files stay)</source>
+            <translation>Не читать их из папки Mihon (файлы останутся)</translation>
+        </message>
     </context>
     <context>
         <name>EditPageBar</name>
@@ -3003,6 +3119,74 @@
         <message>
             <source>Link copied</source>
             <translation>Ссылка скопирована</translation>
+        </message>
+        <message>
+            <source>All repositories</source>
+            <translation>Все репозитории</translation>
+        </message>
+        <message>
+            <source>1 update ready</source>
+            <translation>Готово 1 обновление</translation>
+        </message>
+        <message>
+            <source>%1 updates ready</source>
+            <translation>Готово обновлений: %1</translation>
+        </message>
+        <message>
+            <source>Extensions are up to date</source>
+            <translation>Расширения обновлены</translation>
+        </message>
+        <message>
+            <source>Checking the repositories…</source>
+            <translation>Проверка репозиториев…</translation>
+        </message>
+        <message>
+            <source>Checked %1</source>
+            <translation>Проверено %1</translation>
+        </message>
+        <message>
+            <source>Not checked yet</source>
+            <translation>Ещё не проверено</translation>
+        </message>
+        <message>
+            <source>trusted ones update by themselves</source>
+            <translation>доверенные обновляются сами</translation>
+        </message>
+        <message>
+            <source>Update all</source>
+            <translation>Обновить все</translation>
+        </message>
+        <message>
+            <source>Check for updates</source>
+            <translation>Проверить обновления</translation>
+        </message>
+        <message>
+            <source>All kinds</source>
+            <translation>Все виды</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Комиксы</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Новеллы</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Аниме</translation>
+        </message>
+        <message>
+            <source>Repository</source>
+            <translation>Репозиторий</translation>
+        </message>
+        <message>
+            <source>18+</source>
+            <translation>18+</translation>
+        </message>
+        <message>
+            <source>Its extensions</source>
+            <translation>Его расширения</translation>
         </message>
     </context>
     <context>
@@ -4580,6 +4764,41 @@
         </message>
     </context>
     <context>
+        <name>MihonFolderPicker</name>
+        <message>
+            <source>Looking through Mihon's downloads…</source>
+            <translation>Просмотр загрузок Mihon…</translation>
+        </message>
+        <message>
+            <source>Choose Mihon's storage folder, or the downloads folder in it. Its chapters then open offline from your library, with your progress. Nothing is copied.</source>
+            <translation>Выберите папку хранения Mihon или папку загрузок в ней. Её главы будут открываться офлайн из вашей библиотеки, с вашим прогрессом. Ничего не копируется.</translation>
+        </message>
+        <message>
+            <source>%1 chapters of %2 series open offline from Mihon's folder</source>
+            <translation>%1 глав из %2 серий открываются офлайн из папки Mihon</translation>
+        </message>
+        <message>
+            <source>%1 series not in your library are under On this device</source>
+            <translation>Серии не из вашей библиотеки (%1) — в разделе На этом устройстве</translation>
+        </message>
+        <message>
+            <source>Mihon's storage folder</source>
+            <translation>Папка хранения Mihon</translation>
+        </message>
+        <message>
+            <source>No Mihon downloads in that folder. Choose the folder Mihon keeps its data in (Mihon: More → Settings → Data and storage → Storage location), or the downloads folder inside it.</source>
+            <translation>В этой папке нет загрузок Mihon. Выберите папку, где Mihon хранит данные (Mihon: Ещё → Настройки → Данные и хранилище → Место хранения), или папку загрузок в ней.</translation>
+        </message>
+        <message>
+            <source>%1 chapters of %2 series from Mihon now open offline</source>
+            <translation>%1 глав из %2 серий из Mihon теперь открываются офлайн</translation>
+        </message>
+        <message>
+            <source>Mihon's downloads are under On this device. Import a Mihon backup to link them to your library.</source>
+            <translation>Загрузки Mihon — в разделе На этом устройстве. Импортируйте резервную копию Mihon, чтобы связать их с библиотекой.</translation>
+        </message>
+    </context>
+    <context>
         <name>MihonImportDialog</name>
         <message>
             <source>Bring back everything from Mihon</source>
@@ -4640,6 +4859,30 @@
         <message>
             <source>Your lists come along in %1's order: %2.</source>
             <translation>Ваши списки приходят в порядке %1: %2.</translation>
+        </message>
+        <message>
+            <source>Chapters %1 downloaded</source>
+            <translation>Главы, загруженные в %1</translation>
+        </message>
+        <message>
+            <source>Looking through the folder…</source>
+            <translation>Просмотр папки…</translation>
+        </message>
+        <message>
+            <source>Read from its folder after the import, offline and with your progress. Nothing is copied.</source>
+            <translation>Читаются из его папки после импорта, офлайн и с вашим прогрессом. Ничего не копируется.</translation>
+        </message>
+        <message>
+            <source>Choose its storage folder (More → Settings → Data and storage) to read them here offline. Nothing is copied.</source>
+            <translation>Выберите его папку хранения (Ещё → Настройки → Данные и хранилище), чтобы читать их здесь офлайн. Ничего не копируется.</translation>
+        </message>
+        <message>
+            <source>Chosen</source>
+            <translation>Выбрано</translation>
+        </message>
+        <message>
+            <source>Choose</source>
+            <translation>Выбрать</translation>
         </message>
     </context>
     <context>
@@ -5342,6 +5585,58 @@
             <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
             <translation>Это необязательно. В SCANCORE есть свои встроенные источники комиксов, новелл и аниме, так что этот шаг можно пропустить и добавить репозиторий позже, если захочется больше.</translation>
         </message>
+        <message>
+            <source>Reading comics</source>
+            <translation>Чтение комиксов</translation>
+        </message>
+        <message>
+            <source>Pick a progress bar</source>
+            <translation>Выберите полосу прогресса</translation>
+        </message>
+        <message>
+            <source>It shows how far through a chapter you are, and takes you to a page. Colours, edge and strength are in Settings → Reading.</source>
+            <translation>Показывает, сколько главы прочитано, и переносит к странице. Цвета, край и яркость — в Настройки → Чтение.</translation>
+        </message>
+        <message>
+            <source>Stay in the loop</source>
+            <translation>Будьте в курсе</translation>
+        </message>
+        <message>
+            <source>Get notified</source>
+            <translation>Получайте уведомления</translation>
+        </message>
+        <message>
+            <source>New chapters of what you follow, extension updates and news, in your phone's or computer's notifications.</source>
+            <translation>Новые главы того, что вы читаете, обновления расширений и новости — в уведомлениях телефона или компьютера.</translation>
+        </message>
+        <message>
+            <source>New chapters</source>
+            <translation>Новые главы</translation>
+        </message>
+        <message>
+            <source>When the series in your library get new chapters or episodes.</source>
+            <translation>Когда у серий в вашей библиотеке выходят новые главы или серии.</translation>
+        </message>
+        <message>
+            <source>News from SCANCORE</source>
+            <translation>Новости SCANCORE</translation>
+        </message>
+        <message>
+            <source>Announcements from scancore.onl.</source>
+            <translation>Объявления с scancore.onl.</translation>
+        </message>
+        <message>
+            <source>Allow notifications</source>
+            <translation>Разрешить уведомления</translation>
+        </message>
+        <message>
+            <source>Notifications are allowed</source>
+            <translation>Уведомления разрешены</translation>
+        </message>
+        <message>
+            <source>Your system shows them</source>
+            <translation>Ваша система их показывает</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5592,6 +5887,25 @@
         <message>
             <source>Cancel</source>
             <translation>Отмена</translation>
+        </message>
+    </context>
+    <context>
+        <name>ProgressBarPicker</name>
+        <message>
+            <source>Pages</source>
+            <translation>Страницы</translation>
+        </message>
+        <message>
+            <source>Line</source>
+            <translation>Линия</translation>
+        </message>
+        <message>
+            <source>Floating</source>
+            <translation>Плавающая</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>Нет</translation>
         </message>
     </context>
     <context>
@@ -6054,6 +6368,86 @@
         <message>
             <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
             <translation>На страницах: двойное касание в центре увеличивает, повторное — уменьшает.</translation>
+        </message>
+        <message>
+            <source>Grey</source>
+            <translation>Серый</translation>
+        </message>
+        <message>
+            <source>Accent</source>
+            <translation>Акцент</translation>
+        </message>
+        <message>
+            <source>Ocean</source>
+            <translation>Океан</translation>
+        </message>
+        <message>
+            <source>Rose</source>
+            <translation>Розовый</translation>
+        </message>
+        <message>
+            <source>Mint</source>
+            <translation>Мята</translation>
+        </message>
+        <message>
+            <source>Comic progress bar</source>
+            <translation>Полоса прогресса комиксов</translation>
+        </message>
+        <message>
+            <source>How far through the chapter you are. Tap or drag along it in the reader to go to a page.</source>
+            <translation>Сколько главы вы прочитали. Нажмите или проведите по ней в читалке, чтобы перейти к странице.</translation>
+        </message>
+        <message>
+            <source>Show it</source>
+            <translation>Показывать</translation>
+        </message>
+        <message>
+            <source>Always</source>
+            <translation>Всегда</translation>
+        </message>
+        <message>
+            <source>With controls</source>
+            <translation>С кнопками</translation>
+        </message>
+        <message>
+            <source>Edge</source>
+            <translation>Край</translation>
+        </message>
+        <message>
+            <source>Left</source>
+            <translation>Слева</translation>
+        </message>
+        <message>
+            <source>Right</source>
+            <translation>Справа</translation>
+        </message>
+        <message>
+            <source>Bottom</source>
+            <translation>Снизу</translation>
+        </message>
+        <message>
+            <source>Thickness</source>
+            <translation>Толщина</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>Тонкая</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>Толстая</translation>
+        </message>
+        <message>
+            <source>Strength</source>
+            <translation>Яркость</translation>
+        </message>
+        <message>
+            <source>Lower lets the page show through.</source>
+            <translation>Меньше — страница просвечивает.</translation>
+        </message>
+        <message>
+            <source>Colours</source>
+            <translation>Цвета</translation>
         </message>
     </context>
     <context>
@@ -7285,6 +7679,26 @@
             <source>No built-in source matches. Extension sources are on the Extensions page.</source>
             <translation>Подходящих встроенных источников нет. Источники расширений — на странице «Расширения».</translation>
         </message>
+        <message>
+            <source>Extension log</source>
+            <translation>Журнал расширений</translation>
+        </message>
+        <message>
+            <source>What the extensions reported since they last started, errors included. Attach it to a bug report.</source>
+            <translation>Что сообщили расширения с последнего запуска, включая ошибки. Приложите это к отчёту об ошибке.</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Открыть</translation>
+        </message>
+        <message>
+            <source>Mihon's storage folder works too: the chapters it downloaded open from your library.</source>
+            <translation>Подойдёт и папка хранения Mihon: загруженные главы открываются из вашей библиотеки.</translation>
+        </message>
+        <message>
+            <source>Mihon's downloads · </source>
+            <translation>Загрузки Mihon · </translation>
+        </message>
     </context>
     <context>
         <name>StateView</name>
@@ -8395,6 +8809,10 @@
             <source>Close</source>
             <translation>Закрыть</translation>
         </message>
+        <message>
+            <source>All extensions</source>
+            <translation>Все расширения</translation>
+        </message>
     </context>
     <context>
         <name>WatchPage</name>
@@ -9097,6 +9515,14 @@
         <message>
             <source>Open Extensions to update them.</source>
             <translation>Откройте «Расширения», чтобы обновить их.</translation>
+        </message>
+        <message>
+            <source>%1 was updated</source>
+            <translation>%1 обновлено</translation>
+        </message>
+        <message>
+            <source>%1 extensions were updated</source>
+            <translation>Обновлено расширений: %1</translation>
         </message>
     </context>
     <context>

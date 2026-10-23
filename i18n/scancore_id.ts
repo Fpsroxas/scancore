@@ -1397,6 +1397,58 @@
             <source>Plays twice as fast while your finger stays down.</source>
             <translation>Diputar dua kali lebih cepat selama jarimu tetap menempel.</translation>
         </message>
+        <message>
+            <source>Anime from AniList and MyAnimeList</source>
+            <translation>Anime dari AniList dan MyAnimeList</translation>
+        </message>
+        <message>
+            <source>What you pick under Watch from for an anime is remembered for it, whatever is set here.</source>
+            <translation>Pilihanmu di Tonton dari untuk sebuah anime diingat untuknya, apa pun setelan di sini.</translation>
+        </message>
+        <message>
+            <source>Play from</source>
+            <translation>Putar dari</translation>
+        </message>
+        <message>
+            <source>The built-in servers. Extensions are looked in only when you choose Watch from.</source>
+            <translation>Server bawaan. Ekstensi hanya dicari saat kamu memilih Tonton dari.</translation>
+        </message>
+        <message>
+            <source>Your anime extensions, when one clearly has it; otherwise you choose.</source>
+            <translation>Ekstensi animemu, saat salah satunya jelas memilikinya; jika tidak, kamu yang memilih.</translation>
+        </message>
+        <message>
+            <source>Asks the first time each anime plays.</source>
+            <translation>Bertanya saat tiap anime pertama kali diputar.</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>Bawaan</translation>
+        </message>
+        <message>
+            <source>Extensions</source>
+            <translation>Ekstensi</translation>
+        </message>
+        <message>
+            <source>Ask</source>
+            <translation>Tanya</translation>
+        </message>
+        <message>
+            <source>Extensions to look in</source>
+            <translation>Ekstensi yang dicari</translation>
+        </message>
+        <message>
+            <source>All of them</source>
+            <translation>Semuanya</translation>
+        </message>
+        <message>
+            <source>%1 chosen</source>
+            <translation>%1 dipilih</translation>
+        </message>
+        <message>
+            <source>All extensions</source>
+            <translation>Semua ekstensi</translation>
+        </message>
     </context>
     <context>
         <name>AuthForm</name>
@@ -1817,6 +1869,26 @@
             <source>Two pages</source>
             <translation>Dua halaman</translation>
         </message>
+        <message>
+            <source>Line</source>
+            <translation>Garis</translation>
+        </message>
+        <message>
+            <source>Floating</source>
+            <translation>Mengambang</translation>
+        </message>
+        <message>
+            <source>Left</source>
+            <translation>Kiri</translation>
+        </message>
+        <message>
+            <source>Right</source>
+            <translation>Kanan</translation>
+        </message>
+        <message>
+            <source>Bottom</source>
+            <translation>Bawah</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -1947,6 +2019,14 @@
         <message>
             <source>%1 chapters</source>
             <translation>%1 bab</translation>
+        </message>
+        <message>
+            <source>%1 from your extensions</source>
+            <translation>%1 dari ekstensimu</translation>
+        </message>
+        <message>
+            <source>%1 still searching</source>
+            <translation>%1 masih mencari</translation>
         </message>
     </context>
     <context>
@@ -2428,6 +2508,26 @@
             <source>Mihon, Komikku, TachiyomiSY, Tachiyomi or Aniyomi backup (*.tachibk *.proto.gz)</source>
             <translation>Cadangan Mihon, Komikku, TachiyomiSY, Tachiyomi atau Aniyomi (*.tachibk *.proto.gz)</translation>
         </message>
+        <message>
+            <source>%1 downloaded chapters read from Mihon's folder</source>
+            <translation>%1 bab unduhan dibaca dari folder Mihon</translation>
+        </message>
+        <message>
+            <source>Chapters Mihon downloaded</source>
+            <translation>Bab yang diunduh di Mihon</translation>
+        </message>
+        <message>
+            <source>Look again</source>
+            <translation>Cari lagi</translation>
+        </message>
+        <message>
+            <source>Add folder</source>
+            <translation>Tambah folder</translation>
+        </message>
+        <message>
+            <source>Choose folder</source>
+            <translation>Pilih folder</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -2766,6 +2866,22 @@
             <source>Delete</source>
             <translation>Hapus</translation>
         </message>
+        <message>
+            <source>%1 in Mihon's folder</source>
+            <translation>%1 di folder Mihon</translation>
+        </message>
+        <message>
+            <source>%1 chapters</source>
+            <translation>%1 bab</translation>
+        </message>
+        <message>
+            <source>In Mihon's folder</source>
+            <translation>Di folder Mihon</translation>
+        </message>
+        <message>
+            <source>Stop reading these from Mihon's folder (the files stay)</source>
+            <translation>Berhenti membaca ini dari folder Mihon (berkasnya tetap ada)</translation>
+        </message>
     </context>
     <context>
         <name>EditPageBar</name>
@@ -3003,6 +3119,74 @@
         <message>
             <source>Link copied</source>
             <translation>Tautan disalin</translation>
+        </message>
+        <message>
+            <source>All repositories</source>
+            <translation>Semua repositori</translation>
+        </message>
+        <message>
+            <source>1 update ready</source>
+            <translation>1 pembaruan siap</translation>
+        </message>
+        <message>
+            <source>%1 updates ready</source>
+            <translation>%1 pembaruan siap</translation>
+        </message>
+        <message>
+            <source>Extensions are up to date</source>
+            <translation>Ekstensi sudah terbaru</translation>
+        </message>
+        <message>
+            <source>Checking the repositories…</source>
+            <translation>Memeriksa repositori…</translation>
+        </message>
+        <message>
+            <source>Checked %1</source>
+            <translation>Diperiksa %1</translation>
+        </message>
+        <message>
+            <source>Not checked yet</source>
+            <translation>Belum diperiksa</translation>
+        </message>
+        <message>
+            <source>trusted ones update by themselves</source>
+            <translation>yang tepercaya memperbarui diri sendiri</translation>
+        </message>
+        <message>
+            <source>Update all</source>
+            <translation>Perbarui semua</translation>
+        </message>
+        <message>
+            <source>Check for updates</source>
+            <translation>Periksa pembaruan</translation>
+        </message>
+        <message>
+            <source>All kinds</source>
+            <translation>Semua jenis</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Repository</source>
+            <translation>Repositori</translation>
+        </message>
+        <message>
+            <source>18+</source>
+            <translation>18+</translation>
+        </message>
+        <message>
+            <source>Its extensions</source>
+            <translation>Ekstensinya</translation>
         </message>
     </context>
     <context>
@@ -4580,6 +4764,41 @@
         </message>
     </context>
     <context>
+        <name>MihonFolderPicker</name>
+        <message>
+            <source>Looking through Mihon's downloads…</source>
+            <translation>Memeriksa unduhan Mihon…</translation>
+        </message>
+        <message>
+            <source>Choose Mihon's storage folder, or the downloads folder in it. Its chapters then open offline from your library, with your progress. Nothing is copied.</source>
+            <translation>Pilih folder penyimpanan Mihon, atau folder unduhan di dalamnya. Babnya lalu terbuka offline dari pustakamu, dengan progresmu. Tidak ada yang disalin.</translation>
+        </message>
+        <message>
+            <source>%1 chapters of %2 series open offline from Mihon's folder</source>
+            <translation>%1 bab dari %2 seri terbuka offline dari folder Mihon</translation>
+        </message>
+        <message>
+            <source>%1 series not in your library are under On this device</source>
+            <translation>%1 seri yang tidak ada di pustakamu ada di Di perangkat ini</translation>
+        </message>
+        <message>
+            <source>Mihon's storage folder</source>
+            <translation>Folder penyimpanan Mihon</translation>
+        </message>
+        <message>
+            <source>No Mihon downloads in that folder. Choose the folder Mihon keeps its data in (Mihon: More → Settings → Data and storage → Storage location), or the downloads folder inside it.</source>
+            <translation>Tidak ada unduhan Mihon di folder itu. Pilih folder tempat Mihon menyimpan datanya (Mihon: Lainnya → Setelan → Data dan penyimpanan → Lokasi penyimpanan), atau folder unduhan di dalamnya.</translation>
+        </message>
+        <message>
+            <source>%1 chapters of %2 series from Mihon now open offline</source>
+            <translation>%1 bab dari %2 seri dari Mihon kini terbuka offline</translation>
+        </message>
+        <message>
+            <source>Mihon's downloads are under On this device. Import a Mihon backup to link them to your library.</source>
+            <translation>Unduhan Mihon ada di Di perangkat ini. Impor cadangan Mihon untuk menautkannya ke pustakamu.</translation>
+        </message>
+    </context>
+    <context>
         <name>MihonImportDialog</name>
         <message>
             <source>Bring back everything from Mihon</source>
@@ -4640,6 +4859,30 @@
         <message>
             <source>Your lists come along in %1's order: %2.</source>
             <translation>Daftarmu ikut dalam urutan %1: %2.</translation>
+        </message>
+        <message>
+            <source>Chapters %1 downloaded</source>
+            <translation>Bab yang diunduh di %1</translation>
+        </message>
+        <message>
+            <source>Looking through the folder…</source>
+            <translation>Memeriksa folder…</translation>
+        </message>
+        <message>
+            <source>Read from its folder after the import, offline and with your progress. Nothing is copied.</source>
+            <translation>Dibaca dari foldernya setelah impor, offline dan dengan progresmu. Tidak ada yang disalin.</translation>
+        </message>
+        <message>
+            <source>Choose its storage folder (More → Settings → Data and storage) to read them here offline. Nothing is copied.</source>
+            <translation>Pilih folder penyimpanannya (Lainnya → Setelan → Data dan penyimpanan) untuk membacanya di sini secara offline. Tidak ada yang disalin.</translation>
+        </message>
+        <message>
+            <source>Chosen</source>
+            <translation>Dipilih</translation>
+        </message>
+        <message>
+            <source>Choose</source>
+            <translation>Pilih</translation>
         </message>
     </context>
     <context>
@@ -5342,6 +5585,58 @@
             <source>This is optional. SCANCORE comes with its own built-in sources for comics, novels and anime, so you can skip this step and add a repository later if you want more.</source>
             <translation>Ini opsional. SCANCORE punya sumber bawaan sendiri untuk komik, novel, dan anime, jadi kamu bisa melewati langkah ini dan menambahkan repositori nanti kalau ingin lebih.</translation>
         </message>
+        <message>
+            <source>Reading comics</source>
+            <translation>Membaca komik</translation>
+        </message>
+        <message>
+            <source>Pick a progress bar</source>
+            <translation>Pilih bilah progres</translation>
+        </message>
+        <message>
+            <source>It shows how far through a chapter you are, and takes you to a page. Colours, edge and strength are in Settings → Reading.</source>
+            <translation>Menunjukkan sejauh mana kamu dalam bab dan membawamu ke halaman. Warna, tepi, dan kekuatan ada di Setelan → Membaca.</translation>
+        </message>
+        <message>
+            <source>Stay in the loop</source>
+            <translation>Tetap update</translation>
+        </message>
+        <message>
+            <source>Get notified</source>
+            <translation>Dapatkan notifikasi</translation>
+        </message>
+        <message>
+            <source>New chapters of what you follow, extension updates and news, in your phone's or computer's notifications.</source>
+            <translation>Bab baru dari yang kamu ikuti, pembaruan ekstensi, dan berita, di notifikasi ponsel atau komputermu.</translation>
+        </message>
+        <message>
+            <source>New chapters</source>
+            <translation>Bab baru</translation>
+        </message>
+        <message>
+            <source>When the series in your library get new chapters or episodes.</source>
+            <translation>Saat seri di pustakamu mendapat bab atau episode baru.</translation>
+        </message>
+        <message>
+            <source>News from SCANCORE</source>
+            <translation>Berita dari SCANCORE</translation>
+        </message>
+        <message>
+            <source>Announcements from scancore.onl.</source>
+            <translation>Pengumuman dari scancore.onl.</translation>
+        </message>
+        <message>
+            <source>Allow notifications</source>
+            <translation>Izinkan notifikasi</translation>
+        </message>
+        <message>
+            <source>Notifications are allowed</source>
+            <translation>Notifikasi diizinkan</translation>
+        </message>
+        <message>
+            <source>Your system shows them</source>
+            <translation>Sistemmu menampilkannya</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5592,6 +5887,25 @@
         <message>
             <source>Cancel</source>
             <translation>Batal</translation>
+        </message>
+    </context>
+    <context>
+        <name>ProgressBarPicker</name>
+        <message>
+            <source>Pages</source>
+            <translation>Halaman</translation>
+        </message>
+        <message>
+            <source>Line</source>
+            <translation>Garis</translation>
+        </message>
+        <message>
+            <source>Floating</source>
+            <translation>Mengambang</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>Tidak ada</translation>
         </message>
     </context>
     <context>
@@ -6054,6 +6368,86 @@
         <message>
             <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
             <translation>Di halaman: ketuk dua kali di tengah untuk memperbesar, sekali lagi untuk memperkecil.</translation>
+        </message>
+        <message>
+            <source>Grey</source>
+            <translation>Abu-abu</translation>
+        </message>
+        <message>
+            <source>Accent</source>
+            <translation>Aksen</translation>
+        </message>
+        <message>
+            <source>Ocean</source>
+            <translation>Samudra</translation>
+        </message>
+        <message>
+            <source>Rose</source>
+            <translation>Mawar</translation>
+        </message>
+        <message>
+            <source>Mint</source>
+            <translation>Mint</translation>
+        </message>
+        <message>
+            <source>Comic progress bar</source>
+            <translation>Bilah progres komik</translation>
+        </message>
+        <message>
+            <source>How far through the chapter you are. Tap or drag along it in the reader to go to a page.</source>
+            <translation>Sejauh mana kamu dalam bab. Ketuk atau seret di atasnya di pembaca untuk pindah ke halaman.</translation>
+        </message>
+        <message>
+            <source>Show it</source>
+            <translation>Tampilkan</translation>
+        </message>
+        <message>
+            <source>Always</source>
+            <translation>Selalu</translation>
+        </message>
+        <message>
+            <source>With controls</source>
+            <translation>Bersama kontrol</translation>
+        </message>
+        <message>
+            <source>Edge</source>
+            <translation>Tepi</translation>
+        </message>
+        <message>
+            <source>Left</source>
+            <translation>Kiri</translation>
+        </message>
+        <message>
+            <source>Right</source>
+            <translation>Kanan</translation>
+        </message>
+        <message>
+            <source>Bottom</source>
+            <translation>Bawah</translation>
+        </message>
+        <message>
+            <source>Thickness</source>
+            <translation>Ketebalan</translation>
+        </message>
+        <message>
+            <source>Thin</source>
+            <translation>Tipis</translation>
+        </message>
+        <message>
+            <source>Thick</source>
+            <translation>Tebal</translation>
+        </message>
+        <message>
+            <source>Strength</source>
+            <translation>Kekuatan</translation>
+        </message>
+        <message>
+            <source>Lower lets the page show through.</source>
+            <translation>Lebih rendah membuat halaman terlihat tembus.</translation>
+        </message>
+        <message>
+            <source>Colours</source>
+            <translation>Warna</translation>
         </message>
     </context>
     <context>
@@ -7285,6 +7679,26 @@
             <source>No built-in source matches. Extension sources are on the Extensions page.</source>
             <translation>Tidak ada sumber bawaan yang cocok. Sumber dari ekstensi ada di halaman Ekstensi.</translation>
         </message>
+        <message>
+            <source>Extension log</source>
+            <translation>Log ekstensi</translation>
+        </message>
+        <message>
+            <source>What the extensions reported since they last started, errors included. Attach it to a bug report.</source>
+            <translation>Apa yang dilaporkan ekstensi sejak terakhir dimulai, termasuk error. Lampirkan ke laporan bug.</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Buka</translation>
+        </message>
+        <message>
+            <source>Mihon's storage folder works too: the chapters it downloaded open from your library.</source>
+            <translation>Folder penyimpanan Mihon juga bisa: bab yang diunduhnya terbuka dari pustakamu.</translation>
+        </message>
+        <message>
+            <source>Mihon's downloads · </source>
+            <translation>Unduhan Mihon · </translation>
+        </message>
     </context>
     <context>
         <name>StateView</name>
@@ -8395,6 +8809,10 @@
             <source>Close</source>
             <translation>Tutup</translation>
         </message>
+        <message>
+            <source>All extensions</source>
+            <translation>Semua ekstensi</translation>
+        </message>
     </context>
     <context>
         <name>WatchPage</name>
@@ -9097,6 +9515,14 @@
         <message>
             <source>Open Extensions to update them.</source>
             <translation>Buka Ekstensi untuk memperbaruinya.</translation>
+        </message>
+        <message>
+            <source>%1 was updated</source>
+            <translation>%1 telah diperbarui</translation>
+        </message>
+        <message>
+            <source>%1 extensions were updated</source>
+            <translation>%1 ekstensi telah diperbarui</translation>
         </message>
     </context>
     <context>
