@@ -11,6 +11,12 @@ Item {
     // The results so far: sources answer one by one, so the grid fills
     // while the slower ones are still searching.
     readonly property var found: !searchTask ? null : searchTask.ok ? searchTask.result : searchTask.loading ? (searchTask.partial || null) : null
+    // Beside a catalogue search: the installed extensions, searched too (the
+    // catalogue does not know their titles), streamed in as they answer.
+    property var extensionTask: null
+    readonly property var extensionFound: !extensionTask ? null : extensionTask.ok ? extensionTask.result
+        : extensionTask.loading ? (extensionTask.partial || null) : null
+    readonly property bool hasExtensions: sources.some(s => String(s.key).startsWith("mihon:"))
     readonly property int stillSearching: found && searchTask.loading ? (found.pending || 0) : 0
     property int latestLimit: 36
     property var latestTask: Comics.latest(latestLimit)
@@ -76,6 +82,7 @@ Item {
         catalogFailed = false
         searchTask = query.length > 0 && useCatalog ? Comics.catalog(query)
             : query.length > 0 || source === "local" ? Comics.search(query, source) : null
+        extensionTask = query.length > 0 && useCatalog && hasExtensions ? Comics.search(query, "extensions") : null
         flick.scrollTo(0)
     }
 
@@ -84,6 +91,8 @@ Item {
         function onFailed() {
             if (!page.useCatalog || page.catalogFailed || page.query.length === 0) return
             page.catalogFailed = true
+            // Every source now, extensions included.
+            page.extensionTask = null
             page.searchTask = Comics.search(page.query, "all")
         }
     }
@@ -236,12 +245,52 @@ Item {
                     width: parent.width
                     task: page.searchTask
                     empty: page.searchTask && page.searchTask.ok && page.found.comics.length === 0
+                           && !(page.extensionFound && (page.extensionFound.comics.length > 0 || page.extensionTask.loading))
                     emptyTitle: page.browsingLocal ? qsTr("No comics on this device yet") : qsTr("No comics found")
                     emptyText: page.browsingLocal
                         ? qsTr("Choose the folders that hold your comics in Settings → Sources. Folders of images, CBZ, CBR and PDF files all work.")
                         : qsTr("Try a shorter title or another source. You can also paste a series link.")
                     emptyIcon: page.browsingLocal ? "folder-open" : "search"
                     onRetry: page.run(page.query)
+                }
+                // Your extensions' results, under the catalogue's.
+                Text {
+                    visible: page.catalogResults && !!page.extensionFound
+                    x: Theme.gutter
+                    width: parent.width - 2 * Theme.gutter
+                    topPadding: 8
+                    text: !page.extensionFound ? ""
+                        : qsTr("%1 from your extensions").arg(page.extensionFound.comics.length)
+                          + (page.extensionTask.loading && page.extensionFound.pending
+                             ? " · " + qsTr("%1 still searching").arg(page.extensionFound.pending) : "")
+                    color: Theme.textMuted
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textSm
+                    wrapMode: Text.Wrap
+                }
+                // Extensions that met a browser check while searching: passed
+                // on a tap, not over the page.
+                Flow {
+                    x: Theme.gutter
+                    width: parent.width - 2 * Theme.gutter
+                    spacing: 8
+                    visible: page.catalogResults && !!page.extensionFound
+                    Repeater {
+                        model: page.catalogResults && page.extensionFound ? page.extensionFound.providers.filter(p => p.verifyUrl).slice(0, 6) : []
+                        ScButton {
+                            required property var modelData
+                            compact: true
+                            iconName: "globe"
+                            text: qsTr("Pass %1's browser check").arg(modelData.label)
+                            onClicked: Router.openSiteCheck(modelData.verifyUrl)
+                        }
+                    }
+                }
+                CoverGrid {
+                    visible: page.catalogResults && !!page.extensionFound && page.extensionFound.comics.length > 0
+                    items: visible ? page.extensionFound.comics : []
+                    subtitleFor: (it) => [it.sourceLabel, it.type, it.units ? (it.units === 1 ? qsTr("1 chapter") : qsTr("%1 chapters").arg(it.units)) : ""].filter(s => s).join(" · ")
+                    onOpened: (it, cover) => Router.openSeries(it, cover)
                 }
                 ScButton {
                     anchors.horizontalCenter: parent.horizontalCenter

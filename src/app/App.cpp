@@ -1,12 +1,15 @@
 #include "App.h"
+#include "core/QuietSites.h"
 #include "KeepAwake.h"
 
 #include "WebBridge.h"
 #include "Images.h"
 #include "Announcements.h"
+#include "Downloads.h"
 #include "CrashLog.h"
 #include "Library.h"
 #include "Live.h"
+#include "Extensions.h"
 #include "Notifications.h"
 #include "Platform.h"
 #include "Profiler.h"
@@ -76,6 +79,16 @@ const QVariantMap kDefaults{
     {"readerRailUnread", "#e4e4e7"},
     {"readerRailRead", "#8b8b94"},
     {"readerRailCurrent", "#000000"},
+    // Its look ("segments", "line", "floating"), edge ("left", "right",
+    // "bottom") and strength (0.3 see-through to 1 solid).
+    {"readerProgressLook", "segments"},
+    // Anime opened from AniList or MyAnimeList play from: "builtin" (the
+    // built-in servers; extensions only from Watch from), "extensions" (the
+    // ones in animeMatchSources, all when empty) or "ask".
+    {"animeTrackerPlayer", "builtin"},
+    {"animeMatchSources", QStringList()},
+    {"readerProgressEdge", "left"},
+    {"readerProgressOpacity", 0.85},
     // Readers open in full screen (their full screen button sets it).
     {"readerFullscreen", false},
     {"novelFont", "Literata"},
@@ -198,6 +211,8 @@ const QVariantMap kDefaults{
 } // namespace
 
 App::App(QObject *parent) : QObject(parent) {
+    // Settings restored before the event loop runs are not changes.
+    QTimer::singleShot(0, this, [this] { m_running = true; });
     m_settings = kDefaults;
     for (auto it = kDefaults.begin(); it != kDefaults.end(); ++it)
         m_settings.insert(it.key(), Database::pref(QStringLiteral("setting.") + it.key(), it.value()));
@@ -332,6 +347,10 @@ void App::setSetting(const QString &key, const QVariant &input) {
         novels::Registry::rebuild();
         emit manifestChanged();
     }
+    // Mihon's downloads in a folder added (or no longer there after one is
+    // taken off the list).
+    if (key == QLatin1String("localFolders") && m_running)
+        Downloads::instance()->relinkMihon();
     if (key == QLatin1String("imageCacheMB")) {
         ImageCache::setBudget(std::max<qint64>(128, value.toLongLong()) * 1024 * 1024);
         // A smaller limit takes effect now, not at the next start.
@@ -384,11 +403,16 @@ bool App::protectedSite(const QString &url) const { return CookieJar::isProtecte
 
 void App::cancelSiteCheck(const QString &url) { answerReader(url, false); }
 
+
 // One window per site: requests that meet the same check wait on it together.
 // Not while SCANCORE is in the background, and not longer than 90 seconds.
 void App::askReader(const QString &url, std::function<void(const QJsonValue &)> answer) {
     if (qGuiApp->applicationState() != Qt::ApplicationActive || CookieJar::isProtected(QUrl(url)))
         return answer(QJsonObject{{"passed", false}});
+    // A search across many sources: not now (the host does not count it as
+    // the reader declining).
+    if (isQuietSite(url))
+        return answer(QJsonObject{{"passed", false}, {"quiet", true}});
     const auto host = QUrl(url).host();
     const bool open = m_readerChecks.contains(host);
     m_readerChecks[host].append(std::move(answer));
@@ -710,8 +734,18 @@ void App::startBackgroundWork() {
         const bool install = m_settings.value(QStringLiteral("autoUpdateExtensions")).toBool();
         runInBackground([install] {
             ext::Manager::refreshAll();
-            if (install)
-                ext::Manager::installTrustedUpdates();
+            // Updated by themselves: said, so it is not a surprise.
+            const auto updated = install ? ext::Manager::installTrustedUpdates() : QList<ext::Installed>();
+            if (!updated.isEmpty()) {
+                QStringList names;
+                for (const auto &i : updated)
+                    names.append(i.package.name);
+                Notifications::post({QStringLiteral("extensions"), QStringLiteral("extensions:updated"),
+                                     updated.size() == 1 ? tr("%1 was updated").arg(names.first())
+                                                         : tr("%1 extensions were updated").arg(updated.size()),
+                                     names.join(QStringLiteral(", ")), QVariantMap{{"page", "extensions"}}, false});
+            }
+            QMetaObject::invokeMethod(Extensions::instance(), [] { Extensions::instance()->notifyExtensionsChanged(); });
             // What is still waiting (new signing keys, or automatic
             // updates off).
             const int waiting = int(ext::Manager::updates().size());

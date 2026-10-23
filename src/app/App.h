@@ -31,6 +31,7 @@ class App : public QObject {
     Q_PROPERTY(QVariantMap startAction READ startAction CONSTANT)
 
 public:
+
     static App *instance();
     static App *create(QQmlEngine *, QJSEngine *) { return instance(); }
 
@@ -181,6 +182,7 @@ private:
     QVariantMap m_settings;
     QTimer m_libraryTimer;
     bool m_batteryRestricted = false;
+    bool m_running = false;
     QSystemTrayIcon *m_tray = nullptr;
 };
 
