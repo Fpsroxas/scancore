@@ -2328,6 +2328,14 @@
             <source>Anime on Simkl.</source>
             <translation>Anime di Simkl.</translation>
         </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>%1 ekstensi terpasang</translation>
+        </message>
+        <message>
+            <source>%1 were in several lists and are in the first</source>
+            <translation>%1 ada di beberapa daftar dan kini di yang pertama</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -4424,6 +4432,61 @@
         </message>
     </context>
     <context>
+        <name>MihonImportDialog</name>
+        <message>
+            <source>Bring back everything from Mihon</source>
+            <translation>Bawa kembali semuanya dari Mihon</translation>
+        </message>
+        <message>
+            <source>%1 comics and %2 anime.</source>
+            <translation>%1 komik dan %2 anime.</translation>
+        </message>
+        <message>
+            <source>Your lists come along in Mihon's order: %1.</source>
+            <translation>Daftarmu ikut dalam urutan Mihon: %1.</translation>
+        </message>
+        <message>
+            <source>Repositories in the backup</source>
+            <translation>Repositori di cadangan</translation>
+        </message>
+        <message>
+            <source>%1 extensions</source>
+            <translation>%1 ekstensi</translation>
+        </message>
+        <message>
+            <source>Extensions are other people's code. Add repositories you trust.</source>
+            <translation>Ekstensi adalah kode buatan orang lain. Tambahkan repositori yang Anda percayai.</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions your series came from</source>
+            <translation>Pasang %1 ekstensi asal seri kamu</translation>
+        </message>
+        <message>
+            <source> and %1 more</source>
+            <translation> dan %1 lainnya</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 seri</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, which downloads first (about 100 MB).</source>
+            <translation>Ekstensi berjalan di runtime Ekstensi, yang diunduh lebih dulu (sekitar 100 MB).</translation>
+        </message>
+        <message>
+            <source>%1 series come from extensions none of these repositories has; they wait below to be found by title.</source>
+            <translation>%1 seri berasal dari ekstensi yang tidak ada di repositori mana pun ini; mereka menunggu di bawah untuk ditemukan lewat judul.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Batal</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>Impor</translation>
+        </message>
+    </context>
+    <context>
         <name>NativePlayer</name>
         <message>
             <source>This copy of SCANCORE has no video player for anime from extensions.</source>
@@ -5729,6 +5792,50 @@
             <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
             <translation>Layar tidak meredup atau terkunci selama pembaca terbuka. Video selalu membuatnya tetap menyala saat diputar.</translation>
         </message>
+        <message>
+            <source>Chapter layout</source>
+            <translation>Tata letak bab</translation>
+        </message>
+        <message>
+            <source>Rows, or a grid of two or more for short titles such as volumes. Each series can have its own from the grid button above its chapters.</source>
+            <translation>Baris, atau kisi dua kolom atau lebih untuk judul pendek seperti volume. Tiap seri bisa punya sendiri lewat tombol kisi di atas babnya.</translation>
+        </message>
+        <message>
+            <source>Rows</source>
+            <translation>Baris</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>Kisi</translation>
+        </message>
+        <message>
+            <source>Long press to zoom</source>
+            <translation>Tekan lama untuk zoom</translation>
+        </message>
+        <message>
+            <source>Hold a finger or the mouse on the page to see it twice as big until you let go, for small dialogue and notes in the margins.</source>
+            <translation>Tahan jari atau mouse di halaman untuk melihatnya dua kali lebih besar sampai dilepas, untuk dialog kecil dan catatan di pinggir.</translation>
+        </message>
+        <message>
+            <source>Long press zoom position</source>
+            <translation>Posisi zoom tekan lama</translation>
+        </message>
+        <message>
+            <source>Where you press</source>
+            <translation>Tempat kamu menekan</translation>
+        </message>
+        <message>
+            <source>Centre</source>
+            <translation>Tengah</translation>
+        </message>
+        <message>
+            <source>Double tap to zoom</source>
+            <translation>Ketuk dua kali untuk zoom</translation>
+        </message>
+        <message>
+            <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
+            <translation>Di halaman: ketuk dua kali di tengah untuk memperbesar, sekali lagi untuk memperkecil.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6182,6 +6289,26 @@
         <message>
             <source>Find it on my extensions</source>
             <translation>Cari di ekstensi saya</translation>
+        </message>
+        <message>
+            <source>Volumes</source>
+            <translation>Volume</translation>
+        </message>
+        <message>
+            <source>Extras</source>
+            <translation>Ekstra</translation>
+        </message>
+        <message>
+            <source>Hide groups</source>
+            <translation>Sembunyikan grup</translation>
+        </message>
+        <message>
+            <source>Show as rows</source>
+            <translation>Tampilkan sebagai baris</translation>
+        </message>
+        <message>
+            <source>Show as a grid</source>
+            <translation>Tampilkan sebagai kisi</translation>
         </message>
     </context>
     <context>

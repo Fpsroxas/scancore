@@ -2328,6 +2328,14 @@
             <source>Anime on Simkl.</source>
             <translation>Anime sa Simkl.</translation>
         </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>%1 extension ang na-install</translation>
+        </message>
+        <message>
+            <source>%1 were in several lists and are in the first</source>
+            <translation>%1 ang nasa ilang listahan at nasa una na</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -4416,6 +4424,61 @@
         </message>
     </context>
     <context>
+        <name>MihonImportDialog</name>
+        <message>
+            <source>Bring back everything from Mihon</source>
+            <translation>Ibalik ang lahat mula sa Mihon</translation>
+        </message>
+        <message>
+            <source>%1 comics and %2 anime.</source>
+            <translation>%1 komiks at %2 anime.</translation>
+        </message>
+        <message>
+            <source>Your lists come along in Mihon's order: %1.</source>
+            <translation>Darating ang iyong mga listahan sa ayos ng Mihon: %1.</translation>
+        </message>
+        <message>
+            <source>Repositories in the backup</source>
+            <translation>Mga repository sa backup</translation>
+        </message>
+        <message>
+            <source>%1 extensions</source>
+            <translation>%1 extension</translation>
+        </message>
+        <message>
+            <source>Extensions are other people's code. Add repositories you trust.</source>
+            <translation>Code ng ibang tao ang mga extension. Magdagdag lang ng mga repository na pinagkakatiwalaan mo.</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions your series came from</source>
+            <translation>I-install ang %1 extension na pinagmulan ng iyong mga serye</translation>
+        </message>
+        <message>
+            <source> and %1 more</source>
+            <translation> at %1 pa</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 serye</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, which downloads first (about 100 MB).</source>
+            <translation>Tumatakbo ang mga extension sa Extensions runtime, na unang dina-download (mga 100 MB).</translation>
+        </message>
+        <message>
+            <source>%1 series come from extensions none of these repositories has; they wait below to be found by title.</source>
+            <translation>%1 serye ang galing sa mga extension na wala sa alinmang repositoryong ito; naghihintay sila sa ibaba na mahanap ayon sa pamagat.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Kanselahin</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>I-import</translation>
+        </message>
+    </context>
+    <context>
         <name>NativePlayer</name>
         <message>
             <source>This copy of SCANCORE has no video player for anime from extensions.</source>
@@ -5721,6 +5784,50 @@
             <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
             <translation>Hindi lalabo o magla-lock ang screen habang bukas ang isang reader. Laging pinapanatiling bukas ito ng mga video habang nagpe-play.</translation>
         </message>
+        <message>
+            <source>Chapter layout</source>
+            <translation>Ayos ng mga kabanata</translation>
+        </message>
+        <message>
+            <source>Rows, or a grid of two or more for short titles such as volumes. Each series can have its own from the grid button above its chapters.</source>
+            <translation>Mga hilera, o grid na dalawa o higit pa para sa maiikling pamagat gaya ng mga volume. Bawat serye ay maaaring may sarili mula sa grid button sa itaas ng mga kabanata nito.</translation>
+        </message>
+        <message>
+            <source>Rows</source>
+            <translation>Mga hilera</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>Grid</translation>
+        </message>
+        <message>
+            <source>Long press to zoom</source>
+            <translation>Pindutin nang matagal para mag-zoom</translation>
+        </message>
+        <message>
+            <source>Hold a finger or the mouse on the page to see it twice as big until you let go, for small dialogue and notes in the margins.</source>
+            <translation>Pindutin nang matagal ang pahina gamit ang daliri o mouse para makita itong doble ang laki hanggang bitawan mo, para sa maliliit na usapan at tala sa gilid.</translation>
+        </message>
+        <message>
+            <source>Long press zoom position</source>
+            <translation>Posisyon ng zoom sa matagal na pagpindot</translation>
+        </message>
+        <message>
+            <source>Where you press</source>
+            <translation>Kung saan ka pumindot</translation>
+        </message>
+        <message>
+            <source>Centre</source>
+            <translation>Gitna</translation>
+        </message>
+        <message>
+            <source>Double tap to zoom</source>
+            <translation>I-double tap para mag-zoom</translation>
+        </message>
+        <message>
+            <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
+            <translation>Sa mga pahina: ang double tap sa gitna ay nagzo-zoom in, ang isa pa ay zoom out.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6167,6 +6274,26 @@
         <message>
             <source>Find it on my extensions</source>
             <translation>Hanapin sa mga extension ko</translation>
+        </message>
+        <message>
+            <source>Volumes</source>
+            <translation>Mga volume</translation>
+        </message>
+        <message>
+            <source>Extras</source>
+            <translation>Extra</translation>
+        </message>
+        <message>
+            <source>Hide groups</source>
+            <translation>Itago ang mga grupo</translation>
+        </message>
+        <message>
+            <source>Show as rows</source>
+            <translation>Ipakita bilang mga hilera</translation>
+        </message>
+        <message>
+            <source>Show as a grid</source>
+            <translation>Ipakita bilang grid</translation>
         </message>
     </context>
     <context>

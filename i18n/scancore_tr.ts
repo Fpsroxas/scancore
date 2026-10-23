@@ -2328,6 +2328,14 @@
             <source>Anime on Simkl.</source>
             <translation>Simkl'de anime.</translation>
         </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>%1 uzantı yüklendi</translation>
+        </message>
+        <message>
+            <source>%1 were in several lists and are in the first</source>
+            <translation>%1 seri birkaç listedeydi ve ilkine kondu</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -4424,6 +4432,61 @@
         </message>
     </context>
     <context>
+        <name>MihonImportDialog</name>
+        <message>
+            <source>Bring back everything from Mihon</source>
+            <translation>Mihon'dan her şeyi geri getir</translation>
+        </message>
+        <message>
+            <source>%1 comics and %2 anime.</source>
+            <translation>%1 çizgi roman ve %2 anime.</translation>
+        </message>
+        <message>
+            <source>Your lists come along in Mihon's order: %1.</source>
+            <translation>Listelerin Mihon'daki sırayla gelir: %1.</translation>
+        </message>
+        <message>
+            <source>Repositories in the backup</source>
+            <translation>Yedekteki depolar</translation>
+        </message>
+        <message>
+            <source>%1 extensions</source>
+            <translation>%1 eklenti</translation>
+        </message>
+        <message>
+            <source>Extensions are other people's code. Add repositories you trust.</source>
+            <translation>Eklentiler başkalarının kodudur. Güvendiğin depoları ekle.</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions your series came from</source>
+            <translation>Serilerinin geldiği %1 eklentiyi kur</translation>
+        </message>
+        <message>
+            <source> and %1 more</source>
+            <translation> ve %1 tane daha</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 seri</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, which downloads first (about 100 MB).</source>
+            <translation>Eklentiler, önce indirilen Eklenti çalışma ortamında çalışır (yaklaşık 100 MB).</translation>
+        </message>
+        <message>
+            <source>%1 series come from extensions none of these repositories has; they wait below to be found by title.</source>
+            <translation>%1 seri, bu depoların hiçbirinde olmayan eklentilerden geliyor; aşağıda başlıktan bulunmayı bekliyorlar.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>İptal</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>İçe aktar</translation>
+        </message>
+    </context>
+    <context>
         <name>NativePlayer</name>
         <message>
             <source>This copy of SCANCORE has no video player for anime from extensions.</source>
@@ -5729,6 +5792,50 @@
             <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
             <translation>Bir okuyucu açıkken ekran kararmaz veya kilitlenmez. Videolar oynarken ekranı her zaman açık tutar.</translation>
         </message>
+        <message>
+            <source>Chapter layout</source>
+            <translation>Bölüm düzeni</translation>
+        </message>
+        <message>
+            <source>Rows, or a grid of two or more for short titles such as volumes. Each series can have its own from the grid button above its chapters.</source>
+            <translation>Satırlar ya da ciltler gibi kısa başlıklar için iki veya daha fazla sütunlu ızgara. Her seri, bölümlerinin üstündeki ızgara düğmesiyle kendininkini seçebilir.</translation>
+        </message>
+        <message>
+            <source>Rows</source>
+            <translation>Satırlar</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>Izgara</translation>
+        </message>
+        <message>
+            <source>Long press to zoom</source>
+            <translation>Yakınlaştırmak için basılı tut</translation>
+        </message>
+        <message>
+            <source>Hold a finger or the mouse on the page to see it twice as big until you let go, for small dialogue and notes in the margins.</source>
+            <translation>Sayfaya bir parmak ya da fareyle basılı tutun, bırakana kadar iki kat büyük görünür: küçük konuşmalar ve kenar notları için.</translation>
+        </message>
+        <message>
+            <source>Long press zoom position</source>
+            <translation>Basılı tutma yakınlaştırma konumu</translation>
+        </message>
+        <message>
+            <source>Where you press</source>
+            <translation>Bastığın yer</translation>
+        </message>
+        <message>
+            <source>Centre</source>
+            <translation>Orta</translation>
+        </message>
+        <message>
+            <source>Double tap to zoom</source>
+            <translation>Yakınlaştırmak için çift dokun</translation>
+        </message>
+        <message>
+            <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
+            <translation>Sayfalarda: ortaya çift dokunuş yakınlaştırır, bir daha uzaklaştırır.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6182,6 +6289,26 @@
         <message>
             <source>Find it on my extensions</source>
             <translation>Uzantılarımda bul</translation>
+        </message>
+        <message>
+            <source>Volumes</source>
+            <translation>Ciltler</translation>
+        </message>
+        <message>
+            <source>Extras</source>
+            <translation>Ekstralar</translation>
+        </message>
+        <message>
+            <source>Hide groups</source>
+            <translation>Grupları gizle</translation>
+        </message>
+        <message>
+            <source>Show as rows</source>
+            <translation>Satır olarak göster</translation>
+        </message>
+        <message>
+            <source>Show as a grid</source>
+            <translation>Izgara olarak göster</translation>
         </message>
     </context>
     <context>

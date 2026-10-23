@@ -2328,6 +2328,14 @@
             <source>Anime on Simkl.</source>
             <translation>Simkl पर एनीमे।</translation>
         </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>%1 एक्सटेंशन इंस्टॉल हुए</translation>
+        </message>
+        <message>
+            <source>%1 were in several lists and are in the first</source>
+            <translation>%1 कई सूचियों में थीं और अब पहली में हैं</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -4416,6 +4424,61 @@
         </message>
     </context>
     <context>
+        <name>MihonImportDialog</name>
+        <message>
+            <source>Bring back everything from Mihon</source>
+            <translation>Mihon से सब कुछ वापस लाएँ</translation>
+        </message>
+        <message>
+            <source>%1 comics and %2 anime.</source>
+            <translation>%1 कॉमिक और %2 एनीमे।</translation>
+        </message>
+        <message>
+            <source>Your lists come along in Mihon's order: %1.</source>
+            <translation>आपकी सूचियाँ Mihon के क्रम में आती हैं: %1।</translation>
+        </message>
+        <message>
+            <source>Repositories in the backup</source>
+            <translation>बैकअप में रिपॉज़िटरी</translation>
+        </message>
+        <message>
+            <source>%1 extensions</source>
+            <translation>%1 एक्सटेंशन</translation>
+        </message>
+        <message>
+            <source>Extensions are other people's code. Add repositories you trust.</source>
+            <translation>एक्सटेंशन दूसरों का कोड हैं। सिर्फ़ भरोसेमंद रिपॉज़िटरी जोड़ें।</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions your series came from</source>
+            <translation>वे %1 एक्सटेंशन इंस्टॉल करें जिनसे आपकी सीरीज़ आई हैं</translation>
+        </message>
+        <message>
+            <source> and %1 more</source>
+            <translation> और %1 और</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 सीरीज़</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, which downloads first (about 100 MB).</source>
+            <translation>एक्सटेंशन, एक्सटेंशन रनटाइम में चलते हैं, जो पहले डाउनलोड होता है (लगभग 100 MB)।</translation>
+        </message>
+        <message>
+            <source>%1 series come from extensions none of these repositories has; they wait below to be found by title.</source>
+            <translation>%1 सीरीज़ ऐसे एक्सटेंशन से हैं जो इनमें से किसी रिपॉज़िटरी में नहीं; वे नीचे शीर्षक से मिलने का इंतज़ार करती हैं।</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>रद्द करें</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>इंपोर्ट करें</translation>
+        </message>
+    </context>
+    <context>
         <name>NativePlayer</name>
         <message>
             <source>This copy of SCANCORE has no video player for anime from extensions.</source>
@@ -5721,6 +5784,50 @@
             <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
             <translation>रीडर खुला रहने तक स्क्रीन धुंधली या लॉक नहीं होती। वीडियो चलते समय स्क्रीन हमेशा चालू रहती है।</translation>
         </message>
+        <message>
+            <source>Chapter layout</source>
+            <translation>अध्यायों का लेआउट</translation>
+        </message>
+        <message>
+            <source>Rows, or a grid of two or more for short titles such as volumes. Each series can have its own from the grid button above its chapters.</source>
+            <translation>पंक्तियाँ, या छोटे शीर्षकों (जैसे खंड) के लिए दो या अधिक का ग्रिड। हर सीरीज़ अपने अध्यायों के ऊपर ग्रिड बटन से अपना चुन सकती है।</translation>
+        </message>
+        <message>
+            <source>Rows</source>
+            <translation>पंक्तियाँ</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>ग्रिड</translation>
+        </message>
+        <message>
+            <source>Long press to zoom</source>
+            <translation>ज़ूम के लिए देर तक दबाएँ</translation>
+        </message>
+        <message>
+            <source>Hold a finger or the mouse on the page to see it twice as big until you let go, for small dialogue and notes in the margins.</source>
+            <translation>पेज पर उँगली या माउस दबाए रखें, छोड़ने तक वह दोगुना बड़ा दिखेगा — छोटे संवाद और हाशिये के नोट्स के लिए।</translation>
+        </message>
+        <message>
+            <source>Long press zoom position</source>
+            <translation>देर तक दबाने पर ज़ूम की जगह</translation>
+        </message>
+        <message>
+            <source>Where you press</source>
+            <translation>जहाँ आप दबाएँ</translation>
+        </message>
+        <message>
+            <source>Centre</source>
+            <translation>बीच में</translation>
+        </message>
+        <message>
+            <source>Double tap to zoom</source>
+            <translation>ज़ूम के लिए दो बार टैप करें</translation>
+        </message>
+        <message>
+            <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
+            <translation>पेजों पर: बीच में दो बार टैप ज़ूम इन करता है, फिर से करने पर ज़ूम आउट।</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6167,6 +6274,26 @@
         <message>
             <source>Find it on my extensions</source>
             <translation>मेरे एक्सटेंशन में खोजें</translation>
+        </message>
+        <message>
+            <source>Volumes</source>
+            <translation>खंड</translation>
+        </message>
+        <message>
+            <source>Extras</source>
+            <translation>अतिरिक्त</translation>
+        </message>
+        <message>
+            <source>Hide groups</source>
+            <translation>समूह छिपाएँ</translation>
+        </message>
+        <message>
+            <source>Show as rows</source>
+            <translation>पंक्तियों में दिखाएँ</translation>
+        </message>
+        <message>
+            <source>Show as a grid</source>
+            <translation>ग्रिड में दिखाएँ</translation>
         </message>
     </context>
     <context>

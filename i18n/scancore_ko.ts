@@ -2328,6 +2328,14 @@
             <source>Anime on Simkl.</source>
             <translation>Simkl의 애니메이션.</translation>
         </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>확장 %1개 설치됨</translation>
+        </message>
+        <message>
+            <source>%1 were in several lists and are in the first</source>
+            <translation>%1개는 여러 목록에 있어서 첫 번째 목록에 넣었습니다</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -4424,6 +4432,61 @@
         </message>
     </context>
     <context>
+        <name>MihonImportDialog</name>
+        <message>
+            <source>Bring back everything from Mihon</source>
+            <translation>Mihon에서 모두 가져오기</translation>
+        </message>
+        <message>
+            <source>%1 comics and %2 anime.</source>
+            <translation>만화 %1개와 애니 %2개.</translation>
+        </message>
+        <message>
+            <source>Your lists come along in Mihon's order: %1.</source>
+            <translation>목록은 Mihon 순서대로 옵니다: %1.</translation>
+        </message>
+        <message>
+            <source>Repositories in the backup</source>
+            <translation>백업의 저장소</translation>
+        </message>
+        <message>
+            <source>%1 extensions</source>
+            <translation>확장 프로그램 %1개</translation>
+        </message>
+        <message>
+            <source>Extensions are other people's code. Add repositories you trust.</source>
+            <translation>확장 프로그램은 다른 사람이 만든 코드입니다. 신뢰하는 저장소만 추가하세요.</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions your series came from</source>
+            <translation>시리즈가 온 확장 프로그램 %1개 설치</translation>
+        </message>
+        <message>
+            <source> and %1 more</source>
+            <translation> 외 %1개</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>시리즈 %1개</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, which downloads first (about 100 MB).</source>
+            <translation>확장 프로그램은 확장 런타임에서 실행되며, 먼저 다운로드됩니다(약 100MB).</translation>
+        </message>
+        <message>
+            <source>%1 series come from extensions none of these repositories has; they wait below to be found by title.</source>
+            <translation>%1개 시리즈는 이 저장소들 어디에도 없는 확장 프로그램에서 왔습니다. 아래에서 제목으로 찾기를 기다립니다.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>취소</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>가져오기</translation>
+        </message>
+    </context>
+    <context>
         <name>NativePlayer</name>
         <message>
             <source>This copy of SCANCORE has no video player for anime from extensions.</source>
@@ -5729,6 +5792,50 @@
             <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
             <translation>리더가 열려 있는 동안 화면이 어두워지거나 잠기지 않습니다. 동영상은 재생 중 항상 화면을 켜 둡니다.</translation>
         </message>
+        <message>
+            <source>Chapter layout</source>
+            <translation>회차 배치</translation>
+        </message>
+        <message>
+            <source>Rows, or a grid of two or more for short titles such as volumes. Each series can have its own from the grid button above its chapters.</source>
+            <translation>줄, 또는 권처럼 짧은 제목을 위한 두 칸 이상의 격자. 시리즈마다 회차 위 격자 버튼으로 따로 정할 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Rows</source>
+            <translation>줄</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>격자</translation>
+        </message>
+        <message>
+            <source>Long press to zoom</source>
+            <translation>길게 눌러 확대</translation>
+        </message>
+        <message>
+            <source>Hold a finger or the mouse on the page to see it twice as big until you let go, for small dialogue and notes in the margins.</source>
+            <translation>페이지를 손가락이나 마우스로 누르고 있으면 뗄 때까지 두 배로 크게 보입니다. 작은 대사와 여백 메모에 좋습니다.</translation>
+        </message>
+        <message>
+            <source>Long press zoom position</source>
+            <translation>길게 눌러 확대할 위치</translation>
+        </message>
+        <message>
+            <source>Where you press</source>
+            <translation>누른 곳</translation>
+        </message>
+        <message>
+            <source>Centre</source>
+            <translation>가운데</translation>
+        </message>
+        <message>
+            <source>Double tap to zoom</source>
+            <translation>두 번 탭해서 확대</translation>
+        </message>
+        <message>
+            <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
+            <translation>페이지에서: 가운데를 두 번 탭하면 확대, 다시 하면 축소.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6182,6 +6289,26 @@
         <message>
             <source>Find it on my extensions</source>
             <translation>내 확장 프로그램에서 찾기</translation>
+        </message>
+        <message>
+            <source>Volumes</source>
+            <translation>권</translation>
+        </message>
+        <message>
+            <source>Extras</source>
+            <translation>외전</translation>
+        </message>
+        <message>
+            <source>Hide groups</source>
+            <translation>그룹 숨기기</translation>
+        </message>
+        <message>
+            <source>Show as rows</source>
+            <translation>줄로 보기</translation>
+        </message>
+        <message>
+            <source>Show as a grid</source>
+            <translation>격자로 보기</translation>
         </message>
     </context>
     <context>

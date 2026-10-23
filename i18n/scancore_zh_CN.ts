@@ -2328,6 +2328,14 @@
             <source>Anime on Simkl.</source>
             <translation>Simkl 上的动画。</translation>
         </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>已安装 %1 个扩展</translation>
+        </message>
+        <message>
+            <source>%1 were in several lists and are in the first</source>
+            <translation>%1 部在多个列表中，已放入第一个</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -4424,6 +4432,61 @@
         </message>
     </context>
     <context>
+        <name>MihonImportDialog</name>
+        <message>
+            <source>Bring back everything from Mihon</source>
+            <translation>从 Mihon 取回一切</translation>
+        </message>
+        <message>
+            <source>%1 comics and %2 anime.</source>
+            <translation>%1 部漫画和 %2 部动画。</translation>
+        </message>
+        <message>
+            <source>Your lists come along in Mihon's order: %1.</source>
+            <translation>你的列表按 Mihon 中的顺序导入：%1。</translation>
+        </message>
+        <message>
+            <source>Repositories in the backup</source>
+            <translation>备份中的仓库</translation>
+        </message>
+        <message>
+            <source>%1 extensions</source>
+            <translation>%1 个扩展</translation>
+        </message>
+        <message>
+            <source>Extensions are other people's code. Add repositories you trust.</source>
+            <translation>扩展是别人编写的代码。请只添加你信任的仓库。</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions your series came from</source>
+            <translation>安装你的作品来自的 %1 个扩展</translation>
+        </message>
+        <message>
+            <source> and %1 more</source>
+            <translation>，还有 %1 个</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 个系列</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, which downloads first (about 100 MB).</source>
+            <translation>扩展在扩展运行环境中运行，会先下载（约 100 MB）。</translation>
+        </message>
+        <message>
+            <source>%1 series come from extensions none of these repositories has; they wait below to be found by title.</source>
+            <translation>%1 部作品来自这些仓库都没有的扩展，它们在下方等待按标题查找。</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>取消</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>导入</translation>
+        </message>
+    </context>
+    <context>
         <name>NativePlayer</name>
         <message>
             <source>This copy of SCANCORE has no video player for anime from extensions.</source>
@@ -5729,6 +5792,50 @@
             <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
             <translation>阅读器打开时屏幕不会变暗或锁定。视频播放时始终保持屏幕常亮。</translation>
         </message>
+        <message>
+            <source>Chapter layout</source>
+            <translation>章节布局</translation>
+        </message>
+        <message>
+            <source>Rows, or a grid of two or more for short titles such as volumes. Each series can have its own from the grid button above its chapters.</source>
+            <translation>列表，或适合卷名等短标题的两列及以上网格。每部作品可用章节上方的网格按钮单独设置。</translation>
+        </message>
+        <message>
+            <source>Rows</source>
+            <translation>列表</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>网格</translation>
+        </message>
+        <message>
+            <source>Long press to zoom</source>
+            <translation>长按缩放</translation>
+        </message>
+        <message>
+            <source>Hold a finger or the mouse on the page to see it twice as big until you let go, for small dialogue and notes in the margins.</source>
+            <translation>在页面上按住手指或鼠标，松开前页面放大两倍，适合小字对白和页边注释。</translation>
+        </message>
+        <message>
+            <source>Long press zoom position</source>
+            <translation>长按缩放位置</translation>
+        </message>
+        <message>
+            <source>Where you press</source>
+            <translation>按下的位置</translation>
+        </message>
+        <message>
+            <source>Centre</source>
+            <translation>中间</translation>
+        </message>
+        <message>
+            <source>Double tap to zoom</source>
+            <translation>双击缩放</translation>
+        </message>
+        <message>
+            <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
+            <translation>页面模式：双击中间放大，再次双击缩小。</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6182,6 +6289,26 @@
         <message>
             <source>Find it on my extensions</source>
             <translation>在我的扩展中查找</translation>
+        </message>
+        <message>
+            <source>Volumes</source>
+            <translation>卷</translation>
+        </message>
+        <message>
+            <source>Extras</source>
+            <translation>番外</translation>
+        </message>
+        <message>
+            <source>Hide groups</source>
+            <translation>隐藏汉化组</translation>
+        </message>
+        <message>
+            <source>Show as rows</source>
+            <translation>以列表显示</translation>
+        </message>
+        <message>
+            <source>Show as a grid</source>
+            <translation>以网格显示</translation>
         </message>
     </context>
     <context>

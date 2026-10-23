@@ -2,6 +2,20 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.9.0 — 2026-10-23
+
+Mihon backups that bring back everything, Kagane, and chapters your way.
+
+- **Extensions on Windows, macOS and Linux** ([#20](https://github.com/medium-gh/scancore/issues/20)): "Browse this source" no longer fails with "Cannot read field mQueue because looper is null". Extensions such as Komga, Comix and others that hand work to Android's main thread now run, and Komga's settings open. Computers get the new Extensions runtime 3 by themselves.
+- **Multiple-choice extension settings save** ([#21](https://github.com/medium-gh/scancore/issues/21)): ticking a genre under Blocked genres (or any setting with several choices) failed with "JsonNull is not a JsonArray"; it never saved on any platform. It does now.
+- **Settings no longer reset on restart**: settings made of lists (custom keyboard shortcuts, custom theme colours, recent searches, a series' own reader settings and others) were kept only until SCANCORE closed. They now stay.
+- **Mihon backups bring back everything**: every Mihon category becomes one of your lists in Mihon's order (empty ones too), with each series' date added, history (so Continue lands on the chapter you read last), every chapter you left part-way on its page, bookmarks, the chapter list's sort and filters, the reading mode you chose for it, Kitsu, MangaUpdates, Shikimori and Bangumi links, and the groups you hid (a new **Hide groups** filter on the series page). Before importing, SCANCORE offers to add the backup's extension repositories and install the extensions its series came from, so they come back on their own sources. A series in several Mihon categories goes to the first, and the import says how many.
+- **And back to Mihon**: Back up for Mihon now keeps bookmarks, the page you are on, chapter groups and dates, chapter and reader settings, hidden groups, tracker links and your repositories, and Reading is Mihon's Default. Checked with Mihon 0.21: a library sent there and back comes back the same.
+- **Kagane** as a built-in source, read with SCANCORE's own engine, in English and 14 more languages (adult titles left out).
+- **Chapters as a grid**: short chapter titles (volumes such as 第01卷191p) can show two to a line on phones and more on wide screens, per series from the grid button above the chapters, or for all in Settings → Reading → Chapter layout. Chapter titles now take two lines instead of being cut off.
+- **Volumes, Chapters and Extras**: when a series has more than one kind (卷/巻/Vol. volumes, 话/話/Ch. chapters, 番外/特别篇/Extra/Special/Omake extras), tabs above its chapters show one kind at a time.
+- **Hold to zoom**: in the comic reader, hold a finger or the mouse on the page to see it twice as big until you let go, under your finger or at the centre (Settings → Reading). Double tap to zoom can be switched off there.
+
 ## 2.8.0 — 2026-10-23
 
 Your own library lists, a quality and dub choice for anime, and the screen stays on.

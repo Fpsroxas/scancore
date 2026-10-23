@@ -2328,6 +2328,14 @@
             <source>Anime on Simkl.</source>
             <translation>Simklのアニメ。</translation>
         </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>拡張機能を %1 件インストールしました</translation>
+        </message>
+        <message>
+            <source>%1 were in several lists and are in the first</source>
+            <translation>%1件は複数のリストに入っていたため、最初のリストに入れました</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -4424,6 +4432,61 @@
         </message>
     </context>
     <context>
+        <name>MihonImportDialog</name>
+        <message>
+            <source>Bring back everything from Mihon</source>
+            <translation>Mihonからすべて取り戻す</translation>
+        </message>
+        <message>
+            <source>%1 comics and %2 anime.</source>
+            <translation>コミック%1件とアニメ%2件。</translation>
+        </message>
+        <message>
+            <source>Your lists come along in Mihon's order: %1.</source>
+            <translation>リストはMihonの順番で取り込まれます：%1。</translation>
+        </message>
+        <message>
+            <source>Repositories in the backup</source>
+            <translation>バックアップ内のリポジトリ</translation>
+        </message>
+        <message>
+            <source>%1 extensions</source>
+            <translation>拡張機能%1個</translation>
+        </message>
+        <message>
+            <source>Extensions are other people's code. Add repositories you trust.</source>
+            <translation>拡張機能は他の人が作ったコードです。信頼できるリポジトリだけを追加してください。</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions your series came from</source>
+            <translation>シリーズの元の拡張機能%1個をインストール</translation>
+        </message>
+        <message>
+            <source> and %1 more</source>
+            <translation>、ほか%1件</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1件のシリーズ</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, which downloads first (about 100 MB).</source>
+            <translation>拡張機能は拡張機能ランタイムで動きます。先にダウンロードします（約100 MB）。</translation>
+        </message>
+        <message>
+            <source>%1 series come from extensions none of these repositories has; they wait below to be found by title.</source>
+            <translation>%1件のシリーズは、どのリポジトリにもない拡張機能のものです。下でタイトルから見つかるのを待ちます。</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>キャンセル</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>インポート</translation>
+        </message>
+    </context>
+    <context>
         <name>NativePlayer</name>
         <message>
             <source>This copy of SCANCORE has no video player for anime from extensions.</source>
@@ -5729,6 +5792,50 @@
             <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
             <translation>リーダーを開いている間、画面が暗くなったりロックされたりしません。動画は再生中、常に画面をオンにします。</translation>
         </message>
+        <message>
+            <source>Chapter layout</source>
+            <translation>チャプターの表示</translation>
+        </message>
+        <message>
+            <source>Rows, or a grid of two or more for short titles such as volumes. Each series can have its own from the grid button above its chapters.</source>
+            <translation>リスト、または巻のような短いタイトル向けの2列以上のグリッド。シリーズごとにチャプター上のグリッドボタンで変えられます。</translation>
+        </message>
+        <message>
+            <source>Rows</source>
+            <translation>リスト</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>グリッド</translation>
+        </message>
+        <message>
+            <source>Long press to zoom</source>
+            <translation>長押しでズーム</translation>
+        </message>
+        <message>
+            <source>Hold a finger or the mouse on the page to see it twice as big until you let go, for small dialogue and notes in the margins.</source>
+            <translation>ページを指やマウスで押したままにすると、離すまで2倍に拡大します。小さなセリフや欄外のメモに。</translation>
+        </message>
+        <message>
+            <source>Long press zoom position</source>
+            <translation>長押しズームの位置</translation>
+        </message>
+        <message>
+            <source>Where you press</source>
+            <translation>押した場所</translation>
+        </message>
+        <message>
+            <source>Centre</source>
+            <translation>中央</translation>
+        </message>
+        <message>
+            <source>Double tap to zoom</source>
+            <translation>ダブルタップでズーム</translation>
+        </message>
+        <message>
+            <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
+            <translation>ページ表示で：中央をダブルタップで拡大、もう一度で縮小。</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6182,6 +6289,26 @@
         <message>
             <source>Find it on my extensions</source>
             <translation>自分の拡張機能で探す</translation>
+        </message>
+        <message>
+            <source>Volumes</source>
+            <translation>巻</translation>
+        </message>
+        <message>
+            <source>Extras</source>
+            <translation>番外編</translation>
+        </message>
+        <message>
+            <source>Hide groups</source>
+            <translation>グループを隠す</translation>
+        </message>
+        <message>
+            <source>Show as rows</source>
+            <translation>リストで表示</translation>
+        </message>
+        <message>
+            <source>Show as a grid</source>
+            <translation>グリッドで表示</translation>
         </message>
     </context>
     <context>

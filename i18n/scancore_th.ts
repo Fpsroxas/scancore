@@ -2328,6 +2328,14 @@
             <source>Anime on Simkl.</source>
             <translation>อนิเมะบน Simkl</translation>
         </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>ติดตั้ง %1 ส่วนขยายแล้ว</translation>
+        </message>
+        <message>
+            <source>%1 were in several lists and are in the first</source>
+            <translation>%1 เรื่องอยู่หลายรายการ จึงใส่ไว้ในรายการแรก</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -4416,6 +4424,61 @@
         </message>
     </context>
     <context>
+        <name>MihonImportDialog</name>
+        <message>
+            <source>Bring back everything from Mihon</source>
+            <translation>นำทุกอย่างกลับมาจาก Mihon</translation>
+        </message>
+        <message>
+            <source>%1 comics and %2 anime.</source>
+            <translation>คอมิก %1 เรื่องและอนิเมะ %2 เรื่อง</translation>
+        </message>
+        <message>
+            <source>Your lists come along in Mihon's order: %1.</source>
+            <translation>รายการของคุณมาตามลำดับใน Mihon: %1</translation>
+        </message>
+        <message>
+            <source>Repositories in the backup</source>
+            <translation>คลังในข้อมูลสำรอง</translation>
+        </message>
+        <message>
+            <source>%1 extensions</source>
+            <translation>ส่วนขยาย %1 รายการ</translation>
+        </message>
+        <message>
+            <source>Extensions are other people's code. Add repositories you trust.</source>
+            <translation>ส่วนขยายคือโค้ดของคนอื่น เพิ่มเฉพาะคลังที่คุณเชื่อถือ</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions your series came from</source>
+            <translation>ติดตั้งส่วนขยาย %1 รายการที่เรื่องของคุณมาจาก</translation>
+        </message>
+        <message>
+            <source> and %1 more</source>
+            <translation> และอีก %1</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 เรื่อง</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, which downloads first (about 100 MB).</source>
+            <translation>ส่วนขยายทำงานในรันไทม์ส่วนขยาย ซึ่งจะดาวน์โหลดก่อน (ประมาณ 100 MB)</translation>
+        </message>
+        <message>
+            <source>%1 series come from extensions none of these repositories has; they wait below to be found by title.</source>
+            <translation>%1 เรื่องมาจากส่วนขยายที่ไม่มีในคลังใดเลย จะรออยู่ด้านล่างเพื่อหาจากชื่อเรื่อง</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>ยกเลิก</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>นำเข้า</translation>
+        </message>
+    </context>
+    <context>
         <name>NativePlayer</name>
         <message>
             <source>This copy of SCANCORE has no video player for anime from extensions.</source>
@@ -5721,6 +5784,50 @@
             <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
             <translation>หน้าจอจะไม่หรี่หรือล็อกขณะเปิดตัวอ่าน วิดีโอจะเปิดหน้าจอค้างไว้เสมอขณะเล่น</translation>
         </message>
+        <message>
+            <source>Chapter layout</source>
+            <translation>การจัดวางตอน</translation>
+        </message>
+        <message>
+            <source>Rows, or a grid of two or more for short titles such as volumes. Each series can have its own from the grid button above its chapters.</source>
+            <translation>แถว หรือกริดสองช่องขึ้นไปสำหรับชื่อสั้นๆ เช่นเล่ม แต่ละเรื่องเลือกเองได้จากปุ่มกริดเหนือรายการตอน</translation>
+        </message>
+        <message>
+            <source>Rows</source>
+            <translation>แถว</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>ตาราง</translation>
+        </message>
+        <message>
+            <source>Long press to zoom</source>
+            <translation>กดค้างเพื่อซูม</translation>
+        </message>
+        <message>
+            <source>Hold a finger or the mouse on the page to see it twice as big until you let go, for small dialogue and notes in the margins.</source>
+            <translation>กดนิ้วหรือเมาส์ค้างไว้บนหน้าเพื่อดูใหญ่ขึ้นสองเท่าจนกว่าจะปล่อย สำหรับบทพูดตัวเล็กและโน้ตข้างหน้า</translation>
+        </message>
+        <message>
+            <source>Long press zoom position</source>
+            <translation>ตำแหน่งที่ซูมเมื่อกดค้าง</translation>
+        </message>
+        <message>
+            <source>Where you press</source>
+            <translation>ตรงที่กด</translation>
+        </message>
+        <message>
+            <source>Centre</source>
+            <translation>ตรงกลาง</translation>
+        </message>
+        <message>
+            <source>Double tap to zoom</source>
+            <translation>แตะสองครั้งเพื่อซูม</translation>
+        </message>
+        <message>
+            <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
+            <translation>ในโหมดหน้า: แตะสองครั้งตรงกลางเพื่อซูมเข้า แตะอีกครั้งเพื่อซูมออก</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6167,6 +6274,26 @@
         <message>
             <source>Find it on my extensions</source>
             <translation>หาในส่วนขยายของฉัน</translation>
+        </message>
+        <message>
+            <source>Volumes</source>
+            <translation>เล่ม</translation>
+        </message>
+        <message>
+            <source>Extras</source>
+            <translation>ตอนพิเศษ</translation>
+        </message>
+        <message>
+            <source>Hide groups</source>
+            <translation>ซ่อนกลุ่ม</translation>
+        </message>
+        <message>
+            <source>Show as rows</source>
+            <translation>แสดงเป็นแถว</translation>
+        </message>
+        <message>
+            <source>Show as a grid</source>
+            <translation>แสดงเป็นกริด</translation>
         </message>
     </context>
     <context>

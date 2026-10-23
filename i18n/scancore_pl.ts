@@ -2328,6 +2328,14 @@
             <source>Anime on Simkl.</source>
             <translation>Anime na Simkl.</translation>
         </message>
+        <message>
+            <source>%1 extensions installed</source>
+            <translation>Zainstalowano %1 rozszerzeń</translation>
+        </message>
+        <message>
+            <source>%1 were in several lists and are in the first</source>
+            <translation>%1 było na kilku listach i trafia na pierwszą</translation>
+        </message>
     </context>
     <context>
         <name>ContinueOn</name>
@@ -4416,6 +4424,61 @@
         </message>
     </context>
     <context>
+        <name>MihonImportDialog</name>
+        <message>
+            <source>Bring back everything from Mihon</source>
+            <translation>Przywróć wszystko z Mihon</translation>
+        </message>
+        <message>
+            <source>%1 comics and %2 anime.</source>
+            <translation>%1 komiksów i %2 anime.</translation>
+        </message>
+        <message>
+            <source>Your lists come along in Mihon's order: %1.</source>
+            <translation>Twoje listy przychodzą w kolejności z Mihon: %1.</translation>
+        </message>
+        <message>
+            <source>Repositories in the backup</source>
+            <translation>Repozytoria w kopii</translation>
+        </message>
+        <message>
+            <source>%1 extensions</source>
+            <translation>%1 rozszerzeń</translation>
+        </message>
+        <message>
+            <source>Extensions are other people's code. Add repositories you trust.</source>
+            <translation>Rozszerzenia to cudzy kod. Dodawaj repozytoria, którym ufasz.</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions your series came from</source>
+            <translation>Zainstaluj %1 rozszerzeń, z których pochodzą twoje serie</translation>
+        </message>
+        <message>
+            <source> and %1 more</source>
+            <translation> i %1 więcej</translation>
+        </message>
+        <message>
+            <source>%1 series</source>
+            <translation>%1 serii</translation>
+        </message>
+        <message>
+            <source>Extensions run in the Extensions runtime, which downloads first (about 100 MB).</source>
+            <translation>Rozszerzenia działają w środowisku rozszerzeń, które pobiera się najpierw (około 100 MB).</translation>
+        </message>
+        <message>
+            <source>%1 series come from extensions none of these repositories has; they wait below to be found by title.</source>
+            <translation>%1 serii pochodzi z rozszerzeń, których nie ma żadne z tych repozytoriów; czekają niżej na znalezienie po tytule.</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Anuluj</translation>
+        </message>
+        <message>
+            <source>Import</source>
+            <translation>Importuj</translation>
+        </message>
+    </context>
+    <context>
         <name>NativePlayer</name>
         <message>
             <source>This copy of SCANCORE has no video player for anime from extensions.</source>
@@ -5721,6 +5784,50 @@
             <source>The screen does not dim or lock while a reader is open. Videos always keep it on while they play.</source>
             <translation>Ekran nie przyciemnia się ani nie blokuje, gdy czytnik jest otwarty. Filmy zawsze utrzymują go włączonym podczas odtwarzania.</translation>
         </message>
+        <message>
+            <source>Chapter layout</source>
+            <translation>Układ rozdziałów</translation>
+        </message>
+        <message>
+            <source>Rows, or a grid of two or more for short titles such as volumes. Each series can have its own from the grid button above its chapters.</source>
+            <translation>Wiersze albo siatka po dwa lub więcej dla krótkich tytułów, np. tomów. Każda seria może mieć własny przyciskiem siatki nad rozdziałami.</translation>
+        </message>
+        <message>
+            <source>Rows</source>
+            <translation>Wiersze</translation>
+        </message>
+        <message>
+            <source>Grid</source>
+            <translation>Siatka</translation>
+        </message>
+        <message>
+            <source>Long press to zoom</source>
+            <translation>Przytrzymaj, by powiększyć</translation>
+        </message>
+        <message>
+            <source>Hold a finger or the mouse on the page to see it twice as big until you let go, for small dialogue and notes in the margins.</source>
+            <translation>Przytrzymaj palec lub mysz na stronie, by widzieć ją dwa razy większą, aż puścisz: dla drobnych dialogów i notatek na marginesach.</translation>
+        </message>
+        <message>
+            <source>Long press zoom position</source>
+            <translation>Miejsce powiększenia po przytrzymaniu</translation>
+        </message>
+        <message>
+            <source>Where you press</source>
+            <translation>Tam, gdzie naciskasz</translation>
+        </message>
+        <message>
+            <source>Centre</source>
+            <translation>Środek</translation>
+        </message>
+        <message>
+            <source>Double tap to zoom</source>
+            <translation>Dwukrotne stuknięcie powiększa</translation>
+        </message>
+        <message>
+            <source>On pages: a double tap in the middle zooms in, another zooms out.</source>
+            <translation>Na stronach: dwukrotne stuknięcie w środek powiększa, kolejne pomniejsza.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6167,6 +6274,26 @@
         <message>
             <source>Find it on my extensions</source>
             <translation>Szukaj w moich rozszerzeniach</translation>
+        </message>
+        <message>
+            <source>Volumes</source>
+            <translation>Tomy</translation>
+        </message>
+        <message>
+            <source>Extras</source>
+            <translation>Dodatki</translation>
+        </message>
+        <message>
+            <source>Hide groups</source>
+            <translation>Ukryj grupy</translation>
+        </message>
+        <message>
+            <source>Show as rows</source>
+            <translation>Pokaż jako wiersze</translation>
+        </message>
+        <message>
+            <source>Show as a grid</source>
+            <translation>Pokaż jako siatkę</translation>
         </message>
     </context>
     <context>
