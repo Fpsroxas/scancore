@@ -49,7 +49,10 @@ Item {
     readonly property bool onlyDownloaded: chapterSettings.onlyDownloaded === true
     readonly property bool onlyBookmarked: chapterSettings.onlyBookmarked === true
     readonly property string scanlator: chapterSettings.scanlator || ""
+    // Groups whose chapters are hidden (from Mihon's excluded scanlators).
+    readonly property var hiddenScanlators: chapterSettings.hiddenScanlators ? Array.from(chapterSettings.hiddenScanlators) : []
     readonly property int filtersOn: (onlyUnread ? 1 : 0) + (onlyDownloaded ? 1 : 0) + (onlyBookmarked ? 1 : 0) + (scanlator ? 1 : 0)
+                                     + (hiddenScanlators.length > 0 ? 1 : 0)
     // The groups that translated chapters here, most chapters first.
     readonly property var scanlators: {
         const counts = {}
@@ -82,6 +85,8 @@ Item {
     readonly property var rows: {
         const out = []
         const f = filter.trim().toLowerCase()
+        const hidden = {}
+        for (const name of hiddenScanlators) hidden[name] = true
         for (let i = 0; i < chapters.length; ++i) {
             const c = chapters[i]
             if (f && !(c.title || "").toLowerCase().includes(f) && String(c.number) !== f) continue
@@ -89,6 +94,7 @@ Item {
             if (onlyDownloaded && !(downloads[c.key] && downloads[c.key].status === "done")) continue
             if (onlyBookmarked && !bookmarks[c.key]) continue
             if (scanlator && c.scanlator !== scanlator) continue
+            if (hidden[c.scanlator]) continue
             out.push({ unit: c, index: i })
         }
         return descending ? out.reverse() : out
@@ -253,6 +259,35 @@ Item {
                 value: page.scanlator
                 onPicked: (v) => page.setChapterSetting("scanlator", v || null)
             }
+            Text {
+                visible: page.scanlators.length > 1 || page.hiddenScanlators.length > 0
+                topPadding: 8
+                text: qsTr("Hide groups")
+                color: Theme.textMuted
+                font.family: Theme.fontSans
+                font.pixelSize: Theme.textXs
+            }
+            Flow {
+                visible: page.scanlators.length > 1 || page.hiddenScanlators.length > 0
+                width: parent.width
+                spacing: 6
+                Repeater {
+                    // The groups here (most chapters first) and any hidden
+                    // that have none here now; a long tail stays out.
+                    model: page.scanlators.slice(0, 30).concat(page.hiddenScanlators.filter(s => page.scanlators.indexOf(s) < 0))
+                    delegate: Chip {
+                        required property string modelData
+                        text: modelData
+                        checkable: true
+                        checked: page.hiddenScanlators.indexOf(modelData) >= 0
+                        onClicked: {
+                            const next = page.hiddenScanlators.filter(s => s !== modelData)
+                            if (checked) next.push(modelData)
+                            page.setChapterSetting("hiddenScanlators", next.length ? next : null)
+                        }
+                    }
+                }
+            }
             ScButton {
                 visible: page.filtersOn > 0
                 topPadding: 8
@@ -261,7 +296,7 @@ Item {
                 iconName: "funnel-x"
                 text: qsTr("Clear filters")
                 onClicked: {
-                    for (const k of ["onlyUnread", "onlyDownloaded", "onlyBookmarked", "scanlator"]) page.setChapterSetting(k, null)
+                    for (const k of ["onlyUnread", "onlyDownloaded", "onlyBookmarked", "scanlator", "hiddenScanlators"]) page.setChapterSetting(k, null)
                 }
             }
         }
