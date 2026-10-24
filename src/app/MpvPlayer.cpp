@@ -55,6 +55,8 @@ std::atomic_bool g_sceneSupported{true};
 struct MpvCore {
 #ifdef SCANCORE_HAVE_MPV
     mpv_handle *mpv = nullptr;
+    // mpv 0.38+ names subtitle borders "sub-outline-*" (older: "sub-border-*").
+    bool outlineNames = true;
 #endif
     QMutex mutex;
     MpvPlayer *item = nullptr;
@@ -127,8 +129,33 @@ void command(mpv_handle *mpv, const QStringList &args) {
     mpv_command_async(mpv, 0, argv.data());
 }
 
+// Never a synchronous call from the interface thread while a video is open:
+// mpv may be waiting on the render thread (a new video size, another
+// variant), which waits on the interface thread to sync the scene, and the
+// picture freezes with the app while the sound plays on. Async requests run
+// in the order they are made, so options still come before the loadfile.
 void setString(mpv_handle *mpv, const char *name, const QString &value) {
-    mpv_set_property_string(mpv, name, value.toUtf8().constData());
+    const auto utf8 = value.toUtf8();
+    const char *data = utf8.constData();
+    mpv_set_property_async(mpv, 0, name, MPV_FORMAT_STRING, &data);
+}
+
+void setStrings(mpv_handle *mpv, const char *name, const QStringList &values) {
+    QList<QByteArray> utf8;
+    for (const auto &v : values)
+        utf8.append(v.toUtf8());
+    QList<mpv_node> nodes;
+    for (auto &v : utf8) {
+        mpv_node n;
+        n.format = MPV_FORMAT_STRING;
+        n.u.string = v.data();
+        nodes.append(n);
+    }
+    mpv_node_list list{int(nodes.size()), nodes.data(), nullptr};
+    mpv_node value;
+    value.format = MPV_FORMAT_NODE_ARRAY;
+    value.u.list = &list;
+    mpv_set_property_async(mpv, 0, name, MPV_FORMAT_NODE, &value);
 }
 
 // Options a video's source may set: how to reach and read it, nothing that
@@ -324,6 +351,11 @@ MpvPlayer::MpvPlayer(QQuickItem *parent) : QQuickFramebufferObject(parent), m_co
         return;
     }
     m_core->mpv = mpv;
+    // Asked once now, before any video: later calls are all async.
+    if (char *name = mpv_get_property_string(mpv, "option-info/sub-outline-size/name"))
+        mpv_free(name);
+    else
+        m_core->outlineNames = false;
     mpv_request_log_messages(mpv, "warn");
     mpv_observe_property(mpv, TimePos, "time-pos", MPV_FORMAT_DOUBLE);
     mpv_observe_property(mpv, Duration, "duration", MPV_FORMAT_DOUBLE);
@@ -474,7 +506,7 @@ void MpvPlayer::load() {
     // options.
     QString agent = QString::fromUtf8(Http::userAgent());
     QString referer;
-    QList<QByteArray> fields;
+    QStringList fields;
     for (auto it = m_headers.begin(); it != m_headers.end(); ++it) {
         const auto name = it.key().toLower();
         if (name == QLatin1String("user-agent"))
@@ -482,22 +514,11 @@ void MpvPlayer::load() {
         else if (name == QLatin1String("referer"))
             referer = it.value().toString();
         else
-            fields.append((it.key() + QStringLiteral(": ") + it.value().toString()).toUtf8());
+            fields.append(it.key() + QStringLiteral(": ") + it.value().toString());
     }
     setString(mpv, "user-agent", agent);
     setString(mpv, "referrer", referer);
-    QList<mpv_node> nodes;
-    for (auto &f : fields) {
-        mpv_node n;
-        n.format = MPV_FORMAT_STRING;
-        n.u.string = f.data();
-        nodes.append(n);
-    }
-    mpv_node_list list{int(nodes.size()), nodes.data(), nullptr};
-    mpv_node value;
-    value.format = MPV_FORMAT_NODE_ARRAY;
-    value.u.list = &list;
-    mpv_set_property(mpv, "http-header-fields", MPV_FORMAT_NODE, &value);
+    setStrings(mpv, "http-header-fields", fields);
     // mpv keeps options from one file to the next: the last video's go back
     // to their defaults first (a downloaded episode's HLS demuxer must not
     // reach the next stream). An empty demuxer is mpv's own choice; there is
@@ -507,7 +528,7 @@ void MpvPlayer::load() {
         {"vid", "auto"}, {"sub-delay", "0"}, {"audio-delay", "0"}};
     for (const auto &[name, value] : defaults)
         if (!m_options.contains(QLatin1String(name)))
-            mpv_set_property_string(mpv, name, value);
+            setString(mpv, name, QString::fromLatin1(value));
     for (auto it = m_options.begin(); it != m_options.end(); ++it) {
         if (allowedOptions().contains(it.key()))
             setString(mpv, it.key().toUtf8().constData(), it.value().toString());
@@ -769,16 +790,14 @@ void MpvPlayer::setLook(const QVariantMap &look) {
     setString(mpv, "sub-scale", QString::number(std::clamp(number("subtitleScale", 1), 0.5, 3.0)));
     // Older mpv names it "sub-border-*".
     const auto outline = QString::number(std::clamp(number("subtitleOutline", 3), 0.0, 10.0));
-    if (mpv_set_property_string(mpv, "sub-outline-size", outline.toUtf8().constData()) < 0)
-        setString(mpv, "sub-border-size", outline);
+    setString(mpv, m_core->outlineNames ? "sub-outline-size" : "sub-border-size", outline);
     const auto color = look.value(QStringLiteral("subtitleColor")).toString();
     setString(mpv, "sub-color", QColor::isValidColorName(color) ? color : QStringLiteral("#FFFFFFFF"));
     // A dark box behind the lines instead of an outline.
     const bool box = look.value(QStringLiteral("subtitleBox")).toBool();
     setString(mpv, "sub-border-style", box ? QStringLiteral("opaque-box") : QStringLiteral("outline-and-shadow"));
     const auto boxColor = box ? QStringLiteral("#B0000000") : QStringLiteral("#FF000000");
-    if (mpv_set_property_string(mpv, "sub-outline-color", boxColor.toUtf8().constData()) < 0)
-        setString(mpv, "sub-border-color", boxColor);
+    setString(mpv, m_core->outlineNames ? "sub-outline-color" : "sub-border-color", boxColor);
     // How the picture fills the player: fit (all of it), crop (no bars),
     // stretch, or original (its own pixels, centred).
     const auto fit = look.value(QStringLiteral("fit")).toString();
@@ -786,22 +805,7 @@ void MpvPlayer::setLook(const QVariantMap &look) {
     setString(mpv, "panscan", fit == QLatin1String("crop") ? QStringLiteral("1.0") : QStringLiteral("0.0"));
     setString(mpv, "video-unscaled", fit == QLatin1String("original") ? QStringLiteral("yes") : QStringLiteral("no"));
     // A list, so no separator (":" or ";" by system) gets in the way.
-    const auto shaders = sharpenShaders(look.value(QStringLiteral("sharpen")).toString());
-    QList<QByteArray> paths;
-    for (const auto &path : shaders)
-        paths.append(path.toUtf8());
-    QList<mpv_node> nodes;
-    for (auto &path : paths) {
-        mpv_node n;
-        n.format = MPV_FORMAT_STRING;
-        n.u.string = path.data();
-        nodes.append(n);
-    }
-    mpv_node_list list{int(nodes.size()), nodes.data(), nullptr};
-    mpv_node value;
-    value.format = MPV_FORMAT_NODE_ARRAY;
-    value.u.list = &list;
-    mpv_set_property(mpv, "glsl-shaders", MPV_FORMAT_NODE, &value);
+    setStrings(mpv, "glsl-shaders", sharpenShaders(look.value(QStringLiteral("sharpen")).toString()));
 #endif
 }
 
