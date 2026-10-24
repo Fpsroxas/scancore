@@ -2,6 +2,28 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.12.0 — 2026-10-24
+
+A Windows Phone look, comic pages translated where they are, your own comic servers, watching together, and scrolling that keeps up with your finger.
+
+- **Metro**: a new look (Settings → Interface → Look) in the manner of Windows Phone, on phones, tablets and computers. A panorama hub with a big title over a picture from what you read, sections you swipe through (Explore, Recent, Library, Comics, Novels, Anime and more, in the order you pick), tiles in three sizes that flip to show new chapters, pivots, turnstile page turns, an app bar with a button you can hold for more, Selawik type, uppercase or lowercase headers, and Windows Phone's twenty accent colours or any colour from the wheel. Series pages can pin themselves to the hub.
+- **Scrolling that keeps up**: on phones a quick swipe now glides the way Android's own lists do, as far as Mihon's; before, a list often stopped the moment the finger lifted (#22, #25). Swipes in a row add up, so long libraries go fast. On computers, two-finger touchpad scrolling moves 2.5 times further (as in GTK apps and browsers) and glides on when the fingers lift. On Linux with NVIDIA graphics, the interface now draws on its own thread, so animations no longer stutter while pages load.
+- **Translate comic pages**: the reader's Translate button finds the speech bubbles, translates them and draws the translation over the page, in strip and page mode. On Android it works on the phone with Google's ML Kit (Japanese, Korean, Chinese and Latin-script languages); everywhere it can use DeepL, Google Cloud or any OpenAI-compatible model (a local Ollama works) with your own key, set in Settings → Reading → Translate. Novels can translate a chapter too.
+- **Watch together**: start a watch party from the player, share its six-letter code, and everyone watches the same episode from their own source while the host's play, pause and seek steer the others. Chat beside it. Needs a scancore.onl account.
+- **Your own comic servers**: add Komga, Kavita or Suwayomi in Settings → Sources → Your servers. Their comics are searched with your other sources, saved to your library, and chapters you finish are marked read on the server too.
+- **Webtoons run on into the next chapter**: the next chapter joins the strip as you near the end, with a line naming it, so reading never stops for a button (#9). **Auto-scroll** in the reader's settings (or S), with its speed by your thumb; in page mode the pages turn by themselves. A quick flick now turns a manga page however short it is.
+- **Read aloud, rebuilt**: sentence by sentence with the spoken one highlighted, pauses you choose, a voice per language, a sleep timer, and it goes on with the screen off and into the next chapter, with controls in the notification and on headphones.
+- **Novels as EPUB**: Save as EPUB on a novel's page makes a book for any e-reader, from the downloaded chapters or after downloading the rest.
+- **Spanish**: MangaSin is built in.
+- **Phones**: the screen's full refresh rate on ColorOS and realme phones too; readers fill the screen beside a punch hole, with the status and navigation bars hidden while you read (Settings → Reading). The reader's settings are a sheet from the bottom that scrolls (#25).
+- **Library**: tapping a list no longer opens its menu on phones; hold it for that (#9, #25). Swipe sideways to move between lists. A Most unread sort. The card about things that need a look can be hidden until there is something new (#25).
+- **Computers**: readers and the player open in windows of their own; a magnifying lens under the mouse in the comic reader (L); Android TV runs SCANCORE in the TV's launcher, driven by the remote.
+- **Extensions**: Aniyomi extensions that run their own video server play; videos from other players, VLC and casts go through SCANCORE's relay; Extensions → Diagnostics tests a source and lists the sites each extension contacts; the Extensions list keeps its place when one installs (#25). Computers get Extensions runtime 6 by themselves.
+- A series' own reader settings now follow you to your other devices; small scans can be sharpened as they are enlarged; the player shows its sources as chips.
+- Fixed, thanks to Fpsroxas: a source without settings showed an error instead of "no settings", and opening some sources' settings on computers failed.
+- Contributors now appear with their pictures in the README and CONTRIBUTING.
+- Not yet checked on real devices: page translation with ML Kit on a phone and with real cloud keys (tested with test engines and on the emulator), the 120 Hz request on a realme GT 6T, Android TV on a real TV, and a live Suwayomi server.
+
 ## 2.11.0 — 2026-10-24
 
 Switch from Mihon without losing your downloads, a progress bar you can make your own, and web views for extensions on computers.

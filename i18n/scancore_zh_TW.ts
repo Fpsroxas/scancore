@@ -1032,6 +1032,14 @@
             <source>Waiting: stop</source>
             <translation>等待中：停止</translation>
         </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>從中心頁取消固定</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>固定到中心頁</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1138,6 +1146,14 @@
         <message>
             <source>All %1</source>
             <translation>全部 %1</translation>
+        </message>
+        <message>
+            <source>Party %1</source>
+            <translation>派對 %1</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>觀影派對</translation>
         </message>
     </context>
     <context>
@@ -1888,6 +1904,74 @@
         <message>
             <source>Bottom</source>
             <translation>底部</translation>
+        </message>
+        <message>
+            <source>Finished: </source>
+            <translation>已讀完：</translation>
+        </message>
+        <message>
+            <source>Next: </source>
+            <translation>下一個： </translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>在新視窗中開啟</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>顯示原文</translation>
+        </message>
+        <message>
+            <source>Translate the pages</source>
+            <translation>翻譯頁面</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse (L)</source>
+            <translation>滑鼠下的放大鏡（L）</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>接著讀下一章</translation>
+        </message>
+        <message>
+            <source>Auto-scroll</source>
+            <translation>自動滾動</translation>
+        </message>
+        <message>
+            <source>Turn the pages by themselves</source>
+            <translation>自動翻頁</translation>
+        </message>
+        <message>
+            <source>Auto-scroll speed · %1</source>
+            <translation>自動滾動速度 · %1</translation>
+        </message>
+        <message>
+            <source>A page every %1 s</source>
+            <translation>每 %1 秒一頁</translation>
+        </message>
+        <message>
+            <source>Sharpen small scans</source>
+            <translation>銳化小尺寸掃描圖</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>細</translation>
+        </message>
+        <message>
+            <source>Strong</source>
+            <translation>強</translation>
+        </message>
+        <message>
+            <source>Slower</source>
+            <translation>更慢</translation>
+        </message>
+        <message>
+            <source>Faster</source>
+            <translation>更快</translation>
+        </message>
+        <message>
+            <source>Pause auto-scroll</source>
+            <translation>暫停自動滾動</translation>
         </message>
     </context>
     <context>
@@ -2907,6 +2991,121 @@
         </message>
     </context>
     <context>
+        <name>ExtensionsDiagnostics</name>
+        <message>
+            <source>Answered in %1 s with %2 titles.</source>
+            <translation>%1 秒內返回了 %2 部作品。</translation>
+        </message>
+        <message>
+            <source>Failed after %1 s: %2</source>
+            <translation>%1 秒後失敗：%2</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>診斷</translation>
+        </message>
+        <message>
+            <source>For when an extension misbehaves</source>
+            <translation>用於擴展出問題時</translation>
+        </message>
+        <message>
+            <source>Copy report</source>
+            <translation>複製報告</translation>
+        </message>
+        <message>
+            <source>The report is copied. Paste it into an issue or a message.</source>
+            <translation>報告已複製。請貼上到 issue 或訊息中。</translation>
+        </message>
+        <message>
+            <source>Refresh</source>
+            <translation>重新整理</translation>
+        </message>
+        <message>
+            <source>Runtime</source>
+            <translation>執行環境</translation>
+        </message>
+        <message>
+            <source>Extensions runtime installed</source>
+            <translation>擴充功能執行環境已安裝</translation>
+        </message>
+        <message>
+            <source>Extensions runtime not installed</source>
+            <translation>未安裝擴充套件執行環境</translation>
+        </message>
+        <message>
+            <source>No runtime for this system</source>
+            <translation>沒有適用於此係統的執行環境</translation>
+        </message>
+        <message>
+            <source>Asking the host…</source>
+            <translation>正在詢問房主…</translation>
+        </message>
+        <message>
+            <source>Host %1 answered in %2 ms</source>
+            <translation>執行環境 %1 在 %2 毫秒內響應</translation>
+        </message>
+        <message>
+            <source>Extension libraries it takes</source>
+            <translation>支援的擴充套件庫</translation>
+        </message>
+        <message>
+            <source>Mihon %1 · Aniyomi %2</source>
+            <translation>Mihon %1 · Aniyomi %2</translation>
+        </message>
+        <message>
+            <source>This device</source>
+            <translation>此裝置</translation>
+        </message>
+        <message>
+            <source>Test a source</source>
+            <translation>測試來源</translation>
+        </message>
+        <message>
+            <source>Loads the source's popular titles once and times it.</source>
+            <translation>載入一次來源的熱門作品並計時。</translation>
+        </message>
+        <message>
+            <source>Source</source>
+            <translation>來源</translation>
+        </message>
+        <message>
+            <source>Testing…</source>
+            <translation>正在測試…</translation>
+        </message>
+        <message>
+            <source>Test</source>
+            <translation>測試</translation>
+        </message>
+        <message>
+            <source>Sites the extensions contacted</source>
+            <translation>擴充套件訪問過的網站</translation>
+        </message>
+        <message>
+            <source>This session only, counted in the extensions runtime. Nothing but the sites' names is kept.</source>
+            <translation>僅限本次會話，由擴充套件執行環境統計。只保留網站名稱。</translation>
+        </message>
+        <message>
+            <source>Nothing yet</source>
+            <translation>暫無</translation>
+        </message>
+        <message>
+            <source>Browse or read with an extension and come back.</source>
+            <translation>用擴充套件瀏覽或閱讀後再回來。</translation>
+        </message>
+        <message>
+            <source>%1 · %2 requests, %3</source>
+            <translation>%1 · %2 次請求，%3</translation>
+        </message>
+        <message>
+            <source>Host log</source>
+            <translation>執行環境日誌</translation>
+        </message>
+        <message>
+            <source>The end of extensions/host.log.</source>
+            <translation>extensions/host.log 的末尾。</translation>
+        </message>
+    </context>
+    <context>
         <name>ExtensionsPage</name>
         <message>
             <source>All languages</source>
@@ -3187,6 +3386,10 @@
         <message>
             <source>Its extensions</source>
             <translation>此儲存庫的擴充功能</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>診斷</translation>
         </message>
     </context>
     <context>
@@ -3719,6 +3922,110 @@
             <source>Long</source>
             <translation>長</translation>
         </message>
+        <message>
+            <source>Look</source>
+            <translation>樣式</translation>
+        </message>
+        <message>
+            <source>Metro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Metro：帶磁貼、大字和應用欄的全景中心頁，Windows Phone 風格。</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>標準</translation>
+        </message>
+        <message>
+            <source>Pages and navigation</source>
+            <translation>頁面和導航</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Tiles and panoramas</source>
+            <translation>磁貼和全景</translation>
+        </message>
+        <message>
+            <source>Hold a tile on the hub to resize, move or unpin it. Series pages have Pin to the hub.</source>
+            <translation>長按中心頁上的磁貼可調整大小、移動或取消固定。作品頁有“固定到中心頁”。</translation>
+        </message>
+        <message>
+            <source>Hub title</source>
+            <translation>中心頁標題</translation>
+        </message>
+        <message>
+            <source>The big word across the top of the hub.</source>
+            <translation>中心頁頂部的大字。</translation>
+        </message>
+        <message>
+            <source>Title colour</source>
+            <translation>標題顏色</translation>
+        </message>
+        <message>
+            <source>Accent blend</source>
+            <translation>強調色混合</translation>
+        </message>
+        <message>
+            <source>Plain</source>
+            <translation>純色</translation>
+        </message>
+        <message>
+            <source>Background</source>
+            <translation>後臺</translation>
+        </message>
+        <message>
+            <source>Behind the hub, moving slower than the tiles.</source>
+            <translation>在中心頁後方，比磁貼移動得慢。</translation>
+        </message>
+        <message>
+            <source>Last read</source>
+            <translation>最近閱讀</translation>
+        </message>
+        <message>
+            <source>Theme picture</source>
+            <translation>主題圖片</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>無</translation>
+        </message>
+        <message>
+            <source>Headers</source>
+            <translation>請求頭</translation>
+        </message>
+        <message>
+            <source>UPPERCASE</source>
+            <translation>大寫</translation>
+        </message>
+        <message>
+            <source>lowercase</source>
+            <translation>小寫</translation>
+        </message>
+        <message>
+            <source>Live tiles</source>
+            <translation>動態磁貼</translation>
+        </message>
+        <message>
+            <source>Tiles turn over now and then to show new chapters and where you are.</source>
+            <translation>磁貼會不時翻轉，顯示新章節和你的閱讀位置。</translation>
+        </message>
+        <message>
+            <source>Hub sections</source>
+            <translation>中心頁分割槽</translation>
+        </message>
+        <message>
+            <source>Which sections the hub shows, in this order. Four or five are easiest to find your way in.</source>
+            <translation>中心頁顯示哪些分割槽以及順序。四到五個最容易找。</translation>
+        </message>
+        <message>
+            <source>Earlier</source>
+            <translation>更早</translation>
+        </message>
+        <message>
+            <source>Later</source>
+            <translation>稍後</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -3927,6 +4234,14 @@
         <message>
             <source>Anime player</source>
             <translation>動畫播放器</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse</source>
+            <translation>滑鼠下的放大鏡</translation>
+        </message>
+        <message>
+            <source>Auto-scroll on or off</source>
+            <translation>開啟或關閉自動滾動</translation>
         </message>
     </context>
     <context>
@@ -4298,6 +4613,18 @@
         <message>
             <source>Undo</source>
             <translation>復原</translation>
+        </message>
+        <message>
+            <source>Most unwatched</source>
+            <translation>未看最多</translation>
+        </message>
+        <message>
+            <source>Most unread</source>
+            <translation>未讀最多</translation>
+        </message>
+        <message>
+            <source>Hide until there is something new</source>
+            <translation>隱藏，直到有新內容</translation>
         </message>
     </context>
     <context>
@@ -4674,6 +5001,287 @@
         <message>
             <source>Continue</source>
             <translation>繼續</translation>
+        </message>
+        <message>
+            <source>The host moved on to %1</source>
+            <translation>房主已切換到 %1</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>開啟</translation>
+        </message>
+    </context>
+    <context>
+        <name>Metro</name>
+        <message>
+            <source>Explore</source>
+            <translation>探索</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>最近</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>書庫</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>漫畫</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>動畫</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>已固定到中心頁</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>繼續</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>檢查新章節</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>搜尋漫畫</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>搜尋小說</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>搜尋動畫</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>搜尋全部</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>正在檢查書庫中的新章節…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>一切都是最新的</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>還沒有可繼續的內容</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>搜尋</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>重新整理</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>提醒</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>設定</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>歷史</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>下載</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>動態</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>擴充套件</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>關閉無痕模式</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>無痕模式</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>整理中心頁</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>返回</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> （長按檢視更多）</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>關閉選單</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>開啟選單</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>無痕已關閉</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>無痕</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>賬戶</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>第%1集</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>第%1章</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 個新</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 個新</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>隨機讀一部漫畫</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>繼續</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>隨機探索型別</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>搜尋</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>下載</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>歷史</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>設定</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>你的 %1 年度回顧</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>還沒有可選的內容</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>小</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>中等</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>寬</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>前移</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>後移</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>取消固定</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>固定到中心頁</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>你讀過和看過的內容會顯示在這裡。</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>你儲存的作品會顯示在這裡。</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>全部漫畫</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>即將推出</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>擴充套件</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>最新章節</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>全部小說</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>全部動畫</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>時間表</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>瀏覽</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>熱門</translation>
         </message>
     </context>
     <context>
@@ -5267,6 +5875,94 @@
             <source>Keep the spoken paragraph on screen</source>
             <translation>讓正在朗讀的段落保持在螢幕上</translation>
         </message>
+        <message>
+            <source>Sleep timer: reading aloud stopped</source>
+            <translation>睡眠定時器：已停止朗讀</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>上一句</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>暫停</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>繼續朗讀</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>下一句</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at %1</source>
+            <translation>睡眠定時器：在 %1 停止</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at the end of the chapter</source>
+            <translation>睡眠定時器：本章結束時停止</translation>
+        </message>
+        <message>
+            <source>Sleep timer</source>
+            <translation>睡眠定時器</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>In 15 minutes</source>
+            <translation>15 分鐘後</translation>
+        </message>
+        <message>
+            <source>In 30 minutes</source>
+            <translation>30 分鐘後</translation>
+        </message>
+        <message>
+            <source>In 45 minutes</source>
+            <translation>45 分鐘後</translation>
+        </message>
+        <message>
+            <source>In an hour</source>
+            <translation>1 小時後</translation>
+        </message>
+        <message>
+            <source>At the end of the chapter</source>
+            <translation>章節結束時</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>在新視窗中開啟</translation>
+        </message>
+        <message>
+            <source>Pause reading aloud</source>
+            <translation>暫停朗讀</translation>
+        </message>
+        <message>
+            <source>Translating…</source>
+            <translation>正在翻譯…</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>顯示原文</translation>
+        </message>
+        <message>
+            <source>Translate the chapter</source>
+            <translation>翻譯本章</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>高亮正在朗讀的句子</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs · %1 s</source>
+            <translation>段落間停頓 · %1 秒</translation>
+        </message>
+        <message>
+            <source>Pause between sentences · %1 s</source>
+            <translation>句間停頓 · %1 秒</translation>
+        </message>
     </context>
     <context>
         <name>NovelsPage</name>
@@ -5665,6 +6361,18 @@
             <source>Your system shows them</source>
             <translation>你的系統會顯示通知</translation>
         </message>
+        <message>
+            <source>Layout</source>
+            <translation>版面</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>標準</translation>
+        </message>
+        <message>
+            <source>Metro tiles</source>
+            <translation>Metro 磁貼</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5750,6 +6458,117 @@
         <message>
             <source>Remove</source>
             <translation>移除</translation>
+        </message>
+    </context>
+    <context>
+        <name>PartyPanel</name>
+        <message>
+            <source>Watch together</source>
+            <translation>一起看</translation>
+        </message>
+        <message>
+            <source>Everyone watches from their own source; the host's player steers the others.</source>
+            <translation>每個人用自己的來源觀看；房主的播放器控制其他人。</translation>
+        </message>
+        <message>
+            <source>You are the host: your player steers everyone's.</source>
+            <translation>你是房主：你的播放器控制所有人的播放器。</translation>
+        </message>
+        <message>
+            <source>Playing along with %1</source>
+            <translation>正在與 %1 一起觀看</translation>
+        </message>
+        <message>
+            <source>Waiting for the host…</source>
+            <translation>正在等待房主…</translation>
+        </message>
+        <message>
+            <source>Joining…</source>
+            <translation>正在加入…</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Sign in to scancore.onl (Settings → Account) to watch together.</source>
+            <translation>登入 scancore.onl（設定 → 賬戶）即可一起觀看。</translation>
+        </message>
+        <message>
+            <source>Starting…</source>
+            <translation>正在開始…</translation>
+        </message>
+        <message>
+            <source>Start a watch party</source>
+            <translation>發起觀影派對</translation>
+        </message>
+        <message>
+            <source>Or join one</source>
+            <translation>或者加入一個</translation>
+        </message>
+        <message>
+            <source>Join a watch party</source>
+            <translation>加入觀影派對</translation>
+        </message>
+        <message>
+            <source>Party code</source>
+            <translation>派對代碼</translation>
+        </message>
+        <message>
+            <source>Join</source>
+            <translation>加入</translation>
+        </message>
+        <message>
+            <source>Copy the code</source>
+            <translation>複製代碼</translation>
+        </message>
+        <message>
+            <source>Code copied</source>
+            <translation>代碼已複製</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>分享</translation>
+        </message>
+        <message>
+            <source>Watch %1 with me in SCANCORE: join the party with the code %2</source>
+            <translation>來 SCANCORE 和我一起看 %1：用代碼 %2 加入派對</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>觀影派對</translation>
+        </message>
+        <message>
+            <source>The host is watching %1, episode %2</source>
+            <translation>房主正在看 %1 第 %2 集</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>開啟</translation>
+        </message>
+        <message>
+            <source>host</source>
+            <translation>房主</translation>
+        </message>
+        <message>
+            <source>Say hello: everyone in the party sees it.</source>
+            <translation>打個招呼：派對裡的每個人都能看到。</translation>
+        </message>
+        <message>
+            <source>Message</source>
+            <translation>訊息</translation>
+        </message>
+        <message>
+            <source>Send</source>
+            <translation>傳送</translation>
+        </message>
+        <message>
+            <source>End the party</source>
+            <translation>結束派對</translation>
+        </message>
+        <message>
+            <source>Leave the party</source>
+            <translation>離開派對</translation>
         </message>
     </context>
     <context>
@@ -5934,6 +6753,144 @@
         <message>
             <source>None</source>
             <translation>無</translation>
+        </message>
+    </context>
+    <context>
+        <name>QObject</name>
+        <message>
+            <source>Android could not read the page: %1</source>
+            <translation>Android 無法讀取頁面：%1</translation>
+        </message>
+        <message>
+            <source>This device has no text recogniser.</source>
+            <translation>此裝置沒有文字識別。</translation>
+        </message>
+        <message>
+            <source>Android's translator needs to know the language: pick it in the reader.</source>
+            <translation>Android 的翻譯需要知道語言：請在閱讀器中選擇。</translation>
+        </message>
+        <message>
+            <source>Android could not translate: %1</source>
+            <translation>Android 無法翻譯：%1</translation>
+        </message>
+        <message>
+            <source>This device has no translator of its own.</source>
+            <translation>此裝置沒有自帶翻譯。</translation>
+        </message>
+        <message>
+            <source>Pick a way to translate in Settings → Reading → Translate.</source>
+            <translation>請在“設定 → 閱讀 → 翻譯”中選擇翻譯方式。</translation>
+        </message>
+        <message>
+            <source>The page's picture could not be read.</source>
+            <translation>無法讀取頁面圖片。</translation>
+        </message>
+        <message>
+            <source>%1 refused the key. Check it in Settings → Reading → Translate.</source>
+            <translation>%1 拒絕了金鑰。請在“設定 → 閱讀 → 翻譯”中檢查。</translation>
+        </message>
+        <message>
+            <source>%1 says the key's quota is used up for now.</source>
+            <translation>%1 表示該金鑰的配額暫時用完了。</translation>
+        </message>
+        <message>
+            <source>%1 could not be reached.</source>
+            <translation>無法連線 %1。</translation>
+        </message>
+        <message>
+            <source>%1 answered with an error (%2).</source>
+            <translation>%1 返回了錯誤（%2）。</translation>
+        </message>
+        <message>
+            <source>DeepL needs your key (Settings → Reading → Translate).</source>
+            <translation>DeepL 需要你的金鑰（設定 → 閱讀 → 翻譯）。</translation>
+        </message>
+        <message>
+            <source>DeepL answered with something else than the texts.</source>
+            <translation>DeepL 返回的不是文本。</translation>
+        </message>
+        <message>
+            <source>Google Translate needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google 翻譯需要你的 API 金鑰（設定 → 閱讀 → 翻譯）。</translation>
+        </message>
+        <message>
+            <source>Google Translate answered with something else than the texts.</source>
+            <translation>Google 翻譯返回的不是文本。</translation>
+        </message>
+        <message>
+            <source>Set the service's address and model in Settings → Reading → Translate.</source>
+            <translation>請在“設定 → 閱讀 → 翻譯”中設定服務的地址和模型。</translation>
+        </message>
+        <message>
+            <source>The model did not answer with one translation per text. Try another model.</source>
+            <translation>模型沒有為每段文本各給出一個翻譯。請換一個模型。</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google Cloud Vision 需要你的 API 金鑰（設定 → 閱讀 → 翻譯）。</translation>
+        </message>
+        <message>
+            <source>MangaSin changed its series page: no chapter list found.</source>
+            <translation>MangaSin 更改了作品頁：找不到章節列表。</translation>
+        </message>
+        <message>
+            <source>MangaSin's chapter list could not be opened (its key changed).</source>
+            <translation>無法開啟 MangaSin 的章節列表（其金鑰已更改）。</translation>
+        </message>
+        <message>
+            <source>%1 refused the login. Check it in Settings → Sources → Your servers.</source>
+            <translation>%1 拒絕了登入。請在“設定 → 來源 → 我的伺服器”中檢查。</translation>
+        </message>
+        <message>
+            <source>This server is no longer in Settings → Sources → Your servers.</source>
+            <translation>該伺服器已不在“設定 → 來源 → 我的伺服器”中。</translation>
+        </message>
+        <message>
+            <source>The server did not give the image (%1).</source>
+            <translation>伺服器未提供圖片（%1）。</translation>
+        </message>
+        <message>
+            <source>The image could not be saved.</source>
+            <translation>無法儲存圖片。</translation>
+        </message>
+    </context>
+    <context>
+        <name>ReadAloudBar</name>
+        <message>
+            <source>Reading aloud: %1</source>
+            <translation>正在朗讀：%1</translation>
+        </message>
+        <message>
+            <source>Loading the chapter…</source>
+            <translation>正在載入章節…</translation>
+        </message>
+        <message>
+            <source>stops at %1</source>
+            <translation>%1 停止</translation>
+        </message>
+        <message>
+            <source>stops after this chapter</source>
+            <translation>本章後停止</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>上一句</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>暫停</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>繼續朗讀</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>下一句</translation>
+        </message>
+        <message>
+            <source>Stop reading aloud</source>
+            <translation>停止朗讀</translation>
         </message>
     </context>
     <context>
@@ -6477,6 +7434,122 @@
             <source>Colours</source>
             <translation>顏色</translation>
         </message>
+        <message>
+            <source>Full screen while reading</source>
+            <translation>閱讀時全屏</translation>
+        </message>
+        <message>
+            <source>The status and navigation bars hide with the reader's controls, so pages fill the screen, beside a punch hole too. Swipe from the edge to see them.</source>
+            <translation>狀態列和導航欄會隨閱讀器控制元件一起隱藏，讓頁面鋪滿螢幕，挖孔旁也一樣。從邊緣滑動即可顯示。</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>接著讀下一章</translation>
+        </message>
+        <message>
+            <source>The next chapter joins the strip as you near the end, so reading never stops for a button.</source>
+            <translation>接近結尾時下一章會接到長條上，閱讀不會因為按鈕而停下。</translation>
+        </message>
+        <message>
+            <source>Translate</source>
+            <translation>翻譯</translation>
+        </message>
+        <message>
+            <source>Comic readers have Translate the pages in their top bar. Keys stay on this device and are only sent to their own service.</source>
+            <translation>漫畫閱讀器頂欄有“翻譯頁面”。金鑰儲存在此裝置上，只會傳送給對應的服務。</translation>
+        </message>
+        <message>
+            <source>Translate into</source>
+            <translation>翻譯成</translation>
+        </message>
+        <message>
+            <source>Read the page's text with</source>
+            <translation>讀取頁面文字的方式</translation>
+        </message>
+        <message>
+            <source>Finds the text in a comic's pages.</source>
+            <translation>找出漫畫頁面中的文字。</translation>
+        </message>
+        <message>
+            <source>Translate with</source>
+            <translation>翻譯方式</translation>
+        </message>
+        <message>
+            <source>DeepL key</source>
+            <translation>DeepL 金鑰</translation>
+        </message>
+        <message>
+            <source>From your DeepL account (free keys end in :fx).</source>
+            <translation>來自你的 DeepL 賬戶（免費金鑰以 :fx 結尾）。</translation>
+        </message>
+        <message>
+            <source>Not set</source>
+            <translation>未設定</translation>
+        </message>
+        <message>
+            <source>Google Cloud key</source>
+            <translation>Google Cloud 金鑰</translation>
+        </message>
+        <message>
+            <source>An API key with Cloud Translation and Cloud Vision turned on.</source>
+            <translation>已開啟 Cloud Translation 和 Cloud Vision 的 API 金鑰。</translation>
+        </message>
+        <message>
+            <source>Language model</source>
+            <translation>語言模型</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service: its address up to /v1 (a local Ollama is http://localhost:11434/v1), a model and a key if it needs one.</source>
+            <translation>任何相容 OpenAI 的服務：地址寫到 /v1（本地 Ollama 為 http://localhost:11434/v1）、模型，以及需要時的金鑰。</translation>
+        </message>
+        <message>
+            <source>Model, e.g. gpt-4o-mini</source>
+            <translation>模型，例如 gpt-4o-mini</translation>
+        </message>
+        <message>
+            <source>Key (if it needs one)</source>
+            <translation>金鑰（如需要）</translation>
+        </message>
+        <message>
+            <source>Forget translations</source>
+            <translation>清除翻譯</translation>
+        </message>
+        <message>
+            <source>Pages and chapters are translated again the next time.</source>
+            <translation>頁面和章節下次會重新翻譯。</translation>
+        </message>
+        <message>
+            <source>Forget</source>
+            <translation>忘記</translation>
+        </message>
+        <message>
+            <source>Translations forgotten</source>
+            <translation>已清除翻譯</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>高亮正在朗讀的句子</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs</source>
+            <translation>段落間停頓</translation>
+        </message>
+        <message>
+            <source>Pause between sentences</source>
+            <translation>句間停頓</translation>
+        </message>
+        <message>
+            <source>Voice for a language</source>
+            <translation>各語言的聲音</translation>
+        </message>
+        <message>
+            <source>Books in this language are read with this voice.</source>
+            <translation>這種語言的書用這個聲音朗讀。</translation>
+        </message>
+        <message>
+            <source>The voice above</source>
+            <translation>上面的聲音</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6679,6 +7752,113 @@
         <message>
             <source>Another app</source>
             <translation>其他應用程式</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Comics</name>
+        <message>
+            <source>That server is not saved.</source>
+            <translation>該伺服器未儲存。</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Downloads</name>
+        <message>
+            <source>No chapters of this novel are downloaded. Download some first.</source>
+            <translation>這部小說還沒有下載任何章節。請先下載一些。</translation>
+        </message>
+        <message>
+            <source>The book could not be saved in %1.</source>
+            <translation>無法將書儲存到 %1。</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::MediaControls</name>
+        <message>
+            <source>Reading aloud</source>
+            <translation>朗讀</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Party</name>
+        <message>
+            <source>The party could not be reached (%1).</source>
+            <translation>無法連線派對（%1）。</translation>
+        </message>
+        <message>
+            <source>Watch parties need scancore.onl (this site has none yet).</source>
+            <translation>觀影派對需要 scancore.onl（此站點還沒有）。</translation>
+        </message>
+        <message>
+            <source>The party could not be opened.</source>
+            <translation>無法開啟派對。</translation>
+        </message>
+        <message>
+            <source>A party code has six letters and numbers.</source>
+            <translation>派對代碼由六個字母和數字組成。</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>派對已結束。</translation>
+        </message>
+        <message>
+            <source>No party with that code.</source>
+            <translation>沒有使用該代碼的派對。</translation>
+        </message>
+        <message>
+            <source>The host ended the party.</source>
+            <translation>房主結束了派對。</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Translator</name>
+        <message>
+            <source>To translate pages on a computer, add a Google Cloud key in Settings → Reading → Translate (Vision reads the page's text).</source>
+            <translation>要在電腦上翻譯頁面，請在“設定 → 閱讀 → 翻譯”中新增 Google Cloud 金鑰（Vision 讀取頁面文字）。</translation>
+        </message>
+        <message>
+            <source>Add a DeepL or Google key, or a model's address, in Settings → Reading → Translate.</source>
+            <translation>請在“設定 → 閱讀 → 翻譯”中新增 DeepL 或 Google 金鑰，或模型的地址。</translation>
+        </message>
+        <message>
+            <source>Automatic</source>
+            <translation>自動</translation>
+        </message>
+        <message>
+            <source>This phone</source>
+            <translation>這部手機</translation>
+        </message>
+        <message>
+            <source>On the phone, with Google Play services</source>
+            <translation>在手機上，使用 Google Play 服務</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision</source>
+            <translation>Google Cloud Vision</translation>
+        </message>
+        <message>
+            <source>Your Google Cloud key</source>
+            <translation>你的 Google Cloud 金鑰</translation>
+        </message>
+        <message>
+            <source>On the phone; a model per language</source>
+            <translation>在手機上；每種語言一個模型</translation>
+        </message>
+        <message>
+            <source>Your DeepL key</source>
+            <translation>你的 DeepL 金鑰</translation>
+        </message>
+        <message>
+            <source>Google Translate</source>
+            <translation>Google 翻譯</translation>
+        </message>
+        <message>
+            <source>A language model</source>
+            <translation>語言模型</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service, or one on your computer</source>
+            <translation>任何相容 OpenAI 的服務，或你電腦上的服務</translation>
         </message>
     </context>
     <context>
@@ -6950,6 +8130,121 @@
         <message>
             <source>Show as a grid</source>
             <translation>以格狀顯示</translation>
+        </message>
+        <message>
+            <source>Saved %1 chapters as %2</source>
+            <translation>已將 %1 章儲存為 %2</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>顯示</translation>
+        </message>
+        <message>
+            <source>Save the %1 downloaded chapters</source>
+            <translation>儲存已下載的 %1 章</translation>
+        </message>
+        <message>
+            <source>Download all %1 chapters, then save</source>
+            <translation>下載全部 %1 章後儲存</translation>
+        </message>
+        <message>
+            <source>Stop waiting for the downloads</source>
+            <translation>不再等待下載</translation>
+        </message>
+        <message>
+            <source>No chapter downloaded, so there is no EPUB to save.</source>
+            <translation>沒有已下載的章節，因此沒有可儲存的 EPUB。</translation>
+        </message>
+        <message>
+            <source>Read in a new window</source>
+            <translation>在新視窗中閱讀</translation>
+        </message>
+        <message>
+            <source>Listen</source>
+            <translation>收聽</translation>
+        </message>
+        <message>
+            <source>Downloading for the EPUB…</source>
+            <translation>正在為 EPUB 下載…</translation>
+        </message>
+        <message>
+            <source>Save as EPUB</source>
+            <translation>儲存為 EPUB</translation>
+        </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>從中心頁取消固定</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>固定到中心頁</translation>
+        </message>
+    </context>
+    <context>
+        <name>ServerDialog</name>
+        <message>
+            <source>Trying it…</source>
+            <translation>正在嘗試…</translation>
+        </message>
+        <message>
+            <source>Connected: 1 series found.</source>
+            <translation>已連線：找到 1 部作品。</translation>
+        </message>
+        <message>
+            <source>Connected: %1 series found.</source>
+            <translation>已連線：找到 %1 部作品。</translation>
+        </message>
+        <message>
+            <source>Your server</source>
+            <translation>你的伺服器</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>新增你的伺服器</translation>
+        </message>
+        <message>
+            <source>Read the comics on your own Komga, Kavita or Suwayomi server. The login stays on this device.</source>
+            <translation>閱讀你自己的 Komga、Kavita 或 Suwayomi 伺服器上的漫畫。登入資訊保留在此裝置上。</translation>
+        </message>
+        <message>
+            <source>Name (optional)</source>
+            <translation>名稱（可選）</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>郵箱</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>使用者名稱</translation>
+        </message>
+        <message>
+            <source> (if it asks for one)</source>
+            <translation> （如果要求）</translation>
+        </message>
+        <message>
+            <source>Password (saved; type to change)</source>
+            <translation>密碼（已儲存；輸入以更改）</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>密碼</translation>
+        </message>
+        <message>
+            <source>API key (saved; type to change)</source>
+            <translation>API 金鑰（已儲存；輸入以更改）</translation>
+        </message>
+        <message>
+            <source>Or an API key, instead of the login</source>
+            <translation>或者用 API 金鑰代替登入</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>關閉</translation>
+        </message>
+        <message>
+            <source>Save and try</source>
+            <translation>儲存並測試</translation>
         </message>
     </context>
     <context>
@@ -7249,6 +8544,10 @@
         <message>
             <source> · Medium Dev</source>
             <translation> · Medium Dev</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
         </message>
     </context>
     <context>
@@ -7726,6 +9025,34 @@
         <message>
             <source>Mihon's downloads · </source>
             <translation>Mihon 的下載 · </translation>
+        </message>
+        <message>
+            <source>Your servers</source>
+            <translation>我的伺服器</translation>
+        </message>
+        <message>
+            <source>Komga, Kavita and Suwayomi servers you run: their comics are a source like the others, searched with them and saved to the library.</source>
+            <translation>你自己執行的 Komga、Kavita 和 Suwayomi 伺服器：其中的漫畫和其他來源一樣，會一起搜尋並儲存到書庫。</translation>
+        </message>
+        <message>
+            <source>Change</source>
+            <translation>更改</translation>
+        </message>
+        <message>
+            <source>Open in the browser</source>
+            <translation>在瀏覽器中開啟</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>新增你的伺服器</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>診斷</translation>
+        </message>
+        <message>
+            <source>Whether the extensions runtime answers, a quick test of a source, and the sites each extension contacted.</source>
+            <translation>擴充套件執行環境是否響應、對某個來源的快速測試，以及每個擴充套件訪問過的網站。</translation>
         </message>
     </context>
     <context>
@@ -8408,6 +9735,22 @@
             <source>Saved </source>
             <translation>已儲存 </translation>
         </message>
+        <message>
+            <source>Metro colours</source>
+            <translation>Metro 顏色</translation>
+        </message>
+        <message>
+            <source>The accent colours of Windows Phone, or any colour from the wheel. Tiles, the hub title and switches take it.</source>
+            <translation>Windows Phone 的強調色，或色輪上的任意顏色。磁貼、中心頁標題和開關都會使用它。</translation>
+        </message>
+        <message>
+            <source>Custom colour</source>
+            <translation>自定義顏色</translation>
+        </message>
+        <message>
+            <source>Tile colour</source>
+            <translation>磁貼顏色</translation>
+        </message>
     </context>
     <context>
         <name>TrackerConnect</name>
@@ -8604,6 +9947,13 @@
         <message>
             <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
             <translation>在 設定 → 連線 中連結 AniList、MyAnimeList 或 Kitsu 等追蹤服務，讓你在那裡的清單保持最新。</translation>
+        </message>
+    </context>
+    <context>
+        <name>TranslationLayer</name>
+        <message>
+            <source>Translating…</source>
+            <translation>正在翻譯…</translation>
         </message>
     </context>
     <context>
@@ -9027,6 +10377,34 @@
         <message>
             <source>Close player</source>
             <translation>關閉播放器</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>內建</translation>
+        </message>
+        <message>
+            <source>More…</source>
+            <translation>更多…</translation>
+        </message>
+        <message>
+            <source>Keep SCANCORE open while it plays there: the video comes through it.</source>
+            <translation>在那裡播放時請保持 SCANCORE 開啟：影片經由它傳輸。</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>派對已結束。</translation>
+        </message>
+        <message>
+            <source>Watch party (%1)</source>
+            <translation>觀影派對（%1）</translation>
+        </message>
+        <message>
+            <source>Watch together</source>
+            <translation>一起看</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>在新視窗中開啟</translation>
         </message>
     </context>
     <context>

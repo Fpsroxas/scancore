@@ -1032,6 +1032,14 @@
             <source>Waiting: stop</source>
             <translation>대기 중: 중지</translation>
         </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>허브에서 고정 해제</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>허브에 고정</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1138,6 +1146,14 @@
         <message>
             <source>All %1</source>
             <translation>전체 %1</translation>
+        </message>
+        <message>
+            <source>Party %1</source>
+            <translation>파티 %1</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>워치 파티</translation>
         </message>
     </context>
     <context>
@@ -1888,6 +1904,74 @@
         <message>
             <source>Bottom</source>
             <translation>아래</translation>
+        </message>
+        <message>
+            <source>Finished: </source>
+            <translation>다 읽음: </translation>
+        </message>
+        <message>
+            <source>Next: </source>
+            <translation>다음: </translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>새 창에서 열기</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>원문 보기</translation>
+        </message>
+        <message>
+            <source>Translate the pages</source>
+            <translation>페이지 번역</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse (L)</source>
+            <translation>마우스 아래 돋보기(L)</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>다음 챕터로 이어 읽기</translation>
+        </message>
+        <message>
+            <source>Auto-scroll</source>
+            <translation>자동 스크롤</translation>
+        </message>
+        <message>
+            <source>Turn the pages by themselves</source>
+            <translation>페이지 자동으로 넘기기</translation>
+        </message>
+        <message>
+            <source>Auto-scroll speed · %1</source>
+            <translation>자동 스크롤 속도 · %1</translation>
+        </message>
+        <message>
+            <source>A page every %1 s</source>
+            <translation>%1초마다 한 페이지</translation>
+        </message>
+        <message>
+            <source>Sharpen small scans</source>
+            <translation>작은 스캔 선명하게</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>가늘게</translation>
+        </message>
+        <message>
+            <source>Strong</source>
+            <translation>강하게</translation>
+        </message>
+        <message>
+            <source>Slower</source>
+            <translation>느리게</translation>
+        </message>
+        <message>
+            <source>Faster</source>
+            <translation>더 빠르게</translation>
+        </message>
+        <message>
+            <source>Pause auto-scroll</source>
+            <translation>자동 스크롤 일시 정지</translation>
         </message>
     </context>
     <context>
@@ -2907,6 +2991,121 @@
         </message>
     </context>
     <context>
+        <name>ExtensionsDiagnostics</name>
+        <message>
+            <source>Answered in %1 s with %2 titles.</source>
+            <translation>%1초 만에 작품 %2개로 응답했습니다.</translation>
+        </message>
+        <message>
+            <source>Failed after %1 s: %2</source>
+            <translation>%1초 후 실패: %2</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>진단</translation>
+        </message>
+        <message>
+            <source>For when an extension misbehaves</source>
+            <translation>확장 프로그램이 말썽일 때</translation>
+        </message>
+        <message>
+            <source>Copy report</source>
+            <translation>보고서 복사</translation>
+        </message>
+        <message>
+            <source>The report is copied. Paste it into an issue or a message.</source>
+            <translation>보고서를 복사했습니다. 이슈나 메시지에 붙여 넣으세요.</translation>
+        </message>
+        <message>
+            <source>Refresh</source>
+            <translation>새로 고침</translation>
+        </message>
+        <message>
+            <source>Runtime</source>
+            <translation>런타임</translation>
+        </message>
+        <message>
+            <source>Extensions runtime installed</source>
+            <translation>확장 프로그램 런타임 설치됨</translation>
+        </message>
+        <message>
+            <source>Extensions runtime not installed</source>
+            <translation>확장 프로그램 런타임이 설치되지 않음</translation>
+        </message>
+        <message>
+            <source>No runtime for this system</source>
+            <translation>이 시스템용 런타임이 없음</translation>
+        </message>
+        <message>
+            <source>Asking the host…</source>
+            <translation>호스트에게 묻는 중…</translation>
+        </message>
+        <message>
+            <source>Host %1 answered in %2 ms</source>
+            <translation>런타임 %1이(가) %2ms 만에 응답했습니다</translation>
+        </message>
+        <message>
+            <source>Extension libraries it takes</source>
+            <translation>지원하는 확장 프로그램 라이브러리</translation>
+        </message>
+        <message>
+            <source>Mihon %1 · Aniyomi %2</source>
+            <translation>Mihon %1 · Aniyomi %2</translation>
+        </message>
+        <message>
+            <source>This device</source>
+            <translation>이 기기</translation>
+        </message>
+        <message>
+            <source>Test a source</source>
+            <translation>소스 테스트</translation>
+        </message>
+        <message>
+            <source>Loads the source's popular titles once and times it.</source>
+            <translation>소스의 인기 작품을 한 번 불러오고 시간을 잽니다.</translation>
+        </message>
+        <message>
+            <source>Source</source>
+            <translation>소스</translation>
+        </message>
+        <message>
+            <source>Testing…</source>
+            <translation>테스트 중…</translation>
+        </message>
+        <message>
+            <source>Test</source>
+            <translation>테스트</translation>
+        </message>
+        <message>
+            <source>Sites the extensions contacted</source>
+            <translation>확장 프로그램이 접속한 사이트</translation>
+        </message>
+        <message>
+            <source>This session only, counted in the extensions runtime. Nothing but the sites' names is kept.</source>
+            <translation>이번 세션만, 확장 프로그램 런타임에서 집계합니다. 사이트 이름 외에는 남기지 않습니다.</translation>
+        </message>
+        <message>
+            <source>Nothing yet</source>
+            <translation>아직 없음</translation>
+        </message>
+        <message>
+            <source>Browse or read with an extension and come back.</source>
+            <translation>확장 프로그램으로 둘러보거나 읽고 돌아오세요.</translation>
+        </message>
+        <message>
+            <source>%1 · %2 requests, %3</source>
+            <translation>%1 · 요청 %2건, %3</translation>
+        </message>
+        <message>
+            <source>Host log</source>
+            <translation>런타임 로그</translation>
+        </message>
+        <message>
+            <source>The end of extensions/host.log.</source>
+            <translation>extensions/host.log의 끝부분.</translation>
+        </message>
+    </context>
+    <context>
         <name>ExtensionsPage</name>
         <message>
             <source>All languages</source>
@@ -3187,6 +3386,10 @@
         <message>
             <source>Its extensions</source>
             <translation>이 저장소의 확장 프로그램</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>진단</translation>
         </message>
     </context>
     <context>
@@ -3719,6 +3922,110 @@
             <source>Long</source>
             <translation>길게</translation>
         </message>
+        <message>
+            <source>Look</source>
+            <translation>모양</translation>
+        </message>
+        <message>
+            <source>Metro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Metro: 타일, 큰 글씨, 앱 바가 있는 파노라마 허브로, Windows Phone 스타일입니다.</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>기본</translation>
+        </message>
+        <message>
+            <source>Pages and navigation</source>
+            <translation>페이지와 탐색</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Tiles and panoramas</source>
+            <translation>타일과 파노라마</translation>
+        </message>
+        <message>
+            <source>Hold a tile on the hub to resize, move or unpin it. Series pages have Pin to the hub.</source>
+            <translation>허브의 타일을 길게 눌러 크기를 바꾸거나 옮기거나 고정을 해제하세요. 작품 페이지에는 허브에 고정이 있습니다.</translation>
+        </message>
+        <message>
+            <source>Hub title</source>
+            <translation>허브 제목</translation>
+        </message>
+        <message>
+            <source>The big word across the top of the hub.</source>
+            <translation>허브 맨 위의 큰 글자.</translation>
+        </message>
+        <message>
+            <source>Title colour</source>
+            <translation>제목 색</translation>
+        </message>
+        <message>
+            <source>Accent blend</source>
+            <translation>강조색 혼합</translation>
+        </message>
+        <message>
+            <source>Plain</source>
+            <translation>단색</translation>
+        </message>
+        <message>
+            <source>Background</source>
+            <translation>백그라운드</translation>
+        </message>
+        <message>
+            <source>Behind the hub, moving slower than the tiles.</source>
+            <translation>허브 뒤에서 타일보다 느리게 움직입니다.</translation>
+        </message>
+        <message>
+            <source>Last read</source>
+            <translation>마지막으로 읽음</translation>
+        </message>
+        <message>
+            <source>Theme picture</source>
+            <translation>테마 그림</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>없음</translation>
+        </message>
+        <message>
+            <source>Headers</source>
+            <translation>헤더</translation>
+        </message>
+        <message>
+            <source>UPPERCASE</source>
+            <translation>대문자</translation>
+        </message>
+        <message>
+            <source>lowercase</source>
+            <translation>소문자</translation>
+        </message>
+        <message>
+            <source>Live tiles</source>
+            <translation>라이브 타일</translation>
+        </message>
+        <message>
+            <source>Tiles turn over now and then to show new chapters and where you are.</source>
+            <translation>타일이 가끔 뒤집혀 새 챕터와 읽던 위치를 보여 줍니다.</translation>
+        </message>
+        <message>
+            <source>Hub sections</source>
+            <translation>허브 섹션</translation>
+        </message>
+        <message>
+            <source>Which sections the hub shows, in this order. Four or five are easiest to find your way in.</source>
+            <translation>허브에 보여 줄 섹션과 순서. 네다섯 개가 가장 찾기 쉽습니다.</translation>
+        </message>
+        <message>
+            <source>Earlier</source>
+            <translation>이전</translation>
+        </message>
+        <message>
+            <source>Later</source>
+            <translation>나중에</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -3927,6 +4234,14 @@
         <message>
             <source>Anime player</source>
             <translation>애니메이션 플레이어</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse</source>
+            <translation>마우스 아래 돋보기</translation>
+        </message>
+        <message>
+            <source>Auto-scroll on or off</source>
+            <translation>자동 스크롤 켜기/끄기</translation>
         </message>
     </context>
     <context>
@@ -4298,6 +4613,18 @@
         <message>
             <source>Undo</source>
             <translation>실행 취소</translation>
+        </message>
+        <message>
+            <source>Most unwatched</source>
+            <translation>안 본 것 많은 순</translation>
+        </message>
+        <message>
+            <source>Most unread</source>
+            <translation>안 읽은 것 많은 순</translation>
+        </message>
+        <message>
+            <source>Hide until there is something new</source>
+            <translation>새 소식이 생길 때까지 숨기기</translation>
         </message>
     </context>
     <context>
@@ -4674,6 +5001,287 @@
         <message>
             <source>Continue</source>
             <translation>계속</translation>
+        </message>
+        <message>
+            <source>The host moved on to %1</source>
+            <translation>호스트가 %1(으)로 넘어갔습니다</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>열기</translation>
+        </message>
+    </context>
+    <context>
+        <name>Metro</name>
+        <message>
+            <source>Explore</source>
+            <translation>탐색</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>최근</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>라이브러리</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>만화</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>애니메이션</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>허브에 고정됨</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>계속</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>새 챕터 확인</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>만화 검색</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>소설 검색</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>애니메이션 검색</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>전체 검색</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>라이브러리에서 새 챕터를 확인하는 중…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>모두 최신 상태입니다</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>아직 이어 볼 것이 없음</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>검색</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>새로 고침</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>알림</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>설정</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>기록</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>다운로드</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>활동</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>확장 프로그램</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>시크릿 모드 끄기</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>시크릿 모드</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>허브 정리</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>뒤로</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (길게 눌러 더 보기)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>메뉴 닫기</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>메뉴 열기</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>시크릿 꺼짐</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>시크릿</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>계정</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>에피소드 %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>챕터 %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>새 항목 1</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>새 항목 %1</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>무작위 만화 읽기</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>이어 보기</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>무작위 장르 탐색</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>검색</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>다운로드</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>기록</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>설정</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>나의 %1 결산</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>아직 고를 것이 없음</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>작게</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>중간</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>넓게</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>앞으로 이동</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>뒤로 이동</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>고정 해제</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>허브에 고정</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>읽고 본 것이 여기에 표시됩니다.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>저장한 작품이 여기에 표시됩니다.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>모든 만화</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>공개 예정</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>확장 프로그램</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>최신 챕터</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>모든 소설</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>모든 애니</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>일정</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>둘러보기</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>트렌딩</translation>
         </message>
     </context>
     <context>
@@ -5267,6 +5875,94 @@
             <source>Keep the spoken paragraph on screen</source>
             <translation>읽는 문단을 화면에 유지</translation>
         </message>
+        <message>
+            <source>Sleep timer: reading aloud stopped</source>
+            <translation>취침 타이머: 소리 내어 읽기를 멈췄습니다</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>이전 문장</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>일시 정지</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>계속 소리 내어 읽기</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>다음 문장</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at %1</source>
+            <translation>취침 타이머: %1에 멈춤</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at the end of the chapter</source>
+            <translation>취침 타이머: 챕터가 끝나면 멈춤</translation>
+        </message>
+        <message>
+            <source>Sleep timer</source>
+            <translation>취침 타이머</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>끔</translation>
+        </message>
+        <message>
+            <source>In 15 minutes</source>
+            <translation>15분 후</translation>
+        </message>
+        <message>
+            <source>In 30 minutes</source>
+            <translation>30분 후</translation>
+        </message>
+        <message>
+            <source>In 45 minutes</source>
+            <translation>45분 후</translation>
+        </message>
+        <message>
+            <source>In an hour</source>
+            <translation>1시간 후</translation>
+        </message>
+        <message>
+            <source>At the end of the chapter</source>
+            <translation>챕터가 끝날 때</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>새 창에서 열기</translation>
+        </message>
+        <message>
+            <source>Pause reading aloud</source>
+            <translation>소리 내어 읽기 일시 정지</translation>
+        </message>
+        <message>
+            <source>Translating…</source>
+            <translation>번역 중…</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>원문 보기</translation>
+        </message>
+        <message>
+            <source>Translate the chapter</source>
+            <translation>챕터 번역</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>읽는 문장 강조</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs · %1 s</source>
+            <translation>문단 사이 쉼 · %1초</translation>
+        </message>
+        <message>
+            <source>Pause between sentences · %1 s</source>
+            <translation>문장 사이 쉼 · %1초</translation>
+        </message>
     </context>
     <context>
         <name>NovelsPage</name>
@@ -5665,6 +6361,18 @@
             <source>Your system shows them</source>
             <translation>시스템이 보여줘요</translation>
         </message>
+        <message>
+            <source>Layout</source>
+            <translation>레이아웃</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>기본</translation>
+        </message>
+        <message>
+            <source>Metro tiles</source>
+            <translation>Metro 타일</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5750,6 +6458,117 @@
         <message>
             <source>Remove</source>
             <translation>제거</translation>
+        </message>
+    </context>
+    <context>
+        <name>PartyPanel</name>
+        <message>
+            <source>Watch together</source>
+            <translation>함께 보기</translation>
+        </message>
+        <message>
+            <source>Everyone watches from their own source; the host's player steers the others.</source>
+            <translation>각자 자신의 소스로 보고, 호스트의 플레이어가 다른 사람들을 조종합니다.</translation>
+        </message>
+        <message>
+            <source>You are the host: your player steers everyone's.</source>
+            <translation>내가 호스트입니다: 내 플레이어가 모두의 플레이어를 조종합니다.</translation>
+        </message>
+        <message>
+            <source>Playing along with %1</source>
+            <translation>%1 님과 함께 보는 중</translation>
+        </message>
+        <message>
+            <source>Waiting for the host…</source>
+            <translation>호스트를 기다리는 중…</translation>
+        </message>
+        <message>
+            <source>Joining…</source>
+            <translation>참가 중…</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
+        </message>
+        <message>
+            <source>Sign in to scancore.onl (Settings → Account) to watch together.</source>
+            <translation>함께 보려면 scancore.onl에 로그인하세요(설정 → 계정).</translation>
+        </message>
+        <message>
+            <source>Starting…</source>
+            <translation>시작하는 중…</translation>
+        </message>
+        <message>
+            <source>Start a watch party</source>
+            <translation>워치 파티 시작</translation>
+        </message>
+        <message>
+            <source>Or join one</source>
+            <translation>또는 참가하기</translation>
+        </message>
+        <message>
+            <source>Join a watch party</source>
+            <translation>워치 파티 참가</translation>
+        </message>
+        <message>
+            <source>Party code</source>
+            <translation>파티 코드</translation>
+        </message>
+        <message>
+            <source>Join</source>
+            <translation>참가</translation>
+        </message>
+        <message>
+            <source>Copy the code</source>
+            <translation>코드 복사</translation>
+        </message>
+        <message>
+            <source>Code copied</source>
+            <translation>코드 복사됨</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>공유</translation>
+        </message>
+        <message>
+            <source>Watch %1 with me in SCANCORE: join the party with the code %2</source>
+            <translation>SCANCORE에서 같이 %1 보자: 코드 %2로 파티에 들어와</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>워치 파티</translation>
+        </message>
+        <message>
+            <source>The host is watching %1, episode %2</source>
+            <translation>호스트가 %1 %2화를 보고 있습니다</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>열기</translation>
+        </message>
+        <message>
+            <source>host</source>
+            <translation>호스트</translation>
+        </message>
+        <message>
+            <source>Say hello: everyone in the party sees it.</source>
+            <translation>인사해 보세요: 파티의 모두에게 보입니다.</translation>
+        </message>
+        <message>
+            <source>Message</source>
+            <translation>메시지</translation>
+        </message>
+        <message>
+            <source>Send</source>
+            <translation>보내기</translation>
+        </message>
+        <message>
+            <source>End the party</source>
+            <translation>파티 끝내기</translation>
+        </message>
+        <message>
+            <source>Leave the party</source>
+            <translation>파티 나가기</translation>
         </message>
     </context>
     <context>
@@ -5934,6 +6753,144 @@
         <message>
             <source>None</source>
             <translation>없음</translation>
+        </message>
+    </context>
+    <context>
+        <name>QObject</name>
+        <message>
+            <source>Android could not read the page: %1</source>
+            <translation>Android가 페이지를 읽지 못했습니다: %1</translation>
+        </message>
+        <message>
+            <source>This device has no text recogniser.</source>
+            <translation>이 기기에는 글자 인식이 없습니다.</translation>
+        </message>
+        <message>
+            <source>Android's translator needs to know the language: pick it in the reader.</source>
+            <translation>Android 번역기는 언어를 알아야 합니다. 리더에서 선택하세요.</translation>
+        </message>
+        <message>
+            <source>Android could not translate: %1</source>
+            <translation>Android가 번역하지 못했습니다: %1</translation>
+        </message>
+        <message>
+            <source>This device has no translator of its own.</source>
+            <translation>이 기기에는 자체 번역기가 없습니다.</translation>
+        </message>
+        <message>
+            <source>Pick a way to translate in Settings → Reading → Translate.</source>
+            <translation>설정 → 읽기 → 번역에서 번역 방법을 고르세요.</translation>
+        </message>
+        <message>
+            <source>The page's picture could not be read.</source>
+            <translation>페이지 이미지를 읽을 수 없습니다.</translation>
+        </message>
+        <message>
+            <source>%1 refused the key. Check it in Settings → Reading → Translate.</source>
+            <translation>%1에서 키를 거부했습니다. 설정 → 읽기 → 번역에서 확인하세요.</translation>
+        </message>
+        <message>
+            <source>%1 says the key's quota is used up for now.</source>
+            <translation>%1에 따르면 키의 할당량이 당분간 모두 소진되었습니다.</translation>
+        </message>
+        <message>
+            <source>%1 could not be reached.</source>
+            <translation>%1에 연결할 수 없습니다.</translation>
+        </message>
+        <message>
+            <source>%1 answered with an error (%2).</source>
+            <translation>%1에서 오류를 반환했습니다(%2).</translation>
+        </message>
+        <message>
+            <source>DeepL needs your key (Settings → Reading → Translate).</source>
+            <translation>DeepL에 키가 필요합니다(설정 → 읽기 → 번역).</translation>
+        </message>
+        <message>
+            <source>DeepL answered with something else than the texts.</source>
+            <translation>DeepL이 텍스트가 아닌 다른 것을 반환했습니다.</translation>
+        </message>
+        <message>
+            <source>Google Translate needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google 번역에 API 키가 필요합니다(설정 → 읽기 → 번역).</translation>
+        </message>
+        <message>
+            <source>Google Translate answered with something else than the texts.</source>
+            <translation>Google 번역이 텍스트가 아닌 다른 것을 반환했습니다.</translation>
+        </message>
+        <message>
+            <source>Set the service's address and model in Settings → Reading → Translate.</source>
+            <translation>설정 → 읽기 → 번역에서 서비스 주소와 모델을 정하세요.</translation>
+        </message>
+        <message>
+            <source>The model did not answer with one translation per text. Try another model.</source>
+            <translation>모델이 텍스트마다 번역 하나씩 답하지 않았습니다. 다른 모델을 써 보세요.</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google Cloud Vision에 API 키가 필요합니다(설정 → 읽기 → 번역).</translation>
+        </message>
+        <message>
+            <source>MangaSin changed its series page: no chapter list found.</source>
+            <translation>MangaSin의 작품 페이지가 바뀌어 챕터 목록을 찾지 못했습니다.</translation>
+        </message>
+        <message>
+            <source>MangaSin's chapter list could not be opened (its key changed).</source>
+            <translation>MangaSin의 챕터 목록을 열 수 없습니다(키가 바뀌었습니다).</translation>
+        </message>
+        <message>
+            <source>%1 refused the login. Check it in Settings → Sources → Your servers.</source>
+            <translation>%1에서 로그인을 거부했습니다. 설정 → 소스 → 내 서버에서 확인하세요.</translation>
+        </message>
+        <message>
+            <source>This server is no longer in Settings → Sources → Your servers.</source>
+            <translation>이 서버는 더 이상 설정 → 소스 → 내 서버에 없습니다.</translation>
+        </message>
+        <message>
+            <source>The server did not give the image (%1).</source>
+            <translation>서버가 이미지를 주지 않았습니다(%1).</translation>
+        </message>
+        <message>
+            <source>The image could not be saved.</source>
+            <translation>이미지를 저장할 수 없습니다.</translation>
+        </message>
+    </context>
+    <context>
+        <name>ReadAloudBar</name>
+        <message>
+            <source>Reading aloud: %1</source>
+            <translation>소리 내어 읽는 중: %1</translation>
+        </message>
+        <message>
+            <source>Loading the chapter…</source>
+            <translation>챕터 불러오는 중…</translation>
+        </message>
+        <message>
+            <source>stops at %1</source>
+            <translation>%1에 멈춤</translation>
+        </message>
+        <message>
+            <source>stops after this chapter</source>
+            <translation>이 챕터 후 멈춤</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>이전 문장</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>일시 정지</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>계속 소리 내어 읽기</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>다음 문장</translation>
+        </message>
+        <message>
+            <source>Stop reading aloud</source>
+            <translation>소리 내어 읽기 중지</translation>
         </message>
     </context>
     <context>
@@ -6477,6 +7434,122 @@
             <source>Colours</source>
             <translation>색상</translation>
         </message>
+        <message>
+            <source>Full screen while reading</source>
+            <translation>읽는 동안 전체 화면</translation>
+        </message>
+        <message>
+            <source>The status and navigation bars hide with the reader's controls, so pages fill the screen, beside a punch hole too. Swipe from the edge to see them.</source>
+            <translation>상태 표시줄과 내비게이션 바가 리더 컨트롤과 함께 숨어, 펀치 홀 옆까지 페이지가 화면을 가득 채웁니다. 가장자리에서 밀면 보입니다.</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>다음 챕터로 이어 읽기</translation>
+        </message>
+        <message>
+            <source>The next chapter joins the strip as you near the end, so reading never stops for a button.</source>
+            <translation>끝에 가까워지면 다음 챕터가 세로 스크롤에 이어 붙어, 버튼 때문에 읽기가 멈추지 않습니다.</translation>
+        </message>
+        <message>
+            <source>Translate</source>
+            <translation>번역</translation>
+        </message>
+        <message>
+            <source>Comic readers have Translate the pages in their top bar. Keys stay on this device and are only sent to their own service.</source>
+            <translation>만화 리더 상단 바에 페이지 번역이 있습니다. 키는 이 기기에 남고 해당 서비스로만 전송됩니다.</translation>
+        </message>
+        <message>
+            <source>Translate into</source>
+            <translation>번역할 언어</translation>
+        </message>
+        <message>
+            <source>Read the page's text with</source>
+            <translation>페이지 글자 읽기 방식</translation>
+        </message>
+        <message>
+            <source>Finds the text in a comic's pages.</source>
+            <translation>만화 페이지에서 글자를 찾습니다.</translation>
+        </message>
+        <message>
+            <source>Translate with</source>
+            <translation>번역 방식</translation>
+        </message>
+        <message>
+            <source>DeepL key</source>
+            <translation>DeepL 키</translation>
+        </message>
+        <message>
+            <source>From your DeepL account (free keys end in :fx).</source>
+            <translation>DeepL 계정에서(무료 키는 :fx로 끝납니다).</translation>
+        </message>
+        <message>
+            <source>Not set</source>
+            <translation>설정 안 됨</translation>
+        </message>
+        <message>
+            <source>Google Cloud key</source>
+            <translation>Google Cloud 키</translation>
+        </message>
+        <message>
+            <source>An API key with Cloud Translation and Cloud Vision turned on.</source>
+            <translation>Cloud Translation과 Cloud Vision이 켜진 API 키.</translation>
+        </message>
+        <message>
+            <source>Language model</source>
+            <translation>언어 모델</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service: its address up to /v1 (a local Ollama is http://localhost:11434/v1), a model and a key if it needs one.</source>
+            <translation>OpenAI 호환 서비스: /v1까지의 주소(로컬 Ollama는 http://localhost:11434/v1), 모델, 필요하면 키.</translation>
+        </message>
+        <message>
+            <source>Model, e.g. gpt-4o-mini</source>
+            <translation>모델(예: gpt-4o-mini)</translation>
+        </message>
+        <message>
+            <source>Key (if it needs one)</source>
+            <translation>키(필요한 경우)</translation>
+        </message>
+        <message>
+            <source>Forget translations</source>
+            <translation>번역 지우기</translation>
+        </message>
+        <message>
+            <source>Pages and chapters are translated again the next time.</source>
+            <translation>페이지와 챕터는 다음에 다시 번역됩니다.</translation>
+        </message>
+        <message>
+            <source>Forget</source>
+            <translation>잊기</translation>
+        </message>
+        <message>
+            <source>Translations forgotten</source>
+            <translation>번역을 지웠습니다</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>읽는 문장 강조</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs</source>
+            <translation>문단 사이 쉼</translation>
+        </message>
+        <message>
+            <source>Pause between sentences</source>
+            <translation>문장 사이 쉼</translation>
+        </message>
+        <message>
+            <source>Voice for a language</source>
+            <translation>언어별 목소리</translation>
+        </message>
+        <message>
+            <source>Books in this language are read with this voice.</source>
+            <translation>이 언어의 책은 이 목소리로 읽습니다.</translation>
+        </message>
+        <message>
+            <source>The voice above</source>
+            <translation>위의 목소리</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6679,6 +7752,113 @@
         <message>
             <source>Another app</source>
             <translation>다른 앱</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Comics</name>
+        <message>
+            <source>That server is not saved.</source>
+            <translation>저장되지 않은 서버입니다.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Downloads</name>
+        <message>
+            <source>No chapters of this novel are downloaded. Download some first.</source>
+            <translation>이 소설의 챕터를 받은 것이 없습니다. 먼저 몇 개 받으세요.</translation>
+        </message>
+        <message>
+            <source>The book could not be saved in %1.</source>
+            <translation>%1에 책을 저장할 수 없습니다.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::MediaControls</name>
+        <message>
+            <source>Reading aloud</source>
+            <translation>소리 내어 읽기</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Party</name>
+        <message>
+            <source>The party could not be reached (%1).</source>
+            <translation>파티에 연결할 수 없습니다(%1).</translation>
+        </message>
+        <message>
+            <source>Watch parties need scancore.onl (this site has none yet).</source>
+            <translation>워치 파티에는 scancore.onl이 필요합니다(이 사이트에는 아직 없습니다).</translation>
+        </message>
+        <message>
+            <source>The party could not be opened.</source>
+            <translation>파티를 열 수 없습니다.</translation>
+        </message>
+        <message>
+            <source>A party code has six letters and numbers.</source>
+            <translation>파티 코드는 문자와 숫자 여섯 자리입니다.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>파티가 끝났습니다.</translation>
+        </message>
+        <message>
+            <source>No party with that code.</source>
+            <translation>그 코드의 파티가 없습니다.</translation>
+        </message>
+        <message>
+            <source>The host ended the party.</source>
+            <translation>호스트가 파티를 끝냈습니다.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Translator</name>
+        <message>
+            <source>To translate pages on a computer, add a Google Cloud key in Settings → Reading → Translate (Vision reads the page's text).</source>
+            <translation>컴퓨터에서 페이지를 번역하려면 설정 → 읽기 → 번역에서 Google Cloud 키를 추가하세요(Vision이 페이지 글자를 읽습니다).</translation>
+        </message>
+        <message>
+            <source>Add a DeepL or Google key, or a model's address, in Settings → Reading → Translate.</source>
+            <translation>설정 → 읽기 → 번역에서 DeepL이나 Google 키, 또는 모델 주소를 추가하세요.</translation>
+        </message>
+        <message>
+            <source>Automatic</source>
+            <translation>자동</translation>
+        </message>
+        <message>
+            <source>This phone</source>
+            <translation>이 휴대폰</translation>
+        </message>
+        <message>
+            <source>On the phone, with Google Play services</source>
+            <translation>휴대폰에서, Google Play 서비스로</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision</source>
+            <translation>Google Cloud Vision</translation>
+        </message>
+        <message>
+            <source>Your Google Cloud key</source>
+            <translation>내 Google Cloud 키</translation>
+        </message>
+        <message>
+            <source>On the phone; a model per language</source>
+            <translation>휴대폰에서, 언어마다 모델 하나</translation>
+        </message>
+        <message>
+            <source>Your DeepL key</source>
+            <translation>내 DeepL 키</translation>
+        </message>
+        <message>
+            <source>Google Translate</source>
+            <translation>Google 번역</translation>
+        </message>
+        <message>
+            <source>A language model</source>
+            <translation>언어 모델</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service, or one on your computer</source>
+            <translation>OpenAI 호환 서비스 또는 컴퓨터에 있는 서비스</translation>
         </message>
     </context>
     <context>
@@ -6950,6 +8130,121 @@
         <message>
             <source>Show as a grid</source>
             <translation>격자로 보기</translation>
+        </message>
+        <message>
+            <source>Saved %1 chapters as %2</source>
+            <translation>챕터 %1개를 %2(으)로 저장했습니다</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>보기</translation>
+        </message>
+        <message>
+            <source>Save the %1 downloaded chapters</source>
+            <translation>받은 챕터 %1개 저장</translation>
+        </message>
+        <message>
+            <source>Download all %1 chapters, then save</source>
+            <translation>챕터 %1개를 모두 받은 뒤 저장</translation>
+        </message>
+        <message>
+            <source>Stop waiting for the downloads</source>
+            <translation>다운로드 기다리지 않기</translation>
+        </message>
+        <message>
+            <source>No chapter downloaded, so there is no EPUB to save.</source>
+            <translation>받은 챕터가 없어 저장할 EPUB이 없습니다.</translation>
+        </message>
+        <message>
+            <source>Read in a new window</source>
+            <translation>새 창에서 읽기</translation>
+        </message>
+        <message>
+            <source>Listen</source>
+            <translation>듣기</translation>
+        </message>
+        <message>
+            <source>Downloading for the EPUB…</source>
+            <translation>EPUB용으로 다운로드 중…</translation>
+        </message>
+        <message>
+            <source>Save as EPUB</source>
+            <translation>EPUB으로 저장</translation>
+        </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>허브에서 고정 해제</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>허브에 고정</translation>
+        </message>
+    </context>
+    <context>
+        <name>ServerDialog</name>
+        <message>
+            <source>Trying it…</source>
+            <translation>시도 중…</translation>
+        </message>
+        <message>
+            <source>Connected: 1 series found.</source>
+            <translation>연결됨: 작품 1개를 찾았습니다.</translation>
+        </message>
+        <message>
+            <source>Connected: %1 series found.</source>
+            <translation>연결됨: 작품 %1개를 찾았습니다.</translation>
+        </message>
+        <message>
+            <source>Your server</source>
+            <translation>내 서버</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>내 서버 추가</translation>
+        </message>
+        <message>
+            <source>Read the comics on your own Komga, Kavita or Suwayomi server. The login stays on this device.</source>
+            <translation>내 Komga, Kavita, Suwayomi 서버의 만화를 읽으세요. 로그인 정보는 이 기기에 남습니다.</translation>
+        </message>
+        <message>
+            <source>Name (optional)</source>
+            <translation>이름(선택)</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>이메일</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>사용자 이름</translation>
+        </message>
+        <message>
+            <source> (if it asks for one)</source>
+            <translation> (요청하는 경우)</translation>
+        </message>
+        <message>
+            <source>Password (saved; type to change)</source>
+            <translation>비밀번호(저장됨, 바꾸려면 입력)</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>비밀번호</translation>
+        </message>
+        <message>
+            <source>API key (saved; type to change)</source>
+            <translation>API 키(저장됨, 바꾸려면 입력)</translation>
+        </message>
+        <message>
+            <source>Or an API key, instead of the login</source>
+            <translation>또는 로그인 대신 API 키</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
+        </message>
+        <message>
+            <source>Save and try</source>
+            <translation>저장하고 테스트</translation>
         </message>
     </context>
     <context>
@@ -7249,6 +8544,10 @@
         <message>
             <source> · Medium Dev</source>
             <translation> · Medium Dev</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
         </message>
     </context>
     <context>
@@ -7726,6 +9025,34 @@
         <message>
             <source>Mihon's downloads · </source>
             <translation>Mihon 다운로드 · </translation>
+        </message>
+        <message>
+            <source>Your servers</source>
+            <translation>내 서버</translation>
+        </message>
+        <message>
+            <source>Komga, Kavita and Suwayomi servers you run: their comics are a source like the others, searched with them and saved to the library.</source>
+            <translation>직접 운영하는 Komga, Kavita, Suwayomi 서버: 그 만화들은 다른 소스처럼 함께 검색되고 라이브러리에 저장됩니다.</translation>
+        </message>
+        <message>
+            <source>Change</source>
+            <translation>변경</translation>
+        </message>
+        <message>
+            <source>Open in the browser</source>
+            <translation>브라우저에서 열기</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>내 서버 추가</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>진단</translation>
+        </message>
+        <message>
+            <source>Whether the extensions runtime answers, a quick test of a source, and the sites each extension contacted.</source>
+            <translation>확장 프로그램 런타임 응답 여부, 소스 빠른 테스트, 각 확장 프로그램이 접속한 사이트.</translation>
         </message>
     </context>
     <context>
@@ -8408,6 +9735,22 @@
             <source>Saved </source>
             <translation>저장됨 </translation>
         </message>
+        <message>
+            <source>Metro colours</source>
+            <translation>Metro 색상</translation>
+        </message>
+        <message>
+            <source>The accent colours of Windows Phone, or any colour from the wheel. Tiles, the hub title and switches take it.</source>
+            <translation>Windows Phone의 강조색 또는 색상환의 아무 색. 타일, 허브 제목, 스위치에 쓰입니다.</translation>
+        </message>
+        <message>
+            <source>Custom colour</source>
+            <translation>사용자 지정 색</translation>
+        </message>
+        <message>
+            <source>Tile colour</source>
+            <translation>타일 색</translation>
+        </message>
     </context>
     <context>
         <name>TrackerConnect</name>
@@ -8604,6 +9947,13 @@
         <message>
             <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
             <translation>설정 → 연결에서 AniList, MyAnimeList, Kitsu 같은 트래커를 연결하면 그곳의 목록도 최신으로 유지됩니다.</translation>
+        </message>
+    </context>
+    <context>
+        <name>TranslationLayer</name>
+        <message>
+            <source>Translating…</source>
+            <translation>번역 중…</translation>
         </message>
     </context>
     <context>
@@ -9027,6 +10377,34 @@
         <message>
             <source>Close player</source>
             <translation>플레이어 닫기</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>내장</translation>
+        </message>
+        <message>
+            <source>More…</source>
+            <translation>더 보기…</translation>
+        </message>
+        <message>
+            <source>Keep SCANCORE open while it plays there: the video comes through it.</source>
+            <translation>그곳에서 재생하는 동안 SCANCORE를 열어 두세요. 영상이 SCANCORE를 거쳐 갑니다.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>파티가 끝났습니다.</translation>
+        </message>
+        <message>
+            <source>Watch party (%1)</source>
+            <translation>워치 파티(%1)</translation>
+        </message>
+        <message>
+            <source>Watch together</source>
+            <translation>함께 보기</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>새 창에서 열기</translation>
         </message>
     </context>
     <context>

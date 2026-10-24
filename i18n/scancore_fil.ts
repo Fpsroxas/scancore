@@ -1032,6 +1032,14 @@
             <source>You might also like</source>
             <translation>Baka magustuhan mo rin</translation>
         </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>I-unpin sa hub</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>I-pin sa hub</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1138,6 +1146,14 @@
         <message>
             <source>All %1</source>
             <translation>Lahat (%1)</translation>
+        </message>
+        <message>
+            <source>Party %1</source>
+            <translation>Party %1</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>Watch party</translation>
         </message>
     </context>
     <context>
@@ -1888,6 +1904,74 @@
         <message>
             <source>Bottom</source>
             <translation>Ibaba</translation>
+        </message>
+        <message>
+            <source>Finished: </source>
+            <translation>Tapos na: </translation>
+        </message>
+        <message>
+            <source>Next: </source>
+            <translation>Susunod: </translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Buksan sa bagong window</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>Ipakita ang orihinal</translation>
+        </message>
+        <message>
+            <source>Translate the pages</source>
+            <translation>Isalin ang mga pahina</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse (L)</source>
+            <translation>Lente sa ilalim ng mouse (L)</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>Tuloy-tuloy sa susunod na kabanata</translation>
+        </message>
+        <message>
+            <source>Auto-scroll</source>
+            <translation>Auto-scroll</translation>
+        </message>
+        <message>
+            <source>Turn the pages by themselves</source>
+            <translation>Kusang ilipat ang mga pahina</translation>
+        </message>
+        <message>
+            <source>Auto-scroll speed · %1</source>
+            <translation>Bilis ng auto-scroll · %1</translation>
+        </message>
+        <message>
+            <source>A page every %1 s</source>
+            <translation>Isang pahina bawat %1 s</translation>
+        </message>
+        <message>
+            <source>Sharpen small scans</source>
+            <translation>Patalasin ang maliliit na scan</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Manipis</translation>
+        </message>
+        <message>
+            <source>Strong</source>
+            <translation>Malakas</translation>
+        </message>
+        <message>
+            <source>Slower</source>
+            <translation>Mas mabagal</translation>
+        </message>
+        <message>
+            <source>Faster</source>
+            <translation>Mas mabilis</translation>
+        </message>
+        <message>
+            <source>Pause auto-scroll</source>
+            <translation>I-pause ang auto-scroll</translation>
         </message>
     </context>
     <context>
@@ -2899,6 +2983,121 @@
         </message>
     </context>
     <context>
+        <name>ExtensionsDiagnostics</name>
+        <message>
+            <source>Answered in %1 s with %2 titles.</source>
+            <translation>Sumagot sa loob ng %1 s na may %2 pamagat.</translation>
+        </message>
+        <message>
+            <source>Failed after %1 s: %2</source>
+            <translation>Pumalya pagkalipas ng %1 s: %2</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Diagnostics</translation>
+        </message>
+        <message>
+            <source>For when an extension misbehaves</source>
+            <translation>Para kapag nagloloko ang isang extension</translation>
+        </message>
+        <message>
+            <source>Copy report</source>
+            <translation>Kopyahin ang ulat</translation>
+        </message>
+        <message>
+            <source>The report is copied. Paste it into an issue or a message.</source>
+            <translation>Nakopya ang ulat. I-paste ito sa isang issue o mensahe.</translation>
+        </message>
+        <message>
+            <source>Refresh</source>
+            <translation>I-refresh</translation>
+        </message>
+        <message>
+            <source>Runtime</source>
+            <translation>Runtime</translation>
+        </message>
+        <message>
+            <source>Extensions runtime installed</source>
+            <translation>Naka-install ang Extensions runtime</translation>
+        </message>
+        <message>
+            <source>Extensions runtime not installed</source>
+            <translation>Hindi naka-install ang extensions runtime</translation>
+        </message>
+        <message>
+            <source>No runtime for this system</source>
+            <translation>Walang runtime para sa system na ito</translation>
+        </message>
+        <message>
+            <source>Asking the host…</source>
+            <translation>Tinatanong ang host…</translation>
+        </message>
+        <message>
+            <source>Host %1 answered in %2 ms</source>
+            <translation>Sumagot ang runtime %1 sa loob ng %2 ms</translation>
+        </message>
+        <message>
+            <source>Extension libraries it takes</source>
+            <translation>Mga extension library na sinusuportahan</translation>
+        </message>
+        <message>
+            <source>Mihon %1 · Aniyomi %2</source>
+            <translation>Mihon %1 · Aniyomi %2</translation>
+        </message>
+        <message>
+            <source>This device</source>
+            <translation>Ang device na ito</translation>
+        </message>
+        <message>
+            <source>Test a source</source>
+            <translation>Subukan ang isang source</translation>
+        </message>
+        <message>
+            <source>Loads the source's popular titles once and times it.</source>
+            <translation>Nilo-load nang isang beses ang mga sikat na pamagat ng source at sinusukat ang oras.</translation>
+        </message>
+        <message>
+            <source>Source</source>
+            <translation>Source</translation>
+        </message>
+        <message>
+            <source>Testing…</source>
+            <translation>Sinusubukan…</translation>
+        </message>
+        <message>
+            <source>Test</source>
+            <translation>Subukan</translation>
+        </message>
+        <message>
+            <source>Sites the extensions contacted</source>
+            <translation>Mga site na kinontak ng mga extension</translation>
+        </message>
+        <message>
+            <source>This session only, counted in the extensions runtime. Nothing but the sites' names is kept.</source>
+            <translation>Session na ito lang, binibilang sa extensions runtime. Pangalan lang ng mga site ang itinatago.</translation>
+        </message>
+        <message>
+            <source>Nothing yet</source>
+            <translation>Wala pa</translation>
+        </message>
+        <message>
+            <source>Browse or read with an extension and come back.</source>
+            <translation>Mag-browse o magbasa gamit ang isang extension at bumalik.</translation>
+        </message>
+        <message>
+            <source>%1 · %2 requests, %3</source>
+            <translation>%1 · %2 request, %3</translation>
+        </message>
+        <message>
+            <source>Host log</source>
+            <translation>Log ng runtime</translation>
+        </message>
+        <message>
+            <source>The end of extensions/host.log.</source>
+            <translation>Ang dulo ng extensions/host.log.</translation>
+        </message>
+    </context>
+    <context>
         <name>ExtensionsPage</name>
         <message>
             <source>All languages</source>
@@ -3179,6 +3378,10 @@
         <message>
             <source>Its extensions</source>
             <translation>Mga extension nito</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Diagnostics</translation>
         </message>
     </context>
     <context>
@@ -3711,6 +3914,110 @@
             <source>Long</source>
             <translation>Mahaba</translation>
         </message>
+        <message>
+            <source>Look</source>
+            <translation>Hitsura</translation>
+        </message>
+        <message>
+            <source>Metro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Metro: isang panorama hub na may mga tile, malaking titik at app bar, gaya ng Windows Phone.</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>Standard</translation>
+        </message>
+        <message>
+            <source>Pages and navigation</source>
+            <translation>Mga pahina at nabigasyon</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Tiles and panoramas</source>
+            <translation>Mga tile at panorama</translation>
+        </message>
+        <message>
+            <source>Hold a tile on the hub to resize, move or unpin it. Series pages have Pin to the hub.</source>
+            <translation>Pindutin nang matagal ang isang tile sa hub para baguhin ang laki, ilipat o i-unpin ito. May Pin to the hub ang mga pahina ng serye.</translation>
+        </message>
+        <message>
+            <source>Hub title</source>
+            <translation>Pamagat ng hub</translation>
+        </message>
+        <message>
+            <source>The big word across the top of the hub.</source>
+            <translation>Ang malaking salita sa itaas ng hub.</translation>
+        </message>
+        <message>
+            <source>Title colour</source>
+            <translation>Kulay ng pamagat</translation>
+        </message>
+        <message>
+            <source>Accent blend</source>
+            <translation>Halo ng accent</translation>
+        </message>
+        <message>
+            <source>Plain</source>
+            <translation>Plain</translation>
+        </message>
+        <message>
+            <source>Background</source>
+            <translation>Background</translation>
+        </message>
+        <message>
+            <source>Behind the hub, moving slower than the tiles.</source>
+            <translation>Sa likod ng hub, mas mabagal gumalaw kaysa sa mga tile.</translation>
+        </message>
+        <message>
+            <source>Last read</source>
+            <translation>Huling nabasa</translation>
+        </message>
+        <message>
+            <source>Theme picture</source>
+            <translation>Larawan ng tema</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>Wala</translation>
+        </message>
+        <message>
+            <source>Headers</source>
+            <translation>Mga header</translation>
+        </message>
+        <message>
+            <source>UPPERCASE</source>
+            <translation>MALALAKING TITIK</translation>
+        </message>
+        <message>
+            <source>lowercase</source>
+            <translation>maliliit na titik</translation>
+        </message>
+        <message>
+            <source>Live tiles</source>
+            <translation>Live tiles</translation>
+        </message>
+        <message>
+            <source>Tiles turn over now and then to show new chapters and where you are.</source>
+            <translation>Paminsan-minsang bumabaliktad ang mga tile para ipakita ang mga bagong kabanata at kung nasaan ka na.</translation>
+        </message>
+        <message>
+            <source>Hub sections</source>
+            <translation>Mga seksyon ng hub</translation>
+        </message>
+        <message>
+            <source>Which sections the hub shows, in this order. Four or five are easiest to find your way in.</source>
+            <translation>Aling mga seksyon ang ipinapakita ng hub, sa ganitong ayos. Pinakamadaling hanapin kapag apat o lima.</translation>
+        </message>
+        <message>
+            <source>Earlier</source>
+            <translation>Mas maaga</translation>
+        </message>
+        <message>
+            <source>Later</source>
+            <translation>Mamaya</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -3919,6 +4226,14 @@
         <message>
             <source>Anime player</source>
             <translation>Anime player</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse</source>
+            <translation>Lente sa ilalim ng mouse</translation>
+        </message>
+        <message>
+            <source>Auto-scroll on or off</source>
+            <translation>I-on o i-off ang auto-scroll</translation>
         </message>
     </context>
     <context>
@@ -4290,6 +4605,18 @@
         <message>
             <source>Undo</source>
             <translation>I-undo</translation>
+        </message>
+        <message>
+            <source>Most unwatched</source>
+            <translation>Pinakamaraming hindi pa napapanood</translation>
+        </message>
+        <message>
+            <source>Most unread</source>
+            <translation>Pinakamaraming hindi pa nababasa</translation>
+        </message>
+        <message>
+            <source>Hide until there is something new</source>
+            <translation>Itago hanggang may bago</translation>
         </message>
     </context>
     <context>
@@ -4666,6 +4993,287 @@
         <message>
             <source>Allow</source>
             <translation>Payagan</translation>
+        </message>
+        <message>
+            <source>The host moved on to %1</source>
+            <translation>Lumipat ang host sa %1</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Buksan</translation>
+        </message>
+    </context>
+    <context>
+        <name>Metro</name>
+        <message>
+            <source>Explore</source>
+            <translation>Tuklasin</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Kamakailan</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Library</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komiks</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Nobela</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>Naka-pin sa hub</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>Magpatuloy</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Maghanap ng bagong kabanata</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>Maghanap ng komiks</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>Maghanap ng nobela</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Maghanap ng anime</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Hanapin ang lahat</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Hinahanap sa library mo ang mga bagong kabanata…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Updated na ang lahat</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>Wala pang maitutuloy</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>maghanap</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>i-refresh</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>mga alerto</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>settings</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>kasaysayan</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>mga download</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>aktibidad</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>mga extension</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>i-off ang incognito</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>mag-incognito</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>ayusin ang hub</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Bumalik</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (pindutin nang matagal para sa iba pa)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>Isara ang menu</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>Buksan ang menu</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Naka-off ang incognito</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Incognito</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>Account</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>Episode %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Kabanata %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 bago</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 bago</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>magbasa ng random na komiks</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>ituloy</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>tumuklas ng random na genre</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>maghanap</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>mga download</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>kasaysayan</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>settings</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>ang iyong %1 wrapped</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>Wala pang mapipili</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Maliit</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Katamtaman</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>Malapad</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>Iusog pauna</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>Iusog pahuli</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>I-unpin</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>I-pin sa hub</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>Lalabas dito ang binabasa at pinapanood mo.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>Lalabas dito ang mga seryeng sine-save mo.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>lahat ng komiks</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>paparating</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>mga extension</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Pinakabagong kabanata</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>lahat ng nobela</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Nobela</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>lahat ng anime</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>iskedyul</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>mag-browse</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>Trending</translation>
         </message>
     </context>
     <context>
@@ -5259,6 +5867,94 @@
             <source>Keep the spoken paragraph on screen</source>
             <translation>Panatilihin sa screen ang binabasang talata</translation>
         </message>
+        <message>
+            <source>Sleep timer: reading aloud stopped</source>
+            <translation>Sleep timer: huminto ang pagbasa nang malakas</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>Nakaraang pangungusap</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>I-pause</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>Ituloy ang pagbasa nang malakas</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>Susunod na pangungusap</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at %1</source>
+            <translation>Sleep timer: hihinto ng %1</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at the end of the chapter</source>
+            <translation>Sleep timer: hihinto sa dulo ng kabanata</translation>
+        </message>
+        <message>
+            <source>Sleep timer</source>
+            <translation>Sleep timer</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Off</translation>
+        </message>
+        <message>
+            <source>In 15 minutes</source>
+            <translation>Sa loob ng 15 minuto</translation>
+        </message>
+        <message>
+            <source>In 30 minutes</source>
+            <translation>Sa loob ng 30 minuto</translation>
+        </message>
+        <message>
+            <source>In 45 minutes</source>
+            <translation>Sa loob ng 45 minuto</translation>
+        </message>
+        <message>
+            <source>In an hour</source>
+            <translation>Sa loob ng isang oras</translation>
+        </message>
+        <message>
+            <source>At the end of the chapter</source>
+            <translation>Sa dulo ng kabanata</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Buksan sa bagong window</translation>
+        </message>
+        <message>
+            <source>Pause reading aloud</source>
+            <translation>I-pause ang pagbasa nang malakas</translation>
+        </message>
+        <message>
+            <source>Translating…</source>
+            <translation>Isinasalin…</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>Ipakita ang orihinal</translation>
+        </message>
+        <message>
+            <source>Translate the chapter</source>
+            <translation>Isalin ang kabanata</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>I-highlight ang binabasang pangungusap</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs · %1 s</source>
+            <translation>Hinto sa pagitan ng mga talata · %1 s</translation>
+        </message>
+        <message>
+            <source>Pause between sentences · %1 s</source>
+            <translation>Hinto sa pagitan ng mga pangungusap · %1 s</translation>
+        </message>
     </context>
     <context>
         <name>NovelsPage</name>
@@ -5657,6 +6353,18 @@
             <source>Your system shows them</source>
             <translation>Ipinapakita ito ng system mo</translation>
         </message>
+        <message>
+            <source>Layout</source>
+            <translation>Layout</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>Standard</translation>
+        </message>
+        <message>
+            <source>Metro tiles</source>
+            <translation>Mga tile ng Metro</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5742,6 +6450,117 @@
         <message>
             <source>Remove</source>
             <translation>Alisin</translation>
+        </message>
+    </context>
+    <context>
+        <name>PartyPanel</name>
+        <message>
+            <source>Watch together</source>
+            <translation>Manood nang magkasama</translation>
+        </message>
+        <message>
+            <source>Everyone watches from their own source; the host's player steers the others.</source>
+            <translation>Nanonood ang bawat isa mula sa sarili niyang source; ang player ng host ang nagpapatakbo sa iba.</translation>
+        </message>
+        <message>
+            <source>You are the host: your player steers everyone's.</source>
+            <translation>Ikaw ang host: ang player mo ang nagpapatakbo sa player ng lahat.</translation>
+        </message>
+        <message>
+            <source>Playing along with %1</source>
+            <translation>Nanonood kasabay si %1</translation>
+        </message>
+        <message>
+            <source>Waiting for the host…</source>
+            <translation>Hinihintay ang host…</translation>
+        </message>
+        <message>
+            <source>Joining…</source>
+            <translation>Sumasali…</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Isara</translation>
+        </message>
+        <message>
+            <source>Sign in to scancore.onl (Settings → Account) to watch together.</source>
+            <translation>Mag-sign in sa scancore.onl (Settings → Account) para manood nang magkasama.</translation>
+        </message>
+        <message>
+            <source>Starting…</source>
+            <translation>Nagsisimula…</translation>
+        </message>
+        <message>
+            <source>Start a watch party</source>
+            <translation>Magsimula ng watch party</translation>
+        </message>
+        <message>
+            <source>Or join one</source>
+            <translation>O sumali sa isa</translation>
+        </message>
+        <message>
+            <source>Join a watch party</source>
+            <translation>Sumali sa watch party</translation>
+        </message>
+        <message>
+            <source>Party code</source>
+            <translation>Party code</translation>
+        </message>
+        <message>
+            <source>Join</source>
+            <translation>Sumali</translation>
+        </message>
+        <message>
+            <source>Copy the code</source>
+            <translation>Kopyahin ang code</translation>
+        </message>
+        <message>
+            <source>Code copied</source>
+            <translation>Nakopya ang code</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Ibahagi</translation>
+        </message>
+        <message>
+            <source>Watch %1 with me in SCANCORE: join the party with the code %2</source>
+            <translation>Panoorin natin ang %1 sa SCANCORE: sumali sa party gamit ang code na %2</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>Watch party</translation>
+        </message>
+        <message>
+            <source>The host is watching %1, episode %2</source>
+            <translation>Pinapanood ng host ang %1, episode %2</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Buksan</translation>
+        </message>
+        <message>
+            <source>host</source>
+            <translation>host</translation>
+        </message>
+        <message>
+            <source>Say hello: everyone in the party sees it.</source>
+            <translation>Mag-hello: makikita ito ng lahat sa party.</translation>
+        </message>
+        <message>
+            <source>Message</source>
+            <translation>Mensahe</translation>
+        </message>
+        <message>
+            <source>Send</source>
+            <translation>Ipadala</translation>
+        </message>
+        <message>
+            <source>End the party</source>
+            <translation>Tapusin ang party</translation>
+        </message>
+        <message>
+            <source>Leave the party</source>
+            <translation>Umalis sa party</translation>
         </message>
     </context>
     <context>
@@ -5926,6 +6745,144 @@
         <message>
             <source>None</source>
             <translation>Wala</translation>
+        </message>
+    </context>
+    <context>
+        <name>QObject</name>
+        <message>
+            <source>Android could not read the page: %1</source>
+            <translation>Hindi mabasa ng Android ang pahina: %1</translation>
+        </message>
+        <message>
+            <source>This device has no text recogniser.</source>
+            <translation>Walang text recognition ang device na ito.</translation>
+        </message>
+        <message>
+            <source>Android's translator needs to know the language: pick it in the reader.</source>
+            <translation>Kailangang malaman ng translator ng Android ang wika: piliin ito sa reader.</translation>
+        </message>
+        <message>
+            <source>Android could not translate: %1</source>
+            <translation>Hindi makapagsalin ang Android: %1</translation>
+        </message>
+        <message>
+            <source>This device has no translator of its own.</source>
+            <translation>Walang sariling translator ang device na ito.</translation>
+        </message>
+        <message>
+            <source>Pick a way to translate in Settings → Reading → Translate.</source>
+            <translation>Pumili ng paraan ng pagsasalin sa Settings → Reading → Translate.</translation>
+        </message>
+        <message>
+            <source>The page's picture could not be read.</source>
+            <translation>Hindi mabasa ang larawan ng pahina.</translation>
+        </message>
+        <message>
+            <source>%1 refused the key. Check it in Settings → Reading → Translate.</source>
+            <translation>Tinanggihan ng %1 ang key. Tingnan ito sa Settings → Reading → Translate.</translation>
+        </message>
+        <message>
+            <source>%1 says the key's quota is used up for now.</source>
+            <translation>Sabi ng %1, ubos na muna ang quota ng key.</translation>
+        </message>
+        <message>
+            <source>%1 could not be reached.</source>
+            <translation>Hindi maabot ang %1.</translation>
+        </message>
+        <message>
+            <source>%1 answered with an error (%2).</source>
+            <translation>Sumagot ang %1 ng error (%2).</translation>
+        </message>
+        <message>
+            <source>DeepL needs your key (Settings → Reading → Translate).</source>
+            <translation>Kailangan ng DeepL ang key mo (Settings → Reading → Translate).</translation>
+        </message>
+        <message>
+            <source>DeepL answered with something else than the texts.</source>
+            <translation>Iba ang isinagot ng DeepL, hindi ang mga teksto.</translation>
+        </message>
+        <message>
+            <source>Google Translate needs your API key (Settings → Reading → Translate).</source>
+            <translation>Kailangan ng Google Translate ang API key mo (Settings → Reading → Translate).</translation>
+        </message>
+        <message>
+            <source>Google Translate answered with something else than the texts.</source>
+            <translation>Iba ang isinagot ng Google Translate, hindi ang mga teksto.</translation>
+        </message>
+        <message>
+            <source>Set the service's address and model in Settings → Reading → Translate.</source>
+            <translation>Itakda ang address at model ng serbisyo sa Settings → Reading → Translate.</translation>
+        </message>
+        <message>
+            <source>The model did not answer with one translation per text. Try another model.</source>
+            <translation>Hindi sumagot ang model ng isang salin bawat teksto. Sumubok ng ibang model.</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision needs your API key (Settings → Reading → Translate).</source>
+            <translation>Kailangan ng Google Cloud Vision ang API key mo (Settings → Reading → Translate).</translation>
+        </message>
+        <message>
+            <source>MangaSin changed its series page: no chapter list found.</source>
+            <translation>Binago ng MangaSin ang pahina ng serye: walang nakitang listahan ng kabanata.</translation>
+        </message>
+        <message>
+            <source>MangaSin's chapter list could not be opened (its key changed).</source>
+            <translation>Hindi mabuksan ang listahan ng kabanata ng MangaSin (nagbago ang key nito).</translation>
+        </message>
+        <message>
+            <source>%1 refused the login. Check it in Settings → Sources → Your servers.</source>
+            <translation>Tinanggihan ng %1 ang login. Tingnan ito sa Settings → Sources → Your servers.</translation>
+        </message>
+        <message>
+            <source>This server is no longer in Settings → Sources → Your servers.</source>
+            <translation>Wala na ang server na ito sa Settings → Sources → Your servers.</translation>
+        </message>
+        <message>
+            <source>The server did not give the image (%1).</source>
+            <translation>Hindi ibinigay ng server ang larawan (%1).</translation>
+        </message>
+        <message>
+            <source>The image could not be saved.</source>
+            <translation>Hindi ma-save ang larawan.</translation>
+        </message>
+    </context>
+    <context>
+        <name>ReadAloudBar</name>
+        <message>
+            <source>Reading aloud: %1</source>
+            <translation>Binabasa nang malakas: %1</translation>
+        </message>
+        <message>
+            <source>Loading the chapter…</source>
+            <translation>Nilo-load ang kabanata…</translation>
+        </message>
+        <message>
+            <source>stops at %1</source>
+            <translation>hihinto ng %1</translation>
+        </message>
+        <message>
+            <source>stops after this chapter</source>
+            <translation>hihinto pagkatapos ng kabanatang ito</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>Nakaraang pangungusap</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>I-pause</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>Ituloy ang pagbasa nang malakas</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>Susunod na pangungusap</translation>
+        </message>
+        <message>
+            <source>Stop reading aloud</source>
+            <translation>Itigil ang pagbasa nang malakas</translation>
         </message>
     </context>
     <context>
@@ -6469,6 +7426,122 @@
             <source>Colours</source>
             <translation>Mga kulay</translation>
         </message>
+        <message>
+            <source>Full screen while reading</source>
+            <translation>Full screen habang nagbabasa</translation>
+        </message>
+        <message>
+            <source>The status and navigation bars hide with the reader's controls, so pages fill the screen, beside a punch hole too. Swipe from the edge to see them.</source>
+            <translation>Nagtatago ang status at navigation bar kasabay ng mga kontrol ng reader, kaya napupuno ng pahina ang screen, pati sa tabi ng punch hole. Mag-swipe mula sa gilid para makita sila.</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>Tuloy-tuloy sa susunod na kabanata</translation>
+        </message>
+        <message>
+            <source>The next chapter joins the strip as you near the end, so reading never stops for a button.</source>
+            <translation>Sumasama sa strip ang susunod na kabanata habang malapit ka na sa dulo, kaya hindi humihinto ang pagbasa para sa isang button.</translation>
+        </message>
+        <message>
+            <source>Translate</source>
+            <translation>Isalin</translation>
+        </message>
+        <message>
+            <source>Comic readers have Translate the pages in their top bar. Keys stay on this device and are only sent to their own service.</source>
+            <translation>May Translate the pages ang comic reader sa itaas na bar nito. Nananatili ang mga key sa device na ito at sa sarili lang nilang serbisyo ipinapadala.</translation>
+        </message>
+        <message>
+            <source>Translate into</source>
+            <translation>Isalin sa</translation>
+        </message>
+        <message>
+            <source>Read the page's text with</source>
+            <translation>Basahin ang teksto ng pahina gamit ang</translation>
+        </message>
+        <message>
+            <source>Finds the text in a comic's pages.</source>
+            <translation>Hinahanap ang teksto sa mga pahina ng komiks.</translation>
+        </message>
+        <message>
+            <source>Translate with</source>
+            <translation>Isalin gamit ang</translation>
+        </message>
+        <message>
+            <source>DeepL key</source>
+            <translation>DeepL key</translation>
+        </message>
+        <message>
+            <source>From your DeepL account (free keys end in :fx).</source>
+            <translation>Mula sa DeepL account mo (nagtatapos sa :fx ang libreng key).</translation>
+        </message>
+        <message>
+            <source>Not set</source>
+            <translation>Hindi nakatakda</translation>
+        </message>
+        <message>
+            <source>Google Cloud key</source>
+            <translation>Google Cloud key</translation>
+        </message>
+        <message>
+            <source>An API key with Cloud Translation and Cloud Vision turned on.</source>
+            <translation>Isang API key na naka-on ang Cloud Translation at Cloud Vision.</translation>
+        </message>
+        <message>
+            <source>Language model</source>
+            <translation>Language model</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service: its address up to /v1 (a local Ollama is http://localhost:11434/v1), a model and a key if it needs one.</source>
+            <translation>Anumang serbisyong compatible sa OpenAI: ang address nito hanggang /v1 (ang lokal na Ollama ay http://localhost:11434/v1), isang model at key kung kailangan.</translation>
+        </message>
+        <message>
+            <source>Model, e.g. gpt-4o-mini</source>
+            <translation>Model, hal. gpt-4o-mini</translation>
+        </message>
+        <message>
+            <source>Key (if it needs one)</source>
+            <translation>Key (kung kailangan)</translation>
+        </message>
+        <message>
+            <source>Forget translations</source>
+            <translation>Kalimutan ang mga salin</translation>
+        </message>
+        <message>
+            <source>Pages and chapters are translated again the next time.</source>
+            <translation>Isasalin muli ang mga pahina at kabanata sa susunod.</translation>
+        </message>
+        <message>
+            <source>Forget</source>
+            <translation>Kalimutan</translation>
+        </message>
+        <message>
+            <source>Translations forgotten</source>
+            <translation>Nakalimutan ang mga salin</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>I-highlight ang binabasang pangungusap</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs</source>
+            <translation>Hinto sa pagitan ng mga talata</translation>
+        </message>
+        <message>
+            <source>Pause between sentences</source>
+            <translation>Hinto sa pagitan ng mga pangungusap</translation>
+        </message>
+        <message>
+            <source>Voice for a language</source>
+            <translation>Boses para sa isang wika</translation>
+        </message>
+        <message>
+            <source>Books in this language are read with this voice.</source>
+            <translation>Binabasa ang mga libro sa wikang ito gamit ang boses na ito.</translation>
+        </message>
+        <message>
+            <source>The voice above</source>
+            <translation>Ang boses sa itaas</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6664,6 +7737,113 @@
         <message>
             <source>SCANCORE does not open browser checks for its own site or your sync server.</source>
             <translation>Hindi nagbubukas ang SCANCORE ng browser check para sa sarili nitong site o sa iyong sync server.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Comics</name>
+        <message>
+            <source>That server is not saved.</source>
+            <translation>Hindi naka-save ang server na iyon.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Downloads</name>
+        <message>
+            <source>No chapters of this novel are downloaded. Download some first.</source>
+            <translation>Walang na-download na kabanata ng nobelang ito. Mag-download muna ng ilan.</translation>
+        </message>
+        <message>
+            <source>The book could not be saved in %1.</source>
+            <translation>Hindi ma-save ang libro sa %1.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::MediaControls</name>
+        <message>
+            <source>Reading aloud</source>
+            <translation>Pagbasa nang malakas</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Party</name>
+        <message>
+            <source>The party could not be reached (%1).</source>
+            <translation>Hindi maabot ang party (%1).</translation>
+        </message>
+        <message>
+            <source>Watch parties need scancore.onl (this site has none yet).</source>
+            <translation>Kailangan ng scancore.onl ang mga watch party (wala pa nito ang site na ito).</translation>
+        </message>
+        <message>
+            <source>The party could not be opened.</source>
+            <translation>Hindi mabuksan ang party.</translation>
+        </message>
+        <message>
+            <source>A party code has six letters and numbers.</source>
+            <translation>Anim na letra at numero ang party code.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>Tapos na ang party.</translation>
+        </message>
+        <message>
+            <source>No party with that code.</source>
+            <translation>Walang party na may ganyang code.</translation>
+        </message>
+        <message>
+            <source>The host ended the party.</source>
+            <translation>Tinapos ng host ang party.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Translator</name>
+        <message>
+            <source>To translate pages on a computer, add a Google Cloud key in Settings → Reading → Translate (Vision reads the page's text).</source>
+            <translation>Para magsalin ng mga pahina sa computer, magdagdag ng Google Cloud key sa Settings → Reading → Translate (binabasa ng Vision ang teksto ng pahina).</translation>
+        </message>
+        <message>
+            <source>Add a DeepL or Google key, or a model's address, in Settings → Reading → Translate.</source>
+            <translation>Magdagdag ng DeepL o Google key, o address ng isang model, sa Settings → Reading → Translate.</translation>
+        </message>
+        <message>
+            <source>Automatic</source>
+            <translation>Awtomatiko</translation>
+        </message>
+        <message>
+            <source>This phone</source>
+            <translation>Ang teleponong ito</translation>
+        </message>
+        <message>
+            <source>On the phone, with Google Play services</source>
+            <translation>Sa telepono, gamit ang Google Play services</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision</source>
+            <translation>Google Cloud Vision</translation>
+        </message>
+        <message>
+            <source>Your Google Cloud key</source>
+            <translation>Ang Google Cloud key mo</translation>
+        </message>
+        <message>
+            <source>On the phone; a model per language</source>
+            <translation>Sa telepono; isang model bawat wika</translation>
+        </message>
+        <message>
+            <source>Your DeepL key</source>
+            <translation>Ang DeepL key mo</translation>
+        </message>
+        <message>
+            <source>Google Translate</source>
+            <translation>Google Translate</translation>
+        </message>
+        <message>
+            <source>A language model</source>
+            <translation>Isang language model</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service, or one on your computer</source>
+            <translation>Anumang serbisyong compatible sa OpenAI, o isa sa computer mo</translation>
         </message>
     </context>
     <context>
@@ -6935,6 +8115,121 @@
         <message>
             <source>Show as a grid</source>
             <translation>Ipakita bilang grid</translation>
+        </message>
+        <message>
+            <source>Saved %1 chapters as %2</source>
+            <translation>Na-save ang %1 kabanata bilang %2</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>Ipakita</translation>
+        </message>
+        <message>
+            <source>Save the %1 downloaded chapters</source>
+            <translation>I-save ang %1 na-download na kabanata</translation>
+        </message>
+        <message>
+            <source>Download all %1 chapters, then save</source>
+            <translation>I-download ang lahat ng %1 kabanata, saka i-save</translation>
+        </message>
+        <message>
+            <source>Stop waiting for the downloads</source>
+            <translation>Huwag nang hintayin ang mga download</translation>
+        </message>
+        <message>
+            <source>No chapter downloaded, so there is no EPUB to save.</source>
+            <translation>Walang na-download na kabanata, kaya walang EPUB na mase-save.</translation>
+        </message>
+        <message>
+            <source>Read in a new window</source>
+            <translation>Basahin sa bagong window</translation>
+        </message>
+        <message>
+            <source>Listen</source>
+            <translation>Makinig</translation>
+        </message>
+        <message>
+            <source>Downloading for the EPUB…</source>
+            <translation>Nagda-download para sa EPUB…</translation>
+        </message>
+        <message>
+            <source>Save as EPUB</source>
+            <translation>I-save bilang EPUB</translation>
+        </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>I-unpin sa hub</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>I-pin sa hub</translation>
+        </message>
+    </context>
+    <context>
+        <name>ServerDialog</name>
+        <message>
+            <source>Trying it…</source>
+            <translation>Sinusubukan…</translation>
+        </message>
+        <message>
+            <source>Connected: 1 series found.</source>
+            <translation>Nakakonekta: 1 serye ang nakita.</translation>
+        </message>
+        <message>
+            <source>Connected: %1 series found.</source>
+            <translation>Nakakonekta: %1 serye ang nakita.</translation>
+        </message>
+        <message>
+            <source>Your server</source>
+            <translation>Ang server mo</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>Idagdag ang server mo</translation>
+        </message>
+        <message>
+            <source>Read the comics on your own Komga, Kavita or Suwayomi server. The login stays on this device.</source>
+            <translation>Basahin ang komiks sa sarili mong Komga, Kavita o Suwayomi server. Nananatili ang login sa device na ito.</translation>
+        </message>
+        <message>
+            <source>Name (optional)</source>
+            <translation>Pangalan (opsyonal)</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>Email</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>User name</translation>
+        </message>
+        <message>
+            <source> (if it asks for one)</source>
+            <translation> (kung hihingin)</translation>
+        </message>
+        <message>
+            <source>Password (saved; type to change)</source>
+            <translation>Password (naka-save; mag-type para palitan)</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Password</translation>
+        </message>
+        <message>
+            <source>API key (saved; type to change)</source>
+            <translation>API key (naka-save; mag-type para palitan)</translation>
+        </message>
+        <message>
+            <source>Or an API key, instead of the login</source>
+            <translation>O isang API key, sa halip na login</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Isara</translation>
+        </message>
+        <message>
+            <source>Save and try</source>
+            <translation>I-save at subukan</translation>
         </message>
     </context>
     <context>
@@ -7234,6 +8529,10 @@
         <message>
             <source> · Medium Dev</source>
             <translation> · Medium Dev</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
         </message>
     </context>
     <context>
@@ -7711,6 +9010,34 @@
         <message>
             <source>Mihon's downloads · </source>
             <translation>Mga download ng Mihon · </translation>
+        </message>
+        <message>
+            <source>Your servers</source>
+            <translation>Your servers</translation>
+        </message>
+        <message>
+            <source>Komga, Kavita and Suwayomi servers you run: their comics are a source like the others, searched with them and saved to the library.</source>
+            <translation>Mga Komga, Kavita at Suwayomi server na pinapatakbo mo: source din ang mga komiks nila gaya ng iba, hinahanap kasama nila at sine-save sa library.</translation>
+        </message>
+        <message>
+            <source>Change</source>
+            <translation>Palitan</translation>
+        </message>
+        <message>
+            <source>Open in the browser</source>
+            <translation>Buksan sa browser</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>Idagdag ang server mo</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Diagnostics</translation>
+        </message>
+        <message>
+            <source>Whether the extensions runtime answers, a quick test of a source, and the sites each extension contacted.</source>
+            <translation>Kung sumasagot ang extensions runtime, mabilis na test ng isang source, at ang mga site na kinontak ng bawat extension.</translation>
         </message>
     </context>
     <context>
@@ -8393,6 +9720,22 @@
             <source>Saved </source>
             <translation>Na-save </translation>
         </message>
+        <message>
+            <source>Metro colours</source>
+            <translation>Mga kulay ng Metro</translation>
+        </message>
+        <message>
+            <source>The accent colours of Windows Phone, or any colour from the wheel. Tiles, the hub title and switches take it.</source>
+            <translation>Ang mga accent color ng Windows Phone, o anumang kulay mula sa wheel. Ginagamit ito ng mga tile, ng pamagat ng hub at ng mga switch.</translation>
+        </message>
+        <message>
+            <source>Custom colour</source>
+            <translation>Sariling kulay</translation>
+        </message>
+        <message>
+            <source>Tile colour</source>
+            <translation>Kulay ng tile</translation>
+        </message>
     </context>
     <context>
         <name>TrackerConnect</name>
@@ -8589,6 +9932,13 @@
         <message>
             <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
             <translation>Ikonekta ang isang tracker gaya ng AniList, MyAnimeList o Kitsu sa Settings → Mga koneksyon para manatiling updated ang mga listahan mo roon.</translation>
+        </message>
+    </context>
+    <context>
+        <name>TranslationLayer</name>
+        <message>
+            <source>Translating…</source>
+            <translation>Isinasalin…</translation>
         </message>
     </context>
     <context>
@@ -9012,6 +10362,34 @@
         <message>
             <source>Close player</source>
             <translation>Isara ang player</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>Built-in</translation>
+        </message>
+        <message>
+            <source>More…</source>
+            <translation>Iba pa…</translation>
+        </message>
+        <message>
+            <source>Keep SCANCORE open while it plays there: the video comes through it.</source>
+            <translation>Panatilihing bukas ang SCANCORE habang nagpe-play doon: dumadaan dito ang video.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>Tapos na ang party.</translation>
+        </message>
+        <message>
+            <source>Watch party (%1)</source>
+            <translation>Watch party (%1)</translation>
+        </message>
+        <message>
+            <source>Watch together</source>
+            <translation>Manood nang magkasama</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Buksan sa bagong window</translation>
         </message>
     </context>
     <context>

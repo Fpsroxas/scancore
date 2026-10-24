@@ -1032,6 +1032,14 @@
             <source>Waiting: stop</source>
             <translation>Menunggu: hentikan</translation>
         </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>Lepas dari hub</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Sematkan ke hub</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1138,6 +1146,14 @@
         <message>
             <source>All %1</source>
             <translation>Semua %1</translation>
+        </message>
+        <message>
+            <source>Party %1</source>
+            <translation>Pesta %1</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>Pesta nonton</translation>
         </message>
     </context>
     <context>
@@ -1888,6 +1904,74 @@
         <message>
             <source>Bottom</source>
             <translation>Bawah</translation>
+        </message>
+        <message>
+            <source>Finished: </source>
+            <translation>Selesai: </translation>
+        </message>
+        <message>
+            <source>Next: </source>
+            <translation>Berikutnya: </translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Buka di jendela baru</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>Tampilkan aslinya</translation>
+        </message>
+        <message>
+            <source>Translate the pages</source>
+            <translation>Terjemahkan halaman</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse (L)</source>
+            <translation>Kaca pembesar di bawah tetikus (L)</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>Lanjut ke bab berikutnya</translation>
+        </message>
+        <message>
+            <source>Auto-scroll</source>
+            <translation>Gulir otomatis</translation>
+        </message>
+        <message>
+            <source>Turn the pages by themselves</source>
+            <translation>Balik halaman sendiri</translation>
+        </message>
+        <message>
+            <source>Auto-scroll speed · %1</source>
+            <translation>Kecepatan gulir otomatis · %1</translation>
+        </message>
+        <message>
+            <source>A page every %1 s</source>
+            <translation>Satu halaman tiap %1 dtk</translation>
+        </message>
+        <message>
+            <source>Sharpen small scans</source>
+            <translation>Pertajam pindaian kecil</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Tipis</translation>
+        </message>
+        <message>
+            <source>Strong</source>
+            <translation>Kuat</translation>
+        </message>
+        <message>
+            <source>Slower</source>
+            <translation>Lebih lambat</translation>
+        </message>
+        <message>
+            <source>Faster</source>
+            <translation>Lebih cepat</translation>
+        </message>
+        <message>
+            <source>Pause auto-scroll</source>
+            <translation>Jeda gulir otomatis</translation>
         </message>
     </context>
     <context>
@@ -2907,6 +2991,121 @@
         </message>
     </context>
     <context>
+        <name>ExtensionsDiagnostics</name>
+        <message>
+            <source>Answered in %1 s with %2 titles.</source>
+            <translation>Menjawab dalam %1 dtk dengan %2 judul.</translation>
+        </message>
+        <message>
+            <source>Failed after %1 s: %2</source>
+            <translation>Gagal setelah %1 dtk: %2</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Diagnostik</translation>
+        </message>
+        <message>
+            <source>For when an extension misbehaves</source>
+            <translation>Untuk saat ekstensi bermasalah</translation>
+        </message>
+        <message>
+            <source>Copy report</source>
+            <translation>Salin laporan</translation>
+        </message>
+        <message>
+            <source>The report is copied. Paste it into an issue or a message.</source>
+            <translation>Laporan disalin. Tempelkan ke issue atau pesan.</translation>
+        </message>
+        <message>
+            <source>Refresh</source>
+            <translation>Segarkan</translation>
+        </message>
+        <message>
+            <source>Runtime</source>
+            <translation>Runtime</translation>
+        </message>
+        <message>
+            <source>Extensions runtime installed</source>
+            <translation>Runtime ekstensi terpasang</translation>
+        </message>
+        <message>
+            <source>Extensions runtime not installed</source>
+            <translation>Runtime ekstensi belum terpasang</translation>
+        </message>
+        <message>
+            <source>No runtime for this system</source>
+            <translation>Tidak ada runtime untuk sistem ini</translation>
+        </message>
+        <message>
+            <source>Asking the host…</source>
+            <translation>Menanyakan tuan rumah…</translation>
+        </message>
+        <message>
+            <source>Host %1 answered in %2 ms</source>
+            <translation>Runtime %1 menjawab dalam %2 md</translation>
+        </message>
+        <message>
+            <source>Extension libraries it takes</source>
+            <translation>Pustaka ekstensi yang didukung</translation>
+        </message>
+        <message>
+            <source>Mihon %1 · Aniyomi %2</source>
+            <translation>Mihon %1 · Aniyomi %2</translation>
+        </message>
+        <message>
+            <source>This device</source>
+            <translation>Perangkat ini</translation>
+        </message>
+        <message>
+            <source>Test a source</source>
+            <translation>Uji sumber</translation>
+        </message>
+        <message>
+            <source>Loads the source's popular titles once and times it.</source>
+            <translation>Memuat judul populer sumber sekali dan mengukur waktunya.</translation>
+        </message>
+        <message>
+            <source>Source</source>
+            <translation>Sumber</translation>
+        </message>
+        <message>
+            <source>Testing…</source>
+            <translation>Menguji…</translation>
+        </message>
+        <message>
+            <source>Test</source>
+            <translation>Uji</translation>
+        </message>
+        <message>
+            <source>Sites the extensions contacted</source>
+            <translation>Situs yang dihubungi ekstensi</translation>
+        </message>
+        <message>
+            <source>This session only, counted in the extensions runtime. Nothing but the sites' names is kept.</source>
+            <translation>Hanya sesi ini, dihitung di runtime ekstensi. Yang disimpan hanya nama situs.</translation>
+        </message>
+        <message>
+            <source>Nothing yet</source>
+            <translation>Belum ada</translation>
+        </message>
+        <message>
+            <source>Browse or read with an extension and come back.</source>
+            <translation>Jelajahi atau baca dengan ekstensi lalu kembali.</translation>
+        </message>
+        <message>
+            <source>%1 · %2 requests, %3</source>
+            <translation>%1 · %2 permintaan, %3</translation>
+        </message>
+        <message>
+            <source>Host log</source>
+            <translation>Log runtime</translation>
+        </message>
+        <message>
+            <source>The end of extensions/host.log.</source>
+            <translation>Akhir extensions/host.log.</translation>
+        </message>
+    </context>
+    <context>
         <name>ExtensionsPage</name>
         <message>
             <source>All languages</source>
@@ -3187,6 +3386,10 @@
         <message>
             <source>Its extensions</source>
             <translation>Ekstensinya</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Diagnostik</translation>
         </message>
     </context>
     <context>
@@ -3719,6 +3922,110 @@
             <source>Long</source>
             <translation>Panjang</translation>
         </message>
+        <message>
+            <source>Look</source>
+            <translation>Tampilan</translation>
+        </message>
+        <message>
+            <source>Metro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Metro: hub panorama dengan ubin, huruf besar, dan bilah aplikasi, ala Windows Phone.</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>Standar</translation>
+        </message>
+        <message>
+            <source>Pages and navigation</source>
+            <translation>Halaman dan navigasi</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Tiles and panoramas</source>
+            <translation>Ubin dan panorama</translation>
+        </message>
+        <message>
+            <source>Hold a tile on the hub to resize, move or unpin it. Series pages have Pin to the hub.</source>
+            <translation>Tahan ubin di hub untuk mengubah ukuran, memindahkan, atau melepasnya. Halaman seri punya Sematkan ke hub.</translation>
+        </message>
+        <message>
+            <source>Hub title</source>
+            <translation>Judul hub</translation>
+        </message>
+        <message>
+            <source>The big word across the top of the hub.</source>
+            <translation>Kata besar di bagian atas hub.</translation>
+        </message>
+        <message>
+            <source>Title colour</source>
+            <translation>Warna judul</translation>
+        </message>
+        <message>
+            <source>Accent blend</source>
+            <translation>Campuran aksen</translation>
+        </message>
+        <message>
+            <source>Plain</source>
+            <translation>Polos</translation>
+        </message>
+        <message>
+            <source>Background</source>
+            <translation>Latar</translation>
+        </message>
+        <message>
+            <source>Behind the hub, moving slower than the tiles.</source>
+            <translation>Di belakang hub, bergerak lebih lambat dari ubin.</translation>
+        </message>
+        <message>
+            <source>Last read</source>
+            <translation>Terakhir dibaca</translation>
+        </message>
+        <message>
+            <source>Theme picture</source>
+            <translation>Gambar tema</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>Tidak ada</translation>
+        </message>
+        <message>
+            <source>Headers</source>
+            <translation>Header</translation>
+        </message>
+        <message>
+            <source>UPPERCASE</source>
+            <translation>HURUF BESAR</translation>
+        </message>
+        <message>
+            <source>lowercase</source>
+            <translation>huruf kecil</translation>
+        </message>
+        <message>
+            <source>Live tiles</source>
+            <translation>Ubin hidup</translation>
+        </message>
+        <message>
+            <source>Tiles turn over now and then to show new chapters and where you are.</source>
+            <translation>Ubin sesekali berbalik untuk menampilkan bab baru dan posisi Anda.</translation>
+        </message>
+        <message>
+            <source>Hub sections</source>
+            <translation>Bagian hub</translation>
+        </message>
+        <message>
+            <source>Which sections the hub shows, in this order. Four or five are easiest to find your way in.</source>
+            <translation>Bagian mana yang ditampilkan hub, dengan urutan ini. Empat atau lima paling mudah dinavigasi.</translation>
+        </message>
+        <message>
+            <source>Earlier</source>
+            <translation>Sebelumnya</translation>
+        </message>
+        <message>
+            <source>Later</source>
+            <translation>Nanti</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -3927,6 +4234,14 @@
         <message>
             <source>Anime player</source>
             <translation>Pemutar anime</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse</source>
+            <translation>Kaca pembesar di bawah tetikus</translation>
+        </message>
+        <message>
+            <source>Auto-scroll on or off</source>
+            <translation>Gulir otomatis aktif atau mati</translation>
         </message>
     </context>
     <context>
@@ -4298,6 +4613,18 @@
         <message>
             <source>Undo</source>
             <translation>Urungkan</translation>
+        </message>
+        <message>
+            <source>Most unwatched</source>
+            <translation>Paling banyak belum ditonton</translation>
+        </message>
+        <message>
+            <source>Most unread</source>
+            <translation>Paling banyak belum dibaca</translation>
+        </message>
+        <message>
+            <source>Hide until there is something new</source>
+            <translation>Sembunyikan sampai ada yang baru</translation>
         </message>
     </context>
     <context>
@@ -4674,6 +5001,287 @@
         <message>
             <source>Continue</source>
             <translation>Lanjut</translation>
+        </message>
+        <message>
+            <source>The host moved on to %1</source>
+            <translation>Tuan rumah pindah ke %1</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Buka</translation>
+        </message>
+    </context>
+    <context>
+        <name>Metro</name>
+        <message>
+            <source>Explore</source>
+            <translation>Jelajahi</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Terkini</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>Disematkan ke hub</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>Lanjut</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Periksa bab baru</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>Cari komik</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>Cari novel</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Cari anime</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Cari semuanya</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Memeriksa bab baru di pustaka Anda…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Semuanya sudah terbaru</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>Belum ada yang bisa dilanjutkan</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>cari</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>segarkan</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>peringatan</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>pengaturan</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>riwayat</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>unduhan</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>aktivitas</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>ekstensi</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>matikan penyamaran</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>mode penyamaran</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>atur hub</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (tahan untuk lainnya)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>Tutup menu</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>Buka menu</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Penyamaran mati</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Penyamaran</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>Akun</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>Episode %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Bab %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 baru</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 baru</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>baca komik acak</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>lanjutkan</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>jelajahi genre acak</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>cari</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>unduhan</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>riwayat</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>pengaturan</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>%1 rangkuman Anda</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>Belum ada yang bisa dipilih</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Kecil</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Sedang</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>Lebar</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>Pindah lebih awal</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>Pindah lebih akhir</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>Lepas sematan</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Sematkan ke hub</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>Yang Anda baca dan tonton muncul di sini.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>Seri yang Anda simpan muncul di sini.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>semua komik</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>segera hadir</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>ekstensi</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Bab terbaru</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>semua novel</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>semua anime</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>jadwal</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>jelajahi</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>Tren</translation>
         </message>
     </context>
     <context>
@@ -5267,6 +5875,94 @@
             <source>Keep the spoken paragraph on screen</source>
             <translation>Tetap tampilkan paragraf yang dibacakan</translation>
         </message>
+        <message>
+            <source>Sleep timer: reading aloud stopped</source>
+            <translation>Pengatur waktu tidur: pembacaan berhenti</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>Kalimat sebelumnya</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>Jeda</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>Lanjut membacakan</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>Kalimat berikutnya</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at %1</source>
+            <translation>Pengatur waktu tidur: berhenti pukul %1</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at the end of the chapter</source>
+            <translation>Pengatur waktu tidur: berhenti di akhir bab</translation>
+        </message>
+        <message>
+            <source>Sleep timer</source>
+            <translation>Pengatur waktu tidur</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Mati</translation>
+        </message>
+        <message>
+            <source>In 15 minutes</source>
+            <translation>Dalam 15 menit</translation>
+        </message>
+        <message>
+            <source>In 30 minutes</source>
+            <translation>Dalam 30 menit</translation>
+        </message>
+        <message>
+            <source>In 45 minutes</source>
+            <translation>Dalam 45 menit</translation>
+        </message>
+        <message>
+            <source>In an hour</source>
+            <translation>Dalam satu jam</translation>
+        </message>
+        <message>
+            <source>At the end of the chapter</source>
+            <translation>Di akhir bab</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Buka di jendela baru</translation>
+        </message>
+        <message>
+            <source>Pause reading aloud</source>
+            <translation>Jeda membacakan</translation>
+        </message>
+        <message>
+            <source>Translating…</source>
+            <translation>Menerjemahkan…</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>Tampilkan aslinya</translation>
+        </message>
+        <message>
+            <source>Translate the chapter</source>
+            <translation>Terjemahkan bab</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>Sorot kalimat yang dibacakan</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs · %1 s</source>
+            <translation>Jeda antar paragraf · %1 dtk</translation>
+        </message>
+        <message>
+            <source>Pause between sentences · %1 s</source>
+            <translation>Jeda antar kalimat · %1 dtk</translation>
+        </message>
     </context>
     <context>
         <name>NovelsPage</name>
@@ -5665,6 +6361,18 @@
             <source>Your system shows them</source>
             <translation>Sistemmu menampilkannya</translation>
         </message>
+        <message>
+            <source>Layout</source>
+            <translation>Tata letak</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>Standar</translation>
+        </message>
+        <message>
+            <source>Metro tiles</source>
+            <translation>Ubin Metro</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5750,6 +6458,117 @@
         <message>
             <source>Remove</source>
             <translation>Hapus</translation>
+        </message>
+    </context>
+    <context>
+        <name>PartyPanel</name>
+        <message>
+            <source>Watch together</source>
+            <translation>Nonton bareng</translation>
+        </message>
+        <message>
+            <source>Everyone watches from their own source; the host's player steers the others.</source>
+            <translation>Semua menonton dari sumber masing-masing; pemutar tuan rumah mengendalikan yang lain.</translation>
+        </message>
+        <message>
+            <source>You are the host: your player steers everyone's.</source>
+            <translation>Anda tuan rumah: pemutar Anda mengendalikan milik semua orang.</translation>
+        </message>
+        <message>
+            <source>Playing along with %1</source>
+            <translation>Menonton bersama %1</translation>
+        </message>
+        <message>
+            <source>Waiting for the host…</source>
+            <translation>Menunggu tuan rumah…</translation>
+        </message>
+        <message>
+            <source>Joining…</source>
+            <translation>Bergabung…</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Sign in to scancore.onl (Settings → Account) to watch together.</source>
+            <translation>Masuk ke scancore.onl (Pengaturan → Akun) untuk menonton bersama.</translation>
+        </message>
+        <message>
+            <source>Starting…</source>
+            <translation>Memulai…</translation>
+        </message>
+        <message>
+            <source>Start a watch party</source>
+            <translation>Mulai pesta nonton</translation>
+        </message>
+        <message>
+            <source>Or join one</source>
+            <translation>Atau gabung ke salah satunya</translation>
+        </message>
+        <message>
+            <source>Join a watch party</source>
+            <translation>Gabung ke pesta nonton</translation>
+        </message>
+        <message>
+            <source>Party code</source>
+            <translation>Kode pesta</translation>
+        </message>
+        <message>
+            <source>Join</source>
+            <translation>Gabung</translation>
+        </message>
+        <message>
+            <source>Copy the code</source>
+            <translation>Salin kode</translation>
+        </message>
+        <message>
+            <source>Code copied</source>
+            <translation>Kode disalin</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Bagikan</translation>
+        </message>
+        <message>
+            <source>Watch %1 with me in SCANCORE: join the party with the code %2</source>
+            <translation>Tonton %1 bersamaku di SCANCORE: gabung ke pesta dengan kode %2</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>Pesta nonton</translation>
+        </message>
+        <message>
+            <source>The host is watching %1, episode %2</source>
+            <translation>Tuan rumah sedang menonton %1, episode %2</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Buka</translation>
+        </message>
+        <message>
+            <source>host</source>
+            <translation>tuan rumah</translation>
+        </message>
+        <message>
+            <source>Say hello: everyone in the party sees it.</source>
+            <translation>Sapa: semua di pesta melihatnya.</translation>
+        </message>
+        <message>
+            <source>Message</source>
+            <translation>Pesan</translation>
+        </message>
+        <message>
+            <source>Send</source>
+            <translation>Kirim</translation>
+        </message>
+        <message>
+            <source>End the party</source>
+            <translation>Akhiri pesta</translation>
+        </message>
+        <message>
+            <source>Leave the party</source>
+            <translation>Tinggalkan pesta</translation>
         </message>
     </context>
     <context>
@@ -5934,6 +6753,144 @@
         <message>
             <source>None</source>
             <translation>Tidak ada</translation>
+        </message>
+    </context>
+    <context>
+        <name>QObject</name>
+        <message>
+            <source>Android could not read the page: %1</source>
+            <translation>Android tidak bisa membaca halaman: %1</translation>
+        </message>
+        <message>
+            <source>This device has no text recogniser.</source>
+            <translation>Perangkat ini tidak punya pengenal teks.</translation>
+        </message>
+        <message>
+            <source>Android's translator needs to know the language: pick it in the reader.</source>
+            <translation>Penerjemah Android perlu tahu bahasanya: pilih di pembaca.</translation>
+        </message>
+        <message>
+            <source>Android could not translate: %1</source>
+            <translation>Android tidak bisa menerjemahkan: %1</translation>
+        </message>
+        <message>
+            <source>This device has no translator of its own.</source>
+            <translation>Perangkat ini tidak punya penerjemah sendiri.</translation>
+        </message>
+        <message>
+            <source>Pick a way to translate in Settings → Reading → Translate.</source>
+            <translation>Pilih cara menerjemahkan di Pengaturan → Membaca → Terjemahkan.</translation>
+        </message>
+        <message>
+            <source>The page's picture could not be read.</source>
+            <translation>Gambar halaman tidak bisa dibaca.</translation>
+        </message>
+        <message>
+            <source>%1 refused the key. Check it in Settings → Reading → Translate.</source>
+            <translation>%1 menolak kunci. Periksa di Pengaturan → Membaca → Terjemahkan.</translation>
+        </message>
+        <message>
+            <source>%1 says the key's quota is used up for now.</source>
+            <translation>%1 menyatakan kuota kunci habis untuk sementara.</translation>
+        </message>
+        <message>
+            <source>%1 could not be reached.</source>
+            <translation>%1 tidak bisa dihubungi.</translation>
+        </message>
+        <message>
+            <source>%1 answered with an error (%2).</source>
+            <translation>%1 menjawab dengan galat (%2).</translation>
+        </message>
+        <message>
+            <source>DeepL needs your key (Settings → Reading → Translate).</source>
+            <translation>DeepL memerlukan kunci Anda (Pengaturan → Membaca → Terjemahkan).</translation>
+        </message>
+        <message>
+            <source>DeepL answered with something else than the texts.</source>
+            <translation>DeepL menjawab dengan sesuatu selain teks.</translation>
+        </message>
+        <message>
+            <source>Google Translate needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google Terjemahan memerlukan kunci API Anda (Pengaturan → Membaca → Terjemahkan).</translation>
+        </message>
+        <message>
+            <source>Google Translate answered with something else than the texts.</source>
+            <translation>Google Terjemahan menjawab dengan sesuatu selain teks.</translation>
+        </message>
+        <message>
+            <source>Set the service's address and model in Settings → Reading → Translate.</source>
+            <translation>Atur alamat dan model layanan di Pengaturan → Membaca → Terjemahkan.</translation>
+        </message>
+        <message>
+            <source>The model did not answer with one translation per text. Try another model.</source>
+            <translation>Model tidak menjawab dengan satu terjemahan per teks. Coba model lain.</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google Cloud Vision memerlukan kunci API Anda (Pengaturan → Membaca → Terjemahkan).</translation>
+        </message>
+        <message>
+            <source>MangaSin changed its series page: no chapter list found.</source>
+            <translation>MangaSin mengubah halaman serinya: daftar bab tidak ditemukan.</translation>
+        </message>
+        <message>
+            <source>MangaSin's chapter list could not be opened (its key changed).</source>
+            <translation>Daftar bab MangaSin tidak bisa dibuka (kuncinya berubah).</translation>
+        </message>
+        <message>
+            <source>%1 refused the login. Check it in Settings → Sources → Your servers.</source>
+            <translation>%1 menolak login. Periksa di Pengaturan → Sumber → Server Anda.</translation>
+        </message>
+        <message>
+            <source>This server is no longer in Settings → Sources → Your servers.</source>
+            <translation>Server ini sudah tidak ada di Pengaturan → Sumber → Server Anda.</translation>
+        </message>
+        <message>
+            <source>The server did not give the image (%1).</source>
+            <translation>Server tidak memberikan gambar (%1).</translation>
+        </message>
+        <message>
+            <source>The image could not be saved.</source>
+            <translation>Gambar tidak bisa disimpan.</translation>
+        </message>
+    </context>
+    <context>
+        <name>ReadAloudBar</name>
+        <message>
+            <source>Reading aloud: %1</source>
+            <translation>Membacakan: %1</translation>
+        </message>
+        <message>
+            <source>Loading the chapter…</source>
+            <translation>Memuat bab…</translation>
+        </message>
+        <message>
+            <source>stops at %1</source>
+            <translation>berhenti pukul %1</translation>
+        </message>
+        <message>
+            <source>stops after this chapter</source>
+            <translation>berhenti setelah bab ini</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>Kalimat sebelumnya</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>Jeda</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>Lanjut membacakan</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>Kalimat berikutnya</translation>
+        </message>
+        <message>
+            <source>Stop reading aloud</source>
+            <translation>Berhenti membacakan</translation>
         </message>
     </context>
     <context>
@@ -6477,6 +7434,122 @@
             <source>Colours</source>
             <translation>Warna</translation>
         </message>
+        <message>
+            <source>Full screen while reading</source>
+            <translation>Layar penuh saat membaca</translation>
+        </message>
+        <message>
+            <source>The status and navigation bars hide with the reader's controls, so pages fill the screen, beside a punch hole too. Swipe from the edge to see them.</source>
+            <translation>Bilah status dan navigasi tersembunyi bersama kontrol pembaca, agar halaman memenuhi layar, juga di samping lubang kamera. Usap dari tepi untuk melihatnya.</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>Lanjut ke bab berikutnya</translation>
+        </message>
+        <message>
+            <source>The next chapter joins the strip as you near the end, so reading never stops for a button.</source>
+            <translation>Bab berikutnya bergabung ke strip saat Anda mendekati akhir, jadi membaca tidak pernah berhenti karena tombol.</translation>
+        </message>
+        <message>
+            <source>Translate</source>
+            <translation>Terjemahkan</translation>
+        </message>
+        <message>
+            <source>Comic readers have Translate the pages in their top bar. Keys stay on this device and are only sent to their own service.</source>
+            <translation>Pembaca komik punya Terjemahkan halaman di bilah atasnya. Kunci tetap di perangkat ini dan hanya dikirim ke layanannya sendiri.</translation>
+        </message>
+        <message>
+            <source>Translate into</source>
+            <translation>Terjemahkan ke</translation>
+        </message>
+        <message>
+            <source>Read the page's text with</source>
+            <translation>Baca teks halaman dengan</translation>
+        </message>
+        <message>
+            <source>Finds the text in a comic's pages.</source>
+            <translation>Menemukan teks di halaman komik.</translation>
+        </message>
+        <message>
+            <source>Translate with</source>
+            <translation>Terjemahkan dengan</translation>
+        </message>
+        <message>
+            <source>DeepL key</source>
+            <translation>Kunci DeepL</translation>
+        </message>
+        <message>
+            <source>From your DeepL account (free keys end in :fx).</source>
+            <translation>Dari akun DeepL Anda (kunci gratis berakhiran :fx).</translation>
+        </message>
+        <message>
+            <source>Not set</source>
+            <translation>Belum diatur</translation>
+        </message>
+        <message>
+            <source>Google Cloud key</source>
+            <translation>Kunci Google Cloud</translation>
+        </message>
+        <message>
+            <source>An API key with Cloud Translation and Cloud Vision turned on.</source>
+            <translation>Kunci API dengan Cloud Translation dan Cloud Vision aktif.</translation>
+        </message>
+        <message>
+            <source>Language model</source>
+            <translation>Model bahasa</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service: its address up to /v1 (a local Ollama is http://localhost:11434/v1), a model and a key if it needs one.</source>
+            <translation>Layanan apa pun yang kompatibel dengan OpenAI: alamatnya sampai /v1 (Ollama lokal adalah http://localhost:11434/v1), model, dan kunci jika perlu.</translation>
+        </message>
+        <message>
+            <source>Model, e.g. gpt-4o-mini</source>
+            <translation>Model, mis. gpt-4o-mini</translation>
+        </message>
+        <message>
+            <source>Key (if it needs one)</source>
+            <translation>Kunci (jika perlu)</translation>
+        </message>
+        <message>
+            <source>Forget translations</source>
+            <translation>Lupakan terjemahan</translation>
+        </message>
+        <message>
+            <source>Pages and chapters are translated again the next time.</source>
+            <translation>Halaman dan bab akan diterjemahkan ulang lain kali.</translation>
+        </message>
+        <message>
+            <source>Forget</source>
+            <translation>Lupakan</translation>
+        </message>
+        <message>
+            <source>Translations forgotten</source>
+            <translation>Terjemahan dilupakan</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>Sorot kalimat yang dibacakan</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs</source>
+            <translation>Jeda antar paragraf</translation>
+        </message>
+        <message>
+            <source>Pause between sentences</source>
+            <translation>Jeda antar kalimat</translation>
+        </message>
+        <message>
+            <source>Voice for a language</source>
+            <translation>Suara untuk bahasa</translation>
+        </message>
+        <message>
+            <source>Books in this language are read with this voice.</source>
+            <translation>Buku dalam bahasa ini dibacakan dengan suara ini.</translation>
+        </message>
+        <message>
+            <source>The voice above</source>
+            <translation>Suara di atas</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6679,6 +7752,113 @@
         <message>
             <source>Another app</source>
             <translation>Aplikasi lain</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Comics</name>
+        <message>
+            <source>That server is not saved.</source>
+            <translation>Server itu tidak tersimpan.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Downloads</name>
+        <message>
+            <source>No chapters of this novel are downloaded. Download some first.</source>
+            <translation>Belum ada bab novel ini yang diunduh. Unduh beberapa dulu.</translation>
+        </message>
+        <message>
+            <source>The book could not be saved in %1.</source>
+            <translation>Buku tidak bisa disimpan di %1.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::MediaControls</name>
+        <message>
+            <source>Reading aloud</source>
+            <translation>Membacakan</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Party</name>
+        <message>
+            <source>The party could not be reached (%1).</source>
+            <translation>Pesta tidak bisa dihubungi (%1).</translation>
+        </message>
+        <message>
+            <source>Watch parties need scancore.onl (this site has none yet).</source>
+            <translation>Pesta nonton memerlukan scancore.onl (situs ini belum punya).</translation>
+        </message>
+        <message>
+            <source>The party could not be opened.</source>
+            <translation>Pesta tidak bisa dibuka.</translation>
+        </message>
+        <message>
+            <source>A party code has six letters and numbers.</source>
+            <translation>Kode pesta terdiri dari enam huruf dan angka.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>Pesta sudah selesai.</translation>
+        </message>
+        <message>
+            <source>No party with that code.</source>
+            <translation>Tidak ada pesta dengan kode itu.</translation>
+        </message>
+        <message>
+            <source>The host ended the party.</source>
+            <translation>Tuan rumah mengakhiri pesta.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Translator</name>
+        <message>
+            <source>To translate pages on a computer, add a Google Cloud key in Settings → Reading → Translate (Vision reads the page's text).</source>
+            <translation>Untuk menerjemahkan halaman di komputer, tambahkan kunci Google Cloud di Pengaturan → Membaca → Terjemahkan (Vision membaca teks halaman).</translation>
+        </message>
+        <message>
+            <source>Add a DeepL or Google key, or a model's address, in Settings → Reading → Translate.</source>
+            <translation>Tambahkan kunci DeepL atau Google, atau alamat model, di Pengaturan → Membaca → Terjemahkan.</translation>
+        </message>
+        <message>
+            <source>Automatic</source>
+            <translation>Otomatis</translation>
+        </message>
+        <message>
+            <source>This phone</source>
+            <translation>Ponsel ini</translation>
+        </message>
+        <message>
+            <source>On the phone, with Google Play services</source>
+            <translation>Di ponsel, dengan layanan Google Play</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision</source>
+            <translation>Google Cloud Vision</translation>
+        </message>
+        <message>
+            <source>Your Google Cloud key</source>
+            <translation>Kunci Google Cloud Anda</translation>
+        </message>
+        <message>
+            <source>On the phone; a model per language</source>
+            <translation>Di ponsel; satu model per bahasa</translation>
+        </message>
+        <message>
+            <source>Your DeepL key</source>
+            <translation>Kunci DeepL Anda</translation>
+        </message>
+        <message>
+            <source>Google Translate</source>
+            <translation>Google Terjemahan</translation>
+        </message>
+        <message>
+            <source>A language model</source>
+            <translation>Model bahasa</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service, or one on your computer</source>
+            <translation>Layanan apa pun yang kompatibel dengan OpenAI, atau yang ada di komputer Anda</translation>
         </message>
     </context>
     <context>
@@ -6950,6 +8130,121 @@
         <message>
             <source>Show as a grid</source>
             <translation>Tampilkan sebagai kisi</translation>
+        </message>
+        <message>
+            <source>Saved %1 chapters as %2</source>
+            <translation>%1 bab disimpan sebagai %2</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>Tampilkan</translation>
+        </message>
+        <message>
+            <source>Save the %1 downloaded chapters</source>
+            <translation>Simpan %1 bab yang diunduh</translation>
+        </message>
+        <message>
+            <source>Download all %1 chapters, then save</source>
+            <translation>Unduh semua %1 bab, lalu simpan</translation>
+        </message>
+        <message>
+            <source>Stop waiting for the downloads</source>
+            <translation>Berhenti menunggu unduhan</translation>
+        </message>
+        <message>
+            <source>No chapter downloaded, so there is no EPUB to save.</source>
+            <translation>Tidak ada bab yang diunduh, jadi tidak ada EPUB untuk disimpan.</translation>
+        </message>
+        <message>
+            <source>Read in a new window</source>
+            <translation>Baca di jendela baru</translation>
+        </message>
+        <message>
+            <source>Listen</source>
+            <translation>Dengarkan</translation>
+        </message>
+        <message>
+            <source>Downloading for the EPUB…</source>
+            <translation>Mengunduh untuk EPUB…</translation>
+        </message>
+        <message>
+            <source>Save as EPUB</source>
+            <translation>Simpan sebagai EPUB</translation>
+        </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>Lepas dari hub</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Sematkan ke hub</translation>
+        </message>
+    </context>
+    <context>
+        <name>ServerDialog</name>
+        <message>
+            <source>Trying it…</source>
+            <translation>Mencoba…</translation>
+        </message>
+        <message>
+            <source>Connected: 1 series found.</source>
+            <translation>Terhubung: 1 seri ditemukan.</translation>
+        </message>
+        <message>
+            <source>Connected: %1 series found.</source>
+            <translation>Terhubung: %1 seri ditemukan.</translation>
+        </message>
+        <message>
+            <source>Your server</source>
+            <translation>Server Anda</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>Tambahkan server Anda</translation>
+        </message>
+        <message>
+            <source>Read the comics on your own Komga, Kavita or Suwayomi server. The login stays on this device.</source>
+            <translation>Baca komik di server Komga, Kavita, atau Suwayomi Anda sendiri. Login tetap di perangkat ini.</translation>
+        </message>
+        <message>
+            <source>Name (optional)</source>
+            <translation>Nama (opsional)</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>Email</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Nama pengguna</translation>
+        </message>
+        <message>
+            <source> (if it asks for one)</source>
+            <translation> (jika diminta)</translation>
+        </message>
+        <message>
+            <source>Password (saved; type to change)</source>
+            <translation>Kata sandi (tersimpan; ketik untuk mengganti)</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Kata sandi</translation>
+        </message>
+        <message>
+            <source>API key (saved; type to change)</source>
+            <translation>Kunci API (tersimpan; ketik untuk mengganti)</translation>
+        </message>
+        <message>
+            <source>Or an API key, instead of the login</source>
+            <translation>Atau kunci API, alih-alih login</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Tutup</translation>
+        </message>
+        <message>
+            <source>Save and try</source>
+            <translation>Simpan dan coba</translation>
         </message>
     </context>
     <context>
@@ -7249,6 +8544,10 @@
         <message>
             <source> · Medium Dev</source>
             <translation> · Medium Dev</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
         </message>
     </context>
     <context>
@@ -7726,6 +9025,34 @@
         <message>
             <source>Mihon's downloads · </source>
             <translation>Unduhan Mihon · </translation>
+        </message>
+        <message>
+            <source>Your servers</source>
+            <translation>Server Anda</translation>
+        </message>
+        <message>
+            <source>Komga, Kavita and Suwayomi servers you run: their comics are a source like the others, searched with them and saved to the library.</source>
+            <translation>Server Komga, Kavita, dan Suwayomi yang Anda kelola: komiknya menjadi sumber seperti yang lain, dicari bersama dan disimpan ke pustaka.</translation>
+        </message>
+        <message>
+            <source>Change</source>
+            <translation>Ubah</translation>
+        </message>
+        <message>
+            <source>Open in the browser</source>
+            <translation>Buka di peramban</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>Tambahkan server Anda</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Diagnostik</translation>
+        </message>
+        <message>
+            <source>Whether the extensions runtime answers, a quick test of a source, and the sites each extension contacted.</source>
+            <translation>Apakah runtime ekstensi menjawab, uji cepat sebuah sumber, dan situs yang dihubungi tiap ekstensi.</translation>
         </message>
     </context>
     <context>
@@ -8408,6 +9735,22 @@
             <source>Saved </source>
             <translation>Disimpan </translation>
         </message>
+        <message>
+            <source>Metro colours</source>
+            <translation>Warna Metro</translation>
+        </message>
+        <message>
+            <source>The accent colours of Windows Phone, or any colour from the wheel. Tiles, the hub title and switches take it.</source>
+            <translation>Warna aksen Windows Phone, atau warna apa pun dari roda. Ubin, judul hub, dan sakelar memakainya.</translation>
+        </message>
+        <message>
+            <source>Custom colour</source>
+            <translation>Warna khusus</translation>
+        </message>
+        <message>
+            <source>Tile colour</source>
+            <translation>Warna ubin</translation>
+        </message>
     </context>
     <context>
         <name>TrackerConnect</name>
@@ -8604,6 +9947,13 @@
         <message>
             <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
             <translation>Hubungkan pelacak seperti AniList, MyAnimeList, atau Kitsu di Setelan → Koneksi agar daftar Anda di sana tetap terbaru.</translation>
+        </message>
+    </context>
+    <context>
+        <name>TranslationLayer</name>
+        <message>
+            <source>Translating…</source>
+            <translation>Menerjemahkan…</translation>
         </message>
     </context>
     <context>
@@ -9027,6 +10377,34 @@
         <message>
             <source>Close player</source>
             <translation>Tutup pemutar</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>Bawaan</translation>
+        </message>
+        <message>
+            <source>More…</source>
+            <translation>Lainnya…</translation>
+        </message>
+        <message>
+            <source>Keep SCANCORE open while it plays there: the video comes through it.</source>
+            <translation>Biarkan SCANCORE terbuka selama diputar di sana: videonya lewat SCANCORE.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>Pesta sudah selesai.</translation>
+        </message>
+        <message>
+            <source>Watch party (%1)</source>
+            <translation>Pesta nonton (%1)</translation>
+        </message>
+        <message>
+            <source>Watch together</source>
+            <translation>Nonton bareng</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Buka di jendela baru</translation>
         </message>
     </context>
     <context>

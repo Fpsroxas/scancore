@@ -1032,6 +1032,14 @@
             <source>Waiting: stop</source>
             <translation>Đang chờ: dừng</translation>
         </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>Bỏ ghim khỏi hub</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Ghim vào hub</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1138,6 +1146,14 @@
         <message>
             <source>All %1</source>
             <translation>Tất cả %1</translation>
+        </message>
+        <message>
+            <source>Party %1</source>
+            <translation>Nhóm %1</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>Nhóm xem chung</translation>
         </message>
     </context>
     <context>
@@ -1888,6 +1904,74 @@
         <message>
             <source>Bottom</source>
             <translation>Dưới</translation>
+        </message>
+        <message>
+            <source>Finished: </source>
+            <translation>Đã xong: </translation>
+        </message>
+        <message>
+            <source>Next: </source>
+            <translation>Tiếp theo: </translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Mở trong cửa sổ mới</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>Hiện bản gốc</translation>
+        </message>
+        <message>
+            <source>Translate the pages</source>
+            <translation>Dịch các trang</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse (L)</source>
+            <translation>Kính lúp dưới chuột (L)</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>Đọc liền sang chương sau</translation>
+        </message>
+        <message>
+            <source>Auto-scroll</source>
+            <translation>Tự cuộn</translation>
+        </message>
+        <message>
+            <source>Turn the pages by themselves</source>
+            <translation>Tự lật trang</translation>
+        </message>
+        <message>
+            <source>Auto-scroll speed · %1</source>
+            <translation>Tốc độ tự cuộn · %1</translation>
+        </message>
+        <message>
+            <source>A page every %1 s</source>
+            <translation>Mỗi %1 giây một trang</translation>
+        </message>
+        <message>
+            <source>Sharpen small scans</source>
+            <translation>Làm nét bản quét nhỏ</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Mảnh</translation>
+        </message>
+        <message>
+            <source>Strong</source>
+            <translation>Mạnh</translation>
+        </message>
+        <message>
+            <source>Slower</source>
+            <translation>Chậm hơn</translation>
+        </message>
+        <message>
+            <source>Faster</source>
+            <translation>Nhanh hơn</translation>
+        </message>
+        <message>
+            <source>Pause auto-scroll</source>
+            <translation>Tạm dừng tự cuộn</translation>
         </message>
     </context>
     <context>
@@ -2907,6 +2991,121 @@
         </message>
     </context>
     <context>
+        <name>ExtensionsDiagnostics</name>
+        <message>
+            <source>Answered in %1 s with %2 titles.</source>
+            <translation>Trả lời sau %1 giây với %2 truyện.</translation>
+        </message>
+        <message>
+            <source>Failed after %1 s: %2</source>
+            <translation>Lỗi sau %1 giây: %2</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Chẩn đoán</translation>
+        </message>
+        <message>
+            <source>For when an extension misbehaves</source>
+            <translation>Khi một tiện ích gặp trục trặc</translation>
+        </message>
+        <message>
+            <source>Copy report</source>
+            <translation>Sao chép báo cáo</translation>
+        </message>
+        <message>
+            <source>The report is copied. Paste it into an issue or a message.</source>
+            <translation>Đã sao chép báo cáo. Dán vào issue hoặc tin nhắn.</translation>
+        </message>
+        <message>
+            <source>Refresh</source>
+            <translation>Làm mới</translation>
+        </message>
+        <message>
+            <source>Runtime</source>
+            <translation>Môi trường</translation>
+        </message>
+        <message>
+            <source>Extensions runtime installed</source>
+            <translation>Đã cài môi trường chạy tiện ích</translation>
+        </message>
+        <message>
+            <source>Extensions runtime not installed</source>
+            <translation>Chưa cài môi trường tiện ích</translation>
+        </message>
+        <message>
+            <source>No runtime for this system</source>
+            <translation>Không có môi trường cho hệ thống này</translation>
+        </message>
+        <message>
+            <source>Asking the host…</source>
+            <translation>Đang hỏi chủ phòng…</translation>
+        </message>
+        <message>
+            <source>Host %1 answered in %2 ms</source>
+            <translation>Môi trường %1 trả lời sau %2 ms</translation>
+        </message>
+        <message>
+            <source>Extension libraries it takes</source>
+            <translation>Thư viện tiện ích được hỗ trợ</translation>
+        </message>
+        <message>
+            <source>Mihon %1 · Aniyomi %2</source>
+            <translation>Mihon %1 · Aniyomi %2</translation>
+        </message>
+        <message>
+            <source>This device</source>
+            <translation>Thiết bị này</translation>
+        </message>
+        <message>
+            <source>Test a source</source>
+            <translation>Thử một nguồn</translation>
+        </message>
+        <message>
+            <source>Loads the source's popular titles once and times it.</source>
+            <translation>Tải các truyện phổ biến của nguồn một lần và đo thời gian.</translation>
+        </message>
+        <message>
+            <source>Source</source>
+            <translation>Nguồn</translation>
+        </message>
+        <message>
+            <source>Testing…</source>
+            <translation>Đang thử…</translation>
+        </message>
+        <message>
+            <source>Test</source>
+            <translation>Thử</translation>
+        </message>
+        <message>
+            <source>Sites the extensions contacted</source>
+            <translation>Các trang web tiện ích đã liên hệ</translation>
+        </message>
+        <message>
+            <source>This session only, counted in the extensions runtime. Nothing but the sites' names is kept.</source>
+            <translation>Chỉ phiên này, đếm trong môi trường tiện ích. Chỉ giữ tên các trang web.</translation>
+        </message>
+        <message>
+            <source>Nothing yet</source>
+            <translation>Chưa có gì</translation>
+        </message>
+        <message>
+            <source>Browse or read with an extension and come back.</source>
+            <translation>Duyệt hoặc đọc bằng một tiện ích rồi quay lại.</translation>
+        </message>
+        <message>
+            <source>%1 · %2 requests, %3</source>
+            <translation>%1 · %2 yêu cầu, %3</translation>
+        </message>
+        <message>
+            <source>Host log</source>
+            <translation>Nhật ký môi trường</translation>
+        </message>
+        <message>
+            <source>The end of extensions/host.log.</source>
+            <translation>Phần cuối của extensions/host.log.</translation>
+        </message>
+    </context>
+    <context>
         <name>ExtensionsPage</name>
         <message>
             <source>All languages</source>
@@ -3187,6 +3386,10 @@
         <message>
             <source>Its extensions</source>
             <translation>Tiện ích của kho này</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Chẩn đoán</translation>
         </message>
     </context>
     <context>
@@ -3719,6 +3922,110 @@
             <source>Long</source>
             <translation>Dài</translation>
         </message>
+        <message>
+            <source>Look</source>
+            <translation>Kiểu</translation>
+        </message>
+        <message>
+            <source>Metro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Metro: một hub toàn cảnh với các ô, chữ lớn và thanh ứng dụng, theo kiểu Windows Phone.</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>Tiêu chuẩn</translation>
+        </message>
+        <message>
+            <source>Pages and navigation</source>
+            <translation>Trang và điều hướng</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Tiles and panoramas</source>
+            <translation>Ô và toàn cảnh</translation>
+        </message>
+        <message>
+            <source>Hold a tile on the hub to resize, move or unpin it. Series pages have Pin to the hub.</source>
+            <translation>Nhấn giữ một ô trên hub để đổi cỡ, di chuyển hoặc bỏ ghim. Trang bộ truyện có Ghim vào hub.</translation>
+        </message>
+        <message>
+            <source>Hub title</source>
+            <translation>Tiêu đề hub</translation>
+        </message>
+        <message>
+            <source>The big word across the top of the hub.</source>
+            <translation>Chữ lớn trên đầu hub.</translation>
+        </message>
+        <message>
+            <source>Title colour</source>
+            <translation>Màu tiêu đề</translation>
+        </message>
+        <message>
+            <source>Accent blend</source>
+            <translation>Pha màu nhấn</translation>
+        </message>
+        <message>
+            <source>Plain</source>
+            <translation>Đơn giản</translation>
+        </message>
+        <message>
+            <source>Background</source>
+            <translation>Chạy nền</translation>
+        </message>
+        <message>
+            <source>Behind the hub, moving slower than the tiles.</source>
+            <translation>Phía sau hub, di chuyển chậm hơn các ô.</translation>
+        </message>
+        <message>
+            <source>Last read</source>
+            <translation>Đọc gần nhất</translation>
+        </message>
+        <message>
+            <source>Theme picture</source>
+            <translation>Ảnh chủ đề</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>Không có</translation>
+        </message>
+        <message>
+            <source>Headers</source>
+            <translation>Tiêu đề HTTP</translation>
+        </message>
+        <message>
+            <source>UPPERCASE</source>
+            <translation>CHỮ HOA</translation>
+        </message>
+        <message>
+            <source>lowercase</source>
+            <translation>chữ thường</translation>
+        </message>
+        <message>
+            <source>Live tiles</source>
+            <translation>Ô động</translation>
+        </message>
+        <message>
+            <source>Tiles turn over now and then to show new chapters and where you are.</source>
+            <translation>Thỉnh thoảng các ô lật lại để hiện chương mới và chỗ bạn đang đọc.</translation>
+        </message>
+        <message>
+            <source>Hub sections</source>
+            <translation>Các mục của hub</translation>
+        </message>
+        <message>
+            <source>Which sections the hub shows, in this order. Four or five are easiest to find your way in.</source>
+            <translation>Hub hiện những mục nào, theo thứ tự này. Bốn hoặc năm mục là dễ tìm nhất.</translation>
+        </message>
+        <message>
+            <source>Earlier</source>
+            <translation>Trước đó</translation>
+        </message>
+        <message>
+            <source>Later</source>
+            <translation>Để sau</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -3927,6 +4234,14 @@
         <message>
             <source>Anime player</source>
             <translation>Trình phát anime</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse</source>
+            <translation>Kính lúp dưới chuột</translation>
+        </message>
+        <message>
+            <source>Auto-scroll on or off</source>
+            <translation>Bật hoặc tắt tự cuộn</translation>
         </message>
     </context>
     <context>
@@ -4298,6 +4613,18 @@
         <message>
             <source>Undo</source>
             <translation>Hoàn tác</translation>
+        </message>
+        <message>
+            <source>Most unwatched</source>
+            <translation>Nhiều chưa xem nhất</translation>
+        </message>
+        <message>
+            <source>Most unread</source>
+            <translation>Nhiều chưa đọc nhất</translation>
+        </message>
+        <message>
+            <source>Hide until there is something new</source>
+            <translation>Ẩn cho đến khi có gì mới</translation>
         </message>
     </context>
     <context>
@@ -4674,6 +5001,287 @@
         <message>
             <source>Continue</source>
             <translation>Tiếp tục</translation>
+        </message>
+        <message>
+            <source>The host moved on to %1</source>
+            <translation>Chủ phòng đã chuyển sang %1</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Mở</translation>
+        </message>
+    </context>
+    <context>
+        <name>Metro</name>
+        <message>
+            <source>Explore</source>
+            <translation>Khám phá</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Gần đây</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Thư viện</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Truyện tranh</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>Đã ghim vào hub</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>Tiếp tục</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Kiểm tra chương mới</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>Tìm truyện tranh</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>Tìm tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Tìm anime</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Tìm kiếm mọi thứ</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Đang kiểm tra chương mới trong thư viện…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Mọi thứ đã được cập nhật</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>Chưa có gì để tiếp tục</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>tìm</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>làm mới</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>thông báo</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>cài đặt</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>lịch sử</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>tải xuống</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>hoạt động</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>tiện ích</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>tắt ẩn danh</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>ẩn danh</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>sắp xếp hub</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Quay lại</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (nhấn giữ để xem thêm)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>Đóng menu</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>Mở menu</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Đã tắt ẩn danh</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Ẩn danh</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>Tài khoản</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>Tập %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Chương %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 mới</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 mới</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>đọc truyện ngẫu nhiên</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>đọc tiếp</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>khám phá thể loại ngẫu nhiên</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>tìm</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>tải xuống</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>lịch sử</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>cài đặt</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>%1 nhìn lại của bạn</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>Chưa có gì để chọn</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Nhỏ</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Vừa</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>Rộng</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>Đưa lên trước</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>Đưa ra sau</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>Bỏ ghim</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Ghim vào hub</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>Những gì bạn đọc và xem sẽ hiện ở đây.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>Các bộ bạn lưu sẽ hiện ở đây.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>tất cả truyện tranh</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>sắp ra mắt</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>tiện ích</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Chương mới nhất</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>tất cả tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>tất cả anime</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>lịch</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>duyệt</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>Thịnh hành</translation>
         </message>
     </context>
     <context>
@@ -5267,6 +5875,94 @@
             <source>Keep the spoken paragraph on screen</source>
             <translation>Giữ đoạn đang đọc trên màn hình</translation>
         </message>
+        <message>
+            <source>Sleep timer: reading aloud stopped</source>
+            <translation>Hẹn giờ ngủ: đã dừng đọc to</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>Câu trước</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>Tạm dừng</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>Tiếp tục đọc to</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>Câu tiếp theo</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at %1</source>
+            <translation>Hẹn giờ ngủ: dừng lúc %1</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at the end of the chapter</source>
+            <translation>Hẹn giờ ngủ: dừng ở cuối chương</translation>
+        </message>
+        <message>
+            <source>Sleep timer</source>
+            <translation>Hẹn giờ ngủ</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Tắt</translation>
+        </message>
+        <message>
+            <source>In 15 minutes</source>
+            <translation>Sau 15 phút</translation>
+        </message>
+        <message>
+            <source>In 30 minutes</source>
+            <translation>Sau 30 phút</translation>
+        </message>
+        <message>
+            <source>In 45 minutes</source>
+            <translation>Sau 45 phút</translation>
+        </message>
+        <message>
+            <source>In an hour</source>
+            <translation>Sau một giờ</translation>
+        </message>
+        <message>
+            <source>At the end of the chapter</source>
+            <translation>Ở cuối chương</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Mở trong cửa sổ mới</translation>
+        </message>
+        <message>
+            <source>Pause reading aloud</source>
+            <translation>Tạm dừng đọc to</translation>
+        </message>
+        <message>
+            <source>Translating…</source>
+            <translation>Đang dịch…</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>Hiện bản gốc</translation>
+        </message>
+        <message>
+            <source>Translate the chapter</source>
+            <translation>Dịch chương</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>Tô sáng câu đang đọc</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs · %1 s</source>
+            <translation>Ngắt giữa các đoạn · %1 giây</translation>
+        </message>
+        <message>
+            <source>Pause between sentences · %1 s</source>
+            <translation>Ngắt giữa các câu · %1 giây</translation>
+        </message>
     </context>
     <context>
         <name>NovelsPage</name>
@@ -5665,6 +6361,18 @@
             <source>Your system shows them</source>
             <translation>Hệ thống của bạn hiển thị chúng</translation>
         </message>
+        <message>
+            <source>Layout</source>
+            <translation>Bố cục</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>Tiêu chuẩn</translation>
+        </message>
+        <message>
+            <source>Metro tiles</source>
+            <translation>Ô Metro</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5750,6 +6458,117 @@
         <message>
             <source>Remove</source>
             <translation>Gỡ</translation>
+        </message>
+    </context>
+    <context>
+        <name>PartyPanel</name>
+        <message>
+            <source>Watch together</source>
+            <translation>Xem cùng nhau</translation>
+        </message>
+        <message>
+            <source>Everyone watches from their own source; the host's player steers the others.</source>
+            <translation>Mọi người xem từ nguồn của mình; trình phát của chủ phòng điều khiển những người khác.</translation>
+        </message>
+        <message>
+            <source>You are the host: your player steers everyone's.</source>
+            <translation>Bạn là chủ phòng: trình phát của bạn điều khiển của mọi người.</translation>
+        </message>
+        <message>
+            <source>Playing along with %1</source>
+            <translation>Đang xem cùng %1</translation>
+        </message>
+        <message>
+            <source>Waiting for the host…</source>
+            <translation>Đang chờ chủ phòng…</translation>
+        </message>
+        <message>
+            <source>Joining…</source>
+            <translation>Đang tham gia…</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Sign in to scancore.onl (Settings → Account) to watch together.</source>
+            <translation>Đăng nhập scancore.onl (Cài đặt → Tài khoản) để xem chung.</translation>
+        </message>
+        <message>
+            <source>Starting…</source>
+            <translation>Đang bắt đầu…</translation>
+        </message>
+        <message>
+            <source>Start a watch party</source>
+            <translation>Bắt đầu nhóm xem chung</translation>
+        </message>
+        <message>
+            <source>Or join one</source>
+            <translation>Hoặc tham gia một nhóm</translation>
+        </message>
+        <message>
+            <source>Join a watch party</source>
+            <translation>Tham gia nhóm xem chung</translation>
+        </message>
+        <message>
+            <source>Party code</source>
+            <translation>Mã nhóm</translation>
+        </message>
+        <message>
+            <source>Join</source>
+            <translation>Tham gia</translation>
+        </message>
+        <message>
+            <source>Copy the code</source>
+            <translation>Sao chép mã</translation>
+        </message>
+        <message>
+            <source>Code copied</source>
+            <translation>Đã sao chép mã</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Chia sẻ</translation>
+        </message>
+        <message>
+            <source>Watch %1 with me in SCANCORE: join the party with the code %2</source>
+            <translation>Xem %1 cùng mình trên SCANCORE: vào nhóm bằng mã %2</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>Nhóm xem chung</translation>
+        </message>
+        <message>
+            <source>The host is watching %1, episode %2</source>
+            <translation>Chủ phòng đang xem %1, tập %2</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Mở</translation>
+        </message>
+        <message>
+            <source>host</source>
+            <translation>chủ phòng</translation>
+        </message>
+        <message>
+            <source>Say hello: everyone in the party sees it.</source>
+            <translation>Chào một câu: mọi người trong nhóm đều thấy.</translation>
+        </message>
+        <message>
+            <source>Message</source>
+            <translation>Tin nhắn</translation>
+        </message>
+        <message>
+            <source>Send</source>
+            <translation>Gửi</translation>
+        </message>
+        <message>
+            <source>End the party</source>
+            <translation>Kết thúc nhóm</translation>
+        </message>
+        <message>
+            <source>Leave the party</source>
+            <translation>Rời nhóm</translation>
         </message>
     </context>
     <context>
@@ -5934,6 +6753,144 @@
         <message>
             <source>None</source>
             <translation>Không có</translation>
+        </message>
+    </context>
+    <context>
+        <name>QObject</name>
+        <message>
+            <source>Android could not read the page: %1</source>
+            <translation>Android không đọc được trang: %1</translation>
+        </message>
+        <message>
+            <source>This device has no text recogniser.</source>
+            <translation>Thiết bị này không có nhận dạng chữ.</translation>
+        </message>
+        <message>
+            <source>Android's translator needs to know the language: pick it in the reader.</source>
+            <translation>Trình dịch của Android cần biết ngôn ngữ: chọn trong trình đọc.</translation>
+        </message>
+        <message>
+            <source>Android could not translate: %1</source>
+            <translation>Android không dịch được: %1</translation>
+        </message>
+        <message>
+            <source>This device has no translator of its own.</source>
+            <translation>Thiết bị này không có trình dịch riêng.</translation>
+        </message>
+        <message>
+            <source>Pick a way to translate in Settings → Reading → Translate.</source>
+            <translation>Chọn cách dịch trong Cài đặt → Đọc → Dịch.</translation>
+        </message>
+        <message>
+            <source>The page's picture could not be read.</source>
+            <translation>Không đọc được ảnh của trang.</translation>
+        </message>
+        <message>
+            <source>%1 refused the key. Check it in Settings → Reading → Translate.</source>
+            <translation>%1 từ chối khóa. Kiểm tra trong Cài đặt → Đọc → Dịch.</translation>
+        </message>
+        <message>
+            <source>%1 says the key's quota is used up for now.</source>
+            <translation>%1 cho biết hạn mức của khóa tạm thời đã hết.</translation>
+        </message>
+        <message>
+            <source>%1 could not be reached.</source>
+            <translation>Không kết nối được với %1.</translation>
+        </message>
+        <message>
+            <source>%1 answered with an error (%2).</source>
+            <translation>%1 trả về lỗi (%2).</translation>
+        </message>
+        <message>
+            <source>DeepL needs your key (Settings → Reading → Translate).</source>
+            <translation>DeepL cần khóa của bạn (Cài đặt → Đọc → Dịch).</translation>
+        </message>
+        <message>
+            <source>DeepL answered with something else than the texts.</source>
+            <translation>DeepL trả về thứ khác ngoài các đoạn văn bản.</translation>
+        </message>
+        <message>
+            <source>Google Translate needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google Dịch cần khóa API của bạn (Cài đặt → Đọc → Dịch).</translation>
+        </message>
+        <message>
+            <source>Google Translate answered with something else than the texts.</source>
+            <translation>Google Dịch trả về thứ khác ngoài các đoạn văn bản.</translation>
+        </message>
+        <message>
+            <source>Set the service's address and model in Settings → Reading → Translate.</source>
+            <translation>Đặt địa chỉ và mô hình của dịch vụ trong Cài đặt → Đọc → Dịch.</translation>
+        </message>
+        <message>
+            <source>The model did not answer with one translation per text. Try another model.</source>
+            <translation>Mô hình không trả về mỗi văn bản một bản dịch. Hãy thử mô hình khác.</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google Cloud Vision cần khóa API của bạn (Cài đặt → Đọc → Dịch).</translation>
+        </message>
+        <message>
+            <source>MangaSin changed its series page: no chapter list found.</source>
+            <translation>MangaSin đã đổi trang bộ truyện: không tìm thấy danh sách chương.</translation>
+        </message>
+        <message>
+            <source>MangaSin's chapter list could not be opened (its key changed).</source>
+            <translation>Không mở được danh sách chương của MangaSin (khóa của nó đã đổi).</translation>
+        </message>
+        <message>
+            <source>%1 refused the login. Check it in Settings → Sources → Your servers.</source>
+            <translation>%1 từ chối đăng nhập. Kiểm tra trong Cài đặt → Nguồn → Máy chủ của bạn.</translation>
+        </message>
+        <message>
+            <source>This server is no longer in Settings → Sources → Your servers.</source>
+            <translation>Máy chủ này không còn trong Cài đặt → Nguồn → Máy chủ của bạn.</translation>
+        </message>
+        <message>
+            <source>The server did not give the image (%1).</source>
+            <translation>Máy chủ không trả ảnh (%1).</translation>
+        </message>
+        <message>
+            <source>The image could not be saved.</source>
+            <translation>Không lưu được ảnh.</translation>
+        </message>
+    </context>
+    <context>
+        <name>ReadAloudBar</name>
+        <message>
+            <source>Reading aloud: %1</source>
+            <translation>Đang đọc to: %1</translation>
+        </message>
+        <message>
+            <source>Loading the chapter…</source>
+            <translation>Đang tải chương…</translation>
+        </message>
+        <message>
+            <source>stops at %1</source>
+            <translation>dừng lúc %1</translation>
+        </message>
+        <message>
+            <source>stops after this chapter</source>
+            <translation>dừng sau chương này</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>Câu trước</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>Tạm dừng</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>Tiếp tục đọc to</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>Câu tiếp theo</translation>
+        </message>
+        <message>
+            <source>Stop reading aloud</source>
+            <translation>Dừng đọc to</translation>
         </message>
     </context>
     <context>
@@ -6477,6 +7434,122 @@
             <source>Colours</source>
             <translation>Màu</translation>
         </message>
+        <message>
+            <source>Full screen while reading</source>
+            <translation>Toàn màn hình khi đọc</translation>
+        </message>
+        <message>
+            <source>The status and navigation bars hide with the reader's controls, so pages fill the screen, beside a punch hole too. Swipe from the edge to see them.</source>
+            <translation>Thanh trạng thái và thanh điều hướng ẩn cùng các nút của trình đọc, để trang lấp đầy màn hình, cả cạnh lỗ camera. Vuốt từ mép để xem chúng.</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>Đọc liền sang chương sau</translation>
+        </message>
+        <message>
+            <source>The next chapter joins the strip as you near the end, so reading never stops for a button.</source>
+            <translation>Chương sau được nối vào dải khi bạn gần đến cuối, nên việc đọc không bao giờ dừng vì một nút bấm.</translation>
+        </message>
+        <message>
+            <source>Translate</source>
+            <translation>Dịch</translation>
+        </message>
+        <message>
+            <source>Comic readers have Translate the pages in their top bar. Keys stay on this device and are only sent to their own service.</source>
+            <translation>Trình đọc truyện tranh có Dịch các trang ở thanh trên cùng. Khóa nằm trên thiết bị này và chỉ gửi đến dịch vụ của nó.</translation>
+        </message>
+        <message>
+            <source>Translate into</source>
+            <translation>Dịch sang</translation>
+        </message>
+        <message>
+            <source>Read the page's text with</source>
+            <translation>Đọc chữ trên trang bằng</translation>
+        </message>
+        <message>
+            <source>Finds the text in a comic's pages.</source>
+            <translation>Tìm chữ trên các trang truyện tranh.</translation>
+        </message>
+        <message>
+            <source>Translate with</source>
+            <translation>Dịch bằng</translation>
+        </message>
+        <message>
+            <source>DeepL key</source>
+            <translation>Khóa DeepL</translation>
+        </message>
+        <message>
+            <source>From your DeepL account (free keys end in :fx).</source>
+            <translation>Từ tài khoản DeepL của bạn (khóa miễn phí kết thúc bằng :fx).</translation>
+        </message>
+        <message>
+            <source>Not set</source>
+            <translation>Chưa đặt</translation>
+        </message>
+        <message>
+            <source>Google Cloud key</source>
+            <translation>Khóa Google Cloud</translation>
+        </message>
+        <message>
+            <source>An API key with Cloud Translation and Cloud Vision turned on.</source>
+            <translation>Khóa API đã bật Cloud Translation và Cloud Vision.</translation>
+        </message>
+        <message>
+            <source>Language model</source>
+            <translation>Mô hình ngôn ngữ</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service: its address up to /v1 (a local Ollama is http://localhost:11434/v1), a model and a key if it needs one.</source>
+            <translation>Bất kỳ dịch vụ nào tương thích OpenAI: địa chỉ đến /v1 (Ollama cục bộ là http://localhost:11434/v1), một mô hình và khóa nếu cần.</translation>
+        </message>
+        <message>
+            <source>Model, e.g. gpt-4o-mini</source>
+            <translation>Mô hình, ví dụ gpt-4o-mini</translation>
+        </message>
+        <message>
+            <source>Key (if it needs one)</source>
+            <translation>Khóa (nếu cần)</translation>
+        </message>
+        <message>
+            <source>Forget translations</source>
+            <translation>Quên bản dịch</translation>
+        </message>
+        <message>
+            <source>Pages and chapters are translated again the next time.</source>
+            <translation>Trang và chương sẽ được dịch lại vào lần sau.</translation>
+        </message>
+        <message>
+            <source>Forget</source>
+            <translation>Quên</translation>
+        </message>
+        <message>
+            <source>Translations forgotten</source>
+            <translation>Đã quên bản dịch</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>Tô sáng câu đang đọc</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs</source>
+            <translation>Ngắt giữa các đoạn</translation>
+        </message>
+        <message>
+            <source>Pause between sentences</source>
+            <translation>Ngắt giữa các câu</translation>
+        </message>
+        <message>
+            <source>Voice for a language</source>
+            <translation>Giọng cho một ngôn ngữ</translation>
+        </message>
+        <message>
+            <source>Books in this language are read with this voice.</source>
+            <translation>Sách bằng ngôn ngữ này được đọc bằng giọng này.</translation>
+        </message>
+        <message>
+            <source>The voice above</source>
+            <translation>Giọng ở trên</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6679,6 +7752,113 @@
         <message>
             <source>Another app</source>
             <translation>Ứng dụng khác</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Comics</name>
+        <message>
+            <source>That server is not saved.</source>
+            <translation>Máy chủ đó chưa được lưu.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Downloads</name>
+        <message>
+            <source>No chapters of this novel are downloaded. Download some first.</source>
+            <translation>Chưa tải chương nào của tiểu thuyết này. Hãy tải vài chương trước.</translation>
+        </message>
+        <message>
+            <source>The book could not be saved in %1.</source>
+            <translation>Không lưu được sách vào %1.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::MediaControls</name>
+        <message>
+            <source>Reading aloud</source>
+            <translation>Đọc to</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Party</name>
+        <message>
+            <source>The party could not be reached (%1).</source>
+            <translation>Không kết nối được với nhóm (%1).</translation>
+        </message>
+        <message>
+            <source>Watch parties need scancore.onl (this site has none yet).</source>
+            <translation>Nhóm xem chung cần scancore.onl (trang này chưa có).</translation>
+        </message>
+        <message>
+            <source>The party could not be opened.</source>
+            <translation>Không mở được nhóm.</translation>
+        </message>
+        <message>
+            <source>A party code has six letters and numbers.</source>
+            <translation>Mã nhóm gồm sáu chữ cái và chữ số.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>Nhóm đã kết thúc.</translation>
+        </message>
+        <message>
+            <source>No party with that code.</source>
+            <translation>Không có nhóm nào với mã đó.</translation>
+        </message>
+        <message>
+            <source>The host ended the party.</source>
+            <translation>Chủ phòng đã kết thúc nhóm.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Translator</name>
+        <message>
+            <source>To translate pages on a computer, add a Google Cloud key in Settings → Reading → Translate (Vision reads the page's text).</source>
+            <translation>Để dịch trang trên máy tính, thêm khóa Google Cloud trong Cài đặt → Đọc → Dịch (Vision đọc chữ trên trang).</translation>
+        </message>
+        <message>
+            <source>Add a DeepL or Google key, or a model's address, in Settings → Reading → Translate.</source>
+            <translation>Thêm khóa DeepL hoặc Google, hoặc địa chỉ của một mô hình, trong Cài đặt → Đọc → Dịch.</translation>
+        </message>
+        <message>
+            <source>Automatic</source>
+            <translation>Tự động</translation>
+        </message>
+        <message>
+            <source>This phone</source>
+            <translation>Điện thoại này</translation>
+        </message>
+        <message>
+            <source>On the phone, with Google Play services</source>
+            <translation>Trên điện thoại, với dịch vụ Google Play</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision</source>
+            <translation>Google Cloud Vision</translation>
+        </message>
+        <message>
+            <source>Your Google Cloud key</source>
+            <translation>Khóa Google Cloud của bạn</translation>
+        </message>
+        <message>
+            <source>On the phone; a model per language</source>
+            <translation>Trên điện thoại; mỗi ngôn ngữ một mô hình</translation>
+        </message>
+        <message>
+            <source>Your DeepL key</source>
+            <translation>Khóa DeepL của bạn</translation>
+        </message>
+        <message>
+            <source>Google Translate</source>
+            <translation>Google Dịch</translation>
+        </message>
+        <message>
+            <source>A language model</source>
+            <translation>Một mô hình ngôn ngữ</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service, or one on your computer</source>
+            <translation>Bất kỳ dịch vụ nào tương thích OpenAI, hoặc một dịch vụ trên máy tính của bạn</translation>
         </message>
     </context>
     <context>
@@ -6950,6 +8130,121 @@
         <message>
             <source>Show as a grid</source>
             <translation>Xem dạng lưới</translation>
+        </message>
+        <message>
+            <source>Saved %1 chapters as %2</source>
+            <translation>Đã lưu %1 chương thành %2</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>Hiện</translation>
+        </message>
+        <message>
+            <source>Save the %1 downloaded chapters</source>
+            <translation>Lưu %1 chương đã tải</translation>
+        </message>
+        <message>
+            <source>Download all %1 chapters, then save</source>
+            <translation>Tải tất cả %1 chương rồi lưu</translation>
+        </message>
+        <message>
+            <source>Stop waiting for the downloads</source>
+            <translation>Thôi chờ các bản tải</translation>
+        </message>
+        <message>
+            <source>No chapter downloaded, so there is no EPUB to save.</source>
+            <translation>Chưa tải chương nào nên không có EPUB để lưu.</translation>
+        </message>
+        <message>
+            <source>Read in a new window</source>
+            <translation>Đọc trong cửa sổ mới</translation>
+        </message>
+        <message>
+            <source>Listen</source>
+            <translation>Nghe</translation>
+        </message>
+        <message>
+            <source>Downloading for the EPUB…</source>
+            <translation>Đang tải để làm EPUB…</translation>
+        </message>
+        <message>
+            <source>Save as EPUB</source>
+            <translation>Lưu thành EPUB</translation>
+        </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>Bỏ ghim khỏi hub</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Ghim vào hub</translation>
+        </message>
+    </context>
+    <context>
+        <name>ServerDialog</name>
+        <message>
+            <source>Trying it…</source>
+            <translation>Đang thử…</translation>
+        </message>
+        <message>
+            <source>Connected: 1 series found.</source>
+            <translation>Đã kết nối: tìm thấy 1 bộ.</translation>
+        </message>
+        <message>
+            <source>Connected: %1 series found.</source>
+            <translation>Đã kết nối: tìm thấy %1 bộ.</translation>
+        </message>
+        <message>
+            <source>Your server</source>
+            <translation>Máy chủ của bạn</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>Thêm máy chủ của bạn</translation>
+        </message>
+        <message>
+            <source>Read the comics on your own Komga, Kavita or Suwayomi server. The login stays on this device.</source>
+            <translation>Đọc truyện trên máy chủ Komga, Kavita hoặc Suwayomi của riêng bạn. Thông tin đăng nhập nằm trên thiết bị này.</translation>
+        </message>
+        <message>
+            <source>Name (optional)</source>
+            <translation>Tên (tùy chọn)</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>Email</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Tên người dùng</translation>
+        </message>
+        <message>
+            <source> (if it asks for one)</source>
+            <translation> (nếu được hỏi)</translation>
+        </message>
+        <message>
+            <source>Password (saved; type to change)</source>
+            <translation>Mật khẩu (đã lưu; gõ để đổi)</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Mật khẩu</translation>
+        </message>
+        <message>
+            <source>API key (saved; type to change)</source>
+            <translation>Khóa API (đã lưu; gõ để đổi)</translation>
+        </message>
+        <message>
+            <source>Or an API key, instead of the login</source>
+            <translation>Hoặc khóa API thay cho đăng nhập</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Save and try</source>
+            <translation>Lưu và thử</translation>
         </message>
     </context>
     <context>
@@ -7249,6 +8544,10 @@
         <message>
             <source> · Medium Dev</source>
             <translation> · Medium Dev</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
         </message>
     </context>
     <context>
@@ -7726,6 +9025,34 @@
         <message>
             <source>Mihon's downloads · </source>
             <translation>Bản tải của Mihon · </translation>
+        </message>
+        <message>
+            <source>Your servers</source>
+            <translation>Máy chủ của bạn</translation>
+        </message>
+        <message>
+            <source>Komga, Kavita and Suwayomi servers you run: their comics are a source like the others, searched with them and saved to the library.</source>
+            <translation>Máy chủ Komga, Kavita và Suwayomi bạn tự chạy: truyện của chúng là một nguồn như các nguồn khác, được tìm cùng và lưu vào thư viện.</translation>
+        </message>
+        <message>
+            <source>Change</source>
+            <translation>Đổi</translation>
+        </message>
+        <message>
+            <source>Open in the browser</source>
+            <translation>Mở trong trình duyệt</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>Thêm máy chủ của bạn</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Chẩn đoán</translation>
+        </message>
+        <message>
+            <source>Whether the extensions runtime answers, a quick test of a source, and the sites each extension contacted.</source>
+            <translation>Môi trường tiện ích có trả lời không, thử nhanh một nguồn và các trang web mà mỗi tiện ích đã liên hệ.</translation>
         </message>
     </context>
     <context>
@@ -8408,6 +9735,22 @@
             <source>Saved </source>
             <translation>Đã lưu </translation>
         </message>
+        <message>
+            <source>Metro colours</source>
+            <translation>Màu Metro</translation>
+        </message>
+        <message>
+            <source>The accent colours of Windows Phone, or any colour from the wheel. Tiles, the hub title and switches take it.</source>
+            <translation>Các màu nhấn của Windows Phone, hoặc bất kỳ màu nào từ vòng màu. Ô, tiêu đề hub và công tắc dùng màu này.</translation>
+        </message>
+        <message>
+            <source>Custom colour</source>
+            <translation>Màu tùy chọn</translation>
+        </message>
+        <message>
+            <source>Tile colour</source>
+            <translation>Màu ô</translation>
+        </message>
     </context>
     <context>
         <name>TrackerConnect</name>
@@ -8604,6 +9947,13 @@
         <message>
             <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
             <translation>Kết nối một trình theo dõi như AniList, MyAnimeList hoặc Kitsu trong Cài đặt → Kết nối để danh sách của bạn ở đó luôn cập nhật.</translation>
+        </message>
+    </context>
+    <context>
+        <name>TranslationLayer</name>
+        <message>
+            <source>Translating…</source>
+            <translation>Đang dịch…</translation>
         </message>
     </context>
     <context>
@@ -9027,6 +10377,34 @@
         <message>
             <source>Close player</source>
             <translation>Đóng trình phát</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>Có sẵn</translation>
+        </message>
+        <message>
+            <source>More…</source>
+            <translation>Thêm…</translation>
+        </message>
+        <message>
+            <source>Keep SCANCORE open while it plays there: the video comes through it.</source>
+            <translation>Giữ SCANCORE mở khi đang phát ở đó: video đi qua nó.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>Nhóm đã kết thúc.</translation>
+        </message>
+        <message>
+            <source>Watch party (%1)</source>
+            <translation>Nhóm xem chung (%1)</translation>
+        </message>
+        <message>
+            <source>Watch together</source>
+            <translation>Xem cùng nhau</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Mở trong cửa sổ mới</translation>
         </message>
     </context>
     <context>

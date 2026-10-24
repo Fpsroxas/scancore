@@ -1032,6 +1032,14 @@
             <source>You might also like</source>
             <translation>คุณอาจชอบ</translation>
         </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>เลิกปักหมุดจากฮับ</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>ปักหมุดไว้บนฮับ</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1138,6 +1146,14 @@
         <message>
             <source>All %1</source>
             <translation>ทั้งหมด %1</translation>
+        </message>
+        <message>
+            <source>Party %1</source>
+            <translation>ปาร์ตี้ %1</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>ปาร์ตี้ดูด้วยกัน</translation>
         </message>
     </context>
     <context>
@@ -1888,6 +1904,74 @@
         <message>
             <source>Bottom</source>
             <translation>ล่าง</translation>
+        </message>
+        <message>
+            <source>Finished: </source>
+            <translation>อ่านจบ: </translation>
+        </message>
+        <message>
+            <source>Next: </source>
+            <translation>ถัดไป: </translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>เปิดในหน้าต่างใหม่</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>แสดงต้นฉบับ</translation>
+        </message>
+        <message>
+            <source>Translate the pages</source>
+            <translation>แปลหน้า</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse (L)</source>
+            <translation>แว่นขยายใต้เมาส์ (L)</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>อ่านต่อไปตอนถัดไป</translation>
+        </message>
+        <message>
+            <source>Auto-scroll</source>
+            <translation>เลื่อนอัตโนมัติ</translation>
+        </message>
+        <message>
+            <source>Turn the pages by themselves</source>
+            <translation>พลิกหน้าเอง</translation>
+        </message>
+        <message>
+            <source>Auto-scroll speed · %1</source>
+            <translation>ความเร็วเลื่อนอัตโนมัติ · %1</translation>
+        </message>
+        <message>
+            <source>A page every %1 s</source>
+            <translation>หน้าละ %1 วินาที</translation>
+        </message>
+        <message>
+            <source>Sharpen small scans</source>
+            <translation>ทำสแกนเล็กให้คมขึ้น</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>บาง</translation>
+        </message>
+        <message>
+            <source>Strong</source>
+            <translation>แรง</translation>
+        </message>
+        <message>
+            <source>Slower</source>
+            <translation>ช้าลง</translation>
+        </message>
+        <message>
+            <source>Faster</source>
+            <translation>เร็วขึ้น</translation>
+        </message>
+        <message>
+            <source>Pause auto-scroll</source>
+            <translation>หยุดเลื่อนอัตโนมัติชั่วคราว</translation>
         </message>
     </context>
     <context>
@@ -2899,6 +2983,121 @@
         </message>
     </context>
     <context>
+        <name>ExtensionsDiagnostics</name>
+        <message>
+            <source>Answered in %1 s with %2 titles.</source>
+            <translation>ตอบใน %1 วินาที พร้อม %2 เรื่อง</translation>
+        </message>
+        <message>
+            <source>Failed after %1 s: %2</source>
+            <translation>ล้มเหลวหลัง %1 วินาที: %2</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>การวินิจฉัย</translation>
+        </message>
+        <message>
+            <source>For when an extension misbehaves</source>
+            <translation>สำหรับเมื่อส่วนขยายมีปัญหา</translation>
+        </message>
+        <message>
+            <source>Copy report</source>
+            <translation>คัดลอกรายงาน</translation>
+        </message>
+        <message>
+            <source>The report is copied. Paste it into an issue or a message.</source>
+            <translation>คัดลอกรายงานแล้ว วางลงใน issue หรือข้อความ</translation>
+        </message>
+        <message>
+            <source>Refresh</source>
+            <translation>รีเฟรช</translation>
+        </message>
+        <message>
+            <source>Runtime</source>
+            <translation>รันไทม์</translation>
+        </message>
+        <message>
+            <source>Extensions runtime installed</source>
+            <translation>ติดตั้ง Extensions runtime แล้ว</translation>
+        </message>
+        <message>
+            <source>Extensions runtime not installed</source>
+            <translation>ยังไม่ได้ติดตั้งรันไทม์ส่วนขยาย</translation>
+        </message>
+        <message>
+            <source>No runtime for this system</source>
+            <translation>ไม่มีรันไทม์สำหรับระบบนี้</translation>
+        </message>
+        <message>
+            <source>Asking the host…</source>
+            <translation>กำลังถามโฮสต์…</translation>
+        </message>
+        <message>
+            <source>Host %1 answered in %2 ms</source>
+            <translation>รันไทม์ %1 ตอบใน %2 มิลลิวินาที</translation>
+        </message>
+        <message>
+            <source>Extension libraries it takes</source>
+            <translation>ไลบรารีส่วนขยายที่รองรับ</translation>
+        </message>
+        <message>
+            <source>Mihon %1 · Aniyomi %2</source>
+            <translation>Mihon %1 · Aniyomi %2</translation>
+        </message>
+        <message>
+            <source>This device</source>
+            <translation>อุปกรณ์นี้</translation>
+        </message>
+        <message>
+            <source>Test a source</source>
+            <translation>ทดสอบแหล่ง</translation>
+        </message>
+        <message>
+            <source>Loads the source's popular titles once and times it.</source>
+            <translation>โหลดเรื่องยอดนิยมของแหล่งหนึ่งครั้งและจับเวลา</translation>
+        </message>
+        <message>
+            <source>Source</source>
+            <translation>แหล่ง</translation>
+        </message>
+        <message>
+            <source>Testing…</source>
+            <translation>กำลังทดสอบ…</translation>
+        </message>
+        <message>
+            <source>Test</source>
+            <translation>ทดสอบ</translation>
+        </message>
+        <message>
+            <source>Sites the extensions contacted</source>
+            <translation>เว็บไซต์ที่ส่วนขยายติดต่อ</translation>
+        </message>
+        <message>
+            <source>This session only, counted in the extensions runtime. Nothing but the sites' names is kept.</source>
+            <translation>เฉพาะเซสชันนี้ นับในรันไทม์ส่วนขยาย เก็บไว้เพียงชื่อเว็บไซต์</translation>
+        </message>
+        <message>
+            <source>Nothing yet</source>
+            <translation>ยังไม่มี</translation>
+        </message>
+        <message>
+            <source>Browse or read with an extension and come back.</source>
+            <translation>เรียกดูหรืออ่านด้วยส่วนขยายแล้วกลับมา</translation>
+        </message>
+        <message>
+            <source>%1 · %2 requests, %3</source>
+            <translation>%1 · %2 คำขอ, %3</translation>
+        </message>
+        <message>
+            <source>Host log</source>
+            <translation>บันทึกของรันไทม์</translation>
+        </message>
+        <message>
+            <source>The end of extensions/host.log.</source>
+            <translation>ส่วนท้ายของ extensions/host.log</translation>
+        </message>
+    </context>
+    <context>
         <name>ExtensionsPage</name>
         <message>
             <source>All languages</source>
@@ -3179,6 +3378,10 @@
         <message>
             <source>Its extensions</source>
             <translation>ส่วนขยายของคลังนี้</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>การวินิจฉัย</translation>
         </message>
     </context>
     <context>
@@ -3711,6 +3914,110 @@
             <source>Long</source>
             <translation>ยาว</translation>
         </message>
+        <message>
+            <source>Look</source>
+            <translation>รูปลักษณ์</translation>
+        </message>
+        <message>
+            <source>Metro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Metro: ฮับแบบพาโนรามาที่มีไทล์ ตัวอักษรใหญ่ และแถบแอป ในแบบ Windows Phone</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>มาตรฐาน</translation>
+        </message>
+        <message>
+            <source>Pages and navigation</source>
+            <translation>หน้าและการนำทาง</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Tiles and panoramas</source>
+            <translation>ไทล์และพาโนรามา</translation>
+        </message>
+        <message>
+            <source>Hold a tile on the hub to resize, move or unpin it. Series pages have Pin to the hub.</source>
+            <translation>กดไทล์บนฮับค้างไว้เพื่อปรับขนาด ย้าย หรือเลิกปักหมุด หน้าเรื่องมี ปักหมุดไว้บนฮับ</translation>
+        </message>
+        <message>
+            <source>Hub title</source>
+            <translation>ชื่อฮับ</translation>
+        </message>
+        <message>
+            <source>The big word across the top of the hub.</source>
+            <translation>คำใหญ่ด้านบนของฮับ</translation>
+        </message>
+        <message>
+            <source>Title colour</source>
+            <translation>สีชื่อ</translation>
+        </message>
+        <message>
+            <source>Accent blend</source>
+            <translation>การผสมสีเน้น</translation>
+        </message>
+        <message>
+            <source>Plain</source>
+            <translation>เรียบ</translation>
+        </message>
+        <message>
+            <source>Background</source>
+            <translation>เบื้องหลัง</translation>
+        </message>
+        <message>
+            <source>Behind the hub, moving slower than the tiles.</source>
+            <translation>อยู่หลังฮับ เคลื่อนช้ากว่าไทล์</translation>
+        </message>
+        <message>
+            <source>Last read</source>
+            <translation>อ่านล่าสุด</translation>
+        </message>
+        <message>
+            <source>Theme picture</source>
+            <translation>ภาพธีม</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>ไม่มี</translation>
+        </message>
+        <message>
+            <source>Headers</source>
+            <translation>ส่วนหัว</translation>
+        </message>
+        <message>
+            <source>UPPERCASE</source>
+            <translation>ตัวพิมพ์ใหญ่</translation>
+        </message>
+        <message>
+            <source>lowercase</source>
+            <translation>ตัวพิมพ์เล็ก</translation>
+        </message>
+        <message>
+            <source>Live tiles</source>
+            <translation>ไทล์เคลื่อนไหว</translation>
+        </message>
+        <message>
+            <source>Tiles turn over now and then to show new chapters and where you are.</source>
+            <translation>ไทล์จะพลิกเป็นครั้งคราวเพื่อแสดงตอนใหม่และตำแหน่งที่คุณอ่านอยู่</translation>
+        </message>
+        <message>
+            <source>Hub sections</source>
+            <translation>ส่วนต่างๆ ของฮับ</translation>
+        </message>
+        <message>
+            <source>Which sections the hub shows, in this order. Four or five are easiest to find your way in.</source>
+            <translation>ฮับแสดงส่วนไหนบ้าง ตามลำดับนี้ สี่หรือห้าส่วนหาง่ายที่สุด</translation>
+        </message>
+        <message>
+            <source>Earlier</source>
+            <translation>ก่อนหน้านี้</translation>
+        </message>
+        <message>
+            <source>Later</source>
+            <translation>ภายหลัง</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -3919,6 +4226,14 @@
         <message>
             <source>Anime player</source>
             <translation>เครื่องเล่นอนิเมะ</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse</source>
+            <translation>แว่นขยายใต้เมาส์</translation>
+        </message>
+        <message>
+            <source>Auto-scroll on or off</source>
+            <translation>เปิดหรือปิดการเลื่อนอัตโนมัติ</translation>
         </message>
     </context>
     <context>
@@ -4290,6 +4605,18 @@
         <message>
             <source>Undo</source>
             <translation>เลิกทำ</translation>
+        </message>
+        <message>
+            <source>Most unwatched</source>
+            <translation>ยังไม่ดูมากที่สุด</translation>
+        </message>
+        <message>
+            <source>Most unread</source>
+            <translation>ยังไม่อ่านมากที่สุด</translation>
+        </message>
+        <message>
+            <source>Hide until there is something new</source>
+            <translation>ซ่อนจนกว่าจะมีอะไรใหม่</translation>
         </message>
     </context>
     <context>
@@ -4666,6 +4993,287 @@
         <message>
             <source>Allow</source>
             <translation>อนุญาต</translation>
+        </message>
+        <message>
+            <source>The host moved on to %1</source>
+            <translation>โฮสต์ไปดู %1 แล้ว</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>เปิด</translation>
+        </message>
+    </context>
+    <context>
+        <name>Metro</name>
+        <message>
+            <source>Explore</source>
+            <translation>สำรวจ</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>ล่าสุด</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>คลัง</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>การ์ตูน</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>นิยาย</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>อนิเมะ</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>ปักหมุดไว้บนฮับแล้ว</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>ดำเนินการต่อ</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>ตรวจหาตอนใหม่</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>ค้นหาการ์ตูน</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>ค้นหานิยาย</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>ค้นหาอนิเมะ</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>ค้นหาทุกอย่าง</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>กำลังตรวจหาตอนใหม่ในคลังของคุณ…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>ทุกอย่างเป็นปัจจุบันแล้ว</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>ยังไม่มีอะไรให้อ่านต่อ</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>ค้นหา</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>รีเฟรช</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>การแจ้งเตือน</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>การตั้งค่า</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>ประวัติ</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>ดาวน์โหลด</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>กิจกรรม</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>ส่วนขยาย</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>ปิดโหมดไม่ระบุตัวตน</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>โหมดไม่ระบุตัวตน</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>จัดฮับ</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>ย้อนกลับ</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (กดค้างเพื่อดูเพิ่ม)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>ปิดเมนู</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>เปิดเมนู</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>ปิดไม่ระบุตัวตน</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>ไม่ระบุตัวตน</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>บัญชี</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>ตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>ตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>ใหม่ 1</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>ใหม่ %1</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>อ่านการ์ตูนสุ่ม</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>อ่านต่อ</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>สำรวจแนวสุ่ม</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>ค้นหา</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>ดาวน์โหลด</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>ประวัติ</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>การตั้งค่า</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>%1 ของคุณ</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>ยังไม่มีอะไรให้เลือก</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>เล็ก</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>กลาง</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>กว้าง</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>ย้ายไปก่อน</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>ย้ายไปหลัง</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>เลิกปักหมุด</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>ปักหมุดไว้บนฮับ</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>สิ่งที่คุณอ่านและดูจะแสดงที่นี่</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>เรื่องที่คุณบันทึกจะแสดงที่นี่</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>การ์ตูนทั้งหมด</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>เร็วๆ นี้</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>ส่วนขยาย</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>ตอนล่าสุด</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>นิยายทั้งหมด</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>นิยาย</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>อนิเมะทั้งหมด</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>ตารางฉาย</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>เรียกดู</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>กำลังมาแรง</translation>
         </message>
     </context>
     <context>
@@ -5259,6 +5867,94 @@
             <source>Keep the spoken paragraph on screen</source>
             <translation>ให้ย่อหน้าที่กำลังอ่านอยู่บนหน้าจอ</translation>
         </message>
+        <message>
+            <source>Sleep timer: reading aloud stopped</source>
+            <translation>ตั้งเวลาปิด: หยุดอ่านออกเสียงแล้ว</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>ประโยคก่อนหน้า</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>หยุดชั่วคราว</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>อ่านออกเสียงต่อ</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>ประโยคถัดไป</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at %1</source>
+            <translation>ตั้งเวลาปิด: หยุดตอน %1</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at the end of the chapter</source>
+            <translation>ตั้งเวลาปิด: หยุดเมื่อจบตอน</translation>
+        </message>
+        <message>
+            <source>Sleep timer</source>
+            <translation>ตั้งเวลาปิด</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>In 15 minutes</source>
+            <translation>อีก 15 นาที</translation>
+        </message>
+        <message>
+            <source>In 30 minutes</source>
+            <translation>อีก 30 นาที</translation>
+        </message>
+        <message>
+            <source>In 45 minutes</source>
+            <translation>อีก 45 นาที</translation>
+        </message>
+        <message>
+            <source>In an hour</source>
+            <translation>อีกหนึ่งชั่วโมง</translation>
+        </message>
+        <message>
+            <source>At the end of the chapter</source>
+            <translation>เมื่อจบตอน</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>เปิดในหน้าต่างใหม่</translation>
+        </message>
+        <message>
+            <source>Pause reading aloud</source>
+            <translation>หยุดอ่านออกเสียงชั่วคราว</translation>
+        </message>
+        <message>
+            <source>Translating…</source>
+            <translation>กำลังแปล…</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>แสดงต้นฉบับ</translation>
+        </message>
+        <message>
+            <source>Translate the chapter</source>
+            <translation>แปลตอนนี้</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>ไฮไลต์ประโยคที่กำลังอ่าน</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs · %1 s</source>
+            <translation>เว้นระหว่างย่อหน้า · %1 วินาที</translation>
+        </message>
+        <message>
+            <source>Pause between sentences · %1 s</source>
+            <translation>เว้นระหว่างประโยค · %1 วินาที</translation>
+        </message>
     </context>
     <context>
         <name>NovelsPage</name>
@@ -5657,6 +6353,18 @@
             <source>Your system shows them</source>
             <translation>ระบบของคุณแสดงการแจ้งเตือน</translation>
         </message>
+        <message>
+            <source>Layout</source>
+            <translation>รูปแบบ</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>มาตรฐาน</translation>
+        </message>
+        <message>
+            <source>Metro tiles</source>
+            <translation>ไทล์ Metro</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5742,6 +6450,117 @@
         <message>
             <source>Remove</source>
             <translation>นำออก</translation>
+        </message>
+    </context>
+    <context>
+        <name>PartyPanel</name>
+        <message>
+            <source>Watch together</source>
+            <translation>ดูด้วยกัน</translation>
+        </message>
+        <message>
+            <source>Everyone watches from their own source; the host's player steers the others.</source>
+            <translation>ทุกคนดูจากแหล่งของตัวเอง เครื่องเล่นของโฮสต์ควบคุมคนอื่น</translation>
+        </message>
+        <message>
+            <source>You are the host: your player steers everyone's.</source>
+            <translation>คุณเป็นโฮสต์: เครื่องเล่นของคุณควบคุมของทุกคน</translation>
+        </message>
+        <message>
+            <source>Playing along with %1</source>
+            <translation>กำลังดูไปพร้อม %1</translation>
+        </message>
+        <message>
+            <source>Waiting for the host…</source>
+            <translation>กำลังรอโฮสต์…</translation>
+        </message>
+        <message>
+            <source>Joining…</source>
+            <translation>กำลังเข้าร่วม…</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>Sign in to scancore.onl (Settings → Account) to watch together.</source>
+            <translation>เข้าสู่ระบบ scancore.onl (การตั้งค่า → บัญชี) เพื่อดูด้วยกัน</translation>
+        </message>
+        <message>
+            <source>Starting…</source>
+            <translation>กำลังเริ่ม…</translation>
+        </message>
+        <message>
+            <source>Start a watch party</source>
+            <translation>เริ่มปาร์ตี้ดูด้วยกัน</translation>
+        </message>
+        <message>
+            <source>Or join one</source>
+            <translation>หรือเข้าร่วมสักงาน</translation>
+        </message>
+        <message>
+            <source>Join a watch party</source>
+            <translation>เข้าร่วมปาร์ตี้ดูด้วยกัน</translation>
+        </message>
+        <message>
+            <source>Party code</source>
+            <translation>รหัสปาร์ตี้</translation>
+        </message>
+        <message>
+            <source>Join</source>
+            <translation>เข้าร่วม</translation>
+        </message>
+        <message>
+            <source>Copy the code</source>
+            <translation>คัดลอกรหัส</translation>
+        </message>
+        <message>
+            <source>Code copied</source>
+            <translation>คัดลอกรหัสแล้ว</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>แชร์</translation>
+        </message>
+        <message>
+            <source>Watch %1 with me in SCANCORE: join the party with the code %2</source>
+            <translation>มาดู %1 กับเราใน SCANCORE: เข้าร่วมปาร์ตี้ด้วยรหัส %2</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>ปาร์ตี้ดูด้วยกัน</translation>
+        </message>
+        <message>
+            <source>The host is watching %1, episode %2</source>
+            <translation>โฮสต์กำลังดู %1 ตอนที่ %2</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>เปิด</translation>
+        </message>
+        <message>
+            <source>host</source>
+            <translation>โฮสต์</translation>
+        </message>
+        <message>
+            <source>Say hello: everyone in the party sees it.</source>
+            <translation>ทักทายกันหน่อย: ทุกคนในปาร์ตี้จะเห็น</translation>
+        </message>
+        <message>
+            <source>Message</source>
+            <translation>ข้อความ</translation>
+        </message>
+        <message>
+            <source>Send</source>
+            <translation>ส่ง</translation>
+        </message>
+        <message>
+            <source>End the party</source>
+            <translation>จบปาร์ตี้</translation>
+        </message>
+        <message>
+            <source>Leave the party</source>
+            <translation>ออกจากปาร์ตี้</translation>
         </message>
     </context>
     <context>
@@ -5926,6 +6745,144 @@
         <message>
             <source>None</source>
             <translation>ไม่มี</translation>
+        </message>
+    </context>
+    <context>
+        <name>QObject</name>
+        <message>
+            <source>Android could not read the page: %1</source>
+            <translation>Android อ่านหน้าไม่ได้: %1</translation>
+        </message>
+        <message>
+            <source>This device has no text recogniser.</source>
+            <translation>อุปกรณ์นี้ไม่มีการจดจำข้อความ</translation>
+        </message>
+        <message>
+            <source>Android's translator needs to know the language: pick it in the reader.</source>
+            <translation>ตัวแปลของ Android ต้องรู้ภาษา: เลือกในตัวอ่าน</translation>
+        </message>
+        <message>
+            <source>Android could not translate: %1</source>
+            <translation>Android แปลไม่ได้: %1</translation>
+        </message>
+        <message>
+            <source>This device has no translator of its own.</source>
+            <translation>อุปกรณ์นี้ไม่มีตัวแปลในตัว</translation>
+        </message>
+        <message>
+            <source>Pick a way to translate in Settings → Reading → Translate.</source>
+            <translation>เลือกวิธีแปลใน การตั้งค่า → การอ่าน → แปล</translation>
+        </message>
+        <message>
+            <source>The page's picture could not be read.</source>
+            <translation>อ่านรูปของหน้าไม่ได้</translation>
+        </message>
+        <message>
+            <source>%1 refused the key. Check it in Settings → Reading → Translate.</source>
+            <translation>%1 ปฏิเสธคีย์ ตรวจสอบได้ใน การตั้งค่า → การอ่าน → แปล</translation>
+        </message>
+        <message>
+            <source>%1 says the key's quota is used up for now.</source>
+            <translation>%1 แจ้งว่าโควตาของคีย์หมดแล้วในตอนนี้</translation>
+        </message>
+        <message>
+            <source>%1 could not be reached.</source>
+            <translation>ติดต่อ %1 ไม่ได้</translation>
+        </message>
+        <message>
+            <source>%1 answered with an error (%2).</source>
+            <translation>%1 ตอบกลับด้วยข้อผิดพลาด (%2)</translation>
+        </message>
+        <message>
+            <source>DeepL needs your key (Settings → Reading → Translate).</source>
+            <translation>DeepL ต้องใช้คีย์ของคุณ (การตั้งค่า → การอ่าน → แปล)</translation>
+        </message>
+        <message>
+            <source>DeepL answered with something else than the texts.</source>
+            <translation>DeepL ตอบกลับมาเป็นอย่างอื่นที่ไม่ใช่ข้อความ</translation>
+        </message>
+        <message>
+            <source>Google Translate needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google แปลภาษาต้องใช้คีย์ API ของคุณ (การตั้งค่า → การอ่าน → แปล)</translation>
+        </message>
+        <message>
+            <source>Google Translate answered with something else than the texts.</source>
+            <translation>Google แปลภาษาตอบกลับมาเป็นอย่างอื่นที่ไม่ใช่ข้อความ</translation>
+        </message>
+        <message>
+            <source>Set the service's address and model in Settings → Reading → Translate.</source>
+            <translation>ตั้งที่อยู่และโมเดลของบริการใน การตั้งค่า → การอ่าน → แปล</translation>
+        </message>
+        <message>
+            <source>The model did not answer with one translation per text. Try another model.</source>
+            <translation>โมเดลไม่ได้ตอบคำแปลหนึ่งรายการต่อหนึ่งข้อความ ลองโมเดลอื่น</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google Cloud Vision ต้องใช้คีย์ API ของคุณ (การตั้งค่า → การอ่าน → แปล)</translation>
+        </message>
+        <message>
+            <source>MangaSin changed its series page: no chapter list found.</source>
+            <translation>MangaSin เปลี่ยนหน้าเรื่อง: ไม่พบรายการตอน</translation>
+        </message>
+        <message>
+            <source>MangaSin's chapter list could not be opened (its key changed).</source>
+            <translation>เปิดรายการตอนของ MangaSin ไม่ได้ (คีย์ของมันเปลี่ยนไป)</translation>
+        </message>
+        <message>
+            <source>%1 refused the login. Check it in Settings → Sources → Your servers.</source>
+            <translation>%1 ปฏิเสธการเข้าสู่ระบบ ตรวจสอบได้ใน การตั้งค่า → แหล่ง → เซิร์ฟเวอร์ของคุณ</translation>
+        </message>
+        <message>
+            <source>This server is no longer in Settings → Sources → Your servers.</source>
+            <translation>เซิร์ฟเวอร์นี้ไม่อยู่ใน การตั้งค่า → แหล่ง → เซิร์ฟเวอร์ของคุณ แล้ว</translation>
+        </message>
+        <message>
+            <source>The server did not give the image (%1).</source>
+            <translation>เซิร์ฟเวอร์ไม่ได้ส่งรูปมา (%1)</translation>
+        </message>
+        <message>
+            <source>The image could not be saved.</source>
+            <translation>บันทึกรูปภาพไม่ได้</translation>
+        </message>
+    </context>
+    <context>
+        <name>ReadAloudBar</name>
+        <message>
+            <source>Reading aloud: %1</source>
+            <translation>กำลังอ่านออกเสียง: %1</translation>
+        </message>
+        <message>
+            <source>Loading the chapter…</source>
+            <translation>กำลังโหลดตอน…</translation>
+        </message>
+        <message>
+            <source>stops at %1</source>
+            <translation>หยุดตอน %1</translation>
+        </message>
+        <message>
+            <source>stops after this chapter</source>
+            <translation>หยุดหลังตอนนี้</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>ประโยคก่อนหน้า</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>หยุดชั่วคราว</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>อ่านออกเสียงต่อ</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>ประโยคถัดไป</translation>
+        </message>
+        <message>
+            <source>Stop reading aloud</source>
+            <translation>หยุดอ่านออกเสียง</translation>
         </message>
     </context>
     <context>
@@ -6469,6 +7426,122 @@
             <source>Colours</source>
             <translation>สี</translation>
         </message>
+        <message>
+            <source>Full screen while reading</source>
+            <translation>เต็มจอขณะอ่าน</translation>
+        </message>
+        <message>
+            <source>The status and navigation bars hide with the reader's controls, so pages fill the screen, beside a punch hole too. Swipe from the edge to see them.</source>
+            <translation>แถบสถานะและแถบนำทางจะซ่อนไปพร้อมปุ่มควบคุมของตัวอ่าน ให้หน้าเต็มจอ รวมถึงข้างรูกล้อง ปัดจากขอบเพื่อดู</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>อ่านต่อไปตอนถัดไป</translation>
+        </message>
+        <message>
+            <source>The next chapter joins the strip as you near the end, so reading never stops for a button.</source>
+            <translation>ตอนถัดไปจะต่อท้ายแถบเมื่อใกล้จบ การอ่านจึงไม่ต้องหยุดเพื่อกดปุ่ม</translation>
+        </message>
+        <message>
+            <source>Translate</source>
+            <translation>แปล</translation>
+        </message>
+        <message>
+            <source>Comic readers have Translate the pages in their top bar. Keys stay on this device and are only sent to their own service.</source>
+            <translation>ตัวอ่านการ์ตูนมี แปลหน้า ที่แถบด้านบน คีย์อยู่บนอุปกรณ์นี้และส่งไปยังบริการของมันเท่านั้น</translation>
+        </message>
+        <message>
+            <source>Translate into</source>
+            <translation>แปลเป็น</translation>
+        </message>
+        <message>
+            <source>Read the page's text with</source>
+            <translation>อ่านข้อความในหน้าด้วย</translation>
+        </message>
+        <message>
+            <source>Finds the text in a comic's pages.</source>
+            <translation>ค้นหาข้อความในหน้าการ์ตูน</translation>
+        </message>
+        <message>
+            <source>Translate with</source>
+            <translation>แปลด้วย</translation>
+        </message>
+        <message>
+            <source>DeepL key</source>
+            <translation>คีย์ DeepL</translation>
+        </message>
+        <message>
+            <source>From your DeepL account (free keys end in :fx).</source>
+            <translation>จากบัญชี DeepL ของคุณ (คีย์ฟรีลงท้ายด้วย :fx)</translation>
+        </message>
+        <message>
+            <source>Not set</source>
+            <translation>ยังไม่ได้ตั้ง</translation>
+        </message>
+        <message>
+            <source>Google Cloud key</source>
+            <translation>คีย์ Google Cloud</translation>
+        </message>
+        <message>
+            <source>An API key with Cloud Translation and Cloud Vision turned on.</source>
+            <translation>คีย์ API ที่เปิด Cloud Translation และ Cloud Vision แล้ว</translation>
+        </message>
+        <message>
+            <source>Language model</source>
+            <translation>โมเดลภาษา</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service: its address up to /v1 (a local Ollama is http://localhost:11434/v1), a model and a key if it needs one.</source>
+            <translation>บริการใดก็ได้ที่เข้ากันได้กับ OpenAI: ที่อยู่จนถึง /v1 (Ollama ในเครื่องคือ http://localhost:11434/v1) โมเดล และคีย์ถ้าจำเป็น</translation>
+        </message>
+        <message>
+            <source>Model, e.g. gpt-4o-mini</source>
+            <translation>โมเดล เช่น gpt-4o-mini</translation>
+        </message>
+        <message>
+            <source>Key (if it needs one)</source>
+            <translation>คีย์ (ถ้าจำเป็น)</translation>
+        </message>
+        <message>
+            <source>Forget translations</source>
+            <translation>ลืมคำแปล</translation>
+        </message>
+        <message>
+            <source>Pages and chapters are translated again the next time.</source>
+            <translation>หน้าและตอนจะแปลใหม่ในครั้งหน้า</translation>
+        </message>
+        <message>
+            <source>Forget</source>
+            <translation>ลืม</translation>
+        </message>
+        <message>
+            <source>Translations forgotten</source>
+            <translation>ลืมคำแปลแล้ว</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>ไฮไลต์ประโยคที่กำลังอ่าน</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs</source>
+            <translation>เว้นระหว่างย่อหน้า</translation>
+        </message>
+        <message>
+            <source>Pause between sentences</source>
+            <translation>เว้นระหว่างประโยค</translation>
+        </message>
+        <message>
+            <source>Voice for a language</source>
+            <translation>เสียงสำหรับภาษา</translation>
+        </message>
+        <message>
+            <source>Books in this language are read with this voice.</source>
+            <translation>หนังสือภาษานี้จะอ่านด้วยเสียงนี้</translation>
+        </message>
+        <message>
+            <source>The voice above</source>
+            <translation>เสียงด้านบน</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6664,6 +7737,113 @@
         <message>
             <source>SCANCORE does not open browser checks for its own site or your sync server.</source>
             <translation>SCANCORE ไม่เปิดการตรวจสอบเบราว์เซอร์สำหรับเว็บไซต์ของตัวเองหรือเซิร์ฟเวอร์ซิงก์ของคุณ</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Comics</name>
+        <message>
+            <source>That server is not saved.</source>
+            <translation>เซิร์ฟเวอร์นั้นไม่ได้บันทึกไว้</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Downloads</name>
+        <message>
+            <source>No chapters of this novel are downloaded. Download some first.</source>
+            <translation>ยังไม่ได้ดาวน์โหลดตอนของนิยายเรื่องนี้ ดาวน์โหลดสักสองสามตอนก่อน</translation>
+        </message>
+        <message>
+            <source>The book could not be saved in %1.</source>
+            <translation>บันทึกหนังสือใน %1 ไม่ได้</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::MediaControls</name>
+        <message>
+            <source>Reading aloud</source>
+            <translation>อ่านออกเสียง</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Party</name>
+        <message>
+            <source>The party could not be reached (%1).</source>
+            <translation>ติดต่อปาร์ตี้ไม่ได้ (%1)</translation>
+        </message>
+        <message>
+            <source>Watch parties need scancore.onl (this site has none yet).</source>
+            <translation>ปาร์ตี้ดูด้วยกันต้องใช้ scancore.onl (เว็บนี้ยังไม่มี)</translation>
+        </message>
+        <message>
+            <source>The party could not be opened.</source>
+            <translation>เปิดปาร์ตี้ไม่ได้</translation>
+        </message>
+        <message>
+            <source>A party code has six letters and numbers.</source>
+            <translation>รหัสปาร์ตี้มีตัวอักษรและตัวเลขหกตัว</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>ปาร์ตี้จบแล้ว</translation>
+        </message>
+        <message>
+            <source>No party with that code.</source>
+            <translation>ไม่มีปาร์ตี้ที่ใช้รหัสนั้น</translation>
+        </message>
+        <message>
+            <source>The host ended the party.</source>
+            <translation>โฮสต์จบปาร์ตี้แล้ว</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Translator</name>
+        <message>
+            <source>To translate pages on a computer, add a Google Cloud key in Settings → Reading → Translate (Vision reads the page's text).</source>
+            <translation>หากต้องการแปลหน้าบนคอมพิวเตอร์ ให้เพิ่มคีย์ Google Cloud ใน การตั้งค่า → การอ่าน → แปล (Vision อ่านข้อความในหน้า)</translation>
+        </message>
+        <message>
+            <source>Add a DeepL or Google key, or a model's address, in Settings → Reading → Translate.</source>
+            <translation>เพิ่มคีย์ DeepL หรือ Google หรือที่อยู่ของโมเดลใน การตั้งค่า → การอ่าน → แปล</translation>
+        </message>
+        <message>
+            <source>Automatic</source>
+            <translation>อัตโนมัติ</translation>
+        </message>
+        <message>
+            <source>This phone</source>
+            <translation>โทรศัพท์เครื่องนี้</translation>
+        </message>
+        <message>
+            <source>On the phone, with Google Play services</source>
+            <translation>บนโทรศัพท์ ด้วยบริการ Google Play</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision</source>
+            <translation>Google Cloud Vision</translation>
+        </message>
+        <message>
+            <source>Your Google Cloud key</source>
+            <translation>คีย์ Google Cloud ของคุณ</translation>
+        </message>
+        <message>
+            <source>On the phone; a model per language</source>
+            <translation>บนโทรศัพท์ หนึ่งโมเดลต่อภาษา</translation>
+        </message>
+        <message>
+            <source>Your DeepL key</source>
+            <translation>คีย์ DeepL ของคุณ</translation>
+        </message>
+        <message>
+            <source>Google Translate</source>
+            <translation>Google แปลภาษา</translation>
+        </message>
+        <message>
+            <source>A language model</source>
+            <translation>โมเดลภาษา</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service, or one on your computer</source>
+            <translation>บริการใดก็ได้ที่เข้ากันได้กับ OpenAI หรือบริการบนคอมพิวเตอร์ของคุณ</translation>
         </message>
     </context>
     <context>
@@ -6935,6 +8115,121 @@
         <message>
             <source>Show as a grid</source>
             <translation>แสดงเป็นกริด</translation>
+        </message>
+        <message>
+            <source>Saved %1 chapters as %2</source>
+            <translation>บันทึก %1 ตอนเป็น %2 แล้ว</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>แสดง</translation>
+        </message>
+        <message>
+            <source>Save the %1 downloaded chapters</source>
+            <translation>บันทึก %1 ตอนที่ดาวน์โหลดแล้ว</translation>
+        </message>
+        <message>
+            <source>Download all %1 chapters, then save</source>
+            <translation>ดาวน์โหลดทั้ง %1 ตอน แล้วบันทึก</translation>
+        </message>
+        <message>
+            <source>Stop waiting for the downloads</source>
+            <translation>เลิกรอการดาวน์โหลด</translation>
+        </message>
+        <message>
+            <source>No chapter downloaded, so there is no EPUB to save.</source>
+            <translation>ไม่มีตอนที่ดาวน์โหลด จึงไม่มี EPUB ให้บันทึก</translation>
+        </message>
+        <message>
+            <source>Read in a new window</source>
+            <translation>อ่านในหน้าต่างใหม่</translation>
+        </message>
+        <message>
+            <source>Listen</source>
+            <translation>ฟัง</translation>
+        </message>
+        <message>
+            <source>Downloading for the EPUB…</source>
+            <translation>กำลังดาวน์โหลดสำหรับ EPUB…</translation>
+        </message>
+        <message>
+            <source>Save as EPUB</source>
+            <translation>บันทึกเป็น EPUB</translation>
+        </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>เลิกปักหมุดจากฮับ</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>ปักหมุดไว้บนฮับ</translation>
+        </message>
+    </context>
+    <context>
+        <name>ServerDialog</name>
+        <message>
+            <source>Trying it…</source>
+            <translation>กำลังลอง…</translation>
+        </message>
+        <message>
+            <source>Connected: 1 series found.</source>
+            <translation>เชื่อมต่อแล้ว: พบ 1 เรื่อง</translation>
+        </message>
+        <message>
+            <source>Connected: %1 series found.</source>
+            <translation>เชื่อมต่อแล้ว: พบ %1 เรื่อง</translation>
+        </message>
+        <message>
+            <source>Your server</source>
+            <translation>เซิร์ฟเวอร์ของคุณ</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>เพิ่มเซิร์ฟเวอร์ของคุณ</translation>
+        </message>
+        <message>
+            <source>Read the comics on your own Komga, Kavita or Suwayomi server. The login stays on this device.</source>
+            <translation>อ่านการ์ตูนจากเซิร์ฟเวอร์ Komga, Kavita หรือ Suwayomi ของคุณเอง ข้อมูลเข้าสู่ระบบอยู่บนอุปกรณ์นี้</translation>
+        </message>
+        <message>
+            <source>Name (optional)</source>
+            <translation>ชื่อ (ไม่บังคับ)</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>อีเมล</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>ชื่อผู้ใช้</translation>
+        </message>
+        <message>
+            <source> (if it asks for one)</source>
+            <translation> (ถ้ามีการถาม)</translation>
+        </message>
+        <message>
+            <source>Password (saved; type to change)</source>
+            <translation>รหัสผ่าน (บันทึกแล้ว พิมพ์เพื่อเปลี่ยน)</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>รหัสผ่าน</translation>
+        </message>
+        <message>
+            <source>API key (saved; type to change)</source>
+            <translation>คีย์ API (บันทึกแล้ว พิมพ์เพื่อเปลี่ยน)</translation>
+        </message>
+        <message>
+            <source>Or an API key, instead of the login</source>
+            <translation>หรือคีย์ API แทนการเข้าสู่ระบบ</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>Save and try</source>
+            <translation>บันทึกและลอง</translation>
         </message>
     </context>
     <context>
@@ -7234,6 +8529,10 @@
         <message>
             <source> · Medium Dev</source>
             <translation> · Medium Dev</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
         </message>
     </context>
     <context>
@@ -7711,6 +9010,34 @@
         <message>
             <source>Mihon's downloads · </source>
             <translation>ดาวน์โหลดของ Mihon · </translation>
+        </message>
+        <message>
+            <source>Your servers</source>
+            <translation>เซิร์ฟเวอร์ของคุณ</translation>
+        </message>
+        <message>
+            <source>Komga, Kavita and Suwayomi servers you run: their comics are a source like the others, searched with them and saved to the library.</source>
+            <translation>เซิร์ฟเวอร์ Komga, Kavita และ Suwayomi ที่คุณดูแลเอง: การ์ตูนในนั้นเป็นแหล่งเหมือนแหล่งอื่น ค้นหาไปด้วยกันและบันทึกลงคลัง</translation>
+        </message>
+        <message>
+            <source>Change</source>
+            <translation>เปลี่ยน</translation>
+        </message>
+        <message>
+            <source>Open in the browser</source>
+            <translation>เปิดในเบราว์เซอร์</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>เพิ่มเซิร์ฟเวอร์ของคุณ</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>การวินิจฉัย</translation>
+        </message>
+        <message>
+            <source>Whether the extensions runtime answers, a quick test of a source, and the sites each extension contacted.</source>
+            <translation>รันไทม์ส่วนขยายตอบหรือไม่ ทดสอบแหล่งอย่างรวดเร็ว และเว็บไซต์ที่ส่วนขยายแต่ละตัวติดต่อ</translation>
         </message>
     </context>
     <context>
@@ -8393,6 +9720,22 @@
             <source>Saved </source>
             <translation>บันทึกเมื่อ </translation>
         </message>
+        <message>
+            <source>Metro colours</source>
+            <translation>สี Metro</translation>
+        </message>
+        <message>
+            <source>The accent colours of Windows Phone, or any colour from the wheel. Tiles, the hub title and switches take it.</source>
+            <translation>สีเน้นของ Windows Phone หรือสีใดก็ได้จากวงล้อสี ไทล์ ชื่อฮับ และสวิตช์จะใช้สีนี้</translation>
+        </message>
+        <message>
+            <source>Custom colour</source>
+            <translation>สีที่กำหนดเอง</translation>
+        </message>
+        <message>
+            <source>Tile colour</source>
+            <translation>สีไทล์</translation>
+        </message>
     </context>
     <context>
         <name>TrackerConnect</name>
@@ -8589,6 +9932,13 @@
         <message>
             <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
             <translation>เชื่อมต่อตัวติดตามอย่าง AniList, MyAnimeList หรือ Kitsu ในการตั้งค่า → การเชื่อมต่อ เพื่อให้รายการของคุณที่นั่นเป็นปัจจุบัน</translation>
+        </message>
+    </context>
+    <context>
+        <name>TranslationLayer</name>
+        <message>
+            <source>Translating…</source>
+            <translation>กำลังแปล…</translation>
         </message>
     </context>
     <context>
@@ -9012,6 +10362,34 @@
         <message>
             <source>Close player</source>
             <translation>ปิดเครื่องเล่น</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>ในตัว</translation>
+        </message>
+        <message>
+            <source>More…</source>
+            <translation>เพิ่มเติม…</translation>
+        </message>
+        <message>
+            <source>Keep SCANCORE open while it plays there: the video comes through it.</source>
+            <translation>เปิด SCANCORE ไว้ขณะที่เล่นอยู่ที่นั่น: วิดีโอผ่าน SCANCORE</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>ปาร์ตี้จบแล้ว</translation>
+        </message>
+        <message>
+            <source>Watch party (%1)</source>
+            <translation>ปาร์ตี้ดูด้วยกัน (%1)</translation>
+        </message>
+        <message>
+            <source>Watch together</source>
+            <translation>ดูด้วยกัน</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>เปิดในหน้าต่างใหม่</translation>
         </message>
     </context>
     <context>

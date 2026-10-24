@@ -1032,6 +1032,14 @@
             <source>Waiting: stop</source>
             <translation>Ожидание: остановить</translation>
         </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>Открепить от хаба</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Закрепить на хабе</translation>
+        </message>
     </context>
     <context>
         <name>AnimePage</name>
@@ -1138,6 +1146,14 @@
         <message>
             <source>All %1</source>
             <translation>Все (%1)</translation>
+        </message>
+        <message>
+            <source>Party %1</source>
+            <translation>Вечеринка %1</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>Совместный просмотр</translation>
         </message>
     </context>
     <context>
@@ -1888,6 +1904,74 @@
         <message>
             <source>Bottom</source>
             <translation>Снизу</translation>
+        </message>
+        <message>
+            <source>Finished: </source>
+            <translation>Прочитано: </translation>
+        </message>
+        <message>
+            <source>Next: </source>
+            <translation>Далее: </translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Открыть в новом окне</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>Показать оригинал</translation>
+        </message>
+        <message>
+            <source>Translate the pages</source>
+            <translation>Перевести страницы</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse (L)</source>
+            <translation>Лупа под курсором (L)</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>Продолжать в следующую главу</translation>
+        </message>
+        <message>
+            <source>Auto-scroll</source>
+            <translation>Автопрокрутка</translation>
+        </message>
+        <message>
+            <source>Turn the pages by themselves</source>
+            <translation>Листать страницы автоматически</translation>
+        </message>
+        <message>
+            <source>Auto-scroll speed · %1</source>
+            <translation>Скорость автопрокрутки · %1</translation>
+        </message>
+        <message>
+            <source>A page every %1 s</source>
+            <translation>Страница каждые %1 с</translation>
+        </message>
+        <message>
+            <source>Sharpen small scans</source>
+            <translation>Повышать резкость мелких сканов</translation>
+        </message>
+        <message>
+            <source>Light</source>
+            <translation>Тонкий</translation>
+        </message>
+        <message>
+            <source>Strong</source>
+            <translation>Сильно</translation>
+        </message>
+        <message>
+            <source>Slower</source>
+            <translation>Медленнее</translation>
+        </message>
+        <message>
+            <source>Faster</source>
+            <translation>Быстрее</translation>
+        </message>
+        <message>
+            <source>Pause auto-scroll</source>
+            <translation>Приостановить автопрокрутку</translation>
         </message>
     </context>
     <context>
@@ -2907,6 +2991,121 @@
         </message>
     </context>
     <context>
+        <name>ExtensionsDiagnostics</name>
+        <message>
+            <source>Answered in %1 s with %2 titles.</source>
+            <translation>Ответ за %1 с, тайтлов: %2.</translation>
+        </message>
+        <message>
+            <source>Failed after %1 s: %2</source>
+            <translation>Ошибка через %1 с: %2</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Диагностика</translation>
+        </message>
+        <message>
+            <source>For when an extension misbehaves</source>
+            <translation>На случай, если расширение барахлит</translation>
+        </message>
+        <message>
+            <source>Copy report</source>
+            <translation>Скопировать отчёт</translation>
+        </message>
+        <message>
+            <source>The report is copied. Paste it into an issue or a message.</source>
+            <translation>Отчёт скопирован. Вставьте его в issue или сообщение.</translation>
+        </message>
+        <message>
+            <source>Refresh</source>
+            <translation>Обновить</translation>
+        </message>
+        <message>
+            <source>Runtime</source>
+            <translation>Среда</translation>
+        </message>
+        <message>
+            <source>Extensions runtime installed</source>
+            <translation>Среда выполнения расширений установлена</translation>
+        </message>
+        <message>
+            <source>Extensions runtime not installed</source>
+            <translation>Среда расширений не установлена</translation>
+        </message>
+        <message>
+            <source>No runtime for this system</source>
+            <translation>Нет среды для этой системы</translation>
+        </message>
+        <message>
+            <source>Asking the host…</source>
+            <translation>Спрашиваем ведущего…</translation>
+        </message>
+        <message>
+            <source>Host %1 answered in %2 ms</source>
+            <translation>Среда %1 ответила за %2 мс</translation>
+        </message>
+        <message>
+            <source>Extension libraries it takes</source>
+            <translation>Поддерживаемые библиотеки расширений</translation>
+        </message>
+        <message>
+            <source>Mihon %1 · Aniyomi %2</source>
+            <translation>Mihon %1 · Aniyomi %2</translation>
+        </message>
+        <message>
+            <source>This device</source>
+            <translation>Это устройство</translation>
+        </message>
+        <message>
+            <source>Test a source</source>
+            <translation>Проверить источник</translation>
+        </message>
+        <message>
+            <source>Loads the source's popular titles once and times it.</source>
+            <translation>Один раз загружает популярные тайтлы источника и замеряет время.</translation>
+        </message>
+        <message>
+            <source>Source</source>
+            <translation>Источник</translation>
+        </message>
+        <message>
+            <source>Testing…</source>
+            <translation>Проверка…</translation>
+        </message>
+        <message>
+            <source>Test</source>
+            <translation>Проверить</translation>
+        </message>
+        <message>
+            <source>Sites the extensions contacted</source>
+            <translation>Сайты, к которым обращались расширения</translation>
+        </message>
+        <message>
+            <source>This session only, counted in the extensions runtime. Nothing but the sites' names is kept.</source>
+            <translation>Только эта сессия, по данным среды расширений. Хранятся только названия сайтов.</translation>
+        </message>
+        <message>
+            <source>Nothing yet</source>
+            <translation>Пока ничего</translation>
+        </message>
+        <message>
+            <source>Browse or read with an extension and come back.</source>
+            <translation>Полистайте или почитайте через расширение и вернитесь.</translation>
+        </message>
+        <message>
+            <source>%1 · %2 requests, %3</source>
+            <translation>%1 · запросов: %2, %3</translation>
+        </message>
+        <message>
+            <source>Host log</source>
+            <translation>Журнал среды</translation>
+        </message>
+        <message>
+            <source>The end of extensions/host.log.</source>
+            <translation>Конец extensions/host.log.</translation>
+        </message>
+    </context>
+    <context>
         <name>ExtensionsPage</name>
         <message>
             <source>All languages</source>
@@ -3187,6 +3386,10 @@
         <message>
             <source>Its extensions</source>
             <translation>Его расширения</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Диагностика</translation>
         </message>
     </context>
     <context>
@@ -3719,6 +3922,110 @@
             <source>Long</source>
             <translation>Долгая</translation>
         </message>
+        <message>
+            <source>Look</source>
+            <translation>Вид</translation>
+        </message>
+        <message>
+            <source>Metro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Metro: панорамный хаб с плитками, крупным шрифтом и панелью приложения в духе Windows Phone.</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>Стандартный</translation>
+        </message>
+        <message>
+            <source>Pages and navigation</source>
+            <translation>Страницы и навигация</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Tiles and panoramas</source>
+            <translation>Плитки и панорамы</translation>
+        </message>
+        <message>
+            <source>Hold a tile on the hub to resize, move or unpin it. Series pages have Pin to the hub.</source>
+            <translation>Удерживайте плитку на хабе, чтобы изменить размер, переместить или открепить её. На страницах серий есть «Закрепить на хабе».</translation>
+        </message>
+        <message>
+            <source>Hub title</source>
+            <translation>Заголовок хаба</translation>
+        </message>
+        <message>
+            <source>The big word across the top of the hub.</source>
+            <translation>Большое слово вверху хаба.</translation>
+        </message>
+        <message>
+            <source>Title colour</source>
+            <translation>Цвет заголовка</translation>
+        </message>
+        <message>
+            <source>Accent blend</source>
+            <translation>Смешение акцента</translation>
+        </message>
+        <message>
+            <source>Plain</source>
+            <translation>Простой</translation>
+        </message>
+        <message>
+            <source>Background</source>
+            <translation>Фон</translation>
+        </message>
+        <message>
+            <source>Behind the hub, moving slower than the tiles.</source>
+            <translation>За хабом, движется медленнее плиток.</translation>
+        </message>
+        <message>
+            <source>Last read</source>
+            <translation>Прочитано последним</translation>
+        </message>
+        <message>
+            <source>Theme picture</source>
+            <translation>Картинка темы</translation>
+        </message>
+        <message>
+            <source>None</source>
+            <translation>Нет</translation>
+        </message>
+        <message>
+            <source>Headers</source>
+            <translation>Заголовки</translation>
+        </message>
+        <message>
+            <source>UPPERCASE</source>
+            <translation>ПРОПИСНЫЕ</translation>
+        </message>
+        <message>
+            <source>lowercase</source>
+            <translation>строчные</translation>
+        </message>
+        <message>
+            <source>Live tiles</source>
+            <translation>Живые плитки</translation>
+        </message>
+        <message>
+            <source>Tiles turn over now and then to show new chapters and where you are.</source>
+            <translation>Плитки время от времени переворачиваются и показывают новые главы и где вы остановились.</translation>
+        </message>
+        <message>
+            <source>Hub sections</source>
+            <translation>Разделы хаба</translation>
+        </message>
+        <message>
+            <source>Which sections the hub shows, in this order. Four or five are easiest to find your way in.</source>
+            <translation>Какие разделы показывает хаб и в каком порядке. В четырёх-пяти проще ориентироваться.</translation>
+        </message>
+        <message>
+            <source>Earlier</source>
+            <translation>Раньше</translation>
+        </message>
+        <message>
+            <source>Later</source>
+            <translation>Позже</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -3927,6 +4234,14 @@
         <message>
             <source>Anime player</source>
             <translation>Плеер аниме</translation>
+        </message>
+        <message>
+            <source>Magnifying lens under the mouse</source>
+            <translation>Лупа под курсором</translation>
+        </message>
+        <message>
+            <source>Auto-scroll on or off</source>
+            <translation>Включить или выключить автопрокрутку</translation>
         </message>
     </context>
     <context>
@@ -4298,6 +4613,18 @@
         <message>
             <source>Undo</source>
             <translation>Отменить</translation>
+        </message>
+        <message>
+            <source>Most unwatched</source>
+            <translation>Больше непросмотренного</translation>
+        </message>
+        <message>
+            <source>Most unread</source>
+            <translation>Больше непрочитанного</translation>
+        </message>
+        <message>
+            <source>Hide until there is something new</source>
+            <translation>Скрыть до появления нового</translation>
         </message>
     </context>
     <context>
@@ -4674,6 +5001,287 @@
         <message>
             <source>Continue</source>
             <translation>Продолжить</translation>
+        </message>
+        <message>
+            <source>The host moved on to %1</source>
+            <translation>Ведущий перешёл к %1</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Открыть</translation>
+        </message>
+    </context>
+    <context>
+        <name>Metro</name>
+        <message>
+            <source>Explore</source>
+            <translation>Обзор</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Недавнее</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Библиотека</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Комиксы</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Новеллы</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Аниме</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>Закреплено на хабе</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>Продолжить</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Проверять новые главы</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>Искать комиксы</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>Искать новеллы</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Искать аниме</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Искать везде</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Проверяем библиотеку на новые главы…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Всё актуально</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>Пока нечего продолжать</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>поиск</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>обновить</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>уведомления</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>настройки</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>история</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>загрузки</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>активность</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>расширения</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>выключить инкогнито</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>режим инкогнито</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>настроить хаб</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Назад</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (удерживайте, чтобы увидеть больше)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>Закрыть меню</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>Открыть меню</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Инкогнито выключен</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Инкогнито</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>Аккаунт</translation>
+        </message>
+    </context>
+    <context>
+        <name>MetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>Эпизод %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Глава %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 новая</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>Новых: %1</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>случайный комикс</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>продолжить</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>случайный жанр</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>поиск</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>загрузки</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>история</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>настройки</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>ваш %1 в итогах</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>Пока не из чего выбрать</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Маленький</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Средняя</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>Широкая</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>Переместить раньше</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>Переместить позже</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>Открепить</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Закрепить на хабе</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>Здесь появится то, что вы читаете и смотрите.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>Сохранённые серии появятся здесь.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>все комиксы</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>скоро</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>расширения</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Последние главы</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>все новеллы</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Новеллы</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>всё аниме</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>расписание</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>обзор</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>В тренде</translation>
         </message>
     </context>
     <context>
@@ -5267,6 +5875,94 @@
             <source>Keep the spoken paragraph on screen</source>
             <translation>Держать читаемый абзац на экране</translation>
         </message>
+        <message>
+            <source>Sleep timer: reading aloud stopped</source>
+            <translation>Таймер сна: чтение вслух остановлено</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>Предыдущее предложение</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>Пауза</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>Продолжать чтение вслух</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>Следующее предложение</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at %1</source>
+            <translation>Таймер сна: остановка в %1</translation>
+        </message>
+        <message>
+            <source>Sleep timer: stops at the end of the chapter</source>
+            <translation>Таймер сна: остановка в конце главы</translation>
+        </message>
+        <message>
+            <source>Sleep timer</source>
+            <translation>Таймер сна</translation>
+        </message>
+        <message>
+            <source>Off</source>
+            <translation>Выкл.</translation>
+        </message>
+        <message>
+            <source>In 15 minutes</source>
+            <translation>Через 15 минут</translation>
+        </message>
+        <message>
+            <source>In 30 minutes</source>
+            <translation>Через 30 минут</translation>
+        </message>
+        <message>
+            <source>In 45 minutes</source>
+            <translation>Через 45 минут</translation>
+        </message>
+        <message>
+            <source>In an hour</source>
+            <translation>Через час</translation>
+        </message>
+        <message>
+            <source>At the end of the chapter</source>
+            <translation>В конце главы</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Открыть в новом окне</translation>
+        </message>
+        <message>
+            <source>Pause reading aloud</source>
+            <translation>Приостановить чтение вслух</translation>
+        </message>
+        <message>
+            <source>Translating…</source>
+            <translation>Перевод…</translation>
+        </message>
+        <message>
+            <source>Show the original</source>
+            <translation>Показать оригинал</translation>
+        </message>
+        <message>
+            <source>Translate the chapter</source>
+            <translation>Перевести главу</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>Подсвечивать читаемое предложение</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs · %1 s</source>
+            <translation>Пауза между абзацами · %1 с</translation>
+        </message>
+        <message>
+            <source>Pause between sentences · %1 s</source>
+            <translation>Пауза между предложениями · %1 с</translation>
+        </message>
     </context>
     <context>
         <name>NovelsPage</name>
@@ -5665,6 +6361,18 @@
             <source>Your system shows them</source>
             <translation>Ваша система их показывает</translation>
         </message>
+        <message>
+            <source>Layout</source>
+            <translation>Раскладка</translation>
+        </message>
+        <message>
+            <source>Standard</source>
+            <translation>Стандартный</translation>
+        </message>
+        <message>
+            <source>Metro tiles</source>
+            <translation>Плитки Metro</translation>
+        </message>
     </context>
     <context>
         <name>PageHeader</name>
@@ -5750,6 +6458,117 @@
         <message>
             <source>Remove</source>
             <translation>Удалить</translation>
+        </message>
+    </context>
+    <context>
+        <name>PartyPanel</name>
+        <message>
+            <source>Watch together</source>
+            <translation>Смотреть вместе</translation>
+        </message>
+        <message>
+            <source>Everyone watches from their own source; the host's player steers the others.</source>
+            <translation>Каждый смотрит из своего источника; плеер ведущего управляет остальными.</translation>
+        </message>
+        <message>
+            <source>You are the host: your player steers everyone's.</source>
+            <translation>Вы ведущий: ваш плеер управляет плеерами всех.</translation>
+        </message>
+        <message>
+            <source>Playing along with %1</source>
+            <translation>Смотрим вместе с %1</translation>
+        </message>
+        <message>
+            <source>Waiting for the host…</source>
+            <translation>Ждём ведущего…</translation>
+        </message>
+        <message>
+            <source>Joining…</source>
+            <translation>Присоединяемся…</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Закрыть</translation>
+        </message>
+        <message>
+            <source>Sign in to scancore.onl (Settings → Account) to watch together.</source>
+            <translation>Войдите в scancore.onl (Настройки → Аккаунт), чтобы смотреть вместе.</translation>
+        </message>
+        <message>
+            <source>Starting…</source>
+            <translation>Запуск…</translation>
+        </message>
+        <message>
+            <source>Start a watch party</source>
+            <translation>Начать совместный просмотр</translation>
+        </message>
+        <message>
+            <source>Or join one</source>
+            <translation>Или присоединитесь</translation>
+        </message>
+        <message>
+            <source>Join a watch party</source>
+            <translation>Присоединиться к совместному просмотру</translation>
+        </message>
+        <message>
+            <source>Party code</source>
+            <translation>Код вечеринки</translation>
+        </message>
+        <message>
+            <source>Join</source>
+            <translation>Присоединиться</translation>
+        </message>
+        <message>
+            <source>Copy the code</source>
+            <translation>Скопировать код</translation>
+        </message>
+        <message>
+            <source>Code copied</source>
+            <translation>Код скопирован</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Поделиться</translation>
+        </message>
+        <message>
+            <source>Watch %1 with me in SCANCORE: join the party with the code %2</source>
+            <translation>Посмотри %1 со мной в SCANCORE: присоединяйся к вечеринке с кодом %2</translation>
+        </message>
+        <message>
+            <source>Watch party</source>
+            <translation>Совместный просмотр</translation>
+        </message>
+        <message>
+            <source>The host is watching %1, episode %2</source>
+            <translation>Ведущий смотрит %1, серия %2</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Открыть</translation>
+        </message>
+        <message>
+            <source>host</source>
+            <translation>ведущий</translation>
+        </message>
+        <message>
+            <source>Say hello: everyone in the party sees it.</source>
+            <translation>Поздоровайтесь: все на вечеринке это увидят.</translation>
+        </message>
+        <message>
+            <source>Message</source>
+            <translation>Сообщение</translation>
+        </message>
+        <message>
+            <source>Send</source>
+            <translation>Отправить</translation>
+        </message>
+        <message>
+            <source>End the party</source>
+            <translation>Завершить вечеринку</translation>
+        </message>
+        <message>
+            <source>Leave the party</source>
+            <translation>Покинуть вечеринку</translation>
         </message>
     </context>
     <context>
@@ -5934,6 +6753,144 @@
         <message>
             <source>None</source>
             <translation>Нет</translation>
+        </message>
+    </context>
+    <context>
+        <name>QObject</name>
+        <message>
+            <source>Android could not read the page: %1</source>
+            <translation>Android не смог прочитать страницу: %1</translation>
+        </message>
+        <message>
+            <source>This device has no text recogniser.</source>
+            <translation>На этом устройстве нет распознавания текста.</translation>
+        </message>
+        <message>
+            <source>Android's translator needs to know the language: pick it in the reader.</source>
+            <translation>Переводчику Android нужно знать язык: выберите его в читалке.</translation>
+        </message>
+        <message>
+            <source>Android could not translate: %1</source>
+            <translation>Android не смог перевести: %1</translation>
+        </message>
+        <message>
+            <source>This device has no translator of its own.</source>
+            <translation>На этом устройстве нет своего переводчика.</translation>
+        </message>
+        <message>
+            <source>Pick a way to translate in Settings → Reading → Translate.</source>
+            <translation>Выберите способ перевода в Настройки → Чтение → Перевод.</translation>
+        </message>
+        <message>
+            <source>The page's picture could not be read.</source>
+            <translation>Не удалось прочитать изображение страницы.</translation>
+        </message>
+        <message>
+            <source>%1 refused the key. Check it in Settings → Reading → Translate.</source>
+            <translation>%1 отклонил ключ. Проверьте его в Настройки → Чтение → Перевод.</translation>
+        </message>
+        <message>
+            <source>%1 says the key's quota is used up for now.</source>
+            <translation>%1 сообщает, что квота ключа пока исчерпана.</translation>
+        </message>
+        <message>
+            <source>%1 could not be reached.</source>
+            <translation>Не удалось связаться с %1.</translation>
+        </message>
+        <message>
+            <source>%1 answered with an error (%2).</source>
+            <translation>%1 ответил ошибкой (%2).</translation>
+        </message>
+        <message>
+            <source>DeepL needs your key (Settings → Reading → Translate).</source>
+            <translation>DeepL нужен ваш ключ (Настройки → Чтение → Перевод).</translation>
+        </message>
+        <message>
+            <source>DeepL answered with something else than the texts.</source>
+            <translation>DeepL ответил не текстами.</translation>
+        </message>
+        <message>
+            <source>Google Translate needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google Переводчику нужен ваш ключ API (Настройки → Чтение → Перевод).</translation>
+        </message>
+        <message>
+            <source>Google Translate answered with something else than the texts.</source>
+            <translation>Google Переводчик ответил не текстами.</translation>
+        </message>
+        <message>
+            <source>Set the service's address and model in Settings → Reading → Translate.</source>
+            <translation>Укажите адрес и модель сервиса в Настройки → Чтение → Перевод.</translation>
+        </message>
+        <message>
+            <source>The model did not answer with one translation per text. Try another model.</source>
+            <translation>Модель не ответила по одному переводу на текст. Попробуйте другую модель.</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision needs your API key (Settings → Reading → Translate).</source>
+            <translation>Google Cloud Vision нужен ваш ключ API (Настройки → Чтение → Перевод).</translation>
+        </message>
+        <message>
+            <source>MangaSin changed its series page: no chapter list found.</source>
+            <translation>MangaSin изменил страницу серии: список глав не найден.</translation>
+        </message>
+        <message>
+            <source>MangaSin's chapter list could not be opened (its key changed).</source>
+            <translation>Не удалось открыть список глав MangaSin (его ключ изменился).</translation>
+        </message>
+        <message>
+            <source>%1 refused the login. Check it in Settings → Sources → Your servers.</source>
+            <translation>%1 отклонил вход. Проверьте его в Настройки → Источники → Ваши серверы.</translation>
+        </message>
+        <message>
+            <source>This server is no longer in Settings → Sources → Your servers.</source>
+            <translation>Этого сервера больше нет в Настройки → Источники → Ваши серверы.</translation>
+        </message>
+        <message>
+            <source>The server did not give the image (%1).</source>
+            <translation>Сервер не отдал изображение (%1).</translation>
+        </message>
+        <message>
+            <source>The image could not be saved.</source>
+            <translation>Не удалось сохранить изображение.</translation>
+        </message>
+    </context>
+    <context>
+        <name>ReadAloudBar</name>
+        <message>
+            <source>Reading aloud: %1</source>
+            <translation>Чтение вслух: %1</translation>
+        </message>
+        <message>
+            <source>Loading the chapter…</source>
+            <translation>Загрузка главы…</translation>
+        </message>
+        <message>
+            <source>stops at %1</source>
+            <translation>остановка в %1</translation>
+        </message>
+        <message>
+            <source>stops after this chapter</source>
+            <translation>остановка после этой главы</translation>
+        </message>
+        <message>
+            <source>Previous sentence</source>
+            <translation>Предыдущее предложение</translation>
+        </message>
+        <message>
+            <source>Pause</source>
+            <translation>Пауза</translation>
+        </message>
+        <message>
+            <source>Go on reading aloud</source>
+            <translation>Продолжать чтение вслух</translation>
+        </message>
+        <message>
+            <source>Next sentence</source>
+            <translation>Следующее предложение</translation>
+        </message>
+        <message>
+            <source>Stop reading aloud</source>
+            <translation>Остановить чтение вслух</translation>
         </message>
     </context>
     <context>
@@ -6477,6 +7434,122 @@
             <source>Colours</source>
             <translation>Цвета</translation>
         </message>
+        <message>
+            <source>Full screen while reading</source>
+            <translation>Полный экран при чтении</translation>
+        </message>
+        <message>
+            <source>The status and navigation bars hide with the reader's controls, so pages fill the screen, beside a punch hole too. Swipe from the edge to see them.</source>
+            <translation>Строка состояния и панель навигации скрываются вместе с элементами читалки, чтобы страницы занимали весь экран, в том числе рядом с вырезом камеры. Проведите от края, чтобы их увидеть.</translation>
+        </message>
+        <message>
+            <source>Run on into the next chapter</source>
+            <translation>Продолжать в следующую главу</translation>
+        </message>
+        <message>
+            <source>The next chapter joins the strip as you near the end, so reading never stops for a button.</source>
+            <translation>Следующая глава присоединяется к ленте ближе к концу, так что чтение не останавливается ради кнопки.</translation>
+        </message>
+        <message>
+            <source>Translate</source>
+            <translation>Перевести</translation>
+        </message>
+        <message>
+            <source>Comic readers have Translate the pages in their top bar. Keys stay on this device and are only sent to their own service.</source>
+            <translation>В читалках комиксов есть «Перевести страницы» на верхней панели. Ключи остаются на этом устройстве и отправляются только своему сервису.</translation>
+        </message>
+        <message>
+            <source>Translate into</source>
+            <translation>Перевести на</translation>
+        </message>
+        <message>
+            <source>Read the page's text with</source>
+            <translation>Читать текст страницы с помощью</translation>
+        </message>
+        <message>
+            <source>Finds the text in a comic's pages.</source>
+            <translation>Находит текст на страницах комикса.</translation>
+        </message>
+        <message>
+            <source>Translate with</source>
+            <translation>Переводить через</translation>
+        </message>
+        <message>
+            <source>DeepL key</source>
+            <translation>Ключ DeepL</translation>
+        </message>
+        <message>
+            <source>From your DeepL account (free keys end in :fx).</source>
+            <translation>Из вашего аккаунта DeepL (бесплатные ключи заканчиваются на :fx).</translation>
+        </message>
+        <message>
+            <source>Not set</source>
+            <translation>Не задано</translation>
+        </message>
+        <message>
+            <source>Google Cloud key</source>
+            <translation>Ключ Google Cloud</translation>
+        </message>
+        <message>
+            <source>An API key with Cloud Translation and Cloud Vision turned on.</source>
+            <translation>Ключ API с включёнными Cloud Translation и Cloud Vision.</translation>
+        </message>
+        <message>
+            <source>Language model</source>
+            <translation>Языковая модель</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service: its address up to /v1 (a local Ollama is http://localhost:11434/v1), a model and a key if it needs one.</source>
+            <translation>Любой OpenAI-совместимый сервис: его адрес до /v1 (локальный Ollama — http://localhost:11434/v1), модель и ключ, если нужен.</translation>
+        </message>
+        <message>
+            <source>Model, e.g. gpt-4o-mini</source>
+            <translation>Модель, например gpt-4o-mini</translation>
+        </message>
+        <message>
+            <source>Key (if it needs one)</source>
+            <translation>Ключ (если нужен)</translation>
+        </message>
+        <message>
+            <source>Forget translations</source>
+            <translation>Забыть переводы</translation>
+        </message>
+        <message>
+            <source>Pages and chapters are translated again the next time.</source>
+            <translation>Страницы и главы будут переведены заново в следующий раз.</translation>
+        </message>
+        <message>
+            <source>Forget</source>
+            <translation>Забыть</translation>
+        </message>
+        <message>
+            <source>Translations forgotten</source>
+            <translation>Переводы забыты</translation>
+        </message>
+        <message>
+            <source>Highlight the spoken sentence</source>
+            <translation>Подсвечивать читаемое предложение</translation>
+        </message>
+        <message>
+            <source>Pause between paragraphs</source>
+            <translation>Пауза между абзацами</translation>
+        </message>
+        <message>
+            <source>Pause between sentences</source>
+            <translation>Пауза между предложениями</translation>
+        </message>
+        <message>
+            <source>Voice for a language</source>
+            <translation>Голос для языка</translation>
+        </message>
+        <message>
+            <source>Books in this language are read with this voice.</source>
+            <translation>Книги на этом языке читаются этим голосом.</translation>
+        </message>
+        <message>
+            <source>The voice above</source>
+            <translation>Голос выше</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -6679,6 +7752,113 @@
         <message>
             <source>Another app</source>
             <translation>Другое приложение</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Comics</name>
+        <message>
+            <source>That server is not saved.</source>
+            <translation>Этот сервер не сохранён.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Downloads</name>
+        <message>
+            <source>No chapters of this novel are downloaded. Download some first.</source>
+            <translation>Ни одна глава этой новеллы не скачана. Сначала скачайте несколько.</translation>
+        </message>
+        <message>
+            <source>The book could not be saved in %1.</source>
+            <translation>Не удалось сохранить книгу в %1.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::MediaControls</name>
+        <message>
+            <source>Reading aloud</source>
+            <translation>Чтение вслух</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Party</name>
+        <message>
+            <source>The party could not be reached (%1).</source>
+            <translation>Не удалось связаться с вечеринкой (%1).</translation>
+        </message>
+        <message>
+            <source>Watch parties need scancore.onl (this site has none yet).</source>
+            <translation>Для совместного просмотра нужен scancore.onl (на этом сайте его пока нет).</translation>
+        </message>
+        <message>
+            <source>The party could not be opened.</source>
+            <translation>Не удалось открыть вечеринку.</translation>
+        </message>
+        <message>
+            <source>A party code has six letters and numbers.</source>
+            <translation>Код вечеринки — шесть букв и цифр.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>Вечеринка окончена.</translation>
+        </message>
+        <message>
+            <source>No party with that code.</source>
+            <translation>Нет вечеринки с таким кодом.</translation>
+        </message>
+        <message>
+            <source>The host ended the party.</source>
+            <translation>Ведущий завершил вечеринку.</translation>
+        </message>
+    </context>
+    <context>
+        <name>sc::Translator</name>
+        <message>
+            <source>To translate pages on a computer, add a Google Cloud key in Settings → Reading → Translate (Vision reads the page's text).</source>
+            <translation>Чтобы переводить страницы на компьютере, добавьте ключ Google Cloud в Настройки → Чтение → Перевод (Vision читает текст страницы).</translation>
+        </message>
+        <message>
+            <source>Add a DeepL or Google key, or a model's address, in Settings → Reading → Translate.</source>
+            <translation>Добавьте ключ DeepL или Google либо адрес модели в Настройки → Чтение → Перевод.</translation>
+        </message>
+        <message>
+            <source>Automatic</source>
+            <translation>Автоматически</translation>
+        </message>
+        <message>
+            <source>This phone</source>
+            <translation>Этот телефон</translation>
+        </message>
+        <message>
+            <source>On the phone, with Google Play services</source>
+            <translation>На телефоне, с сервисами Google Play</translation>
+        </message>
+        <message>
+            <source>Google Cloud Vision</source>
+            <translation>Google Cloud Vision</translation>
+        </message>
+        <message>
+            <source>Your Google Cloud key</source>
+            <translation>Ваш ключ Google Cloud</translation>
+        </message>
+        <message>
+            <source>On the phone; a model per language</source>
+            <translation>На телефоне; модель для каждого языка</translation>
+        </message>
+        <message>
+            <source>Your DeepL key</source>
+            <translation>Ваш ключ DeepL</translation>
+        </message>
+        <message>
+            <source>Google Translate</source>
+            <translation>Google Переводчик</translation>
+        </message>
+        <message>
+            <source>A language model</source>
+            <translation>Языковая модель</translation>
+        </message>
+        <message>
+            <source>Any OpenAI-compatible service, or one on your computer</source>
+            <translation>Любой OpenAI-совместимый сервис или сервис на вашем компьютере</translation>
         </message>
     </context>
     <context>
@@ -6950,6 +8130,121 @@
         <message>
             <source>Show as a grid</source>
             <translation>Показать сеткой</translation>
+        </message>
+        <message>
+            <source>Saved %1 chapters as %2</source>
+            <translation>Сохранено глав: %1, файл %2</translation>
+        </message>
+        <message>
+            <source>Show</source>
+            <translation>Показать</translation>
+        </message>
+        <message>
+            <source>Save the %1 downloaded chapters</source>
+            <translation>Сохранить скачанные главы (%1)</translation>
+        </message>
+        <message>
+            <source>Download all %1 chapters, then save</source>
+            <translation>Скачать все главы (%1), затем сохранить</translation>
+        </message>
+        <message>
+            <source>Stop waiting for the downloads</source>
+            <translation>Больше не ждать загрузок</translation>
+        </message>
+        <message>
+            <source>No chapter downloaded, so there is no EPUB to save.</source>
+            <translation>Нет скачанных глав, поэтому сохранять EPUB нечего.</translation>
+        </message>
+        <message>
+            <source>Read in a new window</source>
+            <translation>Читать в новом окне</translation>
+        </message>
+        <message>
+            <source>Listen</source>
+            <translation>Слушать</translation>
+        </message>
+        <message>
+            <source>Downloading for the EPUB…</source>
+            <translation>Скачивание для EPUB…</translation>
+        </message>
+        <message>
+            <source>Save as EPUB</source>
+            <translation>Сохранить как EPUB</translation>
+        </message>
+        <message>
+            <source>Unpin from the hub</source>
+            <translation>Открепить от хаба</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Закрепить на хабе</translation>
+        </message>
+    </context>
+    <context>
+        <name>ServerDialog</name>
+        <message>
+            <source>Trying it…</source>
+            <translation>Проверяем…</translation>
+        </message>
+        <message>
+            <source>Connected: 1 series found.</source>
+            <translation>Подключено: найдена 1 серия.</translation>
+        </message>
+        <message>
+            <source>Connected: %1 series found.</source>
+            <translation>Подключено: найдено серий — %1.</translation>
+        </message>
+        <message>
+            <source>Your server</source>
+            <translation>Ваш сервер</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>Добавить свой сервер</translation>
+        </message>
+        <message>
+            <source>Read the comics on your own Komga, Kavita or Suwayomi server. The login stays on this device.</source>
+            <translation>Читайте комиксы со своего сервера Komga, Kavita или Suwayomi. Данные входа остаются на этом устройстве.</translation>
+        </message>
+        <message>
+            <source>Name (optional)</source>
+            <translation>Имя (необязательно)</translation>
+        </message>
+        <message>
+            <source>Email</source>
+            <translation>Эл. почта</translation>
+        </message>
+        <message>
+            <source>User name</source>
+            <translation>Имя пользователя</translation>
+        </message>
+        <message>
+            <source> (if it asks for one)</source>
+            <translation> (если спросит)</translation>
+        </message>
+        <message>
+            <source>Password (saved; type to change)</source>
+            <translation>Пароль (сохранён; введите, чтобы изменить)</translation>
+        </message>
+        <message>
+            <source>Password</source>
+            <translation>Пароль</translation>
+        </message>
+        <message>
+            <source>API key (saved; type to change)</source>
+            <translation>Ключ API (сохранён; введите, чтобы изменить)</translation>
+        </message>
+        <message>
+            <source>Or an API key, instead of the login</source>
+            <translation>Или ключ API вместо входа</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Закрыть</translation>
+        </message>
+        <message>
+            <source>Save and try</source>
+            <translation>Сохранить и проверить</translation>
         </message>
     </context>
     <context>
@@ -7249,6 +8544,10 @@
         <message>
             <source> · Medium Dev</source>
             <translation> · Medium Dev</translation>
+        </message>
+        <message>
+            <source>Metro</source>
+            <translation>Metro</translation>
         </message>
     </context>
     <context>
@@ -7726,6 +9025,34 @@
         <message>
             <source>Mihon's downloads · </source>
             <translation>Загрузки Mihon · </translation>
+        </message>
+        <message>
+            <source>Your servers</source>
+            <translation>Ваши серверы</translation>
+        </message>
+        <message>
+            <source>Komga, Kavita and Suwayomi servers you run: their comics are a source like the others, searched with them and saved to the library.</source>
+            <translation>Ваши серверы Komga, Kavita и Suwayomi: их комиксы — такой же источник, как остальные, ищутся вместе с ними и сохраняются в библиотеку.</translation>
+        </message>
+        <message>
+            <source>Change</source>
+            <translation>Изменить</translation>
+        </message>
+        <message>
+            <source>Open in the browser</source>
+            <translation>Открыть в браузере</translation>
+        </message>
+        <message>
+            <source>Add your server</source>
+            <translation>Добавить свой сервер</translation>
+        </message>
+        <message>
+            <source>Diagnostics</source>
+            <translation>Диагностика</translation>
+        </message>
+        <message>
+            <source>Whether the extensions runtime answers, a quick test of a source, and the sites each extension contacted.</source>
+            <translation>Отвечает ли среда расширений, быстрая проверка источника и сайты, к которым обращалось каждое расширение.</translation>
         </message>
     </context>
     <context>
@@ -8408,6 +9735,22 @@
             <source>Saved </source>
             <translation>Сохранено </translation>
         </message>
+        <message>
+            <source>Metro colours</source>
+            <translation>Цвета Metro</translation>
+        </message>
+        <message>
+            <source>The accent colours of Windows Phone, or any colour from the wheel. Tiles, the hub title and switches take it.</source>
+            <translation>Акцентные цвета Windows Phone или любой цвет с круга. Его берут плитки, заголовок хаба и переключатели.</translation>
+        </message>
+        <message>
+            <source>Custom colour</source>
+            <translation>Свой цвет</translation>
+        </message>
+        <message>
+            <source>Tile colour</source>
+            <translation>Цвет плиток</translation>
+        </message>
     </context>
     <context>
         <name>TrackerConnect</name>
@@ -8604,6 +9947,13 @@
         <message>
             <source>Connect a tracker such as AniList, MyAnimeList or Kitsu in Settings → Connections to keep your lists there up to date.</source>
             <translation>Подключите трекер, например AniList, MyAnimeList или Kitsu, в разделе Настройки → Подключения, чтобы ваши списки там обновлялись.</translation>
+        </message>
+    </context>
+    <context>
+        <name>TranslationLayer</name>
+        <message>
+            <source>Translating…</source>
+            <translation>Перевод…</translation>
         </message>
     </context>
     <context>
@@ -9027,6 +10377,34 @@
         <message>
             <source>Close player</source>
             <translation>Закрыть плеер</translation>
+        </message>
+        <message>
+            <source>Built-in</source>
+            <translation>Встроенные</translation>
+        </message>
+        <message>
+            <source>More…</source>
+            <translation>Ещё…</translation>
+        </message>
+        <message>
+            <source>Keep SCANCORE open while it plays there: the video comes through it.</source>
+            <translation>Не закрывайте SCANCORE, пока там идёт видео: оно проходит через него.</translation>
+        </message>
+        <message>
+            <source>The party is over.</source>
+            <translation>Вечеринка окончена.</translation>
+        </message>
+        <message>
+            <source>Watch party (%1)</source>
+            <translation>Совместный просмотр (%1)</translation>
+        </message>
+        <message>
+            <source>Watch together</source>
+            <translation>Смотреть вместе</translation>
+        </message>
+        <message>
+            <source>Open in a new window</source>
+            <translation>Открыть в новом окне</translation>
         </message>
     </context>
     <context>
