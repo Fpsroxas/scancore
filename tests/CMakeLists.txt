@@ -25,7 +25,7 @@ target_link_libraries(scancore_text_tests PRIVATE scancore_core Qt6::Test)
 add_test(NAME text COMMAND scancore_text_tests)
 
 # Anime episodes saved for offline playback (HLS, files).
-qt_add_executable(scancore_video_tests tst_video.cpp)
+qt_add_executable(scancore_video_tests tst_video.cpp ${PROJECT_SOURCE_DIR}/src/app/CastProxy.cpp ${PROJECT_SOURCE_DIR}/src/app/CastProxy.h)
 target_link_libraries(scancore_video_tests PRIVATE scancore_core Qt6::Test)
 add_test(NAME video COMMAND scancore_video_tests)
 

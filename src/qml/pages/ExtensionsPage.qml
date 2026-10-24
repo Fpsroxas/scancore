@@ -129,6 +129,7 @@ Item {
                 subtitle: page.installedList.length + (page.installedList.length === 1 ? qsTr(" installed") : qsTr(" installed"))
                     + " · " + page.repositories.length + (page.repositories.length === 1 ? qsTr(" repository") : qsTr(" repositories"))
                 ScButton { text: qsTr("Add repository"); iconName: "plus"; variant: "primary"; onClicked: Router.addRepository("") }
+                IconButton { iconName: "gauge"; filled: true; tip: qsTr("Diagnostics"); onClicked: Router.openExtensionsDiagnostics() }
             }
 
             // Updates, where they are looked for: what is ready, or when

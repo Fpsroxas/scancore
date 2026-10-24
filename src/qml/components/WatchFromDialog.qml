@@ -50,6 +50,19 @@ Dialog {
         else if (task.done) task.ok ? decide(task.result) : open()
     }
 
+    // Looks only in `keys` and plays the match when there is one to pick
+    // (the source chips on the watch page); asks otherwise.
+    function startWith(entry, keys) {
+        media = entry
+        quiet = true
+        picked = false
+        seasonsTask = null
+        seasonsOf = null
+        ticked = Array.from(keys)
+        search()
+        if (task.done) task.ok ? decide(task.result) : open()
+    }
+
     function choose(match) {
         if (match.seasons) {
             seasonsOf = match

@@ -107,6 +107,36 @@ Rectangle {
         }
         return out
     }
+    // Where tracker anime can play from, as chips in the server area: the
+    // built-in servers, the source in use and a few more (the ones ticked
+    // for matching first), never every installed extension; More… has
+    // the rest.
+    readonly property var sourceChips: {
+        if (fromSource || !hasSources) return []
+        const all = Anime.sources().filter(s => s.enabled)
+        const keys = []
+        if (provider.source) keys.push(provider.source)
+        for (const k of Array.from(App.settings.animeMatchSources || []))
+            if (keys.length < 4 && keys.indexOf(k) < 0 && all.some(s => s.key === k)) keys.push(k)
+        for (const s of all)
+            if (keys.length < 4 && keys.indexOf(s.key) < 0) keys.push(s.key)
+        const out = Anime.playerEngine !== "" ? [{ key: "", label: qsTr("Built-in") }] : []
+        for (const k of keys) out.push({ key: k, label: Anime.sourceLabel(k) })
+        if (all.length > keys.length) out.push({ key: "more", label: qsTr("More…") })
+        return out
+    }
+    function pickSource(key) {
+        if (key === "more") return watchFrom.start(media, false)
+        if (key === (provider.source || "")) return
+        if (!key) {
+            Anime.setProvider(media.anilistId || 0, {})
+            provider = { builtIn: true }
+            load(index)
+            return
+        }
+        watchFrom.startWith(media, [key])
+    }
+
     // A video's own chapters, else AniSkip's.
     readonly property var skips: currentVideo.skips && currentVideo.skips.length ? currentVideo.skips
                                : skipTask && skipTask.ok ? skipTask.result : []
@@ -360,6 +390,9 @@ Rectangle {
         if (Anime.openExternally(p.id, video, (series.title || "") + " · " + qsTr("Episode ") + (episode.number || ""), position)) {
             saveProgress(true)
             if (player.item && player.item.player) player.item.player.paused = true
+            // The stream reaches the other player through SCANCORE.
+            if (Anime.relayedExternally(video))
+                Router.toast(qsTr("Keep SCANCORE open while it plays there: the video comes through it."), "info")
         } else
             Router.toast(qsTr("Could not open it there."), "error")
     }
@@ -959,6 +992,17 @@ Rectangle {
             spacing: 6
             visible: !watch.phone
             Repeater {
+                model: watch.sourceChips
+                Chip {
+                    required property var modelData
+                    text: modelData.label
+                    iconName: modelData.key === "more" ? "" : "server"
+                    selected: modelData.key === (watch.provider.source || "")
+                    onClicked: watch.pickSource(modelData.key)
+                }
+            }
+            Rectangle { visible: watch.sourceChips.length > 0 && watch.streams.length > 0; width: 1; height: 20; color: "#3f3f46"; anchors.verticalCenter: parent.verticalCenter }
+            Repeater {
                 model: watch.streams
                 Chip {
                     required property var modelData
@@ -1150,6 +1194,17 @@ Rectangle {
                         id: chips
                         spacing: 6
                         anchors.verticalCenter: parent.verticalCenter
+                        Repeater {
+                            model: watch.sourceChips
+                            Chip {
+                                required property var modelData
+                                text: modelData.label
+                                iconName: modelData.key === "more" ? "" : "server"
+                                selected: modelData.key === (watch.provider.source || "")
+                                onClicked: watch.pickSource(modelData.key)
+                            }
+                        }
+                        Rectangle { visible: watch.sourceChips.length > 0 && watch.streams.length > 0; width: 1; height: 20; color: "#3f3f46"; anchors.verticalCenter: parent.verticalCenter }
                         Repeater {
                             model: watch.streams
                             Chip {

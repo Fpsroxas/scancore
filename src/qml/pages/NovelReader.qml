@@ -860,14 +860,14 @@ Rectangle {
             visible: Speech.available
             width: parent.width; from: 0.5; to: 3; stepSize: 0.05; value: Number(App.settings.ttsRate) || 1
             onMoved: App.setSetting("ttsRate", Math.round(value * 100) / 100)
-            onPressedChanged: if (!pressed && opts.reader.speaking) opts.reader.startSpeaking(opts.reader.spokenBlock)
+            onPressedChanged: if (!pressed) opts.reader.restartVoice()
         }
         OptionLabel { visible: Speech.available; text: qsTr("Voice pitch · %1×").arg(Number(App.settings.ttsPitch || 1).toFixed(2)) }
         ScSlider {
             visible: Speech.available
             width: parent.width; from: 0.5; to: 2; stepSize: 0.05; value: Number(App.settings.ttsPitch) || 1
             onMoved: App.setSetting("ttsPitch", Math.round(value * 100) / 100)
-            onPressedChanged: if (!pressed && opts.reader.speaking) opts.reader.startSpeaking(opts.reader.spokenBlock)
+            onPressedChanged: if (!pressed) opts.reader.restartVoice()
         }
         OptionSwitch { visible: Speech.available; text: qsTr("Go on to the next chapter"); checked: App.settings.ttsContinue !== false; onToggled: (c) => App.setSetting("ttsContinue", c) }
         OptionSwitch { visible: Speech.available; text: qsTr("Keep the spoken paragraph on screen"); checked: App.settings.ttsFollow !== false; onToggled: (c) => App.setSetting("ttsFollow", c) }

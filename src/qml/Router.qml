@@ -66,6 +66,7 @@ QtObject {
     // One source's own popular, latest and filtered lists.
     function openSource(key) { push("pages/SourcePage.qml", { sourceKey: key }) }
     function openExtensions() { push("pages/ExtensionsPage.qml", {}) }
+    function openExtensionsDiagnostics() { push("pages/ExtensionsDiagnostics.qml", {}) }
     function toast(message, kind, action) { if (shell) shell.toast(message, kind || "info", action) }
 
     // item: a search/library map with id, media, sourceUrl, title, cover.

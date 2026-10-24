@@ -129,6 +129,12 @@ SettingsPane {
             description: qsTr("Paste a repository link, or open one from a repository's page with SCANCORE.")
             ScButton { text: qsTr("Add"); onClicked: Router.addRepository("") }
         }
+        SettingRow {
+            iconName: "gauge"
+            title: qsTr("Diagnostics")
+            description: qsTr("Whether the extensions runtime answers, a quick test of a source, and the sites each extension contacted.")
+            ScButton { text: qsTr("Open"); variant: "ghost"; onClicked: Router.openExtensionsDiagnostics() }
+        }
         // For bug reports: what extensions reported (computers).
         SettingRow {
             visible: App.platform !== "android" && pane.hostLog !== ""
