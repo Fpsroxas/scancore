@@ -52,6 +52,11 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.12.3" date="2026-10-25">
+      <description>
+        <p>Fixes pages that could stay empty in the Retro look, such as Settings.</p>
+      </description>
+    </release>
     <release version="2.12.2" date="2026-10-25">
       <description>
         <p>Fixes pages and readers that could open empty in 2.12.1, and makes Settings and the player work with a TV's remote. Includes everything from 2.12.1.</p>

@@ -213,9 +213,7 @@ qt_add_resources(scancore assets
         ${PROJECT_SOURCE_DIR}/resources/shaders/cover.frag.qsb
         ${PROJECT_SOURCE_DIR}/resources/shaders/title.frag.qsb
         ${PROJECT_SOURCE_DIR}/resources/shaders/panel.vert.qsb
-        ${PROJECT_SOURCE_DIR}/resources/shaders/panel.frag.qsb
-        ${PROJECT_SOURCE_DIR}/resources/shaders/turnstile.vert.qsb
-        ${PROJECT_SOURCE_DIR}/resources/shaders/turnstile.frag.qsb)
+        ${PROJECT_SOURCE_DIR}/resources/shaders/panel.frag.qsb)
 foreach(icon ${SCANCORE_ICONS})
     list(APPEND SCANCORE_ICON_PATHS ${PROJECT_SOURCE_DIR}/${icon})
 endforeach()

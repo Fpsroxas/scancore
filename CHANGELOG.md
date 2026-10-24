@@ -2,6 +2,12 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.12.3 — 2026-10-25
+
+Retro's pages show again: Settings and other pages could stay empty in the Retro look.
+
+- **Retro page turns** are back to the way 2.12.0 drew them. The page drawn as one turning picture (2.12.1) could leave the page itself hidden, so a section such as Settings stayed empty under the app bar.
+
 ## 2.12.2 — 2026-10-25
 
 Fixes the empty pages of 2.12.1, which was withdrawn, and makes SCANCORE easier to use with a TV's remote. Everything 2.12.1 brought is in this release too (below).

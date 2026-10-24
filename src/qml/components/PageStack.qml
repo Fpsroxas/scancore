@@ -12,58 +12,25 @@ StackView {
 
     Component.onCompleted: if (initial) push(Qt.resolvedUrl("../" + initial), {}, StackView.Immediate)
 
-    // The turnstile's doors: while a page turns it is drawn as one picture
-    // (ShaderEffectSource) turned by a shader whose angle a UniformAnimator
-    // drives on the render thread. The turn stays smooth while the page it
-    // opens builds itself on the interface thread, and the page is one quad
-    // in 3D instead of every node in it, which keeps the GPU's batching.
+    // The turnstile's doors. A transition only animates its item's own
+    // properties, so the pages get these as transforms while it runs.
     property Item leaving: null
     property Item showing: null
     onCurrentItemChanged: {
         leaving = showing
         showing = currentItem
-        // The doors take the pages at once: StackView shows the new page in
-        // this very frame, and a transition's first step only runs at the
-        // next tick, which flashed the page flat before it turned. Without
-        // a transition (the first page, an immediate push) they let go.
-        if (!turnstile || !leaving || leaving === showing) return
-        hinge(inDoor, showing, 0, false)
-        hinge(outDoor, leaving, 0, true)
-        Qt.callLater(() => { if (!stack.busy) stack.unhinge() })
     }
-    component Door: ShaderEffect {
-        id: door
-        property Item page: null
-        property real angle: 0
-        readonly property real hingeX: 0
-        readonly property real hingeY: height / 2
-        readonly property var source: ShaderEffectSource {
-            sourceItem: door.page
-            hideSource: true
-            live: true
-        }
-        x: page ? page.x : 0
-        y: page ? page.y : 0
-        width: page ? page.width : 0
-        height: page ? page.height : 0
-        z: 1
-        visible: false
-        vertexShader: "qrc:/shaders/turnstile.vert.qsb"
-        fragmentShader: "qrc:/shaders/turnstile.frag.qsb"
-    }
-    Door { id: inDoor }
-    Door { id: outDoor }
-    function hinge(door, page, angle, shown) {
-        door.page = page
-        door.angle = angle
-        door.visible = shown && page !== null
+    Rotation { id: inTurn; origin.x: 0; origin.y: stack.height / 2; axis { x: 0; y: 1; z: 0 } }
+    Rotation { id: outTurn; origin.x: 0; origin.y: stack.height / 2; axis { x: 0; y: 1; z: 0 } }
+    function hinge() {
+        if (stack.showing) stack.showing.transform = [inTurn]
+        if (stack.leaving && stack.leaving !== stack.showing) stack.leaving.transform = [outTurn]
     }
     function unhinge() {
-        for (const door of [inDoor, outDoor]) {
-            door.visible = false
-            door.page = null
-            door.angle = 0
-        }
+        for (const item of [stack.showing, stack.leaving])
+            if (item) item.transform = []
+        inTurn.angle = 0
+        outTurn.angle = 0
     }
 
     // Forward: the old page swings away into the screen, the new one comes
@@ -71,45 +38,40 @@ StackView {
     Transition {
         id: turnForwardIn
         SequentialAnimation {
-            ScriptAction { script: stack.hinge(inDoor, stack.showing, -80, false) }
+            ScriptAction { script: { stack.hinge(); inTurn.angle = -80 } }
+            PropertyAction { property: "opacity"; value: 0 }
             PauseAnimation { duration: Motion.fast }
-            ScriptAction { script: inDoor.visible = inDoor.page !== null }
-            UniformAnimator { target: inDoor; uniform: "angle"; from: -80; to: 0; duration: Motion.normal; easing.type: Easing.OutCubic }
+            PropertyAction { property: "opacity"; value: 1 }
+            NumberAnimation { target: inTurn; property: "angle"; from: -80; to: 0; duration: Motion.normal; easing.type: Easing.OutCubic }
             ScriptAction { script: stack.unhinge() }
         }
     }
     Transition {
         id: turnForwardOut
         SequentialAnimation {
-            ScriptAction { script: stack.hinge(outDoor, stack.leaving !== stack.showing ? stack.leaving : null, 0, true) }
-            UniformAnimator { target: outDoor; uniform: "angle"; from: 0; to: 60; duration: Motion.fast; easing.type: Easing.InCubic }
-            ScriptAction { script: outDoor.visible = false }
+            NumberAnimation { target: outTurn; property: "angle"; from: 0; to: 60; duration: Motion.fast; easing.type: Easing.InCubic }
+            PropertyAction { property: "opacity"; value: 0 }
         }
     }
     Transition {
         id: turnBackIn
         SequentialAnimation {
-            ScriptAction { script: stack.hinge(inDoor, stack.showing, 60, false) }
+            ScriptAction { script: { stack.hinge(); inTurn.angle = 60 } }
+            PropertyAction { property: "opacity"; value: 0 }
             PauseAnimation { duration: Motion.fast }
-            ScriptAction { script: inDoor.visible = inDoor.page !== null }
-            UniformAnimator { target: inDoor; uniform: "angle"; from: 60; to: 0; duration: Motion.normal; easing.type: Easing.OutCubic }
+            PropertyAction { property: "opacity"; value: 1 }
+            NumberAnimation { target: inTurn; property: "angle"; from: 60; to: 0; duration: Motion.normal; easing.type: Easing.OutCubic }
             ScriptAction { script: stack.unhinge() }
         }
     }
     Transition {
         id: turnBackOut
         SequentialAnimation {
-            ScriptAction { script: stack.hinge(outDoor, stack.leaving !== stack.showing ? stack.leaving : null, 0, true) }
-            UniformAnimator { target: outDoor; uniform: "angle"; from: 0; to: -80; duration: Motion.fast; easing.type: Easing.InCubic }
-            ScriptAction { script: outDoor.visible = false }
+            NumberAnimation { target: outTurn; property: "angle"; from: 0; to: -80; duration: Motion.fast; easing.type: Easing.InCubic }
+            PropertyAction { property: "opacity"; value: 0 }
         }
     }
 
-    // NumberAnimations, not Animators: StackView applies the push
-    // transition's starting values to the first page too (pushed with
-    // StackView.Immediate), and an Animator never puts its end value back
-    // when it does not run, so the page stayed at opacity 0 and every
-    // section showed blank (2.12.1).
     Transition {
         id: slideIn
         ParallelAnimation {
