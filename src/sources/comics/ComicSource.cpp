@@ -91,6 +91,8 @@ std::unique_ptr<Source> createSource(const SourceConfig &config) {
         return std::make_unique<InMangaSource>(config);
     if (e == QLatin1String("leercapitulo"))
         return std::make_unique<LeerCapituloSource>(config);
+    if (e == QLatin1String("mangasin"))
+        return std::make_unique<MangaSinSource>(config);
     if (e == QLatin1String("dongman"))
         return std::make_unique<DongmanSource>(config);
     if (e == QLatin1String("kakaopage"))

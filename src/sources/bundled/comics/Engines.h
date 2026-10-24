@@ -166,6 +166,32 @@ public:
     static QList<Panel> parsePanels(const QByteArray &html, const QString &pageUrl);
 };
 
+// MangaSin / Mangas.in (Spanish, m440.in): an MMRCMS site whose chapter
+// list is encrypted with CryptoJS. The passphrase sits in the site's own
+// obfuscated script; SCANCORE runs that script in a sandbox with a
+// CryptoJS that only notes the passphrase it is given (so a new
+// obfuscation changes nothing), and keeps it. The manifest can give one too
+// (options.key).
+class MangaSinSource : public Source {
+public:
+    using Source::Source;
+    QList<Summary> search(const QString &query) override;
+    QList<Chapter> chapters(const QString &seriesUrl) override;
+    QList<Panel> panels(const QString &chapterUrl) override;
+    std::optional<Details> details(const QString &seriesUrl) override;
+
+    static QList<Summary> parseSearch(const QByteArray &json, const QString &base);
+    // The encrypted list in a series page, decrypted with `key`; nullopt
+    // when the key does not open it.
+    static std::optional<QList<Chapter>> parseChapters(const QByteArray &html, const QString &seriesUrl, const QByteArray &key);
+    static QList<Panel> parsePanels(const QByteArray &html, const QString &base);
+    // The passphrase a site script hands CryptoJS.AES.decrypt, or empty.
+    static QByteArray keyFromScript(const QByteArray &script);
+
+private:
+    QByteArray currentKey(bool fresh);
+};
+
 // WordPress manga themes (MangaReader/MangaStream).
 // Naver Webtoon (Korean): the site's own JSON API and viewer pages. Lists
 // the episodes anyone can read without an account (not paid previews or

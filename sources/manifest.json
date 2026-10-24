@@ -1,6 +1,6 @@
 {
-  "version": 7,
-  "updated": "2026-10-23",
+  "version": 8,
+  "updated": "2026-10-24",
   "comics": [
     {
       "key": "asura",
@@ -252,6 +252,25 @@
       "minVersion": "1.5.0",
       "options": {
         "titleSuffix": "ES"
+      }
+    },
+    {
+      "key": "mangasin",
+      "label": "MangaSin",
+      "engine": "mangasin",
+      "base": "https://m440.in",
+      "hosts": [
+        "m440.in",
+        "s1.m440.in"
+      ],
+      "language": "es",
+      "minVersion": "2.12.0",
+      "options": {
+        "key": "X^Ib1O*HLVh%3W2t",
+        "keyScripts": [
+          "/js/exis.js",
+          "/js/ads2.js"
+        ]
       }
     },
     {

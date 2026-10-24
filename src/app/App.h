@@ -85,6 +85,8 @@ public:
     Q_INVOKABLE double mediaVolume() const;
     Q_INVOKABLE void setMediaVolume(double level) const;
     Q_INVOKABLE void setBarIcons(bool darkScreen) const;
+    // Android: the system bars shown or hidden (readers on full screen).
+    Q_INVOKABLE void setSystemBars(bool shown) const;
     // Keeps the screen on while `holder` wants it (a playing video).
     Q_INVOKABLE void keepAwake(const QString &holder, bool on) const;
     // Android: volume keys come as volumeKey() instead of changing the

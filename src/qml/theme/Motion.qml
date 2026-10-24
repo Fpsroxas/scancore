@@ -32,8 +32,11 @@ QtObject {
     // at 1500 px/s²) and the harder braking used before stopped a swipe
     // within a second of the finger lifting (#22). Settings → Interface →
     // Fling glide picks the braking.
-    readonly property real flickVelocity: Theme.touch ? 8000 : 5000
-    readonly property real flickDeceleration: ({ short: 3500, long: 1250 })[App.settings.flingGlide] || 2000
+    // Phones a little quicker still (users found 8000 and 2000 slow on
+    // 120 Hz phones such as the realme GT 6T): a swipe goes further.
+    readonly property real flickVelocity: Theme.touch ? 11000 : 5000
+    readonly property real flickDeceleration: Theme.touch ? (({ short: 3000, long: 1000 })[App.settings.flingGlide] || 1600)
+                                                          : (({ short: 3500, long: 1250 })[App.settings.flingGlide] || 2000)
 
     function stagger(index) {
         return ms(Math.min(index, 16) * 24)

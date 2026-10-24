@@ -10,6 +10,10 @@ add_library(scancore_core STATIC
     core/Parallel.cpp
     core/QuietSites.cpp
     core/Text.cpp
+    core/Epub.cpp
+    core/Aes.cpp
+    core/translation/Layout.cpp
+    core/translation/Cloud.cpp
     core/StreamRelay.cpp
     core/VideoSave.cpp
     core/UpdateRules.cpp
@@ -51,6 +55,7 @@ if(SCANCORE_WITH_BUNDLED_SOURCES)
     target_sources(scancore_core PRIVATE
         sources/bundled/comics/ApiEngines.cpp
         sources/bundled/comics/PageEngines.cpp
+        sources/bundled/comics/EsEngines.cpp
         sources/bundled/novels/Engines.cpp
         sources/bundled/novels/WtrLab.cpp)
     target_compile_definitions(scancore_core PUBLIC SCANCORE_BUNDLED_SOURCES)
@@ -139,6 +144,7 @@ qt_add_qml_module(scancore
         app/Speech.cpp app/Speech.h
         app/ReadAloud.cpp app/ReadAloud.h
         app/MediaControls.cpp app/MediaControls.h
+        app/Translator.cpp app/Translator.h
         app/Trackers.cpp app/Trackers.h app/MoreTrackers.cpp app/TrackerCommon.h
         app/Story.cpp app/Story.h app/Upkeep.cpp app/Upkeep.h
         app/Sync.cpp app/Sync.h

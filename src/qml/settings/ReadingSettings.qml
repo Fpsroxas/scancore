@@ -53,6 +53,13 @@ SettingsPane {
             description: qsTr("The screen does not dim or lock while a reader is open. Videos always keep it on while they play.")
             Toggle { checked: App.settings.readerKeepAwake !== false; onToggled: App.setSetting("readerKeepAwake", checked) }
         }
+        SettingRow {
+            visible: App.platform === "android"
+            iconName: "maximize"
+            title: qsTr("Full screen while reading")
+            description: qsTr("The status and navigation bars hide with the reader's controls, so pages fill the screen, beside a punch hole too. Swipe from the edge to see them.")
+            Toggle { checked: App.settings.readerHideBars !== false; onToggled: App.setSetting("readerHideBars", checked) }
+        }
     }
 
     SettingsGroup {
@@ -476,6 +483,106 @@ SettingsPane {
                 spacing: 12
                 ScSlider { width: pane.sliderWidth; from: 0; to: 0.8; stepSize: 0.05; value: Number(App.settings.novelDim) || 0; onMoved: App.setSetting("novelDim", Math.round(value * 100) / 100) }
                 Readout { text: Math.round((Number(App.settings.novelDim) || 0) * 100) + "%" }
+            }
+        }
+    }
+
+    // Translating comic pages and novel chapters (Translator).
+    SettingsGroup {
+        title: qsTr("Translate")
+        note: Translator.pagesReady ? qsTr("Comic readers have Translate the pages in their top bar. Keys stay on this device and are only sent to their own service.")
+                                    : Translator.hint
+        SettingRow {
+            iconName: "languages"
+            title: qsTr("Translate into")
+            Select {
+                model: Customize.languages
+                value: Translator.target
+                onPicked: (v) => App.setSetting("translateTarget", v)
+            }
+        }
+        SettingRow {
+            iconName: "scroll-text"
+            title: qsTr("Read the page's text with")
+            description: qsTr("Finds the text in a comic's pages.")
+            Select {
+                model: Translator.readers()
+                value: App.settings.translateReader || "auto"
+                onPicked: (v) => App.setSetting("translateReader", v)
+            }
+        }
+        SettingRow {
+            iconName: "globe"
+            title: qsTr("Translate with")
+            Select {
+                model: Translator.translators()
+                value: App.settings.translateText || "auto"
+                onPicked: (v) => App.setSetting("translateText", v)
+            }
+        }
+        SettingRow {
+            iconName: "lock"
+            title: qsTr("DeepL key")
+            description: qsTr("From your DeepL account (free keys end in :fx).")
+            InlineField {
+                width: 220
+                echoMode: TextInput.PasswordEchoOnEdit
+                text: App.settings.translateDeeplKey || ""
+                placeholderText: qsTr("Not set")
+                onEditingFinished: App.setSetting("translateDeeplKey", text.trim())
+            }
+        }
+        SettingRow {
+            iconName: "lock"
+            title: qsTr("Google Cloud key")
+            description: qsTr("An API key with Cloud Translation and Cloud Vision turned on.")
+            InlineField {
+                width: 220
+                echoMode: TextInput.PasswordEchoOnEdit
+                text: App.settings.translateGoogleKey || ""
+                placeholderText: qsTr("Not set")
+                onEditingFinished: App.setSetting("translateGoogleKey", text.trim())
+            }
+        }
+        SettingRow {
+            iconName: "server"
+            title: qsTr("Language model")
+            description: qsTr("Any OpenAI-compatible service: its address up to /v1 (a local Ollama is http://localhost:11434/v1), a model and a key if it needs one.")
+            wide: true
+            Column {
+                spacing: 8
+                InlineField {
+                    width: 260
+                    text: App.settings.translateChatUrl || ""
+                    placeholderText: "https://api.openai.com/v1"
+                    onEditingFinished: App.setSetting("translateChatUrl", text.trim())
+                }
+                InlineField {
+                    width: 260
+                    text: App.settings.translateChatModel || ""
+                    placeholderText: qsTr("Model, e.g. gpt-4o-mini")
+                    onEditingFinished: App.setSetting("translateChatModel", text.trim())
+                }
+                InlineField {
+                    width: 260
+                    echoMode: TextInput.PasswordEchoOnEdit
+                    text: App.settings.translateChatKey || ""
+                    placeholderText: qsTr("Key (if it needs one)")
+                    onEditingFinished: App.setSetting("translateChatKey", text.trim())
+                }
+            }
+        }
+        SettingRow {
+            iconName: "trash"
+            title: qsTr("Forget translations")
+            description: qsTr("Pages and chapters are translated again the next time.")
+            ScButton {
+                text: qsTr("Forget")
+                variant: "ghost"
+                onClicked: {
+                    Translator.clearCache()
+                    Router.toast(qsTr("Translations forgotten"))
+                }
             }
         }
     }

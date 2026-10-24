@@ -57,6 +57,16 @@ Rectangle {
     readonly property string direction: opt("readerDirection", "ltr") === "rtl" ? "rtl" : "ltr"
     readonly property int gap: opt("readerGap", 0)
     readonly property bool crop: opt("readerCrop", false) === true
+    // Pages translated over (Translator), from the source's language.
+    // SCANCORE_START {"translate": true} opens readers translating (tests).
+    property bool translating: App.startAction.translate === true
+    readonly property string translateFrom: {
+        const key = reader.series.source || ""
+        const found = key ? Comics.sources().find(s => s.key === key) : null
+        return found && found.language ? String(found.language) : ""
+    }
+    // Small scans enlarged: sharpened as they are (0 off, to 1).
+    readonly property real sharpen: Number(opt("readerSharpen", 0)) || 0
     readonly property int stripWidth: Math.min(width, opt("readerWidth", 820))
     // Colour filter: brightness and warmth are shades over the page (they
     // change live); grey and invert are applied while pages decode.
@@ -102,6 +112,11 @@ Rectangle {
     clip: true
     readonly property real insetTop: SafeArea.margins.top
     readonly property real insetBottom: SafeArea.margins.bottom
+    // Phones: on full screen while the controls are hidden (Settings →
+    // Reading → Hide the status bar), pages to the very top, beside a punch
+    // hole too.
+    readonly property bool barsHidden: App.platform === "android" && App.settings.readerHideBars !== false && !controlsShown
+    onBarsHiddenChanged: App.setSystemBars(!barsHidden)
 
     color: "#000000"
     focus: true
@@ -135,6 +150,7 @@ Rectangle {
         App.setVolumeKeys(volumeKeys)
     }
     Component.onDestruction: {
+        App.setSystemBars(true)
         App.keepAwake("reader", false)
         App.setVolumeKeys(false)
         Activity.setMedia("")
@@ -381,9 +397,17 @@ Rectangle {
                 source: panelItem.modelData.url
                 referer: reader.referer
                 filter: reader.imageFilter
+                sharpen: reader.sharpen
                 maxDecodeWidth: 2400
                 opacity: status === PanelImage.Ready ? 1 : 0
                 Behavior on opacity { NumberAnimation { duration: Motion.normal } }
+            }
+            TranslationLayer {
+                anchors.fill: image
+                translating: reader.translating
+                url: panelItem.modelData.url
+                referer: reader.referer
+                from: reader.translateFrom
             }
             Column {
                 anchors.centerIn: parent
@@ -601,10 +625,24 @@ Rectangle {
                         referer: reader.referer
                         cropBorders: reader.crop
                         filter: reader.imageFilter
+                        sharpen: reader.sharpen
                         half: pageView.half
                         maxDecodeWidth: 2400
                         // A half is half the page's width.
                         onLoaded: pageView.noteShape(pageView.shown[0], half ? sourceWidth * 2 : sourceWidth, sourceHeight)
+                    }
+                    // Translated over (not with borders cropped, whose
+                    // edges the translation does not know).
+                    TranslationLayer {
+                        x: pageImage.x
+                        y: pageImage.y
+                        width: pageImage.width
+                        height: pageImage.height
+                        translating: reader.translating && !reader.crop
+                        url: pageImage.source
+                        referer: reader.referer
+                        from: reader.translateFrom
+                        half: pageImage.half
                     }
                     PanelImage {
                         id: secondImage
@@ -622,8 +660,20 @@ Rectangle {
                         referer: reader.referer
                         cropBorders: reader.crop
                         filter: reader.imageFilter
+                        sharpen: reader.sharpen
                         maxDecodeWidth: 2400
                         onLoaded: pageView.noteShape(pageView.shown[1], sourceWidth, sourceHeight)
+                    }
+                    TranslationLayer {
+                        visible: pages.two && translating
+                        x: secondImage.x
+                        y: secondImage.y
+                        width: secondImage.width
+                        height: secondImage.height
+                        translating: reader.translating && !reader.crop && pages.two
+                        url: secondImage.source
+                        referer: reader.referer
+                        from: reader.translateFrom
                     }
                 }
             }
@@ -672,6 +722,7 @@ Rectangle {
                 referer: reader.referer
                 cropBorders: reader.crop
                 filter: reader.imageFilter
+                sharpen: reader.sharpen
                 maxDecodeWidth: 2400
                 onLoaded: pageView.noteShape(modelData, sourceWidth, sourceHeight)
             }
@@ -932,7 +983,7 @@ Rectangle {
         z: 3
         width: parent.width
         height: reader.insetTop
-        visible: height > 0
+        visible: height > 0 && !reader.barsHidden
         color: Qt.rgba(0, 0, 0, 0.6)
     }
 
@@ -1031,6 +1082,19 @@ Rectangle {
                 iconColor: "white"
                 tip: qsTr("Comments")
                 onClicked: comments.open()
+            }
+            IconButton {
+                diameter: topActions.button
+                iconName: "languages"
+                iconColor: reader.translating ? Theme.accent : "white"
+                tip: reader.translating ? qsTr("Show the original") : qsTr("Translate the pages")
+                onClicked: {
+                    if (!reader.translating && !Translator.pagesReady) {
+                        Router.toast(Translator.hint, "info")
+                        return
+                    }
+                    reader.translating = !reader.translating
+                }
             }
             ContinueOn {
                 diameter: topActions.button
@@ -1231,6 +1295,13 @@ Rectangle {
                         onToggled: reader.setOpt("readerInvert", checked)
                     }
                     Label { text: qsTr("Invert colours") }
+                }
+                // Small scans, enlarged: sharper lines (resources/shaders/panel.frag).
+                Heading { text: qsTr("Sharpen small scans") }
+                Segmented {
+                    options: [{ value: 0, label: qsTr("Off") }, { value: 0.35, label: qsTr("Light") }, { value: 0.75, label: qsTr("Strong") }]
+                    value: reader.sharpen >= 0.6 ? 0.75 : reader.sharpen > 0 ? 0.35 : 0
+                    onPicked: (v) => reader.setOpt("readerSharpen", v)
                 }
 
                 Rectangle { width: parent.width; height: 1; color: "#2a2a30" }

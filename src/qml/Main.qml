@@ -321,6 +321,10 @@ ApplicationWindow {
         // The parent's safe area, so these margins do not feed back into it.
         anchors.topMargin: parent.SafeArea.margins.top
         anchors.bottomMargin: parent.SafeArea.margins.bottom
+        // Phones on their side: clear of a punch hole or notch at the side
+        // (the window draws into the cutout, Screen.java).
+        anchors.leftMargin: parent.SafeArea.margins.left
+        anchors.rightMargin: parent.SafeArea.margins.right
         enabled: !window.immersiveOpen
         opacity: window.immersiveOpen ? 0 : 1
         scale: window.immersiveOpen ? 0.985 : 1
@@ -355,10 +359,9 @@ ApplicationWindow {
             anchors.left: window.sidebarShown && window.navSide === "left" ? sidebar.right : parent.left
             anchors.right: window.sidebarShown && window.navSide === "right" ? sidebar.left : parent.right
             anchors.top: dock.visible && window.navSide === "top" ? dock.bottom : parent.top
-            anchors.bottom: readAloudBar.shown ? readAloudBar.top
-                : metroBar.visible ? metroBar.top : tabBar.visible ? tabBar.top : dock.visible && window.navSide === "bottom" ? dock.top : parent.bottom
+            anchors.bottom: metroBar.visible ? metroBar.top : tabBar.visible ? tabBar.top : dock.visible && window.navSide === "bottom" ? dock.top : parent.bottom
             anchors.topMargin: dock.visible && window.navSide === "top" ? 6 : 0
-            anchors.bottomMargin: dock.visible && window.navSide === "bottom" && !readAloudBar.shown ? 6 : 0
+            anchors.bottomMargin: (dock.visible && window.navSide === "bottom" ? 6 : 0) + readAloudBar.height
             clip: true
 
             Repeater {
@@ -436,11 +439,12 @@ ApplicationWindow {
         id: readAloudBar
         parent: shellView
         z: 3
-        anchors.left: window.sidebarShown && window.navSide === "left" ? sidebar.right : parent.left
-        anchors.right: window.sidebarShown && window.navSide === "right" ? sidebar.left : parent.right
-        anchors.bottom: metroBar.visible ? metroBar.top : tabBar.visible ? tabBar.top
-            : dock.visible && window.navSide === "bottom" ? dock.top : parent.bottom
-        anchors.bottomMargin: dock.visible && window.navSide === "bottom" ? 8 : 0
+        // Plain positions, not anchors: the bars it sits on are reparented
+        // into shellView too, and anchors to them could be resolved first.
+        x: window.sidebarShown && window.navSide === "left" ? sidebar.x + sidebar.width : 0
+        width: (parent ? parent.width : 0) - (window.sidebarShown ? sidebar.width + window.navInset : 0)
+        y: (parent ? parent.height : 0) - height - (metroBar.visible ? metroBar.height : tabBar.visible ? tabBar.height
+            : dock.visible && window.navSide === "bottom" ? dock.height + 20 : 0)
     }
 
     // Metro: the app bar along the bottom, on every device.
@@ -487,6 +491,9 @@ ApplicationWindow {
         // The parent's safe area, so these margins do not feed back into it.
         anchors.topMargin: edgeToEdge ? 0 : parent.SafeArea.margins.top
         anchors.bottomMargin: edgeToEdge ? 0 : parent.SafeArea.margins.bottom
+        // A side cutout (a phone on its side) is kept clear by every page.
+        anchors.leftMargin: parent.SafeArea.margins.left
+        anchors.rightMargin: parent.SafeArea.margins.right
         visible: depth > 0 || busy
         z: 10
         // Readers handle their own keys, so they need focus as soon as they open.

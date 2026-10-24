@@ -20,7 +20,34 @@ Rectangle {
     property var nextTask: null
     property int nextFor: -1
     readonly property var blocks: task && task.ok ? task.result.blocks : []
+    // The chapter translated (Translator), paragraph by paragraph, from the
+    // source's language (WTR-LAB's raw Chinese novels, and any other).
+    property bool translating: App.startAction.translate === true
+    readonly property string translateFrom: {
+        const key = series.source || ""
+        const found = key ? Novels.sources().find(s => s.key === key) : null
+        return found && found.language ? String(found.language) : ""
+    }
+    property var translateTask: null
+    readonly property var translated: translating && translateTask && translateTask.ok ? translateTask.result : []
+    function translateChapter() {
+        translateTask = translating && blocks.length
+            ? Translator.texts(blocks.map(b => b.kind === "break" ? "" : (b.text || "")), translateFrom) : null
+    }
+    onBlocksChanged: if (translating) translateChapter()
+    onTranslatingChanged: translateChapter()
+    Connections {
+        target: reader.translateTask
+        function onFailed(error) {
+            Router.toast(error, "error")
+            reader.translating = false
+        }
+    }
+    function plainHtml(text) { return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") }
     property bool barsShown: true
+    // Phones: on full screen while the bars are hidden (Settings → Reading).
+    readonly property bool systemBarsHidden: App.platform === "android" && App.settings.readerHideBars !== false && !barsShown
+    onSystemBarsHiddenChanged: App.setSystemBars(!systemBarsHidden)
     property real lastY: 0
     property var resumePosition: null
     property bool finished: false
@@ -92,6 +119,7 @@ Rectangle {
         Activity.setMedia("novel")
     }
     Component.onDestruction: {
+        App.setSystemBars(true)
         App.keepAwake("reader", false)
         // Reading aloud goes on without the reader (the mini player has it).
         Activity.setMedia("")
@@ -384,7 +412,8 @@ Rectangle {
                     width: parent.width
                     leftPadding: modelData.kind === "quote" ? 22 : 0
                     text: (reader.indent && modelData.kind === "paragraph" ? "\u2003" : "")
-                        + (reader.spokenBlock === index && App.settings.ttsHighlight !== false
+                        + (reader.translated.length > index && reader.translated[index] ? reader.plainHtml(reader.translated[index])
+                           : reader.spokenBlock === index && App.settings.ttsHighlight !== false
                            ? reader.markSentence(modelData.html, ReadAloud.sentenceStart, ReadAloud.sentenceLength) : modelData.html)
                     textFormat: Text.StyledText
                     color: reader.look.text
@@ -550,7 +579,7 @@ Rectangle {
         z: 3
         width: parent.width
         height: reader.insetTop
-        visible: height > 0
+        visible: height > 0 && !reader.systemBarsHidden
         color: reader.barsShown ? Theme.alpha(reader.look.chrome, 0.94) : reader.look.bg
         Behavior on color { ColorAnimation { duration: Motion.slow } }
     }
@@ -646,6 +675,16 @@ Rectangle {
                     : reader.speaking ? qsTr("Pause reading aloud") : reader.readingHere ? qsTr("Go on reading aloud") : qsTr("Read aloud from here")
                 onClicked: reader.readingHere ? ReadAloud.toggle()
                     : reader.startSpeaking(flick.contentY - flick.originY < 40 ? -1 : reader.firstVisibleBlock())
+            }
+            IconButton {
+                diameter: novelActions.button
+                visible: Translator.textReady
+                iconName: "languages"
+                iconColor: reader.translating ? Theme.accent : reader.look.text
+                enabled: reader.blocks.length > 0 && !(reader.translateTask && reader.translateTask.loading)
+                tip: reader.translateTask && reader.translateTask.loading ? qsTr("Translating…")
+                    : reader.translating ? qsTr("Show the original") : qsTr("Translate the chapter")
+                onClicked: reader.translating = !reader.translating
             }
             IconButton {
                 diameter: novelActions.button

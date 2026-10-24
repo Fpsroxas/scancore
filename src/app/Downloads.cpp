@@ -3,7 +3,9 @@
 #include "Anime.h"
 #include "Library.h"
 #include "Novels.h"
+#include "Platform.h"
 #include "core/Database.h"
+#include "core/Epub.h"
 #include "core/ImageCache.h"
 #include "core/Http.h"
 #include "core/VideoSave.h"
@@ -12,6 +14,7 @@
 #include "sources/local/Local.h"
 #include "sources/local/MihonLayout.h"
 
+#include <QCoreApplication>
 #include <QCryptographicHash>
 #include <QDir>
 #include <QDirIterator>
@@ -769,6 +772,61 @@ QVariantMap Downloads::localVideo(const QString &seriesId, const QString &unitKe
     if (index.value("hls").toBool())
         video.insert(QStringLiteral("mpvArgs"), QVariantMap{{"demuxer", "lavf"}, {"demuxer-lavf-o", "allowed_extensions=ALL"}});
     return video;
+}
+
+Task *Downloads::exportEpub(const QString &seriesId) {
+    return Task::run([seriesId]() -> QVariant {
+        const auto row = Library::instance()->seriesRow(seriesId);
+        EpubBook book;
+        book.id = seriesId;
+        book.title = row.value(QStringLiteral("title")).toString();
+        book.author = row.value(QStringLiteral("author")).toString();
+        for (const auto &value : Library::cachedUnits(seriesId)) {
+            const auto unit = value.toMap();
+            const auto chapter = localNovelChapter(seriesId, unit.value(QStringLiteral("key")).toString());
+            if (chapter.isEmpty())
+                continue;
+            auto title = chapter.value(QStringLiteral("title")).toString();
+            if (title.isEmpty())
+                title = unit.value(QStringLiteral("title")).toString();
+            book.chapters.append({title, chapter.value(QStringLiteral("blocks")).toList()});
+        }
+        if (book.chapters.isEmpty())
+            throw Error(tr("No chapters of this novel are downloaded. Download some first."));
+        // The cover, when it still loads (a few seconds at most).
+        const QUrl cover(row.value(QStringLiteral("cover")).toString());
+        if (cover.scheme().startsWith(QLatin1String("http"))) {
+            const auto image = Http::get(cover, {}, 8000);
+            if (image.ok() && (image.body.startsWith("\xFF\xD8") || image.body.startsWith("\x89PNG")))
+                book.cover = image.body;
+        }
+        const auto bytes = writeEpub(book);
+        auto name = book.title;
+        name.replace(QRegularExpression(QStringLiteral(R"([\\/:*?"<>|]+)")), QStringLiteral(" "));
+        name = name.simplified().left(80);
+        if (name.isEmpty())
+            name = QStringLiteral("novel");
+#ifdef Q_OS_ANDROID
+        const auto folder = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QStringLiteral("/exports");
+#else
+        auto folder = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+        if (folder.isEmpty())
+            folder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#endif
+        QDir().mkpath(folder);
+        const auto path = folder + QLatin1Char('/') + name + QStringLiteral(".epub");
+        QSaveFile file(path);
+        if (!file.open(QIODevice::WriteOnly) || file.write(bytes) != bytes.size() || !file.commit())
+            throw Error(tr("The book could not be saved in %1.").arg(folder));
+        QVariantMap out{{"path", path}, {"chapters", int(book.chapters.size())}};
+#ifdef Q_OS_ANDROID
+        QMetaObject::invokeMethod(qApp, [path, title = book.title] {
+            platform::shareFile(path, QStringLiteral("application/epub+zip"), title);
+        });
+        out.insert(QStringLiteral("shared"), true);
+#endif
+        return out;
+    });
 }
 
 QVariantMap Downloads::localNovelChapter(const QString &seriesId, const QString &unitKey) {

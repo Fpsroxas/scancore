@@ -243,6 +243,21 @@ bool shareText(const QString &text, const QString &subject) {
 #endif
 }
 
+bool shareFile(const QString &path, const QString &mime, const QString &subject) {
+#ifdef Q_OS_ANDROID
+    return QJniObject::callStaticMethod<jboolean>(kShareClass, "file",
+                                                  "(Landroid/app/Activity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z",
+                                                  QNativeInterface::QAndroidApplication::context().object(),
+                                                  QJniObject::fromString(path).object<jstring>(), QJniObject::fromString(mime).object<jstring>(),
+                                                  QJniObject::fromString(subject).object<jstring>());
+#else
+    Q_UNUSED(path)
+    Q_UNUSED(mime)
+    Q_UNUSED(subject)
+    return false;
+#endif
+}
+
 void holdMulticast(bool on) {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>(kMulticastClass, "hold", "(Landroid/content/Context;Z)V",
@@ -385,6 +400,15 @@ void setFastestRefresh(bool on) {
                                        QNativeInterface::QAndroidApplication::context().object(), jboolean(on));
 #else
     Q_UNUSED(on)
+#endif
+}
+
+void setSystemBars(bool shown) {
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>(kScreenClass, "systemBars", "(Landroid/app/Activity;Z)V",
+                                       QNativeInterface::QAndroidApplication::context().object(), jboolean(shown));
+#else
+    Q_UNUSED(shown)
 #endif
 }
 

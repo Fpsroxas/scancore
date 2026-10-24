@@ -220,6 +220,8 @@ App::App(QObject *parent) : QObject(parent) {
         m_running = true;
         platform::setFastestRefresh(m_settings.value(QStringLiteral("highRefresh"), true).toBool());
     });
+    // Qt's surface can come a moment after the window: ask again for it.
+    QTimer::singleShot(2500, this, [this] { platform::setFastestRefresh(m_settings.value(QStringLiteral("highRefresh"), true).toBool()); });
     m_settings = kDefaults;
     for (auto it = kDefaults.begin(); it != kDefaults.end(); ++it)
         m_settings.insert(it.key(), Database::pref(QStringLiteral("setting.") + it.key(), it.value()));
@@ -474,6 +476,7 @@ void App::prepareWebPlayer() const { platform::prepareWebPlayer(); }
 void App::setOrientation(const QString &mode) const { platform::setOrientation(mode); }
 
 void App::setBarIcons(bool darkScreen) const { platform::setBarIcons(darkScreen); }
+void App::setSystemBars(bool shown) const { platform::setSystemBars(shown); }
 void App::keepAwake(const QString &holder, bool on) const { keepAwake::hold(holder, on); }
 
 void App::setVolumeKeys(bool on) const { platform::setVolumeKeys(on); }

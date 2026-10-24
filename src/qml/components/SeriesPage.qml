@@ -48,6 +48,17 @@ Item {
     }
     onVisibleChanged: if (visible) libraryRevision = Library.revision
     readonly property var progress: { App.dependOn(page.libraryRevision); return Library.progressMap(seriesId) }
+    // Export as EPUB, while it runs and once it is saved.
+    property var epubTask: null
+    Connections {
+        target: page.epubTask
+        function onFinished(result) {
+            if (result.shared) return
+            Router.toast(qsTr("Saved %1 chapters as %2").arg(result.chapters).arg(String(result.path).replace(/^.*[\\/]/, "")), "success",
+                         { label: qsTr("Show"), run: () => App.openFolder(String(result.path).replace(/[\\/][^\\/]*$/, "")) })
+        }
+        function onFailed(error) { Router.toast(error, "error") }
+    }
     readonly property var downloads: { App.dependOn(Downloads.revision); return Downloads.states(seriesId) }
     readonly property bool saved: { App.dependOn(page.libraryRevision); return Library.isSaved(seriesId) }
     readonly property var bookmarks: { App.dependOn(page.libraryRevision); return Library.bookmarks(seriesId) }
@@ -470,6 +481,15 @@ Item {
                         ReadAloud.start(Object.assign({}, page.series, { id: page.seriesId, media: "novel", sourceUrl: page.url }),
                                         page.chapters, at, [], block)
                     }
+                }
+                // Novels: the downloaded chapters as an EPUB for e-readers.
+                IconButton {
+                    readonly property bool any: Object.keys(page.downloads || {}).some(k => (page.downloads[k] || {}).status === "done")
+                    visible: page.media === "novel" && any
+                    iconName: "file-text"
+                    filled: true
+                    tip: qsTr("Export as EPUB")
+                    onClicked: page.epubTask = Downloads.exportEpub(page.seriesId)
                 }
                 // Metro: a tile for it on the hub.
                 IconButton {

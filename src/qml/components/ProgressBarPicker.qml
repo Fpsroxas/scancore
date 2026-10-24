@@ -78,7 +78,7 @@ Flow {
                         current: 4
                         look: tile.modelData.key
                         // The chosen edge on the chosen look, else its own.
-                        edge: tile.selected ? (App.settings.readerProgressEdge || tile.modelData.edge) : tile.modelData.edge
+                        edge: (tile.selected ? (App.settings.readerProgressEdge || tile.modelData.edge) : tile.modelData.edge) || ""
                         thickness: Math.max(3, Number(App.settings.readerProgressWidth) || 3)
                         unread: App.settings.readerRailUnread || "#e4e4e7"
                         read: App.settings.readerRailRead || "#8b8b94"

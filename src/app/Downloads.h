@@ -41,6 +41,10 @@ public:
     Q_INVOKABLE void retryFailed();
     Q_INVOKABLE void clearFinished();
     Q_INVOKABLE QString folder() const;
+    // The novel's downloaded chapters as an EPUB for e-readers: in the
+    // computer's Downloads folder ({path}), or on Android shared through the
+    // share sheet ({shared: true}). Fails when nothing is downloaded.
+    Q_INVOKABLE sc::Task *exportEpub(const QString &seriesId);
     Q_INVOKABLE QString sizeOnDisk() const;
 
     // A downloaded episode as the player takes a video ({url, subtitles,
