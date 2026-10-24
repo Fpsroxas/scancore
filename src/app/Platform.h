@@ -74,5 +74,7 @@ double mediaVolume();
 void setMediaVolume(double level);
 // Light status/navigation bar icons for a dark screen, dark ones for a light one.
 void setBarIcons(bool darkScreen);
+// Android: the screen's fastest refresh rate for this window, or the system's choice.
+void setFastestRefresh(bool on);
 
 } // namespace sc::platform

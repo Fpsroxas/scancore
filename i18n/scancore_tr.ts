@@ -3691,6 +3691,34 @@
             <source>A moment of black when a comic page turns clears the last page's ghost.</source>
             <translation>Bir çizgi roman sayfası çevrilirken kısa bir siyah an, önceki sayfanın izini temizler.</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>En yüksek yenileme hızı</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>Telefonun uygulamalar için seçtiği hız yerine ekranınızın en yüksek hızında (ör. 120 Hz) kaydırın ve animasyon gösterin. Biraz daha fazla pil kullanır.</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>Kaydırma süzülmesi</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>Listelerin kaydırdıktan sonra ne kadar süre hareket etmeye devam ettiği.</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>Listelerin dokunmatik yüzey veya dokunmatik ekranda kaydırdıktan sonra ne kadar süre hareket etmeye devam ettiği.</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>Kısa</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>Uzun</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

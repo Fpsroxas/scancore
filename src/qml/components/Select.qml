@@ -123,6 +123,8 @@ ComboBox {
             NumberAnimation { property: "y"; to: menu.parent ? menu.parent.height : 800; duration: Motion.normal; easing.type: Easing.InCubic }
         }
         contentItem: ListView {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             clip: true
             implicitHeight: contentHeight
             model: control.popup.visible ? control.delegateModel : null

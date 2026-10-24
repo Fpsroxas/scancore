@@ -3691,6 +3691,34 @@
             <source>A moment of black when a comic page turns clears the last page's ghost.</source>
             <translation>Một khoảnh khắc màu đen khi lật trang truyện tranh xóa bóng mờ của trang trước.</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>Tần số quét cao nhất</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>Cuộn và chạy hiệu ứng ở tần số cao nhất của màn hình, chẳng hạn 120 Hz, thay vì tần số điện thoại chọn cho ứng dụng. Tốn pin hơn một chút.</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>Độ trôi khi vuốt</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>Danh sách tiếp tục chuyển động bao lâu sau khi vuốt.</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>Danh sách tiếp tục chuyển động bao lâu sau khi vuốt trên bàn di chuột hoặc màn hình cảm ứng.</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>Ngắn</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>Dài</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

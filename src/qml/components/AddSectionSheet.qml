@@ -101,6 +101,8 @@ Dialog {
     }
 
     contentItem: Flickable {
+        maximumFlickVelocity: Motion.flickVelocity
+        flickDeceleration: Motion.flickDeceleration
         implicitHeight: body.height
         contentHeight: body.height
         clip: true

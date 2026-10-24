@@ -3691,6 +3691,34 @@
             <source>A moment of black when a comic page turns clears the last page's ghost.</source>
             <translation>만화 페이지를 넘길 때 잠깐 검게 표시해 이전 페이지의 잔상을 지웁니다.</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>최고 주사율</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>휴대폰이 앱에 정하는 주사율 대신 화면의 최고 주사율(예: 120Hz)로 스크롤하고 애니메이션합니다. 배터리를 조금 더 씁니다.</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>스크롤 관성</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>스와이프한 뒤 목록이 계속 움직이는 시간입니다.</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>터치패드나 터치스크린에서 스와이프한 뒤 목록이 계속 움직이는 시간입니다.</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>짧게</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>길게</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

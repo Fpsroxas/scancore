@@ -363,12 +363,13 @@ Item {
     }
 
     ListView {
+        flickDeceleration: Motion.flickDeceleration
         WheelScroll {}
         id: list
         anchors.fill: parent
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        maximumFlickVelocity: 5000
+        maximumFlickVelocity: Motion.flickVelocity
         cacheBuffer: 1200
         reuseItems: true
         ScrollBar.vertical: ScScrollBar {}

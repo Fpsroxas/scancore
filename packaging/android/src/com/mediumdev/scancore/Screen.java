@@ -6,8 +6,10 @@ import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.provider.Settings;
 import android.os.Build;
+import android.view.Display;
 import android.view.OrientationEventListener;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowInsetsController;
 
@@ -24,6 +26,33 @@ public final class Screen {
         activity.runOnUiThread(() -> {
             if (on) activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             else activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        });
+    }
+
+    // The screen's fastest refresh rate (90, 120, 144 Hz) at its current
+    // resolution, or the phone's own choice. Some phones (vivo's OriginOS,
+    // OnePlus) keep apps drawn into a SurfaceView, as Qt's are, at 60 Hz
+    // unless they ask; scrolling then looks laggy next to other apps (#22).
+    public static void fastestRefresh(final Activity activity, final boolean on) {
+        if (Build.VERSION.SDK_INT < 23) return;
+        activity.runOnUiThread(() -> {
+            Window window = activity.getWindow();
+            Display display = Build.VERSION.SDK_INT >= 30 ? activity.getDisplay() : activity.getWindowManager().getDefaultDisplay();
+            if (window == null || display == null) return;
+            int id = 0;
+            if (on) {
+                Display.Mode current = display.getMode();
+                Display.Mode best = current;
+                for (Display.Mode mode : display.getSupportedModes())
+                    if (mode.getPhysicalWidth() == current.getPhysicalWidth() && mode.getPhysicalHeight() == current.getPhysicalHeight()
+                            && mode.getRefreshRate() > best.getRefreshRate() + 0.5f)
+                        best = mode;
+                id = best.getModeId();
+            }
+            WindowManager.LayoutParams params = window.getAttributes();
+            if (params.preferredDisplayModeId == id) return;
+            params.preferredDisplayModeId = id;
+            window.setAttributes(params);
         });
     }
 

@@ -122,6 +122,8 @@ Item {
         // The main list: one row per setting, then the actions.
         Flickable {
             id: mainFlick
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             visible: !panel.current
             anchors.top: header.bottom
             anchors.bottom: parent.bottom
@@ -171,6 +173,8 @@ Item {
         // One setting's choices (a list: servers and episodes can be many).
         ListView {
             id: choiceList
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             visible: panel.current !== null
             anchors.top: header.bottom
             anchors.bottom: parent.bottom

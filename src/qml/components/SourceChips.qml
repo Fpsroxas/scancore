@@ -47,6 +47,8 @@ Item {
     }
 
     ListView {
+        maximumFlickVelocity: Motion.flickVelocity
+        flickDeceleration: Motion.flickDeceleration
         visible: root.scrolls
         anchors.fill: parent
         orientation: ListView.Horizontal

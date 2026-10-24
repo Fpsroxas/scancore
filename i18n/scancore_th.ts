@@ -3683,6 +3683,34 @@
             <source>History</source>
             <translation>ประวัติ</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>อัตรารีเฟรชสูงสุด</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>เลื่อนและแสดงแอนิเมชันที่อัตราสูงสุดของหน้าจอ เช่น 120 Hz แทนอัตราที่โทรศัพท์เลือกให้แอป ใช้แบตเตอรี่มากขึ้นเล็กน้อย</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>แรงเลื่อนต่อ</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>รายการเลื่อนต่อไปนานแค่ไหนหลังจากปัด</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>รายการเลื่อนต่อไปนานแค่ไหนหลังจากปัดบนทัชแพดหรือหน้าจอสัมผัส</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>สั้น</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>ยาว</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

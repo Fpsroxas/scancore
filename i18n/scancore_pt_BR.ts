@@ -3691,6 +3691,34 @@
             <source>A moment of black when a comic page turns clears the last page's ghost.</source>
             <translation>Um instante de preto ao virar uma página de quadrinho apaga o fantasma da anterior.</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>Taxa de atualização máxima</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>Rola e anima na taxa mais alta da sua tela, como 120 Hz, em vez da taxa que o celular escolhe para os apps. Usa um pouco mais de bateria.</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>Inércia da rolagem</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>Quanto tempo as listas continuam se movendo depois de deslizar.</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>Quanto tempo as listas continuam se movendo depois de deslizar no touchpad ou na tela sensível ao toque.</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>Curta</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>Longa</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

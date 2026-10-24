@@ -258,8 +258,8 @@ Rectangle {
         spacing: reader.fontSize * reader.paragraphSpacing
         cacheBuffer: Math.max(1200, height * 2)
         boundsBehavior: Flickable.StopAtBounds
-        maximumFlickVelocity: 4500
-        flickDeceleration: 3500
+        maximumFlickVelocity: Motion.flickVelocity
+        flickDeceleration: Motion.flickDeceleration
         reuseItems: true
         ScrollBar.vertical: ScScrollBar {}
         // Where an eased scroll is heading (contentY when none is running).
@@ -659,6 +659,8 @@ Rectangle {
         background: Rectangle { radius: Theme.radiusLg; color: Theme.surface; border.width: 1; border.color: Theme.borderStrong }
         contentItem: ListView {
             id: chapterList
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             clip: true
             model: reader.chapters
             ScrollBar.vertical: ScScrollBar {}
@@ -699,6 +701,8 @@ Rectangle {
             }
         }
         contentItem: Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             implicitHeight: Math.min(options.implicitHeight, reader.height - 140 - (topBar.twoRows ? 46 : 0) - reader.insetTop)
             contentHeight: options.implicitHeight
             clip: true

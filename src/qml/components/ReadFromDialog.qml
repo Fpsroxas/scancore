@@ -333,6 +333,8 @@ Dialog {
 
         ListView {
             id: list
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             // Its whole height when it fits.
             readonly property real wanted: contentHeight
             y: header.height + 16

@@ -3691,6 +3691,34 @@
             <source>A moment of black when a comic page turns clears the last page's ghost.</source>
             <translation>コミックのページをめくるときに一瞬黒くして、前のページの残像を消します。</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>最高リフレッシュレート</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>スマホがアプリ用に選ぶレートではなく、画面の最高レート（120 Hz など）でスクロールとアニメーションを表示します。電池を少し多く使います。</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>スクロールの慣性</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>スワイプ後にリストが動き続ける長さ。</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>タッチパッドやタッチスクリーンでスワイプした後にリストが動き続ける長さ。</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>短い</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>長い</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

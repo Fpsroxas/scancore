@@ -370,6 +370,8 @@ Item {
 
                     Flickable {
                         id: heatScroll
+                        maximumFlickVelocity: Motion.flickVelocity
+                        flickDeceleration: Motion.flickDeceleration
                         width: parent.width
                         height: grid.height
                         contentWidth: grid.width

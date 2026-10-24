@@ -304,6 +304,8 @@ Rectangle {
     Component {
         id: mediaStep
         Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             WheelScroll {}
             contentHeight: mediaColumn.height + 60
             clip: true
@@ -374,6 +376,8 @@ Rectangle {
     Component {
         id: trackerStep
         Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             WheelScroll {}
             contentHeight: trackerColumn.height + 60
             clip: true
@@ -451,6 +455,8 @@ Rectangle {
         id: extensionsStep
         Flickable {
             id: extensionsPage
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             WheelScroll {}
             contentHeight: extensionsColumn.height + 60
             clip: true
@@ -532,6 +538,8 @@ Rectangle {
     Component {
         id: styleStep
         Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             contentHeight: styleColumn.height + 60
             clip: true
             Column {
@@ -610,6 +618,8 @@ Rectangle {
     Component {
         id: barStep
         Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             contentHeight: barColumn.height + 60
             clip: true
             Column {
@@ -637,6 +647,8 @@ Rectangle {
         id: notifyStep
         Flickable {
             id: notifyPage
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             contentHeight: notifyColumn.height + 60
             clip: true
             // Read again when SCANCORE comes back from the system's question.
@@ -715,6 +727,8 @@ Rectangle {
     Component {
         id: accountStep
         Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             contentHeight: accountRow.height + 60
             clip: true
             Item {

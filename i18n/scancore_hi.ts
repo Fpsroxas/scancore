@@ -3683,6 +3683,34 @@
             <source>History</source>
             <translation>इतिहास</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>सबसे ऊँचा रिफ़्रेश रेट</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>फ़ोन ऐप्स के लिए जो रेट चुनता है उसकी जगह अपनी स्क्रीन के सबसे तेज़ रेट, जैसे 120 Hz, पर स्क्रॉल और एनिमेट करें। थोड़ी ज़्यादा बैटरी लगती है।</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>फ़्लिंग ग्लाइड</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>स्वाइप के बाद सूचियाँ कितनी देर चलती रहती हैं।</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>टचपैड या टच स्क्रीन पर स्वाइप के बाद सूचियाँ कितनी देर चलती रहती हैं।</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>छोटा</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>लंबा</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

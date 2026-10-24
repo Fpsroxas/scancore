@@ -379,6 +379,15 @@ void setMediaVolume(double level) {
 #endif
 }
 
+void setFastestRefresh(bool on) {
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>(kScreenClass, "fastestRefresh", "(Landroid/app/Activity;Z)V",
+                                       QNativeInterface::QAndroidApplication::context().object(), jboolean(on));
+#else
+    Q_UNUSED(on)
+#endif
+}
+
 void setBarIcons(bool darkScreen) {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>(kScreenClass, "barIcons", "(Landroid/app/Activity;Z)V",

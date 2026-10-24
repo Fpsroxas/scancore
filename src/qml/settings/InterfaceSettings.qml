@@ -234,6 +234,24 @@ SettingsPane {
             }
         }
         SettingRow {
+            visible: App.platform === "android"
+            iconName: "gauge"
+            title: qsTr("Highest refresh rate")
+            description: qsTr("Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.")
+            Toggle { checked: App.settings.highRefresh !== false; onToggled: App.setSetting("highRefresh", checked) }
+        }
+        SettingRow {
+            iconName: "hand"
+            title: qsTr("Fling glide")
+            description: App.platform === "android" ? qsTr("How long lists keep moving after a swipe.")
+                                                    : qsTr("How long lists keep moving after a touchpad or touch screen swipe.")
+            Segmented {
+                options: [{ value: "short", label: qsTr("Short") }, { value: "default", label: qsTr("Default") }, { value: "long", label: qsTr("Long") }]
+                value: App.settings.flingGlide || "default"
+                onPicked: (v) => App.setSetting("flingGlide", v)
+            }
+        }
+        SettingRow {
             iconName: "sparkles"
             title: qsTr("Reduce motion")
             description: qsTr("Turns off page transitions, hover lifts, animated backgrounds and other animations.")

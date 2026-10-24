@@ -93,6 +93,8 @@ Popup {
         }
 
         Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             WheelScroll {}
             anchors.fill: parent
             anchors.topMargin: 76
