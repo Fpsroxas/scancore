@@ -301,7 +301,7 @@ class ExtensionHost(
             }
             "fetchImage" -> fetchImage(source, params)
             "filters" -> Codec.filters(source.getFilterList())
-            "preferences" -> settings.describe(configurable(source))
+            "preferences" -> (source as? ConfigurableSource)?.let { settings.describe(Configurable.of(it)) } ?: JsonArray(emptyList())
             "setPreference" -> {
                 settings.set(configurable(source), params.string("key"), params["value"] ?: JsonNull)
                 JsonNull

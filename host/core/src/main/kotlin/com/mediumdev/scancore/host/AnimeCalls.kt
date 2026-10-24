@@ -93,7 +93,7 @@ class AnimeCalls(
             }
             "fetchImage" -> fetchImage(source, params)
             "filters" -> AnimeCodec.filters(source.getFilterList())
-            "preferences" -> settings.describe(configurable(source))
+            "preferences" -> (source as? ConfigurableAnimeSource)?.let { settings.describe(Configurable.of(it)) } ?: JsonArray(emptyList())
             "setPreference" -> {
                 settings.set(configurable(source), params.string("key"), params["value"] ?: JsonNull)
                 JsonNull
