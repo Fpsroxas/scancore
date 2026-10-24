@@ -2,6 +2,14 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.12.1 — 2026-10-24
+
+- **Retro**: the Windows Phone look is now called Retro (it was Metro). Your choice, title, sections, pinned tiles and accent carry over, and so do theme files saved in 2.12.0.
+- **Smooth Retro animations**: page turns, the pivot, opening a reader and the standard page slides now run on the drawing thread, so they stay smooth while the page they open is still loading (on phones they could drop to a few frames). The hub switches sections once a swipe settles, and remembering the last section no longer stalls the next swipe.
+- **Translation as one story**: with a language model, each page is translated with the pages before it (and what they said), the page after it, the series' title and chapter, and a running summary and glossary of names kept for the series, so a sentence that runs over several bubbles or onto the next page reads as one. It can also show the model the page itself (Settings → Reading → Translate). Novels keep the story between parts of a chapter too.
+- **Pick the language in the reader**: while translating, the reader's bar has the language to translate into (on phones, tap the Translate button), and the bar stays up while you pick.
+- **Player freeze fixed**: after moving to the next episode the picture could freeze while the sound went on and the app stopped answering (Android). The player no longer waits on the video engine from the interface's thread.
+
 ## 2.12.0 — 2026-10-24
 
 A Windows Phone look, comic pages translated where they are, your own comic servers, watching together, and scrolling that keeps up with your finger.
