@@ -81,8 +81,54 @@ QStringList google(const QStringList &texts, const QString &from, const QString 
     return out;
 }
 
-QStringList chatModel(const QStringList &texts, const QString &from, const QString &to, const QString &base, const QString &key,
-                      const QString &model) {
+namespace {
+
+// The model's answer: {"translations": [...], "summary": "...", "glossary":
+// [{"term", "translation"}]}, or just the array. Models like to wrap JSON in
+// a code fence or talk around it.
+ChatAnswer parseChat(QString content, qsizetype expected) {
+    static const QRegularExpression fence(QStringLiteral(R"(^\s*```(?:json)?\s*|\s*```\s*$)"));
+    content.replace(fence, QString());
+    ChatAnswer out;
+    QJsonArray array;
+    const auto open = content.indexOf(QLatin1Char('{'));
+    const auto close = content.lastIndexOf(QLatin1Char('}'));
+    if (open >= 0 && close > open && (content.indexOf(QLatin1Char('[')) < 0 || open < content.indexOf(QLatin1Char('[')))) {
+        const auto object = QJsonDocument::fromJson(content.mid(open, close - open + 1).toUtf8()).object();
+        array = object.value(QStringLiteral("translations")).toArray();
+        out.summary = object.value(QStringLiteral("summary")).toString().trimmed();
+        for (const auto &g : object.value(QStringLiteral("glossary")).toArray()) {
+            const auto o = g.toObject();
+            const auto term = o.value(QStringLiteral("term")).toString().trimmed();
+            const auto translation = o.value(QStringLiteral("translation")).toString().trimmed();
+            if (!term.isEmpty() && !translation.isEmpty())
+                out.glossary.append({term, translation});
+        }
+    }
+    if (array.isEmpty()) {
+        const auto start = content.indexOf(QLatin1Char('['));
+        const auto end = content.lastIndexOf(QLatin1Char(']'));
+        if (start >= 0 && end > start)
+            array = QJsonDocument::fromJson(content.mid(start, end - start + 1).toUtf8()).array();
+    }
+    for (const auto &v : array)
+        out.texts.append(v.toString());
+    if (out.texts.size() != expected)
+        throw Error(QObject::tr("The model did not answer with one translation per text. Try another model."));
+    return out;
+}
+
+QString pairs(const QList<QPair<QString, QString>> &list, bool arrow) {
+    QString out;
+    for (const auto &[a, b] : list)
+        out += (arrow && !b.isEmpty() ? QStringLiteral("- %1  =>  %2\n").arg(a, b) : QStringLiteral("- %1\n").arg(a));
+    return out;
+}
+
+} // namespace
+
+ChatAnswer chatModel(const QStringList &texts, const QString &from, const QString &to, const QString &base, const QString &key,
+                     const QString &model, const ChatContext &context) {
     if (base.trimmed().isEmpty() || model.trimmed().isEmpty())
         throw Error(QObject::tr("Set the service's address and model in Settings → Reading → Translate."));
     auto root = base.trimmed();
@@ -90,36 +136,60 @@ QStringList chatModel(const QStringList &texts, const QString &from, const QStri
         root.chop(1);
     const QUrl url(root + QStringLiteral("/chat/completions"));
     const auto source = from.isEmpty() ? QStringLiteral("the original language") : languageForPrompt(from);
-    const auto prompt = QStringLiteral(
-                            "You translate comic and novel text from %1 into %2. The user sends a JSON array of strings "
-                            "(speech bubbles or paragraphs, in reading order). Answer with only a JSON array of the same "
-                            "length, each item the natural, fluent translation of the item at that place. Keep names "
-                            "consistent, keep sound effects short, add nothing.")
-                            .arg(source, languageForPrompt(to));
+    auto prompt = QStringLiteral(
+                      "You are a professional translator of comics and novels, translating from %1 into %2. ")
+                      .arg(source, languageForPrompt(to));
+    if (!context.work.isEmpty())
+        prompt += QStringLiteral("The work is \"%1\"%2. ")
+                      .arg(context.work, context.chapter.isEmpty() ? QString() : QStringLiteral(", chapter \"%1\"").arg(context.chapter));
+    prompt += QStringLiteral(
+        "\n\nThe user sends a JSON array of strings: the speech bubbles of one comic page, or the paragraphs of a novel, in "
+        "reading order. Translate each into natural, fluent %1 as a reader of the finished work would want it.\n"
+        "- The strings are one continuous scene. A sentence is often split over two or more consecutive bubbles; translate "
+        "the pieces so they read as one sentence across them, not as unrelated fragments. A reply answers the bubble before "
+        "it.\n"
+        "- Use the context below to settle who speaks, who is addressed, pronouns, gender, politeness and tone, and to keep "
+        "every name, term, nickname and way of speaking consistent with earlier text.\n"
+        "- Keep sound effects short. Add no notes and nothing that is not in the text.\n\n"
+        "Answer with only a JSON object: {\"translations\": [...], \"summary\": \"...\", \"glossary\": [...]}. "
+        "\"translations\" has exactly one string for each string sent, in the same order. \"summary\" is the story so far in at "
+        "most 120 words, updated with this text. \"glossary\" lists only the names and terms that are new or changed, each "
+        "{\"term\": original, \"translation\": how you rendered it}.")
+                  .arg(languageForPrompt(to));
+    if (!context.memory.isEmpty())
+        prompt += QStringLiteral("\n\nThe story so far:\n") + context.memory;
+    if (!context.glossary.isEmpty())
+        prompt += QStringLiteral("\n\nGlossary: always render these as given.\n") + pairs(context.glossary, true);
+    if (!context.before.isEmpty())
+        prompt += QStringLiteral("\n\nThe text just before this (original  =>  your earlier translation), for context only; do not translate it again:\n") +
+                  pairs(context.before, true);
+    if (!context.after.isEmpty())
+        prompt += QStringLiteral("\n\nThe text that follows this (original), for context only; do not translate it:\n") + pairs(context.after, false);
+    if (!context.image.isEmpty())
+        prompt += QStringLiteral("\n\nThe picture of the page is attached: use it to see who speaks and what happens.");
+
+    const auto text = QString::fromUtf8(QJsonDocument(QJsonArray::fromStringList(texts)).toJson(QJsonDocument::Compact));
+    QJsonValue userContent = text;
+    if (!context.image.isEmpty())
+        userContent = QJsonArray{QJsonObject{{"type", "image_url"},
+                                             {"image_url", QJsonObject{{"url", QStringLiteral("data:image/jpeg;base64,") + QString::fromLatin1(context.image.toBase64())}}}},
+                                 QJsonObject{{"type", "text"}, {"text", text}}};
     const QJsonObject body{{"model", model.trimmed()},
                            {"temperature", 0.2},
                            {"messages", QJsonArray{QJsonObject{{"role", "system"}, {"content", prompt}},
-                                                   QJsonObject{{"role", "user"},
-                                                               {"content", QString::fromUtf8(QJsonDocument(QJsonArray::fromStringList(texts))
-                                                                                                  .toJson(QJsonDocument::Compact))}}}}};
+                                                   QJsonObject{{"role", "user"}, {"content", userContent}}}}};
     Headers headers;
     if (!key.trimmed().isEmpty())
         headers.append({"Authorization", "Bearer " + key.trimmed().toUtf8()});
     const auto json = answer(Http::postJson(url, QJsonDocument(body).toJson(QJsonDocument::Compact), headers), QStringLiteral("The model"));
-    auto content = json.value(QStringLiteral("choices")).toArray().first().toObject().value(QStringLiteral("message")).toObject()
-                       .value(QStringLiteral("content")).toString();
-    // Models like to wrap JSON in a code fence.
-    static const QRegularExpression fence(QStringLiteral(R"(^\s*```(?:json)?\s*|\s*```\s*$)"));
-    content.replace(fence, QString());
-    const auto start = content.indexOf(QLatin1Char('['));
-    const auto end = content.lastIndexOf(QLatin1Char(']'));
-    const auto array = start >= 0 && end > start ? QJsonDocument::fromJson(content.mid(start, end - start + 1).toUtf8()).array() : QJsonArray();
-    QStringList out;
-    for (const auto &v : array)
-        out.append(v.toString());
-    if (out.size() != texts.size())
-        throw Error(QObject::tr("The model did not answer with one translation per text. Try another model."));
-    return out;
+    const auto content = json.value(QStringLiteral("choices")).toArray().first().toObject().value(QStringLiteral("message")).toObject()
+                             .value(QStringLiteral("content")).toString();
+    return parseChat(content, texts.size());
+}
+
+QStringList chatModel(const QStringList &texts, const QString &from, const QString &to, const QString &base, const QString &key,
+                      const QString &model) {
+    return chatModel(texts, from, to, base, key, model, ChatContext{}).texts;
 }
 
 QList<TextBlock> googleVision(const QByteArray &image, const QString &language, const QString &key) {

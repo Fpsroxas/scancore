@@ -558,8 +558,8 @@ Rectangle {
                     Text { text: qsTr("Layout"); color: Theme.textMuted; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
                     Segmented {
                         options: [{ value: "standard", label: qsTr("Standard"), icon: "layout-dashboard" },
-                                  { value: "metro", label: qsTr("Metro tiles"), icon: "grid-2x2" }]
-                        value: Theme.metro ? "metro" : "standard"
+                                  { value: "retro", label: qsTr("Retro tiles"), icon: "grid-2x2" }]
+                        value: Theme.retro ? "retro" : "standard"
                         onPicked: (v) => App.setSetting("uiMode", v)
                     }
                 }

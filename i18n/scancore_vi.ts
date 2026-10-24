@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>Tạm dừng tự cuộn</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>Dịch sang %1</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4026,6 +4030,14 @@
             <source>Later</source>
             <translation>Để sau</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro: trung tâm dạng toàn cảnh với các ô, chữ lớn và thanh ứng dụng, theo phong cách Windows Phone.</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5009,279 +5021,6 @@
         <message>
             <source>Open</source>
             <translation>Mở</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>Khám phá</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>Gần đây</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>Thư viện</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>Truyện tranh</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Tiểu thuyết</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>Anime</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>Đã ghim vào hub</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>Tiếp tục</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>Kiểm tra chương mới</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>Tìm truyện tranh</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>Tìm tiểu thuyết</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>Tìm anime</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>Tìm kiếm mọi thứ</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>Đang kiểm tra chương mới trong thư viện…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>Mọi thứ đã được cập nhật</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>Chưa có gì để tiếp tục</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>tìm</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>làm mới</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>thông báo</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>cài đặt</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>lịch sử</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>tải xuống</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>hoạt động</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>tiện ích</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>tắt ẩn danh</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>ẩn danh</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>sắp xếp hub</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>Quay lại</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> (nhấn giữ để xem thêm)</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>Đóng menu</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>Mở menu</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>Đã tắt ẩn danh</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>Ẩn danh</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>Tài khoản</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>Tập %1</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>Chương %1</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>1 mới</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>%1 mới</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>đọc truyện ngẫu nhiên</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>đọc tiếp</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>khám phá thể loại ngẫu nhiên</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>tìm</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>tải xuống</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>lịch sử</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>cài đặt</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>%1 nhìn lại của bạn</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>Chưa có gì để chọn</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>Nhỏ</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>Vừa</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>Rộng</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>Đưa lên trước</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>Đưa ra sau</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>Bỏ ghim</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>Ghim vào hub</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>Những gì bạn đọc và xem sẽ hiện ở đây.</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>Các bộ bạn lưu sẽ hiện ở đây.</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>tất cả truyện tranh</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>sắp ra mắt</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>tiện ích</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>Chương mới nhất</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>tất cả tiểu thuyết</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Tiểu thuyết</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>tất cả anime</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>lịch</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>duyệt</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>Thịnh hành</translation>
         </message>
     </context>
     <context>
@@ -6372,6 +6111,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>Ô Metro</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>Ô Retro</translation>
         </message>
     </context>
     <context>
@@ -7550,6 +7293,14 @@
             <source>The voice above</source>
             <translation>Giọng ở trên</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>Cho mô hình xem trang</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>Gửi hình trang truyện kèm chữ của nó để mô hình thấy ai đang nói. Cần mô hình đọc được hình ảnh; tốn phí hơn.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7591,6 +7342,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>Tiếp theo: tập %1</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>Khám phá</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Gần đây</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Thư viện</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Truyện tranh</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>Đã ghim vào hub</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>Tiếp tục</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Kiểm tra chương mới</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>Tìm truyện tranh</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>Tìm tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Tìm anime</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Tìm kiếm mọi thứ</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Đang kiểm tra chương mới trong thư viện…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Mọi thứ đã được cập nhật</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>Chưa có gì để tiếp tục</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>tìm</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>làm mới</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>thông báo</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>cài đặt</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>lịch sử</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>tải xuống</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>hoạt động</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>tiện ích</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>tắt ẩn danh</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>ẩn danh</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>sắp xếp hub</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Quay lại</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (nhấn giữ để xem thêm)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>Đóng menu</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>Mở menu</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Đã tắt ẩn danh</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Ẩn danh</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>Tài khoản</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>Tập %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Chương %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 mới</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 mới</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>đọc truyện ngẫu nhiên</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>đọc tiếp</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>khám phá thể loại ngẫu nhiên</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>tìm</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>tải xuống</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>lịch sử</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>cài đặt</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>%1 nhìn lại của bạn</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>Chưa có gì để chọn</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Nhỏ</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Vừa</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>Rộng</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>Đưa lên trước</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>Đưa ra sau</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>Bỏ ghim</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Ghim vào hub</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>Những gì bạn đọc và xem sẽ hiện ở đây.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>Các bộ bạn lưu sẽ hiện ở đây.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>tất cả truyện tranh</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>sắp ra mắt</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>tiện ích</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Chương mới nhất</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>tất cả tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>tất cả anime</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>lịch</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>duyệt</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>Thịnh hành</translation>
         </message>
     </context>
     <context>
@@ -8548,6 +8572,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9750,6 +9778,10 @@
         <message>
             <source>Tile colour</source>
             <translation>Màu ô</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>Màu Retro</translation>
         </message>
     </context>
     <context>

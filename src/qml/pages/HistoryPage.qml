@@ -92,15 +92,15 @@ Item {
                 width: list.width - 2 * Theme.gutter
                 spacing: 12
                 Segmented {
-                    visible: !Theme.metro
+                    visible: !Theme.retro
                     options: [{ value: "", label: qsTr("All") }, { value: "comic", label: qsTr("Comics"), icon: "book-open" },
                               { value: "novel", label: qsTr("Novels"), icon: "book-text" }, { value: "anime", label: qsTr("Anime"), icon: "tv" }]
                     value: page.media
                     onPicked: (v) => page.media = v
                 }
-                // Metro: the same as pivot headers.
+                // Retro: the same as pivot headers.
                 PivotHeaders {
-                    visible: Theme.metro
+                    visible: Theme.retro
                     width: parent.width
                     height: visible ? implicitHeight : 0
                     options: [{ value: "", label: qsTr("All") }, { value: "comic", label: qsTr("Comics") },

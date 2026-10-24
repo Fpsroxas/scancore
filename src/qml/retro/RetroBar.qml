@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic
 import ScanCore
 
-// The Metro mode's app bar along the bottom: the multi-purpose button on
+// The Retro mode's app bar along the bottom: the multi-purpose button on
 // the left, "• • •" on the right. The dots open the bar: round buttons with
 // their names, then a menu of words. The multi-purpose button does what the
 // screen in view is for (search on Explore, check for new chapters on
@@ -22,8 +22,8 @@ Item {
 
     // What the button does here.
     readonly property var primary: {
-        if (section === "home" && Metro.onHub) {
-            switch (Metro.hubSection) {
+        if (section === "home" && Retro.onHub) {
+            switch (Retro.hubSection) {
             case "recent": return { icon: "play", label: qsTr("Continue"), run: () => bar.continueLast() }
             case "library": return { icon: "refresh-cw", label: qsTr("Check for new chapters"), run: () => bar.checkLibrary() }
             case "comics": return { icon: "search", label: qsTr("Search comics"), run: () => Router.go("comics") }

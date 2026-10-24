@@ -1,7 +1,7 @@
 import QtQuick
 import ScanCore
 
-// The Metro hub: one long canvas of sections under a huge title, panned
+// The Retro hub: one long canvas of sections under a huge title, panned
 // sideways. Its layers move at their own speeds (Windows Phone's
 // panorama): the background slower than the sections, the title slowest.
 // On phones the next section peeks in at the right and the hub wraps
@@ -208,9 +208,14 @@ FocusScope {
             property: "pos"
             duration: Motion.normal
             easing.type: Easing.OutCubic
-            onFinished: strip.pos = strip.wrapped(Math.round(strip.pos))
+            onFinished: {
+                strip.pos = strip.wrapped(Math.round(strip.pos))
+                pano.currentIndex = strip.wrapped(Math.round(strip.pos))
+            }
         }
-        onPosChanged: if (pano.count > 0) pano.currentIndex = wrapped(Math.round(pos))
+        // The section in view changes once the hub settles, not half way
+        // through a pan: what follows it (the app bar's button, the saved
+        // section) would stall the pan's frames.
 
         Repeater {
             model: pano.cyclic ? pano.sections : []

@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>Otomatik kaydırmayı duraklat</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>Şu dile çevir: %1</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4026,6 +4030,14 @@
             <source>Later</source>
             <translation>Sonra</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro: kutucuklar, büyük yazı ve bir uygulama çubuğu olan, Windows Phone tarzında bir panorama merkezi.</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5009,279 +5021,6 @@
         <message>
             <source>Open</source>
             <translation>Aç</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>Keşfet</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>Son</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>Kitaplık</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>Çizgi romanlar</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Romanlar</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>Anime</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>Merkeze sabitlendi</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>Devam</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>Yeni bölümleri denetle</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>Çizgi roman ara</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>Roman ara</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>Anime ara</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>Her şeyde ara</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>Kitaplıkta yeni bölümler denetleniyor…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>Her şey güncel</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>Henüz devam edilecek bir şey yok</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>ara</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>yenile</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>uyarılar</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>ayarlar</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>geçmiş</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>indirilenler</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>etkinlik</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>uzantılar</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>gizli modu kapat</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>gizli moda geç</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>merkezi düzenle</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>Geri</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> (daha fazlası için basılı tut)</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>Menüyü kapat</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>Menüyü aç</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>Gizli mod kapalı</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>Gizli mod</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>Hesap</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>Bölüm %1</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>Bölüm %1</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>1 yeni</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>%1 yeni</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>rastgele bir çizgi roman oku</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>devam et</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>rastgele bir tür keşfet</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>ara</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>indirilenler</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>geçmiş</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>ayarlar</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>%1 özetin</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>Henüz seçilecek bir şey yok</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>Küçük</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>Orta</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>Geniş</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>Öne taşı</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>Arkaya taşı</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>Sabitlemeyi kaldır</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>Merkeze sabitle</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>Okuduğun ve izlediğin şeyler burada görünür.</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>Kaydettiğin seriler burada görünür.</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>tüm çizgi romanlar</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>yakında</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>uzantılar</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>Son bölümler</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>tüm romanlar</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Romanlar</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>tüm animeler</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>takvim</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>göz at</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>Trend</translation>
         </message>
     </context>
     <context>
@@ -6372,6 +6111,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>Metro karoları</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>Retro kutucukları</translation>
         </message>
     </context>
     <context>
@@ -7550,6 +7293,14 @@
             <source>The voice above</source>
             <translation>Yukarıdaki ses</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>Sayfayı modele göster</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>Çizgi roman sayfasının resmini metniyle birlikte gönderir, böylece model kimin konuştuğunu görür. Resim okuyabilen bir model gerekir; daha pahalıdır.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7591,6 +7342,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>Sıradaki: %1. bölüm</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>Keşfet</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Son</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Kitaplık</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Çizgi romanlar</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Romanlar</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>Merkeze sabitlendi</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>Devam</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Yeni bölümleri denetle</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>Çizgi roman ara</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>Roman ara</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Anime ara</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Her şeyde ara</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Kitaplıkta yeni bölümler denetleniyor…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Her şey güncel</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>Henüz devam edilecek bir şey yok</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>ara</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>yenile</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>uyarılar</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>ayarlar</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>geçmiş</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>indirilenler</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>etkinlik</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>uzantılar</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>gizli modu kapat</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>gizli moda geç</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>merkezi düzenle</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Geri</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (daha fazlası için basılı tut)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>Menüyü kapat</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>Menüyü aç</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Gizli mod kapalı</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Gizli mod</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>Hesap</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>Bölüm %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Bölüm %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 yeni</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 yeni</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>rastgele bir çizgi roman oku</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>devam et</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>rastgele bir tür keşfet</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>ara</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>indirilenler</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>geçmiş</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>ayarlar</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>%1 özetin</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>Henüz seçilecek bir şey yok</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Küçük</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Orta</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>Geniş</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>Öne taşı</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>Arkaya taşı</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>Sabitlemeyi kaldır</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Merkeze sabitle</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>Okuduğun ve izlediğin şeyler burada görünür.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>Kaydettiğin seriler burada görünür.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>tüm çizgi romanlar</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>yakında</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>uzantılar</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Son bölümler</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>tüm romanlar</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Romanlar</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>tüm animeler</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>takvim</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>göz at</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>Trend</translation>
         </message>
     </context>
     <context>
@@ -8548,6 +8572,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9750,6 +9778,10 @@
         <message>
             <source>Tile colour</source>
             <translation>Karo rengi</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>Retro renkleri</translation>
         </message>
     </context>
     <context>

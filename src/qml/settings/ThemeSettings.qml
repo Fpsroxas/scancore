@@ -159,8 +159,8 @@ SettingsPane {
 
     // The phones' own twenty, square as their tiles.
     SettingsGroup {
-        visible: Theme.metro
-        title: qsTr("Metro colours")
+        visible: Theme.retro
+        title: qsTr("Retro colours")
         note: qsTr("The accent colours of Windows Phone, or any colour from the wheel. Tiles, the hub title and switches take it.")
         Flow {
             x: 16
@@ -169,25 +169,25 @@ SettingsPane {
             bottomPadding: 14
             spacing: 8
             Repeater {
-                model: Theme.metroAccentNames
+                model: Theme.retroAccentNames
                 AbstractButton {
-                    id: metroSwatch
+                    id: retroSwatch
                     required property string modelData
                     readonly property bool selected: App.settings.accent === modelData
                     width: 44
                     height: 44
-                    Accessible.name: modelData.replace("metro-", "")
+                    Accessible.name: modelData.replace("retro-", "")
                     hoverEnabled: true
                     ToolTip.visible: hovered && !Theme.touch
-                    ToolTip.text: modelData.replace("metro-", "")
+                    ToolTip.text: modelData.replace("retro-", "")
                     onClicked: App.setSetting("accent", modelData)
                     background: Rectangle {
-                        color: Theme.metroAccents[metroSwatch.modelData]
-                        border.width: metroSwatch.selected ? 3 : 0
+                        color: Theme.retroAccents[retroSwatch.modelData]
+                        border.width: retroSwatch.selected ? 3 : 0
                         border.color: Theme.text
                     }
                     contentItem: Item {
-                        Icon { anchors.centerIn: parent; visible: metroSwatch.selected; name: "check"; size: 18; color: "white" }
+                        Icon { anchors.centerIn: parent; visible: retroSwatch.selected; name: "check"; size: 18; color: "white" }
                     }
                     scale: pressed ? 0.92 : 1
                     Behavior on scale { NumberAnimation { duration: Motion.instant } }
@@ -195,7 +195,7 @@ SettingsPane {
             }
             // Any colour: the wheel, square like the rest.
             AbstractButton {
-                id: metroCustom
+                id: retroCustom
                 readonly property bool selected: Theme.customAccent
                 width: 44
                 height: 44
@@ -203,11 +203,11 @@ SettingsPane {
                 hoverEnabled: true
                 ToolTip.visible: hovered && !Theme.touch
                 ToolTip.text: qsTr("Custom colour")
-                onClicked: metroPicker.edit(Theme.customAccent ? Theme.accent : Theme.tile)
+                onClicked: retroPicker.edit(Theme.customAccent ? Theme.accent : Theme.tile)
                 background: Rectangle {
                     color: Theme.customAccent ? Theme.accent : Theme.surface2
-                    border.width: metroCustom.selected ? 3 : 1
-                    border.color: metroCustom.selected ? Theme.text : Theme.border
+                    border.width: retroCustom.selected ? 3 : 1
+                    border.color: retroCustom.selected ? Theme.text : Theme.border
                 }
                 contentItem: Item {
                     Image {
@@ -594,9 +594,9 @@ SettingsPane {
         onChanged: (c) => pane.update({ base: String(c).slice(0, 7) })
     }
     ColorPicker {
-        id: metroPicker
+        id: retroPicker
         title: qsTr("Tile colour")
-        swatches: Theme.metroAccentNames.slice(0, 14).map(n => String(Theme.metroAccents[n]))
+        swatches: Theme.retroAccentNames.slice(0, 14).map(n => String(Theme.retroAccents[n]))
         onChanged: (c) => {
             App.setSetting("customAccent", String(c).slice(0, 7))
             App.setSetting("accent", "custom")

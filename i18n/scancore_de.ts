@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>Automatisches Scrollen pausieren</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>Übersetzen in: %1</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4026,6 +4030,14 @@
             <source>Later</source>
             <translation>Später</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro: ein Panorama-Hub mit Kacheln, großer Schrift und einer App-Leiste, im Stil von Windows Phone.</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5009,279 +5021,6 @@
         <message>
             <source>Open</source>
             <translation>Öffnen</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>Entdecken</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>Zuletzt</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>Bibliothek</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>Comics</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Romane</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>Anime</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>An den Hub angeheftet</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>Weiter</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>Auf neue Kapitel prüfen</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>Comics suchen</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>Romane suchen</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>Anime suchen</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>Alles durchsuchen</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>Prüfe die Bibliothek auf neue Kapitel…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>Alles ist aktuell</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>Noch nichts zum Fortsetzen</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>suchen</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>aktualisieren</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>hinweise</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>einstellungen</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>verlauf</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>downloads</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>aktivität</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>erweiterungen</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>inkognito aus</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>inkognito gehen</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>hub anordnen</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>Zurück</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> (für mehr gedrückt halten)</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>Menü schließen</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>Menü öffnen</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>Inkognito aus</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>Inkognito</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>Konto</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>Folge %1</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>Kapitel %1</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>1 neu</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>%1 neu</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>zufälligen comic lesen</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>weiter</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>zufälliges genre entdecken</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>suchen</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>downloads</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>verlauf</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>einstellungen</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>dein %1 im rückblick</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>Noch nichts zur Auswahl</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>Klein</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>Mittel</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>Breit</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>Nach vorn</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>Nach hinten</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>Lösen</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>An den Hub anheften</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>Was du liest und schaust, erscheint hier.</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>Gespeicherte Serien erscheinen hier.</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>alle comics</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>demnächst</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>erweiterungen</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>Neueste Kapitel</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>alle romane</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Romane</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>alle anime</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>zeitplan</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>stöbern</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>Im Trend</translation>
         </message>
     </context>
     <context>
@@ -6372,6 +6111,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>Metro-Kacheln</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>Retro-Kacheln</translation>
         </message>
     </context>
     <context>
@@ -7550,6 +7293,14 @@
             <source>The voice above</source>
             <translation>Die Stimme oben</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>Dem Modell die Seite zeigen</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>Sendet das Bild der Comicseite mit ihrem Text, damit das Modell sieht, wer spricht. Braucht ein Modell, das Bilder liest; kostet mehr.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7591,6 +7342,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>Als Nächstes: Folge %1</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>Entdecken</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Zuletzt</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Bibliothek</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Comics</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Romane</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>An den Hub angeheftet</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>Weiter</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Auf neue Kapitel prüfen</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>Comics suchen</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>Romane suchen</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Anime suchen</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Alles durchsuchen</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Prüfe die Bibliothek auf neue Kapitel…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Alles ist aktuell</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>Noch nichts zum Fortsetzen</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>suchen</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>aktualisieren</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>hinweise</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>einstellungen</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>verlauf</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>downloads</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>aktivität</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>erweiterungen</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>inkognito aus</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>inkognito gehen</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>hub anordnen</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Zurück</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (für mehr gedrückt halten)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>Menü schließen</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>Menü öffnen</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Inkognito aus</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Inkognito</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>Konto</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>Folge %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Kapitel %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 neu</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 neu</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>zufälligen comic lesen</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>weiter</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>zufälliges genre entdecken</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>suchen</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>downloads</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>verlauf</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>einstellungen</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>dein %1 im rückblick</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>Noch nichts zur Auswahl</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Klein</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Mittel</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>Breit</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>Nach vorn</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>Nach hinten</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>Lösen</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>An den Hub anheften</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>Was du liest und schaust, erscheint hier.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>Gespeicherte Serien erscheinen hier.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>alle comics</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>demnächst</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>erweiterungen</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Neueste Kapitel</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>alle romane</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Romane</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>alle anime</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>zeitplan</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>stöbern</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>Im Trend</translation>
         </message>
     </context>
     <context>
@@ -8548,6 +8572,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9750,6 +9778,10 @@
         <message>
             <source>Tile colour</source>
             <translation>Kachelfarbe</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>Retro-Farben</translation>
         </message>
     </context>
     <context>

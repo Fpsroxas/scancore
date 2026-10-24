@@ -578,6 +578,12 @@ SettingsPane {
             }
         }
         SettingRow {
+            iconName: "image"
+            title: qsTr("Show the model the page")
+            description: qsTr("Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.")
+            Toggle { checked: App.settings.translateChatImage === true; onToggled: App.setSetting("translateChatImage", checked) }
+        }
+        SettingRow {
             iconName: "trash"
             title: qsTr("Forget translations")
             description: qsTr("Pages and chapters are translated again the next time.")

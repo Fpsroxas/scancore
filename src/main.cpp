@@ -66,7 +66,7 @@ namespace {
 void loadFonts() {
     for (const auto *font : {":/fonts/DMSans.ttf", ":/fonts/DMSans-Italic.ttf", ":/fonts/SpaceGrotesk.ttf",
                              ":/fonts/Literata.ttf", ":/fonts/Literata-Italic.ttf",
-                             // Metro mode (Settings → Interface → Look).
+                             // Retro mode (Settings → Interface → Look).
                              ":/fonts/Selawik.ttf", ":/fonts/Selawik-Light.ttf", ":/fonts/Selawik-Semilight.ttf",
                              ":/fonts/Selawik-Semibold.ttf", ":/fonts/Selawik-Bold.ttf"})
         QFontDatabase::addApplicationFont(QString::fromLatin1(font));
@@ -230,7 +230,7 @@ int main(int argc, char *argv[]) {
         qputenv("DISABLE_MANGOHUD", "1");
     // Qt's Wayland plugin turns the threaded render loop off for NVIDIA's
     // driver, and on the GUI thread every page load, list refresh or script
-    // stalls the animations (Metro's tiles and panoramas stuttered on
+    // stalls the animations (Retro's tiles and panoramas stuttered on
     // Linux). Threaded rendering runs fine there (tested under Hyprland and
     // cage, NVIDIA 615); QSG_RENDER_LOOP=basic brings the old one back.
     if (!qEnvironmentVariableIsSet("QSG_RENDER_LOOP") && !qEnvironmentVariableIsSet("QML_BAD_GUI_RENDER_LOOP"))
@@ -346,6 +346,20 @@ int main(int argc, char *argv[]) {
         if (!key.isEmpty() && !appState->settings().contains(key))
             appState->setSetting(key, Database::pref(QStringLiteral("setting.") + key));
     }
+    // 2.12.0 called the Retro look "Metro": its settings, the mode and its
+    // accents move to their new names once.
+    for (const auto &key : appState->settings().keys()) {
+        if (!key.startsWith(QLatin1String("metro")))
+            continue;
+        const auto renamed = QStringLiteral("retro") + key.mid(5);
+        if (!appState->settings().contains(renamed))
+            appState->setSetting(renamed, appState->settings().value(key));
+        Database::query(QStringLiteral("DELETE FROM prefs WHERE key = ?"), {QStringLiteral("setting.") + key});
+    }
+    if (appState->settings().value(QStringLiteral("uiMode")) == QLatin1String("metro"))
+        appState->setSetting(QStringLiteral("uiMode"), QStringLiteral("retro"));
+    if (const auto accent = appState->settings().value(QStringLiteral("accent")).toString(); accent.startsWith(QLatin1String("metro-")))
+        appState->setSetting(QStringLiteral("accent"), QStringLiteral("retro-") + accent.mid(6));
 #ifndef Q_OS_ANDROID
     QSystemTrayIcon tray(QApplication::windowIcon());
     QMenu trayMenu;

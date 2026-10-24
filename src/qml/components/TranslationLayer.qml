@@ -11,6 +11,9 @@ Item {
     property string referer
     property string from
     property bool translating: false
+    // What helps a language model translate as one story (Translator.page's
+    // hint): the series, the chapter, and the pages around this one.
+    property var context: ({})
     // A page shown as two halves (paged reading): only this half's
     // bubbles, spread over the whole width.
     property string half: ""
@@ -26,15 +29,18 @@ Item {
     onTranslatingChanged: refresh()
     onUrlChanged: refresh()
     onFromChanged: refresh()
+    // Another language asked for in the reader's bar.
+    readonly property string target: Translator.target
+    onTargetChanged: refresh()
     Component.onCompleted: refresh()
-    // Once per page and language, however many of these change on the way.
+    // Once per page and language (and target), however many of these change on the way.
     property string asked: ""
     function refresh() { Qt.callLater(ask) }
     function ask() {
-        const key = translating && url ? url + "|" + from : ""
+        const key = translating && url ? url + "|" + from + "|" + target : ""
         if (key === asked) return
         asked = key
-        task = key ? Translator.page(url, referer, from) : null
+        task = key ? Translator.page(url, referer, from, context || {}) : null
     }
 
     visible: translating

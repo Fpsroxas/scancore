@@ -78,6 +78,19 @@ Rectangle {
         const found = key ? Comics.sources().find(s => s.key === key) : null
         return found && found.language ? String(found.language) : ""
     }
+    // What a language model is told about a page besides its bubbles: the
+    // series (its memory of names and the story is kept under it), the
+    // chapter, and up to three pages before and one after, in `list`.
+    function translateContext(list, i, chapter) {
+        const url = (k) => list[k] ? list[k].url : ""
+        return {
+            work: series.title || "",
+            scope: String(series.id || series.sourceUrl || series.title || ""),
+            chapter: (chapters[chapter] || {}).title || "",
+            before: [url(i - 3), url(i - 2), url(i - 1)].filter(u => u),
+            after: [url(i + 1)].filter(u => u)
+        }
+    }
     // Small scans enlarged: sharpened as they are (0 off, to 1).
     readonly property real sharpen: Number(opt("readerSharpen", 0)) || 0
     // The strip runs on into the next chapter: it joins the strip once
@@ -320,7 +333,7 @@ Rectangle {
         onTriggered: {
             // Stay up while the pointer rests on the controls, a popup is
             // open, or there are no pages yet (loading, or an error to act on).
-            if (settingsPopup.opened || chapterPopup.opened || comments.opened || topHover.hovered
+            if (settingsPopup.opened || chapterPopup.opened || comments.opened || translatePopup.opened || topHover.hovered
                 || reader.panels.length === 0)
                 restart()
             else
@@ -600,6 +613,7 @@ Rectangle {
                 url: panelItem.line ? "" : panelItem.modelData.url || ""
                 referer: panelItem.source ? panelItem.source.referer : reader.referer
                 from: reader.translateFrom
+                context: panelItem.source && !panelItem.line ? reader.translateContext(panelItem.source.panels, panelItem.panel, panelItem.chapter) : ({})
             }
             Column {
                 anchors.centerIn: parent
@@ -835,6 +849,7 @@ Rectangle {
                         referer: reader.referer
                         from: reader.translateFrom
                         half: pageImage.half
+                        context: reader.translateContext(reader.panels, pageView.shown[0], reader.index)
                     }
                     PanelImage {
                         id: secondImage
@@ -866,6 +881,7 @@ Rectangle {
                         url: secondImage.source
                         referer: reader.referer
                         from: reader.translateFrom
+                        context: reader.translateContext(reader.panels, pageView.shown[1], reader.index)
                     }
                 }
             }
@@ -1300,13 +1316,33 @@ Rectangle {
                 diameter: topActions.button
                 iconName: "languages"
                 iconColor: reader.translating ? Theme.accent : "white"
-                tip: reader.translating ? qsTr("Show the original") : qsTr("Translate the pages")
+                tip: reader.translating ? (reader.narrowBar ? qsTr("Translate into %1").arg(reader.languageName(Translator.target)) : qsTr("Show the original"))
+                                        : qsTr("Translate the pages")
                 onClicked: {
                     if (!reader.translating && !Translator.pagesReady) {
                         Router.toast(Translator.hint, "info")
                         return
                     }
+                    // Phones have no room for the language button: this one
+                    // opens the languages, with "Show the original" first.
+                    if (reader.translating && reader.narrowBar) {
+                        reader.showControls()
+                        translatePopup.open()
+                        return
+                    }
                     reader.translating = !reader.translating
+                }
+            }
+            IconButton {
+                id: translateTo
+                diameter: topActions.button
+                visible: reader.translating && !reader.narrowBar
+                iconName: "chevron-down"
+                iconColor: "white"
+                tip: qsTr("Translate into %1").arg(reader.languageName(Translator.target))
+                onClicked: {
+                    reader.showControls()
+                    translatePopup.open()
                 }
             }
             ContinueOn {
@@ -1333,6 +1369,84 @@ Rectangle {
     }
 
     // ------------------------------------------------------------ popups
+
+    // Too narrow for a language button beside the others.
+    readonly property bool narrowBar: width < 420
+    function languageName(code) {
+        const found = Customize.languages.find(l => l.value === code)
+        return found ? found.label : code
+    }
+
+    // The language pages are translated into. The controls stay up while it
+    // is open and for a while after a choice, since the pages redraw under it.
+    Popup {
+        id: translatePopup
+        x: parent.width - width - 18
+        y: topBar.height - 6
+        width: Math.min(260, parent.width - 36)
+        height: Math.min(parent.height - 160 - reader.insetTop - reader.insetBottom, 420)
+        padding: 6
+        onOpened: {
+            reader.showControls()
+            languageList.positionViewAtIndex(Math.max(0, Customize.languages.findIndex(l => l.value === Translator.target)), ListView.Center)
+        }
+        onClosed: reader.showControls()
+        background: Rectangle { radius: Theme.radiusLg; color: "#151517"; border.width: 1; border.color: "#2a2a30" }
+        enter: Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.fast } }
+        exit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Motion.fast } }
+        contentItem: ListView {
+            id: languageList
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
+            clip: true
+            model: Customize.languages
+            ScrollBar.vertical: ScScrollBar {}
+            header: ItemDelegate {
+                width: languageList.width
+                height: 42
+                onClicked: {
+                    translatePopup.close()
+                    reader.translating = false
+                }
+                background: Rectangle { radius: Theme.radiusSm; color: parent.hovered ? "#1f1f23" : "transparent" }
+                contentItem: Row {
+                    spacing: 10
+                    Icon { anchors.verticalCenter: parent.verticalCenter; name: "eye"; size: 16; color: "#c4c4cb" }
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: qsTr("Show the original")
+                        color: "white"
+                        font.family: Theme.fontSans
+                        font.pixelSize: Theme.textSm
+                        font.weight: Font.DemiBold
+                    }
+                }
+            }
+            delegate: ItemDelegate {
+                required property var modelData
+                readonly property bool chosen: modelData.value === Translator.target
+                width: languageList.width
+                height: 38
+                onClicked: {
+                    App.setSetting("translateTarget", modelData.value)
+                    translatePopup.close()
+                }
+                background: Rectangle {
+                    radius: Theme.radiusSm
+                    color: chosen ? "#2a2a30" : parent.hovered ? "#1f1f23" : "transparent"
+                }
+                contentItem: Text {
+                    text: modelData.label
+                    color: chosen ? "white" : "#c4c4cb"
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textSm
+                    font.weight: chosen ? Font.DemiBold : Font.Normal
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+            }
+        }
+    }
 
     Popup {
         id: chapterPopup

@@ -14,7 +14,7 @@ Item {
     property bool keepBeside: false
     default property alias trailing: trailingRow.data
 
-    readonly property real titleX: showBack && !Theme.metro ? Theme.gutter + 34 : Theme.gutter
+    readonly property real titleX: showBack && !Theme.retro ? Theme.gutter + 34 : Theme.gutter
     readonly property bool stacked: !keepBeside && trailingRow.width > 0
         && (Theme.compact || width - titleX - Theme.gutter - trailingRow.width - 12 < 240)
     width: parent ? parent.width : 800
@@ -22,8 +22,8 @@ Item {
 
     IconButton {
         id: back
-        // Metro has its back button in the app bar.
-        visible: header.showBack && !Theme.metro
+        // Retro has its back button in the app bar.
+        visible: header.showBack && !Theme.retro
         x: Theme.gutter - 8
         y: 26
         iconName: "arrow-left"
@@ -37,10 +37,10 @@ Item {
         y: 24
         width: parent.width - x - Theme.gutter - (header.stacked ? 0 : trailingRow.width + 12)
         spacing: 4
-        // Metro: the app's name small above a big, thin title, as Windows
+        // Retro: the app's name small above a big, thin title, as Windows
         // Phone's pages had.
         Text {
-            visible: Theme.metro
+            visible: Theme.retro
             text: "SCANCORE"
             color: Theme.text
             font.family: Theme.fontSans
@@ -52,10 +52,10 @@ Item {
             text: header.title
             color: Theme.text
             font.family: Theme.fontDisplay
-            font.pixelSize: Theme.metro ? Math.round(Theme.text3xl * 1.55) : Theme.text3xl
-            font.weight: Theme.metro ? Font.Light : Font.Bold
-            font.letterSpacing: Theme.metro ? -1 : -0.6
-            font.capitalization: Theme.metro ? (Metro.upperCase ? Font.MixedCase : Font.AllLowercase) : Font.MixedCase
+            font.pixelSize: Theme.retro ? Math.round(Theme.text3xl * 1.55) : Theme.text3xl
+            font.weight: Theme.retro ? Font.Light : Font.Bold
+            font.letterSpacing: Theme.retro ? -1 : -0.6
+            font.capitalization: Theme.retro ? (Retro.upperCase ? Font.MixedCase : Font.AllLowercase) : Font.MixedCase
             elide: Text.ElideRight
         }
         Text {

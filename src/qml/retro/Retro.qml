@@ -2,22 +2,22 @@ pragma Singleton
 import QtQuick
 import ScanCore
 
-// The Metro mode's own state: the hub's sections, the tiles pinned to it,
+// The Retro mode's own state: the hub's sections, the tiles pinned to it,
 // the title and where the hub is (for the app bar's button). Lists are kept
 // as JSON strings (settings hand lists back as Qt lists; a string syncs as
 // it is).
 QtObject {
-    id: metro
+    id: retro
 
-    readonly property bool upperCase: App.settings.metroCase !== "lower"
-    readonly property string title: typeof App.settings.metroTitle === "string" && App.settings.metroTitle.trim().length
-        ? App.settings.metroTitle.trim() : "scancore"
-    readonly property bool gradientTitle: App.settings.metroTitleColor !== "plain"
+    readonly property bool upperCase: App.settings.retroCase !== "lower"
+    readonly property string title: typeof App.settings.retroTitle === "string" && App.settings.retroTitle.trim().length
+        ? App.settings.retroTitle.trim() : "scancore"
+    readonly property bool gradientTitle: App.settings.retroTitleColor !== "plain"
     // "recent": the art of what was read last; "theme": the custom theme's
     // picture (or nothing); "none".
-    readonly property string background: ["recent", "theme", "none"].indexOf(App.settings.metroBackground) >= 0
-        ? App.settings.metroBackground : "recent"
-    readonly property bool liveTiles: App.settings.metroLiveTiles !== false
+    readonly property string background: ["recent", "theme", "none"].indexOf(App.settings.retroBackground) >= 0
+        ? App.settings.retroBackground : "recent"
+    readonly property bool liveTiles: App.settings.retroLiveTiles !== false
 
     // Where the hub is, and whether it is showing: the app bar's button
     // does what the section in view is for.
@@ -51,8 +51,8 @@ QtObject {
     // Strings first: App.settings changes with every setting, a string
     // only when it is different, so the lists below stay the same objects
     // (the hub would rebuild its sections otherwise).
-    readonly property string sectionsText: typeof App.settings.metroSections === "string" ? App.settings.metroSections : ""
-    readonly property string pinsText: typeof App.settings.metroTiles === "string" ? App.settings.metroTiles : ""
+    readonly property string sectionsText: typeof App.settings.retroSections === "string" ? App.settings.retroSections : ""
+    readonly property string pinsText: typeof App.settings.retroTiles === "string" ? App.settings.retroTiles : ""
 
     // The hub's sections in the user's order (at least one).
     readonly property var sectionList: {
@@ -60,12 +60,12 @@ QtObject {
         return (keys.length ? keys : defaultSections).map(k => ({ key: k, label: sectionLabel(k) }))
     }
     function sections() { return sectionList }
-    function setSections(keys) { App.setSetting("metroSections", JSON.stringify(keys)) }
+    function setSections(keys) { App.setSetting("retroSections", JSON.stringify(keys)) }
 
     // Pinned tiles: [{ id, size, item }], item being the series map it opens.
     readonly property var pinList: parse(pinsText, []).filter(p => p && p.id && p.item)
     function pins() { return pinList }
-    function savePins(list) { App.setSetting("metroTiles", JSON.stringify(list)) }
+    function savePins(list) { App.setSetting("retroTiles", JSON.stringify(list)) }
     function isPinned(id) { return pinList.some(p => p.id === id) }
     // What a tile needs to open the series again, nothing more.
     function pin(item, size) {

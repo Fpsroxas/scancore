@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>自動スクロールを一時停止</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>%1 に翻訳</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4026,6 +4030,14 @@
             <source>Later</source>
             <translation>あとで</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro: タイル、大きな文字、アプリバーを備えたパノラマのハブ。Windows Phone 風です。</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5009,279 +5021,6 @@
         <message>
             <source>Open</source>
             <translation>開く</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>探索</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>最近</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>ライブラリ</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>コミック</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>小説</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>アニメ</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>ハブに固定しました</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>続ける</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>新しい章を確認</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>コミックを検索</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>小説を検索</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>アニメを検索</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>すべてを検索</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>ライブラリの新しい章を確認中…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>すべて最新です</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>まだ続きはありません</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>検索</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>更新</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>お知らせ</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>設定</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>履歴</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>ダウンロード</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>アクティビティ</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>拡張機能</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>シークレットモードを解除</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>シークレットモード</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>ハブを並べ替え</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>戻る</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> （長押しでその他）</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>メニューを閉じる</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>メニューを開く</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>シークレット: オフ</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>シークレット</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>アカウント</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>エピソード %1</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>チャプター %1</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>新着 1</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>新着 %1</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>ランダムなコミックを読む</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>続きから</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>ランダムなジャンルを探す</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>検索</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>ダウンロード</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>履歴</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>設定</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>あなたの %1 まとめ</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>まだ選べるものがありません</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>小</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>中</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>ワイド</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>前へ移動</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>後ろへ移動</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>固定解除</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>ハブに固定</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>読んだもの、見たものがここに表示されます。</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>保存した作品がここに表示されます。</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>すべてのコミック</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>近日公開</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>拡張機能</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>最新の章</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>すべての小説</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>小説</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>すべてのアニメ</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>スケジュール</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>ブラウズ</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>トレンド</translation>
         </message>
     </context>
     <context>
@@ -6372,6 +6111,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>Metro タイル</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>Retro タイル</translation>
         </message>
     </context>
     <context>
@@ -7550,6 +7293,14 @@
             <source>The voice above</source>
             <translation>上の声</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>モデルにページを見せる</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>コミックのページの画像をテキストと一緒に送り、誰が話しているかをモデルが見られるようにします。画像を読めるモデルが必要で、費用が増えます。</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7591,6 +7342,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>次: 第 %1 話</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>探索</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>最近</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>ライブラリ</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>コミック</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小説</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>アニメ</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>ハブに固定しました</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>続ける</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>新しい章を確認</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>コミックを検索</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>小説を検索</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>アニメを検索</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>すべてを検索</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>ライブラリの新しい章を確認中…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>すべて最新です</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>まだ続きはありません</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>検索</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>更新</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>お知らせ</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>設定</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>履歴</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>ダウンロード</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>アクティビティ</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>拡張機能</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>シークレットモードを解除</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>シークレットモード</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>ハブを並べ替え</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>戻る</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> （長押しでその他）</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>メニューを閉じる</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>メニューを開く</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>シークレット: オフ</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>シークレット</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>アカウント</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>エピソード %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>チャプター %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>新着 1</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>新着 %1</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>ランダムなコミックを読む</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>続きから</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>ランダムなジャンルを探す</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>検索</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>ダウンロード</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>履歴</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>設定</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>あなたの %1 まとめ</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>まだ選べるものがありません</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>小</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>中</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>ワイド</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>前へ移動</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>後ろへ移動</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>固定解除</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>ハブに固定</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>読んだもの、見たものがここに表示されます。</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>保存した作品がここに表示されます。</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>すべてのコミック</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>近日公開</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>拡張機能</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>最新の章</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>すべての小説</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小説</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>すべてのアニメ</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>スケジュール</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>ブラウズ</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>トレンド</translation>
         </message>
     </context>
     <context>
@@ -8548,6 +8572,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9750,6 +9778,10 @@
         <message>
             <source>Tile colour</source>
             <translation>タイルの色</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>Retro の色</translation>
         </message>
     </context>
     <context>

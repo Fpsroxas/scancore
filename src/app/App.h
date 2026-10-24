@@ -52,6 +52,11 @@ public:
     QVariantMap startAction() const;
 
     Q_INVOKABLE void setSetting(const QString &key, const QVariant &value);
+    // Stored and kept in `settings`, without settingsChanged: for what only
+    // matters the next time it is read (a place to come back to). Every
+    // binding on App.settings runs again on a change, which costs a phone a
+    // frame or more.
+    Q_INVOKABLE void rememberSetting(const QString &key, const QVariant &value);
     // A value QML handed to a QVariant parameter, as plain data: JS arrays
     // and objects arrive as QJSValue, which JSON (the database, sync) turns
     // into null.

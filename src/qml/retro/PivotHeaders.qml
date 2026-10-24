@@ -4,7 +4,7 @@ import ScanCore
 
 // Windows Phone's pivot headers: big thin words in a row, the current one
 // bright and first, the others dimmed after it in turn (they wrap around,
-// as the pivot did). A drop-in for Segmented in the Metro mode:
+// as the pivot did). A drop-in for Segmented in the Retro mode:
 // options [{value, label}], value, picked(value).
 Item {
     id: pivot
@@ -26,9 +26,8 @@ Item {
     Row {
         id: words
         spacing: Math.round(pivot.size * 0.5)
-        // Each change slides the row in from the right a little.
-        property real nudge: 0
-        x: nudge
+        // Each change slides the row in from the right a little (an
+        // animator: the page reloading under it does not stall it).
         Repeater {
             model: pivot.turned
             AbstractButton {
@@ -48,17 +47,16 @@ Item {
                     font.family: Theme.fontSans
                     font.pixelSize: pivot.size
                     font.weight: Font.Light
-                    font.capitalization: Metro.upperCase ? Font.MixedCase : Font.AllLowercase
+                    font.capitalization: Retro.upperCase ? Font.MixedCase : Font.AllLowercase
                     verticalAlignment: Text.AlignVCenter
                 }
             }
         }
     }
     onCurrentIndexChanged: if (!Motion.reduced) slide.restart()
-    NumberAnimation {
+    XAnimator {
         id: slide
         target: words
-        property: "nudge"
         from: pivot.size
         to: 0
         duration: Motion.normal

@@ -112,7 +112,7 @@ Item {
         color: "transparent"
         radius: Theme.radiusMd + 3
         border.width: 3
-        border.color: Theme.metro ? Theme.tile : Theme.accentIsMono ? "#ffffff" : Theme.accent
+        border.color: Theme.retro ? Theme.tile : Theme.accentIsMono ? "#ffffff" : Theme.accent
         // Follows the item as it moves or its view scrolls.
         FrameAnimation {
             running: ring.visible

@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>暫停自動滾動</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>翻譯成%1</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4026,6 +4030,14 @@
             <source>Later</source>
             <translation>稍後</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro：帶動態磚、大字和應用程式列的全景中心，Windows Phone 風格。</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5009,279 +5021,6 @@
         <message>
             <source>Open</source>
             <translation>開啟</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>探索</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>最近</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>書庫</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>漫畫</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>小說</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>動畫</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>已固定到中心頁</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>繼續</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>檢查新章節</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>搜尋漫畫</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>搜尋小說</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>搜尋動畫</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>搜尋全部</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>正在檢查書庫中的新章節…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>一切都是最新的</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>還沒有可繼續的內容</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>搜尋</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>重新整理</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>提醒</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>設定</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>歷史</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>下載</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>動態</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>擴充套件</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>關閉無痕模式</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>無痕模式</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>整理中心頁</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>返回</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> （長按檢視更多）</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>關閉選單</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>開啟選單</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>無痕已關閉</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>無痕</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>賬戶</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>第%1集</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>第%1章</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>1 個新</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>%1 個新</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>隨機讀一部漫畫</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>繼續</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>隨機探索型別</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>搜尋</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>下載</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>歷史</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>設定</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>你的 %1 年度回顧</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>還沒有可選的內容</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>小</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>中等</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>寬</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>前移</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>後移</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>取消固定</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>固定到中心頁</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>你讀過和看過的內容會顯示在這裡。</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>你儲存的作品會顯示在這裡。</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>全部漫畫</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>即將推出</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>擴充套件</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>最新章節</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>全部小說</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>小說</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>全部動畫</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>時間表</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>瀏覽</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>熱門</translation>
         </message>
     </context>
     <context>
@@ -6372,6 +6111,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>Metro 磁貼</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>Retro 動態磚</translation>
         </message>
     </context>
     <context>
@@ -7550,6 +7293,14 @@
             <source>The voice above</source>
             <translation>上面的聲音</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>讓模型看到頁面</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>將漫畫頁面的圖片連同文字一起傳送，讓模型看到是誰在說話。需要能讀取圖片的模型，費用較高。</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7591,6 +7342,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>接下來：第 %1 集</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>探索</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>最近</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>書庫</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>漫畫</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>動畫</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>已固定到中心頁</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>繼續</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>檢查新章節</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>搜尋漫畫</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>搜尋小說</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>搜尋動畫</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>搜尋全部</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>正在檢查書庫中的新章節…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>一切都是最新的</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>還沒有可繼續的內容</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>搜尋</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>重新整理</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>提醒</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>設定</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>歷史</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>下載</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>動態</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>擴充套件</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>關閉無痕模式</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>無痕模式</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>整理中心頁</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>返回</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> （長按檢視更多）</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>關閉選單</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>開啟選單</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>無痕已關閉</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>無痕</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>賬戶</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>第%1集</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>第%1章</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 個新</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 個新</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>隨機讀一部漫畫</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>繼續</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>隨機探索型別</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>搜尋</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>下載</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>歷史</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>設定</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>你的 %1 年度回顧</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>還沒有可選的內容</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>小</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>中等</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>寬</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>前移</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>後移</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>取消固定</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>固定到中心頁</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>你讀過和看過的內容會顯示在這裡。</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>你儲存的作品會顯示在這裡。</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>全部漫畫</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>即將推出</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>擴充套件</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>最新章節</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>全部小說</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>小說</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>全部動畫</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>時間表</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>瀏覽</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>熱門</translation>
         </message>
     </context>
     <context>
@@ -8548,6 +8572,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9750,6 +9778,10 @@
         <message>
             <source>Tile colour</source>
             <translation>磁貼顏色</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>Retro 色彩</translation>
         </message>
     </context>
     <context>

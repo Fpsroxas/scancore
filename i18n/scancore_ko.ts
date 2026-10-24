@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>자동 스크롤 일시 정지</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>%1(으)로 번역</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4026,6 +4030,14 @@
             <source>Later</source>
             <translation>나중에</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro: 타일, 큰 글씨, 앱 바가 있는 파노라마 허브. Windows Phone 스타일입니다.</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5009,279 +5021,6 @@
         <message>
             <source>Open</source>
             <translation>열기</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>탐색</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>최근</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>라이브러리</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>만화</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>소설</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>애니메이션</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>허브에 고정됨</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>계속</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>새 챕터 확인</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>만화 검색</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>소설 검색</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>애니메이션 검색</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>전체 검색</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>라이브러리에서 새 챕터를 확인하는 중…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>모두 최신 상태입니다</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>아직 이어 볼 것이 없음</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>검색</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>새로 고침</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>알림</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>설정</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>기록</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>다운로드</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>활동</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>확장 프로그램</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>시크릿 모드 끄기</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>시크릿 모드</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>허브 정리</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>뒤로</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> (길게 눌러 더 보기)</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>메뉴 닫기</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>메뉴 열기</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>시크릿 꺼짐</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>시크릿</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>계정</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>에피소드 %1</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>챕터 %1</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>새 항목 1</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>새 항목 %1</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>무작위 만화 읽기</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>이어 보기</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>무작위 장르 탐색</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>검색</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>다운로드</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>기록</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>설정</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>나의 %1 결산</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>아직 고를 것이 없음</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>작게</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>중간</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>넓게</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>앞으로 이동</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>뒤로 이동</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>고정 해제</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>허브에 고정</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>읽고 본 것이 여기에 표시됩니다.</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>저장한 작품이 여기에 표시됩니다.</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>모든 만화</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>공개 예정</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>확장 프로그램</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>최신 챕터</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>모든 소설</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>소설</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>모든 애니</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>일정</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>둘러보기</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>트렌딩</translation>
         </message>
     </context>
     <context>
@@ -6372,6 +6111,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>Metro 타일</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>Retro 타일</translation>
         </message>
     </context>
     <context>
@@ -7550,6 +7293,14 @@
             <source>The voice above</source>
             <translation>위의 목소리</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>모델에게 페이지 보여 주기</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>만화 페이지 이미지를 텍스트와 함께 보내 모델이 누가 말하는지 볼 수 있게 합니다. 이미지를 읽는 모델이 필요하며 비용이 더 듭니다.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7591,6 +7342,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>다음: %1화</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>탐색</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>최근</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>라이브러리</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>만화</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>애니메이션</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>허브에 고정됨</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>계속</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>새 챕터 확인</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>만화 검색</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>소설 검색</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>애니메이션 검색</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>전체 검색</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>라이브러리에서 새 챕터를 확인하는 중…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>모두 최신 상태입니다</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>아직 이어 볼 것이 없음</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>검색</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>새로 고침</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>알림</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>설정</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>기록</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>다운로드</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>활동</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>확장 프로그램</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>시크릿 모드 끄기</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>시크릿 모드</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>허브 정리</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>뒤로</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (길게 눌러 더 보기)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>메뉴 닫기</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>메뉴 열기</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>시크릿 꺼짐</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>시크릿</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>계정</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>에피소드 %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>챕터 %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>새 항목 1</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>새 항목 %1</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>무작위 만화 읽기</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>이어 보기</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>무작위 장르 탐색</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>검색</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>다운로드</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>기록</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>설정</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>나의 %1 결산</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>아직 고를 것이 없음</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>작게</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>중간</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>넓게</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>앞으로 이동</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>뒤로 이동</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>고정 해제</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>허브에 고정</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>읽고 본 것이 여기에 표시됩니다.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>저장한 작품이 여기에 표시됩니다.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>모든 만화</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>공개 예정</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>확장 프로그램</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>최신 챕터</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>모든 소설</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>모든 애니</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>일정</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>둘러보기</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>트렌딩</translation>
         </message>
     </context>
     <context>
@@ -8548,6 +8572,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9750,6 +9778,10 @@
         <message>
             <source>Tile colour</source>
             <translation>타일 색</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>Retro 색상</translation>
         </message>
     </context>
     <context>

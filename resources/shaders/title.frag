@@ -1,4 +1,4 @@
-// The Metro hub's title in a gradient: the text (drawn white into a layer)
+// The Retro hub's title in a gradient: the text (drawn white into a layer)
 // gives the shape, two colours blend across it from left to right. Replaces
 // a gradient rectangle masked by MultiEffect, which left a faint box.
 // Rebuild title.frag.qsb with resources/shaders/build.sh after changing it.

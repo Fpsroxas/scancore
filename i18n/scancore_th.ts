@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>หยุดเลื่อนอัตโนมัติชั่วคราว</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>แปลเป็น %1</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4018,6 +4022,14 @@
             <source>Later</source>
             <translation>ภายหลัง</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro: ฮับแบบพาโนรามาพร้อมไทล์ ตัวอักษรใหญ่ และแถบแอป ในสไตล์ Windows Phone</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5001,279 +5013,6 @@
         <message>
             <source>Open</source>
             <translation>เปิด</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>สำรวจ</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>ล่าสุด</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>คลัง</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>การ์ตูน</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>นิยาย</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>อนิเมะ</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>ปักหมุดไว้บนฮับแล้ว</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>ดำเนินการต่อ</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>ตรวจหาตอนใหม่</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>ค้นหาการ์ตูน</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>ค้นหานิยาย</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>ค้นหาอนิเมะ</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>ค้นหาทุกอย่าง</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>กำลังตรวจหาตอนใหม่ในคลังของคุณ…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>ทุกอย่างเป็นปัจจุบันแล้ว</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>ยังไม่มีอะไรให้อ่านต่อ</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>ค้นหา</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>รีเฟรช</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>การแจ้งเตือน</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>การตั้งค่า</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>ประวัติ</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>ดาวน์โหลด</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>กิจกรรม</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>ส่วนขยาย</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>ปิดโหมดไม่ระบุตัวตน</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>โหมดไม่ระบุตัวตน</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>จัดฮับ</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>ย้อนกลับ</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> (กดค้างเพื่อดูเพิ่ม)</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>ปิดเมนู</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>เปิดเมนู</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>ปิดไม่ระบุตัวตน</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>ไม่ระบุตัวตน</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>บัญชี</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>ตอนที่ %1</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>ตอนที่ %1</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>ใหม่ 1</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>ใหม่ %1</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>อ่านการ์ตูนสุ่ม</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>อ่านต่อ</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>สำรวจแนวสุ่ม</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>ค้นหา</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>ดาวน์โหลด</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>ประวัติ</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>การตั้งค่า</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>%1 ของคุณ</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>ยังไม่มีอะไรให้เลือก</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>เล็ก</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>กลาง</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>กว้าง</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>ย้ายไปก่อน</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>ย้ายไปหลัง</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>เลิกปักหมุด</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>ปักหมุดไว้บนฮับ</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>สิ่งที่คุณอ่านและดูจะแสดงที่นี่</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>เรื่องที่คุณบันทึกจะแสดงที่นี่</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>การ์ตูนทั้งหมด</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>เร็วๆ นี้</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>ส่วนขยาย</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>ตอนล่าสุด</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>นิยายทั้งหมด</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>นิยาย</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>อนิเมะทั้งหมด</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>ตารางฉาย</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>เรียกดู</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>กำลังมาแรง</translation>
         </message>
     </context>
     <context>
@@ -6364,6 +6103,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>ไทล์ Metro</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>ไทล์ Retro</translation>
         </message>
     </context>
     <context>
@@ -7542,6 +7285,14 @@
             <source>The voice above</source>
             <translation>เสียงด้านบน</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>ให้โมเดลดูหน้า</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>ส่งภาพหน้าการ์ตูนไปพร้อมข้อความ เพื่อให้โมเดลเห็นว่าใครกำลังพูด ต้องใช้โมเดลที่อ่านภาพได้ และมีค่าใช้จ่ายมากขึ้น</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7583,6 +7334,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>ถัดไป: ตอนที่ %1</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>สำรวจ</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>ล่าสุด</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>คลัง</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>การ์ตูน</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>นิยาย</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>อนิเมะ</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>ปักหมุดไว้บนฮับแล้ว</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>ดำเนินการต่อ</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>ตรวจหาตอนใหม่</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>ค้นหาการ์ตูน</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>ค้นหานิยาย</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>ค้นหาอนิเมะ</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>ค้นหาทุกอย่าง</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>กำลังตรวจหาตอนใหม่ในคลังของคุณ…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>ทุกอย่างเป็นปัจจุบันแล้ว</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>ยังไม่มีอะไรให้อ่านต่อ</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>ค้นหา</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>รีเฟรช</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>การแจ้งเตือน</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>การตั้งค่า</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>ประวัติ</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>ดาวน์โหลด</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>กิจกรรม</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>ส่วนขยาย</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>ปิดโหมดไม่ระบุตัวตน</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>โหมดไม่ระบุตัวตน</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>จัดฮับ</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>ย้อนกลับ</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (กดค้างเพื่อดูเพิ่ม)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>ปิดเมนู</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>เปิดเมนู</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>ปิดไม่ระบุตัวตน</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>ไม่ระบุตัวตน</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>บัญชี</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>ตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>ตอนที่ %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>ใหม่ 1</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>ใหม่ %1</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>อ่านการ์ตูนสุ่ม</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>อ่านต่อ</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>สำรวจแนวสุ่ม</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>ค้นหา</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>ดาวน์โหลด</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>ประวัติ</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>การตั้งค่า</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>%1 ของคุณ</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>ยังไม่มีอะไรให้เลือก</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>เล็ก</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>กลาง</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>กว้าง</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>ย้ายไปก่อน</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>ย้ายไปหลัง</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>เลิกปักหมุด</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>ปักหมุดไว้บนฮับ</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>สิ่งที่คุณอ่านและดูจะแสดงที่นี่</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>เรื่องที่คุณบันทึกจะแสดงที่นี่</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>การ์ตูนทั้งหมด</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>เร็วๆ นี้</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>ส่วนขยาย</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>ตอนล่าสุด</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>นิยายทั้งหมด</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>นิยาย</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>อนิเมะทั้งหมด</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>ตารางฉาย</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>เรียกดู</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>กำลังมาแรง</translation>
         </message>
     </context>
     <context>
@@ -8533,6 +8557,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9735,6 +9763,10 @@
         <message>
             <source>Tile colour</source>
             <translation>สีไทล์</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>สีของ Retro</translation>
         </message>
     </context>
     <context>

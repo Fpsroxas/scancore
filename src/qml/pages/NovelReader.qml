@@ -32,10 +32,13 @@ Rectangle {
     readonly property var translated: translating && translateTask && translateTask.ok ? translateTask.result : []
     function translateChapter() {
         translateTask = translating && blocks.length
-            ? Translator.texts(blocks.map(b => b.kind === "break" ? "" : (b.text || "")), translateFrom) : null
+            ? Translator.texts(blocks.map(b => b.kind === "break" ? "" : (b.text || "")), translateFrom,
+                { work: series.title || "", scope: String(series.id || series.sourceUrl || series.title || ""), chapter: unit.title || "" }) : null
     }
     onBlocksChanged: if (translating) translateChapter()
     onTranslatingChanged: translateChapter()
+    readonly property string translateTarget: Translator.target
+    onTranslateTargetChanged: if (translating) translateChapter()
     Connections {
         target: reader.translateTask
         function onFailed(error) {

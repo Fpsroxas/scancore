@@ -195,7 +195,7 @@ Item {
         contentHeight: column.height + 60
 
         // Touch screens: a sideways swipe moves to the next list (All,
-        // Favourites, then the reader's lists), as in Mihon; in Metro, to the
+        // Favourites, then the reader's lists), as in Mihon; in Retro, to the
         // next pivot.
         DragHandler {
             enabled: Theme.touch
@@ -208,7 +208,7 @@ Item {
                 if (active) { lastX = 0; return }
                 const step = lastX < -80 ? 1 : lastX > 80 ? -1 : 0
                 if (!step) return
-                if (Theme.metro) return step > 0 ? mediaPivot.next() : mediaPivot.previous()
+                if (Theme.retro) return step > 0 ? mediaPivot.next() : mediaPivot.previous()
                 page.stepCategory(step)
             }
         }
@@ -336,11 +336,11 @@ Item {
                 }
             }
 
-            // Metro: the media as pivot headers (swiping the page sideways
+            // Retro: the media as pivot headers (swiping the page sideways
             // turns them too).
             PivotHeaders {
                 id: mediaPivot
-                visible: Theme.metro
+                visible: Theme.retro
                 x: Theme.gutter
                 width: parent.width - 2 * Theme.gutter
                 height: visible ? implicitHeight : 0
@@ -350,7 +350,7 @@ Item {
             }
 
             Segmented {
-                visible: Theme.compact && !Theme.metro
+                visible: Theme.compact && !Theme.retro
                 x: Theme.gutter
                 width: parent.width - 2 * Theme.gutter
                 fill: true
@@ -401,7 +401,7 @@ Item {
                 width: parent.width - 2 * Theme.gutter
                 spacing: 12
                 Segmented {
-                    visible: !Theme.metro
+                    visible: !Theme.retro
                     options: page.mediaOptions
                     value: page.media
                     onPicked: (v) => App.setSetting("libraryMedia", v)

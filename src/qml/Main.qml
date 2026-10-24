@@ -43,8 +43,8 @@ ApplicationWindow {
     readonly property bool immersiveOpen: immersive.depth > 0
 
     // Settings → Interface: how navigation sits on wide windows. Phones
-    // always use the bottom tabs; the Metro mode has its app bar everywhere.
-    readonly property string navStyle: Theme.metro ? "metro" : Theme.compact ? "tabs"
+    // always use the bottom tabs; the Retro mode has its app bar everywhere.
+    readonly property string navStyle: Theme.retro ? "retro" : Theme.compact ? "tabs"
         : ["sidebar", "floating", "rail", "dock"].indexOf(App.settings.navStyle) >= 0 ? App.settings.navStyle : "sidebar"
     readonly property string navSide: navStyle === "dock" ? (App.settings.dockSide === "top" ? "top" : "bottom")
         : App.settings.navSide === "right" ? "right" : "left"
@@ -100,10 +100,10 @@ ApplicationWindow {
         // background).
         if (start.notify) notifyHook.start()
         if (start.palette) Qt.callLater(() => commandPalette.open())
-        // {"metroBar": "open" | "more"}: the Metro app bar opened, or its
+        // {"retroBar": "open" | "more"}: the Retro app bar opened, or its
         // button held.
-        if (start.metroBar === "open") metroBar.expanded = true
-        if (start.metroBar === "more") metroBar.moreOpen = true
+        if (start.retroBar === "open") retroBar.expanded = true
+        if (start.retroBar === "more") retroBar.moreOpen = true
         if (start.shortcuts) Qt.callLater(() => shortcutsSheet.open())
         if (start.push) Qt.callLater(() => shell.push(start.push.path, start.push.props || {}))
         if (start.installNovelPack) {
@@ -213,7 +213,7 @@ ApplicationWindow {
         id: shell
         property string section: "home"
         property var visited: ({ home: true })
-        // Pages over the current section's first one (Metro's back button).
+        // Pages over the current section's first one (Retro's back button).
         readonly property int depth: {
             App.dependOn(section, visited)
             const stack = stackFor(section)
@@ -281,8 +281,8 @@ ApplicationWindow {
                 stack.pop()
                 return true
             }
-            // Metro: every section leads back to the hub.
-            if (Theme.metro && section !== "home") {
+            // Retro: every section leads back to the hub.
+            if (Theme.retro && section !== "home") {
                 goSection("home")
                 return true
             }
@@ -384,7 +384,7 @@ ApplicationWindow {
             anchors.left: window.sidebarShown && window.navSide === "left" ? sidebar.right : parent.left
             anchors.right: window.sidebarShown && window.navSide === "right" ? sidebar.left : parent.right
             anchors.top: dock.visible && window.navSide === "top" ? dock.bottom : parent.top
-            anchors.bottom: metroBar.visible ? metroBar.top : tabBar.visible ? tabBar.top : dock.visible && window.navSide === "bottom" ? dock.top : parent.bottom
+            anchors.bottom: retroBar.visible ? retroBar.top : tabBar.visible ? tabBar.top : dock.visible && window.navSide === "bottom" ? dock.top : parent.bottom
             anchors.topMargin: dock.visible && window.navSide === "top" ? 6 : 0
             anchors.bottomMargin: (dock.visible && window.navSide === "bottom" ? 6 : 0) + readAloudBar.height
             clip: true
@@ -406,11 +406,11 @@ ApplicationWindow {
                     transform: Translate { y: sectionLoader.current ? 0 : 14; Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate } } }
                     Behavior on opacity { NumberAnimation { duration: sectionLoader.current ? Motion.slow : Motion.fast; easing.type: Easing.OutCubic } }
 
-                    // Metro: Home is the hub.
-                    sourceComponent: sectionLoader.key === "home" && Theme.metro ? metroHome : sectionStack
+                    // Retro: Home is the hub.
+                    sourceComponent: sectionLoader.key === "home" && Theme.retro ? retroHome : sectionStack
                     Component {
-                        id: metroHome
-                        PageStack { initial: "metro/MetroHub.qml" }
+                        id: retroHome
+                        PageStack { initial: "retro/RetroHub.qml" }
                     }
                     Component {
                         id: sectionStack
@@ -468,15 +468,15 @@ ApplicationWindow {
         // into shellView too, and anchors to them could be resolved first.
         x: window.sidebarShown && window.navSide === "left" ? sidebar.x + sidebar.width : 0
         width: (parent ? parent.width : 0) - (window.sidebarShown ? sidebar.width + window.navInset : 0)
-        y: (parent ? parent.height : 0) - height - (metroBar.visible ? metroBar.height : tabBar.visible ? tabBar.height
+        y: (parent ? parent.height : 0) - height - (retroBar.visible ? retroBar.height : tabBar.visible ? tabBar.height
             : dock.visible && window.navSide === "bottom" ? dock.height + 20 : 0)
     }
 
-    // Metro: the app bar along the bottom, on every device.
-    MetroBar {
-        id: metroBar
+    // Retro: the app bar along the bottom, on every device.
+    RetroBar {
+        id: retroBar
         parent: shellView
-        visible: Theme.metro
+        visible: Theme.retro
         z: 3
         height: visible ? implicitHeight : 0
         anchors.left: parent.left
@@ -491,7 +491,7 @@ ApplicationWindow {
     TabBar {
         id: tabBar
         parent: shellView
-        visible: Theme.compact && !Theme.metro
+        visible: Theme.compact && !Theme.retro
         height: visible ? 62 : 0
         anchors.left: parent.left
         anchors.right: parent.right
@@ -523,18 +523,20 @@ ApplicationWindow {
         z: 10
         // Readers handle their own keys, so they need focus as soon as they open.
         onCurrentItemChanged: if (currentItem) currentItem.forceActiveFocus()
+        // Animators (the render thread): a reader building its first pages
+        // does not stall the fade that opens it.
         pushEnter: Transition {
             ParallelAnimation {
-                NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.slow; easing.type: Easing.OutCubic }
-                NumberAnimation { property: "scale"; from: 1.03; to: 1; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
+                OpacityAnimator { from: 0; to: 1; duration: Motion.slow; easing.type: Easing.OutCubic }
+                ScaleAnimator { from: 1.03; to: 1; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
             }
         }
-        pushExit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Motion.fast } }
-        popEnter: Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.normal } }
+        pushExit: Transition { OpacityAnimator { to: 0; duration: Motion.fast } }
+        popEnter: Transition { OpacityAnimator { from: 0; to: 1; duration: Motion.normal } }
         popExit: Transition {
             ParallelAnimation {
-                NumberAnimation { property: "opacity"; to: 0; duration: Motion.normal }
-                NumberAnimation { property: "scale"; to: 1.02; duration: Motion.normal }
+                OpacityAnimator { to: 0; duration: Motion.normal }
+                ScaleAnimator { to: 1.02; duration: Motion.normal }
             }
         }
         replaceEnter: pushEnter
@@ -567,7 +569,7 @@ ApplicationWindow {
         visible: App.settings.incognito === true
         anchors.horizontalCenter: parent.horizontalCenter
         // Above the phone's tabs or a bottom dock, clear of page headers.
-        y: parent.height - height - 12 - (metroBar.visible ? metroBar.barHeight : tabBar.visible ? tabBar.height
+        y: parent.height - height - 12 - (retroBar.visible ? retroBar.barHeight : tabBar.visible ? tabBar.height
             : dock.visible && dock.side !== "top" ? parent.height - dock.y : 0)
         height: 28
         width: badgeRow.implicitWidth + 22
@@ -691,7 +693,7 @@ ApplicationWindow {
         id: toasts
         z: 40
         // Above the phone's tab bar, not over it.
-        bottomInset: (tabBar.visible ? tabBar.height : metroBar.visible ? metroBar.barHeight : 0) + readAloudBar.height + (incognitoBadge.visible ? incognitoBadge.height + 12 : 0)
+        bottomInset: (tabBar.visible ? tabBar.height : retroBar.visible ? retroBar.barHeight : 0) + readAloudBar.height + (incognitoBadge.visible ? incognitoBadge.height + 12 : 0)
     }
 
     // Development hook: SCANCORE_START {"screenshot": "/path.png", "delay": ms}

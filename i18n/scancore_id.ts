@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>Jeda gulir otomatis</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>Terjemahkan ke %1</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4026,6 +4030,14 @@
             <source>Later</source>
             <translation>Nanti</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro: hub panorama dengan ubin, huruf besar, dan bilah aplikasi, ala Windows Phone.</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5009,279 +5021,6 @@
         <message>
             <source>Open</source>
             <translation>Buka</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>Jelajahi</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>Terkini</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>Pustaka</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>Komik</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Novel</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>Anime</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>Disematkan ke hub</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>Lanjut</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>Periksa bab baru</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>Cari komik</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>Cari novel</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>Cari anime</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>Cari semuanya</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>Memeriksa bab baru di pustaka Anda…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>Semuanya sudah terbaru</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>Belum ada yang bisa dilanjutkan</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>cari</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>segarkan</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>peringatan</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>pengaturan</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>riwayat</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>unduhan</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>aktivitas</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>ekstensi</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>matikan penyamaran</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>mode penyamaran</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>atur hub</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>Kembali</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> (tahan untuk lainnya)</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>Tutup menu</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>Buka menu</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>Penyamaran mati</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>Penyamaran</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>Akun</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>Episode %1</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>Bab %1</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>1 baru</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>%1 baru</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>baca komik acak</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>lanjutkan</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>jelajahi genre acak</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>cari</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>unduhan</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>riwayat</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>pengaturan</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>%1 rangkuman Anda</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>Belum ada yang bisa dipilih</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>Kecil</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>Sedang</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>Lebar</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>Pindah lebih awal</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>Pindah lebih akhir</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>Lepas sematan</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>Sematkan ke hub</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>Yang Anda baca dan tonton muncul di sini.</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>Seri yang Anda simpan muncul di sini.</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>semua komik</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>segera hadir</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>ekstensi</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>Bab terbaru</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>semua novel</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Novel</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>semua anime</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>jadwal</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>jelajahi</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>Tren</translation>
         </message>
     </context>
     <context>
@@ -6372,6 +6111,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>Ubin Metro</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>Ubin Retro</translation>
         </message>
     </context>
     <context>
@@ -7550,6 +7293,14 @@
             <source>The voice above</source>
             <translation>Suara di atas</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>Tunjukkan halaman ke model</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>Mengirim gambar halaman komik beserta teksnya, agar model bisa melihat siapa yang berbicara. Perlu model yang bisa membaca gambar; biayanya lebih besar.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7591,6 +7342,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>Berikutnya: episode %1</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>Jelajahi</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Terkini</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Pustaka</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komik</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>Disematkan ke hub</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>Lanjut</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Periksa bab baru</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>Cari komik</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>Cari novel</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Cari anime</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Cari semuanya</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Memeriksa bab baru di pustaka Anda…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Semuanya sudah terbaru</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>Belum ada yang bisa dilanjutkan</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>cari</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>segarkan</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>peringatan</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>pengaturan</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>riwayat</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>unduhan</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>aktivitas</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>ekstensi</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>matikan penyamaran</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>mode penyamaran</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>atur hub</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Kembali</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (tahan untuk lainnya)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>Tutup menu</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>Buka menu</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Penyamaran mati</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Penyamaran</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>Akun</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>Episode %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Bab %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 baru</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 baru</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>baca komik acak</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>lanjutkan</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>jelajahi genre acak</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>cari</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>unduhan</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>riwayat</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>pengaturan</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>%1 rangkuman Anda</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>Belum ada yang bisa dipilih</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Kecil</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Sedang</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>Lebar</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>Pindah lebih awal</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>Pindah lebih akhir</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>Lepas sematan</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>Sematkan ke hub</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>Yang Anda baca dan tonton muncul di sini.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>Seri yang Anda simpan muncul di sini.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>semua komik</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>segera hadir</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>ekstensi</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Bab terbaru</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>semua novel</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Novel</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>semua anime</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>jadwal</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>jelajahi</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>Tren</translation>
         </message>
     </context>
     <context>
@@ -8548,6 +8572,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9750,6 +9778,10 @@
         <message>
             <source>Tile colour</source>
             <translation>Warna ubin</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>Warna Retro</translation>
         </message>
     </context>
     <context>

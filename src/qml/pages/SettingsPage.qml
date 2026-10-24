@@ -56,11 +56,11 @@ Item {
         switch (key) {
         case "theme": {
             const theme = { system: qsTr("System"), light: qsTr("Light"), dark: qsTr("Dark"), black: qsTr("Black"), custom: qsTr("Custom") }[App.settings.theme] || qsTr("Dark")
-            const accent = String(App.settings.accent || "mono").replace(/^metro-/, "")
+            const accent = String(App.settings.accent || "mono").replace(/^retro-/, "")
             return theme + qsTr(" theme · ") + accent.charAt(0).toUpperCase() + accent.slice(1) + qsTr(" accent")
         }
         case "interface":
-            if (Theme.metro) return qsTr("Metro") + " · " + ({ relaxed: "relaxed", snappy: "snappy" }[App.settings.motionSpeed] || "default") + qsTr(" motion")
+            if (Theme.retro) return qsTr("Retro") + " · " + ({ relaxed: "relaxed", snappy: "snappy" }[App.settings.motionSpeed] || "default") + qsTr(" motion")
             return ({ sidebar: qsTr("Sidebar"), floating: qsTr("Floating sidebar"), rail: qsTr("Icon rail"), dock: qsTr("Dock") }[App.settings.navStyle] || qsTr("Sidebar"))
                 + " · " + ({ relaxed: "relaxed", snappy: "snappy" }[App.settings.motionSpeed] || "default") + qsTr(" motion")
         case "keyboard": {

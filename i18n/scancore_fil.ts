@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>I-pause ang auto-scroll</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>Isalin sa %1</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4018,6 +4022,14 @@
             <source>Later</source>
             <translation>Mamaya</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro: isang panorama hub na may mga tile, malalaking titik at app bar, gaya ng Windows Phone.</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5001,279 +5013,6 @@
         <message>
             <source>Open</source>
             <translation>Buksan</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>Tuklasin</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>Kamakailan</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>Library</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>Komiks</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Nobela</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>Anime</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>Naka-pin sa hub</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>Magpatuloy</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>Maghanap ng bagong kabanata</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>Maghanap ng komiks</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>Maghanap ng nobela</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>Maghanap ng anime</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>Hanapin ang lahat</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>Hinahanap sa library mo ang mga bagong kabanata…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>Updated na ang lahat</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>Wala pang maitutuloy</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>maghanap</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>i-refresh</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>mga alerto</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>settings</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>kasaysayan</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>mga download</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>aktibidad</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>mga extension</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>i-off ang incognito</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>mag-incognito</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>ayusin ang hub</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>Bumalik</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> (pindutin nang matagal para sa iba pa)</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>Isara ang menu</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>Buksan ang menu</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>Naka-off ang incognito</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>Incognito</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>Account</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>Episode %1</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>Kabanata %1</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>1 bago</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>%1 bago</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>magbasa ng random na komiks</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>ituloy</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>tumuklas ng random na genre</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>maghanap</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>mga download</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>kasaysayan</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>settings</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>ang iyong %1 wrapped</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>Wala pang mapipili</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>Maliit</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>Katamtaman</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>Malapad</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>Iusog pauna</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>Iusog pahuli</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>I-unpin</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>I-pin sa hub</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>Lalabas dito ang binabasa at pinapanood mo.</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>Lalabas dito ang mga seryeng sine-save mo.</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>lahat ng komiks</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>paparating</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>mga extension</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>Pinakabagong kabanata</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>lahat ng nobela</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>Nobela</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>lahat ng anime</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>iskedyul</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>mag-browse</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>Trending</translation>
         </message>
     </context>
     <context>
@@ -6364,6 +6103,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>Mga tile ng Metro</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>Mga tile ng Retro</translation>
         </message>
     </context>
     <context>
@@ -7542,6 +7285,14 @@
             <source>The voice above</source>
             <translation>Ang boses sa itaas</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>Ipakita sa model ang pahina</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>Ipinapadala ang larawan ng pahina ng komiks kasama ang teksto nito, para makita ng model kung sino ang nagsasalita. Kailangan ng model na nakakabasa ng larawan; mas mahal.</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7583,6 +7334,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>Susunod: episode %1</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>Tuklasin</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>Kamakailan</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>Library</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>Komiks</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Nobela</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>Anime</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>Naka-pin sa hub</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>Magpatuloy</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>Maghanap ng bagong kabanata</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>Maghanap ng komiks</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>Maghanap ng nobela</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>Maghanap ng anime</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>Hanapin ang lahat</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>Hinahanap sa library mo ang mga bagong kabanata…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>Updated na ang lahat</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>Wala pang maitutuloy</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>maghanap</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>i-refresh</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>mga alerto</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>settings</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>kasaysayan</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>mga download</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>aktibidad</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>mga extension</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>i-off ang incognito</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>mag-incognito</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>ayusin ang hub</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>Bumalik</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (pindutin nang matagal para sa iba pa)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>Isara ang menu</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>Buksan ang menu</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>Naka-off ang incognito</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>Incognito</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>Account</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>Episode %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>Kabanata %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 bago</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 bago</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>magbasa ng random na komiks</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>ituloy</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>tumuklas ng random na genre</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>maghanap</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>mga download</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>kasaysayan</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>settings</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>ang iyong %1 wrapped</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>Wala pang mapipili</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>Maliit</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>Katamtaman</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>Malapad</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>Iusog pauna</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>Iusog pahuli</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>I-unpin</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>I-pin sa hub</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>Lalabas dito ang binabasa at pinapanood mo.</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>Lalabas dito ang mga seryeng sine-save mo.</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>lahat ng komiks</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>paparating</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>mga extension</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>Pinakabagong kabanata</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>lahat ng nobela</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>Nobela</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>lahat ng anime</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>iskedyul</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>mag-browse</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>Trending</translation>
         </message>
     </context>
     <context>
@@ -8533,6 +8557,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9735,6 +9763,10 @@
         <message>
             <source>Tile colour</source>
             <translation>Kulay ng tile</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>Mga kulay ng Retro</translation>
         </message>
     </context>
     <context>

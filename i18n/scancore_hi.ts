@@ -1973,6 +1973,10 @@
             <source>Pause auto-scroll</source>
             <translation>अपने-आप स्क्रॉल रोकें</translation>
         </message>
+        <message>
+            <source>Translate into %1</source>
+            <translation>%1 में अनुवाद करें</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -4018,6 +4022,14 @@
             <source>Later</source>
             <translation>बाद में</translation>
         </message>
+        <message>
+            <source>Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.</source>
+            <translation>Retro: टाइलों, बड़े अक्षरों और ऐप बार वाला पैनोरमा हब, Windows Phone जैसा।</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>
@@ -5001,279 +5013,6 @@
         <message>
             <source>Open</source>
             <translation>खोलें</translation>
-        </message>
-    </context>
-    <context>
-        <name>Metro</name>
-        <message>
-            <source>Explore</source>
-            <translation>खोजें</translation>
-        </message>
-        <message>
-            <source>Recent</source>
-            <translation>हाल का</translation>
-        </message>
-        <message>
-            <source>Library</source>
-            <translation>लाइब्रेरी</translation>
-        </message>
-        <message>
-            <source>Comics</source>
-            <translation>कॉमिक्स</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>उपन्यास</translation>
-        </message>
-        <message>
-            <source>Anime</source>
-            <translation>एनीमे</translation>
-        </message>
-        <message>
-            <source>Pinned to the hub</source>
-            <translation>हब पर पिन किया गया</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroBar</name>
-        <message>
-            <source>Continue</source>
-            <translation>जारी रखें</translation>
-        </message>
-        <message>
-            <source>Check for new chapters</source>
-            <translation>नए चैप्टर देखें</translation>
-        </message>
-        <message>
-            <source>Search comics</source>
-            <translation>कॉमिक्स खोजें</translation>
-        </message>
-        <message>
-            <source>Search novels</source>
-            <translation>उपन्यास खोजें</translation>
-        </message>
-        <message>
-            <source>Search anime</source>
-            <translation>एनीमे खोजें</translation>
-        </message>
-        <message>
-            <source>Search everything</source>
-            <translation>सब कुछ खोजें</translation>
-        </message>
-        <message>
-            <source>Checking your library for new chapters…</source>
-            <translation>आपकी लाइब्रेरी में नए चैप्टर देखे जा रहे हैं…</translation>
-        </message>
-        <message>
-            <source>Everything is up to date</source>
-            <translation>सब कुछ अप टू डेट है</translation>
-        </message>
-        <message>
-            <source>Nothing to continue yet</source>
-            <translation>अभी जारी रखने को कुछ नहीं</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>खोजें</translation>
-        </message>
-        <message>
-            <source>refresh</source>
-            <translation>रीफ़्रेश</translation>
-        </message>
-        <message>
-            <source>alerts</source>
-            <translation>सूचनाएँ</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>सेटिंग</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>इतिहास</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>डाउनलोड</translation>
-        </message>
-        <message>
-            <source>activity</source>
-            <translation>गतिविधि</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>एक्सटेंशन</translation>
-        </message>
-        <message>
-            <source>turn incognito off</source>
-            <translation>इनकॉग्निटो बंद</translation>
-        </message>
-        <message>
-            <source>go incognito</source>
-            <translation>इनकॉग्निटो</translation>
-        </message>
-        <message>
-            <source>arrange the hub</source>
-            <translation>हब सजाएँ</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>पीछे</translation>
-        </message>
-        <message>
-            <source> (hold for more)</source>
-            <translation> (और के लिए दबाकर रखें)</translation>
-        </message>
-        <message>
-            <source>Close the menu</source>
-            <translation>मेनू बंद करें</translation>
-        </message>
-        <message>
-            <source>Open the menu</source>
-            <translation>मेनू खोलें</translation>
-        </message>
-        <message>
-            <source>Incognito off</source>
-            <translation>इनकॉग्निटो बंद</translation>
-        </message>
-        <message>
-            <source>Incognito</source>
-            <translation>इनकॉग्निटो</translation>
-        </message>
-        <message>
-            <source>Account</source>
-            <translation>खाता</translation>
-        </message>
-    </context>
-    <context>
-        <name>MetroHub</name>
-        <message>
-            <source>Episode %1</source>
-            <translation>एपिसोड %1</translation>
-        </message>
-        <message>
-            <source>Chapter %1</source>
-            <translation>चैप्टर %1</translation>
-        </message>
-        <message>
-            <source>1 new</source>
-            <translation>1 नया</translation>
-        </message>
-        <message>
-            <source>%1 new</source>
-            <translation>%1 नए</translation>
-        </message>
-        <message>
-            <source>read a random comic</source>
-            <translation>कोई भी कॉमिक पढ़ें</translation>
-        </message>
-        <message>
-            <source>continue</source>
-            <translation>जारी रखें</translation>
-        </message>
-        <message>
-            <source>explore a random genre</source>
-            <translation>कोई भी शैली खोजें</translation>
-        </message>
-        <message>
-            <source>search</source>
-            <translation>खोजें</translation>
-        </message>
-        <message>
-            <source>downloads</source>
-            <translation>डाउनलोड</translation>
-        </message>
-        <message>
-            <source>history</source>
-            <translation>इतिहास</translation>
-        </message>
-        <message>
-            <source>settings</source>
-            <translation>सेटिंग</translation>
-        </message>
-        <message>
-            <source>your %1 wrapped</source>
-            <translation>आपका %1 सार</translation>
-        </message>
-        <message>
-            <source>Nothing to pick from yet</source>
-            <translation>अभी चुनने को कुछ नहीं</translation>
-        </message>
-        <message>
-            <source>Small</source>
-            <translation>छोटा</translation>
-        </message>
-        <message>
-            <source>Medium</source>
-            <translation>मध्यम</translation>
-        </message>
-        <message>
-            <source>Wide</source>
-            <translation>चौड़ा</translation>
-        </message>
-        <message>
-            <source>Move earlier</source>
-            <translation>पहले ले जाएँ</translation>
-        </message>
-        <message>
-            <source>Move later</source>
-            <translation>बाद में ले जाएँ</translation>
-        </message>
-        <message>
-            <source>Unpin</source>
-            <translation>अनपिन करें</translation>
-        </message>
-        <message>
-            <source>Pin to the hub</source>
-            <translation>हब पर पिन करें</translation>
-        </message>
-        <message>
-            <source>What you read and watch shows up here.</source>
-            <translation>आप जो पढ़ते और देखते हैं, वह यहाँ दिखेगा।</translation>
-        </message>
-        <message>
-            <source>Series you save show up here.</source>
-            <translation>आपकी सहेजी सीरीज़ यहाँ दिखेंगी।</translation>
-        </message>
-        <message>
-            <source>all comics</source>
-            <translation>सारी कॉमिक्स</translation>
-        </message>
-        <message>
-            <source>coming up</source>
-            <translation>जल्द आ रहा</translation>
-        </message>
-        <message>
-            <source>extensions</source>
-            <translation>एक्सटेंशन</translation>
-        </message>
-        <message>
-            <source>Latest chapters</source>
-            <translation>नए चैप्टर</translation>
-        </message>
-        <message>
-            <source>all novels</source>
-            <translation>सारे उपन्यास</translation>
-        </message>
-        <message>
-            <source>Novels</source>
-            <translation>उपन्यास</translation>
-        </message>
-        <message>
-            <source>all anime</source>
-            <translation>सारे एनिमे</translation>
-        </message>
-        <message>
-            <source>schedule</source>
-            <translation>शेड्यूल</translation>
-        </message>
-        <message>
-            <source>browse</source>
-            <translation>ब्राउज़</translation>
-        </message>
-        <message>
-            <source>Trending</source>
-            <translation>ट्रेंडिंग</translation>
         </message>
     </context>
     <context>
@@ -6364,6 +6103,10 @@
         <message>
             <source>Metro tiles</source>
             <translation>Metro टाइलें</translation>
+        </message>
+        <message>
+            <source>Retro tiles</source>
+            <translation>Retro टाइलें</translation>
         </message>
     </context>
     <context>
@@ -7542,6 +7285,14 @@
             <source>The voice above</source>
             <translation>ऊपर वाली आवाज़</translation>
         </message>
+        <message>
+            <source>Show the model the page</source>
+            <translation>मॉडल को पेज दिखाएँ</translation>
+        </message>
+        <message>
+            <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
+            <translation>कॉमिक पेज की तस्वीर उसके टेक्स्ट के साथ भेजता है, ताकि मॉडल देख सके कि कौन बोल रहा है। ऐसा मॉडल चाहिए जो तस्वीरें पढ़ सके; खर्च ज़्यादा होता है।</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7583,6 +7334,279 @@
         <message>
             <source>Up next: episode %1</source>
             <translation>आगे: एपिसोड %1</translation>
+        </message>
+    </context>
+    <context>
+        <name>Retro</name>
+        <message>
+            <source>Explore</source>
+            <translation>खोजें</translation>
+        </message>
+        <message>
+            <source>Recent</source>
+            <translation>हाल का</translation>
+        </message>
+        <message>
+            <source>Library</source>
+            <translation>लाइब्रेरी</translation>
+        </message>
+        <message>
+            <source>Comics</source>
+            <translation>कॉमिक्स</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>उपन्यास</translation>
+        </message>
+        <message>
+            <source>Anime</source>
+            <translation>एनीमे</translation>
+        </message>
+        <message>
+            <source>Pinned to the hub</source>
+            <translation>हब पर पिन किया गया</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroBar</name>
+        <message>
+            <source>Continue</source>
+            <translation>जारी रखें</translation>
+        </message>
+        <message>
+            <source>Check for new chapters</source>
+            <translation>नए चैप्टर देखें</translation>
+        </message>
+        <message>
+            <source>Search comics</source>
+            <translation>कॉमिक्स खोजें</translation>
+        </message>
+        <message>
+            <source>Search novels</source>
+            <translation>उपन्यास खोजें</translation>
+        </message>
+        <message>
+            <source>Search anime</source>
+            <translation>एनीमे खोजें</translation>
+        </message>
+        <message>
+            <source>Search everything</source>
+            <translation>सब कुछ खोजें</translation>
+        </message>
+        <message>
+            <source>Checking your library for new chapters…</source>
+            <translation>आपकी लाइब्रेरी में नए चैप्टर देखे जा रहे हैं…</translation>
+        </message>
+        <message>
+            <source>Everything is up to date</source>
+            <translation>सब कुछ अप टू डेट है</translation>
+        </message>
+        <message>
+            <source>Nothing to continue yet</source>
+            <translation>अभी जारी रखने को कुछ नहीं</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>खोजें</translation>
+        </message>
+        <message>
+            <source>refresh</source>
+            <translation>रीफ़्रेश</translation>
+        </message>
+        <message>
+            <source>alerts</source>
+            <translation>सूचनाएँ</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>सेटिंग</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>इतिहास</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>डाउनलोड</translation>
+        </message>
+        <message>
+            <source>activity</source>
+            <translation>गतिविधि</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>एक्सटेंशन</translation>
+        </message>
+        <message>
+            <source>turn incognito off</source>
+            <translation>इनकॉग्निटो बंद</translation>
+        </message>
+        <message>
+            <source>go incognito</source>
+            <translation>इनकॉग्निटो</translation>
+        </message>
+        <message>
+            <source>arrange the hub</source>
+            <translation>हब सजाएँ</translation>
+        </message>
+        <message>
+            <source>Back</source>
+            <translation>पीछे</translation>
+        </message>
+        <message>
+            <source> (hold for more)</source>
+            <translation> (और के लिए दबाकर रखें)</translation>
+        </message>
+        <message>
+            <source>Close the menu</source>
+            <translation>मेनू बंद करें</translation>
+        </message>
+        <message>
+            <source>Open the menu</source>
+            <translation>मेनू खोलें</translation>
+        </message>
+        <message>
+            <source>Incognito off</source>
+            <translation>इनकॉग्निटो बंद</translation>
+        </message>
+        <message>
+            <source>Incognito</source>
+            <translation>इनकॉग्निटो</translation>
+        </message>
+        <message>
+            <source>Account</source>
+            <translation>खाता</translation>
+        </message>
+    </context>
+    <context>
+        <name>RetroHub</name>
+        <message>
+            <source>Episode %1</source>
+            <translation>एपिसोड %1</translation>
+        </message>
+        <message>
+            <source>Chapter %1</source>
+            <translation>चैप्टर %1</translation>
+        </message>
+        <message>
+            <source>1 new</source>
+            <translation>1 नया</translation>
+        </message>
+        <message>
+            <source>%1 new</source>
+            <translation>%1 नए</translation>
+        </message>
+        <message>
+            <source>read a random comic</source>
+            <translation>कोई भी कॉमिक पढ़ें</translation>
+        </message>
+        <message>
+            <source>continue</source>
+            <translation>जारी रखें</translation>
+        </message>
+        <message>
+            <source>explore a random genre</source>
+            <translation>कोई भी शैली खोजें</translation>
+        </message>
+        <message>
+            <source>search</source>
+            <translation>खोजें</translation>
+        </message>
+        <message>
+            <source>downloads</source>
+            <translation>डाउनलोड</translation>
+        </message>
+        <message>
+            <source>history</source>
+            <translation>इतिहास</translation>
+        </message>
+        <message>
+            <source>settings</source>
+            <translation>सेटिंग</translation>
+        </message>
+        <message>
+            <source>your %1 wrapped</source>
+            <translation>आपका %1 सार</translation>
+        </message>
+        <message>
+            <source>Nothing to pick from yet</source>
+            <translation>अभी चुनने को कुछ नहीं</translation>
+        </message>
+        <message>
+            <source>Small</source>
+            <translation>छोटा</translation>
+        </message>
+        <message>
+            <source>Medium</source>
+            <translation>मध्यम</translation>
+        </message>
+        <message>
+            <source>Wide</source>
+            <translation>चौड़ा</translation>
+        </message>
+        <message>
+            <source>Move earlier</source>
+            <translation>पहले ले जाएँ</translation>
+        </message>
+        <message>
+            <source>Move later</source>
+            <translation>बाद में ले जाएँ</translation>
+        </message>
+        <message>
+            <source>Unpin</source>
+            <translation>अनपिन करें</translation>
+        </message>
+        <message>
+            <source>Pin to the hub</source>
+            <translation>हब पर पिन करें</translation>
+        </message>
+        <message>
+            <source>What you read and watch shows up here.</source>
+            <translation>आप जो पढ़ते और देखते हैं, वह यहाँ दिखेगा।</translation>
+        </message>
+        <message>
+            <source>Series you save show up here.</source>
+            <translation>आपकी सहेजी सीरीज़ यहाँ दिखेंगी।</translation>
+        </message>
+        <message>
+            <source>all comics</source>
+            <translation>सारी कॉमिक्स</translation>
+        </message>
+        <message>
+            <source>coming up</source>
+            <translation>जल्द आ रहा</translation>
+        </message>
+        <message>
+            <source>extensions</source>
+            <translation>एक्सटेंशन</translation>
+        </message>
+        <message>
+            <source>Latest chapters</source>
+            <translation>नए चैप्टर</translation>
+        </message>
+        <message>
+            <source>all novels</source>
+            <translation>सारे उपन्यास</translation>
+        </message>
+        <message>
+            <source>Novels</source>
+            <translation>उपन्यास</translation>
+        </message>
+        <message>
+            <source>all anime</source>
+            <translation>सारे एनिमे</translation>
+        </message>
+        <message>
+            <source>schedule</source>
+            <translation>शेड्यूल</translation>
+        </message>
+        <message>
+            <source>browse</source>
+            <translation>ब्राउज़</translation>
+        </message>
+        <message>
+            <source>Trending</source>
+            <translation>ट्रेंडिंग</translation>
         </message>
     </context>
     <context>
@@ -8533,6 +8557,10 @@
         <message>
             <source>Metro</source>
             <translation>Metro</translation>
+        </message>
+        <message>
+            <source>Retro</source>
+            <translation>Retro</translation>
         </message>
     </context>
     <context>
@@ -9735,6 +9763,10 @@
         <message>
             <source>Tile colour</source>
             <translation>टाइल का रंग</translation>
+        </message>
+        <message>
+            <source>Retro colours</source>
+            <translation>Retro रंग</translation>
         </message>
     </context>
     <context>

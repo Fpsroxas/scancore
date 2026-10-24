@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QQmlEngine>
 #include <QVariantList>
+#include <QVariantMap>
 
 namespace sc {
 
@@ -19,7 +20,8 @@ class Task;
 // Settings: translateTarget (a language, default the app's), translateReader
 // ("auto", "mlkit", "vision"), translateText ("auto", "mlkit", "deepl",
 // "google", "chat"), translateDeeplKey, translateGoogleKey, translateChatUrl,
-// translateChatKey, translateChatModel.
+// translateChatKey, translateChatModel, translateChatImage (send a page's
+// picture to the model).
 class Translator : public QObject {
     Q_OBJECT
     QML_ELEMENT
@@ -44,9 +46,15 @@ public:
     // The page at `url` translated from `from` ("" = the engine guesses):
     // {width, height, blocks: [{x, y, w, h (0 to 1 of the page), text,
     // source, vertical}], engine}.
+    // `hint` helps a language model translate as one story: {work, chapter,
+    // scope (what the memory is kept under: the series), before: [urls of
+    // the pages before], after: [urls of the pages after]}.
     Q_INVOKABLE sc::Task *page(const QString &url, const QString &referer, const QString &from);
+    Q_INVOKABLE sc::Task *page(const QString &url, const QString &referer, const QString &from, const QVariantMap &hint);
     // Texts translated, in order: [string].
+    // `hint`: {work, chapter, scope}.
     Q_INVOKABLE sc::Task *texts(const QStringList &texts, const QString &from);
+    Q_INVOKABLE sc::Task *texts(const QStringList &texts, const QString &from, const QVariantMap &hint);
     // [{value, label, detail}] for Settings.
     Q_INVOKABLE QVariantList readers() const;
     Q_INVOKABLE QVariantList translators() const;

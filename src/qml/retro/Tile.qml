@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic
 import ScanCore
 
-// One Metro tile. `tile` describes it:
+// One Retro tile. `tile` describes it:
 //   { key, size: "small" | "medium" | "wide", kind: "cover" | "action" | "icon",
 //     label, count, icon, item (a library/search map for covers),
 //     back: { label, detail } (a live tile's other side, shown in turns) }

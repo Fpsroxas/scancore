@@ -526,15 +526,15 @@ Item {
                     tip: page.epubPending ? qsTr("Downloading for the EPUB…") : qsTr("Save as EPUB")
                     onClicked: page.epubMenu(epubButton)
                 }
-                // Metro: a tile for it on the hub.
+                // Retro: a tile for it on the hub.
                 IconButton {
-                    readonly property bool pinned: Metro.isPinned(page.seriesId)
-                    visible: Theme.metro
+                    readonly property bool pinned: Retro.isPinned(page.seriesId)
+                    visible: Theme.retro
                     iconName: pinned ? "pin-off" : "pin"
                     filled: true
                     tip: pinned ? qsTr("Unpin from the hub") : qsTr("Pin to the hub")
-                    onClicked: pinned ? Metro.unpin(page.seriesId)
-                        : Metro.pin(Object.assign({}, page.series, { id: page.seriesId, media: page.media, sourceUrl: page.url,
+                    onClicked: pinned ? Retro.unpin(page.seriesId)
+                        : Retro.pin(Object.assign({}, page.series, { id: page.seriesId, media: page.media, sourceUrl: page.url,
                                                                      referer: page.coverReferer }), "medium")
                 }
                 IconButton {

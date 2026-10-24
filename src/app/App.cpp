@@ -372,6 +372,14 @@ void App::setSetting(const QString &key, const QVariant &input) {
     emit settingsChanged();
 }
 
+void App::rememberSetting(const QString &key, const QVariant &input) {
+    const auto value = plain(input);
+    if (m_settings.value(key) == value)
+        return;
+    m_settings.insert(key, value);
+    Database::setPref(QStringLiteral("setting.") + key, value);
+}
+
 QString App::image(const QString &url, const QString &referer) const {
     if (url.isEmpty())
         return {};

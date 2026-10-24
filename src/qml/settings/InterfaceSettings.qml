@@ -102,22 +102,22 @@ SettingsPane {
         }
     }
 
-    // Standard or Metro, drawn small.
+    // Standard or Retro, drawn small.
     component LookPreview: Item {
         id: look
-        property bool metro: false
+        property bool retro: false
         anchors.fill: parent
-        Rectangle { anchors.fill: parent; color: look.metro ? "#101012" : Theme.surface2 }
+        Rectangle { anchors.fill: parent; color: look.retro ? "#101012" : Theme.surface2 }
         // Standard: a sidebar and covers.
-        Rectangle { visible: !look.metro; width: 40; height: parent.height; color: Theme.surface3 }
+        Rectangle { visible: !look.retro; width: 40; height: parent.height; color: Theme.surface3 }
         Row {
-            visible: !look.metro
+            visible: !look.retro
             x: 52; y: 22; spacing: 5
             Repeater { model: 3; Rectangle { width: 18; height: 26; radius: 3; color: Theme.borderStrong } }
         }
-        // Metro: the big thin title, a header and tiles in the accent.
+        // Retro: the big thin title, a header and tiles in the accent.
         Text {
-            visible: look.metro
+            visible: look.retro
             x: 6; y: -8
             text: "scancore"
             color: Theme.tile
@@ -126,7 +126,7 @@ SettingsPane {
             font.weight: Font.Light
         }
         Grid {
-            visible: look.metro
+            visible: look.retro
             x: 8; y: 34; columns: 4; spacing: 3
             Repeater {
                 model: [1, 0, 1, 1, 0, 1, 1, 0]
@@ -137,7 +137,7 @@ SettingsPane {
 
     SettingsGroup {
         title: qsTr("Look")
-        note: qsTr("Metro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.")
+        note: qsTr("Retro: a panorama hub with tiles, big type and an app bar, in the manner of Windows Phone.")
         Flow {
             x: 12
             width: parent.width - 24
@@ -146,23 +146,23 @@ SettingsPane {
             spacing: 12
             Repeater {
                 model: [{ value: "standard", label: qsTr("Standard"), detail: qsTr("Pages and navigation") },
-                        { value: "metro", label: qsTr("Metro"), detail: qsTr("Tiles and panoramas") }]
+                        { value: "retro", label: qsTr("Retro"), detail: qsTr("Tiles and panoramas") }]
                 ChoiceTile {
                     required property var modelData
                     width: pane.tileWidth
                     label: modelData.label
                     detail: modelData.detail
-                    selected: (Theme.metro ? "metro" : "standard") === modelData.value
+                    selected: (Theme.retro ? "retro" : "standard") === modelData.value
                     onClicked: App.setSetting("uiMode", modelData.value)
-                    LookPreview { metro: modelData.value === "metro" }
+                    LookPreview { retro: modelData.value === "retro" }
                 }
             }
         }
     }
 
     SettingsGroup {
-        visible: Theme.metro
-        title: qsTr("Metro")
+        visible: Theme.retro
+        title: qsTr("Retro")
         note: qsTr("Hold a tile on the hub to resize, move or unpin it. Series pages have Pin to the hub.")
         SettingRow {
             iconName: "type"
@@ -170,10 +170,10 @@ SettingsPane {
             description: qsTr("The big word across the top of the hub.")
             InlineField {
                 width: 180
-                text: Metro.title
+                text: Retro.title
                 placeholderText: "scancore"
                 maximumLength: 24
-                onEditingFinished: App.setSetting("metroTitle", text.trim())
+                onEditingFinished: App.setSetting("retroTitle", text.trim())
             }
         }
         SettingRow {
@@ -181,8 +181,8 @@ SettingsPane {
             title: qsTr("Title colour")
             Segmented {
                 options: [{ value: "gradient", label: qsTr("Accent blend") }, { value: "plain", label: qsTr("Plain") }]
-                value: Metro.gradientTitle ? "gradient" : "plain"
-                onPicked: (v) => App.setSetting("metroTitleColor", v)
+                value: Retro.gradientTitle ? "gradient" : "plain"
+                onPicked: (v) => App.setSetting("retroTitleColor", v)
             }
         }
         SettingRow {
@@ -192,8 +192,8 @@ SettingsPane {
             Segmented {
                 options: [{ value: "recent", label: qsTr("Last read") }, { value: "theme", label: qsTr("Theme picture") },
                           { value: "none", label: qsTr("None") }]
-                value: Metro.background
-                onPicked: (v) => App.setSetting("metroBackground", v)
+                value: Retro.background
+                onPicked: (v) => App.setSetting("retroBackground", v)
             }
         }
         SettingRow {
@@ -201,15 +201,15 @@ SettingsPane {
             title: qsTr("Headers")
             Segmented {
                 options: [{ value: "upper", label: qsTr("UPPERCASE") }, { value: "lower", label: qsTr("lowercase") }]
-                value: Metro.upperCase ? "upper" : "lower"
-                onPicked: (v) => App.setSetting("metroCase", v)
+                value: Retro.upperCase ? "upper" : "lower"
+                onPicked: (v) => App.setSetting("retroCase", v)
             }
         }
         SettingRow {
             iconName: "refresh-cw"
             title: qsTr("Live tiles")
             description: qsTr("Tiles turn over now and then to show new chapters and where you are.")
-            Toggle { checked: Metro.liveTiles; onToggled: App.setSetting("metroLiveTiles", checked) }
+            Toggle { checked: Retro.liveTiles; onToggled: App.setSetting("retroLiveTiles", checked) }
         }
         SettingRow {
             iconName: "columns-2"
@@ -217,17 +217,17 @@ SettingsPane {
             description: qsTr("Which sections the hub shows, in this order. Four or five are easiest to find your way in.")
         }
         Repeater {
-            model: (Metro.sectionList, Metro.sectionKeys.slice().sort((a, b) => {
-                const order = Metro.sectionList.map(s => s.key)
+            model: (Retro.sectionList, Retro.sectionKeys.slice().sort((a, b) => {
+                const order = Retro.sectionList.map(s => s.key)
                 const ia = order.indexOf(a), ib = order.indexOf(b)
                 return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib)
             }))
             SettingRow {
                 id: sectionRow
                 required property string modelData
-                readonly property var shown: Metro.sectionList.map(s => s.key)
+                readonly property var shown: Retro.sectionList.map(s => s.key)
                 readonly property int at: shown.indexOf(modelData)
-                title: Metro.sectionLabel(modelData)
+                title: Retro.sectionLabel(modelData)
                 Row {
                     spacing: 4
                     IconButton {
@@ -238,7 +238,7 @@ SettingsPane {
                             const list = sectionRow.shown.slice()
                             list.splice(sectionRow.at, 1)
                             list.splice(sectionRow.at - 1, 0, sectionRow.modelData)
-                            Metro.setSections(list)
+                            Retro.setSections(list)
                         }
                     }
                     IconButton {
@@ -249,7 +249,7 @@ SettingsPane {
                             const list = sectionRow.shown.slice()
                             list.splice(sectionRow.at, 1)
                             list.splice(sectionRow.at + 1, 0, sectionRow.modelData)
-                            Metro.setSections(list)
+                            Retro.setSections(list)
                         }
                     }
                     Toggle {
@@ -259,7 +259,7 @@ SettingsPane {
                         onToggled: {
                             const list = sectionRow.shown.filter(k => k !== sectionRow.modelData)
                             if (checked) list.push(sectionRow.modelData)
-                            Metro.setSections(list)
+                            Retro.setSections(list)
                         }
                     }
                 }
@@ -268,7 +268,7 @@ SettingsPane {
     }
 
     SettingsGroup {
-        visible: App.platform !== "android" && !Theme.metro
+        visible: App.platform !== "android" && !Theme.retro
         title: qsTr("Navigation")
         note: qsTr("Narrow windows and phones always use tabs along the bottom.")
         Flow {

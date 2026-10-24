@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls.Basic
 import ScanCore
 
-// Home in the Metro mode: the panorama hub. Explore is a packed grid of
+// Home in the Retro mode: the panorama hub. Explore is a packed grid of
 // tiles (what was pinned, or the library's newest, with the accent's action
 // tiles between them), Recent and Library are the history and the library,
 // and Comics, Novels and Anime are a few big links over what is new there.
@@ -25,7 +25,7 @@ Item {
     // As on Home: out of sight, library changes are only noted.
     property bool libraryStale: false
     onVisibleChanged: {
-        Metro.onHub = visible
+        Retro.onHub = visible
         if (visible && libraryStale) { libraryStale = false; refresh.restart() }
         // Back from a page: the tiles swing in again.
         if (visible && turn > 0) turnIn.restart()
@@ -48,7 +48,7 @@ Item {
     Timer {
         interval: 3200
         repeat: true
-        running: hub.visible && Metro.liveTiles && !Motion.reduced && Qt.application.state === Qt.ApplicationActive
+        running: hub.visible && Retro.liveTiles && !Motion.reduced && Qt.application.state === Qt.ApplicationActive
         onTriggered: hub.beat++
     }
 
@@ -103,7 +103,7 @@ Item {
     readonly property var exploreTiles: {
         const byId = {}
         for (const e of library) byId[e.id] = e
-        const pins = Metro.pinList
+        const pins = Retro.pinList
         const covers = pins.map((p, i) => coverTile(byId[p.id] || p.item, p.size, "pin:" + p.id, true, i))
         // Topped up to four with the library's newest, so pinning one does
         // not empty the hub.
@@ -179,13 +179,13 @@ Item {
         const list = []
         if (t.pinned) {
             for (const [value, label] of sizes)
-                list.push({ text: label, icon: "layout-grid", checked: t.size === value, run: () => Metro.resize(id, value) })
+                list.push({ text: label, icon: "layout-grid", checked: t.size === value, run: () => Retro.resize(id, value) })
             list.push(null)
-            list.push({ text: qsTr("Move earlier"), icon: "chevron-left", run: () => Metro.move(id, -1) })
-            list.push({ text: qsTr("Move later"), icon: "chevron-right", run: () => Metro.move(id, 1) })
-            list.push({ text: qsTr("Unpin"), icon: "pin-off", danger: true, run: () => Metro.unpin(id) })
+            list.push({ text: qsTr("Move earlier"), icon: "chevron-left", run: () => Retro.move(id, -1) })
+            list.push({ text: qsTr("Move later"), icon: "chevron-right", run: () => Retro.move(id, 1) })
+            list.push({ text: qsTr("Unpin"), icon: "pin-off", danger: true, run: () => Retro.unpin(id) })
         } else {
-            list.push({ text: qsTr("Pin to the hub"), icon: "pin", run: () => Metro.pin(t.item, t.size) })
+            list.push({ text: qsTr("Pin to the hub"), icon: "pin", run: () => Retro.pin(t.item, t.size) })
         }
         tileMenu.openAt(item, item.width / 2, item.height / 2, list)
     }
@@ -198,17 +198,17 @@ Item {
         id: pano
         anchors.fill: parent
         focus: true
-        title: Metro.title
-        gradientTitle: Metro.gradientTitle
-        upperCase: Metro.upperCase
-        sections: Metro.sectionList
-        background: Metro.background === "recent" && hub.backgroundEntry
+        title: Retro.title
+        gradientTitle: Retro.gradientTitle
+        upperCase: Retro.upperCase
+        sections: Retro.sectionList
+        background: Retro.background === "recent" && hub.backgroundEntry
             ? ((hub.backgroundEntry.extra && hub.backgroundEntry.extra.banner) || hub.backgroundEntry.cover || "") : ""
         backgroundReferer: hub.referer(hub.backgroundEntry)
         pages: ({ explore: explorePage, recent: recentPage, library: libraryPage,
                   comics: comicsPage, novels: novelsPage, anime: animePage })
         onCurrentKeyChanged: {
-            Metro.hubSection = currentKey
+            Retro.hubSection = currentKey
             rememberSection.restart()
         }
         onHeaderClicked: (key) => {
@@ -216,9 +216,9 @@ Item {
             else if (key !== "explore") hub.launch(() => Router.go(key))
         }
         Component.onCompleted: {
-            const saved = App.settings.metroSection
+            const saved = App.settings.retroSection
             if (saved) Qt.callLater(() => pano.goKey(saved))
-            Metro.hubSection = currentKey
+            Retro.hubSection = currentKey
         }
     }
 
@@ -227,7 +227,7 @@ Item {
     Timer {
         id: rememberSection
         interval: 1500
-        onTriggered: App.setSetting("metroSection", pano.currentKey)
+        onTriggered: App.rememberSetting("retroSection", pano.currentKey)
     }
 
     // Room under every section for the app bar's button.
@@ -249,7 +249,7 @@ Item {
                     gap: Theme.compact ? 8 : 10
                     tiles: hub.exploreTiles
                     beat: hub.beat
-                    live: Metro.liveTiles
+                    live: Retro.liveTiles
                     turn: hub.turn
                     onClicked: (t) => hub.openTile(t)
                     onHeld: (t, item) => hub.holdTile(t, item)
@@ -259,7 +259,7 @@ Item {
     }
 
     // A two-line row: a square picture, the title, and a line in the accent.
-    component MetroRow: AbstractButton {
+    component RetroRow: AbstractButton {
         id: rowButton
         property var entry: ({})
         property string detail: ""
@@ -322,7 +322,7 @@ Item {
                 bottomMargin: hub.bottomRoom
                 model: hub.history
                 WheelScroll {}
-                delegate: MetroRow {
+                delegate: RetroRow {
                     required property var modelData
                     entry: modelData
                     detail: modelData.media === "anime" ? hub.unitWord(modelData).arg(modelData.unitNumber || modelData.unitKey)
@@ -438,7 +438,7 @@ Item {
                     font.family: Theme.fontSans
                     font.pixelSize: Theme.textMd
                     font.weight: Font.DemiBold
-                    font.capitalization: Metro.upperCase ? Font.AllUppercase : Font.AllLowercase
+                    font.capitalization: Retro.upperCase ? Font.AllUppercase : Font.AllLowercase
                 }
                 Item { width: 1; height: 8 }
                 Spinner { visible: media.loading && media.items.length === 0 }

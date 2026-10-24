@@ -207,8 +207,8 @@ QtObject {
     // Everything a theme file carries beyond its colours and background
     // (Customize.h): light or dark, accent, layout, arranged pages and the
     // readers' colours.
-    readonly property var lookSettings: ["uiMode", "metroTitle", "metroTitleColor", "metroBackground", "metroCase",
-        "metroLiveTiles", "metroSections", "navStyle", "navSide", "dockSide", "pageSpacing", "roundness", "coverSize",
+    readonly property var lookSettings: ["uiMode", "retroTitle", "retroTitleColor", "retroBackground", "retroCase",
+        "retroLiveTiles", "retroSections", "navStyle", "navSide", "dockSide", "pageSpacing", "roundness", "coverSize",
         "motionSpeed", "textScale", "readerProgressWidth", "readerRailUnread", "readerRailRead", "readerRailCurrent",
         "readerProgressLook", "readerProgressEdge", "readerProgressOpacity",
         "novelTheme", "novelCustomBg", "novelCustomText"]
@@ -233,7 +233,16 @@ QtObject {
     // Switches to a theme read from a .sct file (Customize.importTheme).
     function applyTheme(theme) {
         const t = Object.assign({}, theme)
-        const accent = t.accent, look = t.look, preset = t.preset
+        const accent = t.accent, preset = t.preset
+        // Files from 2.12.0 call the Retro look "Metro".
+        const look = t.look ? Object.assign({}, t.look) : t.look
+        if (look) {
+            if (String(look.accentName || "").startsWith("metro-")) look.accentName = "retro-" + look.accentName.slice(6)
+            const settings = {}
+            for (const k in (look.settings || {}))
+                settings[k.startsWith("metro") ? "retro" + k.slice(5) : k] = k === "uiMode" && look.settings[k] === "metro" ? "retro" : look.settings[k]
+            look.settings = settings
+        }
         delete t.accent
         delete t.look
         delete t.preset
@@ -246,7 +255,7 @@ QtObject {
         if (accent) {
             App.setSetting("customAccent", accent)
             App.setSetting("accent", "custom")
-        } else if (look && look.accentName && (Theme.accents[look.accentName] || Theme.metroAccents[look.accentName])) {
+        } else if (look && look.accentName && (Theme.accents[look.accentName] || Theme.retroAccents[look.accentName])) {
             App.setSetting("accent", look.accentName)
         }
         // A version 2 file is the whole look: pages it does not arrange go
