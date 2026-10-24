@@ -192,6 +192,11 @@ SettingsPane {
             }
         }
         SettingRow {
+            title: qsTr("Run on into the next chapter")
+            description: qsTr("The next chapter joins the strip as you near the end, so reading never stops for a button.")
+            Toggle { checked: App.settings.readerContinuous !== false; onToggled: App.setSetting("readerContinuous", checked) }
+        }
+        SettingRow {
             title: qsTr("Gap between panels")
             Row {
                 spacing: 12

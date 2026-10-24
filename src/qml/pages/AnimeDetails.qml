@@ -11,6 +11,8 @@ Item {
     property int anilistId: 0
     property var summary: ({})
     property bool autoResume: false
+    // Opened for a watch party (Router.openPartyAnime): starts this episode.
+    property real partyEpisode: 0
     property string url: ""
     property string sourceUrl: ""
     readonly property bool fromSource: sourceUrl.length > 0
@@ -109,7 +111,11 @@ Item {
     Connections {
         target: page.episodesTask
         function onFinished() {
-            if (page.autoResume) {
+            if (page.partyEpisode > 0) {
+                const i = page.episodes.findIndex(e => Number(e.number) === page.partyEpisode)
+                page.partyEpisode = 0
+                page.watch(Math.max(0, i))
+            } else if (page.autoResume) {
                 page.autoResume = false
                 page.watch(page.resumeInfo.index)
             }

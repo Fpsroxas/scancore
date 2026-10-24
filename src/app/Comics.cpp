@@ -1,4 +1,5 @@
 #include "Comics.h"
+#include "sources/servers/Servers.h"
 
 #include "App.h"
 #include "core/QuietSites.h"
@@ -65,7 +66,8 @@ int relevance(const QString &title, const QString &query) {
 QString searchLanguage() { return Database::pref(QStringLiteral("setting.sourceLanguages")).toString(); }
 
 bool inSearchLanguage(const Source &source, const QString &language) {
-    return language.isEmpty() || source.key() == QLatin1String("local") ||
+    // Files on this device and the reader's own servers are in any language.
+    return language.isEmpty() || source.key() == QLatin1String("local") || source.language() == QLatin1String("*") ||
            source.language().section(QLatin1Char('-'), 0, 0) == language;
 }
 
@@ -717,6 +719,70 @@ Task *Comics::latest(int limit) {
         QVariantMap result{{"updates", updates}, {"providers", providers}};
         Database::cachePut(cacheKey, QJsonDocument::fromVariant(result).toJson(QJsonDocument::Compact), 300);
         return result;
+    });
+}
+
+QVariantList Comics::servers() const {
+    QVariantList out;
+    for (const auto &s : servers::load())
+        out.append(QVariantMap{{"id", s.id}, {"kind", s.kind}, {"label", s.label}, {"url", s.url}, {"username", s.username},
+                               {"hasPassword", !s.password.isEmpty()}, {"hasKey", !s.apiKey.isEmpty()},
+                               {"source", QStringLiteral("server-") + s.id}});
+    return out;
+}
+
+QString Comics::saveServer(const QVariantMap &map) {
+    auto list = servers::load();
+    servers::Server server;
+    server.id = map.value(QStringLiteral("id")).toString();
+    if (server.id.isEmpty())
+        server.id = QString::number(QDateTime::currentMSecsSinceEpoch(), 36);
+    for (const auto &old : std::as_const(list))
+        if (old.id == server.id)
+            server = old;
+    server.kind = map.value(QStringLiteral("kind")).toString();
+    server.url = map.value(QStringLiteral("url")).toString().trimmed();
+    if (!server.url.contains(QLatin1String("://")))
+        server.url.prepend(QStringLiteral("http://"));
+    server.label = map.value(QStringLiteral("label")).toString().trimmed();
+    if (server.label.isEmpty())
+        server.label = QUrl(server.url).host();
+    server.username = map.value(QStringLiteral("username")).toString().trimmed();
+    if (const auto password = map.value(QStringLiteral("password")).toString(); !password.isEmpty())
+        server.password = password;
+    if (const auto key = map.value(QStringLiteral("apiKey")).toString().trimmed(); !key.isEmpty())
+        server.apiKey = key;
+    bool replaced = false;
+    for (auto &old : list)
+        if (old.id == server.id) {
+            old = server;
+            replaced = true;
+        }
+    if (!replaced)
+        list.append(server);
+    servers::save(list);
+    comics::Registry::rebuild();
+    emit App::instance()->manifestChanged();
+    return server.id;
+}
+
+void Comics::removeServer(const QString &id) {
+    auto list = servers::load();
+    list.erase(std::remove_if(list.begin(), list.end(), [&](const servers::Server &s) { return s.id == id; }), list.end());
+    servers::save(list);
+    comics::Registry::rebuild();
+    emit App::instance()->manifestChanged();
+}
+
+Task *Comics::testServer(const QString &id) {
+    return Task::run([id]() -> QVariant {
+        auto source = comics::Registry::byKey(QStringLiteral("server-") + id);
+        if (!source)
+            throw Error(tr("That server is not saved."));
+        servers::authHeaders(*servers::byId(id), true);
+        // Kavita refuses an empty search.
+        const auto found = source->search(servers::byId(id)->kind == QLatin1String("kavita") ? QStringLiteral("a") : QString());
+        return QVariantMap{{"ok", true}, {"count", int(found.size())}};
     });
 }
 

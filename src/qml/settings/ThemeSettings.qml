@@ -161,7 +161,7 @@ SettingsPane {
     SettingsGroup {
         visible: Theme.metro
         title: qsTr("Metro colours")
-        note: qsTr("The accent colours of Windows Phone. Tiles, the hub title and switches take it.")
+        note: qsTr("The accent colours of Windows Phone, or any colour from the wheel. Tiles, the hub title and switches take it.")
         Flow {
             x: 16
             width: parent.width - 32
@@ -192,6 +192,34 @@ SettingsPane {
                     scale: pressed ? 0.92 : 1
                     Behavior on scale { NumberAnimation { duration: Motion.instant } }
                 }
+            }
+            // Any colour: the wheel, square like the rest.
+            AbstractButton {
+                id: metroCustom
+                readonly property bool selected: Theme.customAccent
+                width: 44
+                height: 44
+                Accessible.name: qsTr("Custom colour")
+                hoverEnabled: true
+                ToolTip.visible: hovered && !Theme.touch
+                ToolTip.text: qsTr("Custom colour")
+                onClicked: metroPicker.edit(Theme.customAccent ? Theme.accent : Theme.tile)
+                background: Rectangle {
+                    color: Theme.customAccent ? Theme.accent : Theme.surface2
+                    border.width: metroCustom.selected ? 3 : 1
+                    border.color: metroCustom.selected ? Theme.text : Theme.border
+                }
+                contentItem: Item {
+                    Image {
+                        anchors.centerIn: parent
+                        width: 26
+                        height: 26
+                        source: "image://colorwheel/" + Math.round(52 * Screen.devicePixelRatio)
+                        sourceSize: Qt.size(Math.round(52 * Screen.devicePixelRatio), Math.round(52 * Screen.devicePixelRatio))
+                    }
+                }
+                scale: pressed ? 0.92 : 1
+                Behavior on scale { NumberAnimation { duration: Motion.instant } }
             }
         }
     }
@@ -564,6 +592,15 @@ SettingsPane {
         id: basePicker
         title: qsTr("Window colour")
         onChanged: (c) => pane.update({ base: String(c).slice(0, 7) })
+    }
+    ColorPicker {
+        id: metroPicker
+        title: qsTr("Tile colour")
+        swatches: Theme.metroAccentNames.slice(0, 14).map(n => String(Theme.metroAccents[n]))
+        onChanged: (c) => {
+            App.setSetting("customAccent", String(c).slice(0, 7))
+            App.setSetting("accent", "custom")
+        }
     }
     ColorPicker {
         id: accentPicker

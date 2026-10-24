@@ -60,6 +60,35 @@ Item {
         function onFailed(error) { Router.toast(error, "error") }
     }
     readonly property var downloads: { App.dependOn(Downloads.revision); return Downloads.states(seriesId) }
+    // Save as EPUB: the chapters already downloaded, or all of them (the
+    // missing ones download first, then the book is made).
+    property bool epubPending: false
+    readonly property int downloadedCount: chapters.filter(c => downloads[c.key] && downloads[c.key].status === "done").length
+    function epubMenu(anchor) {
+        const missing = chapters.filter(c => !(downloads[c.key] && downloads[c.key].status === "done"))
+        const items = []
+        if (downloadedCount > 0)
+            items.push({ text: qsTr("Save the %1 downloaded chapters").arg(downloadedCount), icon: "file-text",
+                         run: () => page.epubTask = Downloads.exportEpub(page.seriesId) })
+        if (missing.length > 0)
+            items.push({ text: qsTr("Download all %1 chapters, then save").arg(chapters.length), icon: "download", run: () => {
+                download(missing)
+                epubPending = true
+            } })
+        if (epubPending)
+            items.push({ text: qsTr("Stop waiting for the downloads"), icon: "x", run: () => epubPending = false })
+        if (items.length === 1 && !epubPending && downloadedCount === chapters.length) return items[0].run()
+        chapterMenu.openAt(anchor, 0, anchor.height, items)
+    }
+    // Once every chapter has finished (or failed): the book.
+    onDownloadsChanged: {
+        if (!epubPending) return
+        const busy = chapters.some(c => !downloads[c.key] || (downloads[c.key].status !== "done" && downloads[c.key].status !== "failed"))
+        if (busy) return
+        epubPending = false
+        if (downloadedCount > 0) epubTask = Downloads.exportEpub(seriesId)
+        else Router.toast(qsTr("No chapter downloaded, so there is no EPUB to save."), "error")
+    }
     readonly property bool saved: { App.dependOn(page.libraryRevision); return Library.isSaved(seriesId) }
     readonly property var bookmarks: { App.dependOn(page.libraryRevision); return Library.bookmarks(seriesId) }
     // This series' own chapter list settings: sort and filters.
@@ -210,6 +239,11 @@ Item {
             { text: qsTr("Mark previous as unread"), icon: "undo-2", enabled: index > 0,
               run: () => Library.markUnits(series, before(index), false) }
         ]
+        // Computers: this chapter in a window of its own.
+        if (Router.windows)
+            items.unshift({ text: qsTr("Read in a new window"), icon: "external-link",
+                            run: () => { Library.markSeen(seriesId); Router.openWindow(media === "novel" ? "pages/NovelReader.qml" : "pages/ComicReader.qml",
+                                                                                      { series: series, chapters: chapters, index: index }) } }, null)
         if (!local) {
             items.push(null)
             items.push(dl && dl.status === "done"
@@ -482,14 +516,15 @@ Item {
                                         page.chapters, at, [], block)
                     }
                 }
-                // Novels: the downloaded chapters as an EPUB for e-readers.
+                // Novels: the book as an EPUB for e-readers, from the chapters
+                // downloaded, or after downloading the rest.
                 IconButton {
-                    readonly property bool any: Object.keys(page.downloads || {}).some(k => (page.downloads[k] || {}).status === "done")
-                    visible: page.media === "novel" && any
-                    iconName: "file-text"
+                    id: epubButton
+                    visible: page.media === "novel" && page.chapters.length > 0
+                    iconName: page.epubPending ? "loader-circle" : "file-text"
                     filled: true
-                    tip: qsTr("Export as EPUB")
-                    onClicked: page.epubTask = Downloads.exportEpub(page.seriesId)
+                    tip: page.epubPending ? qsTr("Downloading for the EPUB…") : qsTr("Save as EPUB")
+                    onClicked: page.epubMenu(epubButton)
                 }
                 // Metro: a tile for it on the hub.
                 IconButton {

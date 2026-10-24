@@ -31,6 +31,8 @@ QtObject {
         { id: "reader.prev", scope: "reader", label: qsTr("Previous chapter"), keys: ["P"] },
         { id: "reader.mode", scope: "reader", label: qsTr("Switch between strip and pages"), keys: ["M"] },
         { id: "reader.fullscreen", scope: "reader", label: qsTr("Full screen"), keys: ["F"] },
+        { id: "reader.lens", scope: "reader", label: qsTr("Magnifying lens under the mouse"), keys: ["L"] },
+        { id: "reader.auto", scope: "reader", label: qsTr("Auto-scroll on or off"), keys: ["S"] },
         { id: "reader.wider", scope: "reader", label: qsTr("Wider strip, larger text"), keys: ["+", "="] },
         { id: "reader.narrower", scope: "reader", label: qsTr("Narrower strip, smaller text"), keys: ["-"] },
         { id: "reader.first", scope: "reader", label: qsTr("First page"), keys: ["Home"] },

@@ -76,6 +76,8 @@ double mediaVolume();
 void setMediaVolume(double level);
 // Light status/navigation bar icons for a dark screen, dark ones for a light one.
 void setBarIcons(bool darkScreen);
+// A television (Android TV): a D-pad, no touch screen.
+bool isTv();
 // Android: the status and navigation bars shown or hidden (readers).
 void setSystemBars(bool shown);
 // Android: the screen's fastest refresh rate for this window, or the system's choice.

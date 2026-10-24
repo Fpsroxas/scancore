@@ -50,6 +50,8 @@ Item {
 
     function seek(seconds) { mpv.seek(seconds) }
     function togglePause() { mpv.togglePause(); interacted() }
+    // A watch party's host playing or paused.
+    function setPlaying(on) { if (mpv.loaded && !mpv.ended && on === mpv.paused) mpv.togglePause() }
     function seekBy(seconds) { mpv.seekBy(seconds); interacted() }
     function changeVolume(delta) {
         const v = Math.max(0, Math.min(130, Math.round(mpv.volume + delta)))

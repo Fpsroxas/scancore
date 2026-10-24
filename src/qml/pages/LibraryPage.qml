@@ -51,7 +51,14 @@ Item {
         if (sort === "recent") out.sort((a, b) => (b.progressAt || 0) - (a.progressAt || 0))
         else if (sort === "added") out.sort((a, b) => (b.addedAt || 0) - (a.addedAt || 0))
         else if (sort === "title") out.sort((a, b) => String(a.title || "").localeCompare(String(b.title || "")))
+        else if (sort === "unread") out.sort((a, b) => (b.unread || 0) - (a.unread || 0) || (b.progressAt || 0) - (a.progressAt || 0))
         return out
+    }
+    function stepCategory(step) {
+        const order = ["all", "favourites"].concat(categories.map(c => c.value))
+        const at = order.indexOf(category)
+        const next = order[at + step]
+        if (next !== undefined) App.setSetting("libraryCategory", next)
     }
     readonly property string categoryLabel: category === "favourites" ? qsTr("Favourites")
         : (categories.find(c => c.value === category) || { label: "" }).label
@@ -61,7 +68,8 @@ Item {
         { value: "novel", label: qsTr("Novels"), icon: "book-text" }, { value: "anime", label: qsTr("Anime"), icon: "tv" }]
     readonly property var sortOptions: [{ value: "updates", label: qsTr("New chapters first") },
         { value: "recent", label: media === "anime" ? qsTr("Recently watched") : qsTr("Recently read") },
-        { value: "added", label: qsTr("Recently added") }, { value: "title", label: qsTr("Title A–Z") }]
+        { value: "added", label: qsTr("Recently added") }, { value: "title", label: qsTr("Title A–Z") },
+        { value: "unread", label: media === "anime" ? qsTr("Most unwatched") : qsTr("Most unread") }]
     readonly property var viewOptions: [{ value: "grid", icon: "layout-grid", label: qsTr("Grid") },
         { value: "compact", icon: "grid-2x2", label: qsTr("Compact grid") }, { value: "list", icon: "list", label: qsTr("List") }]
 
@@ -186,9 +194,11 @@ Item {
         anchors.fill: parent
         contentHeight: column.height + 60
 
-        // Metro on touch screens: a sideways swipe moves to the next pivot.
+        // Touch screens: a sideways swipe moves to the next list (All,
+        // Favourites, then the reader's lists), as in Mihon; in Metro, to the
+        // next pivot.
         DragHandler {
-            enabled: Theme.metro && Theme.touch
+            enabled: Theme.touch
             target: null
             xAxis.enabled: true
             yAxis.enabled: false
@@ -196,8 +206,10 @@ Item {
             onTranslationChanged: if (active) lastX = translation.x
             onActiveChanged: {
                 if (active) { lastX = 0; return }
-                if (lastX < -80) mediaPivot.next()
-                else if (lastX > 80) mediaPivot.previous()
+                const step = lastX < -80 ? 1 : lastX > 80 ? -1 : 0
+                if (!step) return
+                if (Theme.metro) return step > 0 ? mediaPivot.next() : mediaPivot.previous()
+                page.stepCategory(step)
             }
         }
 
@@ -271,10 +283,11 @@ Item {
                 }
             }
 
-            // Sources that stopped answering, or series saved twice.
+            // Sources that stopped answering, or series saved twice. Hidden
+            // with its ×, it stays away until there are more of them.
             Rectangle {
                 id: careBanner
-                visible: Upkeep.attention > 0
+                visible: Upkeep.attention > Number(App.settings.libraryCareHiddenAt || 0)
                 x: Theme.gutter
                 width: parent.width - 2 * Theme.gutter
                 height: visible ? careRow.height + 20 : 0
@@ -305,11 +318,20 @@ Item {
                     }
                     ScButton {
                         id: reviewButton
-                        anchors.right: parent.right
+                        anchors.right: hideCare.left
+                        anchors.rightMargin: 4
                         anchors.verticalCenter: parent.verticalCenter
                         compact: true
                         text: qsTr("Review")
                         onClicked: Router.openLibraryCare()
+                    }
+                    IconButton {
+                        id: hideCare
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+                        iconName: "x"
+                        tip: qsTr("Hide until there is something new")
+                        onClicked: App.setSetting("libraryCareHiddenAt", Upkeep.attention)
                     }
                 }
             }
@@ -430,6 +452,8 @@ Item {
                         onPressAndHold: page.listMenu(listChip, width / 2, height, modelData)
                         TapHandler {
                             acceptedButtons: Qt.RightButton
+                            // Mice only: touch taps ignore acceptedButtons (a tap would open it).
+                            acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
                             onTapped: (point) => page.listMenu(listChip, point.position.x, point.position.y, listChip.modelData)
                         }
                     }

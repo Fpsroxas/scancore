@@ -1,4 +1,5 @@
 #include "Library.h"
+#include "sources/servers/Servers.h"
 
 #include "Activity.h"
 #include "App.h"
@@ -437,7 +438,9 @@ const QString kBriefSelect = QStringLiteral(R"(
     SELECT s.id, s.media, s.source, s.source_url AS sourceUrl, s.title, s.cover,
            l.category, l.favourite, l.added_at AS addedAt, l.new_units AS newUnits,
            p.unit_key AS unitKey, p.unit_title AS unitTitle, p.unit_number AS unitNumber,
-           p.percent, p.completed, p.updated_at AS progressAt
+           p.percent, p.completed, p.updated_at AS progressAt,
+           (SELECT COUNT(*) FROM units u WHERE u.series_id = s.id
+                AND NOT EXISTS (SELECT 1 FROM progress q WHERE q.series_id = u.series_id AND q.unit_key = u.unit_key AND q.completed)) AS unread
 )");
 
 Task *Library::entries(const QString &media, bool brief) {
@@ -579,6 +582,11 @@ void Library::saveProgress(const QVariantMap &series, const QVariantMap &unit, c
     if (completed && !wasCompleted) {
         Activity::unitFinished(seriesId.section(QLatin1Char(':'), 0, 0));
         Trackers::unitFinished(seriesId);
+        // The reader's own server is told too.
+        if (series.value(QStringLiteral("source")).toString().startsWith(QLatin1String("server-")))
+            runInBackground([source = series.value(QStringLiteral("source")).toString(), seriesUrl = series.value(QStringLiteral("sourceUrl")).toString(),
+                             chapterUrl = unit.value(QStringLiteral("url")).toString().isEmpty() ? key : unit.value(QStringLiteral("url")).toString(),
+                             number = unit.value(QStringLiteral("number")).toString()] { servers::chapterRead(source, seriesUrl, chapterUrl, number); });
         // "Delete once read": the downloads of chapters finished before this
         // one go (this one may still be open). Mihon's files stay.
         if (App::instance()->settings().value(QStringLiteral("deleteAfterRead")).toBool())

@@ -47,7 +47,9 @@ Item {
     }
 
     ListView {
+        id: chipList
         maximumFlickVelocity: Motion.flickVelocity
+        Glide { flick: chipList }
         flickDeceleration: Motion.flickDeceleration
         visible: root.scrolls
         anchors.fill: parent

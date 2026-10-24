@@ -54,6 +54,20 @@ Item {
             || (e.sources || []).some(s => (s.name || "").toLowerCase().indexOf(q) >= 0 || (s.baseUrl || "").toLowerCase().indexOf(q) >= 0))
     }
     readonly property var rows: tab === "installed" ? installedShown : tab === "available" ? availableList : repositories
+    // The list gets its rows from here: a new list (an extension installed
+    // or updated) would otherwise send it back to the top; on the same tab
+    // it stays where it was.
+    property var shownRows: []
+    property string shownTab: ""
+    function showRows() {
+        const keep = shownTab === tab
+        const y = list.contentY
+        shownTab = tab
+        shownRows = rows
+        if (keep) Qt.callLater(() => list.contentY = Math.max(list.originY, Math.min(y, list.originY + list.contentHeight - list.height)))
+    }
+    onRowsChanged: showRows()
+    Component.onCompleted: showRows()
     readonly property bool needsRuntime: App.platform !== "android" && Extensions.runtimeAvailable && !Extensions.runtimeInstalled
 
     function installing(id) { return Extensions.installing.indexOf(id) >= 0 }
@@ -113,7 +127,7 @@ Item {
         WheelScroll {}
         id: list
         anchors.fill: parent
-        model: page.rows
+        model: page.shownRows
         clip: true
         bottomMargin: 40
         boundsBehavior: Flickable.StopAtBounds

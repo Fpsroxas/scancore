@@ -68,6 +68,15 @@ public:
     Q_INVOKABLE sc::Task *latest(int limit = 40);
 
     Q_INVOKABLE QString imageReferer(const QString &url) const;
+    // The reader's own servers (Settings → Sources → Your servers):
+    // [{id, kind, label, url, username, hasPassword, hasKey}] (no secrets).
+    Q_INVOKABLE QVariantList servers() const;
+    // Adds or changes one ({id?, kind, label, url, username, password,
+    // apiKey}; an empty password or key keeps the saved one). Returns its id.
+    Q_INVOKABLE QString saveServer(const QVariantMap &server);
+    Q_INVOKABLE void removeServer(const QString &id);
+    // Logs in and searches once: {ok, count} or fails with why.
+    Q_INVOKABLE sc::Task *testServer(const QString &id);
     // The series' page on its site, for "Open on the website".
     Q_INVOKABLE sc::Task *webUrl(const QString &url);
     // Warms the image cache for the first pages of an upcoming chapter.

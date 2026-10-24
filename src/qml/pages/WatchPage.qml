@@ -213,12 +213,14 @@ Rectangle {
         if (phone && landscape) Window.window.showFullScreen()
         wake()
         Activity.setMedia("anime")
+        Party.watching = media.anilistId || 0
     }
     // However the player is closed (Back, Esc, the arrow), leave full screen.
     Component.onDestruction: {
         App.keepAwake("watch", false)
         Activity.setMedia("")
         Presence.clear()
+        if (Party.watching === (media.anilistId || 0)) Party.watching = 0
         saveProgress(true)
         if (castDevice) Cast.stop()
         if (phone && fullScreen) Window.window.showNormal()
@@ -400,6 +402,40 @@ Rectangle {
         if (outsidePlayers.length === 1) return openOutside(outsidePlayers[0])
         moreMenu.openAt(anchor, 0, anchor.height, outsidePlayers.map(p => ({ text: p.name, icon: "external-link", run: () => openOutside(p) })))
     }
+    // Watch parties (Party): the host's player goes out on every tick and
+    // its changes; someone playing along follows it (episode, position, and
+    // with SCANCORE's player, play and pause).
+    readonly property var partyAnime: ({ anilistId: media.anilistId || 0, title: series.title || media.title || "",
+                                         cover: series.cover || media.cover || "", episode: Number(episode.number) || 1 })
+    readonly property bool playingNow: casting ? Cast.state === "playing" : nativeStream ? !!player.item && player.item.playing === true : webPlaying
+    readonly property bool following: Party.active && !Party.hosting && !!Party.state.anime && Party.state.anime.anilistId === (media.anilistId || 0)
+    function reportParty() {
+        if (Party.hosting && media.anilistId)
+            Party.report(partyAnime, Number(episode.number) || 0, playingNow, position)
+    }
+    onPlayingNowChanged: reportParty()
+    function followParty() {
+        if (!following) return
+        const s = Party.state
+        const i = episodes.findIndex(e => Number(e.number) === Number(s.episode))
+        if (i >= 0 && i !== index) {
+            load(i)
+            return
+        }
+        // Once the video is there (followParty again when it says how long it is).
+        if (!player.item || duration <= 0 || casting) return
+        const target = Math.min(Party.hostPosition(), duration - 1)
+        if (Math.abs(target - position) > 2.5) player.seek(target)
+        if (nativeStream && player.item.setPlaying) player.item.setPlaying(s.playing === true)
+    }
+    Connections {
+        target: Party
+        function onStateReceived() { watch.followParty() }
+        function onMessageReceived(name, text) { if (!partyPanel.opened) Router.toast(name + ": " + text, "info") }
+        function onEnded() { Router.toast(Party.error || qsTr("The party is over."), "info") }
+    }
+    PartyPanel { id: partyPanel; anime: watch.partyAnime }
+
     // Phones: what does not fit on the bar.
     function moreItems() {
         const items = []
@@ -418,6 +454,8 @@ Rectangle {
                                : { text: qsTr("Cast to a TV"), icon: "cast", run: () => castPicker.open() })
         if (canOpenOutside)
             items.push({ text: qsTr("Open in another app"), icon: "external-link", run: () => openOutside(outsidePlayers[0]) })
+        if (media.anilistId)
+            items.push({ text: Party.active ? qsTr("Watch party (%1)").arg(Party.code) : qsTr("Watch together"), icon: "users", run: () => partyPanel.open() })
         if (media.anilistId)
             items.push({ text: qsTr("Comments"), icon: "message-circle", run: () => comments.open() })
         return items
@@ -512,12 +550,14 @@ Rectangle {
                 Router.toast(qsTr("Resumed at ") + formatTime(resumeAt))
             }
         }
+        if (total > 0 && duration === 0 && following) Qt.callLater(followParty)
         if (total > 0) duration = total
         // Moving forward: the episode is playing, which counts as watching
         // time on the Activity page.
         if (seconds > position && seconds - position < 5) Activity.playing()
         position = seconds
         saveProgress(false)
+        reportParty()
         if (skipsItself(activeSkip))
             player.seek(activeSkip.end)
         if ((status === "Ended" || (total > 0 && seconds >= total - 1)) && !ended) {
@@ -550,7 +590,7 @@ Rectangle {
     function exit() {
         saveProgress(true)
         if (fullScreen) Window.window.showNormal()
-        Router.back()
+        Router.leave(watch)
     }
 
     // Android's Back: the panel closes, then full screen ends, then the
@@ -1021,6 +1061,35 @@ Rectangle {
                 iconColor: "white"
                 tip: qsTr("Watch from")
                 onClicked: watchFrom.start(watch.media, false)
+            }
+            // On in a window of its own (a second screen).
+            IconButton {
+                visible: Router.windows && !(Window.window && Window.window.isPageWindow === true)
+                iconName: "columns-2"
+                iconColor: "white"
+                tip: qsTr("Open in a new window")
+                onClicked: {
+                    watch.saveProgress(true)
+                    Router.openWindow("pages/WatchPage.qml", { media: watch.media, episodes: watch.episodes, index: watch.index })
+                    Router.leave(watch)
+                }
+            }
+            IconButton {
+                visible: !!watch.media.anilistId
+                iconName: "users"
+                iconColor: Party.active ? Theme.accent : "white"
+                tip: Party.active ? qsTr("Watch party (%1)").arg(Party.code) : qsTr("Watch together")
+                onClicked: partyPanel.open()
+                Rectangle {
+                    visible: Party.unread > 0
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.margins: 4
+                    width: 8
+                    height: 8
+                    radius: 4
+                    color: Theme.accent
+                }
             }
             IconButton { visible: !!watch.media.anilistId; iconName: "message-circle"; iconColor: "white"; tip: qsTr("Comments"); onClicked: comments.open() }
             ContinueOn { seriesId: watch.series.id || ""; iconColor: "white"; save: () => watch.saveProgress(true) }

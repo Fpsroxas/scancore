@@ -228,6 +228,13 @@ int main(int argc, char *argv[]) {
     // pointer" shortly after startup. Set DISABLE_MANGOHUD=0 to keep it.
     if (!qEnvironmentVariableIsSet("DISABLE_MANGOHUD"))
         qputenv("DISABLE_MANGOHUD", "1");
+    // Qt's Wayland plugin turns the threaded render loop off for NVIDIA's
+    // driver, and on the GUI thread every page load, list refresh or script
+    // stalls the animations (Metro's tiles and panoramas stuttered on
+    // Linux). Threaded rendering runs fine there (tested under Hyprland and
+    // cage, NVIDIA 615); QSG_RENDER_LOOP=basic brings the old one back.
+    if (!qEnvironmentVariableIsSet("QSG_RENDER_LOOP") && !qEnvironmentVariableIsSet("QML_BAD_GUI_RENDER_LOOP"))
+        qputenv("QSG_RENDER_LOOP", "threaded");
 #endif
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     QtWebEngineQuick::initialize();

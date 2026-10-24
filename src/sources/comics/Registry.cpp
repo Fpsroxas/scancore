@@ -1,4 +1,5 @@
 #include "Registry.h"
+#include "sources/servers/Servers.h"
 
 #include "extensions/ExtensionSource.h"
 #include "extensions/Host.h"
@@ -67,6 +68,11 @@ void Registry::rebuild() {
     // Sources of installed Mihon extensions.
     for (const auto &entry : ext::Manager::sources(ext::Kind::Mihon))
         sources.append(std::make_shared<ext::ExtensionSource>(entry));
+    // The reader's own servers (Komga, Kavita, Suwayomi).
+    servers::registerImages();
+    for (const auto &server : servers::load())
+        if (auto source = servers::createSource(server))
+            sources.append(std::shared_ptr<Source>(std::move(source)));
     // Files on this device: opens any file, and lists the chosen folders.
     SourceConfig local;
     local.key = QStringLiteral("local");

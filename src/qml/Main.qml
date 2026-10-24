@@ -131,6 +131,23 @@ ApplicationWindow {
     CrashReportsDialog { id: crashPrompt }
     Timer { running: true; interval: 2500; onTriggered: crashPrompt.showLatest() }
 
+    // A watch party joined from elsewhere: its anime opens once the host's
+    // state arrives; when the host moves to another anime, a toast offers it.
+    Connections {
+        target: Party
+        property string opened: ""
+        function onStateReceived() {
+            const s = Party.state
+            if (!Party.active || Party.hosting || !s.anime || Party.watching === s.anime.anilistId) return
+            const key = Party.code + ":" + s.anime.anilistId
+            if (key === opened) return
+            const first = !opened.startsWith(Party.code + ":")
+            opened = key
+            if (first) Router.openPartyAnime(s)
+            else shell.toast(qsTr("The host moved on to %1").arg(s.anime.title), "info", { label: qsTr("Open"), run: () => Router.openPartyAnime(Party.state) })
+        }
+    }
+
     // Another of the account's apps sent where it is (Continue on…).
     Connections {
         target: Live
@@ -334,6 +351,14 @@ ApplicationWindow {
         // Disabling drops focus; take it back when the reader closes.
         onEnabledChanged: if (enabled) forceActiveFocus()
         Keys.onEscapePressed: (event) => event.accepted = shell.back()
+        // A TV's remote: the D-pad between controls, Select presses.
+        Keys.onPressed: (event) => {
+            if (!App.tv) return
+            const dirs = { [Qt.Key_Left]: "left", [Qt.Key_Right]: "right", [Qt.Key_Up]: "up", [Qt.Key_Down]: "down" }
+            if (dirs[event.key] !== undefined) event.accepted = spatialFocus.move(dirs[event.key])
+            else if (event.key === Qt.Key_Select || event.key === Qt.Key_Enter || event.key === Qt.Key_Return)
+                event.accepted = spatialFocus.activate()
+        }
 
         Shadow {
             target: sidebar
@@ -575,6 +600,17 @@ ApplicationWindow {
         }
     }
 
+    SpatialFocus {
+        id: spatialFocus
+        scope: shellView
+    }
+    // A TV opens with the focus on the first control.
+    Timer {
+        running: App.tv
+        interval: 1500
+        onTriggered: if (!spatialFocus.current || !spatialFocus.isStop(spatialFocus.current)) spatialFocus.move("down")
+    }
+
     CommandPalette {
         id: commandPalette
         z: 30
@@ -678,6 +714,8 @@ ApplicationWindow {
     // The back button on mice.
     TapHandler {
         acceptedButtons: Qt.BackButton
+        // Mice only: touch taps ignore acceptedButtons.
+        acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
         onTapped: shell.back()
     }
     Shortcut {

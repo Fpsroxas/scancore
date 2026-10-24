@@ -283,6 +283,8 @@ App *App::instance() {
 
 QString App::version() const { return QCoreApplication::applicationVersion(); }
 
+bool App::tv() const { return platform::isTv(); }
+
 QString App::platform() const {
     // Development hook: SCANCORE_LOOK_AS=android lays the interface out as
     // on a phone (screenshots of phone layouts on a computer); the phone's

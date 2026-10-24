@@ -63,6 +63,13 @@ Item {
             ScButton { text: qsTr("Schedule"); iconName: "calendar"; compact: true; onClicked: Router.openAnimeSchedule() }
             ScButton { visible: Theme.compact; text: qsTr("Search"); iconName: "search"; compact: true; onClicked: Router.openAnimeBrowse({}) }
             ScButton { text: qsTr("Extensions"); iconName: "puzzle"; compact: true; onClicked: Router.openExtensions() }
+            ScButton {
+                visible: Account.signedIn
+                text: Party.active ? qsTr("Party %1").arg(Party.code) : qsTr("Watch party")
+                iconName: "users"
+                compact: true
+                onClicked: partyPanel.open()
+            }
             IconButton {
                 iconName: "layout-dashboard"
                 tip: qsTr("Edit page")
@@ -495,4 +502,6 @@ Item {
         arrangers: [layout]
         onDone: page.editing = false
     }
+
+    PartyPanel { id: partyPanel }
 }

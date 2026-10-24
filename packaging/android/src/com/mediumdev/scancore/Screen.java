@@ -167,6 +167,13 @@ public final class Screen {
         });
     }
 
+    // A television (Android TV, Google TV): the remote's D-pad drives the app.
+    public static boolean isTv(Context context) {
+        android.app.UiModeManager ui = (android.app.UiModeManager) context.getSystemService(Context.UI_MODE_SERVICE);
+        return (ui != null && ui.getCurrentModeType() == android.content.res.Configuration.UI_MODE_TYPE_TELEVISION)
+            || context.getPackageManager().hasSystemFeature("android.software.leanback");
+    }
+
     // Readers on full screen (as Mihon's): the status and navigation bars
     // hidden while the reader's own controls are, a swipe from the edge
     // shows them for a moment; shown again with the controls.

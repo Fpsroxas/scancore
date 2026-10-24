@@ -22,10 +22,27 @@ Rectangle {
     readonly property string referer: task && task.ok ? task.result.referer : ""
 
     // Settings chosen for this series alone (the reader's settings, "Only
-    // this series") win over the general ones.
+    // this series") win over the general ones. Kept with the series' own
+    // settings ("reader"), which sync to the reader's other devices; older
+    // ones from the readerSeries setting are read until they change.
+    property int seriesRevision: 0
     readonly property var seriesPrefs: {
+        App.dependOn(seriesRevision)
+        if (!series.id) return null
+        const own = Library.seriesSettings(series.id).reader
+        if (own && typeof own === "object") return own
         const all = App.settings.readerSeries || {}
-        return series.id && all[series.id] ? all[series.id] : null
+        return all[series.id] ? all[series.id] : null
+    }
+    function storeSeriesPrefs(prefs) {
+        Library.setSeriesSetting(series.id, "reader", prefs)
+        // Gone from the old place, so it is not read back from there.
+        const all = Object.assign({}, App.settings.readerSeries || {})
+        if (all[series.id] !== undefined) {
+            delete all[series.id]
+            App.setSetting("readerSeries", all)
+        }
+        seriesRevision++
     }
     function opt(name, fallback) {
         if (seriesPrefs && seriesPrefs[name] !== undefined) return seriesPrefs[name]
@@ -37,20 +54,16 @@ Rectangle {
             App.setSetting(name, value)
             return
         }
-        const all = Object.assign({}, App.settings.readerSeries || {})
         const mine = Object.assign({}, seriesPrefs)
         mine[name] = value
-        all[series.id] = mine
-        App.setSetting("readerSeries", all)
+        storeSeriesPrefs(mine)
     }
     function setSeriesOnly(on) {
-        const all = Object.assign({}, App.settings.readerSeries || {})
         if (on)
-            all[series.id] = { readerMode: mode, readerDirection: direction, readerWidth: opt("readerWidth", 820),
-                               readerGap: gap, readerSpread: opt("readerSpread", "single"), readerCrop: crop }
+            storeSeriesPrefs({ readerMode: mode, readerDirection: direction, readerWidth: opt("readerWidth", 820),
+                               readerGap: gap, readerSpread: opt("readerSpread", "single"), readerCrop: crop })
         else
-            delete all[series.id]
-        App.setSetting("readerSeries", all)
+            storeSeriesPrefs(null)
     }
 
     readonly property string mode: opt("readerMode", "strip") === "paged" ? "paged" : "strip"
@@ -67,6 +80,49 @@ Rectangle {
     }
     // Small scans enlarged: sharpened as they are (0 off, to 1).
     readonly property real sharpen: Number(opt("readerSharpen", 0)) || 0
+    // The strip runs on into the next chapter: it joins the strip once
+    // fetched (at 70% of this one), after a line naming it, and the chapter
+    // read changes as it scrolls past (Mihon's continuous webtoon). Off, a
+    // chapter ends with the next-chapter card.
+    readonly property bool continuous: mode === "strip" && opt("readerContinuous", true) !== false
+    // The strip's rows: {chapter, panel}; panel -1 is the line before a
+    // chapter. stripChapters: chapter index → {panels, referer, start row}.
+    ListModel { id: stripModel }
+    property var stripChapters: ({})
+    property var chapterTasks: ({})
+    function stripFill() {
+        stripModel.clear()
+        stripChapters = {}
+        if (mode !== "strip" || !task || !task.ok) return
+        stripAppend(index, task.result)
+    }
+    function stripAppend(ci, result) {
+        if (stripChapters[ci] || !result || !result.panels) return
+        const chapters = Object.assign({}, stripChapters)
+        if (stripModel.count > 0) stripModel.append({ chapter: ci, panel: -1 })
+        chapters[ci] = { panels: result.panels, referer: result.referer || "", start: stripModel.count }
+        stripChapters = chapters
+        const rows = []
+        for (let k = 0; k < result.panels.length; ++k) rows.push({ chapter: ci, panel: k })
+        stripModel.append(rows)
+    }
+    function stripRow(p) {
+        const c = stripChapters[index]
+        return c ? c.start + p : p
+    }
+    // Scrolled into another chapter of the strip: it becomes the one read
+    // (its progress, page count and the next one's prefetch), with no jump.
+    function stripSwitch(ci, panel) {
+        if (ci === index || !chapterTasks[ci]) return
+        if (ci > index) markFinished()
+        saveProgress(true)
+        index = ci
+        finished = false
+        task = chapterTasks[ci]
+        nextTask = null
+        currentPanel = panel
+        Presence.show("comic", series.title || "", chapters[ci].title || "")
+    }
     readonly property int stripWidth: Math.min(width, opt("readerWidth", 820))
     // Colour filter: brightness and warmth are shades over the page (they
     // change live); grey and invert are applied while pages decode.
@@ -102,6 +158,35 @@ Rectangle {
     onVolumeKeysChanged: App.setVolumeKeys(volumeKeys)
     property int currentPanel: 0
     property bool controlsShown: true
+
+    // Auto-scroll (as in TachiyomiSY): the strip moves by itself, or the
+    // pages turn every few seconds; speed 1–20. Holding the strip pauses it;
+    // the end of the last chapter stops it.
+    property bool autoScrolling: false
+    readonly property int autoSpeed: Math.max(1, Math.min(20, Number(opt("readerAutoSpeed", 5)) || 5))
+    function setAutoSpeed(v) { setOpt("readerAutoSpeed", Math.max(1, Math.min(20, v))) }
+    FrameAnimation {
+        running: reader.autoScrolling && reader.mode === "strip" && Qt.application.state === Qt.ApplicationActive
+                 && !strip.dragging && !strip.flicking && !settingsPopup.opened && !reader.magnifying
+        onTriggered: {
+            const end = strip.originY + strip.contentHeight - strip.height
+            if (strip.contentY >= end - 1) {
+                if (!reader.hasNext || !reader.continuous) reader.autoScrolling = false
+                return
+            }
+            strip.contentY = Math.min(end, strip.contentY + reader.autoSpeed * 40 * Math.min(frameTime, 0.05))
+        }
+    }
+    Timer {
+        running: reader.autoScrolling && reader.mode === "paged" && Qt.application.state === Qt.ApplicationActive
+                 && !settingsPopup.opened && !pageView.zoomed
+        interval: (22 - reader.autoSpeed) * 1000
+        repeat: true
+        onTriggered: {
+            if (pageView.view >= pageView.views.length - 1 && !reader.hasNext) reader.autoScrolling = false
+            else pageView.turn(1)
+        }
+    }
     property bool finished: false
     property var resumePosition: null
 
@@ -131,6 +216,8 @@ Rectangle {
         if (nextTask && nextTask.ok && nextTask.done && nextFor === i) task = nextTask
         else task = Comics.panels(chapters[i].url, series.id, chapters[i].key)
         nextTask = null
+        chapterTasks = ({ [i]: task })
+        stripFill()
         strip.contentY = strip.originY
         pageView.resetZoom()
         pageView.page = 0
@@ -158,13 +245,17 @@ Rectangle {
         saveProgress(true)
     }
 
+    onModeChanged: stripFill()
     Connections {
         target: reader.task
         function onFinished() {
+            // A chapter switched to in the strip is there already.
+            if (reader.stripChapters[reader.index]) return
+            reader.stripFill()
             Qt.callLater(() => {
                 if (reader.resumePosition && reader.resumePosition.panel > 0) {
                     const p = Math.min(reader.resumePosition.panel, reader.panels.length - 1)
-                    if (reader.mode === "strip") strip.positionViewAtIndex(p, ListView.Beginning)
+                    if (reader.mode === "strip") strip.positionViewAtIndex(reader.stripRow(p), ListView.Beginning)
                     else pageView.page = pageView.views[pageView.viewOf(p)][0]
                     reader.currentPanel = p
                 }
@@ -196,10 +287,15 @@ Rectangle {
         if (!hasNext || nextFor === index + 1) return
         nextFor = index + 1
         nextTask = Comics.panels(chapters[index + 1].url, series.id, chapters[index + 1].key)
+        chapterTasks = Object.assign({}, chapterTasks, { [index + 1]: nextTask })
     }
     Connections {
         target: reader.nextTask
-        function onFinished(result) { Comics.prefetch(result.panels, result.referer, 6) }
+        function onFinished(result) {
+            Comics.prefetch(result.panels, result.referer, 6)
+            // Only after the chapter it follows (not after one jumped away from).
+            if (reader.continuous && reader.stripChapters[reader.nextFor - 1]) reader.stripAppend(reader.nextFor, result)
+        }
     }
 
     function markFinished() {
@@ -274,7 +370,7 @@ Rectangle {
 
     function exit() {
         saveProgress(true)
-        Router.back()
+        Router.leave(reader)
     }
 
     function keyHint(action) {
@@ -316,6 +412,63 @@ Rectangle {
     Shortcut { sequences: Keymap.sequences("reader.wider"); onActivated: reader.setOpt("readerWidth", Math.min(2400, reader.stripWidth + 80)) }
     Shortcut { sequences: Keymap.sequences("reader.narrower"); onActivated: reader.setOpt("readerWidth", Math.max(360, reader.stripWidth - 80)) }
 
+    Shortcut { sequences: Keymap.sequences("reader.auto"); onActivated: reader.autoScrolling = !reader.autoScrolling }
+    Shortcut { sequences: Keymap.sequences("reader.lens"); enabled: App.platform !== "android"; onActivated: reader.lensOn = !reader.lensOn }
+
+    // Computers: a lens under the mouse (L, or the reader's settings),
+    // twice as large, for small lettering and margin notes.
+    property bool lensOn: App.settings.readerLens === true
+    onLensOnChanged: App.setSetting("readerLens", lensOn)
+    HoverHandler {
+        id: lensHover
+        enabled: reader.lensOn && App.platform !== "android"
+    }
+    Rectangle {
+        id: lens
+        z: 2
+        readonly property real size: 260
+        readonly property Item view: reader.mode === "strip" ? strip : pageView
+        // SCANCORE_START {"lensAt": [x, y]} holds it there (tests).
+        readonly property point at: App.startAction.lensAt ? Qt.point(App.startAction.lensAt[0], App.startAction.lensAt[1])
+                                                           : lensHover.point.position
+        visible: reader.lensOn && (lensHover.hovered || !!App.startAction.lensAt) && !reader.controlsShown
+        width: size
+        height: size
+        radius: size / 2
+        x: at.x - size / 2
+        y: at.y - size / 2
+        color: "black"
+        border.width: 2
+        border.color: Qt.rgba(1, 1, 1, 0.7)
+        // The page under the mouse, half the lens wide, drawn at twice that.
+        ShaderEffectSource {
+            id: lensImage
+            anchors.fill: parent
+            anchors.margins: 2
+            visible: false
+            sourceItem: lens.visible ? lens.view : null
+            live: true
+            hideSource: false
+            // Drawn at the lens's own size, so the page's shader enlarges it
+            // (sharper than stretching a small copy).
+            textureSize: Qt.size(Math.ceil(width * Screen.devicePixelRatio), Math.ceil(height * Screen.devicePixelRatio))
+            sourceRect: {
+                const p = lens.view.mapFromItem(reader, lens.at.x, lens.at.y)
+                return Qt.rect(p.x - lens.size / 4, p.y - lens.size / 4, lens.size / 2, lens.size / 2)
+            }
+        }
+        // Round, with soft edges: the covers' shader cuts the circle.
+        ShaderEffect {
+            anchors.fill: lensImage
+            property variant source: lensImage
+            property size size: Qt.size(width, height)
+            property size crop: Qt.size(1, 1)
+            property real radius: width / 2
+            property real zoom: 1
+            fragmentShader: "qrc:/shaders/cover.frag.qsb"
+        }
+    }
+
     // ------------------------------------------------------------ strip
 
     ListView {
@@ -330,7 +483,7 @@ Rectangle {
             yScale: xScale
             Behavior on xScale { NumberAnimation { duration: Motion.fast; easing.type: Easing.OutCubic } }
         }
-        model: reader.mode === "strip" ? reader.panels : []
+        model: stripModel
         cacheBuffer: Math.max(2400, height * 3)
         boundsBehavior: Flickable.StopAtBounds
         maximumFlickVelocity: Motion.flickVelocity
@@ -341,7 +494,11 @@ Rectangle {
 
         onContentYChanged: {
             const i = indexAt(width / 2, contentY + height * 0.35)
-            if (i >= 0) reader.currentPanel = i
+            const row = i >= 0 ? stripModel.get(i) : null
+            if (row && row.panel >= 0) {
+                if (row.chapter !== reader.index) reader.stripSwitch(row.chapter, row.panel)
+                else reader.currentPanel = row.panel
+            }
             if (atYEnd && reader.panels.length > 0) reader.markFinished()
             if (moving || stripWheel.ease.running) reader.controlsShown = false
         }
@@ -382,20 +539,55 @@ Rectangle {
 
         delegate: Item {
             id: panelItem
-            required property var modelData
-            required property int index
+            required property int chapter
+            required property int panel
+            readonly property var source: reader.stripChapters[chapter] || null
+            readonly property var modelData: source && panel >= 0 ? source.panels[panel] || ({}) : ({})
+            readonly property int index: panel
+            readonly property bool line: panel < 0
             width: strip.width
-            height: image.status === PanelImage.Ready && image.sourceWidth > 0
+            height: line ? 140
+                : image.status === PanelImage.Ready && image.sourceWidth > 0
                 ? reader.stripWidth * image.sourceHeight / image.sourceWidth
                 : (modelData.width > 0 && modelData.height > 0 ? reader.stripWidth * modelData.height / modelData.width : reader.stripWidth * 1.4)
+
+            // Between two chapters of the strip.
+            Column {
+                visible: panelItem.line
+                anchors.centerIn: parent
+                width: Math.min(parent.width - 48, 420)
+                spacing: 6
+                Rectangle { width: parent.width; height: 1; color: "#3f3f46" }
+                Item { width: 1; height: 10 }
+                Text {
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    text: qsTr("Finished: ") + ((reader.chapters[panelItem.chapter - 1] || {}).title || "")
+                    elide: Text.ElideRight
+                    color: "#9a9aa2"
+                    font.family: Theme.fontSans
+                    font.pixelSize: Theme.textSm
+                }
+                Text {
+                    width: parent.width
+                    horizontalAlignment: Text.AlignHCenter
+                    text: qsTr("Next: ") + ((reader.chapters[panelItem.chapter] || {}).title || "")
+                    elide: Text.ElideRight
+                    color: "#e4e4e7"
+                    font.family: Theme.fontDisplay
+                    font.pixelSize: Theme.textLg
+                    font.weight: Font.DemiBold
+                }
+            }
 
             PanelImage {
                 id: image
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: reader.stripWidth
                 height: parent.height
-                source: panelItem.modelData.url
-                referer: reader.referer
+                source: panelItem.line ? "" : panelItem.modelData.url || ""
+                referer: panelItem.source ? panelItem.source.referer : reader.referer
+                visible: !panelItem.line
                 filter: reader.imageFilter
                 sharpen: reader.sharpen
                 maxDecodeWidth: 2400
@@ -405,14 +597,14 @@ Rectangle {
             TranslationLayer {
                 anchors.fill: image
                 translating: reader.translating
-                url: panelItem.modelData.url
-                referer: reader.referer
+                url: panelItem.line ? "" : panelItem.modelData.url || ""
+                referer: panelItem.source ? panelItem.source.referer : reader.referer
                 from: reader.translateFrom
             }
             Column {
                 anchors.centerIn: parent
                 spacing: 10
-                visible: image.status !== PanelImage.Ready
+                visible: !panelItem.line && image.status !== PanelImage.Ready
                 Spinner {
                     anchors.horizontalCenter: parent.horizontalCenter
                     visible: image.status === PanelImage.Loading
@@ -789,14 +981,22 @@ Rectangle {
                 target: null
                 enabled: !pageView.zoomed && !pinch.active && !reader.magnifying
                 yAxis.enabled: false
-                onTranslationChanged: if (active) pageHolder.x = translation.x * 0.7
+                // A quick flick turns the page however short it is (as
+                // Android's pagers do); a slow drag needs to go further.
+                property real flingX: 0
+                onTranslationChanged: if (active) {
+                    pageHolder.x = translation.x * 0.7
+                    flingX = centroid.velocity.x
+                }
                 onActiveChanged: {
                     if (active) {
                         pageSwap.stop()
+                        flingX = 0
                         return
                     }
                     const dx = translation.x
-                    if (Math.abs(dx) > Math.min(90, pageView.width * 0.12)) {
+                    const flung = Math.abs(flingX) > 500 && Math.abs(dx) > 16 && (flingX < 0) === (dx < 0)
+                    if (flung || Math.abs(dx) > Math.min(90, pageView.width * 0.12)) {
                         const forward = dx < 0 ? !pageView.rtl : pageView.rtl
                         pageView.turn(forward ? 1 : -1)
                     }
@@ -908,7 +1108,7 @@ Rectangle {
     // to a page.
     function jumpTo(i) {
         if (i < 0 || i >= reader.panels.length) return
-        if (reader.mode === "strip") strip.positionViewAtIndex(i, ListView.Beginning)
+        if (reader.mode === "strip") strip.positionViewAtIndex(reader.stripRow(i), ListView.Beginning)
         else pageView.page = pageView.views[pageView.viewOf(i)][0]
     }
     Item {
@@ -1043,6 +1243,19 @@ Rectangle {
             readonly property int button: reader.width < 420 ? 32 : 34
             spacing: reader.width < 420 ? 0 : 4
             // Pages are on the progress bar at the left edge; chapters here.
+            // Computers: on in a window of its own (where it left off).
+            IconButton {
+                diameter: topActions.button
+                visible: Router.windows && !(Window.window && Window.window.isPageWindow === true)
+                iconName: "columns-2"
+                iconColor: "white"
+                tip: qsTr("Open in a new window")
+                onClicked: {
+                    reader.saveProgress(true)
+                    Router.openWindow("pages/ComicReader.qml", { series: reader.series, chapters: reader.chapters, index: reader.index })
+                    Router.leave(reader)
+                }
+            }
             IconButton {
                 diameter: topActions.button
                 iconName: "skip-back"
@@ -1177,15 +1390,27 @@ Rectangle {
 
     Popup {
         id: settingsPopup
-        x: parent.width - width - 18
-        y: topBar.height - 6
-        width: Math.min(320, parent.width - 36)
+        // Phones: a sheet from the bottom edge, as wide as the screen, that
+        // scrolls; computers: a panel under the top bar.
+        readonly property bool sheet: Theme.compact
+        readonly property real restY: sheet ? parent.height - height : topBar.height - 6
+        x: sheet ? 0 : parent.width - width - 18
+        y: restY
+        width: sheet ? parent.width : Math.min(320, parent.width - 36)
         padding: 18
-        background: Rectangle { radius: Theme.radiusLg; color: "#151517"; border.width: 1; border.color: "#2a2a30" }
+        bottomPadding: sheet ? 18 + reader.insetBottom : 18
+        background: Rectangle {
+            radius: Theme.radiusLg
+            color: "#151517"
+            border.width: 1
+            border.color: "#2a2a30"
+            // Square along the bottom edge.
+            Rectangle { visible: settingsPopup.sheet; width: parent.width; height: parent.radius; anchors.bottom: parent.bottom; color: parent.color }
+        }
         enter: Transition {
             ParallelAnimation {
                 NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.fast }
-                NumberAnimation { property: "y"; from: topBar.height - 16; to: topBar.height - 6; duration: Motion.normal; easing.type: Easing.OutCubic }
+                NumberAnimation { property: "y"; from: settingsPopup.restY + (settingsPopup.sheet ? 60 : -10); to: settingsPopup.restY; duration: Motion.normal; easing.type: Easing.OutCubic }
             }
         }
         exit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Motion.fast } }
@@ -1193,7 +1418,7 @@ Rectangle {
         contentItem: Flickable {
             maximumFlickVelocity: Motion.flickVelocity
             flickDeceleration: Motion.flickDeceleration
-            implicitHeight: Math.min(settingsColumn.implicitHeight, reader.height - 110 - reader.insetTop - reader.insetBottom)
+            implicitHeight: Math.min(settingsColumn.implicitHeight, settingsPopup.sheet ? reader.height * 0.62 : reader.height - 110 - reader.insetTop - reader.insetBottom)
             contentHeight: settingsColumn.implicitHeight
             clip: true
             boundsBehavior: Flickable.StopAtBounds
@@ -1206,17 +1431,23 @@ Rectangle {
                 component Label: Text { anchors.verticalCenter: parent.verticalCenter; color: "#d4d4d8"; font.family: Theme.fontSans; font.pixelSize: Theme.textSm }
                 Heading { text: qsTr("Layout") }
                 Segmented {
+                    width: parent.width
+                    fill: true
                     options: [{ value: "strip", label: qsTr("Vertical"), icon: "move-vertical" }, { value: "paged", label: qsTr("Pages"), icon: "layers" }]
                     value: reader.mode
                     onPicked: (v) => reader.setOpt("readerMode", v)
                 }
                 Segmented {
+                    width: parent.width
+                    fill: true
                     visible: reader.mode === "paged"
                     options: [{ value: "ltr", label: qsTr("Left to right") }, { value: "rtl", label: qsTr("Right to left") }]
                     value: reader.direction
                     onPicked: (v) => reader.setOpt("readerDirection", v)
                 }
                 Segmented {
+                    width: parent.width
+                    fill: true
                     visible: reader.mode === "paged" && App.platform !== "android"
                     options: [{ value: "single", label: qsTr("One page") }, { value: "double", label: qsTr("Two pages") }]
                     value: reader.opt("readerSpread", "single")
@@ -1239,6 +1470,41 @@ Rectangle {
                         onToggled: reader.setOpt("readerSplitWide", checked)
                     }
                     Label { text: qsTr("Split wide pages in two") }
+                }
+                Row {
+                    visible: App.platform !== "android"
+                    spacing: 10
+                    Toggle {
+                        checked: reader.lensOn
+                        onToggled: reader.lensOn = checked
+                    }
+                    Label { text: qsTr("Magnifying lens under the mouse (L)") }
+                }
+                Row {
+                    visible: reader.mode === "strip"
+                    spacing: 10
+                    Toggle {
+                        checked: reader.continuous
+                        onToggled: reader.setOpt("readerContinuous", checked)
+                    }
+                    Label { text: qsTr("Run on into the next chapter") }
+                }
+                Row {
+                    spacing: 10
+                    Toggle {
+                        checked: reader.autoScrolling
+                        onToggled: reader.autoScrolling = checked
+                    }
+                    Label { text: reader.mode === "strip" ? qsTr("Auto-scroll") : qsTr("Turn the pages by themselves") }
+                }
+                Heading { text: reader.mode === "strip" ? qsTr("Auto-scroll speed · %1").arg(reader.autoSpeed) : qsTr("A page every %1 s").arg(22 - reader.autoSpeed) }
+                ScSlider {
+                    width: parent.width
+                    from: 1
+                    to: 20
+                    stepSize: 1
+                    value: reader.autoSpeed
+                    onMoved: reader.setAutoSpeed(value)
                 }
                 Heading { visible: reader.mode === "strip"; text: qsTr("Width · %1 px").arg(reader.stripWidth) }
                 ScSlider {
@@ -1299,6 +1565,8 @@ Rectangle {
                 // Small scans, enlarged: sharper lines (resources/shaders/panel.frag).
                 Heading { text: qsTr("Sharpen small scans") }
                 Segmented {
+                    width: parent.width
+                    fill: true
                     options: [{ value: 0, label: qsTr("Off") }, { value: 0.35, label: qsTr("Light") }, { value: 0.75, label: qsTr("Strong") }]
                     value: reader.sharpen >= 0.6 ? 0.75 : reader.sharpen > 0 ? 0.35 : 0
                     onPicked: (v) => reader.setOpt("readerSharpen", v)
@@ -1343,23 +1611,31 @@ Rectangle {
                 Rectangle { width: parent.width; height: 1; color: "#2a2a30" }
                 Heading { text: qsTr("Page progress bar") }
                 Segmented {
+                    width: parent.width
+                    fill: true
                     options: [{ value: true, label: qsTr("Always") }, { value: "controls", label: qsTr("With controls") }, { value: false, label: qsTr("Off") }]
                     value: rail.mode
                     onPicked: (v) => App.setSetting("readerProgressBar", v)
                 }
                 Segmented {
+                    width: parent.width
+                    fill: true
                     visible: rail.mode !== false
                     options: [{ value: 3, label: qsTr("Thin") }, { value: 6, label: qsTr("Medium") }, { value: 10, label: qsTr("Thick") }]
                     value: rail.thickness
                     onPicked: (v) => App.setSetting("readerProgressWidth", v)
                 }
                 Segmented {
+                    width: parent.width
+                    fill: true
                     visible: rail.mode !== false
                     options: [{ value: "segments", label: qsTr("Pages") }, { value: "line", label: qsTr("Line") }, { value: "floating", label: qsTr("Floating") }]
                     value: App.settings.readerProgressLook || "segments"
                     onPicked: (v) => App.setSetting("readerProgressLook", v)
                 }
                 Segmented {
+                    width: parent.width
+                    fill: true
                     visible: rail.mode !== false
                     options: [{ value: "left", label: qsTr("Left") }, { value: "right", label: qsTr("Right") }, { value: "bottom", label: qsTr("Bottom") }]
                     value: App.settings.readerProgressEdge || "left"
@@ -1400,4 +1676,49 @@ Rectangle {
         visible: einkFlash.running
     }
     Timer { id: einkFlash; interval: 120 }
+    // Auto-scroll running: pause, slower and faster, by the thumb.
+    Rectangle {
+        id: autoPill
+        z: 60
+        visible: opacity > 0
+        opacity: reader.autoScrolling || autoPause.running ? 1 : 0
+        Behavior on opacity { NumberAnimation { duration: Motion.fast } }
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: parent.height - height - 28 - reader.insetBottom - (reader.controlsShown ? 56 : 0)
+        Behavior on y { NumberAnimation { duration: Motion.normal; easing.type: Easing.OutCubic } }
+        width: autoRow.width + 12
+        height: 44
+        radius: 22
+        color: "#e6151517"
+        border.width: 1
+        border.color: "#2a2a30"
+        // Paused from here: the pill stays a moment to start it again.
+        Timer { id: autoPause; interval: 4000 }
+        Row {
+            id: autoRow
+            anchors.centerIn: parent
+            spacing: 2
+            IconButton { iconName: "minus"; iconColor: "white"; tip: qsTr("Slower"); onClicked: reader.setAutoSpeed(reader.autoSpeed - 1) }
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+                width: 34
+                horizontalAlignment: Text.AlignHCenter
+                text: reader.autoSpeed
+                color: "#e4e4e7"
+                font.family: Theme.fontSans
+                font.pixelSize: Theme.textSm
+                font.weight: Font.DemiBold
+            }
+            IconButton { iconName: "plus"; iconColor: "white"; tip: qsTr("Faster"); onClicked: reader.setAutoSpeed(reader.autoSpeed + 1) }
+            IconButton {
+                iconName: reader.autoScrolling ? "pause" : "play"
+                iconColor: "white"
+                tip: reader.autoScrolling ? qsTr("Pause auto-scroll") : qsTr("Auto-scroll")
+                onClicked: {
+                    reader.autoScrolling = !reader.autoScrolling
+                    if (!reader.autoScrolling) autoPause.restart()
+                }
+            }
+        }
+    }
 }

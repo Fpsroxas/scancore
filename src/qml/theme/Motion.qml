@@ -38,6 +38,20 @@ QtObject {
     readonly property real flickDeceleration: Theme.touch ? (({ short: 3000, long: 1000 })[App.settings.flingGlide] || 1600)
                                                           : (({ short: 3500, long: 1250 })[App.settings.flingGlide] || 2000)
 
+    // Glide (touch screens): Android's OverScroller spline. A fling at v
+    // dp/s travels friction·c·exp(r/(r−1)·ln(0.35·v/(friction·c))) dp, with
+    // r = ln 0.78 / ln 0.9 and c the "physical coefficient" (gravity × inches
+    // × 160 dp × 0.84); friction is Android's 0.015 by default, less for a
+    // long glide and more for a short one (Settings → Interface).
+    readonly property real flingMax: 8000
+    readonly property real flingFriction: ({ short: 0.022, long: 0.010 })[App.settings.flingGlide] || 0.015
+    function flingDistance(v) {
+        const r = Math.log(0.78) / Math.log(0.9)
+        const fc = flingFriction * 9.80665 * 39.37 * 160 * 0.84
+        const l = Math.log(0.35 * Math.abs(v) / fc)
+        return fc * Math.exp(r / (r - 1) * l)
+    }
+
     function stagger(index) {
         return ms(Math.min(index, 16) * 24)
     }

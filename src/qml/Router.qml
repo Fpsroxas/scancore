@@ -12,6 +12,23 @@ QtObject {
     // A page on top of the current section's stack.
     function push(path, props) { if (shell) shell.push(path, props || {}) }
     function back() { if (shell) shell.back() }
+    // A page done: its own window closes (openWindow), else the shell
+    // goes back.
+    function leave(page) {
+        const w = page && page.Window ? page.Window.window : null
+        if (w && w.isPageWindow === true) w.close()
+        else back()
+    }
+    // Computers: `path` (a reader, the player, a page) in a window of its own.
+    readonly property bool windows: App.platform !== "android"
+    function openWindow(path, props) {
+        const component = Qt.createComponent(Qt.resolvedUrl("components/PageWindow.qml"))
+        if (component.status !== Component.Ready) {
+            console.warn("PageWindow:", component.errorString())
+            return null
+        }
+        return component.createObject(null, { page: path, props: props || {} })
+    }
     // A comic or book file: an archive, folder or PDF of pages, or an EPUB.
     function openFile(url) {
         const address = String(url)
@@ -103,6 +120,14 @@ QtObject {
         return -1
     }
 
+    // A watch party's anime (Party.state), for someone who joined from
+    // elsewhere: its page, which starts the host's episode.
+    function openPartyAnime(state) {
+        if (!shell || !state || !state.anime) return
+        shell.push("pages/AnimeDetails.qml", { anilistId: state.anime.anilistId,
+                                               summary: { title: state.anime.title, cover: state.anime.cover || "" },
+                                               partyEpisode: Number(state.episode) || 1 })
+    }
     function openWatch(media, episodes, index) {
         if (shell) shell.openImmersive("pages/WatchPage.qml", { media: media, episodes: episodes, index: index })
     }

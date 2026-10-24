@@ -43,6 +43,7 @@ add_library(scancore_core STATIC
     sources/local/LocalComics.cpp
     sources/local/LocalNovels.cpp
     sources/local/MihonLayout.cpp
+    sources/servers/Servers.cpp
     sources/novels/LnCrawl.cpp
     sources/novels/Registry.cpp
     sources/novels/TextBlocks.cpp
@@ -149,7 +150,8 @@ qt_add_qml_module(scancore
         app/Story.cpp app/Story.h app/Upkeep.cpp app/Upkeep.h
         app/Sync.cpp app/Sync.h
         app/Library.cpp app/Library.h
-        app/Live.cpp app/Live.h
+        app/Live.cpp app/Live.h app/EventStream.h
+        app/Party.cpp app/Party.h
         app/Cast.cpp app/Cast.h
         app/CrashLog.cpp app/CrashLog.h
         app/CastProxy.cpp app/CastProxy.h

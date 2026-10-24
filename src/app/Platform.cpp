@@ -403,6 +403,17 @@ void setFastestRefresh(bool on) {
 #endif
 }
 
+bool isTv() {
+#ifdef Q_OS_ANDROID
+    static const bool tv = QJniObject::callStaticMethod<jboolean>(kScreenClass, "isTv", "(Landroid/content/Context;)Z",
+                                                                  QNativeInterface::QAndroidApplication::context().object());
+    return tv;
+#else
+    // SCANCORE_TV=1 tries the TV's remote navigation on a computer.
+    return qEnvironmentVariableIsSet("SCANCORE_TV");
+#endif
+}
+
 void setSystemBars(bool shown) {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>(kScreenClass, "systemBars", "(Landroid/app/Activity;Z)V",

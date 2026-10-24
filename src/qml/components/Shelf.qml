@@ -126,6 +126,7 @@ Column {
         ListView {
             id: list
             maximumFlickVelocity: Motion.flickVelocity
+            Glide { flick: list }
             anchors.fill: parent
             visible: !shelf.grid && !shelf.loading && shelf.error.length === 0
             orientation: ListView.Horizontal

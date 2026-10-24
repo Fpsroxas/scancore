@@ -19,6 +19,9 @@ class App : public QObject {
     QML_SINGLETON
     Q_PROPERTY(QString version READ version CONSTANT)
     Q_PROPERTY(QString platform READ platform CONSTANT)
+    // On a television: driven by a remote's D-pad (spatial focus, a focus
+    // ring, Select presses).
+    Q_PROPERTY(bool tv READ tv CONSTANT)
     Q_PROPERTY(QVariantMap settings READ settings NOTIFY settingsChanged)
     Q_PROPERTY(QString dataFolder READ dataFolder CONSTANT)
     Q_PROPERTY(int manifestVersion READ manifestVersion NOTIFY manifestChanged)
@@ -45,6 +48,7 @@ public:
     int manifestVersion() const;
     bool webEngine() const;
     bool batteryRestricted() const { return m_batteryRestricted; }
+    bool tv() const;
     QVariantMap startAction() const;
 
     Q_INVOKABLE void setSetting(const QString &key, const QVariant &value);

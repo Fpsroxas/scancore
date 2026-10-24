@@ -245,7 +245,7 @@ Rectangle {
 
     function exit() {
         savePosition(true)
-        Router.back()
+        Router.leave(reader)
     }
 
     function keyHint(action) {
@@ -652,6 +652,19 @@ Rectangle {
             IconButton { diameter: novelActions.button; iconName: "chevron-left"; iconColor: reader.look.text; enabled: reader.hasPrev; tip: qsTr("Previous chapter") + reader.keyHint("reader.prev"); onClicked: reader.load(reader.index - 1) }
             IconButton { diameter: novelActions.button; iconName: "chevron-right"; iconColor: reader.look.text; enabled: reader.hasNext; tip: qsTr("Next chapter") + reader.keyHint("reader.next"); onClicked: reader.load(reader.index + 1) }
             IconButton { diameter: novelActions.button; iconName: "list"; iconColor: reader.look.text; tip: qsTr("Chapters"); onClicked: chapterPopup.open() }
+            // Computers: on in a window of its own (where it left off).
+            IconButton {
+                diameter: novelActions.button
+                visible: Router.windows && !(Window.window && Window.window.isPageWindow === true)
+                iconName: "columns-2"
+                iconColor: reader.look.text
+                tip: qsTr("Open in a new window")
+                onClicked: {
+                    reader.savePosition(true)
+                    Router.openWindow("pages/NovelReader.qml", { series: reader.series, chapters: reader.chapters, index: reader.index })
+                    Router.leave(reader)
+                }
+            }
             IconButton {
                 diameter: novelActions.button
                 visible: !String(reader.series.sourceUrl || "").startsWith("file:")
@@ -755,21 +768,32 @@ Rectangle {
 
     Popup {
         id: typePopup
-        x: parent.width - width - 16
-        y: 70 + (topBar.twoRows ? 46 : 0) + reader.insetTop
-        width: Math.min(340, parent.width - 32)
+        // Phones: a sheet from the bottom edge that scrolls; computers: a
+        // panel under the top bar.
+        readonly property bool sheet: Theme.compact
+        readonly property real restY: sheet ? parent.height - height : 70 + (topBar.twoRows ? 46 : 0) + reader.insetTop
+        x: sheet ? 0 : parent.width - width - 16
+        y: restY
+        width: sheet ? parent.width : Math.min(340, parent.width - 32)
         padding: 20
-        background: Rectangle { radius: Theme.radiusLg; color: Theme.surface; border.width: 1; border.color: Theme.borderStrong }
+        bottomPadding: sheet ? 20 + reader.insetBottom : 20
+        background: Rectangle {
+            radius: Theme.radiusLg
+            color: Theme.surface
+            border.width: 1
+            border.color: Theme.borderStrong
+            Rectangle { visible: typePopup.sheet; width: parent.width; height: parent.radius; anchors.bottom: parent.bottom; color: parent.color }
+        }
         enter: Transition {
             ParallelAnimation {
                 NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.fast }
-                NumberAnimation { property: "y"; from: 58 + (topBar.twoRows ? 46 : 0) + reader.insetTop; to: 70 + (topBar.twoRows ? 46 : 0) + reader.insetTop; duration: Motion.normal; easing.type: Easing.OutCubic }
+                NumberAnimation { property: "y"; from: typePopup.restY + (typePopup.sheet ? 60 : -12); to: typePopup.restY; duration: Motion.normal; easing.type: Easing.OutCubic }
             }
         }
         contentItem: Flickable {
             maximumFlickVelocity: Motion.flickVelocity
             flickDeceleration: Motion.flickDeceleration
-            implicitHeight: Math.min(options.implicitHeight, reader.height - 140 - (topBar.twoRows ? 46 : 0) - reader.insetTop)
+            implicitHeight: Math.min(options.implicitHeight, typePopup.sheet ? reader.height * 0.62 : reader.height - 140 - (topBar.twoRows ? 46 : 0) - reader.insetTop)
             contentHeight: options.implicitHeight
             clip: true
             boundsBehavior: Flickable.StopAtBounds
