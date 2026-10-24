@@ -105,34 +105,37 @@ StackView {
         }
     }
 
-    // Animators: they run on the render thread, so a page still building
-    // itself does not stall its own slide.
+    // NumberAnimations, not Animators: StackView applies the push
+    // transition's starting values to the first page too (pushed with
+    // StackView.Immediate), and an Animator never puts its end value back
+    // when it does not run, so the page stayed at opacity 0 and every
+    // section showed blank (2.12.1).
     Transition {
         id: slideIn
         ParallelAnimation {
-            OpacityAnimator { from: 0; to: 1; duration: Motion.normal; easing.type: Easing.OutCubic }
-            XAnimator { from: 48; to: 0; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
+            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.normal; easing.type: Easing.OutCubic }
+            NumberAnimation { property: "x"; from: 48; to: 0; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
         }
     }
     Transition {
         id: slideOut
         ParallelAnimation {
-            OpacityAnimator { from: 1; to: 0; duration: Motion.normal; easing.type: Easing.OutCubic }
-            XAnimator { from: 0; to: -28; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
+            NumberAnimation { property: "opacity"; from: 1; to: 0; duration: Motion.normal; easing.type: Easing.OutCubic }
+            NumberAnimation { property: "x"; from: 0; to: -28; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
         }
     }
     Transition {
         id: slideBackIn
         ParallelAnimation {
-            OpacityAnimator { from: 0; to: 1; duration: Motion.normal; easing.type: Easing.OutCubic }
-            XAnimator { from: -28; to: 0; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
+            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.normal; easing.type: Easing.OutCubic }
+            NumberAnimation { property: "x"; from: -28; to: 0; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
         }
     }
     Transition {
         id: slideBackOut
         ParallelAnimation {
-            OpacityAnimator { from: 1; to: 0; duration: Motion.fast; easing.type: Easing.OutCubic }
-            XAnimator { from: 0; to: 48; duration: Motion.normal; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.accelerate }
+            NumberAnimation { property: "opacity"; from: 1; to: 0; duration: Motion.fast; easing.type: Easing.OutCubic }
+            NumberAnimation { property: "x"; from: 0; to: 48; duration: Motion.normal; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.accelerate }
         }
     }
 

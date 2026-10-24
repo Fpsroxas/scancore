@@ -27,7 +27,10 @@ Item {
         id: words
         spacing: Math.round(pivot.size * 0.5)
         // Each change slides the row in from the right a little (an
-        // animator: the page reloading under it does not stall it).
+        // animation, not an Animator: one that does not run while the
+        // pivot is out of sight would leave the row shifted).
+        property real nudge: 0
+        x: nudge
         Repeater {
             model: pivot.turned
             AbstractButton {
@@ -54,9 +57,10 @@ Item {
         }
     }
     onCurrentIndexChanged: if (!Motion.reduced) slide.restart()
-    XAnimator {
+    NumberAnimation {
         id: slide
         target: words
+        property: "nudge"
         from: pivot.size
         to: 0
         duration: Motion.normal

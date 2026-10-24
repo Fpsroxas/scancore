@@ -262,6 +262,10 @@ ApplicationWindow {
             if (App.profiling) App.profilePlace(path)
         }
 
+        // A TV's remote, for controls that take the D-pad's keys themselves
+        // (Select): the focus moves on as from anywhere else.
+        function moveFocus(direction) { return spatialFocus.move(direction) }
+
         function openImmersive(path, props) {
             immersive.push(Qt.resolvedUrl(path), props)
             if (App.profiling) App.profilePlace(path)
@@ -523,20 +527,22 @@ ApplicationWindow {
         z: 10
         // Readers handle their own keys, so they need focus as soon as they open.
         onCurrentItemChanged: if (currentItem) currentItem.forceActiveFocus()
-        // Animators (the render thread): a reader building its first pages
-        // does not stall the fade that opens it.
+        // NumberAnimations, not Animators: the first reader pushed onto the
+        // empty stack gets the starting opacity without the animation
+        // running, and an Animator never puts the end value back, so it
+        // opened invisible (2.12.1).
         pushEnter: Transition {
             ParallelAnimation {
-                OpacityAnimator { from: 0; to: 1; duration: Motion.slow; easing.type: Easing.OutCubic }
-                ScaleAnimator { from: 1.03; to: 1; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
+                NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.slow; easing.type: Easing.OutCubic }
+                NumberAnimation { property: "scale"; from: 1.03; to: 1; duration: Motion.page; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate }
             }
         }
-        pushExit: Transition { OpacityAnimator { to: 0; duration: Motion.fast } }
-        popEnter: Transition { OpacityAnimator { from: 0; to: 1; duration: Motion.normal } }
+        pushExit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Motion.fast } }
+        popEnter: Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Motion.normal } }
         popExit: Transition {
             ParallelAnimation {
-                OpacityAnimator { to: 0; duration: Motion.normal }
-                ScaleAnimator { to: 1.02; duration: Motion.normal }
+                NumberAnimation { property: "opacity"; to: 0; duration: Motion.normal }
+                NumberAnimation { property: "scale"; to: 1.02; duration: Motion.normal }
             }
         }
         replaceEnter: pushEnter

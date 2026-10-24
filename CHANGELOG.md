@@ -2,7 +2,22 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.12.2 — 2026-10-25
+
+Fixes the empty pages of 2.12.1, which was withdrawn, and makes SCANCORE easier to use with a TV's remote. Everything 2.12.1 brought is in this release too (below).
+
+- **Pages show again**: after updating to 2.12.1, Home and every other section could stay empty under the tabs, and the first reader or player opened blank. Page slides and the reader's fade are drawn as in 2.12.0 again; Retro's page turns stay on the drawing thread.
+- **Android TV**:
+  - Back leaves the player. Before, it only tried to turn the screen to portrait, so the player could not be closed.
+  - Drop-downs in Settings no longer take the remote's up and down: the D-pad moves on to the next setting, Select opens the list, and in it the D-pad picks and Select chooses.
+  - Settings' list of categories scrolls, so Storage and About can be reached with the D-pad or a pointer remote.
+  - A setting whose choices do not fit beside its text puts them under it, instead of squeezing the text into a column a few letters wide (Settings → Connections).
+  - Signing in to AniList no longer presents the TV's web view as desktop Chrome, which Cloudflare's check refused.
+- Not yet checked on a real TV: the Android TV fixes were tested with the interface on a computer, as a TV with its remote.
+
 ## 2.12.1 — 2026-10-24
+
+Withdrawn: its pages could stay empty. Its changes are in 2.12.2.
 
 - **Retro**: the Windows Phone look is now called Retro (it was Metro). Your choice, title, sections, pinned tiles and accent carry over, and so do theme files saved in 2.12.0.
 - **Smooth Retro animations**: page turns, the pivot, opening a reader and the standard page slides now run on the drawing thread, so they stay smooth while the page they open is still loading (on phones they could drop to a few frames). The hub switches sections once a swipe settles, and remembering the last section no longer stalls the next swipe.

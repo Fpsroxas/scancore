@@ -20,11 +20,12 @@ Item {
     readonly property int pad: 16
     readonly property int textX: pad + (iconName ? 32 + 14 : 0)
     // Its control under the text on every screen (wide controls such as a
-    // row of chips); on phones any control that would squeeze the text into
-    // a narrow column goes there.
+    // row of chips); any control that would squeeze the text into a narrow
+    // column goes there too (a TV's settings pane is narrow as well), and on
+    // phones one taking much of the width.
     property bool wide: false
     readonly property real besideWidth: width - textX - pad - (holder.width > 0 ? holder.width + 16 : 0) - trailing
-    readonly property bool stacked: wide || (Theme.compact && (holder.width > width * 0.42 || besideWidth < 160))
+    readonly property bool stacked: wide || besideWidth < 160 || (Theme.compact && holder.width > width * 0.42)
     readonly property real trailing: clickable ? 22 : 0
 
     width: parent ? parent.width : 600

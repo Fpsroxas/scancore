@@ -192,10 +192,17 @@ bool openSiteCheck(const QString &url, const QString &title, const QString &done
 #ifdef Q_OS_ANDROID
     if (!registerBrowserCheck())
         return false;
+    // AniList's sign-in only hands back a token in its address, and nothing
+    // uses its cookies afterwards, so it keeps the web view's own user agent
+    // (empty: BrowserCheck leaves it as it is). SCANCORE's desktop Chrome
+    // agent on a TV box's older web view did not match what the page saw,
+    // and Cloudflare refused the check.
+    const QUrl address(url);
+    const bool signInOnly = address.host() == QLatin1String("anilist.co") && address.path().startsWith(QLatin1String("/api/v2/oauth/"));
     QJniObject::callStaticMethod<void>(
         kBrowserCheckClass, "start", "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
         QNativeInterface::QAndroidApplication::context().object(), QJniObject::fromString(url).object<jstring>(),
-        QJniObject::fromString(ext::ExtensionSource::checkAgent(url)).object<jstring>(),
+        QJniObject::fromString(signInOnly ? QString() : ext::ExtensionSource::checkAgent(url)).object<jstring>(),
         QJniObject::fromString(title).object<jstring>(), QJniObject::fromString(doneLabel).object<jstring>());
     return true;
 #else
