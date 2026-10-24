@@ -3691,6 +3691,34 @@
             <source>A moment of black when a comic page turns clears the last page's ghost.</source>
             <translation>Мгновение чёрного при смене страницы комикса стирает след предыдущей.</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>Максимальная частота обновления</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>Прокрутка и анимация с максимальной частотой экрана, например 120 Гц, а не с той, что телефон выбирает для приложений. Расходует немного больше заряда.</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>Инерция прокрутки</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>Как долго списки продолжают двигаться после свайпа.</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>Как долго списки продолжают двигаться после свайпа на тачпаде или сенсорном экране.</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>Короткая</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>Долгая</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

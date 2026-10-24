@@ -212,6 +212,17 @@ Item {
                     tip: qsTr("Tracking")
                     onClicked: tracking.open()
                 }
+                // Metro: a tile for it on the hub.
+                IconButton {
+                    readonly property bool pinned: Metro.isPinned(page.seriesId)
+                    visible: Theme.metro && page.seriesId.length > 0
+                    iconName: pinned ? "pin-off" : "pin"
+                    filled: true
+                    tip: pinned ? qsTr("Unpin from the hub") : qsTr("Pin to the hub")
+                    onClicked: pinned ? Metro.unpin(page.seriesId)
+                        : Metro.pin(Object.assign({}, page.series, { id: page.seriesId, media: "anime",
+                                                                     anilistId: page.anilistId || (page.series.extra || {}).anilistId || 0 }), "medium")
+                }
                 Component.onCompleted: Qt.callLater(() => Router.shell.land(header.coverItem))
             }
             }

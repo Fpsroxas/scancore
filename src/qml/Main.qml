@@ -43,8 +43,8 @@ ApplicationWindow {
     readonly property bool immersiveOpen: immersive.depth > 0
 
     // Settings → Interface: how navigation sits on wide windows. Phones
-    // always use the bottom tabs.
-    readonly property string navStyle: Theme.compact ? "tabs"
+    // always use the bottom tabs; the Metro mode has its app bar everywhere.
+    readonly property string navStyle: Theme.metro ? "metro" : Theme.compact ? "tabs"
         : ["sidebar", "floating", "rail", "dock"].indexOf(App.settings.navStyle) >= 0 ? App.settings.navStyle : "sidebar"
     readonly property string navSide: navStyle === "dock" ? (App.settings.dockSide === "top" ? "top" : "bottom")
         : App.settings.navSide === "right" ? "right" : "left"
@@ -82,6 +82,12 @@ ApplicationWindow {
         if (start.size) {
             window.width = start.size[0]
             window.height = start.size[1]
+            // "fixed": true keeps that size where a compositor would fill
+            // its screen (test runs under cage).
+            if (start.fixed) {
+                window.minimumWidth = window.maximumWidth = start.size[0]
+                window.minimumHeight = window.maximumHeight = start.size[1]
+            }
         }
         if (start.screenshot) screenshotTimer.start()
         // The page chosen in Settings → Interface → Start.
@@ -94,6 +100,10 @@ ApplicationWindow {
         // background).
         if (start.notify) notifyHook.start()
         if (start.palette) Qt.callLater(() => commandPalette.open())
+        // {"metroBar": "open" | "more"}: the Metro app bar opened, or its
+        // button held.
+        if (start.metroBar === "open") metroBar.expanded = true
+        if (start.metroBar === "more") metroBar.moreOpen = true
         if (start.shortcuts) Qt.callLater(() => shortcutsSheet.open())
         if (start.push) Qt.callLater(() => shell.push(start.push.path, start.push.props || {}))
         if (start.installNovelPack) {
@@ -186,6 +196,12 @@ ApplicationWindow {
         id: shell
         property string section: "home"
         property var visited: ({ home: true })
+        // Pages over the current section's first one (Metro's back button).
+        readonly property int depth: {
+            App.dependOn(section, visited)
+            const stack = stackFor(section)
+            return stack ? stack.depth : 1
+        }
         // After the first page is up, the others are built over several
         // frames instead of in one go, so a first visit (and the press that
         // led there) never freezes the window; slow phones gain most.
@@ -246,6 +262,11 @@ ApplicationWindow {
             const stack = stackFor(section)
             if (stack && stack.depth > 1) {
                 stack.pop()
+                return true
+            }
+            // Metro: every section leads back to the hub.
+            if (Theme.metro && section !== "home") {
+                goSection("home")
                 return true
             }
             return false
@@ -334,9 +355,10 @@ ApplicationWindow {
             anchors.left: window.sidebarShown && window.navSide === "left" ? sidebar.right : parent.left
             anchors.right: window.sidebarShown && window.navSide === "right" ? sidebar.left : parent.right
             anchors.top: dock.visible && window.navSide === "top" ? dock.bottom : parent.top
-            anchors.bottom: Theme.compact ? tabBar.top : dock.visible && window.navSide === "bottom" ? dock.top : parent.bottom
+            anchors.bottom: readAloudBar.shown ? readAloudBar.top
+                : metroBar.visible ? metroBar.top : tabBar.visible ? tabBar.top : dock.visible && window.navSide === "bottom" ? dock.top : parent.bottom
             anchors.topMargin: dock.visible && window.navSide === "top" ? 6 : 0
-            anchors.bottomMargin: dock.visible && window.navSide === "bottom" ? 6 : 0
+            anchors.bottomMargin: dock.visible && window.navSide === "bottom" && !readAloudBar.shown ? 6 : 0
             clip: true
 
             Repeater {
@@ -356,18 +378,27 @@ ApplicationWindow {
                     transform: Translate { y: sectionLoader.current ? 0 : 14; Behavior on y { NumberAnimation { duration: Motion.slow; easing.type: Easing.BezierSpline; easing.bezierCurve: Motion.decelerate } } }
                     Behavior on opacity { NumberAnimation { duration: sectionLoader.current ? Motion.slow : Motion.fast; easing.type: Easing.OutCubic } }
 
-                    sourceComponent: PageStack {
-                        initial: {
-                            switch (sectionLoader.key) {
-                            case "home": return "pages/HomePage.qml"
-                            case "comics": return "pages/ComicsPage.qml"
-                            case "novels": return "pages/NovelsPage.qml"
-                            case "anime": return "pages/AnimePage.qml"
-                            case "library": return "pages/LibraryPage.qml"
-                            case "history": return "pages/HistoryPage.qml"
-                            case "activity": return "pages/ActivityPage.qml"
-                            case "downloads": return "pages/DownloadsPage.qml"
-                            default: return "pages/SettingsPage.qml"
+                    // Metro: Home is the hub.
+                    sourceComponent: sectionLoader.key === "home" && Theme.metro ? metroHome : sectionStack
+                    Component {
+                        id: metroHome
+                        PageStack { initial: "metro/MetroHub.qml" }
+                    }
+                    Component {
+                        id: sectionStack
+                        PageStack {
+                            initial: {
+                                switch (sectionLoader.key) {
+                                case "home": return "pages/HomePage.qml"
+                                case "comics": return "pages/ComicsPage.qml"
+                                case "novels": return "pages/NovelsPage.qml"
+                                case "anime": return "pages/AnimePage.qml"
+                                case "library": return "pages/LibraryPage.qml"
+                                case "history": return "pages/HistoryPage.qml"
+                                case "activity": return "pages/ActivityPage.qml"
+                                case "downloads": return "pages/DownloadsPage.qml"
+                                default: return "pages/SettingsPage.qml"
+                                }
                             }
                         }
                     }
@@ -399,12 +430,40 @@ ApplicationWindow {
         onOpenPalette: commandPalette.open()
     }
 
+    // Reading aloud with the reader closed: the mini player, above the
+    // navigation along the bottom.
+    ReadAloudBar {
+        id: readAloudBar
+        parent: shellView
+        z: 3
+        anchors.left: window.sidebarShown && window.navSide === "left" ? sidebar.right : parent.left
+        anchors.right: window.sidebarShown && window.navSide === "right" ? sidebar.left : parent.right
+        anchors.bottom: metroBar.visible ? metroBar.top : tabBar.visible ? tabBar.top
+            : dock.visible && window.navSide === "bottom" ? dock.top : parent.bottom
+        anchors.bottomMargin: dock.visible && window.navSide === "bottom" ? 8 : 0
+    }
+
+    // Metro: the app bar along the bottom, on every device.
+    MetroBar {
+        id: metroBar
+        parent: shellView
+        visible: Theme.metro
+        z: 3
+        height: visible ? implicitHeight : 0
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        section: shell.section
+        canGoBack: shell.section !== "home" || shell.depth > 1
+        onBack: shell.back()
+    }
+
     // Phone layout: bottom tabs instead of the sidebar.
     TabBar {
         id: tabBar
         parent: shellView
-        visible: Theme.compact
-        height: Theme.compact ? 62 : 0
+        visible: Theme.compact && !Theme.metro
+        height: visible ? 62 : 0
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -476,7 +535,7 @@ ApplicationWindow {
         visible: App.settings.incognito === true
         anchors.horizontalCenter: parent.horizontalCenter
         // Above the phone's tabs or a bottom dock, clear of page headers.
-        y: parent.height - height - 12 - (tabBar.visible ? tabBar.height
+        y: parent.height - height - 12 - (metroBar.visible ? metroBar.barHeight : tabBar.visible ? tabBar.height
             : dock.visible && dock.side !== "top" ? parent.height - dock.y : 0)
         height: 28
         width: badgeRow.implicitWidth + 22
@@ -486,7 +545,7 @@ ApplicationWindow {
         ToolTip.text: qsTr("Nothing you read or watch is recorded. Click to turn off.")
         onClicked: Router.setIncognito(false)
         background: Rectangle {
-            radius: height / 2
+            radius: Theme.pill(height)
             color: incognitoBadge.hovered ? Theme.surface3 : Theme.surface2
             border.width: 1
             border.color: Theme.borderStrong
@@ -589,7 +648,7 @@ ApplicationWindow {
         id: toasts
         z: 40
         // Above the phone's tab bar, not over it.
-        bottomInset: (tabBar.visible ? tabBar.height : 0) + (incognitoBadge.visible ? incognitoBadge.height + 12 : 0)
+        bottomInset: (tabBar.visible ? tabBar.height : metroBar.visible ? metroBar.barHeight : 0) + readAloudBar.height + (incognitoBadge.visible ? incognitoBadge.height + 12 : 0)
     }
 
     // Development hook: SCANCORE_START {"screenshot": "/path.png", "delay": ms}

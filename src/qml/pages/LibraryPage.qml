@@ -186,6 +186,21 @@ Item {
         anchors.fill: parent
         contentHeight: column.height + 60
 
+        // Metro on touch screens: a sideways swipe moves to the next pivot.
+        DragHandler {
+            enabled: Theme.metro && Theme.touch
+            target: null
+            xAxis.enabled: true
+            yAxis.enabled: false
+            property real lastX: 0
+            onTranslationChanged: if (active) lastX = translation.x
+            onActiveChanged: {
+                if (active) { lastX = 0; return }
+                if (lastX < -80) mediaPivot.next()
+                else if (lastX > 80) mediaPivot.previous()
+            }
+        }
+
         Column {
             id: column
             width: parent.width
@@ -299,8 +314,21 @@ Item {
                 }
             }
 
+            // Metro: the media as pivot headers (swiping the page sideways
+            // turns them too).
+            PivotHeaders {
+                id: mediaPivot
+                visible: Theme.metro
+                x: Theme.gutter
+                width: parent.width - 2 * Theme.gutter
+                height: visible ? implicitHeight : 0
+                options: page.mediaOptions
+                value: page.media
+                onPicked: (v) => App.setSetting("libraryMedia", v)
+            }
+
             Segmented {
-                visible: Theme.compact
+                visible: Theme.compact && !Theme.metro
                 x: Theme.gutter
                 width: parent.width - 2 * Theme.gutter
                 fill: true
@@ -351,6 +379,7 @@ Item {
                 width: parent.width - 2 * Theme.gutter
                 spacing: 12
                 Segmented {
+                    visible: !Theme.metro
                     options: page.mediaOptions
                     value: page.media
                     onPicked: (v) => App.setSetting("libraryMedia", v)

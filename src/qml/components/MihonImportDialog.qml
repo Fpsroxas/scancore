@@ -89,6 +89,8 @@ Dialog {
     contentItem: Column {
         spacing: 16
     Flickable {
+        maximumFlickVelocity: Motion.flickVelocity
+        flickDeceleration: Motion.flickDeceleration
         width: parent.width
         implicitHeight: body.implicitHeight
         // The window's height, less the margin, padding and buttons.

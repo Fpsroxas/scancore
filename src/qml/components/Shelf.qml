@@ -125,6 +125,7 @@ Column {
 
         ListView {
             id: list
+            maximumFlickVelocity: Motion.flickVelocity
             anchors.fill: parent
             visible: !shelf.grid && !shelf.loading && shelf.error.length === 0
             orientation: ListView.Horizontal
@@ -134,7 +135,7 @@ Column {
             clip: true
             model: shelf.grid ? [] : shelf.shownItems
             boundsBehavior: Flickable.StopAtBounds
-            flickDeceleration: 4000
+            flickDeceleration: Motion.flickDeceleration
             reuseItems: true
             cacheBuffer: 600
             // Covers that scroll into view later appear at once; the

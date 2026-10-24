@@ -18,7 +18,7 @@ Rectangle {
     anchors.bottomMargin: Theme.compact ? 84 : 28
     width: Math.min(parent.width - 2 * Theme.gutter, row.implicitWidth + 32)
     height: 56
-    radius: height / 2
+    radius: Theme.pill(height)
     color: Theme.surface
     border.width: 1
     border.color: Theme.borderStrong

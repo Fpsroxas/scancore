@@ -181,13 +181,14 @@ QtObject {
     // Everything a theme file carries beyond its colours and background
     // (Customize.h): light or dark, accent, layout, arranged pages and the
     // readers' colours.
-    readonly property var lookSettings: ["navStyle", "navSide", "dockSide", "pageSpacing", "roundness", "coverSize",
+    readonly property var lookSettings: ["uiMode", "metroTitle", "metroTitleColor", "metroBackground", "metroCase",
+        "metroLiveTiles", "metroSections", "navStyle", "navSide", "dockSide", "pageSpacing", "roundness", "coverSize",
         "motionSpeed", "textScale", "readerProgressWidth", "readerRailUnread", "readerRailRead", "readerRailCurrent",
         "readerProgressLook", "readerProgressEdge", "readerProgressOpacity",
         "novelTheme", "novelCustomBg", "novelCustomText"]
     readonly property var arrangedPages: ["home", "comics", "comics-top", "novels", "novels-top", "anime"]
     // What the ones with no stored value look like, so a file resets them too.
-    readonly property var lookDefaults: ({ navStyle: "sidebar", navSide: "left", dockSide: "bottom", pageSpacing: "default",
+    readonly property var lookDefaults: ({ uiMode: "standard", navStyle: "sidebar", navSide: "left", dockSide: "bottom", pageSpacing: "default",
         roundness: "default", coverSize: "default", motionSpeed: "default", textScale: 1 })
     function currentLook() {
         const settings = {}
@@ -219,7 +220,7 @@ QtObject {
         if (accent) {
             App.setSetting("customAccent", accent)
             App.setSetting("accent", "custom")
-        } else if (look && look.accentName && Theme.accents[look.accentName]) {
+        } else if (look && look.accentName && (Theme.accents[look.accentName] || Theme.metroAccents[look.accentName])) {
             App.setSetting("accent", look.accentName)
         }
         // A version 2 file is the whole look: pages it does not arrange go

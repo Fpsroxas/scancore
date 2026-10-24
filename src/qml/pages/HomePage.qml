@@ -267,6 +267,8 @@ Item {
                         font.weight: Font.DemiBold
                     }
                     ListView {
+                        maximumFlickVelocity: Motion.flickVelocity
+                        flickDeceleration: Motion.flickDeceleration
                         WheelScroll {}
                         width: parent.width
                         height: Theme.compact ? 132 : 144

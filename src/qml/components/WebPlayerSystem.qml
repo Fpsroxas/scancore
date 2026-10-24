@@ -7,9 +7,9 @@ import ScanCore
 // WebEngine in Qt's own packages cannot. Like any native view it is drawn
 // above everything Qt renders, so nothing can overlap it.
 //
-// Phones load the player inside a small page of ours (PlayerPage, with its
-// tap shield), as WebPlayer does, and read its time through getTime/seek
-// messages. The page reports back through
+// Phones load the player inside a small page of ours (PlayerPage), as
+// WebPlayer does, and read its time through getTime/seek messages; taps go
+// to the player's own controls. The page reports back through
 // its title, never through runJavaScript callbacks: on Android, Qt WebView
 // runs those callbacks on the Android UI thread, alongside the QML engine on
 // Qt's own thread, which crashes the app (a SIGSEGV in the JavaScript engine,
@@ -24,18 +24,12 @@ Item {
     property string url
     readonly property bool direct: App.platform !== "android"
     signal time(real seconds, real total, string status)
-    // The video was tapped (phones). Taps inside the cross-origin player never
-    // reach the wrapper, but the first tap moves focus into the frame and
-    // blurs the wrapper's window; handing focus back re-arms that for the next
-    // tap.
-    signal interacted()
     // Desktop: a key pressed while the page had focus, as the DOM tells it:
     // {key, ctrl, alt, shift, meta}.
     signal key(var press)
     // The player's own codec support, for parity with WebPlayer. System web
     // views play H.264, so this never fires.
     signal unsupported()
-    property int taps: 0
 
     function seek(seconds) {
         if (direct)
@@ -68,13 +62,10 @@ Item {
     function load() {
         if (!url || !ready) return
         if (direct) web.url = url
-        else web.loadHtml(PlayerPage.wrapper(url, true, true), "https://reanime.to/")
+        else web.loadHtml(PlayerPage.wrapper(url, true), "https://reanime.to/")
     }
     onReadyChanged: load()
-    onUrlChanged: {
-        taps = 0
-        load()
-    }
+    onUrlChanged: load()
 
     WebView {
         id: web
@@ -85,10 +76,6 @@ Item {
             if (!title.startsWith("sc:")) return
             try {
                 const s = JSON.parse(title.slice(3))
-                if (s.taps > root.taps) {
-                    root.taps = s.taps
-                    root.interacted()
-                }
                 if (s.d > 0) root.time(s.t, s.d, s.s || "")
             } catch (e) {}
         }

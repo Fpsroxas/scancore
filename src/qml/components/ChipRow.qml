@@ -6,6 +6,8 @@ import ScanCore
 // sources does not push the page down.
 Flickable {
     id: root
+    maximumFlickVelocity: Motion.flickVelocity
+    flickDeceleration: Motion.flickDeceleration
     default property alias chips: flow.data
     property real padding: Theme.gutter
 

@@ -19,6 +19,11 @@ target_link_libraries(scancore_library_tests PRIVATE scancore_core Qt6::Test Qt6
 target_compile_definitions(scancore_library_tests PRIVATE SCANCORE_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
 add_test(NAME library COMMAND scancore_library_tests)
 
+# Text helpers (sentences for reading aloud).
+qt_add_executable(scancore_text_tests tst_text.cpp)
+target_link_libraries(scancore_text_tests PRIVATE scancore_core Qt6::Test)
+add_test(NAME text COMMAND scancore_text_tests)
+
 # Anime episodes saved for offline playback (HLS, files).
 qt_add_executable(scancore_video_tests tst_video.cpp)
 target_link_libraries(scancore_video_tests PRIVATE scancore_core Qt6::Test)

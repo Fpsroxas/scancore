@@ -108,6 +108,8 @@ Item {
     }
 
     ListView {
+        maximumFlickVelocity: Motion.flickVelocity
+        flickDeceleration: Motion.flickDeceleration
         WheelScroll {}
         id: list
         anchors.fill: parent

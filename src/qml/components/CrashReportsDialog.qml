@@ -76,6 +76,8 @@ Dialog {
             radius: Theme.radiusMd
             color: Theme.surface2
             Flickable {
+                maximumFlickVelocity: Motion.flickVelocity
+                flickDeceleration: Motion.flickDeceleration
                 anchors.fill: parent
                 anchors.margins: 10
                 clip: true

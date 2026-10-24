@@ -36,11 +36,12 @@ Rectangle {
     readonly property real paragraphSpacing: App.settings.novelParagraphSpacing === undefined ? 0.9 : App.settings.novelParagraphSpacing
     readonly property bool indent: App.settings.novelIndent === true
 
-    // Reading aloud: the paragraph being spoken (-1 for the title), and
-    // whether the next chapter should carry on when this one ends.
-    property bool speaking: false
-    property int spokenBlock: -2
-    property bool speakNext: false
+    // Reading aloud (ReadAloud, which goes on when the reader closes):
+    // whether it is this chapter, and the paragraph being spoken (-1 for
+    // the title).
+    readonly property bool readingHere: ReadAloud.active && ReadAloud.series.id === series.id && ReadAloud.chapterIndex === index
+    readonly property bool speaking: readingHere && ReadAloud.playing
+    readonly property int spokenBlock: readingHere ? ReadAloud.block : -2
     // Scrolling by itself, at novelAutoScrollSpeed pixels a second.
     property bool autoScrolling: false
 
@@ -60,11 +61,11 @@ Rectangle {
     // The chapter's text fades in (the list's header plays it).
     signal reveal()
 
-    function load(i) {
+    function load(i, followingVoice) {
         savePosition(true)
-        // A chapter picked by hand stops the voice; the end of one read
-        // aloud carries on into the next (speakNext).
-        if (speaking) stopSpeaking()
+        // A chapter picked by hand stops the voice; one the voice moved on
+        // to is only shown.
+        if (!followingVoice && ReadAloud.active && ReadAloud.series.id === series.id && ReadAloud.chapterIndex !== i) stopSpeaking()
         index = i
         finished = false
         const p = Library.progressMap(series.id)[chapters[i].key]
@@ -92,7 +93,7 @@ Rectangle {
     }
     Component.onDestruction: {
         App.keepAwake("reader", false)
-        Speech.stop()
+        // Reading aloud goes on without the reader (the mini player has it).
         Activity.setMedia("")
         Presence.clear()
         savePosition(true)
@@ -116,68 +117,69 @@ Rectangle {
             finished = true
             savePosition(true)
         }
-        if (speakNext) {
-            speakNext = false
-            startSpeaking(-1)
-        }
     }
 
-    // Queues the chapter from block `from` (-1: from its title). The whole
-    // chapter goes at once, so a phone's engine reads on in the background.
+    // Reads the chapter aloud from block `from` (-1: from its title).
     function startSpeaking(from) {
-        Speech.stop()
-        Speech.configure(App.settings.ttsVoice || "", Number(App.settings.ttsRate) || 1, Number(App.settings.ttsPitch) || 1)
-        if (from < 0) {
-            const title = (task && task.ok && task.result.title) ? task.result.title : (unit.title || "")
-            if (title) Speech.enqueue(title, -1)
-            from = 0
-        }
-        for (let i = from; i < blocks.length; ++i)
-            if (blocks[i].kind !== "break" && blocks[i].text) Speech.enqueue(blocks[i].text, i)
-        speaking = true
+        const title = (task && task.ok && task.result.title) ? task.result.title : (unit.title || "")
+        ReadAloud.start(series, chapters, index, blocks, from, title)
         autoScrolling = false
     }
-    function stopSpeaking() {
-        speaking = false
-        speakNext = false
-        spokenBlock = -2
-        Speech.stop()
+    function stopSpeaking() { ReadAloud.stop() }
+    // The spoken sentence in a paragraph's markup, in the highlight colour.
+    // start and length count the paragraph's plain text: tags are skipped
+    // and an entity (&amp;) is one character.
+    readonly property color sentenceColor: Theme.accentIsMono ? (Theme.isDark(look.bg) ? "#fbbf24" : "#b45309") : Theme.accent
+    function markSentence(html, start, length) {
+        if (length <= 0) return html
+        const open = '<font color="' + String(sentenceColor).slice(0, 7) + '">'
+        let out = "", seen = 0, opened = false, closed = false
+        for (let i = 0; i < html.length; ++i) {
+            const c = html[i]
+            if (c === "<") {
+                const end = html.indexOf(">", i)
+                if (end < 0) { out += html.slice(i); break }
+                out += html.slice(i, end + 1)
+                i = end
+                continue
+            }
+            if (!opened && seen === start) { out += open; opened = true }
+            if (opened && !closed && seen === start + length) { out += "</font>"; closed = true }
+            if (c === "&") {
+                const end = html.indexOf(";", i)
+                if (end > i && end - i < 10) { out += html.slice(i, end + 1); i = end; ++seen; continue }
+            }
+            out += c
+            ++seen
+        }
+        if (opened && !closed) out += "</font>"
+        return out
     }
-    function lastSpokenBlock() {
-        for (let i = blocks.length - 1; i >= 0; --i)
-            if (blocks[i].kind !== "break" && blocks[i].text) return i
-        return -1
+
+    // A voice setting changed while reading: the next sentence uses it.
+    function restartVoice() {
+        if (!speaking) return
+        ReadAloud.pause()
+        ReadAloud.play()
     }
 
     Connections {
-        target: Speech
-        function onStarted(tag) {
-            if (!reader.speaking) return
-            reader.spokenBlock = tag
-            if (tag >= 0 && App.settings.ttsFollow !== false) {
-                const item = flick.itemAtIndex(tag)
-                // Keep it in the upper third, without jumping for every line.
-                if (!item || item.y < flick.contentY + 80 || item.y + item.height > flick.contentY + flick.height - 80)
-                    flick.showBlock(tag, flick.height * 0.25, !!item)
-            }
+        target: ReadAloud
+        // Keep the spoken sentence on screen, without jumping for every line.
+        function onPositionChanged() {
+            if (!reader.readingHere || ReadAloud.block < 0 || App.settings.ttsFollow === false) return
+            const item = flick.itemAtIndex(ReadAloud.block)
+            if (!item || item.y < flick.contentY + 80 || item.y + item.height > flick.contentY + flick.height - 80)
+                flick.showBlock(ReadAloud.block, flick.height * 0.25, !!item)
         }
-        function onFinished(tag) {
-            if (!reader.speaking || tag !== reader.lastSpokenBlock()) return
-            reader.speaking = false
-            reader.spokenBlock = -2
-            reader.finished = true
-            reader.savePosition(true)
-            if (App.settings.ttsContinue !== false && reader.hasNext) {
-                reader.load(reader.index + 1)
-                reader.speakNext = true
-                if (reader.task && reader.task.done) Qt.callLater(reader.arrived)
-            }
+        // The voice went on to another chapter of this book: show it.
+        function onChapterChanged() {
+            if (ReadAloud.active && ReadAloud.series.id === reader.series.id && ReadAloud.chapterIndex >= 0
+                    && ReadAloud.chapterIndex !== reader.index)
+                reader.load(ReadAloud.chapterIndex, true)
         }
-        function onFailed(message) {
-            reader.speaking = false
-            reader.spokenBlock = -2
-            Router.toast(message, "error")
-        }
+        function onFailed(message) { Router.toast(message, "error") }
+        function onSlept() { Router.toast(qsTr("Sleep timer: reading aloud stopped"), "info") }
     }
 
     FrameAnimation {
@@ -258,8 +260,8 @@ Rectangle {
         spacing: reader.fontSize * reader.paragraphSpacing
         cacheBuffer: Math.max(1200, height * 2)
         boundsBehavior: Flickable.StopAtBounds
-        maximumFlickVelocity: 4500
-        flickDeceleration: 3500
+        maximumFlickVelocity: Motion.flickVelocity
+        flickDeceleration: Motion.flickDeceleration
         reuseItems: true
         ScrollBar.vertical: ScScrollBar {}
         // Where an eased scroll is heading (contentY when none is running).
@@ -367,7 +369,7 @@ Rectangle {
                 x: (parent.width - width) / 2
                 width: reader.columnWidth
                 height: modelData.kind === "break" ? reader.fontSize * 1.6 : text.implicitHeight
-                // The paragraph being read aloud.
+                // The paragraph being read aloud, and its sentence.
                 Rectangle {
                     visible: reader.spokenBlock === index
                     anchors.fill: parent
@@ -375,12 +377,15 @@ Rectangle {
                     radius: Theme.radiusSm
                     color: Theme.alpha(String(reader.look.text).slice(0, 7), 0.08)
                 }
+
                 Text {
                     id: text
                     visible: modelData.kind !== "break"
                     width: parent.width
                     leftPadding: modelData.kind === "quote" ? 22 : 0
-                    text: (reader.indent && modelData.kind === "paragraph" ? "\u2003" : "") + modelData.html
+                    text: (reader.indent && modelData.kind === "paragraph" ? "\u2003" : "")
+                        + (reader.spokenBlock === index && App.settings.ttsHighlight !== false
+                           ? reader.markSentence(modelData.html, ReadAloud.sentenceStart, ReadAloud.sentenceLength) : modelData.html)
                     textFormat: Text.StyledText
                     color: reader.look.text
                     font.family: modelData.kind === "heading" ? Theme.fontDisplay : reader.fontFamily
@@ -477,16 +482,17 @@ Rectangle {
         visible: opacity > 0
     }
 
-    // While reading aloud: back a paragraph, stop, on a paragraph.
+    // While reading aloud: back a sentence, play or pause, on a sentence,
+    // the sleep timer and stop.
     Rectangle {
         z: 2
-        visible: reader.speaking
+        visible: reader.readingHere
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 24 + reader.insetBottom
         width: speechRow.width + 16
         height: 52
-        radius: 26
+        radius: Theme.pill(height)
         color: Theme.alpha(String(reader.look.chrome).slice(0, 7), 0.96)
         border.width: 1
         border.color: Theme.alpha(String(reader.look.text).slice(0, 7), 0.12)
@@ -497,24 +503,45 @@ Rectangle {
             IconButton {
                 iconName: "skip-back"
                 iconColor: reader.look.text
-                tip: qsTr("Previous paragraph")
-                onClicked: reader.startSpeaking(Math.max(-1, reader.spokenBlock - 1))
+                tip: qsTr("Previous sentence")
+                onClicked: ReadAloud.skip(-1)
             }
             IconButton {
-                iconName: "pause"
+                iconName: ReadAloud.playing ? "pause" : "play"
                 iconColor: reader.look.text
-                tip: qsTr("Stop reading aloud")
-                onClicked: reader.stopSpeaking()
+                tip: ReadAloud.playing ? qsTr("Pause") : qsTr("Go on reading aloud")
+                onClicked: ReadAloud.toggle()
             }
             IconButton {
                 iconName: "skip-forward"
                 iconColor: reader.look.text
-                tip: qsTr("Next paragraph")
-                enabled: reader.spokenBlock < reader.lastSpokenBlock()
-                onClicked: reader.startSpeaking(reader.spokenBlock + 1)
+                tip: qsTr("Next sentence")
+                onClicked: ReadAloud.skip(1)
+            }
+            IconButton {
+                id: sleepButton
+                iconName: "moon"
+                iconColor: ReadAloud.sleepMode !== "off" ? Theme.accent : reader.look.text
+                tip: ReadAloud.sleepMode === "minutes" ? qsTr("Sleep timer: stops at %1").arg(Qt.formatTime(new Date(ReadAloud.sleepEndsAt), "hh:mm"))
+                    : ReadAloud.sleepMode === "chapter" ? qsTr("Sleep timer: stops at the end of the chapter") : qsTr("Sleep timer")
+                onClicked: sleepMenu.openAt(sleepButton, 0, -sleepMenu.implicitHeight - 8, [
+                    { text: qsTr("Off"), checked: ReadAloud.sleepMode === "off", run: () => ReadAloud.setSleep(0) },
+                    { text: qsTr("In 15 minutes"), run: () => ReadAloud.setSleep(15) },
+                    { text: qsTr("In 30 minutes"), run: () => ReadAloud.setSleep(30) },
+                    { text: qsTr("In 45 minutes"), run: () => ReadAloud.setSleep(45) },
+                    { text: qsTr("In an hour"), run: () => ReadAloud.setSleep(60) },
+                    { text: qsTr("At the end of the chapter"), checked: ReadAloud.sleepMode === "chapter", run: () => ReadAloud.setSleep(-1) }
+                ])
+            }
+            IconButton {
+                iconName: "x"
+                iconColor: reader.look.text
+                tip: qsTr("Stop reading aloud")
+                onClicked: reader.stopSpeaking()
             }
         }
     }
+    ActionMenu { id: sleepMenu }
 
     // The status bar area keeps the reading theme's colour (the bar's while
     // it is shown). It is drawn over the top bar, which slides away under
@@ -613,11 +640,11 @@ Rectangle {
             IconButton {
                 diameter: novelActions.button
                 iconName: reader.speaking ? "pause" : "volume-2"
-                iconColor: reader.speaking ? Theme.accent : reader.look.text
+                iconColor: reader.readingHere ? Theme.accent : reader.look.text
                 enabled: Speech.available && reader.blocks.length > 0
                 tip: !Speech.available ? qsTr("No voices are installed on this device")
-                    : reader.speaking ? qsTr("Stop reading aloud") : qsTr("Read aloud from here")
-                onClicked: reader.speaking ? reader.stopSpeaking()
+                    : reader.speaking ? qsTr("Pause reading aloud") : reader.readingHere ? qsTr("Go on reading aloud") : qsTr("Read aloud from here")
+                onClicked: reader.readingHere ? ReadAloud.toggle()
                     : reader.startSpeaking(flick.contentY - flick.originY < 40 ? -1 : reader.firstVisibleBlock())
             }
             IconButton {
@@ -659,6 +686,8 @@ Rectangle {
         background: Rectangle { radius: Theme.radiusLg; color: Theme.surface; border.width: 1; border.color: Theme.borderStrong }
         contentItem: ListView {
             id: chapterList
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             clip: true
             model: reader.chapters
             ScrollBar.vertical: ScScrollBar {}
@@ -699,6 +728,8 @@ Rectangle {
             }
         }
         contentItem: Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             implicitHeight: Math.min(options.implicitHeight, reader.height - 140 - (topBar.twoRows ? 46 : 0) - reader.insetTop)
             contentHeight: options.implicitHeight
             clip: true
@@ -822,7 +853,7 @@ Rectangle {
             width: parent.width
             model: [{ value: "", label: qsTr("System voice") }].concat(Speech.voices.map(v => ({ value: v.id, label: v.name + " · " + v.language })))
             value: App.settings.ttsVoice || ""
-            onPicked: (v) => { App.setSetting("ttsVoice", v); if (opts.reader.speaking) opts.reader.startSpeaking(opts.reader.spokenBlock) }
+            onPicked: (v) => { App.setSetting("ttsVoice", v); opts.reader.restartVoice() }
         }
         OptionLabel { visible: Speech.available; text: qsTr("Voice speed · %1×").arg(Number(App.settings.ttsRate || 1).toFixed(2)) }
         ScSlider {
@@ -840,5 +871,22 @@ Rectangle {
         }
         OptionSwitch { visible: Speech.available; text: qsTr("Go on to the next chapter"); checked: App.settings.ttsContinue !== false; onToggled: (c) => App.setSetting("ttsContinue", c) }
         OptionSwitch { visible: Speech.available; text: qsTr("Keep the spoken paragraph on screen"); checked: App.settings.ttsFollow !== false; onToggled: (c) => App.setSetting("ttsFollow", c) }
+        OptionSwitch { visible: Speech.available; text: qsTr("Highlight the spoken sentence"); checked: App.settings.ttsHighlight !== false; onToggled: (c) => App.setSetting("ttsHighlight", c) }
+        OptionLabel { visible: Speech.available; text: qsTr("Pause between paragraphs · %1 s").arg(((Number(App.settings.ttsParagraphPause) || (App.settings.ttsParagraphPause === 0 ? 0 : 350)) / 1000).toFixed(1)) }
+        ScSlider {
+            visible: Speech.available
+            width: parent.width; from: 0; to: 2000; stepSize: 50
+            value: App.settings.ttsParagraphPause === undefined ? 350 : Number(App.settings.ttsParagraphPause)
+            onMoved: App.setSetting("ttsParagraphPause", Math.round(value))
+            onPressedChanged: if (!pressed) opts.reader.restartVoice()
+        }
+        OptionLabel { visible: Speech.available; text: qsTr("Pause between sentences · %1 s").arg(((Number(App.settings.ttsSentencePause) || 0) / 1000).toFixed(1)) }
+        ScSlider {
+            visible: Speech.available
+            width: parent.width; from: 0; to: 1500; stepSize: 50
+            value: Number(App.settings.ttsSentencePause) || 0
+            onMoved: App.setSetting("ttsSentencePause", Math.round(value))
+            onPressedChanged: if (!pressed) opts.reader.restartVoice()
+        }
     }
 }

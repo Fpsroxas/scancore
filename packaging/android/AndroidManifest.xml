@@ -19,6 +19,10 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <!-- Casting: finding TVs and Chromecasts on the Wi-Fi (SSDP, mDNS). -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <!-- Reading aloud with the screen off: a media-playback service with
+         controls on the lock screen (ReadAloudService). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <!-- %%INSERT_PERMISSIONS -->
     <!-- Reading novels aloud: Android 11+ only lets apps see the
          text-to-speech engines they declare they look for. -->
@@ -87,6 +91,11 @@
             android:name="com.mediumdev.scancore.BrowserCheck"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation|density|uiMode"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
+            android:exported="false" />
+
+        <service
+            android:name="com.mediumdev.scancore.ReadAloudService"
+            android:foregroundServiceType="mediaPlayback"
             android:exported="false" />
 
         <provider

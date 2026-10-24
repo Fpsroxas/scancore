@@ -222,6 +222,8 @@ Dialog {
                 }
             }
             ListView {
+                maximumFlickVelocity: Motion.flickVelocity
+                flickDeceleration: Motion.flickDeceleration
                 WheelScroll {}
                 id: results
                 width: parent.width

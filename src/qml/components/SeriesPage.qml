@@ -363,12 +363,13 @@ Item {
     }
 
     ListView {
+        flickDeceleration: Motion.flickDeceleration
         WheelScroll {}
         id: list
         anchors.fill: parent
         clip: true
         boundsBehavior: Flickable.StopAtBounds
-        maximumFlickVelocity: 5000
+        maximumFlickVelocity: Motion.flickVelocity
         cacheBuffer: 1200
         reuseItems: true
         ScrollBar.vertical: ScScrollBar {}
@@ -454,6 +455,32 @@ Item {
                     tip: qsTr("Find it on my extensions")
                     onClicked: readFrom.start(migrate.itemFor({ media: page.media, title: page.series.title || "",
                                                                 cover: page.series.cover || "", extra: page.series.extra || {} }), true)
+                }
+                // Novels: listen without the reader (it goes on with the
+                // screen off, and the mini player has it).
+                IconButton {
+                    visible: page.media === "novel" && Speech.available && page.chapters.length > 0
+                    iconName: "volume-2"
+                    filled: true
+                    tip: qsTr("Listen")
+                    onClicked: {
+                        const at = Math.max(0, Math.min(page.chapters.length - 1, page.resumeInfo.index))
+                        const last = Library.lastProgress(page.seriesId)
+                        const block = last && last.unitKey === page.chapters[at].key && last.position ? (last.position.block || -1) : -1
+                        ReadAloud.start(Object.assign({}, page.series, { id: page.seriesId, media: "novel", sourceUrl: page.url }),
+                                        page.chapters, at, [], block)
+                    }
+                }
+                // Metro: a tile for it on the hub.
+                IconButton {
+                    readonly property bool pinned: Metro.isPinned(page.seriesId)
+                    visible: Theme.metro
+                    iconName: pinned ? "pin-off" : "pin"
+                    filled: true
+                    tip: pinned ? qsTr("Unpin from the hub") : qsTr("Pin to the hub")
+                    onClicked: pinned ? Metro.unpin(page.seriesId)
+                        : Metro.pin(Object.assign({}, page.series, { id: page.seriesId, media: page.media, sourceUrl: page.url,
+                                                                     referer: page.coverReferer }), "medium")
                 }
                 IconButton {
                     visible: !page.local

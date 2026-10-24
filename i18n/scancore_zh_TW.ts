@@ -3691,6 +3691,34 @@
             <source>A moment of black when a comic page turns clears the last page's ghost.</source>
             <translation>翻漫畫頁時短暫顯示黑色，清除上一頁的殘影。</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>最高更新率</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>以螢幕的最高更新率（例如 120 Hz）捲動和播放動畫，而非手機為應用程式選擇的更新率。會多耗一點電。</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>滑動慣性</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>滑動後清單繼續移動的時間。</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>在觸控板或觸控螢幕上滑動後清單繼續移動的時間。</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>短</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>長</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

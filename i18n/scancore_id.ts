@@ -3691,6 +3691,34 @@
             <source>A moment of black when a comic page turns clears the last page's ghost.</source>
             <translation>Sekejap hitam saat halaman komik berganti menghapus bayangan halaman sebelumnya.</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>Kecepatan refresh tertinggi</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>Gulir dan animasi pada kecepatan tertinggi layar Anda, seperti 120 Hz, alih-alih kecepatan yang dipilih ponsel untuk aplikasi. Memakai sedikit lebih banyak baterai.</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>Luncuran gulir</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>Berapa lama daftar terus bergerak setelah digeser.</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>Berapa lama daftar terus bergerak setelah digeser di touchpad atau layar sentuh.</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>Pendek</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>Panjang</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

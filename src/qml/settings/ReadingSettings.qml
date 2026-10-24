@@ -524,6 +524,74 @@ SettingsPane {
             title: qsTr("Keep the spoken paragraph on screen")
             Toggle { checked: App.settings.ttsFollow !== false; onToggled: App.setSetting("ttsFollow", checked) }
         }
+        SettingRow {
+            visible: Speech.available
+            title: qsTr("Highlight the spoken sentence")
+            Toggle { checked: App.settings.ttsHighlight !== false; onToggled: App.setSetting("ttsHighlight", checked) }
+        }
+        SettingRow {
+            visible: Speech.available
+            title: qsTr("Pause between paragraphs")
+            Row {
+                spacing: 12
+                ScSlider {
+                    width: pane.sliderWidth; from: 0; to: 2000; stepSize: 50
+                    value: App.settings.ttsParagraphPause === undefined ? 350 : Number(App.settings.ttsParagraphPause)
+                    onMoved: App.setSetting("ttsParagraphPause", Math.round(value))
+                }
+                Readout { text: ((App.settings.ttsParagraphPause === undefined ? 350 : Number(App.settings.ttsParagraphPause)) / 1000).toFixed(1) + " s" }
+            }
+        }
+        SettingRow {
+            visible: Speech.available
+            title: qsTr("Pause between sentences")
+            Row {
+                spacing: 12
+                ScSlider {
+                    width: pane.sliderWidth; from: 0; to: 1500; stepSize: 50
+                    value: Number(App.settings.ttsSentencePause) || 0
+                    onMoved: App.setSetting("ttsSentencePause", Math.round(value))
+                }
+                Readout { text: ((Number(App.settings.ttsSentencePause) || 0) / 1000).toFixed(1) + " s" }
+            }
+        }
+        // A voice for each language a book can be in (a Korean web novel in
+        // a Korean voice, the rest in yours).
+        SettingRow {
+            id: perLanguage
+            visible: Speech.available && languages.length > 1
+            title: qsTr("Voice for a language")
+            description: qsTr("Books in this language are read with this voice.")
+            readonly property var languages: {
+                const seen = {}
+                const out = []
+                for (const s of Novels.sources()) {
+                    const code = String(s.language || "")
+                    if (!code || seen[code]) continue
+                    seen[code] = true
+                    out.push({ value: code, label: s.languageName || code })
+                }
+                return out.sort((a, b) => a.label.localeCompare(b.label))
+            }
+            property string language: languages.length ? languages[0].value : ""
+            readonly property string base: language.split(/[-_]/)[0]
+            Column {
+                spacing: 8
+                Select {
+                    model: perLanguage.languages
+                    value: perLanguage.language
+                    onPicked: (v) => perLanguage.language = v
+                }
+                Select {
+                    model: [{ value: "", label: qsTr("The voice above") }].concat(Speech.voices
+                        .filter(v => String(v.language).split(/[-_]/)[0] === perLanguage.base)
+                        .map(v => ({ value: v.id, label: v.name + " · " + v.language })))
+                    value: (App.settings.ttsVoices, ReadAloud.voiceFor(perLanguage.language) === (App.settings.ttsVoice || "")
+                        ? "" : ReadAloud.voiceFor(perLanguage.language))
+                    onPicked: (v) => ReadAloud.setVoiceFor(perLanguage.language, v)
+                }
+            }
+        }
     }
 
     ColorPicker {

@@ -205,6 +205,10 @@ const QVariantMap kDefaults{
     // Extension updates signed with a trusted key install by themselves.
     {"autoUpdateExtensions", true},
     {"scrollSpeed", 1},
+    // How long a fling glides (Motion.flickDeceleration).
+    {"flingGlide", "default"},
+    // Android: draw at the screen's fastest refresh rate (Platform).
+    {"highRefresh", true},
     {"novelSource", "all"},
 };
 
@@ -212,7 +216,10 @@ const QVariantMap kDefaults{
 
 App::App(QObject *parent) : QObject(parent) {
     // Settings restored before the event loop runs are not changes.
-    QTimer::singleShot(0, this, [this] { m_running = true; });
+    QTimer::singleShot(0, this, [this] {
+        m_running = true;
+        platform::setFastestRefresh(m_settings.value(QStringLiteral("highRefresh"), true).toBool());
+    });
     m_settings = kDefaults;
     for (auto it = kDefaults.begin(); it != kDefaults.end(); ++it)
         m_settings.insert(it.key(), Database::pref(QStringLiteral("setting.") + it.key(), it.value()));
@@ -349,6 +356,8 @@ void App::setSetting(const QString &key, const QVariant &input) {
     }
     // Mihon's downloads in a folder added (or no longer there after one is
     // taken off the list).
+    if (key == QLatin1String("highRefresh"))
+        platform::setFastestRefresh(value.toBool());
     if (key == QLatin1String("localFolders") && m_running)
         Downloads::instance()->relinkMihon();
     if (key == QLatin1String("imageCacheMB")) {

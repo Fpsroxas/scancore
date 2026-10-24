@@ -3,6 +3,7 @@
 #include <QHash>
 #include <QObject>
 #include <QQmlEngine>
+#include <QTimer>
 #include <QVariantList>
 
 class QTextToSpeech;
@@ -35,6 +36,10 @@ public:
 
     // Adds text to the queue; started(tag) and finished(tag) follow.
     Q_INVOKABLE void enqueue(const QString &text, int tag);
+    // A pause in the queue, where the engine can queue one (Android); see
+    // queuesSilence. started/finished(tag) follow as for text.
+    Q_INVOKABLE void enqueueSilence(int ms, int tag);
+    Q_INVOKABLE bool queuesSilence() const;
     // Empties the queue and stops at once.
     Q_INVOKABLE void stop();
     // rate and pitch are multipliers (1 = the voice's own); voice is an id
@@ -69,6 +74,15 @@ private:
     };
     QHash<int, Chunk> m_queued;
     int m_nextChunk = 1;
+    // Development hook SCANCORE_TTS_ENGINE=timer (or timer-silence, which
+    // queues pauses as Android does): a silent voice that "speaks" 15 ms a
+    // character, for tests of reading aloud. {chunk, ms}.
+    bool m_testEngine = false;
+    bool m_testSilence = false;
+    QList<QPair<int, int>> m_testQueue;
+    int m_testCurrent = 0;
+    QTimer *m_testTimer = nullptr;
+    void testNext();
 #ifdef SCANCORE_HAVE_TTS
     QTextToSpeech *m_tts = nullptr;
     QHash<qsizetype, int> m_qtIds; // Qt's enqueue id -> chunk

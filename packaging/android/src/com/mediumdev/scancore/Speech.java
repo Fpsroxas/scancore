@@ -44,7 +44,10 @@ public final class Speech {
                         @Override public void onError(String id, int code) { nativeError(Integer.parseInt(id), "Text-to-speech error " + code); }
                     });
                     apply();
-                    for (Object[] p : pending) speakNow((String) p[1], (Integer) p[0]);
+                    for (Object[] p : pending) {
+                        if (p[1] != null) speakNow((String) p[1], (Integer) p[0]);
+                        else tts.playSilentUtterance((Integer) p[2], TextToSpeech.QUEUE_ADD, Integer.toString((Integer) p[0]));
+                    }
                 }
                 pending.clear();
                 nativeReady(ready, voices());
@@ -85,6 +88,14 @@ public final class Speech {
         if (tts == null) return;
         if (ready) speakNow(text, chunk);
         else pending.add(new Object[] {chunk, text});
+    }
+
+    // A pause between sentences, queued like speech (its id comes back
+    // through the same callbacks).
+    public static synchronized void silence(int ms, int chunk) {
+        if (tts == null) return;
+        if (ready) tts.playSilentUtterance(ms, TextToSpeech.QUEUE_ADD, Integer.toString(chunk));
+        else pending.add(new Object[] {chunk, null, ms});
     }
 
     public static synchronized void stop() {

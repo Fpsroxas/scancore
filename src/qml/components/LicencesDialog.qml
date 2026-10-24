@@ -89,6 +89,8 @@ Dialog {
         }
         ListView {
             id: list
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             anchors.fill: parent
             anchors.topMargin: intro.height
             visible: dialog.file === ""
@@ -138,6 +140,8 @@ Dialog {
         }
 
         Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             anchors.fill: parent
             visible: dialog.file !== ""
             contentHeight: body.implicitHeight

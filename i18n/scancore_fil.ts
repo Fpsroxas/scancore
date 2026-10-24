@@ -3683,6 +3683,34 @@
             <source>History</source>
             <translation>History</translation>
         </message>
+        <message>
+            <source>Highest refresh rate</source>
+            <translation>Pinakamataas na refresh rate</translation>
+        </message>
+        <message>
+            <source>Scroll and animate at your screen's fastest rate, such as 120 Hz, instead of the rate the phone picks for apps. Uses a little more battery.</source>
+            <translation>Mag-scroll at mag-animate sa pinakamabilis na rate ng iyong screen, gaya ng 120 Hz, sa halip na sa rate na pinipili ng telepono para sa mga app. Gumagamit ng kaunti pang baterya.</translation>
+        </message>
+        <message>
+            <source>Fling glide</source>
+            <translation>Pag-glide ng fling</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a swipe.</source>
+            <translation>Gaano katagal patuloy na gumagalaw ang mga listahan pagkatapos mag-swipe.</translation>
+        </message>
+        <message>
+            <source>How long lists keep moving after a touchpad or touch screen swipe.</source>
+            <translation>Gaano katagal patuloy na gumagalaw ang mga listahan pagkatapos mag-swipe sa touchpad o touch screen.</translation>
+        </message>
+        <message>
+            <source>Short</source>
+            <translation>Maikli</translation>
+        </message>
+        <message>
+            <source>Long</source>
+            <translation>Mahaba</translation>
+        </message>
     </context>
     <context>
         <name>KeyRecorder</name>

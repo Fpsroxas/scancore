@@ -111,7 +111,7 @@ endif()
 if(NOT SCANCORE_WITH_SYSTEM_WEBVIEW)
     list(REMOVE_ITEM SCANCORE_QML qml/components/WebPlayerSystem.qml)
 endif()
-set_source_files_properties(qml/theme/Theme.qml qml/theme/Motion.qml qml/Router.qml qml/Keymap.qml qml/PageLayout.qml qml/VideoPrefs.qml qml/PlayerPage.qml
+set_source_files_properties(qml/theme/Theme.qml qml/theme/Motion.qml qml/metro/Metro.qml qml/Router.qml qml/Keymap.qml qml/PageLayout.qml qml/VideoPrefs.qml qml/PlayerPage.qml
     PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 qt_add_qml_module(scancore
@@ -137,6 +137,8 @@ qt_add_qml_module(scancore
         app/KeepAwake.cpp app/KeepAwake.h
         app/Profiler.cpp app/Profiler.h
         app/Speech.cpp app/Speech.h
+        app/ReadAloud.cpp app/ReadAloud.h
+        app/MediaControls.cpp app/MediaControls.h
         app/Trackers.cpp app/Trackers.h app/MoreTrackers.cpp app/TrackerCommon.h
         app/Story.cpp app/Story.h app/Upkeep.cpp app/Upkeep.h
         app/Sync.cpp app/Sync.h
@@ -193,9 +195,15 @@ qt_add_resources(scancore assets
         ${PROJECT_SOURCE_DIR}/resources/fonts/SpaceGrotesk.ttf
         ${PROJECT_SOURCE_DIR}/resources/fonts/Literata.ttf
         ${PROJECT_SOURCE_DIR}/resources/fonts/Literata-Italic.ttf
+        ${PROJECT_SOURCE_DIR}/resources/fonts/Selawik.ttf
+        ${PROJECT_SOURCE_DIR}/resources/fonts/Selawik-Light.ttf
+        ${PROJECT_SOURCE_DIR}/resources/fonts/Selawik-Semilight.ttf
+        ${PROJECT_SOURCE_DIR}/resources/fonts/Selawik-Semibold.ttf
+        ${PROJECT_SOURCE_DIR}/resources/fonts/Selawik-Bold.ttf
         ${PROJECT_SOURCE_DIR}/resources/branding/scancore.svg
         ${PROJECT_SOURCE_DIR}/resources/branding/shadow.png
         ${PROJECT_SOURCE_DIR}/resources/shaders/cover.frag.qsb
+        ${PROJECT_SOURCE_DIR}/resources/shaders/title.frag.qsb
         ${PROJECT_SOURCE_DIR}/resources/shaders/panel.vert.qsb
         ${PROJECT_SOURCE_DIR}/resources/shaders/panel.frag.qsb)
 foreach(icon ${SCANCORE_ICONS})

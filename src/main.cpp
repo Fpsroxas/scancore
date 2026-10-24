@@ -65,7 +65,10 @@ namespace {
 
 void loadFonts() {
     for (const auto *font : {":/fonts/DMSans.ttf", ":/fonts/DMSans-Italic.ttf", ":/fonts/SpaceGrotesk.ttf",
-                             ":/fonts/Literata.ttf", ":/fonts/Literata-Italic.ttf"})
+                             ":/fonts/Literata.ttf", ":/fonts/Literata-Italic.ttf",
+                             // Metro mode (Settings → Interface → Look).
+                             ":/fonts/Selawik.ttf", ":/fonts/Selawik-Light.ttf", ":/fonts/Selawik-Semilight.ttf",
+                             ":/fonts/Selawik-Semibold.ttf", ":/fonts/Selawik-Bold.ttf"})
         QFontDatabase::addApplicationFont(QString::fromLatin1(font));
     QFont font(QStringLiteral("DM Sans"));
     font.setPixelSize(14);

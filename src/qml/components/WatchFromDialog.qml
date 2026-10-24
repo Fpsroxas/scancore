@@ -225,6 +225,8 @@ Dialog {
         }
 
         Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             width: parent.width
             height: Math.min(contentHeight, 340)
             contentHeight: list.height

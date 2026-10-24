@@ -21,7 +21,7 @@ AbstractButton {
     opacity: enabled ? 1 : 0.45
 
     background: Rectangle {
-        radius: height / 2
+        radius: Theme.pill(height)
         color: chip.selected ? Theme.accent : chip.hovered ? Theme.surface3 : Theme.surface2
         border.width: chip.selected ? 0 : 1
         border.color: Theme.border

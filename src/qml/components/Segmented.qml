@@ -18,7 +18,7 @@ Rectangle {
 
     implicitHeight: 36
     implicitWidth: row.implicitWidth + 8
-    radius: height / 2
+    radius: Theme.pill(height)
     color: Theme.surface2
     border.width: 1
     border.color: Theme.border
@@ -27,7 +27,7 @@ Rectangle {
         id: pill
         y: 4
         height: parent.height - 8
-        radius: height / 2
+        radius: Theme.pill(height)
         color: Theme.surface
         border.width: 1
         border.color: Theme.borderStrong

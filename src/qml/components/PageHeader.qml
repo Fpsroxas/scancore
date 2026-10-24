@@ -14,7 +14,7 @@ Item {
     property bool keepBeside: false
     default property alias trailing: trailingRow.data
 
-    readonly property real titleX: showBack ? Theme.gutter + 34 : Theme.gutter
+    readonly property real titleX: showBack && !Theme.metro ? Theme.gutter + 34 : Theme.gutter
     readonly property bool stacked: !keepBeside && trailingRow.width > 0
         && (Theme.compact || width - titleX - Theme.gutter - trailingRow.width - 12 < 240)
     width: parent ? parent.width : 800
@@ -22,7 +22,8 @@ Item {
 
     IconButton {
         id: back
-        visible: header.showBack
+        // Metro has its back button in the app bar.
+        visible: header.showBack && !Theme.metro
         x: Theme.gutter - 8
         y: 26
         iconName: "arrow-left"
@@ -36,14 +37,25 @@ Item {
         y: 24
         width: parent.width - x - Theme.gutter - (header.stacked ? 0 : trailingRow.width + 12)
         spacing: 4
+        // Metro: the app's name small above a big, thin title, as Windows
+        // Phone's pages had.
+        Text {
+            visible: Theme.metro
+            text: "SCANCORE"
+            color: Theme.text
+            font.family: Theme.fontSans
+            font.pixelSize: Theme.textSm
+            font.weight: Font.DemiBold
+        }
         Text {
             width: parent.width
             text: header.title
             color: Theme.text
             font.family: Theme.fontDisplay
-            font.pixelSize: Theme.text3xl
-            font.weight: Font.Bold
-            font.letterSpacing: -0.6
+            font.pixelSize: Theme.metro ? Math.round(Theme.text3xl * 1.55) : Theme.text3xl
+            font.weight: Theme.metro ? Font.Light : Font.Bold
+            font.letterSpacing: Theme.metro ? -1 : -0.6
+            font.capitalization: Theme.metro ? (Metro.upperCase ? Font.MixedCase : Font.AllLowercase) : Font.MixedCase
             elide: Text.ElideRight
         }
         Text {

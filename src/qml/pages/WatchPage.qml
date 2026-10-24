@@ -18,9 +18,10 @@ import ScanCore
 // Desktops dock the bar above the video and the episode list beside it; in
 // full screen they hide until the pointer reaches the top edge.
 // Phone portrait puts the controls and episodes below a 16:9 player;
-// landscape is full screen, its controls over the video (a strip above a
-// system web view, which nothing can cover). Hidden controls take no taps:
-// the first tap only shows them. Settings and actions are one panel
+// landscape is full screen, its controls over the video (over a system web
+// view, which nothing can cover, a strip above it that shows on its own:
+// taps there are the web player's). Hidden controls take no taps: the first
+// tap only shows them. Settings and actions are one panel
 // (PlayerPanel).
 Rectangle {
     id: watch
@@ -679,6 +680,7 @@ Rectangle {
                 // NativePlayer has more to say than the web players.
                 ignoreUnknownSignals: true
                 function onTime(seconds, total, status) { watch.onPlayerTime(seconds, total, status) }
+                // NativePlayer's controls in use (web players' taps are theirs).
                 function onInteracted() { watch.wake() }
                 function onKey(press) { watch.pageKey(press) }
                 function onUnsupported() { watch.unsupported = true }
@@ -1088,6 +1090,8 @@ Rectangle {
         HoverHandler { id: sideHover }
 
         ListView {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             WheelScroll {}
             anchors.fill: parent
             anchors.margins: 8
@@ -1133,6 +1137,8 @@ Rectangle {
                 width: parent.width - 32
                 height: 36
                 Flickable {
+                    maximumFlickVelocity: Motion.flickVelocity
+                    flickDeceleration: Motion.flickDeceleration
                     anchors.left: parent.left
                     anchors.right: phoneNav.left
                     anchors.rightMargin: 8
@@ -1210,6 +1216,8 @@ Rectangle {
         }
 
         ListView {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             WheelScroll {}
             id: phoneList
             anchors.top: phoneHead.bottom
@@ -1335,12 +1343,15 @@ Rectangle {
         Behavior on opacity { NumberAnimation { duration: Motion.normal } }
         enabled: watch.chromeSettled
     }
+    // Over a web player taps belong to its own controls, so this strip only
+    // shows on its own: as the player opens and while skip or the next
+    // episode is on offer. Back leaves full screen for the rest.
     LandscapeTop {
         id: strip
         overVideo: false
         width: watch.width
-        visible: watch.immersed && watch.systemView && watch.chromeShown
-        enabled: watch.chromeSettled
+        visible: watch.immersed && watch.systemView && (watch.chromeShown || watch.showSkip || nextCountdown.running)
+        enabled: watch.chromeSettled || watch.showSkip || nextCountdown.running
     }
 
     PlayerPanel {

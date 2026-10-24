@@ -40,6 +40,8 @@ SettingsPane {
 
     // Scrolls sideways when the tabs are wider than the pane.
     Flickable {
+        maximumFlickVelocity: Motion.flickVelocity
+        flickDeceleration: Motion.flickDeceleration
         width: parent.width
         height: methodTabs.height
         contentWidth: methodTabs.width

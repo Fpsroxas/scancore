@@ -317,8 +317,8 @@ Rectangle {
         model: reader.mode === "strip" ? reader.panels : []
         cacheBuffer: Math.max(2400, height * 3)
         boundsBehavior: Flickable.StopAtBounds
-        maximumFlickVelocity: 7000
-        flickDeceleration: 2600
+        maximumFlickVelocity: Motion.flickVelocity
+        flickDeceleration: Motion.flickDeceleration
         spacing: reader.gap
         reuseItems: false
         ScrollBar.vertical: ScScrollBar { policy: reader.controlsShown ? ScrollBar.AlwaysOn : ScrollBar.AsNeeded }
@@ -1070,6 +1070,8 @@ Rectangle {
         exit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Motion.fast } }
         contentItem: ListView {
             id: chapterList
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             clip: true
             model: reader.chapters
             ScrollBar.vertical: ScScrollBar {}
@@ -1125,6 +1127,8 @@ Rectangle {
         exit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Motion.fast } }
         // Scrolls when it is taller than the window (phones).
         contentItem: Flickable {
+            maximumFlickVelocity: Motion.flickVelocity
+            flickDeceleration: Motion.flickDeceleration
             implicitHeight: Math.min(settingsColumn.implicitHeight, reader.height - 110 - reader.insetTop - reader.insetBottom)
             contentHeight: settingsColumn.implicitHeight
             clip: true

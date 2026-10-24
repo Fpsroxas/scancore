@@ -27,7 +27,7 @@ AbstractButton {
     font.weight: Font.DemiBold
 
     background: Rectangle {
-        radius: height / 2
+        radius: Theme.pill(height)
         color: control.fill
         border.width: control.variant === "ghost" ? 1 : 0
         border.color: Theme.border
@@ -43,7 +43,7 @@ AbstractButton {
         Rectangle {
             anchors.fill: parent
             anchors.margins: -3
-            radius: height / 2
+            radius: Theme.pill(height)
             color: "transparent"
             border.width: 2
             border.color: Theme.alpha(Theme.accent, 0.6)

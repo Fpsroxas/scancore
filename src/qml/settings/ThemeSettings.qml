@@ -157,6 +157,45 @@ SettingsPane {
         }
     }
 
+    // The phones' own twenty, square as their tiles.
+    SettingsGroup {
+        visible: Theme.metro
+        title: qsTr("Metro colours")
+        note: qsTr("The accent colours of Windows Phone. Tiles, the hub title and switches take it.")
+        Flow {
+            x: 16
+            width: parent.width - 32
+            topPadding: 16
+            bottomPadding: 14
+            spacing: 8
+            Repeater {
+                model: Theme.metroAccentNames
+                AbstractButton {
+                    id: metroSwatch
+                    required property string modelData
+                    readonly property bool selected: App.settings.accent === modelData
+                    width: 44
+                    height: 44
+                    Accessible.name: modelData.replace("metro-", "")
+                    hoverEnabled: true
+                    ToolTip.visible: hovered && !Theme.touch
+                    ToolTip.text: modelData.replace("metro-", "")
+                    onClicked: App.setSetting("accent", modelData)
+                    background: Rectangle {
+                        color: Theme.metroAccents[metroSwatch.modelData]
+                        border.width: metroSwatch.selected ? 3 : 0
+                        border.color: Theme.text
+                    }
+                    contentItem: Item {
+                        Icon { anchors.centerIn: parent; visible: metroSwatch.selected; name: "check"; size: 18; color: "white" }
+                    }
+                    scale: pressed ? 0.92 : 1
+                    Behavior on scale { NumberAnimation { duration: Motion.instant } }
+                }
+            }
+        }
+    }
+
     SettingsGroup {
         title: qsTr("Accent")
         note: qsTr("Mono matches the scancore.onl website. Custom takes any colour.")

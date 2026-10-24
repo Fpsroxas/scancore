@@ -212,6 +212,8 @@ Dialog {
     }
 
     contentItem: Flickable {
+        maximumFlickVelocity: Motion.flickVelocity
+        flickDeceleration: Motion.flickDeceleration
         implicitHeight: body.implicitHeight
         contentHeight: body.implicitHeight
         clip: true
@@ -363,6 +365,8 @@ Dialog {
             // Several series: one row each, in a list of its own so only the
             // rows on screen exist (and re-read `rows` when one changes).
             ListView {
+                maximumFlickVelocity: Motion.flickVelocity
+                flickDeceleration: Motion.flickDeceleration
                 visible: dialog.batch
                 width: parent.width
                 height: Math.min(contentHeight, 70 * 6.5)

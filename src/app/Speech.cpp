@@ -138,6 +138,15 @@ void Speech::ensureEngine() {
     if (m_engineStarted)
         return;
     m_engineStarted = true;
+    if (qEnvironmentVariable("SCANCORE_TTS_ENGINE").startsWith(QLatin1String("timer"))) {
+        m_testEngine = true;
+        m_testSilence = qEnvironmentVariable("SCANCORE_TTS_ENGINE") == QLatin1String("timer-silence");
+        m_testTimer = new QTimer(this);
+        m_testTimer->setSingleShot(true);
+        connect(m_testTimer, &QTimer::timeout, this, &Speech::testNext);
+        engineReady(true, {QVariantMap{{"id", "test"}, {"name", "Test voice"}, {"language", "en_US"}}});
+        return;
+    }
 #if defined(SCANCORE_HAVE_TTS)
     // Development hook: SCANCORE_TTS_ENGINE=mock speaks silently (tests).
     const auto engine = qEnvironmentVariable("SCANCORE_TTS_ENGINE");
@@ -238,7 +247,27 @@ void Speech::engineFailed(int chunk, const QString &message) {
     });
 }
 
+void Speech::testNext() {
+    if (m_testCurrent) {
+        const int done = m_testCurrent;
+        m_testCurrent = 0;
+        engineFinished(done);
+    }
+    if (m_testQueue.isEmpty())
+        return;
+    const auto [chunk, ms] = m_testQueue.takeFirst();
+    m_testCurrent = chunk;
+    engineStarted(chunk);
+    m_testTimer->start(ms);
+}
+
 void Speech::sendChunk(int chunk, const QString &text) {
+    if (m_testEngine) {
+        m_testQueue.append({chunk, int(15 * text.size())});
+        if (!m_testCurrent && !m_testTimer->isActive())
+            m_testTimer->start(0);
+        return;
+    }
 #if defined(SCANCORE_HAVE_TTS)
     m_qtIds.insert(m_tts->enqueue(text), chunk);
 #elif defined(Q_OS_ANDROID)
@@ -264,9 +293,48 @@ void Speech::enqueue(const QString &text, int tag) {
         emit changed();
 }
 
+bool Speech::queuesSilence() const {
+    if (m_testEngine)
+        return m_testSilence;
+#if defined(Q_OS_ANDROID) && !defined(SCANCORE_HAVE_TTS)
+    return true;
+#else
+    return false;
+#endif
+}
+
+void Speech::enqueueSilence(int ms, int tag) {
+    if (m_testEngine && m_testSilence && ms > 0) {
+        const int chunk = m_nextChunk++;
+        m_queued.insert(chunk, {tag, true});
+        m_testQueue.append({chunk, ms});
+        if (!m_testCurrent && !m_testTimer->isActive())
+            m_testTimer->start(0);
+        return;
+    }
+#if defined(Q_OS_ANDROID) && !defined(SCANCORE_HAVE_TTS)
+    if (ms <= 0)
+        return;
+    const bool wasEmpty = m_queued.isEmpty();
+    const int chunk = m_nextChunk++;
+    m_queued.insert(chunk, {tag, true});
+    QJniObject::callStaticMethod<void>(kSpeechClass, "silence", "(II)V", jint(ms), jint(chunk));
+    if (wasEmpty)
+        emit changed();
+#else
+    Q_UNUSED(ms)
+    Q_UNUSED(tag)
+#endif
+}
+
 void Speech::stop() {
     const bool had = !m_queued.isEmpty();
     m_queued.clear();
+    if (m_testEngine) {
+        m_testQueue.clear();
+        m_testCurrent = 0;
+        m_testTimer->stop();
+    }
 #if defined(SCANCORE_HAVE_TTS)
     m_qtIds.clear();
     m_current = 0;

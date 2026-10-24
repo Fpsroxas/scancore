@@ -27,6 +27,14 @@ QtObject {
     readonly property var accelerate: [0.3, 0, 0.8, 0.15, 1, 1]
     readonly property var spring: [0.34, 1.36, 0.64, 1, 1, 1]
 
+    // Flings. Android lets a finger throw a list at up to 8000 dp/s and lets
+    // it glide out for a second or two; Qt's own limits (2500 px/s, braking
+    // at 1500 px/s²) and the harder braking used before stopped a swipe
+    // within a second of the finger lifting (#22). Settings → Interface →
+    // Fling glide picks the braking.
+    readonly property real flickVelocity: Theme.touch ? 8000 : 5000
+    readonly property real flickDeceleration: ({ short: 3500, long: 1250 })[App.settings.flingGlide] || 2000
+
     function stagger(index) {
         return ms(Math.min(index, 16) * 24)
     }
