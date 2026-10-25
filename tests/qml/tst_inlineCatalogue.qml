@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtTest
-import ScanCore
+import Scancore
 
 Item {
     width: 1100; height: 800
