@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Vertical Flickable with eased mouse-wheel scrolling and touchpad scrolling
 // at the user's speed (WheelScroll).

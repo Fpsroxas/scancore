@@ -457,6 +457,74 @@ void chapterRead(const QString &sourceKey, const QString &seriesUrl, const QStri
     }
 }
 
+QVariantList trackerSearch(const Server &server, const QString &title) {
+    QVariantList out;
+    if (server.kind == QLatin1String("komga")) {
+        Request request;
+        request.url = withQuery(QUrl(server.url + QStringLiteral("/api/v1/series")), {{"search", title}, {"size", "20"}});
+        request.headers = authHeaders(server);
+        const auto response = Http::send(request);
+        if (!response.ok())
+            throw Error(QStringLiteral("%1 answered %2.").arg(server.label).arg(response.status), response.status);
+        for (const auto &v : response.json().object().value(QStringLiteral("content")).toArray()) {
+            const auto s = v.toObject();
+            const auto name = s.value(QStringLiteral("metadata")).toObject().value(QStringLiteral("title")).toString(s.value(QStringLiteral("name")).toString());
+            const int books = s.value(QStringLiteral("booksCount")).toInt();
+            out.append(QVariantMap{{"id", s.value(QStringLiteral("id")).toString()},
+                                   {"title", name},
+                                   {"titles", QStringList{name, s.value(QStringLiteral("name")).toString()}},
+                                   {"detail", QStringLiteral("%1 books").arg(books)},
+                                   {"total", books}});
+        }
+    } else if (server.kind == QLatin1String("kavita")) {
+        Request request;
+        request.url = withQuery(QUrl(server.url + QStringLiteral("/api/Search/search")), {{"queryString", title}});
+        request.headers = authHeaders(server);
+        const auto response = Http::send(request);
+        if (!response.ok())
+            throw Error(QStringLiteral("%1 answered %2.").arg(server.label).arg(response.status), response.status);
+        for (const auto &v : response.json().object().value(QStringLiteral("series")).toArray()) {
+            const auto s = v.toObject();
+            const auto name = s.value(QStringLiteral("name")).toString();
+            out.append(QVariantMap{{"id", s.value(QStringLiteral("seriesId")).toInteger()},
+                                   {"title", name},
+                                   {"titles", QStringList{name, s.value(QStringLiteral("originalName")).toString(), s.value(QStringLiteral("localizedName")).toString()}},
+                                   {"detail", s.value(QStringLiteral("libraryName")).toString()},
+                                   {"total", 0}});
+        }
+    }
+    return out;
+}
+
+void trackerPush(const Server &server, const QVariant &id, int progress) {
+    if (progress <= 0)
+        return;
+    Response response;
+    if (server.kind == QLatin1String("komga")) {
+        // Komga's endpoint for Mihon: books read up to this number. Komga
+        // before 0.157 knows only the first version (by position).
+        for (const auto &[version, field] : {std::pair{"v2", "lastBookNumberSortRead"}, std::pair{"v1", "lastBookRead"}}) {
+            Request request;
+            request.url = QUrl(server.url + QStringLiteral("/api/%1/series/%2/read-progress/tachiyomi").arg(QLatin1String(version), id.toString()));
+            request.method = "PUT";
+            request.headers = authHeaders(server);
+            request.headers.append(QPair<QByteArray, QByteArray>("Content-Type", "application/json"));
+            request.body = QJsonDocument(QJsonObject{{QLatin1String(field), progress}}).toJson(QJsonDocument::Compact);
+            response = Http::send(request);
+            if (response.status != 404)
+                break;
+        }
+    } else if (server.kind == QLatin1String("kavita")) {
+        response = Http::postJson(withQuery(QUrl(server.url + QStringLiteral("/api/Tachiyomi/mark-chapter-until-as-read")),
+                                            {{"seriesId", id.toString()}, {"chapterNumber", QString::number(progress)}}),
+                                  "{}", authHeaders(server));
+    } else {
+        return;
+    }
+    if (!response.ok())
+        throw Error(QStringLiteral("%1 answered %2.").arg(server.label).arg(response.status), response.status == 401 ? 401 : response.status);
+}
+
 void registerImages() {
     static const bool once = [] {
         ImageCache::setRefererWriter(QStringLiteral("server"), [](const QString &url, const QString &referer, const QString &path) {

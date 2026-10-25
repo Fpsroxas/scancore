@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Crash reports and diagnostics, ready to send to the developer: after a
 // crash it opens by itself on the newest report; Settings → About lists them.

@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Window
 import QtWebEngine
-import ScanCore
+import Scancore
 
 // Hosts a provider's player page inside a small wrapper document
 // (PlayerPage). The wrapper polls the player's postMessage API (getTime /

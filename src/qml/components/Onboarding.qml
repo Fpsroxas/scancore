@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Shapes
-import ScanCore
+import Scancore
 
 // First-run welcome: the interface language, what SCANCORE does, the tracker
 // to keep, extensions (a repository link, if the reader has one), a quick

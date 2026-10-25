@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Dropdown. model: [{value, label}] ; bind `value`, handle `picked`.
 // On phones the choices open as a sheet from the bottom, titled `title`

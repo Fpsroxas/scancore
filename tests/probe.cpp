@@ -52,7 +52,7 @@ static bool step(const QString &label, F &&fn) {
 int main(int argc, char **argv) {
     QCoreApplication app(argc, argv);
     QCoreApplication::setOrganizationName(QStringLiteral("Medium Dev"));
-    QCoreApplication::setApplicationName(QStringLiteral("ScanCore"));
+    QCoreApplication::setApplicationName(QStringLiteral("SCANCORE"));
     // SCANCORE_PROBE_MANIFEST: another manifest, for sites being considered.
     QFile manifest(qEnvironmentVariableIsSet("SCANCORE_PROBE_MANIFEST") ? qEnvironmentVariable("SCANCORE_PROBE_MANIFEST")
                                                                       : QStringLiteral(SCANCORE_SOURCE_DIR "/sources/manifest.json"));

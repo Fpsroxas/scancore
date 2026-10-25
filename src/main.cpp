@@ -118,6 +118,31 @@ void registerPdf() {
 #endif
 }
 
+// Before 2.13.0 the app's folders were named in another spelling
+// (kOldName): they move to SCANCORE's once, before anything opens them. On
+// Windows and macOS, whose file names ignore case, the same folder simply
+// carries on. Absolute paths stored under the old data folder are rewritten
+// once the database is open (openStorage).
+constexpr auto kOldName = "ScanCore";
+QString g_movedFrom, g_movedTo;
+void moveOldFolders() {
+    for (const auto location : {QStandardPaths::AppDataLocation, QStandardPaths::CacheLocation}) {
+        const QFileInfo now(QStandardPaths::writableLocation(location));
+        const auto old = now.absolutePath() + QLatin1Char('/') + QLatin1String(kOldName);
+        if (now.fileName() == QLatin1String(kOldName) || now.exists() || !QFileInfo(old).isDir())
+            continue;
+        if (QDir().rename(old, now.absoluteFilePath())) {
+            qInfo("Moved %s to %s", qPrintable(old), qPrintable(now.absoluteFilePath()));
+            if (location == QStandardPaths::AppDataLocation) {
+                g_movedFrom = old;
+                g_movedTo = now.absoluteFilePath();
+            }
+        } else {
+            qWarning("Could not move %s to %s", qPrintable(old), qPrintable(now.absoluteFilePath()));
+        }
+    }
+}
+
 void openStorage() {
     const auto data = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     const auto cache = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
@@ -134,6 +159,15 @@ void openStorage() {
         QFile::rename(db + QStringLiteral(".restore"), db);
     }
     Database::open(db);
+    if (!g_movedFrom.isEmpty()) {
+        // Downloads, extensions, covers and settings that named a file in
+        // the old folder.
+        static const QList<QPair<const char *, const char *>> columns{
+            {"downloads", "path"}, {"ext_installed", "path"}, {"series", "cover"}, {"prefs", "value"}, {"series_settings", "value"}};
+        for (const auto &[table, column] : columns)
+            Database::exec(QStringLiteral("UPDATE %1 SET %2 = REPLACE(%2, ?, ?) WHERE %2 LIKE ?").arg(QLatin1String(table), QLatin1String(column)),
+                           {g_movedFrom + QLatin1Char('/'), g_movedTo + QLatin1Char('/'), QStringLiteral("%") + g_movedFrom + QStringLiteral("/%")});
+    }
     CookieJar::shared().load(data + QStringLiteral("/cookies.txt"));
     // The size chosen in Settings → Storage (it was always 1 GB before).
     const qint64 cacheMb = std::max<qint64>(128, Database::pref(QStringLiteral("setting.imageCacheMB"), 1024).toLongLong());
@@ -265,13 +299,14 @@ int main(int argc, char *argv[]) {
 #endif
     Application::setOrganizationName(QStringLiteral("Medium Dev"));
     Application::setOrganizationDomain(QStringLiteral("mediumdev.com"));
-    Application::setApplicationName(QStringLiteral("ScanCore"));
+    Application::setApplicationName(QStringLiteral("SCANCORE"));
     Application::setApplicationDisplayName(QStringLiteral("SCANCORE"));
     Application::setApplicationVersion(QStringLiteral(SCANCORE_VERSION));
     // Development hook for testing updates.
     if (qEnvironmentVariableIsSet("SCANCORE_PRETEND_VERSION"))
         Application::setApplicationVersion(qEnvironmentVariable("SCANCORE_PRETEND_VERSION"));
     Application::setDesktopFileName(QStringLiteral("com.mediumdev.scancore"));
+    moveOldFolders();
     // Crash reports (Settings → About), and the recent log they carry.
     sc::crashlog::install();
     // Development hook: SCANCORE_CRASH_TEST=segv|abort|throw crashes on
@@ -380,7 +415,7 @@ int main(int argc, char *argv[]) {
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed, &app, [] { QCoreApplication::exit(1); },
                      Qt::QueuedConnection);
     startStep("before the interface");
-    engine.loadFromModule("ScanCore", "Main");
+    engine.loadFromModule("Scancore", "Main");
     if (engine.rootObjects().isEmpty())
         return 1;
     startStep("interface created");

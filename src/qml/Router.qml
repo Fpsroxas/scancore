@@ -1,6 +1,6 @@
 pragma Singleton
 import QtQuick
-import ScanCore
+import Scancore
 
 // Navigation entry points used by every page. Main.qml installs itself as
 // the shell on startup.

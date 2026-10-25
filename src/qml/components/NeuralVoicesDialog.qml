@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Neural voices for reading aloud on computers (Piper): the catalogue, the
 // app's language first, each voice downloaded or removed here. The first

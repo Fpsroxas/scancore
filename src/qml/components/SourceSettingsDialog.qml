@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // An extension source's own settings, as its extension describes them
 // (switches, lists, several choices, text). Each change is saved at once;

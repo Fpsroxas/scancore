@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // Tiles packed the way Windows Phone's Start packed them: a grid of square
 // units, small tiles 1×1, medium 2×2 (on even columns), wide 4×2, each in

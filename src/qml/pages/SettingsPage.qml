@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Settings. Wide windows list the categories beside the one being shown;
 // phones show the categories as a list and open each on its own page

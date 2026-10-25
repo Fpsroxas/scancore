@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Time spent in SCANCORE and chapters and episodes finished, on every synced
 // device: today, this week, this month and all time, the streak, a year of
@@ -171,6 +171,12 @@ Item {
             PageHeader {
                 title: qsTr("Activity")
                 subtitle: qsTr("Your reading and watching, on every device you sync")
+                ScButton {
+                    text: qsTr("Friends")
+                    iconName: "users"
+                    variant: "ghost"
+                    onClicked: Router.push("pages/FriendsPage.qml", {})
+                }
                 ScButton {
                     text: qsTr("Your ") + new Date().getFullYear()
                     iconName: "gift"

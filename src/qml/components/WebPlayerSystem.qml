@@ -1,6 +1,6 @@
 import QtQuick
 import QtWebView
-import ScanCore
+import Scancore
 
 // Player in the system's web view: Android WebView on phones, WebView2 on
 // Windows and WKWebView on macOS. These play the H.264 episodes that the Qt

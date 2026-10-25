@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // The comic reader's progress bar, picked by looking at it: a small page
 // for each look (with the colours and strength set now), and None. Used in

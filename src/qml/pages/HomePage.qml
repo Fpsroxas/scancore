@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Everything at a glance: continue where you left off, library updates and
 // what is new across comics, novels and anime.

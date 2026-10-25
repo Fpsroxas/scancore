@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // The open-source software inside SCANCORE and the licences it comes under
 // (resources/licenses). Choosing one shows its licence text.

@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // "Watch from": where an AniList anime plays. Finds it on the installed
 // anime sources (under any of its names), content language first, and

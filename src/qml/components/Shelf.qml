@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // A titled horizontal row of covers with smooth arrow and wheel scrolling,
 // or a grid. Inside a PageSection it follows the user's look for it.

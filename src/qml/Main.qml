@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Window
-import ScanCore
+import Scancore
 
 ApplicationWindow {
     id: window

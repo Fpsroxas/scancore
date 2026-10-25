@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Details page shared by comics and novels: header, actions and a fast
 // chapter list with read state, downloads and multi-select.

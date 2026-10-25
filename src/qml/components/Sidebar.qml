@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Collapsible navigation rail. The selection indicator slides between
 // items; collapsing animates the width and fades the labels.

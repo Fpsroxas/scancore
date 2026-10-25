@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // A source's search filters as its extension describes them: headings,
 // lists, text, check boxes, include/exclude boxes, sorting and groups of

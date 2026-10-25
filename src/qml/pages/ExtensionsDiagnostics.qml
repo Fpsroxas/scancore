@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Extensions → Diagnostics: for when an extension misbehaves. Whether the
 // runtime is there and answers, a quick test of one source (its popular

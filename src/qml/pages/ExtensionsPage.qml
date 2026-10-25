@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Repositories the user added, the extensions installed from them (trust,
 // updates, their sources, settings and health) and the ones they offer.

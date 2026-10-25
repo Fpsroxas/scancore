@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(ScanCore
+project(SCANCORE
     VERSION 2.12.3
     DESCRIPTION "Read comics and novels and watch anime, entirely on your own machine"
     HOMEPAGE_URL "https://github.com/medium-gh/scancore"

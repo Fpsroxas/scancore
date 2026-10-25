@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // The notification area: new chapters, announcements, extension and app
 // updates, newest first. A sheet from the right on desktop, from the bottom

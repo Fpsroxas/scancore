@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // The Retro mode's app bar along the bottom: the multi-purpose button on
 // the left, "• • •" on the right. The dots open the bar: round buttons with

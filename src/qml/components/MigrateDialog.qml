@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // "Move to another source": finds each series on the other sources (under
 // every name its catalogue knows), lets the reader pick where it goes, and

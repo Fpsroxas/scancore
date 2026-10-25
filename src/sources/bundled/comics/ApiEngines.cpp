@@ -281,7 +281,7 @@ QJsonDocument MangaDexSource::api(const QString &path, const QList<QPair<QString
         QThread::msleep(std::min<qint64>(wait, 50));
         wait -= 50;
     }
-    return Http::getJson(apiUrl(m_config.api, path, params), {{"User-Agent", "ScanCore-Desktop/1.0"}});
+    return Http::getJson(apiUrl(m_config.api, path, params), {{"User-Agent", "SCANCORE-Desktop/1.0"}});
 }
 
 QList<Summary> MangaDexSource::search(const QString &query) {

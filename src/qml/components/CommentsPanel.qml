@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // The comments of the chapter or episode being read or watched, in a panel
 // that slides in from the right (from the bottom on phones).

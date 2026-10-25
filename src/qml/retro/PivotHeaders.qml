@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Windows Phone's pivot headers: big thin words in a row, the current one
 // bright and first, the others dimmed after it in turn (they wrap around,

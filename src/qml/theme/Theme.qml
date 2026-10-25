@@ -1,8 +1,8 @@
 pragma Singleton
 import QtQuick
-import ScanCore
+import Scancore
 
-// Colour, type and shape tokens. The default palette follows the ScanCore
+// Colour, type and shape tokens. The default palette follows the SCANCORE
 // website: neutral greys with white (dark) or near-black (light) accents.
 // The custom theme makes a whole palette from one window colour, and can add
 // a background picture and a see-through window.

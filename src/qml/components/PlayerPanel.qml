@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // The player's one settings panel (Quality, Audio, Subtitles, Speed, Fit,
 // Server, Episodes and the player's actions), in the player's own dark look

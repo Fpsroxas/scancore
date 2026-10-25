@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // A television's remote (App.tv): the D-pad moves the focus to the nearest
 // control in that direction, Select presses it, and a ring shows where the

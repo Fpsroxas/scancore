@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Reading aloud with the reader closed (audiobook mode): the book, the
 // chapter, play or pause and stop, over the bottom of the pages. Tapping it

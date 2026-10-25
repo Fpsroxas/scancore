@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // Large page title with an optional subtitle and trailing controls. On
 // phones, or whenever they would leave the title too little room, the

@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // The TVs and Chromecasts on this network, to cast an episode to. Looks for
 // them while open; picking one emits picked(device).

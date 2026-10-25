@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Home in the Retro mode: the panorama hub. Explore is a packed grid of
 // tiles (what was pinned, or the library's newest, with the accent's action

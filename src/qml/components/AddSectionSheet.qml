@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // "Add section" while arranging a page: sections taken off it, and shelves
 // of an installed extension's own listings (its latest releases or what is

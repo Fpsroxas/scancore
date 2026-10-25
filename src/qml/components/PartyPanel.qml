@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Watch together (see Party): start a party for the anime being watched or
 // join one with its code; in a party, its code to share, who is in it and

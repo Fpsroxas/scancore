@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Plays a video from an anime extension with SCANCORE's own player (libmpv,
 // MpvPlayer), with controls along the bottom: play, episodes, seek, time,

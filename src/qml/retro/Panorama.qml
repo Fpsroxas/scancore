@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // The Retro hub: one long canvas of sections under a huge title, panned
 // sideways. Its layers move at their own speeds (Windows Phone's

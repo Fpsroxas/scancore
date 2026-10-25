@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Translating on the computer (OnDevice): the languages that can be
 // translated into the one chosen (Translator.target), each downloaded or

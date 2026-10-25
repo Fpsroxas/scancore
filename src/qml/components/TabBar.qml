@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Bottom navigation for phones. The selection pill slides between tabs;
 // "More" opens the remaining sections and search.

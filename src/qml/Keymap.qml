@@ -1,6 +1,6 @@
 pragma Singleton
 import QtQuick
-import ScanCore
+import Scancore
 
 // Keyboard shortcuts that can be changed in Settings → Keyboard. Each action
 // has default keys; the keybinds setting holds the ones changed, as

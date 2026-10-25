@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Per-section navigation stack. Pages slide and fade with a slight depth
 // shift; the page underneath recedes rather than vanishing. In the Retro

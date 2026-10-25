@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // Touch flings as Android's own lists fling (OverScroller, which Mihon and
 // other native apps use): the finger's speed over its last 100 ms (as

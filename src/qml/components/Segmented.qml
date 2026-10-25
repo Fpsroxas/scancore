@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // Segmented control with a sliding selection pill.
 Rectangle {

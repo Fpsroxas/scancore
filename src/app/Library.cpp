@@ -186,15 +186,22 @@ void Library::save(const QVariantMap &series, const QString &category) {
     const auto id = series.value(QStringLiteral("id")).toString();
     if (id.isEmpty())
         return;
-    upsertSeries(series);
-    const auto known = Database::scalar(QStringLiteral("SELECT COUNT(*) FROM units WHERE series_id = ?"), {id}).toInt();
-    Database::transaction([&] {
-        Database::query(QStringLiteral("INSERT INTO library(series_id, category, added_at, known_units, changed_at) "
-                                       "VALUES(?, ?, ?, ?, ?) ON CONFLICT(series_id) DO UPDATE SET "
-                                       "category = excluded.category, changed_at = excluded.changed_at"),
-                        {id, category, Database::now(), known, Database::now()});
-        Database::query(QStringLiteral("DELETE FROM library_removed WHERE series_id = ?"), {id});
-    });
+    // Called from QML: a series it cannot store (no source) is refused,
+    // not thrown through the interface (which ends the app).
+    try {
+        upsertSeries(series);
+        const auto known = Database::scalar(QStringLiteral("SELECT COUNT(*) FROM units WHERE series_id = ?"), {id}).toInt();
+        Database::transaction([&] {
+            Database::query(QStringLiteral("INSERT INTO library(series_id, category, added_at, known_units, changed_at) "
+                                           "VALUES(?, ?, ?, ?, ?) ON CONFLICT(series_id) DO UPDATE SET "
+                                           "category = excluded.category, changed_at = excluded.changed_at"),
+                            {id, category, Database::now(), known, Database::now()});
+            Database::query(QStringLiteral("DELETE FROM library_removed WHERE series_id = ?"), {id});
+        });
+    } catch (const Error &e) {
+        qWarning("Library: %s could not be saved: %s", qPrintable(id), e.what());
+        return;
+    }
     notifyChanged();
     emit saved(id);
 }

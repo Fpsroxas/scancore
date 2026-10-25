@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Opens a title from the chosen tracker's catalogue: finds it on the
 // built-in sources (under any of its names) and opens it there. It opens

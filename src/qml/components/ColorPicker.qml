@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Colour picker: a hue and saturation wheel, a brightness slider (how dark
 // the colour is), a hex field and a few swatches. `changed` fires as the

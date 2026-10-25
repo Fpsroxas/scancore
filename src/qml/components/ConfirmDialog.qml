@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // A short question with Cancel and a confirming button, or (asksText) a
 // name to type. Springs in from the middle of the window over a dimmed page.

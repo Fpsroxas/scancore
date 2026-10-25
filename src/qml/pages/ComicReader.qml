@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Window
-import ScanCore
+import Scancore
 
 // Full-window comic reader. Vertical strip (webtoons) or single pages
 // (manga), with eased scrolling, auto-hiding controls, progress saved as you
@@ -319,6 +319,8 @@ Rectangle {
 
     // ------------------------------------------------------------ controls
 
+    // This chapter's page reactions (PageReactions below).
+    readonly property var pageReactions: reactions
     function showControls() {
         controlsShown = true
         hideTimer.restart()
@@ -333,7 +335,7 @@ Rectangle {
         onTriggered: {
             // Stay up while the pointer rests on the controls, a popup is
             // open, or there are no pages yet (loading, or an error to act on).
-            if (settingsPopup.opened || chapterPopup.opened || comments.opened || translatePopup.opened || topHover.hovered
+            if (settingsPopup.opened || chapterPopup.opened || comments.opened || reactPopup.opened || translatePopup.opened || topHover.hovered
                 || reader.panels.length === 0)
                 restart()
             else
@@ -1149,6 +1151,8 @@ Rectangle {
             current: reader.currentPanel
             finished: reader.finished
             look: App.settings.readerProgressLook || "segments"
+            marks: reactions.marks
+            markColor: Theme.accent
             edge: App.settings.readerProgressEdge || "left"
             reversed: reader.direction === "rtl"
             thickness: rail.thickness
@@ -1303,6 +1307,14 @@ Rectangle {
                 iconColor: "white"
                 tip: (reader.mode === "strip" ? qsTr("Switch to pages") : qsTr("Switch to vertical strip")) + reader.keyHint("reader.mode")
                 onClicked: reader.setOpt("readerMode", reader.mode === "strip" ? "paged" : "strip")
+            }
+            IconButton {
+                diameter: topActions.button
+                visible: reactions.available && !String(reader.series.sourceUrl || "").startsWith("file:")
+                iconName: "heart"
+                iconColor: reactions.mineFor(reader.currentPanel) ? Theme.accent : "white"
+                tip: qsTr("React to this page")
+                onClicked: reactPopup.open()
             }
             IconButton {
                 diameter: topActions.button
@@ -1487,6 +1499,54 @@ Rectangle {
                     font.weight: index === reader.index ? Font.DemiBold : Font.Normal
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
+                }
+            }
+        }
+    }
+
+    // Reactions on this chapter's pages (dots on the page bar).
+    PageReactions {
+        id: reactions
+        media: "comic"
+        title: comments.title
+        comickHid: comments.comickHid
+        url: comments.url
+        unit: comments.unit
+    }
+    Popup {
+        id: reactPopup
+        x: parent.width - width - 18
+        y: topBar.height - 6
+        padding: 10
+        background: Rectangle { radius: Theme.radiusLg; color: "#151517"; border.width: 1; border.color: "#2a2a30" }
+        contentItem: Row {
+            spacing: 4
+            Repeater {
+                model: reactions.kinds
+                delegate: AbstractButton {
+                    id: kind
+                    required property var modelData
+                    readonly property int count: reactions.countsFor(reader.currentPanel)[modelData.type] || 0
+                    readonly property bool chosen: reactions.mineFor(reader.currentPanel) === modelData.type
+                    width: 46
+                    height: 52
+                    hoverEnabled: true
+                    onClicked: { reactions.react(reader.currentPanel, modelData.type); reactPopup.close() }
+                    background: Rectangle {
+                        radius: Theme.radiusMd
+                        color: kind.chosen ? Theme.alpha(Theme.accent, 0.3) : kind.hovered ? "#26262b" : "transparent"
+                    }
+                    contentItem: Column {
+                        spacing: 0
+                        Text { anchors.horizontalCenter: parent.horizontalCenter; text: kind.modelData.glyph; font.pixelSize: 22 }
+                        Text {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            text: kind.count > 0 ? kind.count : ""
+                            color: "#b4b4bb"
+                            font.family: Theme.fontSans
+                            font.pixelSize: Theme.textXs
+                        }
+                    }
                 }
             }
         }

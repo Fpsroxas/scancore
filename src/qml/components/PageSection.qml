@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // One movable, hideable part of a page (a shelf, the search bar, the
 // spotlight…). Outside edit mode it is just its content; in edit mode it

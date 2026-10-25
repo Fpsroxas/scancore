@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // Mouse-wheel and touchpad scrolling for a vertical Flickable (its parent),
 // the same on every system. Wheels move in eased steps; touchpads (pixel

@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Before a Mihon backup comes in: the repositories it names that are not
 // added here, and the extensions its series came from that are not

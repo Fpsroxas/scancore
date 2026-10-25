@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Which AniList and MyAnimeList entry a series moves forward when you finish
 // a chapter or episode. Comics and novels are matched by title on their own;

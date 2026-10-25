@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Ctrl+K: jump anywhere, search any media type, reopen something recent, or
 // run a quick command (theme, motion, update check, sync, shortcuts).
