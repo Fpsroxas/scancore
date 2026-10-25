@@ -421,5 +421,7 @@ int main(int argc, char *argv[]) {
         CancelScope::cancelAll();
         CookieJar::shared().save();
     });
+    // A hang (the interface not answering) leaves a report like a crash.
+    sc::crashlog::watchHangs();
     return app.exec();
 }

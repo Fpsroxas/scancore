@@ -799,9 +799,11 @@ bool App::shareText(const QString &text, const QString &subject) const { return 
 QString App::reportIssueUrl(const QString &text) const {
     // GitHub takes links of about 8 KB: the report's start (what happened
     // and the backtrace); the rest is pasted.
-    const auto title = text.section(QLatin1Char('\n'), 0, 0).contains(QLatin1String("crash")) ? QStringLiteral("Crash: ") +
-            text.section(QStringLiteral("What: "), 1).section(QLatin1Char('\n'), 0, 0)
-                                                                                         : QStringLiteral("Problem report");
+    const auto first = text.section(QLatin1Char('\n'), 0, 0);
+    const auto what = text.section(QStringLiteral("What: "), 1).section(QLatin1Char('\n'), 0, 0);
+    const auto title = first.contains(QLatin1String("crash"))  ? QStringLiteral("Crash: ") + what
+                       : first.contains(QLatin1String("hang")) ? QStringLiteral("Hang: ") + what
+                                                                : QStringLiteral("Problem report");
     auto body = QStringLiteral("What I was doing:\n\n\n```\n%1\n```").arg(text.left(5000));
     QUrl url(QStringLiteral("https://github.com/medium-gh/scancore/issues/new"));
     url.setQuery(QUrlQuery{{QStringLiteral("title"), title}, {QStringLiteral("body"), body}});

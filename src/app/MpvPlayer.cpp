@@ -1,5 +1,7 @@
 #include "MpvPlayer.h"
 
+#include "CrashLog.h"
+
 #include "core/Http.h"
 #include "core/StreamRelay.h"
 #include "core/Task.h"
@@ -211,6 +213,7 @@ public:
     // On the scene graph's thread, with its OpenGL context current, as
     // mpv requires.
     ~MpvRenderer() override {
+        crashlog::Busy busy("closing mpv's renderer");
         if (m_context)
             mpv_render_context_free(m_context);
     }
@@ -229,10 +232,19 @@ public:
         auto *fbo = framebufferObject();
         mpv_opengl_fbo target{int(fbo->handle()), fbo->width(), fbo->height(), 0};
         int flip = 0;
+        // Never wait here for mpv's video thread to present the frame (mpv's
+        // default, without a time limit): the interface waits on this thread
+        // to sync, so any wait here holds the whole app to mpv's timing. The
+        // scene draws again whenever mpv says a frame is ready.
+        int block = 0;
         mpv_render_param params[]{{MPV_RENDER_PARAM_OPENGL_FBO, &target},
                                   {MPV_RENDER_PARAM_FLIP_Y, &flip},
+                                  {MPV_RENDER_PARAM_BLOCK_FOR_TARGET_TIME, &block},
                                   {MPV_RENDER_PARAM_INVALID, nullptr}};
-        mpv_render_context_render(m_context, params);
+        {
+            crashlog::Busy busy("mpv drawing the video");
+            mpv_render_context_render(m_context, params);
+        }
         QQuickOpenGLUtils::resetOpenGLState();
     }
 

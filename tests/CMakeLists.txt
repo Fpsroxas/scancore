@@ -29,6 +29,18 @@ qt_add_executable(scancore_video_tests tst_video.cpp ${PROJECT_SOURCE_DIR}/src/a
 target_link_libraries(scancore_video_tests PRIVATE scancore_core Qt6::Test)
 add_test(NAME video COMMAND scancore_video_tests)
 
+# The player going to the next episode while it draws (libmpv, OpenGL).
+if(SCANCORE_HAVE_MPV AND NOT ANDROID)
+    qt_add_executable(scancore_player_tests tst_player.cpp
+        ${PROJECT_SOURCE_DIR}/src/app/MpvPlayer.cpp ${PROJECT_SOURCE_DIR}/src/app/MpvPlayer.h
+        ${PROJECT_SOURCE_DIR}/src/app/CrashLog.cpp ${PROJECT_SOURCE_DIR}/src/app/CrashLog.h
+        ${PROJECT_SOURCE_DIR}/src/core/Task.cpp ${PROJECT_SOURCE_DIR}/src/core/Task.h)
+    target_include_directories(scancore_player_tests PRIVATE ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/src/app)
+    target_link_libraries(scancore_player_tests PRIVATE scancore_core scancore_mpv Qt6::Quick Qt6::OpenGL Qt6::Test)
+    target_compile_definitions(scancore_player_tests PRIVATE SCANCORE_HAVE_MPV SCANCORE_SOURCE_DIR="${PROJECT_SOURCE_DIR}")
+    add_test(NAME player COMMAND scancore_player_tests)
+endif()
+
 # Extension repositories, trust, installs and extension sources.
 qt_add_executable(scancore_extension_tests tst_extensions.cpp)
 target_link_libraries(scancore_extension_tests PRIVATE scancore_core Qt6::Test Qt6::CorePrivate)

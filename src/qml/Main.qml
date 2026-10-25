@@ -520,9 +520,12 @@ ApplicationWindow {
         // The parent's safe area, so these margins do not feed back into it.
         anchors.topMargin: edgeToEdge ? 0 : parent.SafeArea.margins.top
         anchors.bottomMargin: edgeToEdge ? 0 : parent.SafeArea.margins.bottom
-        // A side cutout (a phone on its side) is kept clear by every page.
-        anchors.leftMargin: parent.SafeArea.margins.left
-        anchors.rightMargin: parent.SafeArea.margins.right
+        // A side cutout (a phone on its side) is kept clear by every page;
+        // the player's picture may reach into it (StackView.view.cutoutLeft).
+        anchors.leftMargin: cutoutLeft
+        anchors.rightMargin: cutoutRight
+        readonly property real cutoutLeft: parent.SafeArea.margins.left
+        readonly property real cutoutRight: parent.SafeArea.margins.right
         visible: depth > 0 || busy
         z: 10
         // Readers handle their own keys, so they need focus as soon as they open.

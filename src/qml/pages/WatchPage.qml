@@ -748,6 +748,9 @@ Rectangle {
                 item.hasNext = Qt.binding(() => watch.hasNext)
                 item.panelOpen = Qt.binding(() => panel.opened)
                 item.fullScreen = Qt.binding(() => watch.immersed || watch.fullScreen)
+                // Phone landscape: the picture may go under a side cutout.
+                item.bleedLeft = Qt.binding(() => watch.immersed && watch.StackView.view ? watch.StackView.view.cutoutLeft : 0)
+                item.bleedRight = Qt.binding(() => watch.immersed && watch.StackView.view ? watch.StackView.view.cutoutRight : 0)
             }
             function seek(seconds) { if (item) item.seek(seconds) }
             Connections {
