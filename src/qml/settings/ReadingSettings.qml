@@ -507,6 +507,27 @@ SettingsPane {
             }
         }
         SettingRow {
+            visible: OnDevice.available
+            iconName: "download"
+            title: qsTr("Translate on this computer")
+            description: {
+                App.dependOn(OnDevice.revision)
+                return OnDevice.any() ? qsTr("Pages and chapters translated with nothing sent anywhere. Add or remove languages.")
+                                      : qsTr("Download a language once; pages and chapters are then translated with nothing sent anywhere.")
+            }
+            ScButton {
+                text: qsTr("Languages…")
+                onClicked: onDeviceLanguages.start()
+            }
+            OnDeviceDialog { id: onDeviceLanguages }
+        }
+        SettingRow {
+            iconName: "book-open"
+            title: qsTr("Translate novels in other languages")
+            description: qsTr("Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.")
+            Toggle { checked: App.settings.translateNovelsAuto === true; onToggled: App.setSetting("translateNovelsAuto", checked) }
+        }
+        SettingRow {
             iconName: "scroll-text"
             title: qsTr("Read the page's text with")
             description: qsTr("Finds the text in a comic's pages.")
@@ -603,7 +624,20 @@ SettingsPane {
         SettingRow {
             visible: !Speech.available
             title: qsTr("No voices are installed on this device")
-            description: qsTr("Add one in the system's text-to-speech settings.")
+            description: Piper.available ? qsTr("Download a neural voice below, or add one in the system's text-to-speech settings.")
+                                         : qsTr("Add one in the system's text-to-speech settings.")
+        }
+        SettingRow {
+            visible: Piper.available
+            iconName: "volume-2"
+            title: qsTr("Neural voices")
+            description: Piper.voices.length > 0 ? qsTr("%n downloaded; natural voices that need no internet", "", Piper.voices.length)
+                                                 : qsTr("Natural voices that read without the internet, downloaded once")
+            ScButton {
+                text: qsTr("Choose…")
+                onClicked: neuralVoices.start()
+            }
+            NeuralVoicesDialog { id: neuralVoices }
         }
         SettingRow {
             visible: Speech.available
@@ -624,7 +658,8 @@ SettingsPane {
             }
         }
         SettingRow {
-            visible: Speech.available
+            // Neural voices keep their own.
+            visible: Speech.available && !String(App.settings.ttsVoice || "").startsWith("piper:")
             title: qsTr("Voice pitch")
             Row {
                 spacing: 12

@@ -22,7 +22,18 @@ Rectangle {
     readonly property var blocks: task && task.ok ? task.result.blocks : []
     // The chapter translated (Translator), paragraph by paragraph, from the
     // source's language (WTR-LAB's raw Chinese novels, and any other).
-    property bool translating: App.startAction.translate === true
+    // Remembered per series (Library: translate); with Settings → Reading →
+    // Translate novels in other languages, it starts by itself whenever the
+    // source's language is not the one translated into (WTR-LAB, in English,
+    // for someone reading in Spanish).
+    property bool translating: App.startAction.translate === true || startsTranslated()
+    function startsTranslated() {
+        const own = series.id ? Library.seriesSettings(series.id).translate : undefined
+        if (own !== undefined && own !== null) return own === true
+        const from = String(translateFrom).split(/[-_]/)[0]
+        return App.settings.translateNovelsAuto === true && Translator.textReady && from !== ""
+            && from !== String(Translator.target).split(/[-_]/)[0]
+    }
     readonly property string translateFrom: {
         const key = series.source || ""
         const found = key ? Novels.sources().find(s => s.key === key) : null
@@ -700,7 +711,11 @@ Rectangle {
                 enabled: reader.blocks.length > 0 && !(reader.translateTask && reader.translateTask.loading)
                 tip: reader.translateTask && reader.translateTask.loading ? qsTr("Translating…")
                     : reader.translating ? qsTr("Show the original") : qsTr("Translate the chapter")
-                onClicked: reader.translating = !reader.translating
+                onClicked: {
+                    reader.translating = !reader.translating
+                    // This series is read translated (or not) from now on.
+                    if (reader.series.id) Library.setSeriesSetting(reader.series.id, "translate", reader.translating)
+                }
             }
             IconButton {
                 diameter: novelActions.button

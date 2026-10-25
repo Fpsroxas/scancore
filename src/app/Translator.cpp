@@ -1,6 +1,7 @@
 #include "Translator.h"
 
 #include "App.h"
+#include "OnDevice.h"
 #include "core/Database.h"
 #include "core/Http.h"
 #include "core/ImageCache.h"
@@ -121,6 +122,8 @@ QStringList translateWith(const QString &engine, const QStringList &texts, const
             out += chatModel(part, from, to, setting("translateChatUrl"), setting("translateChatKey"), setting("translateChatModel"));
         else if (engine == QLatin1String("mlkit"))
             out += mlkitTranslate(part, from, to);
+        else if (engine == QLatin1String("local"))
+            out += OnDevice::instance()->translate(part, from, to);
         else if (engine == QLatin1String("fake"))
             for (const auto &t : part)
                 out += QStringLiteral("Translated: ") + t;
@@ -166,7 +169,7 @@ Recognised recognize(const QString &url, const QString &referer, const QString &
     for (int top = 0; top < height; top += kSlice - kOverlap) {
         const int bottom = std::min(height, top + kSlice);
         const bool whole = top == 0 && bottom == height;
-        const auto part = whole ? bytes : encoded(image.copy(0, top, image.width(), bottom - top));
+        const auto part = whole || reader == QLatin1String("local") ? bytes : encoded(image.copy(0, top, image.width(), bottom - top));
         // Lines whose middle is in this slice's own share (not the
         // overlap the next slice reads again).
         const double from0 = top == 0 ? 0 : top + kOverlap / 2.0;
@@ -183,6 +186,13 @@ Recognised recognize(const QString &url, const QString &referer, const QString &
                 b.box.translate(0, top);
                 if (b.box.center().y() >= from0 && b.box.center().y() < to0)
                     blocks.append(b);
+            }
+        } else if (reader == QLatin1String("local")) {
+            // On the computer: the slice as a picture, no re-encoding.
+            for (auto l : OnDevice::instance()->read(image.copy(0, top, image.width(), bottom - top), from)) {
+                l.box.translate(0, top);
+                if (l.box.center().y() >= from0 && l.box.center().y() < to0)
+                    lines.append(l);
             }
         } else {
             for (auto l : mlkitLines(part, from)) {
@@ -326,6 +336,7 @@ Translator *Translator::instance() {
 
 Translator::Translator(QObject *parent) : QObject(parent) {
     connect(App::instance(), &App::settingsChanged, this, &Translator::changed);
+    connect(OnDevice::instance(), &OnDevice::changed, this, &Translator::changed);
 }
 
 QString Translator::target() const {
@@ -349,10 +360,15 @@ QString Translator::readerEngine() const {
         return setting("translateGoogleKey").isEmpty() ? QString() : chosen;
     if (chosen == QLatin1String("mlkit"))
         return onAndroid() ? chosen : QString();
-    // Automatic: the phone's own, else Vision with a Google key.
+    if (chosen == QLatin1String("local"))
+        return OnDevice::instance()->any() ? chosen : QString();
+    // Automatic: the phone's own, else Vision with a Google key, else what
+    // was downloaded to this computer.
     if (onAndroid())
         return QStringLiteral("mlkit");
-    return setting("translateGoogleKey").isEmpty() ? QString() : QStringLiteral("vision");
+    if (!setting("translateGoogleKey").isEmpty())
+        return QStringLiteral("vision");
+    return OnDevice::instance()->any() ? QStringLiteral("local") : QString();
 }
 
 QString Translator::textEngine() const {
@@ -367,14 +383,19 @@ QString Translator::textEngine() const {
         return setting("translateChatUrl").isEmpty() || setting("translateChatModel").isEmpty() ? QString() : chosen;
     if (chosen == QLatin1String("mlkit"))
         return onAndroid() ? chosen : QString();
-    // Automatic: a key the reader gave, else the phone's own.
+    if (chosen == QLatin1String("local"))
+        return OnDevice::instance()->any() ? chosen : QString();
+    // Automatic: a key the reader gave, else the phone's own, else the
+    // computer's.
     if (!setting("translateDeeplKey").isEmpty())
         return QStringLiteral("deepl");
     if (!setting("translateGoogleKey").isEmpty())
         return QStringLiteral("google");
     if (!setting("translateChatUrl").isEmpty() && !setting("translateChatModel").isEmpty())
         return QStringLiteral("chat");
-    return onAndroid() ? QStringLiteral("mlkit") : QString();
+    if (onAndroid())
+        return QStringLiteral("mlkit");
+    return OnDevice::instance()->any() ? QStringLiteral("local") : QString();
 }
 
 bool Translator::pagesReady() const { return !readerEngine().isEmpty() && !textEngine().isEmpty(); }
@@ -384,8 +405,11 @@ QString Translator::hint() const {
     if (pagesReady())
         return {};
     if (readerEngine().isEmpty())
-        return tr("To translate pages on a computer, add a Google Cloud key in Settings → Reading → Translate (Vision reads the "
-                  "page's text).");
+        return OnDevice::instance()->available()
+                   ? tr("To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a "
+                        "Google Cloud key there.")
+                   : tr("To translate pages on a computer, add a Google Cloud key in Settings → Reading → Translate (Vision reads the "
+                        "page's text).");
     return tr("Add a DeepL or Google key, or a model's address, in Settings → Reading → Translate.");
 }
 
@@ -393,6 +417,8 @@ QVariantList Translator::readers() const {
     QVariantList out{QVariantMap{{"value", "auto"}, {"label", tr("Automatic")}}};
     if (onAndroid())
         out.append(QVariantMap{{"value", "mlkit"}, {"label", tr("This phone")}, {"detail", tr("On the phone, with Google Play services")}});
+    if (OnDevice::instance()->available())
+        out.append(QVariantMap{{"value", "local"}, {"label", tr("This computer")}, {"detail", tr("Downloaded once; pages never leave the computer")}});
     out.append(QVariantMap{{"value", "vision"}, {"label", tr("Google Cloud Vision")}, {"detail", tr("Your Google Cloud key")}});
     return out;
 }
@@ -401,6 +427,8 @@ QVariantList Translator::translators() const {
     QVariantList out{QVariantMap{{"value", "auto"}, {"label", tr("Automatic")}}};
     if (onAndroid())
         out.append(QVariantMap{{"value", "mlkit"}, {"label", tr("This phone")}, {"detail", tr("On the phone; a model per language")}});
+    if (OnDevice::instance()->available())
+        out.append(QVariantMap{{"value", "local"}, {"label", tr("This computer")}, {"detail", tr("Downloaded once; nothing leaves the computer")}});
     out.append(QVariantMap{{"value", "deepl"}, {"label", QStringLiteral("DeepL")}, {"detail", tr("Your DeepL key")}});
     out.append(QVariantMap{{"value", "google"}, {"label", tr("Google Translate")}, {"detail", tr("Your Google Cloud key")}});
     out.append(QVariantMap{{"value", "chat"}, {"label", tr("A language model")}, {"detail", tr("Any OpenAI-compatible service, or one on your computer")}});

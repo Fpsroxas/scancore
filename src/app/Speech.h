@@ -12,7 +12,8 @@ namespace sc {
 
 // Reading aloud with the system's voices: Qt Speech on desktop (SAPI or
 // WinRT, AVSpeechSynthesizer, speech-dispatcher), Android's own engine on
-// phones (packaging/android/src/.../Speech.java). The novel reader queues a
+// phones (packaging/android/src/.../Speech.java); and on computers the
+// neural voices downloaded for Piper (ids "piper:…", see Piper). The novel reader queues a
 // chapter's paragraphs with tags and hears back as each starts and ends, so
 // it can follow along; Android's engine keeps reading the queue even while
 // the app is in the background.
@@ -30,7 +31,7 @@ public:
     static Speech *create(QQmlEngine *, QJSEngine *) { return instance(); }
     ~Speech() override;
 
-    bool available() const { return m_available; }
+    bool available() const { return m_available || m_hasNeural; }
     bool speaking() const { return !m_queued.isEmpty(); }
     QVariantList voices() const { return m_voices; }
 
@@ -65,6 +66,12 @@ private:
     void sendChunk(int chunk, const QString &text);
 
     bool m_available = false;
+    // The system's voices, and whether neural ones are installed.
+    QVariantList m_systemVoices;
+    bool m_hasNeural = false;
+    // The neural voice in use (its Piper key), else the system's engine.
+    QString m_neural;
+    void updateVoices();
     bool m_engineStarted = false;
     QVariantList m_voices;
     // Engine chunk id -> {tag, last chunk of the tag}.

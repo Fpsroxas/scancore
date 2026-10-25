@@ -14,6 +14,8 @@ add_library(scancore_core STATIC
     core/Aes.cpp
     core/translation/Layout.cpp
     core/translation/Cloud.cpp
+    core/translation/Onnx.cpp
+    core/translation/LocalMt.cpp
     core/StreamRelay.cpp
     core/VideoSave.cpp
     core/UpdateRules.cpp
@@ -62,6 +64,8 @@ if(SCANCORE_WITH_BUNDLED_SOURCES)
     target_compile_definitions(scancore_core PUBLIC SCANCORE_BUNDLED_SOURCES)
 endif()
 target_include_directories(scancore_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+# ONNX Runtime's C API, for the optional on-device translation pack.
+target_include_directories(scancore_core SYSTEM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/third_party/onnxruntime)
 # LNReader plugins: SCANCORE's shims, and the bundled libraries when present.
 set(SCANCORE_PLUGIN_FILES ${PROJECT_SOURCE_DIR}/resources/plugins/prelude.js ${PROJECT_SOURCE_DIR}/resources/plugins/runtime.js)
 if(EXISTS ${PROJECT_SOURCE_DIR}/resources/plugins/vendor.js)
@@ -157,6 +161,11 @@ qt_add_qml_module(scancore
         app/CastProxy.cpp app/CastProxy.h
         app/Lock.cpp app/Lock.h
         app/MpvPlayer.cpp app/MpvPlayer.h
+        app/Piper.cpp app/Piper.h
+        app/LocalOcr.cpp app/LocalOcr.h
+        app/LocalUpscale.cpp app/LocalUpscale.h
+        app/OnDevice.cpp app/OnDevice.h
+        app/Archive.cpp app/Archive.h
         app/Novels.cpp app/Novels.h
         app/Presence.cpp app/Presence.h
         app/Updater.cpp app/Updater.h
@@ -255,7 +264,7 @@ qt_add_resources(scancore manifest
 target_include_directories(scancore PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/app ${CMAKE_CURRENT_SOURCE_DIR}/core)
 
 target_link_libraries(scancore PRIVATE
-    scancore_core Qt6::Gui Qt6::OpenGL Qt6::Quick Qt6::QuickControls2 Qt6::Svg)
+    scancore_core Qt6::Gui Qt6::OpenGL Qt6::Quick Qt6::QuickControls2 Qt6::Svg Qt6::CorePrivate)
 if(ANDROID)
     # Qt's network stack on Android needs OpenSSL shipped inside the APK.
     include(FetchContent)
@@ -299,6 +308,14 @@ endif()
 if(TARGET Qt6::TextToSpeech)
     target_link_libraries(scancore PRIVATE Qt6::TextToSpeech)
     target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_TTS)
+endif()
+# Neural voices (Piper) come as a .tar.gz on Linux and macOS.
+if(NOT ANDROID AND NOT WIN32)
+    find_package(ZLIB QUIET)
+    if(ZLIB_FOUND)
+        target_link_libraries(scancore PRIVATE ZLIB::ZLIB)
+        target_compile_definitions(scancore PRIVATE SCANCORE_HAVE_ZLIB)
+    endif()
 endif()
 if(TARGET Qt6::Pdf)
     target_link_libraries(scancore PRIVATE Qt6::Pdf)

@@ -1,5 +1,7 @@
 #include "Speech.h"
 
+#include "Piper.h"
+
 #include <atomic>
 
 #include <QCoreApplication>
@@ -8,6 +10,7 @@
 #include <QJsonObject>
 #include <QLocale>
 #include <QRegularExpression>
+#include <QSet>
 
 #include <algorithm>
 #include <cmath>
@@ -138,6 +141,13 @@ void Speech::ensureEngine() {
     if (m_engineStarted)
         return;
     m_engineStarted = true;
+    if (auto *piper = Piper::instance(); piper->available()) {
+        connect(piper, &Piper::voicesChanged, this, &Speech::updateVoices);
+        connect(piper, &Piper::started, this, &Speech::engineStarted);
+        connect(piper, &Piper::finished, this, &Speech::engineFinished);
+        connect(piper, &Piper::failed, this, &Speech::engineFailed);
+        updateVoices();
+    }
     if (qEnvironmentVariable("SCANCORE_TTS_ENGINE").startsWith(QLatin1String("timer"))) {
         m_testEngine = true;
         m_testSilence = qEnvironmentVariable("SCANCORE_TTS_ENGINE") == QLatin1String("timer-silence");
@@ -204,13 +214,44 @@ void Speech::ensureEngine() {
 
 void Speech::engineReady(bool ok, const QVariantList &voices) {
     QMetaObject::invokeMethod(this, [this, ok, voices] {
-        auto sorted = voices;
-        sortVoices(sorted);
-        m_voices = sorted;
+        m_systemVoices = voices;
         m_available = ok;
-        emit voicesChanged();
-        emit changed();
+        updateVoices();
     });
+}
+
+// The neural voices first (they sound best), then the system's.
+void Speech::updateVoices() {
+    QVariantList neural;
+    for (const auto &v : Piper::instance()->voices()) {
+        auto m = v.toMap();
+        m.insert(QStringLiteral("name"), m.value(QStringLiteral("name")).toString() + tr(" (neural)"));
+        neural.append(m);
+    }
+    m_hasNeural = !neural.isEmpty();
+    sortVoices(neural);
+    // espeak-ng (Linux) lists each language once more for every variant
+    // ("English (Great Britain)+Adam", ~135 each, 14,000 in all): only the
+    // language itself, where it is there.
+    QSet<QString> bases;
+    for (const auto &v : std::as_const(m_systemVoices)) {
+        const auto m = v.toMap();
+        if (!m.value(QStringLiteral("name")).toString().contains(QLatin1Char('+')))
+            bases.insert(m.value(QStringLiteral("name")).toString() + QLatin1Char('|') + m.value(QStringLiteral("language")).toString());
+    }
+    QVariantList system;
+    for (const auto &v : std::as_const(m_systemVoices)) {
+        const auto m = v.toMap();
+        const auto name = m.value(QStringLiteral("name")).toString();
+        const auto plus = name.indexOf(QLatin1Char('+'));
+        if (plus > 0 && bases.contains(name.left(plus) + QLatin1Char('|') + m.value(QStringLiteral("language")).toString()))
+            continue;
+        system.append(v);
+    }
+    sortVoices(system);
+    m_voices = neural + system;
+    emit voicesChanged();
+    emit changed();
 }
 
 void Speech::engineStarted(int chunk) {
@@ -262,6 +303,10 @@ void Speech::testNext() {
 }
 
 void Speech::sendChunk(int chunk, const QString &text) {
+    if (!m_neural.isEmpty()) {
+        Piper::instance()->speak(chunk, text);
+        return;
+    }
     if (m_testEngine) {
         m_testQueue.append({chunk, int(15 * text.size())});
         if (!m_testCurrent && !m_testTimer->isActive())
@@ -294,6 +339,8 @@ void Speech::enqueue(const QString &text, int tag) {
 }
 
 bool Speech::queuesSilence() const {
+    if (!m_neural.isEmpty())
+        return false;
     if (m_testEngine)
         return m_testSilence;
 #if defined(Q_OS_ANDROID) && !defined(SCANCORE_HAVE_TTS)
@@ -330,6 +377,7 @@ void Speech::enqueueSilence(int ms, int tag) {
 void Speech::stop() {
     const bool had = !m_queued.isEmpty();
     m_queued.clear();
+    Piper::instance()->stop();
     if (m_testEngine) {
         m_testQueue.clear();
         m_testCurrent = 0;
@@ -350,6 +398,13 @@ void Speech::stop() {
 void Speech::configure(const QString &voice, double rate, double pitch) {
     rate = std::clamp(rate, 0.25, 4.0);
     pitch = std::clamp(pitch, 0.5, 2.0);
+    // A neural voice keeps its own pitch; the speed is the player's.
+    m_neural = voice.startsWith(QLatin1String("piper:")) ? voice.mid(6) : QString();
+    if (!m_neural.isEmpty()) {
+        Piper::instance()->setVoice(m_neural);
+        Piper::instance()->setRate(rate);
+        return;
+    }
 #if defined(SCANCORE_HAVE_TTS)
     if (!m_tts)
         return;

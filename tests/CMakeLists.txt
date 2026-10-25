@@ -41,6 +41,14 @@ if(SCANCORE_HAVE_MPV AND NOT ANDROID)
     add_test(NAME player COMMAND scancore_player_tests)
 endif()
 
+# Translating on the computer: ONNX Runtime with PaddleOCR and Opus-MT
+# (needs the downloaded models; see the test).
+qt_add_executable(scancore_ondevice_tests tst_ondevice.cpp
+    ${PROJECT_SOURCE_DIR}/src/app/LocalOcr.cpp ${PROJECT_SOURCE_DIR}/src/app/LocalOcr.h
+    ${PROJECT_SOURCE_DIR}/src/app/LocalUpscale.cpp ${PROJECT_SOURCE_DIR}/src/app/LocalUpscale.h)
+target_link_libraries(scancore_ondevice_tests PRIVATE scancore_core Qt6::Gui Qt6::Test)
+add_test(NAME ondevice COMMAND scancore_ondevice_tests)
+
 # Extension repositories, trust, installs and extension sources.
 qt_add_executable(scancore_extension_tests tst_extensions.cpp)
 target_link_libraries(scancore_extension_tests PRIVATE scancore_core Qt6::Test Qt6::CorePrivate)

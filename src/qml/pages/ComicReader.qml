@@ -1685,6 +1685,35 @@ Rectangle {
                     value: reader.sharpen >= 0.6 ? 0.75 : reader.sharpen > 0 ? 0.35 : 0
                     onPicked: (v) => reader.setOpt("readerSharpen", v)
                 }
+                // Computers: downloads enlarged twice with waifu2x (OnDevice).
+                Row {
+                    id: upscaleRow
+                    visible: OnDevice.available
+                    spacing: 10
+                    Toggle {
+                        id: upscaleToggle
+                        checked: reader.opt("readerUpscale", false) === true
+                        onToggled: {
+                            reader.setOpt("readerUpscale", checked)
+                            if (checked && !OnDevice.upscalerInstalled()) {
+                                upscaleInstall.task = OnDevice.installUpscaler()
+                                Router.toast(qsTr("Downloading the upscaler (about 15 MB the first time)…"), "info")
+                            }
+                        }
+                    }
+                    Label {
+                        width: upscaleRow.parent.width - upscaleToggle.width - upscaleRow.spacing
+                        wrapMode: Text.Wrap
+                        text: qsTr("Enlarge downloaded pages (sharper; slower downloads)")
+                    }
+                    Connections {
+                        id: upscaleInstall
+                        property var task: null
+                        target: task
+                        function onFinished() { Router.toast(qsTr("Chapters downloaded from now on are enlarged."), "success") }
+                        function onFailed(error) { Router.toast(error, "error") }
+                    }
+                }
 
                 Rectangle { width: parent.width; height: 1; color: "#2a2a30" }
                 Heading { text: qsTr("Taps") }
