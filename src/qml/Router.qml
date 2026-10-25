@@ -17,8 +17,12 @@ QtObject {
     function leave(page) {
         const w = page && page.Window ? page.Window.window : null
         if (w && w.isPageWindow === true) w.close()
+        else if (shell && page && page === shell.splitItem) shell.closeSplit()
         else back()
     }
+    // The next reader opened goes beside the one that is open (a reader's
+    // Side by side), not over it.
+    property bool toSplit: false
     // Computers: `path` (a reader, the player, a page) in a window of its own.
     readonly property bool windows: App.platform !== "android"
     function openWindow(path, props) {
@@ -99,12 +103,18 @@ QtObject {
             shell.push("pages/ComicDetails.qml", { url: item.sourceUrl || item.url, summary: item }, fromCover, item.cover)
     }
 
-    function openComicReader(series, chapters, index) {
-        if (shell) shell.openImmersive("pages/ComicReader.qml", { series: series, chapters: chapters, index: index })
-    }
-
-    function openNovelReader(series, chapters, index) {
-        if (shell) shell.openImmersive("pages/NovelReader.qml", { series: series, chapters: chapters, index: index })
+    function openComicReader(series, chapters, index) { openReader("pages/ComicReader.qml", series, chapters, index) }
+    function openNovelReader(series, chapters, index) { openReader("pages/NovelReader.qml", series, chapters, index) }
+    function openReader(path, series, chapters, index) {
+        if (!shell) return
+        const props = { series: series, chapters: chapters, index: index }
+        if (toSplit && shell.canSplit) {
+            toSplit = false
+            shell.openSplit(path, props)
+        } else {
+            toSplit = false
+            shell.openImmersive(path, props)
+        }
     }
 
     // SCANCORE Wrapped for a year, as a story over the whole window.

@@ -299,9 +299,9 @@ Item {
         padding: 14
         focus: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-        background: Rectangle {
+        background: GlassPanel {
             radius: Theme.radiusLg
-            color: Theme.surface
+            fill: Theme.surface
             border.width: 1
             border.color: Theme.borderStrong
         }

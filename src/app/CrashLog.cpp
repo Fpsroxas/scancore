@@ -471,6 +471,16 @@ void watchHangs() {
     };
     QObject::connect(qGuiApp, &QGuiApplication::applicationStateChanged, qGuiApp, follow);
     follow(qGuiApp->applicationState());
+    // Quitting waits for work still running (a page loading): not a hang.
+    static std::atomic_bool quitting{false};
+    QObject::connect(qGuiApp, &QCoreApplication::aboutToQuit, [] {
+        quitting = true;
+        g_watching = false;
+    });
+    QObject::connect(qGuiApp, &QGuiApplication::applicationStateChanged, qGuiApp, [] {
+        if (quitting)
+            g_watching = false;
+    });
     std::thread([] {
         bool reported = false;
         while (true) {

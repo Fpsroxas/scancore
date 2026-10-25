@@ -29,8 +29,8 @@ Drawer {
         target: Party
         function onChatChanged() { if (panel.opened) Party.markRead() }
     }
-    background: Rectangle {
-        color: Theme.surface
+    background: GlassPanel {
+        fill: Theme.surface
         radius: Theme.compact ? Theme.radiusXl : 0
         Rectangle {
             visible: !Theme.compact

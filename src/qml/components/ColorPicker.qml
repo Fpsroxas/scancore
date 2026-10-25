@@ -57,9 +57,9 @@ Popup {
         }
     }
     exit: Transition { NumberAnimation { property: "opacity"; to: 0; duration: Motion.fast } }
-    background: Rectangle {
+    background: GlassPanel {
         radius: Theme.radiusXl
-        color: Theme.palette.surface
+        fill: Theme.palette.surface
         border.width: 1
         border.color: Theme.borderStrong
     }

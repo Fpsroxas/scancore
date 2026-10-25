@@ -388,8 +388,37 @@ Rectangle {
         Router.leave(reader)
     }
 
+    // Keys: this series' key profile (Settings → Keyboard), and, side by
+    // side, only in the reader last clicked.
+    property string keyProfile: series.id ? (Library.seriesSettings(series.id).keys || "") : ""
+    function setKeyProfile(name) {
+        Library.setSeriesSetting(series.id, "keys", name)
+        keyProfile = name
+    }
+    readonly property bool keysHere: {
+        const shell = Router.shell
+        if (!shell || !shell.splitItem) return true
+        return shell.keyReader === reader || (shell.keyReader !== shell.splitItem && reader !== shell.splitItem)
+    }
+    onActiveFocusChanged: if (activeFocus && Router.shell) Router.shell.keyReader = reader
+    // Over everything in the reader, it notes the press and passes it on
+    // (a handler on the reader itself never hears presses its pages take).
+    MouseArea {
+        anchors.fill: parent
+        z: 100000
+        enabled: !!Router.shell && !!Router.shell.splitItem
+        acceptedButtons: Qt.AllButtons
+        onPressed: (mouse) => {
+            mouse.accepted = false
+            Router.shell.keyReader = reader
+            for (let item = reader.Window.activeFocusItem; item; item = item.parent)
+                if (item === reader) return
+            reader.forceActiveFocus()
+        }
+    }
+
     function keyHint(action) {
-        const keys = Keymap.labels(action)
+        const keys = Keymap.labels(action, keyProfile)
         return keys.length ? " (" + keys[0] + ")" : ""
     }
 
@@ -397,10 +426,10 @@ Rectangle {
     // while the reader has focus (not in its chapter list, say).
     Keys.onPressed: (event) => {
         if (event.key === Qt.Key_Escape) exit()
-        else if (Keymap.matches("reader.down", event)) scrollBy(height * 0.18)
-        else if (Keymap.matches("reader.up", event)) scrollBy(-height * 0.18)
-        else if (Keymap.matches("reader.pageDown", event)) scrollBy(height * 0.85)
-        else if (Keymap.matches("reader.pageUp", event)) scrollBy(-height * 0.85)
+        else if (Keymap.matches("reader.down", event, keyProfile)) scrollBy(height * 0.18)
+        else if (Keymap.matches("reader.up", event, keyProfile)) scrollBy(-height * 0.18)
+        else if (Keymap.matches("reader.pageDown", event, keyProfile)) scrollBy(height * 0.85)
+        else if (Keymap.matches("reader.pageUp", event, keyProfile)) scrollBy(-height * 0.85)
         else if (event.key === Qt.Key_Right) mode === "paged" ? pageView.turn(direction === "rtl" ? -1 : 1) : (hasNext && load(index + 1))
         else if (event.key === Qt.Key_Left) mode === "paged" ? pageView.turn(direction === "rtl" ? 1 : -1) : (hasPrev && load(index - 1))
         else return
@@ -408,27 +437,30 @@ Rectangle {
     }
 
     // The rest come from Settings → Keyboard (see Keymap).
-    Shortcut { sequences: Keymap.sequences("reader.next"); onActivated: if (reader.hasNext) reader.load(reader.index + 1) }
-    Shortcut { sequences: Keymap.sequences("reader.prev"); onActivated: if (reader.hasPrev) reader.load(reader.index - 1) }
+    Shortcut { sequences: Keymap.sequences("reader.next", reader.keyProfile); enabled: reader.keysHere; onActivated: if (reader.hasNext) reader.load(reader.index + 1) }
+    Shortcut { sequences: Keymap.sequences("reader.prev", reader.keyProfile); enabled: reader.keysHere; onActivated: if (reader.hasPrev) reader.load(reader.index - 1) }
     Shortcut {
-        sequences: Keymap.sequences("reader.first")
+        sequences: Keymap.sequences("reader.first", reader.keyProfile)
+        enabled: reader.keysHere
         onActivated: reader.mode === "strip" ? strip.positionViewAtBeginning() : (pageView.page = 0)
     }
     Shortcut {
-        sequences: Keymap.sequences("reader.last")
+        sequences: Keymap.sequences("reader.last", reader.keyProfile)
+        enabled: reader.keysHere
         onActivated: reader.mode === "strip" ? strip.positionViewAtEnd() : (pageView.page = pageView.views[pageView.views.length - 1][0])
     }
     Shortcut {
-        sequences: Keymap.sequences("reader.fullscreen")
+        sequences: Keymap.sequences("reader.fullscreen", reader.keyProfile)
+        enabled: reader.keysHere
         onActivated: fullScreen.toggle()
     }
     ReaderWindow { id: fullScreen }
-    Shortcut { sequences: Keymap.sequences("reader.mode"); onActivated: reader.setOpt("readerMode", reader.mode === "strip" ? "paged" : "strip") }
-    Shortcut { sequences: Keymap.sequences("reader.wider"); onActivated: reader.setOpt("readerWidth", Math.min(2400, reader.stripWidth + 80)) }
-    Shortcut { sequences: Keymap.sequences("reader.narrower"); onActivated: reader.setOpt("readerWidth", Math.max(360, reader.stripWidth - 80)) }
+    Shortcut { sequences: Keymap.sequences("reader.mode", reader.keyProfile); enabled: reader.keysHere; onActivated: reader.setOpt("readerMode", reader.mode === "strip" ? "paged" : "strip") }
+    Shortcut { sequences: Keymap.sequences("reader.wider", reader.keyProfile); enabled: reader.keysHere; onActivated: reader.setOpt("readerWidth", Math.min(2400, reader.stripWidth + 80)) }
+    Shortcut { sequences: Keymap.sequences("reader.narrower", reader.keyProfile); enabled: reader.keysHere; onActivated: reader.setOpt("readerWidth", Math.max(360, reader.stripWidth - 80)) }
 
-    Shortcut { sequences: Keymap.sequences("reader.auto"); onActivated: reader.autoScrolling = !reader.autoScrolling }
-    Shortcut { sequences: Keymap.sequences("reader.lens"); enabled: App.platform !== "android"; onActivated: reader.lensOn = !reader.lensOn }
+    Shortcut { sequences: Keymap.sequences("reader.auto", reader.keyProfile); enabled: reader.keysHere; onActivated: reader.autoScrolling = !reader.autoScrolling }
+    Shortcut { sequences: Keymap.sequences("reader.lens", reader.keyProfile); enabled: reader.keysHere && App.platform !== "android"; onActivated: reader.lensOn = !reader.lensOn }
 
     // Computers: a lens under the mouse (L, or the reader's settings),
     // twice as large, for small lettering and margin notes.
@@ -1308,6 +1340,15 @@ Rectangle {
                 tip: (reader.mode === "strip" ? qsTr("Switch to pages") : qsTr("Switch to vertical strip")) + reader.keyHint("reader.mode")
                 onClicked: reader.setOpt("readerMode", reader.mode === "strip" ? "paged" : "strip")
             }
+            // Wide windows: another comic or novel on the right half.
+            IconButton {
+                diameter: topActions.button
+                visible: !!Router.shell && Router.shell.canSplit && Router.shell.splitItem !== reader
+                iconName: "panel-left"
+                iconColor: "white"
+                tip: qsTr("Read another beside this")
+                onClicked: splitPicker.start()
+            }
             IconButton {
                 diameter: topActions.button
                 visible: reactions.available && !String(reader.series.sourceUrl || "").startsWith("file:")
@@ -1504,6 +1545,8 @@ Rectangle {
         }
     }
 
+    SplitPicker { id: splitPicker }
+
     // Reactions on this chapter's pages (dots on the page bar).
     PageReactions {
         id: reactions
@@ -1573,13 +1616,13 @@ Rectangle {
         width: sheet ? parent.width : Math.min(320, parent.width - 36)
         padding: 18
         bottomPadding: sheet ? 18 + reader.insetBottom : 18
-        background: Rectangle {
+        background: GlassPanel {
             radius: Theme.radiusLg
-            color: "#151517"
+            fill: "#151517"
             border.width: 1
             border.color: "#2a2a30"
             // Square along the bottom edge.
-            Rectangle { visible: settingsPopup.sheet; width: parent.width; height: parent.radius; anchors.bottom: parent.bottom; color: parent.color }
+            squareBottom: settingsPopup.sheet
         }
         enter: Transition {
             ParallelAnimation {
@@ -1851,6 +1894,18 @@ Rectangle {
                         onToggled: if (checked !== fullScreen.fullScreen) fullScreen.toggle()
                     }
                     Label { text: qsTr("Full screen") }
+                }
+                // Key profiles (Settings → Keyboard), once there are any.
+                Rectangle { visible: keysSelect.visible; width: parent.width; height: 1; color: "#2a2a30" }
+                Heading { visible: keysSelect.visible; text: qsTr("Keys") }
+                Select {
+                    id: keysSelect
+                    visible: !!reader.series.id && Keymap.profileNames.length > 0
+                    width: parent.width
+                    Accessible.name: qsTr("Keys for this series")
+                    model: [{ value: "", label: qsTr("Everyday keys") }].concat(Keymap.profileNames.map(n => ({ value: n, label: n })))
+                    value: reader.keyProfile
+                    onPicked: (v) => reader.setKeyProfile(v)
                 }
                 Rectangle { width: parent.width; height: 1; color: "#2a2a30" }
                 Row {

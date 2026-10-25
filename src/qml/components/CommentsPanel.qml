@@ -24,8 +24,8 @@ Drawer {
     modal: true
     dim: true
     Overlay.modal: Rectangle { color: Theme.overlay }
-    background: Rectangle {
-        color: Theme.surface
+    background: GlassPanel {
+        fill: Theme.surface
         radius: Theme.compact ? Theme.radiusXl : 0
         Rectangle {
             visible: !Theme.compact

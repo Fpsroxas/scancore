@@ -262,8 +262,37 @@ Rectangle {
         Router.leave(reader)
     }
 
+    // Keys: this series' key profile (Settings → Keyboard), and, side by
+    // side, only in the reader last clicked.
+    property string keyProfile: series.id ? (Library.seriesSettings(series.id).keys || "") : ""
+    function setKeyProfile(name) {
+        Library.setSeriesSetting(series.id, "keys", name)
+        keyProfile = name
+    }
+    readonly property bool keysHere: {
+        const shell = Router.shell
+        if (!shell || !shell.splitItem) return true
+        return shell.keyReader === reader || (shell.keyReader !== shell.splitItem && reader !== shell.splitItem)
+    }
+    onActiveFocusChanged: if (activeFocus && Router.shell) Router.shell.keyReader = reader
+    // Over everything in the reader, it notes the press and passes it on
+    // (a handler on the reader itself never hears presses its pages take).
+    MouseArea {
+        anchors.fill: parent
+        z: 100000
+        enabled: !!Router.shell && !!Router.shell.splitItem
+        acceptedButtons: Qt.AllButtons
+        onPressed: (mouse) => {
+            mouse.accepted = false
+            Router.shell.keyReader = reader
+            for (let item = reader.Window.activeFocusItem; item; item = item.parent)
+                if (item === reader) return
+            reader.forceActiveFocus()
+        }
+    }
+
     function keyHint(action) {
-        const keys = Keymap.labels(action)
+        const keys = Keymap.labels(action, keyProfile)
         return keys.length ? " (" + keys[0] + ")" : ""
     }
 
@@ -274,22 +303,22 @@ Rectangle {
     // reader; scrolling keys only while the reader has focus.
     Keys.onPressed: (event) => {
         if (event.key === Qt.Key_Escape) exit()
-        else if (Keymap.matches("reader.down", event)) flick.scrollTo(flick.target + 90)
-        else if (Keymap.matches("reader.up", event)) flick.scrollTo(flick.target - 90)
-        else if (Keymap.matches("reader.pageDown", event)) flick.scrollTo(flick.contentY + flick.height * 0.85)
-        else if (Keymap.matches("reader.pageUp", event)) flick.scrollTo(flick.contentY - flick.height * 0.85)
+        else if (Keymap.matches("reader.down", event, keyProfile)) flick.scrollTo(flick.target + 90)
+        else if (Keymap.matches("reader.up", event, keyProfile)) flick.scrollTo(flick.target - 90)
+        else if (Keymap.matches("reader.pageDown", event, keyProfile)) flick.scrollTo(flick.contentY + flick.height * 0.85)
+        else if (Keymap.matches("reader.pageUp", event, keyProfile)) flick.scrollTo(flick.contentY - flick.height * 0.85)
         else if (event.key === Qt.Key_Right) { if (hasNext) load(index + 1) }
         else if (event.key === Qt.Key_Left) { if (hasPrev) load(index - 1) }
         else return
         event.accepted = true
     }
-    Shortcut { sequences: Keymap.sequences("reader.next"); onActivated: if (reader.hasNext) reader.load(reader.index + 1) }
-    Shortcut { sequences: Keymap.sequences("reader.prev"); onActivated: if (reader.hasPrev) reader.load(reader.index - 1) }
-    Shortcut { sequences: Keymap.sequences("reader.first"); onActivated: flick.positionViewAtBeginning() }
-    Shortcut { sequences: Keymap.sequences("reader.last"); onActivated: flick.positionViewAtEnd() }
-    Shortcut { sequences: Keymap.sequences("reader.fullscreen"); onActivated: reader.toggleFullScreen() }
-    Shortcut { sequences: Keymap.sequences("reader.wider"); onActivated: App.setSetting("novelSize", Math.min(34, reader.fontSize + 1)) }
-    Shortcut { sequences: Keymap.sequences("reader.narrower"); onActivated: App.setSetting("novelSize", Math.max(13, reader.fontSize - 1)) }
+    Shortcut { sequences: Keymap.sequences("reader.next", reader.keyProfile); enabled: reader.keysHere; onActivated: if (reader.hasNext) reader.load(reader.index + 1) }
+    Shortcut { sequences: Keymap.sequences("reader.prev", reader.keyProfile); enabled: reader.keysHere; onActivated: if (reader.hasPrev) reader.load(reader.index - 1) }
+    Shortcut { sequences: Keymap.sequences("reader.first", reader.keyProfile); enabled: reader.keysHere; onActivated: flick.positionViewAtBeginning() }
+    Shortcut { sequences: Keymap.sequences("reader.last", reader.keyProfile); enabled: reader.keysHere; onActivated: flick.positionViewAtEnd() }
+    Shortcut { sequences: Keymap.sequences("reader.fullscreen", reader.keyProfile); enabled: reader.keysHere; onActivated: reader.toggleFullScreen() }
+    Shortcut { sequences: Keymap.sequences("reader.wider", reader.keyProfile); enabled: reader.keysHere; onActivated: App.setSetting("novelSize", Math.min(34, reader.fontSize + 1)) }
+    Shortcut { sequences: Keymap.sequences("reader.narrower", reader.keyProfile); enabled: reader.keysHere; onActivated: App.setSetting("novelSize", Math.max(13, reader.fontSize - 1)) }
 
     // The chapter as a list of its paragraphs, so only those near the
     // screen exist: a chapter of thousands of paragraphs opens and scrolls
@@ -679,6 +708,15 @@ Rectangle {
                     Router.leave(reader)
                 }
             }
+            // Wide windows: another comic or novel on the right half.
+            IconButton {
+                diameter: novelActions.button
+                visible: !!Router.shell && Router.shell.canSplit && Router.shell.splitItem !== reader
+                iconName: "panel-left"
+                iconColor: reader.look.text
+                tip: qsTr("Read another beside this")
+                onClicked: splitPicker.start()
+            }
             IconButton {
                 diameter: novelActions.button
                 visible: !String(reader.series.sourceUrl || "").startsWith("file:")
@@ -795,12 +833,12 @@ Rectangle {
         width: sheet ? parent.width : Math.min(340, parent.width - 32)
         padding: 20
         bottomPadding: sheet ? 20 + reader.insetBottom : 20
-        background: Rectangle {
+        background: GlassPanel {
             radius: Theme.radiusLg
-            color: Theme.surface
+            fill: Theme.surface
             border.width: 1
             border.color: Theme.borderStrong
-            Rectangle { visible: typePopup.sheet; width: parent.width; height: parent.radius; anchors.bottom: parent.bottom; color: parent.color }
+            squareBottom: typePopup.sheet
         }
         enter: Transition {
             ParallelAnimation {
@@ -919,6 +957,18 @@ Rectangle {
         OptionLabel { text: qsTr("Auto-scroll speed · %1").arg(Number(App.settings.novelAutoScrollSpeed) || 40) }
         ScSlider { width: parent.width; from: 10; to: 200; stepSize: 5; value: Number(App.settings.novelAutoScrollSpeed) || 40; onMoved: App.setSetting("novelAutoScrollSpeed", value) }
 
+        // Key profiles (Settings → Keyboard), once there are any.
+        OptionLabel { visible: keysSelect.visible; text: qsTr("Keys for this series") }
+        Select {
+            id: keysSelect
+            visible: !!opts.reader.series.id && Keymap.profileNames.length > 0
+            width: parent.width
+            Accessible.name: qsTr("Keys for this series")
+            model: [{ value: "", label: qsTr("Everyday keys") }].concat(Keymap.profileNames.map(n => ({ value: n, label: n })))
+            value: opts.reader.keyProfile
+            onPicked: (v) => opts.reader.setKeyProfile(v)
+        }
+
         OptionLabel { text: qsTr("Read aloud") }
         Text {
             visible: !Speech.available
@@ -970,4 +1020,6 @@ Rectangle {
             onPressedChanged: if (!pressed) opts.reader.restartVoice()
         }
     }
+
+    SplitPicker { id: splitPicker }
 }

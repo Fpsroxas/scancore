@@ -185,11 +185,11 @@ Dialog {
         NumberAnimation { property: "y"; to: dialog.parent ? dialog.parent.height : 800; duration: Motion.normal; easing.type: Easing.InCubic }
     }
 
-    background: Rectangle {
+    background: GlassPanel {
         radius: Theme.radiusXl
         bottomLeftRadius: dialog.sheet ? 0 : Theme.radiusXl
         bottomRightRadius: dialog.sheet ? 0 : Theme.radiusXl
-        color: Theme.surface
+        fill: Theme.surface
         border.width: dialog.sheet ? 0 : 1
         border.color: Theme.borderStrong
         Rectangle {
