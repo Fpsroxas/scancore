@@ -10,6 +10,7 @@
 #include "extensions/Apk.h"
 #include "extensions/ExtensionSource.h"
 #include "extensions/Host.h"
+#include "extensions/LineHost.h"
 #include "extensions/Index.h"
 #include "extensions/Manager.h"
 #include "extensions/Runtime.h"
@@ -134,6 +135,13 @@ QByteArray varint(quint64 v) {
 QByteArray field(int number, const QByteArray &bytes) { return varint(quint64(number) << 3 | 2) + varint(bytes.size()) + bytes; }
 QByteArray field(int number, quint64 value) { return varint(quint64(number) << 3) + varint(value); }
 
+class BrowserCheckTestHost : public LineHost {
+public:
+    using LineHost::receive;
+    bool available() const override { return true; }
+    void sendLine(const QByteArray &) override {}
+};
+
 } // namespace
 
 class ExtensionTests : public QObject {
@@ -143,6 +151,43 @@ class ExtensionTests : public QObject {
     std::unique_ptr<FixtureServer> m_server;
 
 private slots:
+    void interactiveCheckKeepsExtensionAgent() {
+        BrowserCheckTestHost host;
+        const QJsonObject params{{"url", "https://agent-fixture.test/check"}, {"userAgent", "Source-specific UA"}};
+        QString agentAtDispatch;
+        bool dispatched = false;
+        LineHost::setAskHandler([&](const QString &method, const QJsonObject &request, LineHost::Answer) {
+            dispatched = method == QLatin1String("readerBrowserCheck") && request == params;
+            agentAtDispatch = browserCheckAgent(request.value(QStringLiteral("url")).toString());
+        });
+        host.receive(QJsonDocument(QJsonObject{{"ask", 1}, {"method", "readerBrowserCheck"}, {"params", params}}).toJson());
+        LineHost::setAskHandler({});
+        QVERIFY(dispatched);
+        QCOMPARE(agentAtDispatch, QStringLiteral("Source-specific UA"));
+        QCOMPARE(browserCheckAgent(QStringLiteral("https://agent-fixture.test/another-path")), QStringLiteral("Source-specific UA"));
+        QVERIFY(browserCheckAgent(QStringLiteral("https://unrelated-agent-fixture.test/")).isEmpty());
+    }
+
+    void interactiveCheckIgnoresEmptyAndUnrelatedAgents() {
+        BrowserCheckTestHost host;
+        const QString url = QStringLiteral("https://agent-edge-fixture.test/check");
+        const auto receive = [&](const QString &method, const QJsonObject &params) {
+            host.receive(QJsonDocument(QJsonObject{{"ask", 1}, {"method", method}, {"params", params}}).toJson());
+        };
+        receive(QStringLiteral("readerBrowserCheck"), {{"url", url}, {"userAgent", "Original UA"}});
+        QCOMPARE(browserCheckAgent(url), QStringLiteral("Original UA"));
+        receive(QStringLiteral("readerBrowserCheck"), {{"url", url}, {"userAgent", ""}});
+        QCOMPARE(browserCheckAgent(url), QStringLiteral("Original UA"));
+        receive(QStringLiteral("readerBrowserCheck"), {{"url", url}});
+        QCOMPARE(browserCheckAgent(url), QStringLiteral("Original UA"));
+        receive(QStringLiteral("unrelatedAsk"), {{"url", url}, {"userAgent", "Unrelated UA"}});
+        QCOMPARE(browserCheckAgent(url), QStringLiteral("Original UA"));
+        receive(QStringLiteral("readerBrowserCheck"), {{"url", "https://agent-empty-fixture.test/"}, {"userAgent", ""}});
+        QVERIFY(browserCheckAgent(QStringLiteral("https://agent-empty-fixture.test/")).isEmpty());
+        receive(QStringLiteral("readerBrowserCheck"), {{"url", url}, {"userAgent", "Updated UA"}});
+        QCOMPARE(browserCheckAgent(url), QStringLiteral("Updated UA"));
+    }
+
     void initTestCase() {
         QVERIFY(m_dir.isValid());
         Database::open(m_dir.filePath(QStringLiteral("test.db")));
