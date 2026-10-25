@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Text button. variant: "primary" | "secondary" | "ghost" | "plain" | "danger".
 // iconAfter puts the icon after the text (an arrow on "Continue").

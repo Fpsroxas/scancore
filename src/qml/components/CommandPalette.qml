@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Ctrl+K: jump anywhere, search any media type, reopen something recent, or
 // run a quick command (theme, motion, update check, sync, shortcuts).
@@ -120,9 +120,9 @@ Popup {
         }
     }
 
-    background: Rectangle {
+    background: GlassPanel {
         radius: Theme.radiusXl
-        color: Theme.surface
+        fill: Theme.surface
         border.width: 1
         border.color: Theme.borderStrong
     }

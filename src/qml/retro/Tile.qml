@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // One Retro tile. `tile` describes it:
 //   { key, size: "small" | "medium" | "wide", kind: "cover" | "action" | "icon",

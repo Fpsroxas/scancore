@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // "Watch from": where an AniList anime plays. Finds it on the installed
 // anime sources (under any of its names), content language first, and
@@ -119,9 +119,9 @@ Dialog {
             NumberAnimation { property: "scale"; to: 0.97; duration: Motion.fast }
         }
     }
-    background: Rectangle {
+    background: GlassPanel {
         radius: Theme.radiusXl
-        color: Theme.surface
+        fill: Theme.surface
         border.width: 1
         border.color: Theme.borderStrong
     }

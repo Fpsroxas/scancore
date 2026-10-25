@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Anime details: AniList metadata, episodes with thumbnails and progress,
 // related entries and recommendations. An anime opened from an extension's

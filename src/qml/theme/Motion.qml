@@ -1,6 +1,6 @@
 pragma Singleton
 import QtQuick
-import ScanCore
+import Scancore
 
 // Motion tokens. Durations collapse to zero when "Reduce motion" is on and
 // stretch or shrink with the animation speed setting, so every animation in

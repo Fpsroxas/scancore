@@ -1,8 +1,8 @@
 pragma Singleton
 import QtQuick
-import ScanCore
+import Scancore
 
-// Colour, type and shape tokens. The default palette follows the ScanCore
+// Colour, type and shape tokens. The default palette follows the SCANCORE
 // website: neutral greys with white (dark) or near-black (light) accents.
 // The custom theme makes a whole palette from one window colour, and can add
 // a background picture and a see-through window.
@@ -24,6 +24,9 @@ QtObject {
     // pivots in the Windows Phone manner, retro/*.qml) instead of the
     // standard pages and navigation.
     readonly property bool retro: App.settings.uiMode === "retro"
+    // Menus, sheets and dialogs show what is behind them, blurred
+    // (GlassPanel). Not on e-ink, which cannot show it.
+    readonly property bool glass: App.settings.glass === true && !eink
 
     // Base colours per theme. Settings draws its theme previews from these.
     readonly property var palettes: ({

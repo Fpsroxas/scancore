@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // One setting inside a SettingsGroup: an optional icon, a title and
 // description, and its control on the right. On phones a wide control drops

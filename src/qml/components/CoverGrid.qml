@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // Responsive grid of cover cards for use inside a scrolling page. Only the
 // rows on screen (and a couple either side) exist: cards are reused in a

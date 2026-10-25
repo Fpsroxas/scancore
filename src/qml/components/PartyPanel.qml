@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Watch together (see Party): start a party for the anime being watched or
 // join one with its code; in a party, its code to share, who is in it and
@@ -29,8 +29,8 @@ Drawer {
         target: Party
         function onChatChanged() { if (panel.opened) Party.markRead() }
     }
-    background: Rectangle {
-        color: Theme.surface
+    background: GlassPanel {
+        fill: Theme.surface
         radius: Theme.compact ? Theme.radiusXl : 0
         Rectangle {
             visible: !Theme.compact

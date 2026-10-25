@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Adding or changing one of the reader's own comic servers (Komga, Kavita,
 // Suwayomi): its kind, address and login, saved and tried at once.
@@ -45,9 +45,9 @@ Dialog {
     focus: true
     padding: 24
     Overlay.modal: Rectangle { color: Theme.overlay }
-    background: Rectangle {
+    background: GlassPanel {
         radius: Theme.radiusXl
-        color: Theme.surface
+        fill: Theme.surface
         border.width: 1
         border.color: Theme.borderStrong
     }

@@ -545,6 +545,10 @@
             <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
             <translation>SCANCORE를 사용하는 동안 시간이 기록됩니다: 리더, 에피소드 재생, 둘러보기 중. 시간 기록 이전에 끝낸 챕터는 읽기 기록에서 가져옵니다.</translation>
         </message>
+        <message>
+            <source>Friends</source>
+            <translation>친구</translation>
+        </message>
     </context>
     <context>
         <name>AddRepositoryDialog</name>
@@ -1977,6 +1981,38 @@
             <source>Translate into %1</source>
             <translation>%1(으)로 번역</translation>
         </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>옆에 다른 작품 읽기</translation>
+        </message>
+        <message>
+            <source>React to this page</source>
+            <translation>이 페이지에 반응하기</translation>
+        </message>
+        <message>
+            <source>Downloading the upscaler (about 15 MB the first time)…</source>
+            <translation>업스케일러 다운로드 중(처음에는 약 15MB)…</translation>
+        </message>
+        <message>
+            <source>Enlarge downloaded pages (sharper; slower downloads)</source>
+            <translation>다운로드한 페이지 확대(더 선명함, 다운로드 느림)</translation>
+        </message>
+        <message>
+            <source>Chapters downloaded from now on are enlarged.</source>
+            <translation>지금부터 다운로드하는 챕터는 확대됩니다.</translation>
+        </message>
+        <message>
+            <source>Keys</source>
+            <translation>키</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>이 시리즈의 키</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>평소 키</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -2615,6 +2651,10 @@
         <message>
             <source>Choose folder</source>
             <translation>폴더 선택</translation>
+        </message>
+        <message>
+            <source>Your server: series read from other sources move forward on it too. It is managed in Settings → Sources → Your servers.</source>
+            <translation>내 서버: 다른 소스에서 읽은 시리즈의 진행도 여기에 반영됩니다. 설정 → 소스 → 내 서버에서 관리합니다.</translation>
         </message>
     </context>
     <context>
@@ -3447,6 +3487,193 @@
         </message>
     </context>
     <context>
+        <name>FriendsPage</name>
+        <message>
+            <source>just now</source>
+            <translation>방금</translation>
+        </message>
+        <message>
+            <source>%1 min ago</source>
+            <translation>%1분 전</translation>
+        </message>
+        <message>
+            <source>%1 h ago</source>
+            <translation>%1시간 전</translation>
+        </message>
+        <message>
+            <source>%1 days ago</source>
+            <translation>%1일 전</translation>
+        </message>
+        <message>
+            <source>%1 shared a list: %2</source>
+            <translation>%1님이 목록을 공유했습니다: %2</translation>
+        </message>
+        <message>
+            <source>%1 watched %2</source>
+            <translation>%1님이 %2을(를) 봤습니다</translation>
+        </message>
+        <message>
+            <source>%1 read %2</source>
+            <translation>%1님이 %2을(를) 읽었습니다</translation>
+        </message>
+        <message>
+            <source>That list is empty.</source>
+            <translation>목록이 비어 있습니다.</translation>
+        </message>
+        <message>
+            <source>Shared. The link is copied: %1</source>
+            <translation>공유했습니다. 링크를 복사했습니다: %1</translation>
+        </message>
+        <message>
+            <source>%1 added to your library; %2 could not be found on your sources.</source>
+            <translation>%1개를 라이브러리에 추가했습니다. %2개는 소스에서 찾지 못했습니다.</translation>
+        </message>
+        <message>
+            <source>All of it is in your library already.</source>
+            <translation>모두 이미 라이브러리에 있습니다.</translation>
+        </message>
+        <message>
+            <source>%1 added to your library.</source>
+            <translation>%1개를 라이브러리에 추가했습니다.</translation>
+        </message>
+        <message>
+            <source>Friends</source>
+            <translation>친구</translation>
+        </message>
+        <message>
+            <source>Follow each other on %1 to be friends</source>
+            <translation>%1에서 서로 팔로우하면 친구가 됩니다</translation>
+        </message>
+        <message>
+            <source>Sign in (Settings → Sync) to add friends, see what they read and share lists.</source>
+            <translation>친구를 추가하고, 친구가 읽는 작품을 보고, 목록을 공유하려면 로그인하세요(설정 → 동기화).</translation>
+        </message>
+        <message>
+            <source>You</source>
+            <translation>나</translation>
+        </message>
+        <message>
+            <source>Share what I read and watch</source>
+            <translation>내가 읽고 보는 작품 공유</translation>
+        </message>
+        <message>
+            <source>Your friends see the series you read and watch, and the lists you share. Off: they see nothing.</source>
+            <translation>친구는 내가 읽고 보는 시리즈와 공유한 목록을 볼 수 있습니다. 끔: 아무것도 볼 수 없습니다.</translation>
+        </message>
+        <message>
+            <source>Add a friend</source>
+            <translation>친구 추가</translation>
+        </message>
+        <message>
+            <source>Their username; when they add you too, you are friends. You are @%1.</source>
+            <translation>상대의 사용자 이름입니다. 상대도 나를 추가하면 친구가 됩니다. 내 이름은 @%1입니다.</translation>
+        </message>
+        <message>
+            <source>username</source>
+            <translation>사용자 이름</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>추가</translation>
+        </message>
+        <message>
+            <source>You follow @%1.</source>
+            <translation>@%1님을 팔로우하고 있습니다.</translation>
+        </message>
+        <message>
+            <source>Asking to be friends</source>
+            <translation>친구 요청 보냄</translation>
+        </message>
+        <message>
+            <source>Added you</source>
+            <translation>나를 추가함</translation>
+        </message>
+        <message>
+            <source>Add back</source>
+            <translation>나도 추가</translation>
+        </message>
+        <message>
+            <source>No friends yet.</source>
+            <translation>아직 친구가 없습니다.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>제거</translation>
+        </message>
+        <message>
+            <source>Waiting for them to add you</source>
+            <translation>상대가 나를 추가하기를 기다리는 중</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>취소</translation>
+        </message>
+        <message>
+            <source>What friends read</source>
+            <translation>친구가 읽는 작품</translation>
+        </message>
+        <message>
+            <source>Nothing yet: friends show here once they share what they read.</source>
+            <translation>아직 없습니다. 친구가 읽는 작품을 공유하면 여기에 표시됩니다.</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>열기</translation>
+        </message>
+        <message>
+            <source>Shared lists</source>
+            <translation>공유 목록</translation>
+        </message>
+        <message>
+            <source>Share a list from your library</source>
+            <translation>라이브러리에서 목록 공유</translation>
+        </message>
+        <message>
+            <source>Anyone with the link sees it, and can add it all to their library in SCANCORE.</source>
+            <translation>링크가 있는 사람은 누구나 볼 수 있고, SCANCORE에서 전부 자신의 라이브러리에 추가할 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>공유</translation>
+        </message>
+        <message>
+            <source>Open a shared list</source>
+            <translation>공유 목록 열기</translation>
+        </message>
+        <message>
+            <source>Its link or code.</source>
+            <translation>링크 또는 코드.</translation>
+        </message>
+        <message>
+            <source>link or code</source>
+            <translation>링크 또는 코드</translation>
+        </message>
+        <message>
+            <source>%1 series from @%2: %3</source>
+            <translation>@%2님의 시리즈 %1개: %3</translation>
+        </message>
+        <message>
+            <source>Add all to my library</source>
+            <translation>모두 내 라이브러리에 추가</translation>
+        </message>
+        <message>
+            <source>%1 series · shared %2</source>
+            <translation>시리즈 %1개 · %2에 공유</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>링크 복사</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>링크 복사됨</translation>
+        </message>
+        <message>
+            <source>Stop sharing</source>
+            <translation>공유 중지</translation>
+        </message>
+    </context>
+    <context>
         <name>HistoryPage</name>
         <message>
             <source>Today</source>
@@ -4099,6 +4326,74 @@
         <message>
             <source>Back to the default</source>
             <translation>기본값으로 되돌리기</translation>
+        </message>
+        <message>
+            <source>Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. </source>
+            <translation>단축키를 클릭한 뒤 새 키를 누르세요. Backspace는 키 없이 두고, Esc는 기존 키를 유지합니다. </translation>
+        </message>
+        <message>
+            <source>Everyday: </source>
+            <translation>평소: </translation>
+        </message>
+        <message>
+            <source>none</source>
+            <translation>없음</translation>
+        </message>
+        <message>
+            <source>Back to the everyday keys</source>
+            <translation>평소 키로 되돌리기</translation>
+        </message>
+        <message>
+            <source>Key profiles</source>
+            <translation>키 프로필</translation>
+        </message>
+        <message>
+            <source>Other keys for the readers, for the series you choose (in the reader's settings, under Keys): one-handed keys for webtoons, say. Keys a profile leaves alone stay as everyday.</source>
+            <translation>선택한 시리즈에서 리더에 쓸 다른 키(리더 설정의 키 항목): 예를 들어 웹툰용 한 손 키. 프로필이 바꾸지 않은 키는 평소대로 유지됩니다.</translation>
+        </message>
+        <message>
+            <source>Readers' keys below</source>
+            <translation>리더 키는 아래에</translation>
+        </message>
+        <message>
+            <source>Changing the profile “%1”</source>
+            <translation>프로필 “%1” 변경 중</translation>
+        </message>
+        <message>
+            <source>Changing the everyday keys</source>
+            <translation>평소 키 변경 중</translation>
+        </message>
+        <message>
+            <source>Key profile</source>
+            <translation>키 프로필</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>평소 키</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>지우기</translation>
+        </message>
+        <message>
+            <source>New profile</source>
+            <translation>새 프로필</translation>
+        </message>
+        <message>
+            <source>Starts as the everyday keys</source>
+            <translation>평소 키에서 시작</translation>
+        </message>
+        <message>
+            <source>Name, e.g. Webtoons</source>
+            <translation>이름(예: 웹툰)</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>추가</translation>
+        </message>
+        <message>
+            <source>There is a profile with that name already.</source>
+            <translation>같은 이름의 프로필이 이미 있습니다.</translation>
         </message>
     </context>
     <context>
@@ -5259,6 +5554,22 @@
             <source>Choose</source>
             <translation>선택</translation>
         </message>
+        <message>
+            <source>Also the other extension you had in %1</source>
+            <translation>%1에 있던 다른 확장 프로그램도</translation>
+        </message>
+        <message>
+            <source>Also the %1 other extensions you had in %2</source>
+            <translation>%2에 있던 다른 확장 프로그램 %1개도</translation>
+        </message>
+        <message>
+            <source>Install the extension you had in %1</source>
+            <translation>%1에 있던 확장 프로그램 설치</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions you had in %2</source>
+            <translation>%2에 있던 확장 프로그램 %1개 설치</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -5365,6 +5676,57 @@
         <message>
             <source>Settings</source>
             <translation>설정</translation>
+        </message>
+    </context>
+    <context>
+        <name>NeuralVoicesDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>시작하는 중…</translation>
+        </message>
+        <message>
+            <source>Voice ready: choose it under Voice.</source>
+            <translation>음성이 준비되었습니다. 음성에서 선택하세요.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>뉴럴 음성</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
+        </message>
+        <message>
+            <source>Natural voices that read on this computer, with no internet once downloaded. The first one also brings the voice program (Piper, about 25 MB).</source>
+            <translation>이 컴퓨터에서 읽어 주는 자연스러운 음성으로, 다운로드 후에는 인터넷이 필요 없습니다. 첫 음성과 함께 음성 프로그램(Piper, 약 25MB)도 설치됩니다.</translation>
+        </message>
+        <message>
+            <source>Find a voice or language</source>
+            <translation>음성 또는 언어 찾기</translation>
+        </message>
+        <message>
+            <source>Best quality</source>
+            <translation>최고 품질</translation>
+        </message>
+        <message>
+            <source>Good quality</source>
+            <translation>좋은 품질</translation>
+        </message>
+        <message>
+            <source>Smaller</source>
+            <translation>작게</translation>
+        </message>
+        <message>
+            <source>Smallest</source>
+            <translation>가장 작게</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>제거</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>다운로드</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +6063,18 @@
         <message>
             <source>Pause between sentences · %1 s</source>
             <translation>문장 사이 쉼 · %1초</translation>
+        </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>옆에 다른 작품 읽기</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>이 시리즈의 키</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>평소 키</translation>
         </message>
     </context>
     <context>
@@ -6115,6 +6489,61 @@
         <message>
             <source>Retro tiles</source>
             <translation>Retro 타일</translation>
+        </message>
+    </context>
+    <context>
+        <name>OnDeviceDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>시작하는 중…</translation>
+        </message>
+        <message>
+            <source>Ready: pages in this language can be translated on this computer.</source>
+            <translation>준비됨: 이 언어의 페이지를 이 컴퓨터에서 번역할 수 있습니다.</translation>
+        </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>이 컴퓨터에서 번역</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
+        </message>
+        <message>
+            <source>Each language brings what reading its pages and translating them into %1 needs: about 140 MB. Nothing is sent anywhere. ONNX Runtime (Microsoft), PaddleOCR and Opus-MT do the work.</source>
+            <translation>각 언어에는 해당 언어의 페이지를 읽고 %1(으)로 번역하는 데 필요한 것이 들어 있습니다: 약 140MB. 아무것도 전송되지 않습니다. ONNX Runtime(Microsoft), PaddleOCR, Opus-MT가 처리합니다.</translation>
+        </message>
+        <message>
+            <source>Find a language</source>
+            <translation>언어 찾기</translation>
+        </message>
+        <message>
+            <source>Ready · through English</source>
+            <translation>준비됨 · 영어 경유</translation>
+        </message>
+        <message>
+            <source>Ready</source>
+            <translation>준비됨</translation>
+        </message>
+        <message>
+            <source>About %1 MB</source>
+            <translation>약 %1MB</translation>
+        </message>
+        <message>
+            <source>Nothing more to download</source>
+            <translation>더 다운로드할 것이 없습니다</translation>
+        </message>
+        <message>
+            <source> · through English</source>
+            <translation> · 영어 경유</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>제거</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>다운로드</translation>
         </message>
     </context>
     <context>
@@ -7301,6 +7730,50 @@
             <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
             <translation>만화 페이지 이미지를 텍스트와 함께 보내 모델이 누가 말하는지 볼 수 있게 합니다. 이미지를 읽는 모델이 필요하며 비용이 더 듭니다.</translation>
         </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>이 컴퓨터에서 번역</translation>
+        </message>
+        <message>
+            <source>Pages and chapters translated with nothing sent anywhere. Add or remove languages.</source>
+            <translation>어디에도 보내지 않고 번역되는 페이지와 챕터. 언어를 추가하거나 제거합니다.</translation>
+        </message>
+        <message>
+            <source>Download a language once; pages and chapters are then translated with nothing sent anywhere.</source>
+            <translation>언어를 한 번 다운로드하면 페이지와 챕터를 어디에도 보내지 않고 번역합니다.</translation>
+        </message>
+        <message>
+            <source>Languages…</source>
+            <translation>언어…</translation>
+        </message>
+        <message>
+            <source>Translate novels in other languages</source>
+            <translation>다른 언어의 소설 번역</translation>
+        </message>
+        <message>
+            <source>Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.</source>
+            <translation>다른 언어 소스의 챕터(WTR-LAB은 영어)는 번역된 상태로 열립니다. 시리즈마다 리더의 번역 버튼으로 정합니다.</translation>
+        </message>
+        <message>
+            <source>Download a neural voice below, or add one in the system's text-to-speech settings.</source>
+            <translation>아래에서 뉴럴 음성을 다운로드하거나 시스템의 텍스트 음성 변환 설정에서 추가하세요.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>뉴럴 음성</translation>
+        </message>
+        <message>
+            <source>%1 downloaded; natural voices that need no internet</source>
+            <translation>%1개 다운로드됨. 인터넷이 필요 없는 자연스러운 음성</translation>
+        </message>
+        <message>
+            <source>Natural voices that read without the internet, downloaded once</source>
+            <translation>인터넷 없이 읽어 주는 자연스러운 음성(한 번 다운로드)</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>선택…</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7883,6 +8356,22 @@
         <message>
             <source>Any OpenAI-compatible service, or one on your computer</source>
             <translation>OpenAI 호환 서비스 또는 컴퓨터에 있는 서비스</translation>
+        </message>
+        <message>
+            <source>To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a Google Cloud key there.</source>
+            <translation>컴퓨터에서 페이지를 번역하려면 설정 → 읽기 → 이 컴퓨터에서 번역에서 언어를 다운로드하거나 그곳에 Google Cloud 키를 추가하세요.</translation>
+        </message>
+        <message>
+            <source>This computer</source>
+            <translation>이 컴퓨터</translation>
+        </message>
+        <message>
+            <source>Downloaded once; pages never leave the computer</source>
+            <translation>한 번 다운로드. 페이지는 컴퓨터 밖으로 나가지 않습니다</translation>
+        </message>
+        <message>
+            <source>Downloaded once; nothing leaves the computer</source>
+            <translation>한 번 다운로드. 아무것도 컴퓨터 밖으로 나가지 않습니다</translation>
         </message>
     </context>
     <context>
@@ -9084,6 +9573,37 @@
         </message>
     </context>
     <context>
+        <name>SplitPicker</name>
+        <message>
+            <source>No chapters to read</source>
+            <translation>읽을 챕터가 없습니다</translation>
+        </message>
+        <message>
+            <source>Read beside</source>
+            <translation>나란히 읽기</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>닫기</translation>
+        </message>
+        <message>
+            <source>Nothing in progress yet: start a comic or a novel, then read it beside another.</source>
+            <translation>아직 읽는 중인 작품이 없습니다. 만화나 소설을 시작한 뒤 다른 작품과 나란히 읽어 보세요.</translation>
+        </message>
+        <message>
+            <source>Opening…</source>
+            <translation>여는 중…</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>소설</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>만화</translation>
+        </message>
+    </context>
+    <context>
         <name>StateView</name>
         <message>
             <source>Nothing here yet</source>
@@ -9782,6 +10302,18 @@
         <message>
             <source>Retro colours</source>
             <translation>Retro 색상</translation>
+        </message>
+        <message>
+            <source>Glass</source>
+            <translation>글래스</translation>
+        </message>
+        <message>
+            <source>Glass menus and sheets</source>
+            <translation>글래스 메뉴와 시트</translation>
+        </message>
+        <message>
+            <source>Menus, sheets and dialogs show what is behind them, blurred.</source>
+            <translation>메뉴, 시트, 대화 상자가 뒤에 있는 것을 흐리게 보여 줍니다.</translation>
         </message>
     </context>
     <context>
@@ -10998,6 +11530,10 @@
         <message>
             <source>The voice could not read this.</source>
             <translation>음성이 이 부분을 읽지 못했습니다.</translation>
+        </message>
+        <message>
+            <source> (neural)</source>
+            <translation> (뉴럴)</translation>
         </message>
     </context>
 </TS>

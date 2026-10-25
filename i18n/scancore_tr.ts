@@ -545,6 +545,10 @@
             <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
             <translation>SCANCORE kullanılırken süre sayılır: okuyucuda, bir bölüm oynatırken veya göz atarken. Süre tutulmadan önce bitirilen bölümler okuma geçmişinden gelir.</translation>
         </message>
+        <message>
+            <source>Friends</source>
+            <translation>Arkadaşlar</translation>
+        </message>
     </context>
     <context>
         <name>AddRepositoryDialog</name>
@@ -1977,6 +1981,38 @@
             <source>Translate into %1</source>
             <translation>Şu dile çevir: %1</translation>
         </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Yanında başka bir şey oku</translation>
+        </message>
+        <message>
+            <source>React to this page</source>
+            <translation>Bu sayfaya tepki ver</translation>
+        </message>
+        <message>
+            <source>Downloading the upscaler (about 15 MB the first time)…</source>
+            <translation>Büyütücü indiriliyor (ilk seferde yaklaşık 15 MB)…</translation>
+        </message>
+        <message>
+            <source>Enlarge downloaded pages (sharper; slower downloads)</source>
+            <translation>İndirilen sayfaları büyüt (daha net; daha yavaş indirme)</translation>
+        </message>
+        <message>
+            <source>Chapters downloaded from now on are enlarged.</source>
+            <translation>Bundan sonra indirilen bölümler büyütülür.</translation>
+        </message>
+        <message>
+            <source>Keys</source>
+            <translation>Tuşlar</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Bu seri için tuşlar</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Günlük tuşlar</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -2615,6 +2651,10 @@
         <message>
             <source>Choose folder</source>
             <translation>Klasör seç</translation>
+        </message>
+        <message>
+            <source>Your server: series read from other sources move forward on it too. It is managed in Settings → Sources → Your servers.</source>
+            <translation>Sunucun: başka kaynaklardan okunan seriler onda da ilerler. Ayarlar → Kaynaklar → Sunucuların bölümünden yönetilir.</translation>
         </message>
     </context>
     <context>
@@ -3447,6 +3487,193 @@
         </message>
     </context>
     <context>
+        <name>FriendsPage</name>
+        <message>
+            <source>just now</source>
+            <translation>az önce</translation>
+        </message>
+        <message>
+            <source>%1 min ago</source>
+            <translation>%1 dk önce</translation>
+        </message>
+        <message>
+            <source>%1 h ago</source>
+            <translation>%1 sa önce</translation>
+        </message>
+        <message>
+            <source>%1 days ago</source>
+            <translation>%1 gün önce</translation>
+        </message>
+        <message>
+            <source>%1 shared a list: %2</source>
+            <translation>%1 bir liste paylaştı: %2</translation>
+        </message>
+        <message>
+            <source>%1 watched %2</source>
+            <translation>%1, %2 izledi</translation>
+        </message>
+        <message>
+            <source>%1 read %2</source>
+            <translation>%1, %2 okudu</translation>
+        </message>
+        <message>
+            <source>That list is empty.</source>
+            <translation>Bu liste boş.</translation>
+        </message>
+        <message>
+            <source>Shared. The link is copied: %1</source>
+            <translation>Paylaşıldı. Bağlantı kopyalandı: %1</translation>
+        </message>
+        <message>
+            <source>%1 added to your library; %2 could not be found on your sources.</source>
+            <translation>%1 seri kitaplığına eklendi; %2 seri kaynaklarında bulunamadı.</translation>
+        </message>
+        <message>
+            <source>All of it is in your library already.</source>
+            <translation>Hepsi zaten kitaplığında.</translation>
+        </message>
+        <message>
+            <source>%1 added to your library.</source>
+            <translation>%1 seri kitaplığına eklendi.</translation>
+        </message>
+        <message>
+            <source>Friends</source>
+            <translation>Arkadaşlar</translation>
+        </message>
+        <message>
+            <source>Follow each other on %1 to be friends</source>
+            <translation>Arkadaş olmak için %1 üzerinde birbirinizi takip edin</translation>
+        </message>
+        <message>
+            <source>Sign in (Settings → Sync) to add friends, see what they read and share lists.</source>
+            <translation>Arkadaş eklemek, ne okuduklarını görmek ve liste paylaşmak için giriş yap (Ayarlar → Eşitleme).</translation>
+        </message>
+        <message>
+            <source>You</source>
+            <translation>Sen</translation>
+        </message>
+        <message>
+            <source>Share what I read and watch</source>
+            <translation>Okuduklarımı ve izlediklerimi paylaş</translation>
+        </message>
+        <message>
+            <source>Your friends see the series you read and watch, and the lists you share. Off: they see nothing.</source>
+            <translation>Arkadaşların okuduğun ve izlediğin serileri ve paylaştığın listeleri görür. Kapalı: hiçbir şey görmezler.</translation>
+        </message>
+        <message>
+            <source>Add a friend</source>
+            <translation>Arkadaş ekle</translation>
+        </message>
+        <message>
+            <source>Their username; when they add you too, you are friends. You are @%1.</source>
+            <translation>Kullanıcı adı; o da seni eklediğinde arkadaş olursunuz. Sen @%1'sin.</translation>
+        </message>
+        <message>
+            <source>username</source>
+            <translation>kullanıcı adı</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ekle</translation>
+        </message>
+        <message>
+            <source>You follow @%1.</source>
+            <translation>@%1 kullanıcısını takip ediyorsun.</translation>
+        </message>
+        <message>
+            <source>Asking to be friends</source>
+            <translation>Arkadaşlık isteği gönderildi</translation>
+        </message>
+        <message>
+            <source>Added you</source>
+            <translation>Seni ekledi</translation>
+        </message>
+        <message>
+            <source>Add back</source>
+            <translation>Sen de ekle</translation>
+        </message>
+        <message>
+            <source>No friends yet.</source>
+            <translation>Henüz arkadaş yok.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Kaldır</translation>
+        </message>
+        <message>
+            <source>Waiting for them to add you</source>
+            <translation>Seni eklemesi bekleniyor</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>İptal</translation>
+        </message>
+        <message>
+            <source>What friends read</source>
+            <translation>Arkadaşlar ne okuyor</translation>
+        </message>
+        <message>
+            <source>Nothing yet: friends show here once they share what they read.</source>
+            <translation>Henüz bir şey yok: arkadaşlar okuduklarını paylaştıklarında burada görünür.</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Aç</translation>
+        </message>
+        <message>
+            <source>Shared lists</source>
+            <translation>Paylaşılan listeler</translation>
+        </message>
+        <message>
+            <source>Share a list from your library</source>
+            <translation>Kitaplığından bir liste paylaş</translation>
+        </message>
+        <message>
+            <source>Anyone with the link sees it, and can add it all to their library in SCANCORE.</source>
+            <translation>Bağlantıya sahip olan herkes onu görür ve hepsini SCANCORE'daki kitaplığına ekleyebilir.</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Paylaş</translation>
+        </message>
+        <message>
+            <source>Open a shared list</source>
+            <translation>Paylaşılan bir liste aç</translation>
+        </message>
+        <message>
+            <source>Its link or code.</source>
+            <translation>Bağlantısı veya kodu.</translation>
+        </message>
+        <message>
+            <source>link or code</source>
+            <translation>bağlantı veya kod</translation>
+        </message>
+        <message>
+            <source>%1 series from @%2: %3</source>
+            <translation>@%2 kullanıcısından %1 seri: %3</translation>
+        </message>
+        <message>
+            <source>Add all to my library</source>
+            <translation>Hepsini kitaplığıma ekle</translation>
+        </message>
+        <message>
+            <source>%1 series · shared %2</source>
+            <translation>%1 seri · paylaşıldı %2</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>Bağlantıyı kopyala</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>Bağlantı kopyalandı</translation>
+        </message>
+        <message>
+            <source>Stop sharing</source>
+            <translation>Paylaşmayı durdur</translation>
+        </message>
+    </context>
+    <context>
         <name>HistoryPage</name>
         <message>
             <source>Today</source>
@@ -4099,6 +4326,74 @@
         <message>
             <source>Back to the default</source>
             <translation>Varsayılana dön</translation>
+        </message>
+        <message>
+            <source>Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. </source>
+            <translation>Bir kısayola tıkla, sonra yeni tuşlara bas. Geri tuşu bir eylemi tuşsuz bırakır; Esc eskisini korur. </translation>
+        </message>
+        <message>
+            <source>Everyday: </source>
+            <translation>Günlük: </translation>
+        </message>
+        <message>
+            <source>none</source>
+            <translation>yok</translation>
+        </message>
+        <message>
+            <source>Back to the everyday keys</source>
+            <translation>Günlük tuşlara dön</translation>
+        </message>
+        <message>
+            <source>Key profiles</source>
+            <translation>Tuş profilleri</translation>
+        </message>
+        <message>
+            <source>Other keys for the readers, for the series you choose (in the reader's settings, under Keys): one-handed keys for webtoons, say. Keys a profile leaves alone stay as everyday.</source>
+            <translation>Seçtiğin seriler için okuyuculara başka tuşlar (okuyucu ayarlarında, Tuşlar altında): örneğin webtoonlar için tek el tuşları. Bir profilin dokunmadığı tuşlar günlük hâliyle kalır.</translation>
+        </message>
+        <message>
+            <source>Readers' keys below</source>
+            <translation>Okuyucu tuşları aşağıda</translation>
+        </message>
+        <message>
+            <source>Changing the profile “%1”</source>
+            <translation>“%1” profili değiştiriliyor</translation>
+        </message>
+        <message>
+            <source>Changing the everyday keys</source>
+            <translation>Günlük tuşlar değiştiriliyor</translation>
+        </message>
+        <message>
+            <source>Key profile</source>
+            <translation>Tuş profili</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Günlük tuşlar</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Sil</translation>
+        </message>
+        <message>
+            <source>New profile</source>
+            <translation>Yeni profil</translation>
+        </message>
+        <message>
+            <source>Starts as the everyday keys</source>
+            <translation>Günlük tuşlarla başlar</translation>
+        </message>
+        <message>
+            <source>Name, e.g. Webtoons</source>
+            <translation>Ad, ör. Webtoonlar</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Ekle</translation>
+        </message>
+        <message>
+            <source>There is a profile with that name already.</source>
+            <translation>Bu adda bir profil zaten var.</translation>
         </message>
     </context>
     <context>
@@ -5259,6 +5554,22 @@
             <source>Choose</source>
             <translation>Seç</translation>
         </message>
+        <message>
+            <source>Also the other extension you had in %1</source>
+            <translation>%1 içindeki diğer uzantı da</translation>
+        </message>
+        <message>
+            <source>Also the %1 other extensions you had in %2</source>
+            <translation>%2 içindeki diğer %1 uzantı da</translation>
+        </message>
+        <message>
+            <source>Install the extension you had in %1</source>
+            <translation>%1 içindeki uzantıyı yükle</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions you had in %2</source>
+            <translation>%2 içindeki %1 uzantıyı yükle</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -5365,6 +5676,57 @@
         <message>
             <source>Settings</source>
             <translation>Ayarlar</translation>
+        </message>
+    </context>
+    <context>
+        <name>NeuralVoicesDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Başlatılıyor…</translation>
+        </message>
+        <message>
+            <source>Voice ready: choose it under Voice.</source>
+            <translation>Ses hazır: Ses altından seç.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Nöral sesler</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Natural voices that read on this computer, with no internet once downloaded. The first one also brings the voice program (Piper, about 25 MB).</source>
+            <translation>Bu bilgisayarda okuyan, indirildikten sonra internet gerektirmeyen doğal sesler. İlki ses programını da getirir (Piper, yaklaşık 25 MB).</translation>
+        </message>
+        <message>
+            <source>Find a voice or language</source>
+            <translation>Ses veya dil bul</translation>
+        </message>
+        <message>
+            <source>Best quality</source>
+            <translation>En iyi kalite</translation>
+        </message>
+        <message>
+            <source>Good quality</source>
+            <translation>İyi kalite</translation>
+        </message>
+        <message>
+            <source>Smaller</source>
+            <translation>Daha küçük</translation>
+        </message>
+        <message>
+            <source>Smallest</source>
+            <translation>En küçük</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Kaldır</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>İndir</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +6063,18 @@
         <message>
             <source>Pause between sentences · %1 s</source>
             <translation>Cümleler arası duraklama · %1 sn</translation>
+        </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Yanında başka bir şey oku</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Bu seri için tuşlar</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Günlük tuşlar</translation>
         </message>
     </context>
     <context>
@@ -6115,6 +6489,61 @@
         <message>
             <source>Retro tiles</source>
             <translation>Retro kutucukları</translation>
+        </message>
+    </context>
+    <context>
+        <name>OnDeviceDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Başlatılıyor…</translation>
+        </message>
+        <message>
+            <source>Ready: pages in this language can be translated on this computer.</source>
+            <translation>Hazır: bu dildeki sayfalar bu bilgisayarda çevrilebilir.</translation>
+        </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Bu bilgisayarda çevir</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Each language brings what reading its pages and translating them into %1 needs: about 140 MB. Nothing is sent anywhere. ONNX Runtime (Microsoft), PaddleOCR and Opus-MT do the work.</source>
+            <translation>Her dil, sayfalarını okumak ve %1 diline çevirmek için gerekenleri getirir: yaklaşık 140 MB. Hiçbir yere bir şey gönderilmez. İşi ONNX Runtime (Microsoft), PaddleOCR ve Opus-MT yapar.</translation>
+        </message>
+        <message>
+            <source>Find a language</source>
+            <translation>Dil bul</translation>
+        </message>
+        <message>
+            <source>Ready · through English</source>
+            <translation>Hazır · İngilizce üzerinden</translation>
+        </message>
+        <message>
+            <source>Ready</source>
+            <translation>Hazır</translation>
+        </message>
+        <message>
+            <source>About %1 MB</source>
+            <translation>Yaklaşık %1 MB</translation>
+        </message>
+        <message>
+            <source>Nothing more to download</source>
+            <translation>İndirilecek başka bir şey yok</translation>
+        </message>
+        <message>
+            <source> · through English</source>
+            <translation> · İngilizce üzerinden</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Kaldır</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>İndir</translation>
         </message>
     </context>
     <context>
@@ -7301,6 +7730,50 @@
             <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
             <translation>Çizgi roman sayfasının resmini metniyle birlikte gönderir, böylece model kimin konuştuğunu görür. Resim okuyabilen bir model gerekir; daha pahalıdır.</translation>
         </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Bu bilgisayarda çevir</translation>
+        </message>
+        <message>
+            <source>Pages and chapters translated with nothing sent anywhere. Add or remove languages.</source>
+            <translation>Sayfalar ve bölümler hiçbir yere bir şey gönderilmeden çevrilir. Dil ekle veya kaldır.</translation>
+        </message>
+        <message>
+            <source>Download a language once; pages and chapters are then translated with nothing sent anywhere.</source>
+            <translation>Bir dili bir kez indir; sayfalar ve bölümler artık hiçbir yere bir şey gönderilmeden çevrilir.</translation>
+        </message>
+        <message>
+            <source>Languages…</source>
+            <translation>Diller…</translation>
+        </message>
+        <message>
+            <source>Translate novels in other languages</source>
+            <translation>Diğer dillerdeki romanları çevir</translation>
+        </message>
+        <message>
+            <source>Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.</source>
+            <translation>Başka dildeki bir kaynaktan gelen bölümler (WTR-LAB'inkiler, İngilizce) çevrilmiş açılır. Okuyucudaki Çevir düğmesi her seri için karar verir.</translation>
+        </message>
+        <message>
+            <source>Download a neural voice below, or add one in the system's text-to-speech settings.</source>
+            <translation>Aşağıdan bir nöral ses indir veya sistemin metin okuma ayarlarından bir tane ekle.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Nöral sesler</translation>
+        </message>
+        <message>
+            <source>%1 downloaded; natural voices that need no internet</source>
+            <translation>%1 indirildi; internet gerektirmeyen doğal sesler</translation>
+        </message>
+        <message>
+            <source>Natural voices that read without the internet, downloaded once</source>
+            <translation>İnternetsiz okuyan doğal sesler, bir kez indirilir</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>Seç…</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7883,6 +8356,22 @@
         <message>
             <source>Any OpenAI-compatible service, or one on your computer</source>
             <translation>OpenAI uyumlu herhangi bir hizmet ya da bilgisayarındaki bir hizmet</translation>
+        </message>
+        <message>
+            <source>To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a Google Cloud key there.</source>
+            <translation>Bilgisayarda sayfa çevirmek için Ayarlar → Okuma → Bu bilgisayarda çevir bölümünden bir dil indir veya oraya bir Google Cloud anahtarı ekle.</translation>
+        </message>
+        <message>
+            <source>This computer</source>
+            <translation>Bu bilgisayar</translation>
+        </message>
+        <message>
+            <source>Downloaded once; pages never leave the computer</source>
+            <translation>Bir kez indirilir; sayfalar asla bilgisayardan çıkmaz</translation>
+        </message>
+        <message>
+            <source>Downloaded once; nothing leaves the computer</source>
+            <translation>Bir kez indirilir; hiçbir şey bilgisayardan çıkmaz</translation>
         </message>
     </context>
     <context>
@@ -9084,6 +9573,37 @@
         </message>
     </context>
     <context>
+        <name>SplitPicker</name>
+        <message>
+            <source>No chapters to read</source>
+            <translation>Okunacak bölüm yok</translation>
+        </message>
+        <message>
+            <source>Read beside</source>
+            <translation>Yanında oku</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Kapat</translation>
+        </message>
+        <message>
+            <source>Nothing in progress yet: start a comic or a novel, then read it beside another.</source>
+            <translation>Henüz devam eden bir şey yok: bir çizgi roman veya roman başlat, sonra başka birinin yanında oku.</translation>
+        </message>
+        <message>
+            <source>Opening…</source>
+            <translation>Açılıyor…</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Roman</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Çizgi roman</translation>
+        </message>
+    </context>
+    <context>
         <name>StateView</name>
         <message>
             <source>Nothing here yet</source>
@@ -9782,6 +10302,18 @@
         <message>
             <source>Retro colours</source>
             <translation>Retro renkleri</translation>
+        </message>
+        <message>
+            <source>Glass</source>
+            <translation>Cam</translation>
+        </message>
+        <message>
+            <source>Glass menus and sheets</source>
+            <translation>Cam menüler ve paneller</translation>
+        </message>
+        <message>
+            <source>Menus, sheets and dialogs show what is behind them, blurred.</source>
+            <translation>Menüler, paneller ve iletişim kutuları arkalarındakini bulanık gösterir.</translation>
         </message>
     </context>
     <context>
@@ -10998,6 +11530,10 @@
         <message>
             <source>The voice could not read this.</source>
             <translation>Ses bunu okuyamadı.</translation>
+        </message>
+        <message>
+            <source> (neural)</source>
+            <translation> (nöral)</translation>
         </message>
     </context>
 </TS>

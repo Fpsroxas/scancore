@@ -1,13 +1,13 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Window
-import ScanCore
+import Scancore
 
 // Anime player. Episodes from anime extensions play in SCANCORE's own player
 // (NativePlayer, libmpv): an extension's own anime from its source, an
 // AniList anime from the source picked in "Watch from". Otherwise ReAnime's
 // streams are the provider's own player page, shown in an embedded browser.
-// Either way ScanCore follows the position for resume, auto-next and
+// Either way SCANCORE follows the position for resume, auto-next and
 // skipping intros (AniSkip, or the video's own chapters).
 //
 // Desktop with Qt WebEngine (Linux): the video fills the page and the top
@@ -748,6 +748,9 @@ Rectangle {
                 item.hasNext = Qt.binding(() => watch.hasNext)
                 item.panelOpen = Qt.binding(() => panel.opened)
                 item.fullScreen = Qt.binding(() => watch.immersed || watch.fullScreen)
+                // Phone landscape: the picture may go under a side cutout.
+                item.bleedLeft = Qt.binding(() => watch.immersed && watch.StackView.view ? watch.StackView.view.cutoutLeft : 0)
+                item.bleedRight = Qt.binding(() => watch.immersed && watch.StackView.view ? watch.StackView.view.cutoutRight : 0)
             }
             function seek(seconds) { if (item) item.seek(seconds) }
             Connections {

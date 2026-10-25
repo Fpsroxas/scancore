@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Dialogs
-import ScanCore
+import Scancore
 
 SettingsPane {
     id: pane
@@ -154,6 +154,17 @@ SettingsPane {
                     }
                 }
             }
+        }
+    }
+
+    SettingsGroup {
+        visible: !Theme.eink
+        title: qsTr("Glass")
+        SettingRow {
+            iconName: "layers"
+            title: qsTr("Glass menus and sheets")
+            description: qsTr("Menus, sheets and dialogs show what is behind them, blurred.")
+            Toggle { checked: App.settings.glass === true; onToggled: App.setSetting("glass", checked) }
         }
     }
 

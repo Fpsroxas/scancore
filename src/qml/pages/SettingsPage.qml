@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Settings. Wide windows list the categories beside the one being shown;
 // phones show the categories as a list and open each on its own page
@@ -15,11 +15,11 @@ Item {
         { key: "connections", file: "ConnectionsSettings.qml", title: qsTr("Connections"), subtitle: qsTr("AniList, MyAnimeList, Comick and imports"), icon: "link", tint: "emerald",
           keywords: "anilist myanimelist mal comick tracking tracker list discord rich presence status import mihon tachiyomi tachibk backup export xml bring library" },
         { key: "theme", file: "ThemeSettings.qml", title: qsTr("Theme"), subtitle: qsTr("Colours, background and transparency"), icon: "palette", tint: "violet",
-          keywords: "dark light black system custom colour color accent wheel background picture image gif wallpaper transparency transparent opacity panels export import sct share" },
+          keywords: "dark light black system custom colour color accent wheel background picture image gif wallpaper transparency transparent opacity panels export import sct share glass blur frosted see-through menus sheets" },
         { key: "interface", file: "InterfaceSettings.qml", title: qsTr("Interface"), subtitle: qsTr("Navigation, size and motion"), icon: "layout-grid", tint: "indigo",
           keywords: "language translation idioma langue bahasa idioma sidebar dock rail floating navigation left right top bottom text size font cover animation motion speed reduce start page" },
         { key: "keyboard", file: "KeyboardSettings.qml", title: qsTr("Keyboard"), subtitle: qsTr("Shortcuts"), icon: "keyboard", tint: "mono",
-          keywords: "keys shortcuts keybinds hotkeys bindings", desktop: true },
+          keywords: "keys shortcuts keybinds hotkeys bindings key profiles per series", desktop: true },
         { key: "reading", file: "ReadingSettings.qml", title: qsTr("Reading"), subtitle: qsTr("Comic and novel readers"), icon: "book-open", tint: "ember",
           keywords: "comic novel reader strip pages direction width gap font size line spacing justify sepia paper" },
         { key: "anime", file: "AnimeSettings.qml", title: qsTr("Anime"), subtitle: qsTr("Playback and skipping"), icon: "tv", tint: "rose",

@@ -3,6 +3,8 @@
 #include "Anime.h"
 #include "Library.h"
 #include "Novels.h"
+#include "OnDevice.h"
+#include "App.h"
 #include "Platform.h"
 #include "core/Database.h"
 #include "core/Epub.h"
@@ -20,6 +22,8 @@
 #include <QDirIterator>
 #include <QElapsedTimer>
 #include <QFile>
+#include <QFileInfo>
+#include <QImage>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -29,6 +33,8 @@
 #include <QRegularExpression>
 #include <QSaveFile>
 #include <QStandardPaths>
+
+#include <functional>
 
 namespace sc {
 
@@ -64,6 +70,49 @@ QString extensionFor(const QByteArray &contentType, const QString &url) {
         return QStringLiteral("jpg");
     const auto suffix = QFileInfo(QUrl(url).path()).suffix().toLower();
     return suffix.isEmpty() ? QStringLiteral("jpg") : suffix;
+}
+
+// Low-resolution pages enlarged twice on the computer (waifu2x), when the
+// series asks (its reader's readerUpscale, else the reader's own setting)
+// and the upscaler is installed. A page that fails keeps its own picture.
+bool wantsUpscale(const QString &seriesId) {
+    auto wanted = Library::instance()->seriesSettings(seriesId).value(QStringLiteral("reader")).toMap().value(QStringLiteral("readerUpscale"));
+    if (!wanted.isValid())
+        wanted = App::instance()->settings().value(QStringLiteral("readerUpscale"));
+    return wanted.toBool() && OnDevice::instance()->upscalerInstalled();
+}
+
+// `progress(i)` after each page.
+void upscalePages(const QString &folder, QJsonArray &index, const std::function<void(int)> &progress) {
+    for (int i = 0; i < index.size(); ++i) {
+        progress(i);
+        if (CancelScope::cancelled())
+            return;
+        auto entry = index[i].toObject();
+        const auto path = folder + QLatin1Char('/') + entry.value(QStringLiteral("file")).toString();
+        QImage page(path);
+        // Pages this wide already look sharp on any screen.
+        if (page.isNull() || page.width() >= 1200)
+            continue;
+        try {
+            const auto big = OnDevice::instance()->upscale(page);
+            const auto name = QFileInfo(path).completeBaseName() + QStringLiteral(".jpg");
+            if (!big.save(folder + QLatin1Char('/') + name + QStringLiteral(".part"), "JPEG", 92))
+                continue;
+            if (name != QFileInfo(path).fileName())
+                QFile::remove(path);
+            QFile::remove(folder + QLatin1Char('/') + name);
+            QFile::rename(folder + QLatin1Char('/') + name + QStringLiteral(".part"), folder + QLatin1Char('/') + name);
+            entry.insert(QStringLiteral("file"), name);
+            entry.insert(QStringLiteral("width"), big.width());
+            entry.insert(QStringLiteral("height"), big.height());
+            entry.insert(QStringLiteral("upscaled"), true);
+            index[i] = entry;
+        } catch (const Error &e) {
+            qWarning("Upscaling %s: %s", qPrintable(path), e.what());
+            return;
+        }
+    }
 }
 
 void writeJson(const QString &path, const QJsonDocument &doc) {
@@ -193,7 +242,8 @@ void Downloads::runJob(const QVariantMap &row, const CancelFlag &flag) {
             const auto panels = source->panels(unitUrl);
             if (panels.isEmpty())
                 throw Error(QStringLiteral("This chapter has no readable pages."));
-            Database::exec(QStringLiteral("UPDATE downloads SET total = ?, done = 0 WHERE id = ?"), {panels.size(), id});
+            const bool upscale = wantsUpscale(seriesId);
+            Database::exec(QStringLiteral("UPDATE downloads SET total = ?, done = 0 WHERE id = ?"), {panels.size() * (upscale ? 2 : 1), id});
             QJsonArray index;
             for (int i = 0; i < panels.size(); ++i) {
                 if (CancelScope::cancelled())
@@ -242,6 +292,12 @@ void Downloads::runJob(const QVariantMap &row, const CancelFlag &flag) {
                 Database::exec(QStringLiteral("UPDATE downloads SET done = ? WHERE id = ?"), {i + 1, id});
                 QMetaObject::invokeMethod(this, [this] { notify(); });
             }
+            // Enlarging is the second half of the progress bar.
+            if (upscale)
+                upscalePages(folder, index, [&](int i) {
+                    Database::exec(QStringLiteral("UPDATE downloads SET done = ? WHERE id = ?"), {int(panels.size()) + i, id});
+                    QMetaObject::invokeMethod(this, [this] { notify(); });
+                });
             writeJson(folder + QStringLiteral("/index.json"), QJsonDocument(QJsonObject{{"panels", index}}));
         } else if (seriesId.startsWith(QLatin1String("anime:"))) {
             const auto from = QJsonDocument::fromJson(row.value(QStringLiteral("extra")).toByteArray()).object();

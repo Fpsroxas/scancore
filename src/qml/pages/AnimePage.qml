@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Anime home: rotating spotlight, continue watching, today's schedule and
 // the anime catalogue's lists: AniList's trending, seasonal, popular and

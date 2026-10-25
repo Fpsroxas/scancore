@@ -192,6 +192,12 @@
   "file": "FTL.txt"
  },
  {
+  "name": "ONNX Runtime (C API headers)",
+  "use": "Translating on the computer; the runtime itself is an optional download",
+  "licence": "MIT",
+  "file": "MIT.txt"
+ },
+ {
   "name": "zlib",
   "use": "Compression in the video player",
   "licence": "Zlib",

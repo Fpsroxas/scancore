@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // Floating card that appears when a new version is downloaded (or can be).
 Rectangle {

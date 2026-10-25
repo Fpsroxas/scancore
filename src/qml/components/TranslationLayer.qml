@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // A comic page's translation, over the page: each bubble the translator
 // found is covered with its translation, fitted to the bubble. A tap on one

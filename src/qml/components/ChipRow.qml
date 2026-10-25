@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // A row of chips that spans its parent. Wide windows wrap it onto more
 // lines; phones keep it on one line that scrolls sideways, so a long list of

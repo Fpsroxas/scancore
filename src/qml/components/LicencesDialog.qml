@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // The open-source software inside SCANCORE and the licences it comes under
 // (resources/licenses). Choosing one shows its licence text.
@@ -43,9 +43,9 @@ Dialog {
         }
     }
 
-    background: Rectangle {
+    background: GlassPanel {
         radius: Theme.radiusXl
-        color: Theme.surface
+        fill: Theme.surface
         border.width: 1
         border.color: Theme.borderStrong
     }

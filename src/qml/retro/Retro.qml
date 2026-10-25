@@ -1,6 +1,6 @@
 pragma Singleton
 import QtQuick
-import ScanCore
+import Scancore
 
 // The Retro mode's own state: the hub's sections, the tiles pinned to it,
 // the title and where the hub is (for the app bar's button). Lists are kept

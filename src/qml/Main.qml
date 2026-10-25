@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls.Basic
 import QtQuick.Window
-import ScanCore
+import Scancore
 
 ApplicationWindow {
     id: window
@@ -266,6 +266,15 @@ ApplicationWindow {
         // (Select): the focus moves on as from anywhere else.
         function moveFocus(direction) { return spatialFocus.move(direction) }
 
+        // Side by side: `path` with `props` beside the reader that is open.
+        readonly property bool canSplit: window.width >= 1100 && immersive.depth > 0
+        readonly property var splitItem: splitPane.active ? splitLoader.item : null
+        function openSplit(path, props) { splitPane.open(path, props) }
+        function closeSplit() { if (splitPane.page != "") splitPane.close() }
+        // Which of the two readers the keys go to: the one last clicked or
+        // focused (both answering the same shortcut, Qt would run neither).
+        property var keyReader: null
+
         function openImmersive(path, props) {
             immersive.push(Qt.resolvedUrl(path), props)
             if (App.profiling) App.profilePlace(path)
@@ -520,13 +529,19 @@ ApplicationWindow {
         // The parent's safe area, so these margins do not feed back into it.
         anchors.topMargin: edgeToEdge ? 0 : parent.SafeArea.margins.top
         anchors.bottomMargin: edgeToEdge ? 0 : parent.SafeArea.margins.bottom
-        // A side cutout (a phone on its side) is kept clear by every page.
-        anchors.leftMargin: parent.SafeArea.margins.left
-        anchors.rightMargin: parent.SafeArea.margins.right
+        // A side cutout (a phone on its side) is kept clear by every page;
+        // the player's picture may reach into it (StackView.view.cutoutLeft).
+        anchors.leftMargin: cutoutLeft
+        // Side by side: the second reader has the right half.
+        anchors.rightMargin: cutoutRight + (splitPane.active ? splitPane.width : 0)
+        readonly property real cutoutLeft: parent.SafeArea.margins.left
+        readonly property real cutoutRight: parent.SafeArea.margins.right
         visible: depth > 0 || busy
         z: 10
         // Readers handle their own keys, so they need focus as soon as they open.
         onCurrentItemChanged: if (currentItem) currentItem.forceActiveFocus()
+        // The reader beside goes with the last one here.
+        onDepthChanged: if (depth === 0) shell.closeSplit()
         // NumberAnimations, not Animators: the first reader pushed onto the
         // empty stack gets the starting opacity without the animation
         // running, and an Animator never puts the end value back, so it
@@ -547,6 +562,42 @@ ApplicationWindow {
         }
         replaceEnter: pushEnter
         replaceExit: pushExit
+    }
+
+    // Side by side (wide windows): a second reader on the right half, opened
+    // from a reader's Side by side button (Router.toSplit); its own close
+    // closes only it (Router.leave).
+    Item {
+        id: splitPane
+        parent: window.contentItem.parent
+        property url page: ""
+        property var props: ({})
+        readonly property bool active: page != "" && immersive.depth > 0 && window.width >= 1100
+        visible: active
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.rightMargin: immersive.cutoutRight
+        width: Math.round((parent.width - immersive.cutoutLeft - immersive.cutoutRight) / 2)
+        z: 10
+        Rectangle { anchors.fill: parent; color: "#000000" }
+        Loader {
+            id: splitLoader
+            anchors.fill: parent
+            anchors.leftMargin: 1
+            onLoaded: item.forceActiveFocus()
+        }
+        // Between the two: a line to tell them apart.
+        Rectangle { width: 1; height: parent.height; color: "#2a2a30" }
+        function open(path, props) {
+            page = Qt.resolvedUrl(path)
+            splitLoader.setSource(page, props || {})
+        }
+        function close() {
+            page = ""
+            splitLoader.source = ""
+            if (immersive.currentItem) immersive.currentItem.forceActiveFocus()
+        }
     }
 
     HeroLayer {

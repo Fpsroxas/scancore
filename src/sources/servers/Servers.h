@@ -43,6 +43,13 @@ std::unique_ptr<comics::Source> createSource(const Server &server);
 // background); failures are only logged. `sourceKey` "server-<id>"; other sources are ignored.
 void chapterRead(const QString &sourceKey, const QString &seriesUrl, const QString &chapterUrl, const QString &number);
 
+// Komga and Kavita as trackers for series read from other sources (as
+// Mihon's are): the server's series by title ([{id, title, titles,
+// detail, total}]), and one moved forward so every chapter up to
+// `progress` is read. Blocking; throw Error.
+QVariantList trackerSearch(const Server &server, const QString &title);
+void trackerPush(const Server &server, const QVariant &id, int progress);
+
 // Lets the image cache fetch "server:<id>" images with their login. Once.
 void registerImages();
 

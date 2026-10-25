@@ -52,6 +52,11 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="2.13.0" date="2026-10-25">
+      <description>
+        <p>Friends and lists shared by link, reactions on a page, two readers side by side, natural voices and page translation that work offline on the computer, sharper downloaded scans, key profiles per series, and glass menus.</p>
+      </description>
+    </release>
     <release version="2.12.3" date="2026-10-25">
       <description>
         <p>Fixes pages that could stay empty in the Retro look, such as Settings.</p>

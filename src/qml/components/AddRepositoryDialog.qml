@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Every way of adding a repository ends here: a one-tap link, a pasted
 // address, the first-run step. Reads the repository first, says what it is
@@ -98,9 +98,9 @@ Dialog {
         }
     }
 
-    background: Rectangle {
+    background: GlassPanel {
         radius: Theme.radiusXl
-        color: Theme.surface
+        fill: Theme.surface
         border.width: 1
         border.color: Theme.borderStrong
     }

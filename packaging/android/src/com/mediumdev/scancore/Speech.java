@@ -63,7 +63,11 @@ public final class Speech {
                     if (v.isNetworkConnectionRequired() && v.getFeatures().contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)) continue;
                     JSONObject o = new JSONObject();
                     o.put("id", v.getName());
-                    o.put("name", v.getName());
+                    // Engines name voices like "en-us-x-tpf-local": how good
+                    // and whether it needs the internet say more.
+                    String quality = v.getQuality() >= Voice.QUALITY_VERY_HIGH ? " · very high quality"
+                                   : v.getQuality() >= Voice.QUALITY_HIGH ? " · high quality" : "";
+                    o.put("name", v.getName() + quality + (v.isNetworkConnectionRequired() ? " · online" : ""));
                     o.put("language", v.getLocale().toLanguageTag().replace('-', '_'));
                     out.put(o);
                 }
@@ -75,9 +79,30 @@ public final class Speech {
     private static void apply() {
         tts.setSpeechRate(rate);
         tts.setPitch(pitch);
-        if (!voice.isEmpty() && tts.getVoices() != null)
+        if (tts.getVoices() == null) return;
+        if (!voice.isEmpty()) {
             for (Voice v : tts.getVoices())
                 if (v.getName().equals(voice)) { tts.setVoice(v); return; }
+            return;
+        }
+        Voice best = best();
+        if (best != null) tts.setVoice(best);
+    }
+
+    // No voice picked: the best the engine has for its own language without
+    // the internet (its default is not always its best).
+    private static Voice best() {
+        Voice fallback = tts.getDefaultVoice();
+        if (fallback == null) return null;
+        Voice best = fallback.isNetworkConnectionRequired() ? null : fallback;
+        for (Voice v : tts.getVoices()) {
+            if (!v.getLocale().equals(fallback.getLocale())) continue;
+            if (v.isNetworkConnectionRequired() || v.getFeatures().contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED)) continue;
+            if (best == null || v.getQuality() > best.getQuality()
+                    || (v.getQuality() == best.getQuality() && v.getLatency() < best.getLatency()))
+                best = v;
+        }
+        return best != null ? best : fallback;
     }
 
     private static void speakNow(String text, int chunk) {

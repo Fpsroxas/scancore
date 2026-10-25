@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // A reader, the player or a page in a window of its own (computers): read
 // one series while another downloads, the anime on a second screen, or a

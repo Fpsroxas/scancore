@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Navigation as a floating dock along the top or bottom of the window: every
 // section as an icon that grows under the pointer, with its name above (or

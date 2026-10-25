@@ -545,6 +545,10 @@
             <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
             <translation>使用 SCANCORE 时会计时：在阅读器中、播放剧集或浏览时。开始计时之前读完的章节来自你的阅读记录。</translation>
         </message>
+        <message>
+            <source>Friends</source>
+            <translation>好友</translation>
+        </message>
     </context>
     <context>
         <name>AddRepositoryDialog</name>
@@ -1977,6 +1981,38 @@
             <source>Translate into %1</source>
             <translation>翻译成%1</translation>
         </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>在旁边阅读其他作品</translation>
+        </message>
+        <message>
+            <source>React to this page</source>
+            <translation>对此页面做出回应</translation>
+        </message>
+        <message>
+            <source>Downloading the upscaler (about 15 MB the first time)…</source>
+            <translation>正在下载放大器（首次约 15 MB）…</translation>
+        </message>
+        <message>
+            <source>Enlarge downloaded pages (sharper; slower downloads)</source>
+            <translation>放大已下载的页面（更清晰；下载更慢）</translation>
+        </message>
+        <message>
+            <source>Chapters downloaded from now on are enlarged.</source>
+            <translation>从现在起下载的章节会被放大。</translation>
+        </message>
+        <message>
+            <source>Keys</source>
+            <translation>按键</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>此作品的按键</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>日常按键</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -2615,6 +2651,10 @@
         <message>
             <source>Choose folder</source>
             <translation>选择文件夹</translation>
+        </message>
+        <message>
+            <source>Your server: series read from other sources move forward on it too. It is managed in Settings → Sources → Your servers.</source>
+            <translation>我的服务器：从其他来源阅读的作品也会在其上同步进度。在 设置 → 来源 → 我的服务器 中管理。</translation>
         </message>
     </context>
     <context>
@@ -3447,6 +3487,193 @@
         </message>
     </context>
     <context>
+        <name>FriendsPage</name>
+        <message>
+            <source>just now</source>
+            <translation>刚刚</translation>
+        </message>
+        <message>
+            <source>%1 min ago</source>
+            <translation>%1 分钟前</translation>
+        </message>
+        <message>
+            <source>%1 h ago</source>
+            <translation>%1 小时前</translation>
+        </message>
+        <message>
+            <source>%1 days ago</source>
+            <translation>%1 天前</translation>
+        </message>
+        <message>
+            <source>%1 shared a list: %2</source>
+            <translation>%1 分享了一个列表：%2</translation>
+        </message>
+        <message>
+            <source>%1 watched %2</source>
+            <translation>%1 看了 %2</translation>
+        </message>
+        <message>
+            <source>%1 read %2</source>
+            <translation>%1 读了 %2</translation>
+        </message>
+        <message>
+            <source>That list is empty.</source>
+            <translation>该列表是空的。</translation>
+        </message>
+        <message>
+            <source>Shared. The link is copied: %1</source>
+            <translation>已分享。链接已复制：%1</translation>
+        </message>
+        <message>
+            <source>%1 added to your library; %2 could not be found on your sources.</source>
+            <translation>已将 %1 部加入书库；%2 部在你的来源中找不到。</translation>
+        </message>
+        <message>
+            <source>All of it is in your library already.</source>
+            <translation>全部已在你的书库中。</translation>
+        </message>
+        <message>
+            <source>%1 added to your library.</source>
+            <translation>已将 %1 部加入书库。</translation>
+        </message>
+        <message>
+            <source>Friends</source>
+            <translation>好友</translation>
+        </message>
+        <message>
+            <source>Follow each other on %1 to be friends</source>
+            <translation>在 %1 上互相关注即可成为好友</translation>
+        </message>
+        <message>
+            <source>Sign in (Settings → Sync) to add friends, see what they read and share lists.</source>
+            <translation>登录（设置 → 同步）即可添加好友、查看他们在读什么并分享列表。</translation>
+        </message>
+        <message>
+            <source>You</source>
+            <translation>你</translation>
+        </message>
+        <message>
+            <source>Share what I read and watch</source>
+            <translation>分享我在读和在看的内容</translation>
+        </message>
+        <message>
+            <source>Your friends see the series you read and watch, and the lists you share. Off: they see nothing.</source>
+            <translation>好友能看到你在读和在看的作品，以及你分享的列表。关闭：他们什么都看不到。</translation>
+        </message>
+        <message>
+            <source>Add a friend</source>
+            <translation>添加好友</translation>
+        </message>
+        <message>
+            <source>Their username; when they add you too, you are friends. You are @%1.</source>
+            <translation>对方的用户名；对方也添加你后，你们就是好友。你是 @%1。</translation>
+        </message>
+        <message>
+            <source>username</source>
+            <translation>用户名</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>添加</translation>
+        </message>
+        <message>
+            <source>You follow @%1.</source>
+            <translation>你关注了 @%1。</translation>
+        </message>
+        <message>
+            <source>Asking to be friends</source>
+            <translation>已发送好友请求</translation>
+        </message>
+        <message>
+            <source>Added you</source>
+            <translation>添加了你</translation>
+        </message>
+        <message>
+            <source>Add back</source>
+            <translation>回加</translation>
+        </message>
+        <message>
+            <source>No friends yet.</source>
+            <translation>还没有好友。</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>移除</translation>
+        </message>
+        <message>
+            <source>Waiting for them to add you</source>
+            <translation>等待对方添加你</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>取消</translation>
+        </message>
+        <message>
+            <source>What friends read</source>
+            <translation>好友在读</translation>
+        </message>
+        <message>
+            <source>Nothing yet: friends show here once they share what they read.</source>
+            <translation>暂无内容：好友分享自己在读的内容后会显示在这里。</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>打开</translation>
+        </message>
+        <message>
+            <source>Shared lists</source>
+            <translation>分享的列表</translation>
+        </message>
+        <message>
+            <source>Share a list from your library</source>
+            <translation>从书库分享一个列表</translation>
+        </message>
+        <message>
+            <source>Anyone with the link sees it, and can add it all to their library in SCANCORE.</source>
+            <translation>任何拿到链接的人都能看到它，并可在 SCANCORE 中将其全部加入自己的书库。</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>分享</translation>
+        </message>
+        <message>
+            <source>Open a shared list</source>
+            <translation>打开分享的列表</translation>
+        </message>
+        <message>
+            <source>Its link or code.</source>
+            <translation>它的链接或代码。</translation>
+        </message>
+        <message>
+            <source>link or code</source>
+            <translation>链接或代码</translation>
+        </message>
+        <message>
+            <source>%1 series from @%2: %3</source>
+            <translation>来自 @%2 的 %1 部作品：%3</translation>
+        </message>
+        <message>
+            <source>Add all to my library</source>
+            <translation>全部加入我的书库</translation>
+        </message>
+        <message>
+            <source>%1 series · shared %2</source>
+            <translation>%1 部作品 · 分享于 %2</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>复制链接</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>已复制链接</translation>
+        </message>
+        <message>
+            <source>Stop sharing</source>
+            <translation>停止分享</translation>
+        </message>
+    </context>
+    <context>
         <name>HistoryPage</name>
         <message>
             <source>Today</source>
@@ -4099,6 +4326,74 @@
         <message>
             <source>Back to the default</source>
             <translation>恢复默认</translation>
+        </message>
+        <message>
+            <source>Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. </source>
+            <translation>点击一个快捷键，然后按下新按键。Backspace 让操作没有按键；Esc 保留原来的按键。 </translation>
+        </message>
+        <message>
+            <source>Everyday: </source>
+            <translation>日常： </translation>
+        </message>
+        <message>
+            <source>none</source>
+            <translation>无</translation>
+        </message>
+        <message>
+            <source>Back to the everyday keys</source>
+            <translation>恢复日常按键</translation>
+        </message>
+        <message>
+            <source>Key profiles</source>
+            <translation>按键配置</translation>
+        </message>
+        <message>
+            <source>Other keys for the readers, for the series you choose (in the reader's settings, under Keys): one-handed keys for webtoons, say. Keys a profile leaves alone stay as everyday.</source>
+            <translation>为你选择的作品给阅读器设置其他按键（在阅读器设置的“按键”中）：例如条漫的单手按键。配置未改动的按键保持日常设置。</translation>
+        </message>
+        <message>
+            <source>Readers' keys below</source>
+            <translation>阅读器按键在下方</translation>
+        </message>
+        <message>
+            <source>Changing the profile “%1”</source>
+            <translation>正在修改配置“%1”</translation>
+        </message>
+        <message>
+            <source>Changing the everyday keys</source>
+            <translation>正在修改日常按键</translation>
+        </message>
+        <message>
+            <source>Key profile</source>
+            <translation>按键配置</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>日常按键</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>删除</translation>
+        </message>
+        <message>
+            <source>New profile</source>
+            <translation>新配置</translation>
+        </message>
+        <message>
+            <source>Starts as the everyday keys</source>
+            <translation>以日常按键为起点</translation>
+        </message>
+        <message>
+            <source>Name, e.g. Webtoons</source>
+            <translation>名称，例如 Webtoon</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>添加</translation>
+        </message>
+        <message>
+            <source>There is a profile with that name already.</source>
+            <translation>已存在同名配置。</translation>
         </message>
     </context>
     <context>
@@ -5259,6 +5554,22 @@
             <source>Choose</source>
             <translation>选择</translation>
         </message>
+        <message>
+            <source>Also the other extension you had in %1</source>
+            <translation>以及你在 %1 中的另一个扩展</translation>
+        </message>
+        <message>
+            <source>Also the %1 other extensions you had in %2</source>
+            <translation>以及你在 %2 中的其他 %1 个扩展</translation>
+        </message>
+        <message>
+            <source>Install the extension you had in %1</source>
+            <translation>安装你在 %1 中的扩展</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions you had in %2</source>
+            <translation>安装你在 %2 中的 %1 个扩展</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -5365,6 +5676,57 @@
         <message>
             <source>Settings</source>
             <translation>设置</translation>
+        </message>
+    </context>
+    <context>
+        <name>NeuralVoicesDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>正在开始…</translation>
+        </message>
+        <message>
+            <source>Voice ready: choose it under Voice.</source>
+            <translation>语音已就绪：在“语音”中选择。</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>神经语音</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>关闭</translation>
+        </message>
+        <message>
+            <source>Natural voices that read on this computer, with no internet once downloaded. The first one also brings the voice program (Piper, about 25 MB).</source>
+            <translation>在这台电脑上朗读的自然语音，下载后无需联网。第一个语音会同时带来语音程序（Piper，约 25 MB）。</translation>
+        </message>
+        <message>
+            <source>Find a voice or language</source>
+            <translation>查找语音或语言</translation>
+        </message>
+        <message>
+            <source>Best quality</source>
+            <translation>最佳质量</translation>
+        </message>
+        <message>
+            <source>Good quality</source>
+            <translation>良好质量</translation>
+        </message>
+        <message>
+            <source>Smaller</source>
+            <translation>较小</translation>
+        </message>
+        <message>
+            <source>Smallest</source>
+            <translation>最小</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>移除</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>下载</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +6063,18 @@
         <message>
             <source>Pause between sentences · %1 s</source>
             <translation>句间停顿 · %1 秒</translation>
+        </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>在旁边阅读其他作品</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>此作品的按键</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>日常按键</translation>
         </message>
     </context>
     <context>
@@ -6115,6 +6489,61 @@
         <message>
             <source>Retro tiles</source>
             <translation>Retro 磁贴</translation>
+        </message>
+    </context>
+    <context>
+        <name>OnDeviceDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>正在开始…</translation>
+        </message>
+        <message>
+            <source>Ready: pages in this language can be translated on this computer.</source>
+            <translation>就绪：此语言的页面可在这台电脑上翻译。</translation>
+        </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>在这台电脑上翻译</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>关闭</translation>
+        </message>
+        <message>
+            <source>Each language brings what reading its pages and translating them into %1 needs: about 140 MB. Nothing is sent anywhere. ONNX Runtime (Microsoft), PaddleOCR and Opus-MT do the work.</source>
+            <translation>每种语言都包含读取其页面并翻译为%1所需的内容：约 140 MB。不会向任何地方发送内容。由 ONNX Runtime（Microsoft）、PaddleOCR 和 Opus-MT 完成。</translation>
+        </message>
+        <message>
+            <source>Find a language</source>
+            <translation>查找语言</translation>
+        </message>
+        <message>
+            <source>Ready · through English</source>
+            <translation>就绪 · 经由英语</translation>
+        </message>
+        <message>
+            <source>Ready</source>
+            <translation>就绪</translation>
+        </message>
+        <message>
+            <source>About %1 MB</source>
+            <translation>约 %1 MB</translation>
+        </message>
+        <message>
+            <source>Nothing more to download</source>
+            <translation>没有更多要下载的了</translation>
+        </message>
+        <message>
+            <source> · through English</source>
+            <translation> · 经由英语</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>移除</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>下载</translation>
         </message>
     </context>
     <context>
@@ -7301,6 +7730,50 @@
             <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
             <translation>将漫画页面的图片连同文字一起发送，让模型看到是谁在说话。需要能读取图片的模型，费用更高。</translation>
         </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>在这台电脑上翻译</translation>
+        </message>
+        <message>
+            <source>Pages and chapters translated with nothing sent anywhere. Add or remove languages.</source>
+            <translation>不向任何地方发送内容即可翻译的页面和章节。添加或移除语言。</translation>
+        </message>
+        <message>
+            <source>Download a language once; pages and chapters are then translated with nothing sent anywhere.</source>
+            <translation>下载一次语言后，页面和章节的翻译都不会向任何地方发送内容。</translation>
+        </message>
+        <message>
+            <source>Languages…</source>
+            <translation>语言…</translation>
+        </message>
+        <message>
+            <source>Translate novels in other languages</source>
+            <translation>翻译其他语言的小说</translation>
+        </message>
+        <message>
+            <source>Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.</source>
+            <translation>来自其他语言来源的章节（WTR-LAB 的为英语）会以译文打开。每部作品由阅读器的“翻译”按钮决定。</translation>
+        </message>
+        <message>
+            <source>Download a neural voice below, or add one in the system's text-to-speech settings.</source>
+            <translation>在下方下载神经语音，或在系统的文字转语音设置中添加。</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>神经语音</translation>
+        </message>
+        <message>
+            <source>%1 downloaded; natural voices that need no internet</source>
+            <translation>已下载 %1 个；无需联网的自然语音</translation>
+        </message>
+        <message>
+            <source>Natural voices that read without the internet, downloaded once</source>
+            <translation>无需联网朗读的自然语音，只需下载一次</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>选择…</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7883,6 +8356,22 @@
         <message>
             <source>Any OpenAI-compatible service, or one on your computer</source>
             <translation>任何兼容 OpenAI 的服务，或你电脑上的服务</translation>
+        </message>
+        <message>
+            <source>To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a Google Cloud key there.</source>
+            <translation>要在电脑上翻译页面，请在 设置 → 阅读 → 在这台电脑上翻译 中下载语言，或在那里添加 Google Cloud 密钥。</translation>
+        </message>
+        <message>
+            <source>This computer</source>
+            <translation>这台电脑</translation>
+        </message>
+        <message>
+            <source>Downloaded once; pages never leave the computer</source>
+            <translation>只需下载一次；页面永远不会离开电脑</translation>
+        </message>
+        <message>
+            <source>Downloaded once; nothing leaves the computer</source>
+            <translation>只需下载一次；任何内容都不会离开电脑</translation>
         </message>
     </context>
     <context>
@@ -9084,6 +9573,37 @@
         </message>
     </context>
     <context>
+        <name>SplitPicker</name>
+        <message>
+            <source>No chapters to read</source>
+            <translation>没有可读的章节</translation>
+        </message>
+        <message>
+            <source>Read beside</source>
+            <translation>并排阅读</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>关闭</translation>
+        </message>
+        <message>
+            <source>Nothing in progress yet: start a comic or a novel, then read it beside another.</source>
+            <translation>还没有进行中的作品：先开始一部漫画或小说，再把它与另一部并排阅读。</translation>
+        </message>
+        <message>
+            <source>Opening…</source>
+            <translation>正在打开…</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>小说</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>漫画</translation>
+        </message>
+    </context>
+    <context>
         <name>StateView</name>
         <message>
             <source>Nothing here yet</source>
@@ -9782,6 +10302,18 @@
         <message>
             <source>Retro colours</source>
             <translation>Retro 颜色</translation>
+        </message>
+        <message>
+            <source>Glass</source>
+            <translation>玻璃</translation>
+        </message>
+        <message>
+            <source>Glass menus and sheets</source>
+            <translation>玻璃菜单和面板</translation>
+        </message>
+        <message>
+            <source>Menus, sheets and dialogs show what is behind them, blurred.</source>
+            <translation>菜单、面板和对话框会模糊地显示其后方的内容。</translation>
         </message>
     </context>
     <context>
@@ -10998,6 +11530,10 @@
         <message>
             <source>The voice could not read this.</source>
             <translation>语音无法朗读这部分内容。</translation>
+        </message>
+        <message>
+            <source> (neural)</source>
+            <translation> (神经)</translation>
         </message>
     </context>
 </TS>

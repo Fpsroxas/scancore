@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic
-import ScanCore
+import Scancore
 
 // Saved comics, novels and anime, each on its own: categories (reading,
 // planned, on hold, completed, dropped), favourites, three views (grid,

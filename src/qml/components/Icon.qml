@@ -1,5 +1,5 @@
 import QtQuick
-import ScanCore
+import Scancore
 
 // A Lucide icon tinted to a colour.
 Image {
