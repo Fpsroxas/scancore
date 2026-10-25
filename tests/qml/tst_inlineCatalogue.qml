@@ -9,6 +9,15 @@ Item {
     FontLoader { source: "../../resources/fonts/SpaceGrotesk.ttf" }
     Rectangle { anchors.fill: parent; color: Theme.bg }
     Component { id: pageComponent; ComicsPage { anchors.fill: parent } }
+    // Capture navigation with either the real Router or the QML test mock.
+    QtObject {
+        id: navigationSpy
+        property var opened: []
+        function push(path, props) {
+            if (props && props.summary)
+                opened = opened.concat([props.summary])
+        }
+    }
     TestCase {
         name: "InlineCatalogue"
         when: windowShown
@@ -17,7 +26,8 @@ Item {
         function init() {
             App.settings = {comicSource:"all",catalogComic:"comick",theme:"dark",reducedMotion:true}
             Comics.reset()
-            Router.opened = []
+            navigationSpy.opened = []
+            Router.shell = navigationSpy
             page = createTemporaryObject(pageComponent, parent)
             verify(page !== null)
             wait(30)
@@ -154,8 +164,8 @@ Item {
                 verify(covers.find(item => item.itemIndex === expected).activeFocus)
             }
             keyClick(Qt.Key_Return)
-            compare(Router.opened.length, 1)
-            compare(Router.opened[0].id, String(expected + 1))
+            compare(navigationSpy.opened.length, 1)
+            compare(navigationSpy.opened[0].id, String(expected + 1))
         }
         function test_deduplicatesWithinAndAcrossPages() {
             pick("alpha")
@@ -186,7 +196,7 @@ Item {
             Comics.calls[0].task.succeed({items:[{id:"one",title:"First title"}],hasNextPage:true})
             compare(page.found.comics.length, 1)
             verify(page.searching)
-            compare(Router.opened.length, 0)
+            compare(navigationSpy.opened.length, 0)
         }
     }
 }
