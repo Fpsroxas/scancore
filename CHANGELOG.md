@@ -2,6 +2,27 @@
 
 Downloads for the current version are listed on the [releases page](https://github.com/medium-gh/scancore/releases).
 
+## 2.13.0 — 2026-10-25
+
+Friends, reactions and shared lists; two readers side by side; voices, translation and sharper scans that work on the computer with nothing sent anywhere; and glass.
+
+- **Friends**: Activity → Friends. Follow each other by username on scancore.onl (or your own SCANCORE server) to be friends; once they choose to share it, you see what they read and watch. Sharing is off until you turn it on. Share a library list by link, and add a list someone shared with you to your library in one go.
+- **Reactions**: the comic reader's heart reacts to the page you are on, and pages other readers reacted to show as dots beside the page bar.
+- **Side by side**: in a wide window, a reader's Read beside opens another comic or novel you are reading on the right half, at the chapter you are on. Keys go to the reader you clicked last.
+- **Key profiles**: Settings → Keyboard can keep other reader keys for the series you choose, one-handed keys for webtoons, say. Pick a series' profile in the reader's settings, under Keys.
+- **Neural voices on computers**: Settings → Reading → Neural voices downloads natural voices (Piper) that read aloud with no internet. On Android, read aloud uses the best offline voice for the language by itself.
+- **Translate on this computer**: download a language once in Settings → Reading, and comic pages and novel chapters are translated on the computer, with nothing sent anywhere (ONNX Runtime, PaddleOCR and Opus-MT).
+- **Novels in your language**: chapters from a source in another language, such as WTR-LAB's English novels, can open translated by themselves, and the reader remembers Translate for each series.
+- **Sharper downloads on computers**: Enlarge downloaded pages, in the reader's settings, enlarges small scans as they download (waifu2x), on the computer.
+- **Komga and Kavita as trackers**: a series you read from another source moves forward on your server too.
+- **Mihon import** also offers the extensions you had set up there, even ones with no series in your library (#25).
+- **Glass**: menus, sheets and dialogs can show what is behind them, blurred (Settings → Theme) (#25).
+- **Retro** page turns now move smoothly instead of jumping to their last frame.
+- **Player**: in Stretch and Crop to fill, the picture reaches under a phone's camera cutout. The player no longer waits on mpv to draw, and when the app stops answering it offers a report like a crash report.
+- The name is spelt SCANCORE everywhere, including the app's folders. Folders made under the old spelling move over the first time you start this version.
+- Fixed, thanks to Fpsroxas: sites' browser checks keep the extension's own User-Agent (#28).
+- Not yet checked on real devices: neural voices and on-device translation on Windows and macOS (tested on Linux).
+
 ## 2.12.3 — 2026-10-25
 
 Retro's pages show again: Settings and other pages could stay empty in the Retro look.

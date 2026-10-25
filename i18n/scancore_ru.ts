@@ -545,6 +545,10 @@
             <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
             <translation>Время считается, пока вы пользуетесь SCANCORE: в читалке, при просмотре эпизода или просмотре каталога. Главы, прочитанные до начала учёта, берутся из истории чтения.</translation>
         </message>
+        <message>
+            <source>Friends</source>
+            <translation>Друзья</translation>
+        </message>
     </context>
     <context>
         <name>AddRepositoryDialog</name>
@@ -1977,6 +1981,38 @@
             <source>Translate into %1</source>
             <translation>Переводить на: %1</translation>
         </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Читать что-то рядом</translation>
+        </message>
+        <message>
+            <source>React to this page</source>
+            <translation>Отреагировать на эту страницу</translation>
+        </message>
+        <message>
+            <source>Downloading the upscaler (about 15 MB the first time)…</source>
+            <translation>Загрузка увеличителя (около 15 МБ в первый раз)…</translation>
+        </message>
+        <message>
+            <source>Enlarge downloaded pages (sharper; slower downloads)</source>
+            <translation>Увеличивать загруженные страницы (чётче; загрузка медленнее)</translation>
+        </message>
+        <message>
+            <source>Chapters downloaded from now on are enlarged.</source>
+            <translation>Главы, загруженные с этого момента, увеличиваются.</translation>
+        </message>
+        <message>
+            <source>Keys</source>
+            <translation>Клавиши</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Клавиши для этой серии</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Обычные клавиши</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -2615,6 +2651,10 @@
         <message>
             <source>Choose folder</source>
             <translation>Выбрать папку</translation>
+        </message>
+        <message>
+            <source>Your server: series read from other sources move forward on it too. It is managed in Settings → Sources → Your servers.</source>
+            <translation>Ваш сервер: серии, которые вы читаете из других источников, продвигаются и на нём. Управляется в Настройки → Источники → Ваши серверы.</translation>
         </message>
     </context>
     <context>
@@ -3447,6 +3487,193 @@
         </message>
     </context>
     <context>
+        <name>FriendsPage</name>
+        <message>
+            <source>just now</source>
+            <translation>только что</translation>
+        </message>
+        <message>
+            <source>%1 min ago</source>
+            <translation>%1 мин назад</translation>
+        </message>
+        <message>
+            <source>%1 h ago</source>
+            <translation>%1 ч назад</translation>
+        </message>
+        <message>
+            <source>%1 days ago</source>
+            <translation>%1 дн. назад</translation>
+        </message>
+        <message>
+            <source>%1 shared a list: %2</source>
+            <translation>%1 делится списком: %2</translation>
+        </message>
+        <message>
+            <source>%1 watched %2</source>
+            <translation>%1 смотрит %2</translation>
+        </message>
+        <message>
+            <source>%1 read %2</source>
+            <translation>%1 читает %2</translation>
+        </message>
+        <message>
+            <source>That list is empty.</source>
+            <translation>Этот список пуст.</translation>
+        </message>
+        <message>
+            <source>Shared. The link is copied: %1</source>
+            <translation>Готово. Ссылка скопирована: %1</translation>
+        </message>
+        <message>
+            <source>%1 added to your library; %2 could not be found on your sources.</source>
+            <translation>Добавлено в библиотеку: %1; не найдено в ваших источниках: %2.</translation>
+        </message>
+        <message>
+            <source>All of it is in your library already.</source>
+            <translation>Всё уже есть в вашей библиотеке.</translation>
+        </message>
+        <message>
+            <source>%1 added to your library.</source>
+            <translation>Добавлено в библиотеку: %1.</translation>
+        </message>
+        <message>
+            <source>Friends</source>
+            <translation>Друзья</translation>
+        </message>
+        <message>
+            <source>Follow each other on %1 to be friends</source>
+            <translation>Подпишитесь друг на друга на %1, чтобы стать друзьями</translation>
+        </message>
+        <message>
+            <source>Sign in (Settings → Sync) to add friends, see what they read and share lists.</source>
+            <translation>Войдите (Настройки → Синхронизация), чтобы добавлять друзей, видеть, что они читают, и делиться списками.</translation>
+        </message>
+        <message>
+            <source>You</source>
+            <translation>Вы</translation>
+        </message>
+        <message>
+            <source>Share what I read and watch</source>
+            <translation>Делиться тем, что я читаю и смотрю</translation>
+        </message>
+        <message>
+            <source>Your friends see the series you read and watch, and the lists you share. Off: they see nothing.</source>
+            <translation>Друзья видят серии, которые вы читаете и смотрите, и списки, которыми вы делитесь. Выкл.: они ничего не видят.</translation>
+        </message>
+        <message>
+            <source>Add a friend</source>
+            <translation>Добавить друга</translation>
+        </message>
+        <message>
+            <source>Their username; when they add you too, you are friends. You are @%1.</source>
+            <translation>Имя пользователя; когда вас тоже добавят, вы станете друзьями. Вы — @%1.</translation>
+        </message>
+        <message>
+            <source>username</source>
+            <translation>имя пользователя</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Добавить</translation>
+        </message>
+        <message>
+            <source>You follow @%1.</source>
+            <translation>Вы подписаны на @%1.</translation>
+        </message>
+        <message>
+            <source>Asking to be friends</source>
+            <translation>Запрос в друзья отправлен</translation>
+        </message>
+        <message>
+            <source>Added you</source>
+            <translation>Добавил(а) вас</translation>
+        </message>
+        <message>
+            <source>Add back</source>
+            <translation>Добавить в ответ</translation>
+        </message>
+        <message>
+            <source>No friends yet.</source>
+            <translation>Друзей пока нет.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Удалить</translation>
+        </message>
+        <message>
+            <source>Waiting for them to add you</source>
+            <translation>Ждём, когда вас добавят</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Отмена</translation>
+        </message>
+        <message>
+            <source>What friends read</source>
+            <translation>Что читают друзья</translation>
+        </message>
+        <message>
+            <source>Nothing yet: friends show here once they share what they read.</source>
+            <translation>Пока ничего: друзья появятся здесь, когда поделятся тем, что читают.</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Открыть</translation>
+        </message>
+        <message>
+            <source>Shared lists</source>
+            <translation>Общие списки</translation>
+        </message>
+        <message>
+            <source>Share a list from your library</source>
+            <translation>Поделиться списком из библиотеки</translation>
+        </message>
+        <message>
+            <source>Anyone with the link sees it, and can add it all to their library in SCANCORE.</source>
+            <translation>Любой, у кого есть ссылка, увидит его и сможет добавить всё в свою библиотеку в SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Поделиться</translation>
+        </message>
+        <message>
+            <source>Open a shared list</source>
+            <translation>Открыть общий список</translation>
+        </message>
+        <message>
+            <source>Its link or code.</source>
+            <translation>Её ссылка или код.</translation>
+        </message>
+        <message>
+            <source>link or code</source>
+            <translation>ссылка или код</translation>
+        </message>
+        <message>
+            <source>%1 series from @%2: %3</source>
+            <translation>Серии от @%2 (%1): %3</translation>
+        </message>
+        <message>
+            <source>Add all to my library</source>
+            <translation>Добавить всё в мою библиотеку</translation>
+        </message>
+        <message>
+            <source>%1 series · shared %2</source>
+            <translation>Серий: %1 · поделились %2</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>Копировать ссылку</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>Ссылка скопирована</translation>
+        </message>
+        <message>
+            <source>Stop sharing</source>
+            <translation>Больше не делиться</translation>
+        </message>
+    </context>
+    <context>
         <name>HistoryPage</name>
         <message>
             <source>Today</source>
@@ -4099,6 +4326,74 @@
         <message>
             <source>Back to the default</source>
             <translation>Вернуть по умолчанию</translation>
+        </message>
+        <message>
+            <source>Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. </source>
+            <translation>Нажмите на сочетание, затем нажмите новые клавиши. Backspace оставляет действие без клавиши; Esc сохраняет прежнюю. </translation>
+        </message>
+        <message>
+            <source>Everyday: </source>
+            <translation>Обычно: </translation>
+        </message>
+        <message>
+            <source>none</source>
+            <translation>нет</translation>
+        </message>
+        <message>
+            <source>Back to the everyday keys</source>
+            <translation>Вернуть обычные клавиши</translation>
+        </message>
+        <message>
+            <source>Key profiles</source>
+            <translation>Профили клавиш</translation>
+        </message>
+        <message>
+            <source>Other keys for the readers, for the series you choose (in the reader's settings, under Keys): one-handed keys for webtoons, say. Keys a profile leaves alone stay as everyday.</source>
+            <translation>Другие клавиши для читалок в выбранных сериях (в настройках читалки, в разделе «Клавиши»): например, клавиши для одной руки для вебтунов. Клавиши, которые профиль не меняет, остаются обычными.</translation>
+        </message>
+        <message>
+            <source>Readers' keys below</source>
+            <translation>Клавиши читалок ниже</translation>
+        </message>
+        <message>
+            <source>Changing the profile “%1”</source>
+            <translation>Изменение профиля «%1»</translation>
+        </message>
+        <message>
+            <source>Changing the everyday keys</source>
+            <translation>Изменение обычных клавиш</translation>
+        </message>
+        <message>
+            <source>Key profile</source>
+            <translation>Профиль клавиш</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Обычные клавиши</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Удалить</translation>
+        </message>
+        <message>
+            <source>New profile</source>
+            <translation>Новый профиль</translation>
+        </message>
+        <message>
+            <source>Starts as the everyday keys</source>
+            <translation>Начинается с обычных клавиш</translation>
+        </message>
+        <message>
+            <source>Name, e.g. Webtoons</source>
+            <translation>Название, например Вебтуны</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Добавить</translation>
+        </message>
+        <message>
+            <source>There is a profile with that name already.</source>
+            <translation>Профиль с таким названием уже есть.</translation>
         </message>
     </context>
     <context>
@@ -5259,6 +5554,22 @@
             <source>Choose</source>
             <translation>Выбрать</translation>
         </message>
+        <message>
+            <source>Also the other extension you had in %1</source>
+            <translation>А также другое расширение, которое было у вас в %1</translation>
+        </message>
+        <message>
+            <source>Also the %1 other extensions you had in %2</source>
+            <translation>А также остальные расширения (%1), которые были у вас в %2</translation>
+        </message>
+        <message>
+            <source>Install the extension you had in %1</source>
+            <translation>Установить расширение, которое было у вас в %1</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions you had in %2</source>
+            <translation>Установить расширения (%1), которые были у вас в %2</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -5365,6 +5676,57 @@
         <message>
             <source>Settings</source>
             <translation>Настройки</translation>
+        </message>
+    </context>
+    <context>
+        <name>NeuralVoicesDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Запуск…</translation>
+        </message>
+        <message>
+            <source>Voice ready: choose it under Voice.</source>
+            <translation>Голос готов: выберите его в разделе «Голос».</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Нейросетевые голоса</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Закрыть</translation>
+        </message>
+        <message>
+            <source>Natural voices that read on this computer, with no internet once downloaded. The first one also brings the voice program (Piper, about 25 MB).</source>
+            <translation>Естественные голоса, которые читают на этом компьютере, без интернета после загрузки. Первый также приносит голосовую программу (Piper, около 25 МБ).</translation>
+        </message>
+        <message>
+            <source>Find a voice or language</source>
+            <translation>Найти голос или язык</translation>
+        </message>
+        <message>
+            <source>Best quality</source>
+            <translation>Лучшее качество</translation>
+        </message>
+        <message>
+            <source>Good quality</source>
+            <translation>Хорошее качество</translation>
+        </message>
+        <message>
+            <source>Smaller</source>
+            <translation>Меньше</translation>
+        </message>
+        <message>
+            <source>Smallest</source>
+            <translation>Самый маленький</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Удалить</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Скачать</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +6063,18 @@
         <message>
             <source>Pause between sentences · %1 s</source>
             <translation>Пауза между предложениями · %1 с</translation>
+        </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Читать что-то рядом</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Клавиши для этой серии</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Обычные клавиши</translation>
         </message>
     </context>
     <context>
@@ -6115,6 +6489,61 @@
         <message>
             <source>Retro tiles</source>
             <translation>Плитки Retro</translation>
+        </message>
+    </context>
+    <context>
+        <name>OnDeviceDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Запуск…</translation>
+        </message>
+        <message>
+            <source>Ready: pages in this language can be translated on this computer.</source>
+            <translation>Готово: страницы на этом языке можно переводить на этом компьютере.</translation>
+        </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Переводить на этом компьютере</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Закрыть</translation>
+        </message>
+        <message>
+            <source>Each language brings what reading its pages and translating them into %1 needs: about 140 MB. Nothing is sent anywhere. ONNX Runtime (Microsoft), PaddleOCR and Opus-MT do the work.</source>
+            <translation>Каждый язык приносит то, что нужно для чтения его страниц и перевода на %1: около 140 МБ. Ничего никуда не отправляется. Работу выполняют ONNX Runtime (Microsoft), PaddleOCR и Opus-MT.</translation>
+        </message>
+        <message>
+            <source>Find a language</source>
+            <translation>Найти язык</translation>
+        </message>
+        <message>
+            <source>Ready · through English</source>
+            <translation>Готово · через английский</translation>
+        </message>
+        <message>
+            <source>Ready</source>
+            <translation>Готово</translation>
+        </message>
+        <message>
+            <source>About %1 MB</source>
+            <translation>Около %1 МБ</translation>
+        </message>
+        <message>
+            <source>Nothing more to download</source>
+            <translation>Больше нечего загружать</translation>
+        </message>
+        <message>
+            <source> · through English</source>
+            <translation> · через английский</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Удалить</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Скачать</translation>
         </message>
     </context>
     <context>
@@ -7301,6 +7730,50 @@
             <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
             <translation>Отправляет изображение страницы комикса вместе с текстом, чтобы модель видела, кто говорит. Нужна модель, которая понимает изображения; стоит дороже.</translation>
         </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Переводить на этом компьютере</translation>
+        </message>
+        <message>
+            <source>Pages and chapters translated with nothing sent anywhere. Add or remove languages.</source>
+            <translation>Страницы и главы переводятся без отправки куда-либо. Добавьте или удалите языки.</translation>
+        </message>
+        <message>
+            <source>Download a language once; pages and chapters are then translated with nothing sent anywhere.</source>
+            <translation>Загрузите язык один раз — страницы и главы будут переводиться без отправки куда-либо.</translation>
+        </message>
+        <message>
+            <source>Languages…</source>
+            <translation>Языки…</translation>
+        </message>
+        <message>
+            <source>Translate novels in other languages</source>
+            <translation>Переводить романы на других языках</translation>
+        </message>
+        <message>
+            <source>Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.</source>
+            <translation>Главы из источника на другом языке (у WTR-LAB — на английском) открываются переведёнными. Кнопка «Перевести» в читалке решает для каждой серии.</translation>
+        </message>
+        <message>
+            <source>Download a neural voice below, or add one in the system's text-to-speech settings.</source>
+            <translation>Загрузите нейросетевой голос ниже или добавьте его в системных настройках синтеза речи.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Нейросетевые голоса</translation>
+        </message>
+        <message>
+            <source>%1 downloaded; natural voices that need no internet</source>
+            <translation>Загружено: %1; естественные голоса без интернета</translation>
+        </message>
+        <message>
+            <source>Natural voices that read without the internet, downloaded once</source>
+            <translation>Естественные голоса, читающие без интернета, загружаются один раз</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>Выбрать…</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7883,6 +8356,22 @@
         <message>
             <source>Any OpenAI-compatible service, or one on your computer</source>
             <translation>Любой OpenAI-совместимый сервис или сервис на вашем компьютере</translation>
+        </message>
+        <message>
+            <source>To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a Google Cloud key there.</source>
+            <translation>Чтобы переводить страницы на компьютере, загрузите язык в Настройки → Чтение → Переводить на этом компьютере или добавьте там ключ Google Cloud.</translation>
+        </message>
+        <message>
+            <source>This computer</source>
+            <translation>Этот компьютер</translation>
+        </message>
+        <message>
+            <source>Downloaded once; pages never leave the computer</source>
+            <translation>Загружается один раз; страницы никогда не покидают компьютер</translation>
+        </message>
+        <message>
+            <source>Downloaded once; nothing leaves the computer</source>
+            <translation>Загружается один раз; ничего не покидает компьютер</translation>
         </message>
     </context>
     <context>
@@ -9084,6 +9573,37 @@
         </message>
     </context>
     <context>
+        <name>SplitPicker</name>
+        <message>
+            <source>No chapters to read</source>
+            <translation>Нет глав для чтения</translation>
+        </message>
+        <message>
+            <source>Read beside</source>
+            <translation>Читать рядом</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Закрыть</translation>
+        </message>
+        <message>
+            <source>Nothing in progress yet: start a comic or a novel, then read it beside another.</source>
+            <translation>Пока ничего не начато: начните комикс или роман, а затем читайте его рядом с другим.</translation>
+        </message>
+        <message>
+            <source>Opening…</source>
+            <translation>Открытие…</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Новелла</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Комикс</translation>
+        </message>
+    </context>
+    <context>
         <name>StateView</name>
         <message>
             <source>Nothing here yet</source>
@@ -9782,6 +10302,18 @@
         <message>
             <source>Retro colours</source>
             <translation>Цвета Retro</translation>
+        </message>
+        <message>
+            <source>Glass</source>
+            <translation>Стекло</translation>
+        </message>
+        <message>
+            <source>Glass menus and sheets</source>
+            <translation>Стеклянные меню и панели</translation>
+        </message>
+        <message>
+            <source>Menus, sheets and dialogs show what is behind them, blurred.</source>
+            <translation>Меню, панели и диалоги показывают то, что за ними, размыто.</translation>
         </message>
     </context>
     <context>
@@ -10998,6 +11530,10 @@
         <message>
             <source>The voice could not read this.</source>
             <translation>Голос не смог прочитать это.</translation>
+        </message>
+        <message>
+            <source> (neural)</source>
+            <translation> (нейросетевой)</translation>
         </message>
     </context>
 </TS>

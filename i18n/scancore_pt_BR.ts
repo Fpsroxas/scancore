@@ -545,6 +545,10 @@
             <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
             <translation>O tempo conta enquanto você usa o SCANCORE: em um leitor, assistindo a um episódio ou explorando. Capítulos terminados antes do registro de tempo vêm do seu histórico de leitura.</translation>
         </message>
+        <message>
+            <source>Friends</source>
+            <translation>Amigos</translation>
+        </message>
     </context>
     <context>
         <name>AddRepositoryDialog</name>
@@ -1977,6 +1981,38 @@
             <source>Translate into %1</source>
             <translation>Traduzir para %1</translation>
         </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Ler outra coisa ao lado</translation>
+        </message>
+        <message>
+            <source>React to this page</source>
+            <translation>Reagir a esta página</translation>
+        </message>
+        <message>
+            <source>Downloading the upscaler (about 15 MB the first time)…</source>
+            <translation>Baixando o ampliador (cerca de 15 MB na primeira vez)…</translation>
+        </message>
+        <message>
+            <source>Enlarge downloaded pages (sharper; slower downloads)</source>
+            <translation>Ampliar as páginas baixadas (mais nítidas; downloads mais lentos)</translation>
+        </message>
+        <message>
+            <source>Chapters downloaded from now on are enlarged.</source>
+            <translation>Os capítulos baixados a partir de agora são ampliados.</translation>
+        </message>
+        <message>
+            <source>Keys</source>
+            <translation>Teclas</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Teclas para esta série</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Teclas de sempre</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -2615,6 +2651,10 @@
         <message>
             <source>Choose folder</source>
             <translation>Escolher pasta</translation>
+        </message>
+        <message>
+            <source>Your server: series read from other sources move forward on it too. It is managed in Settings → Sources → Your servers.</source>
+            <translation>Seu servidor: séries lidas em outras fontes também avançam nele. Ele é gerenciado em Ajustes → Fontes → Seus servidores.</translation>
         </message>
     </context>
     <context>
@@ -3447,6 +3487,193 @@
         </message>
     </context>
     <context>
+        <name>FriendsPage</name>
+        <message>
+            <source>just now</source>
+            <translation>agora mesmo</translation>
+        </message>
+        <message>
+            <source>%1 min ago</source>
+            <translation>há %1 min</translation>
+        </message>
+        <message>
+            <source>%1 h ago</source>
+            <translation>há %1 h</translation>
+        </message>
+        <message>
+            <source>%1 days ago</source>
+            <translation>há %1 dias</translation>
+        </message>
+        <message>
+            <source>%1 shared a list: %2</source>
+            <translation>%1 compartilhou uma lista: %2</translation>
+        </message>
+        <message>
+            <source>%1 watched %2</source>
+            <translation>%1 assistiu %2</translation>
+        </message>
+        <message>
+            <source>%1 read %2</source>
+            <translation>%1 leu %2</translation>
+        </message>
+        <message>
+            <source>That list is empty.</source>
+            <translation>Essa lista está vazia.</translation>
+        </message>
+        <message>
+            <source>Shared. The link is copied: %1</source>
+            <translation>Compartilhada. Link copiado: %1</translation>
+        </message>
+        <message>
+            <source>%1 added to your library; %2 could not be found on your sources.</source>
+            <translation>%1 adicionadas à sua biblioteca; %2 não foram encontradas nas suas fontes.</translation>
+        </message>
+        <message>
+            <source>All of it is in your library already.</source>
+            <translation>Tudo já está na sua biblioteca.</translation>
+        </message>
+        <message>
+            <source>%1 added to your library.</source>
+            <translation>%1 adicionadas à sua biblioteca.</translation>
+        </message>
+        <message>
+            <source>Friends</source>
+            <translation>Amigos</translation>
+        </message>
+        <message>
+            <source>Follow each other on %1 to be friends</source>
+            <translation>Sigam um ao outro no %1 para serem amigos</translation>
+        </message>
+        <message>
+            <source>Sign in (Settings → Sync) to add friends, see what they read and share lists.</source>
+            <translation>Entre (Ajustes → Sincronização) para adicionar amigos, ver o que eles leem e compartilhar listas.</translation>
+        </message>
+        <message>
+            <source>You</source>
+            <translation>Você</translation>
+        </message>
+        <message>
+            <source>Share what I read and watch</source>
+            <translation>Compartilhar o que leio e assisto</translation>
+        </message>
+        <message>
+            <source>Your friends see the series you read and watch, and the lists you share. Off: they see nothing.</source>
+            <translation>Seus amigos veem as séries que você lê e assiste e as listas que você compartilha. Desligado: eles não veem nada.</translation>
+        </message>
+        <message>
+            <source>Add a friend</source>
+            <translation>Adicionar um amigo</translation>
+        </message>
+        <message>
+            <source>Their username; when they add you too, you are friends. You are @%1.</source>
+            <translation>O nome de usuário; quando a pessoa também adicionar você, vocês serão amigos. Você é @%1.</translation>
+        </message>
+        <message>
+            <source>username</source>
+            <translation>nome de usuário</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Adicionar</translation>
+        </message>
+        <message>
+            <source>You follow @%1.</source>
+            <translation>Você segue @%1.</translation>
+        </message>
+        <message>
+            <source>Asking to be friends</source>
+            <translation>Pedido de amizade enviado</translation>
+        </message>
+        <message>
+            <source>Added you</source>
+            <translation>Adicionou você</translation>
+        </message>
+        <message>
+            <source>Add back</source>
+            <translation>Adicionar também</translation>
+        </message>
+        <message>
+            <source>No friends yet.</source>
+            <translation>Nenhum amigo ainda.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Remover</translation>
+        </message>
+        <message>
+            <source>Waiting for them to add you</source>
+            <translation>Esperando a pessoa adicionar você</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Cancelar</translation>
+        </message>
+        <message>
+            <source>What friends read</source>
+            <translation>O que os amigos leem</translation>
+        </message>
+        <message>
+            <source>Nothing yet: friends show here once they share what they read.</source>
+            <translation>Nada ainda: os amigos aparecem aqui quando compartilham o que leem.</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Abrir</translation>
+        </message>
+        <message>
+            <source>Shared lists</source>
+            <translation>Listas compartilhadas</translation>
+        </message>
+        <message>
+            <source>Share a list from your library</source>
+            <translation>Compartilhar uma lista da sua biblioteca</translation>
+        </message>
+        <message>
+            <source>Anyone with the link sees it, and can add it all to their library in SCANCORE.</source>
+            <translation>Quem tiver o link pode vê-la e adicionar tudo à própria biblioteca no SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Compartilhar</translation>
+        </message>
+        <message>
+            <source>Open a shared list</source>
+            <translation>Abrir uma lista compartilhada</translation>
+        </message>
+        <message>
+            <source>Its link or code.</source>
+            <translation>O link ou código dela.</translation>
+        </message>
+        <message>
+            <source>link or code</source>
+            <translation>link ou código</translation>
+        </message>
+        <message>
+            <source>%1 series from @%2: %3</source>
+            <translation>%1 séries de @%2: %3</translation>
+        </message>
+        <message>
+            <source>Add all to my library</source>
+            <translation>Adicionar tudo à minha biblioteca</translation>
+        </message>
+        <message>
+            <source>%1 series · shared %2</source>
+            <translation>%1 séries · compartilhada %2</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>Copiar link</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>Link copiado</translation>
+        </message>
+        <message>
+            <source>Stop sharing</source>
+            <translation>Parar de compartilhar</translation>
+        </message>
+    </context>
+    <context>
         <name>HistoryPage</name>
         <message>
             <source>Today</source>
@@ -4099,6 +4326,74 @@
         <message>
             <source>Back to the default</source>
             <translation>Voltar ao padrão</translation>
+        </message>
+        <message>
+            <source>Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. </source>
+            <translation>Clique em um atalho e pressione as novas teclas. Backspace deixa uma ação sem tecla; Esc mantém a que ela tinha. </translation>
+        </message>
+        <message>
+            <source>Everyday: </source>
+            <translation>De sempre: </translation>
+        </message>
+        <message>
+            <source>none</source>
+            <translation>nenhuma</translation>
+        </message>
+        <message>
+            <source>Back to the everyday keys</source>
+            <translation>Voltar às teclas de sempre</translation>
+        </message>
+        <message>
+            <source>Key profiles</source>
+            <translation>Perfis de teclas</translation>
+        </message>
+        <message>
+            <source>Other keys for the readers, for the series you choose (in the reader's settings, under Keys): one-handed keys for webtoons, say. Keys a profile leaves alone stay as everyday.</source>
+            <translation>Outras teclas para os leitores, nas séries que você escolher (nos ajustes do leitor, em Teclas): teclas para uma mão em webtoons, por exemplo. As teclas que um perfil não muda continuam as de sempre.</translation>
+        </message>
+        <message>
+            <source>Readers' keys below</source>
+            <translation>Teclas dos leitores abaixo</translation>
+        </message>
+        <message>
+            <source>Changing the profile “%1”</source>
+            <translation>Alterando o perfil “%1”</translation>
+        </message>
+        <message>
+            <source>Changing the everyday keys</source>
+            <translation>Alterando as teclas de sempre</translation>
+        </message>
+        <message>
+            <source>Key profile</source>
+            <translation>Perfil de teclas</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Teclas de sempre</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Apagar</translation>
+        </message>
+        <message>
+            <source>New profile</source>
+            <translation>Novo perfil</translation>
+        </message>
+        <message>
+            <source>Starts as the everyday keys</source>
+            <translation>Começa com as teclas de sempre</translation>
+        </message>
+        <message>
+            <source>Name, e.g. Webtoons</source>
+            <translation>Nome, p. ex. Webtoons</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Adicionar</translation>
+        </message>
+        <message>
+            <source>There is a profile with that name already.</source>
+            <translation>Já existe um perfil com esse nome.</translation>
         </message>
     </context>
     <context>
@@ -5259,6 +5554,22 @@
             <source>Choose</source>
             <translation>Escolher</translation>
         </message>
+        <message>
+            <source>Also the other extension you had in %1</source>
+            <translation>Também a outra extensão que você tinha no %1</translation>
+        </message>
+        <message>
+            <source>Also the %1 other extensions you had in %2</source>
+            <translation>Também as outras %1 extensões que você tinha no %2</translation>
+        </message>
+        <message>
+            <source>Install the extension you had in %1</source>
+            <translation>Instalar a extensão que você tinha no %1</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions you had in %2</source>
+            <translation>Instalar as %1 extensões que você tinha no %2</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -5365,6 +5676,57 @@
         <message>
             <source>Settings</source>
             <translation>Ajustes</translation>
+        </message>
+    </context>
+    <context>
+        <name>NeuralVoicesDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Iniciando…</translation>
+        </message>
+        <message>
+            <source>Voice ready: choose it under Voice.</source>
+            <translation>Voz pronta: escolha-a em Voz.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Vozes neurais</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Fechar</translation>
+        </message>
+        <message>
+            <source>Natural voices that read on this computer, with no internet once downloaded. The first one also brings the voice program (Piper, about 25 MB).</source>
+            <translation>Vozes naturais que leem neste computador, sem internet depois de baixadas. A primeira também traz o programa de voz (Piper, cerca de 25 MB).</translation>
+        </message>
+        <message>
+            <source>Find a voice or language</source>
+            <translation>Buscar uma voz ou um idioma</translation>
+        </message>
+        <message>
+            <source>Best quality</source>
+            <translation>Melhor qualidade</translation>
+        </message>
+        <message>
+            <source>Good quality</source>
+            <translation>Boa qualidade</translation>
+        </message>
+        <message>
+            <source>Smaller</source>
+            <translation>Menor</translation>
+        </message>
+        <message>
+            <source>Smallest</source>
+            <translation>A menor</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Remover</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Baixar</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +6063,18 @@
         <message>
             <source>Pause between sentences · %1 s</source>
             <translation>Pausa entre frases · %1 s</translation>
+        </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Ler outra coisa ao lado</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Teclas para esta série</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Teclas de sempre</translation>
         </message>
     </context>
     <context>
@@ -6115,6 +6489,61 @@
         <message>
             <source>Retro tiles</source>
             <translation>Blocos Retro</translation>
+        </message>
+    </context>
+    <context>
+        <name>OnDeviceDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Iniciando…</translation>
+        </message>
+        <message>
+            <source>Ready: pages in this language can be translated on this computer.</source>
+            <translation>Pronta: as páginas neste idioma podem ser traduzidas neste computador.</translation>
+        </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Traduzir neste computador</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Fechar</translation>
+        </message>
+        <message>
+            <source>Each language brings what reading its pages and translating them into %1 needs: about 140 MB. Nothing is sent anywhere. ONNX Runtime (Microsoft), PaddleOCR and Opus-MT do the work.</source>
+            <translation>Cada idioma traz o necessário para ler suas páginas e traduzi-las para %1: cerca de 140 MB. Nada é enviado a lugar nenhum. ONNX Runtime (Microsoft), PaddleOCR e Opus-MT fazem o trabalho.</translation>
+        </message>
+        <message>
+            <source>Find a language</source>
+            <translation>Buscar um idioma</translation>
+        </message>
+        <message>
+            <source>Ready · through English</source>
+            <translation>Pronta · pelo inglês</translation>
+        </message>
+        <message>
+            <source>Ready</source>
+            <translation>Pronta</translation>
+        </message>
+        <message>
+            <source>About %1 MB</source>
+            <translation>Cerca de %1 MB</translation>
+        </message>
+        <message>
+            <source>Nothing more to download</source>
+            <translation>Nada mais para baixar</translation>
+        </message>
+        <message>
+            <source> · through English</source>
+            <translation> · pelo inglês</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Remover</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Baixar</translation>
         </message>
     </context>
     <context>
@@ -7301,6 +7730,50 @@
             <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
             <translation>Envia a imagem da página do quadrinho com o texto, para o modelo ver quem fala. Precisa de um modelo que leia imagens; custa mais.</translation>
         </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Traduzir neste computador</translation>
+        </message>
+        <message>
+            <source>Pages and chapters translated with nothing sent anywhere. Add or remove languages.</source>
+            <translation>Páginas e capítulos traduzidos sem enviar nada a lugar nenhum. Adicione ou remova idiomas.</translation>
+        </message>
+        <message>
+            <source>Download a language once; pages and chapters are then translated with nothing sent anywhere.</source>
+            <translation>Baixe um idioma uma vez; páginas e capítulos passam a ser traduzidos sem enviar nada a lugar nenhum.</translation>
+        </message>
+        <message>
+            <source>Languages…</source>
+            <translation>Idiomas…</translation>
+        </message>
+        <message>
+            <source>Translate novels in other languages</source>
+            <translation>Traduzir romances em outros idiomas</translation>
+        </message>
+        <message>
+            <source>Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.</source>
+            <translation>Capítulos de uma fonte em outro idioma (os da WTR-LAB, em inglês) abrem traduzidos. O botão Traduzir do leitor decide para cada série.</translation>
+        </message>
+        <message>
+            <source>Download a neural voice below, or add one in the system's text-to-speech settings.</source>
+            <translation>Baixe uma voz neural abaixo ou adicione uma nos ajustes de texto para fala do sistema.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Vozes neurais</translation>
+        </message>
+        <message>
+            <source>%1 downloaded; natural voices that need no internet</source>
+            <translation>%1 baixadas; vozes naturais que não precisam de internet</translation>
+        </message>
+        <message>
+            <source>Natural voices that read without the internet, downloaded once</source>
+            <translation>Vozes naturais que leem sem internet, baixadas uma vez</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>Escolher…</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7883,6 +8356,22 @@
         <message>
             <source>Any OpenAI-compatible service, or one on your computer</source>
             <translation>Qualquer serviço compatível com OpenAI, ou um no seu computador</translation>
+        </message>
+        <message>
+            <source>To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a Google Cloud key there.</source>
+            <translation>Para traduzir páginas no computador, baixe um idioma em Ajustes → Leitura → Traduzir neste computador ou adicione lá uma chave do Google Cloud.</translation>
+        </message>
+        <message>
+            <source>This computer</source>
+            <translation>Este computador</translation>
+        </message>
+        <message>
+            <source>Downloaded once; pages never leave the computer</source>
+            <translation>Baixado uma vez; as páginas nunca saem do computador</translation>
+        </message>
+        <message>
+            <source>Downloaded once; nothing leaves the computer</source>
+            <translation>Baixado uma vez; nada sai do computador</translation>
         </message>
     </context>
     <context>
@@ -9084,6 +9573,37 @@
         </message>
     </context>
     <context>
+        <name>SplitPicker</name>
+        <message>
+            <source>No chapters to read</source>
+            <translation>Nenhum capítulo para ler</translation>
+        </message>
+        <message>
+            <source>Read beside</source>
+            <translation>Ler ao lado</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Fechar</translation>
+        </message>
+        <message>
+            <source>Nothing in progress yet: start a comic or a novel, then read it beside another.</source>
+            <translation>Nada em andamento ainda: comece um quadrinho ou um romance e depois leia ao lado de outro.</translation>
+        </message>
+        <message>
+            <source>Opening…</source>
+            <translation>Abrindo…</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Romance</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Quadrinho</translation>
+        </message>
+    </context>
+    <context>
         <name>StateView</name>
         <message>
             <source>Nothing here yet</source>
@@ -9782,6 +10302,18 @@
         <message>
             <source>Retro colours</source>
             <translation>Cores Retro</translation>
+        </message>
+        <message>
+            <source>Glass</source>
+            <translation>Vidro</translation>
+        </message>
+        <message>
+            <source>Glass menus and sheets</source>
+            <translation>Menus e painéis de vidro</translation>
+        </message>
+        <message>
+            <source>Menus, sheets and dialogs show what is behind them, blurred.</source>
+            <translation>Menus, painéis e diálogos mostram o que está atrás deles, desfocado.</translation>
         </message>
     </context>
     <context>
@@ -10998,6 +11530,10 @@
         <message>
             <source>The voice could not read this.</source>
             <translation>A voz não conseguiu ler isto.</translation>
+        </message>
+        <message>
+            <source> (neural)</source>
+            <translation> (neural)</translation>
         </message>
     </context>
 </TS>

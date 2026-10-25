@@ -545,6 +545,10 @@
             <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
             <translation>Thời gian được tính khi bạn dùng SCANCORE: trong trình đọc, khi phát một tập hoặc khi duyệt. Các chương đọc xong trước khi bắt đầu tính giờ lấy từ lịch sử đọc.</translation>
         </message>
+        <message>
+            <source>Friends</source>
+            <translation>Bạn bè</translation>
+        </message>
     </context>
     <context>
         <name>AddRepositoryDialog</name>
@@ -1977,6 +1981,38 @@
             <source>Translate into %1</source>
             <translation>Dịch sang %1</translation>
         </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Đọc thứ khác bên cạnh</translation>
+        </message>
+        <message>
+            <source>React to this page</source>
+            <translation>Bày tỏ cảm xúc với trang này</translation>
+        </message>
+        <message>
+            <source>Downloading the upscaler (about 15 MB the first time)…</source>
+            <translation>Đang tải bộ phóng to (khoảng 15 MB lần đầu)…</translation>
+        </message>
+        <message>
+            <source>Enlarge downloaded pages (sharper; slower downloads)</source>
+            <translation>Phóng to trang đã tải (nét hơn; tải chậm hơn)</translation>
+        </message>
+        <message>
+            <source>Chapters downloaded from now on are enlarged.</source>
+            <translation>Các chương tải từ giờ sẽ được phóng to.</translation>
+        </message>
+        <message>
+            <source>Keys</source>
+            <translation>Phím</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Phím cho bộ này</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Phím thường ngày</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -2615,6 +2651,10 @@
         <message>
             <source>Choose folder</source>
             <translation>Chọn thư mục</translation>
+        </message>
+        <message>
+            <source>Your server: series read from other sources move forward on it too. It is managed in Settings → Sources → Your servers.</source>
+            <translation>Máy chủ của bạn: các bộ đọc từ nguồn khác cũng tiến lên ở đó. Quản lý ở Cài đặt → Nguồn → Máy chủ của bạn.</translation>
         </message>
     </context>
     <context>
@@ -3447,6 +3487,193 @@
         </message>
     </context>
     <context>
+        <name>FriendsPage</name>
+        <message>
+            <source>just now</source>
+            <translation>vừa xong</translation>
+        </message>
+        <message>
+            <source>%1 min ago</source>
+            <translation>%1 phút trước</translation>
+        </message>
+        <message>
+            <source>%1 h ago</source>
+            <translation>%1 giờ trước</translation>
+        </message>
+        <message>
+            <source>%1 days ago</source>
+            <translation>%1 ngày trước</translation>
+        </message>
+        <message>
+            <source>%1 shared a list: %2</source>
+            <translation>%1 đã chia sẻ một danh sách: %2</translation>
+        </message>
+        <message>
+            <source>%1 watched %2</source>
+            <translation>%1 đã xem %2</translation>
+        </message>
+        <message>
+            <source>%1 read %2</source>
+            <translation>%1 đã đọc %2</translation>
+        </message>
+        <message>
+            <source>That list is empty.</source>
+            <translation>Danh sách đó trống.</translation>
+        </message>
+        <message>
+            <source>Shared. The link is copied: %1</source>
+            <translation>Đã chia sẻ. Đã sao chép liên kết: %1</translation>
+        </message>
+        <message>
+            <source>%1 added to your library; %2 could not be found on your sources.</source>
+            <translation>Đã thêm %1 vào thư viện của bạn; không tìm thấy %2 trong các nguồn của bạn.</translation>
+        </message>
+        <message>
+            <source>All of it is in your library already.</source>
+            <translation>Tất cả đã có trong thư viện của bạn.</translation>
+        </message>
+        <message>
+            <source>%1 added to your library.</source>
+            <translation>Đã thêm %1 vào thư viện của bạn.</translation>
+        </message>
+        <message>
+            <source>Friends</source>
+            <translation>Bạn bè</translation>
+        </message>
+        <message>
+            <source>Follow each other on %1 to be friends</source>
+            <translation>Theo dõi nhau trên %1 để làm bạn</translation>
+        </message>
+        <message>
+            <source>Sign in (Settings → Sync) to add friends, see what they read and share lists.</source>
+            <translation>Đăng nhập (Cài đặt → Đồng bộ) để thêm bạn, xem họ đọc gì và chia sẻ danh sách.</translation>
+        </message>
+        <message>
+            <source>You</source>
+            <translation>Bạn</translation>
+        </message>
+        <message>
+            <source>Share what I read and watch</source>
+            <translation>Chia sẻ những gì tôi đọc và xem</translation>
+        </message>
+        <message>
+            <source>Your friends see the series you read and watch, and the lists you share. Off: they see nothing.</source>
+            <translation>Bạn bè thấy các bộ bạn đọc và xem, và các danh sách bạn chia sẻ. Tắt: họ không thấy gì.</translation>
+        </message>
+        <message>
+            <source>Add a friend</source>
+            <translation>Thêm bạn</translation>
+        </message>
+        <message>
+            <source>Their username; when they add you too, you are friends. You are @%1.</source>
+            <translation>Tên người dùng của họ; khi họ cũng thêm bạn, hai bạn là bạn bè. Bạn là @%1.</translation>
+        </message>
+        <message>
+            <source>username</source>
+            <translation>tên người dùng</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Thêm</translation>
+        </message>
+        <message>
+            <source>You follow @%1.</source>
+            <translation>Bạn theo dõi @%1.</translation>
+        </message>
+        <message>
+            <source>Asking to be friends</source>
+            <translation>Đã gửi lời mời kết bạn</translation>
+        </message>
+        <message>
+            <source>Added you</source>
+            <translation>Đã thêm bạn</translation>
+        </message>
+        <message>
+            <source>Add back</source>
+            <translation>Thêm lại</translation>
+        </message>
+        <message>
+            <source>No friends yet.</source>
+            <translation>Chưa có bạn bè.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Gỡ</translation>
+        </message>
+        <message>
+            <source>Waiting for them to add you</source>
+            <translation>Đang chờ họ thêm bạn</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Hủy</translation>
+        </message>
+        <message>
+            <source>What friends read</source>
+            <translation>Bạn bè đang đọc gì</translation>
+        </message>
+        <message>
+            <source>Nothing yet: friends show here once they share what they read.</source>
+            <translation>Chưa có gì: bạn bè hiện ở đây khi họ chia sẻ những gì họ đọc.</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Mở</translation>
+        </message>
+        <message>
+            <source>Shared lists</source>
+            <translation>Danh sách được chia sẻ</translation>
+        </message>
+        <message>
+            <source>Share a list from your library</source>
+            <translation>Chia sẻ một danh sách từ thư viện</translation>
+        </message>
+        <message>
+            <source>Anyone with the link sees it, and can add it all to their library in SCANCORE.</source>
+            <translation>Ai có liên kết đều xem được và có thể thêm tất cả vào thư viện của họ trong SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Chia sẻ</translation>
+        </message>
+        <message>
+            <source>Open a shared list</source>
+            <translation>Mở danh sách được chia sẻ</translation>
+        </message>
+        <message>
+            <source>Its link or code.</source>
+            <translation>Liên kết hoặc mã của nó.</translation>
+        </message>
+        <message>
+            <source>link or code</source>
+            <translation>liên kết hoặc mã</translation>
+        </message>
+        <message>
+            <source>%1 series from @%2: %3</source>
+            <translation>%1 bộ từ @%2: %3</translation>
+        </message>
+        <message>
+            <source>Add all to my library</source>
+            <translation>Thêm tất cả vào thư viện của tôi</translation>
+        </message>
+        <message>
+            <source>%1 series · shared %2</source>
+            <translation>%1 bộ · đã chia sẻ %2</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>Sao chép liên kết</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>Đã sao chép liên kết</translation>
+        </message>
+        <message>
+            <source>Stop sharing</source>
+            <translation>Ngừng chia sẻ</translation>
+        </message>
+    </context>
+    <context>
         <name>HistoryPage</name>
         <message>
             <source>Today</source>
@@ -4099,6 +4326,74 @@
         <message>
             <source>Back to the default</source>
             <translation>Về mặc định</translation>
+        </message>
+        <message>
+            <source>Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. </source>
+            <translation>Nhấp vào một phím tắt, rồi nhấn phím mới. Backspace để thao tác không có phím; Esc giữ phím cũ. </translation>
+        </message>
+        <message>
+            <source>Everyday: </source>
+            <translation>Thường ngày: </translation>
+        </message>
+        <message>
+            <source>none</source>
+            <translation>không có</translation>
+        </message>
+        <message>
+            <source>Back to the everyday keys</source>
+            <translation>Về lại phím thường ngày</translation>
+        </message>
+        <message>
+            <source>Key profiles</source>
+            <translation>Hồ sơ phím</translation>
+        </message>
+        <message>
+            <source>Other keys for the readers, for the series you choose (in the reader's settings, under Keys): one-handed keys for webtoons, say. Keys a profile leaves alone stay as everyday.</source>
+            <translation>Phím khác cho trình đọc, cho các bộ bạn chọn (trong cài đặt trình đọc, mục Phím): ví dụ phím một tay cho webtoon. Phím mà hồ sơ không đổi vẫn như thường ngày.</translation>
+        </message>
+        <message>
+            <source>Readers' keys below</source>
+            <translation>Phím của trình đọc ở dưới</translation>
+        </message>
+        <message>
+            <source>Changing the profile “%1”</source>
+            <translation>Đang đổi hồ sơ “%1”</translation>
+        </message>
+        <message>
+            <source>Changing the everyday keys</source>
+            <translation>Đang đổi phím thường ngày</translation>
+        </message>
+        <message>
+            <source>Key profile</source>
+            <translation>Hồ sơ phím</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Phím thường ngày</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Xóa</translation>
+        </message>
+        <message>
+            <source>New profile</source>
+            <translation>Hồ sơ mới</translation>
+        </message>
+        <message>
+            <source>Starts as the everyday keys</source>
+            <translation>Bắt đầu từ phím thường ngày</translation>
+        </message>
+        <message>
+            <source>Name, e.g. Webtoons</source>
+            <translation>Tên, ví dụ Webtoon</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Thêm</translation>
+        </message>
+        <message>
+            <source>There is a profile with that name already.</source>
+            <translation>Đã có hồ sơ với tên đó.</translation>
         </message>
     </context>
     <context>
@@ -5259,6 +5554,22 @@
             <source>Choose</source>
             <translation>Chọn</translation>
         </message>
+        <message>
+            <source>Also the other extension you had in %1</source>
+            <translation>Cả tiện ích mở rộng khác bạn có trong %1</translation>
+        </message>
+        <message>
+            <source>Also the %1 other extensions you had in %2</source>
+            <translation>Cả %1 tiện ích mở rộng khác bạn có trong %2</translation>
+        </message>
+        <message>
+            <source>Install the extension you had in %1</source>
+            <translation>Cài tiện ích mở rộng bạn có trong %1</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions you had in %2</source>
+            <translation>Cài %1 tiện ích mở rộng bạn có trong %2</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -5365,6 +5676,57 @@
         <message>
             <source>Settings</source>
             <translation>Cài đặt</translation>
+        </message>
+    </context>
+    <context>
+        <name>NeuralVoicesDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Đang bắt đầu…</translation>
+        </message>
+        <message>
+            <source>Voice ready: choose it under Voice.</source>
+            <translation>Giọng đã sẵn sàng: chọn ở mục Giọng đọc.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Giọng neural</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Natural voices that read on this computer, with no internet once downloaded. The first one also brings the voice program (Piper, about 25 MB).</source>
+            <translation>Giọng tự nhiên đọc trên máy tính này, không cần internet sau khi tải. Giọng đầu tiên cũng mang theo chương trình giọng nói (Piper, khoảng 25 MB).</translation>
+        </message>
+        <message>
+            <source>Find a voice or language</source>
+            <translation>Tìm giọng hoặc ngôn ngữ</translation>
+        </message>
+        <message>
+            <source>Best quality</source>
+            <translation>Chất lượng tốt nhất</translation>
+        </message>
+        <message>
+            <source>Good quality</source>
+            <translation>Chất lượng tốt</translation>
+        </message>
+        <message>
+            <source>Smaller</source>
+            <translation>Nhỏ hơn</translation>
+        </message>
+        <message>
+            <source>Smallest</source>
+            <translation>Nhỏ nhất</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Gỡ</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Tải xuống</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +6063,18 @@
         <message>
             <source>Pause between sentences · %1 s</source>
             <translation>Ngắt giữa các câu · %1 giây</translation>
+        </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Đọc thứ khác bên cạnh</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Phím cho bộ này</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Phím thường ngày</translation>
         </message>
     </context>
     <context>
@@ -6115,6 +6489,61 @@
         <message>
             <source>Retro tiles</source>
             <translation>Ô Retro</translation>
+        </message>
+    </context>
+    <context>
+        <name>OnDeviceDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Đang bắt đầu…</translation>
+        </message>
+        <message>
+            <source>Ready: pages in this language can be translated on this computer.</source>
+            <translation>Sẵn sàng: trang bằng ngôn ngữ này có thể được dịch trên máy tính này.</translation>
+        </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Dịch trên máy tính này</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Each language brings what reading its pages and translating them into %1 needs: about 140 MB. Nothing is sent anywhere. ONNX Runtime (Microsoft), PaddleOCR and Opus-MT do the work.</source>
+            <translation>Mỗi ngôn ngữ mang theo những gì cần để đọc trang và dịch sang %1: khoảng 140 MB. Không gửi gì đi đâu. ONNX Runtime (Microsoft), PaddleOCR và Opus-MT đảm nhận việc này.</translation>
+        </message>
+        <message>
+            <source>Find a language</source>
+            <translation>Tìm ngôn ngữ</translation>
+        </message>
+        <message>
+            <source>Ready · through English</source>
+            <translation>Sẵn sàng · qua tiếng Anh</translation>
+        </message>
+        <message>
+            <source>Ready</source>
+            <translation>Sẵn sàng</translation>
+        </message>
+        <message>
+            <source>About %1 MB</source>
+            <translation>Khoảng %1 MB</translation>
+        </message>
+        <message>
+            <source>Nothing more to download</source>
+            <translation>Không còn gì để tải</translation>
+        </message>
+        <message>
+            <source> · through English</source>
+            <translation> · qua tiếng Anh</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Gỡ</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>Tải xuống</translation>
         </message>
     </context>
     <context>
@@ -7301,6 +7730,50 @@
             <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
             <translation>Gửi hình trang truyện kèm chữ của nó để mô hình thấy ai đang nói. Cần mô hình đọc được hình ảnh; tốn phí hơn.</translation>
         </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Dịch trên máy tính này</translation>
+        </message>
+        <message>
+            <source>Pages and chapters translated with nothing sent anywhere. Add or remove languages.</source>
+            <translation>Trang và chương được dịch mà không gửi gì đi đâu. Thêm hoặc bỏ ngôn ngữ.</translation>
+        </message>
+        <message>
+            <source>Download a language once; pages and chapters are then translated with nothing sent anywhere.</source>
+            <translation>Tải một ngôn ngữ một lần; sau đó trang và chương được dịch mà không gửi gì đi đâu.</translation>
+        </message>
+        <message>
+            <source>Languages…</source>
+            <translation>Ngôn ngữ…</translation>
+        </message>
+        <message>
+            <source>Translate novels in other languages</source>
+            <translation>Dịch tiểu thuyết ở ngôn ngữ khác</translation>
+        </message>
+        <message>
+            <source>Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.</source>
+            <translation>Các chương từ nguồn ngôn ngữ khác (của WTR-LAB, bằng tiếng Anh) sẽ mở bản dịch. Nút Dịch trong trình đọc quyết định cho từng bộ.</translation>
+        </message>
+        <message>
+            <source>Download a neural voice below, or add one in the system's text-to-speech settings.</source>
+            <translation>Tải một giọng neural bên dưới, hoặc thêm một giọng trong cài đặt chuyển văn bản thành giọng nói của hệ thống.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Giọng neural</translation>
+        </message>
+        <message>
+            <source>%1 downloaded; natural voices that need no internet</source>
+            <translation>Đã tải %1; giọng tự nhiên không cần internet</translation>
+        </message>
+        <message>
+            <source>Natural voices that read without the internet, downloaded once</source>
+            <translation>Giọng tự nhiên đọc không cần internet, tải một lần</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>Chọn…</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7883,6 +8356,22 @@
         <message>
             <source>Any OpenAI-compatible service, or one on your computer</source>
             <translation>Bất kỳ dịch vụ nào tương thích OpenAI, hoặc một dịch vụ trên máy tính của bạn</translation>
+        </message>
+        <message>
+            <source>To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a Google Cloud key there.</source>
+            <translation>Để dịch trang trên máy tính, hãy tải một ngôn ngữ ở Cài đặt → Đọc → Dịch trên máy tính này, hoặc thêm khóa Google Cloud ở đó.</translation>
+        </message>
+        <message>
+            <source>This computer</source>
+            <translation>Máy tính này</translation>
+        </message>
+        <message>
+            <source>Downloaded once; pages never leave the computer</source>
+            <translation>Tải một lần; trang không bao giờ rời khỏi máy tính</translation>
+        </message>
+        <message>
+            <source>Downloaded once; nothing leaves the computer</source>
+            <translation>Tải một lần; không có gì rời khỏi máy tính</translation>
         </message>
     </context>
     <context>
@@ -9084,6 +9573,37 @@
         </message>
     </context>
     <context>
+        <name>SplitPicker</name>
+        <message>
+            <source>No chapters to read</source>
+            <translation>Không có chương để đọc</translation>
+        </message>
+        <message>
+            <source>Read beside</source>
+            <translation>Đọc song song</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Đóng</translation>
+        </message>
+        <message>
+            <source>Nothing in progress yet: start a comic or a novel, then read it beside another.</source>
+            <translation>Chưa có gì đang đọc: hãy bắt đầu một truyện tranh hoặc tiểu thuyết, rồi đọc cạnh một bộ khác.</translation>
+        </message>
+        <message>
+            <source>Opening…</source>
+            <translation>Đang mở…</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Tiểu thuyết</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Truyện tranh</translation>
+        </message>
+    </context>
+    <context>
         <name>StateView</name>
         <message>
             <source>Nothing here yet</source>
@@ -9782,6 +10302,18 @@
         <message>
             <source>Retro colours</source>
             <translation>Màu Retro</translation>
+        </message>
+        <message>
+            <source>Glass</source>
+            <translation>Kính</translation>
+        </message>
+        <message>
+            <source>Glass menus and sheets</source>
+            <translation>Menu và bảng kính</translation>
+        </message>
+        <message>
+            <source>Menus, sheets and dialogs show what is behind them, blurred.</source>
+            <translation>Menu, bảng và hộp thoại hiện những gì phía sau, được làm mờ.</translation>
         </message>
     </context>
     <context>
@@ -10998,6 +11530,10 @@
         <message>
             <source>The voice could not read this.</source>
             <translation>Giọng đọc không đọc được đoạn này.</translation>
+        </message>
+        <message>
+            <source> (neural)</source>
+            <translation> (neural)</translation>
         </message>
     </context>
 </TS>

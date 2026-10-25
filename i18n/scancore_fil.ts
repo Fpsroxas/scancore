@@ -545,6 +545,10 @@
             <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
             <translation>Binibilang ang oras habang ginagamit ang SCANCORE: sa isang reader, habang nagpe-play ng episode, o habang nagba-browse. Ang mga kabanatang natapos bago nagsimulang bilangin ang oras ay mula sa history ng pagbabasa mo.</translation>
         </message>
+        <message>
+            <source>Friends</source>
+            <translation>Mga kaibigan</translation>
+        </message>
     </context>
     <context>
         <name>AddRepositoryDialog</name>
@@ -1977,6 +1981,38 @@
             <source>Translate into %1</source>
             <translation>Isalin sa %1</translation>
         </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Magbasa ng iba sa tabi nito</translation>
+        </message>
+        <message>
+            <source>React to this page</source>
+            <translation>Mag-react sa pahinang ito</translation>
+        </message>
+        <message>
+            <source>Downloading the upscaler (about 15 MB the first time)…</source>
+            <translation>Dina-download ang upscaler (mga 15 MB sa unang beses)…</translation>
+        </message>
+        <message>
+            <source>Enlarge downloaded pages (sharper; slower downloads)</source>
+            <translation>Palakihin ang mga na-download na pahina (mas malinaw; mas mabagal ang download)</translation>
+        </message>
+        <message>
+            <source>Chapters downloaded from now on are enlarged.</source>
+            <translation>Palalakihin ang mga kabanatang ida-download mula ngayon.</translation>
+        </message>
+        <message>
+            <source>Keys</source>
+            <translation>Mga key</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Mga key para sa seryeng ito</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Mga karaniwang key</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -2615,6 +2651,10 @@
         <message>
             <source>Choose folder</source>
             <translation>Pumili ng folder</translation>
+        </message>
+        <message>
+            <source>Your server: series read from other sources move forward on it too. It is managed in Settings → Sources → Your servers.</source>
+            <translation>Server mo: umuusad din dito ang mga seryeng binabasa mula sa ibang source. Pinamamahalaan ito sa Settings → Mga source → Your servers.</translation>
         </message>
     </context>
     <context>
@@ -3439,6 +3479,193 @@
         </message>
     </context>
     <context>
+        <name>FriendsPage</name>
+        <message>
+            <source>just now</source>
+            <translation>ngayon lang</translation>
+        </message>
+        <message>
+            <source>%1 min ago</source>
+            <translation>%1 min na ang nakalipas</translation>
+        </message>
+        <message>
+            <source>%1 h ago</source>
+            <translation>%1 oras na ang nakalipas</translation>
+        </message>
+        <message>
+            <source>%1 days ago</source>
+            <translation>%1 araw na ang nakalipas</translation>
+        </message>
+        <message>
+            <source>%1 shared a list: %2</source>
+            <translation>Nagbahagi si %1 ng listahan: %2</translation>
+        </message>
+        <message>
+            <source>%1 watched %2</source>
+            <translation>Pinanood ni %1 ang %2</translation>
+        </message>
+        <message>
+            <source>%1 read %2</source>
+            <translation>Binasa ni %1 ang %2</translation>
+        </message>
+        <message>
+            <source>That list is empty.</source>
+            <translation>Walang laman ang listahang iyon.</translation>
+        </message>
+        <message>
+            <source>Shared. The link is copied: %1</source>
+            <translation>Naibahagi. Nakopya ang link: %1</translation>
+        </message>
+        <message>
+            <source>%1 added to your library; %2 could not be found on your sources.</source>
+            <translation>Naidagdag ang %1 sa library mo; hindi nahanap ang %2 sa mga source mo.</translation>
+        </message>
+        <message>
+            <source>All of it is in your library already.</source>
+            <translation>Nasa library mo na ang lahat.</translation>
+        </message>
+        <message>
+            <source>%1 added to your library.</source>
+            <translation>Naidagdag ang %1 sa library mo.</translation>
+        </message>
+        <message>
+            <source>Friends</source>
+            <translation>Mga kaibigan</translation>
+        </message>
+        <message>
+            <source>Follow each other on %1 to be friends</source>
+            <translation>I-follow ang isa't isa sa %1 para maging magkaibigan</translation>
+        </message>
+        <message>
+            <source>Sign in (Settings → Sync) to add friends, see what they read and share lists.</source>
+            <translation>Mag-sign in (Settings → Sync) para magdagdag ng kaibigan, makita ang binabasa nila at magbahagi ng listahan.</translation>
+        </message>
+        <message>
+            <source>You</source>
+            <translation>Ikaw</translation>
+        </message>
+        <message>
+            <source>Share what I read and watch</source>
+            <translation>Ibahagi ang binabasa at pinapanood ko</translation>
+        </message>
+        <message>
+            <source>Your friends see the series you read and watch, and the lists you share. Off: they see nothing.</source>
+            <translation>Nakikita ng mga kaibigan mo ang mga seryeng binabasa at pinapanood mo, at ang mga listahang ibinabahagi mo. Naka-off: wala silang nakikita.</translation>
+        </message>
+        <message>
+            <source>Add a friend</source>
+            <translation>Magdagdag ng kaibigan</translation>
+        </message>
+        <message>
+            <source>Their username; when they add you too, you are friends. You are @%1.</source>
+            <translation>Ang username nila; kapag idinagdag ka rin nila, magkaibigan na kayo. Ikaw si @%1.</translation>
+        </message>
+        <message>
+            <source>username</source>
+            <translation>username</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Idagdag</translation>
+        </message>
+        <message>
+            <source>You follow @%1.</source>
+            <translation>Fina-follow mo si @%1.</translation>
+        </message>
+        <message>
+            <source>Asking to be friends</source>
+            <translation>Naipadala ang friend request</translation>
+        </message>
+        <message>
+            <source>Added you</source>
+            <translation>Idinagdag ka</translation>
+        </message>
+        <message>
+            <source>Add back</source>
+            <translation>Idagdag din</translation>
+        </message>
+        <message>
+            <source>No friends yet.</source>
+            <translation>Wala ka pang kaibigan.</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Alisin</translation>
+        </message>
+        <message>
+            <source>Waiting for them to add you</source>
+            <translation>Hinihintay na idagdag ka nila</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>Kanselahin</translation>
+        </message>
+        <message>
+            <source>What friends read</source>
+            <translation>Binabasa ng mga kaibigan</translation>
+        </message>
+        <message>
+            <source>Nothing yet: friends show here once they share what they read.</source>
+            <translation>Wala pa: lalabas dito ang mga kaibigan kapag ibinahagi nila ang binabasa nila.</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>Buksan</translation>
+        </message>
+        <message>
+            <source>Shared lists</source>
+            <translation>Mga ibinahaging listahan</translation>
+        </message>
+        <message>
+            <source>Share a list from your library</source>
+            <translation>Magbahagi ng listahan mula sa library mo</translation>
+        </message>
+        <message>
+            <source>Anyone with the link sees it, and can add it all to their library in SCANCORE.</source>
+            <translation>Makikita ito ng sinumang may link, at maidaragdag nila lahat sa library nila sa SCANCORE.</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>Ibahagi</translation>
+        </message>
+        <message>
+            <source>Open a shared list</source>
+            <translation>Magbukas ng ibinahaging listahan</translation>
+        </message>
+        <message>
+            <source>Its link or code.</source>
+            <translation>Ang link o code nito.</translation>
+        </message>
+        <message>
+            <source>link or code</source>
+            <translation>link o code</translation>
+        </message>
+        <message>
+            <source>%1 series from @%2: %3</source>
+            <translation>%1 serye mula kay @%2: %3</translation>
+        </message>
+        <message>
+            <source>Add all to my library</source>
+            <translation>Idagdag lahat sa library ko</translation>
+        </message>
+        <message>
+            <source>%1 series · shared %2</source>
+            <translation>%1 serye · ibinahagi %2</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>Kopyahin ang link</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>Nakopya ang link</translation>
+        </message>
+        <message>
+            <source>Stop sharing</source>
+            <translation>Itigil ang pagbabahagi</translation>
+        </message>
+    </context>
+    <context>
         <name>HistoryPage</name>
         <message>
             <source>Today</source>
@@ -4091,6 +4318,74 @@
         <message>
             <source>Back to the default</source>
             <translation>Ibalik sa default</translation>
+        </message>
+        <message>
+            <source>Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. </source>
+            <translation>Mag-click ng shortcut, tapos pindutin ang mga bagong key. Iniiwan ng Backspace ang isang aksyon nang walang key; pinapanatili ng Esc ang dati. </translation>
+        </message>
+        <message>
+            <source>Everyday: </source>
+            <translation>Karaniwan: </translation>
+        </message>
+        <message>
+            <source>none</source>
+            <translation>wala</translation>
+        </message>
+        <message>
+            <source>Back to the everyday keys</source>
+            <translation>Bumalik sa mga karaniwang key</translation>
+        </message>
+        <message>
+            <source>Key profiles</source>
+            <translation>Mga key profile</translation>
+        </message>
+        <message>
+            <source>Other keys for the readers, for the series you choose (in the reader's settings, under Keys): one-handed keys for webtoons, say. Keys a profile leaves alone stay as everyday.</source>
+            <translation>Ibang mga key para sa mga reader, para sa mga seryeng pipiliin mo (sa settings ng reader, sa ilalim ng Mga key): mga key na pang-isang kamay para sa webtoons, halimbawa. Ang mga key na hindi binabago ng profile ay mananatiling karaniwan.</translation>
+        </message>
+        <message>
+            <source>Readers' keys below</source>
+            <translation>Mga key ng reader sa ibaba</translation>
+        </message>
+        <message>
+            <source>Changing the profile “%1”</source>
+            <translation>Binabago ang profile na “%1”</translation>
+        </message>
+        <message>
+            <source>Changing the everyday keys</source>
+            <translation>Binabago ang mga karaniwang key</translation>
+        </message>
+        <message>
+            <source>Key profile</source>
+            <translation>Key profile</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Mga karaniwang key</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Burahin</translation>
+        </message>
+        <message>
+            <source>New profile</source>
+            <translation>Bagong profile</translation>
+        </message>
+        <message>
+            <source>Starts as the everyday keys</source>
+            <translation>Nagsisimula sa mga karaniwang key</translation>
+        </message>
+        <message>
+            <source>Name, e.g. Webtoons</source>
+            <translation>Pangalan, hal. Webtoons</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>Idagdag</translation>
+        </message>
+        <message>
+            <source>There is a profile with that name already.</source>
+            <translation>May profile na sa pangalang iyon.</translation>
         </message>
     </context>
     <context>
@@ -5251,6 +5546,22 @@
             <source>Choose</source>
             <translation>Pumili</translation>
         </message>
+        <message>
+            <source>Also the other extension you had in %1</source>
+            <translation>Pati ang isa pang extension na nasa %1 mo</translation>
+        </message>
+        <message>
+            <source>Also the %1 other extensions you had in %2</source>
+            <translation>Pati ang %1 iba pang extension na nasa %2 mo</translation>
+        </message>
+        <message>
+            <source>Install the extension you had in %1</source>
+            <translation>I-install ang extension na nasa %1 mo</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions you had in %2</source>
+            <translation>I-install ang %1 extension na nasa %2 mo</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -5357,6 +5668,57 @@
         <message>
             <source>Settings</source>
             <translation>Settings</translation>
+        </message>
+    </context>
+    <context>
+        <name>NeuralVoicesDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Nagsisimula…</translation>
+        </message>
+        <message>
+            <source>Voice ready: choose it under Voice.</source>
+            <translation>Handa na ang boses: piliin ito sa ilalim ng Boses.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Mga neural na boses</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Isara</translation>
+        </message>
+        <message>
+            <source>Natural voices that read on this computer, with no internet once downloaded. The first one also brings the voice program (Piper, about 25 MB).</source>
+            <translation>Mga natural na boses na nagbabasa sa computer na ito, walang internet kapag na-download na. Dala rin ng una ang voice program (Piper, mga 25 MB).</translation>
+        </message>
+        <message>
+            <source>Find a voice or language</source>
+            <translation>Maghanap ng boses o wika</translation>
+        </message>
+        <message>
+            <source>Best quality</source>
+            <translation>Pinakamahusay na kalidad</translation>
+        </message>
+        <message>
+            <source>Good quality</source>
+            <translation>Magandang kalidad</translation>
+        </message>
+        <message>
+            <source>Smaller</source>
+            <translation>Mas maliit</translation>
+        </message>
+        <message>
+            <source>Smallest</source>
+            <translation>Pinakamaliit</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Alisin</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>I-download</translation>
         </message>
     </context>
     <context>
@@ -5693,6 +6055,18 @@
         <message>
             <source>Pause between sentences · %1 s</source>
             <translation>Hinto sa pagitan ng mga pangungusap · %1 s</translation>
+        </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>Magbasa ng iba sa tabi nito</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>Mga key para sa seryeng ito</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>Mga karaniwang key</translation>
         </message>
     </context>
     <context>
@@ -6107,6 +6481,61 @@
         <message>
             <source>Retro tiles</source>
             <translation>Mga tile ng Retro</translation>
+        </message>
+    </context>
+    <context>
+        <name>OnDeviceDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>Nagsisimula…</translation>
+        </message>
+        <message>
+            <source>Ready: pages in this language can be translated on this computer.</source>
+            <translation>Handa na: maisasalin sa computer na ito ang mga pahina sa wikang ito.</translation>
+        </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Isalin sa computer na ito</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Isara</translation>
+        </message>
+        <message>
+            <source>Each language brings what reading its pages and translating them into %1 needs: about 140 MB. Nothing is sent anywhere. ONNX Runtime (Microsoft), PaddleOCR and Opus-MT do the work.</source>
+            <translation>Dala ng bawat wika ang kailangan para basahin ang mga pahina nito at isalin sa %1: mga 140 MB. Walang ipinapadala kahit saan. Ang ONNX Runtime (Microsoft), PaddleOCR at Opus-MT ang gumagawa nito.</translation>
+        </message>
+        <message>
+            <source>Find a language</source>
+            <translation>Maghanap ng wika</translation>
+        </message>
+        <message>
+            <source>Ready · through English</source>
+            <translation>Handa na · sa pamamagitan ng English</translation>
+        </message>
+        <message>
+            <source>Ready</source>
+            <translation>Handa na</translation>
+        </message>
+        <message>
+            <source>About %1 MB</source>
+            <translation>Mga %1 MB</translation>
+        </message>
+        <message>
+            <source>Nothing more to download</source>
+            <translation>Wala nang ida-download</translation>
+        </message>
+        <message>
+            <source> · through English</source>
+            <translation> · sa pamamagitan ng English</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>Alisin</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>I-download</translation>
         </message>
     </context>
     <context>
@@ -7293,6 +7722,50 @@
             <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
             <translation>Ipinapadala ang larawan ng pahina ng komiks kasama ang teksto nito, para makita ng model kung sino ang nagsasalita. Kailangan ng model na nakakabasa ng larawan; mas mahal.</translation>
         </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>Isalin sa computer na ito</translation>
+        </message>
+        <message>
+            <source>Pages and chapters translated with nothing sent anywhere. Add or remove languages.</source>
+            <translation>Mga pahina at kabanatang isinasalin nang walang ipinapadala kahit saan. Magdagdag o mag-alis ng wika.</translation>
+        </message>
+        <message>
+            <source>Download a language once; pages and chapters are then translated with nothing sent anywhere.</source>
+            <translation>Mag-download ng wika nang isang beses; isasalin na ang mga pahina at kabanata nang walang ipinapadala kahit saan.</translation>
+        </message>
+        <message>
+            <source>Languages…</source>
+            <translation>Mga wika…</translation>
+        </message>
+        <message>
+            <source>Translate novels in other languages</source>
+            <translation>Isalin ang mga nobela sa ibang wika</translation>
+        </message>
+        <message>
+            <source>Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.</source>
+            <translation>Bubukas nang nakasalin ang mga kabanata mula sa source na ibang wika (ang sa WTR-LAB, sa English). Ang Isalin na button ng reader ang magpapasya sa bawat serye.</translation>
+        </message>
+        <message>
+            <source>Download a neural voice below, or add one in the system's text-to-speech settings.</source>
+            <translation>Mag-download ng neural na boses sa ibaba, o magdagdag sa text-to-speech settings ng system.</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>Mga neural na boses</translation>
+        </message>
+        <message>
+            <source>%1 downloaded; natural voices that need no internet</source>
+            <translation>%1 na-download; mga natural na boses na hindi kailangan ng internet</translation>
+        </message>
+        <message>
+            <source>Natural voices that read without the internet, downloaded once</source>
+            <translation>Mga natural na boses na nagbabasa nang walang internet, isang beses ida-download</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>Pumili…</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7868,6 +8341,22 @@
         <message>
             <source>Any OpenAI-compatible service, or one on your computer</source>
             <translation>Anumang serbisyong compatible sa OpenAI, o isa sa computer mo</translation>
+        </message>
+        <message>
+            <source>To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a Google Cloud key there.</source>
+            <translation>Para magsalin ng mga pahina sa computer, mag-download ng wika sa Settings → Pagbabasa → Isalin sa computer na ito, o magdagdag doon ng Google Cloud key.</translation>
+        </message>
+        <message>
+            <source>This computer</source>
+            <translation>Computer na ito</translation>
+        </message>
+        <message>
+            <source>Downloaded once; pages never leave the computer</source>
+            <translation>Isang beses ida-download; hindi kailanman lumalabas sa computer ang mga pahina</translation>
+        </message>
+        <message>
+            <source>Downloaded once; nothing leaves the computer</source>
+            <translation>Isang beses ida-download; walang lumalabas sa computer</translation>
         </message>
     </context>
     <context>
@@ -9069,6 +9558,37 @@
         </message>
     </context>
     <context>
+        <name>SplitPicker</name>
+        <message>
+            <source>No chapters to read</source>
+            <translation>Walang kabanatang mababasa</translation>
+        </message>
+        <message>
+            <source>Read beside</source>
+            <translation>Basahin nang magkatabi</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>Isara</translation>
+        </message>
+        <message>
+            <source>Nothing in progress yet: start a comic or a novel, then read it beside another.</source>
+            <translation>Wala pang binabasa: magsimula ng komiks o nobela, tapos basahin ito katabi ng iba.</translation>
+        </message>
+        <message>
+            <source>Opening…</source>
+            <translation>Binubuksan…</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>Nobela</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>Komiks</translation>
+        </message>
+    </context>
+    <context>
         <name>StateView</name>
         <message>
             <source>Nothing here yet</source>
@@ -9767,6 +10287,18 @@
         <message>
             <source>Retro colours</source>
             <translation>Mga kulay ng Retro</translation>
+        </message>
+        <message>
+            <source>Glass</source>
+            <translation>Salamin</translation>
+        </message>
+        <message>
+            <source>Glass menus and sheets</source>
+            <translation>Mga menu at sheet na salamin</translation>
+        </message>
+        <message>
+            <source>Menus, sheets and dialogs show what is behind them, blurred.</source>
+            <translation>Ipinapakita ng mga menu, sheet at dialog ang nasa likod nila, malabo.</translation>
         </message>
     </context>
     <context>
@@ -10990,6 +11522,10 @@
         <message>
             <source>The voice could not read this.</source>
             <translation>Hindi ito mabasa ng boses.</translation>
+        </message>
+        <message>
+            <source> (neural)</source>
+            <translation> (neural)</translation>
         </message>
     </context>
 </TS>

@@ -631,7 +631,7 @@ SettingsPane {
             visible: Piper.available
             iconName: "volume-2"
             title: qsTr("Neural voices")
-            description: Piper.voices.length > 0 ? qsTr("%n downloaded; natural voices that need no internet", "", Piper.voices.length)
+            description: Piper.voices.length > 0 ? qsTr("%1 downloaded; natural voices that need no internet").arg(Piper.voices.length)
                                                  : qsTr("Natural voices that read without the internet, downloaded once")
             ScButton {
                 text: qsTr("Choose…")

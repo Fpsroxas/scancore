@@ -51,8 +51,9 @@ Item {
         const p = e.payload || {}
         const who = e.user.displayName || "@" + e.user.username
         if (e.type === "shared") return qsTr("%1 shared a list: %2").arg(who).arg(p.title)
-        const verb = e.type === "watched" ? qsTr("watched") : qsTr("read")
-        return who + " " + verb + " " + p.title + (p.unit ? " · " + p.unit : "")
+        const what = p.title + (p.unit ? " · " + p.unit : "")
+        return e.type === "watched" ? qsTr("%1 watched %2").arg(who).arg(what)
+                                    : qsTr("%1 read %2").arg(who).arg(what)
     }
 
     // A library list, as the site keeps it.

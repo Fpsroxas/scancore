@@ -545,6 +545,10 @@
             <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
             <translation>เวลาจะนับขณะใช้ SCANCORE: ในตัวอ่าน ขณะเล่นตอน หรือขณะเรียกดู ตอนที่อ่านจบก่อนเริ่มนับเวลามาจากประวัติการอ่านของคุณ</translation>
         </message>
+        <message>
+            <source>Friends</source>
+            <translation>เพื่อน</translation>
+        </message>
     </context>
     <context>
         <name>AddRepositoryDialog</name>
@@ -1977,6 +1981,38 @@
             <source>Translate into %1</source>
             <translation>แปลเป็น %1</translation>
         </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>อ่านเรื่องอื่นข้าง ๆ</translation>
+        </message>
+        <message>
+            <source>React to this page</source>
+            <translation>แสดงความรู้สึกต่อหน้านี้</translation>
+        </message>
+        <message>
+            <source>Downloading the upscaler (about 15 MB the first time)…</source>
+            <translation>กำลังดาวน์โหลดตัวขยายภาพ (ประมาณ 15 MB ในครั้งแรก)…</translation>
+        </message>
+        <message>
+            <source>Enlarge downloaded pages (sharper; slower downloads)</source>
+            <translation>ขยายหน้าที่ดาวน์โหลด (คมชัดขึ้น ดาวน์โหลดช้าลง)</translation>
+        </message>
+        <message>
+            <source>Chapters downloaded from now on are enlarged.</source>
+            <translation>ตอนที่ดาวน์โหลดจากนี้ไปจะถูกขยาย</translation>
+        </message>
+        <message>
+            <source>Keys</source>
+            <translation>ปุ่ม</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>ปุ่มสำหรับเรื่องนี้</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>ปุ่มประจำ</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -2615,6 +2651,10 @@
         <message>
             <source>Choose folder</source>
             <translation>เลือกโฟลเดอร์</translation>
+        </message>
+        <message>
+            <source>Your server: series read from other sources move forward on it too. It is managed in Settings → Sources → Your servers.</source>
+            <translation>เซิร์ฟเวอร์ของคุณ: เรื่องที่อ่านจากแหล่งอื่นจะเดินหน้าบนเซิร์ฟเวอร์นี้ด้วย จัดการได้ใน การตั้งค่า → แหล่ง → เซิร์ฟเวอร์ของคุณ</translation>
         </message>
     </context>
     <context>
@@ -3439,6 +3479,193 @@
         </message>
     </context>
     <context>
+        <name>FriendsPage</name>
+        <message>
+            <source>just now</source>
+            <translation>เมื่อสักครู่</translation>
+        </message>
+        <message>
+            <source>%1 min ago</source>
+            <translation>%1 นาทีที่แล้ว</translation>
+        </message>
+        <message>
+            <source>%1 h ago</source>
+            <translation>%1 ชม. ที่แล้ว</translation>
+        </message>
+        <message>
+            <source>%1 days ago</source>
+            <translation>%1 วันที่แล้ว</translation>
+        </message>
+        <message>
+            <source>%1 shared a list: %2</source>
+            <translation>%1 แชร์รายการ: %2</translation>
+        </message>
+        <message>
+            <source>%1 watched %2</source>
+            <translation>%1 ดู %2</translation>
+        </message>
+        <message>
+            <source>%1 read %2</source>
+            <translation>%1 อ่าน %2</translation>
+        </message>
+        <message>
+            <source>That list is empty.</source>
+            <translation>รายการนั้นว่างเปล่า</translation>
+        </message>
+        <message>
+            <source>Shared. The link is copied: %1</source>
+            <translation>แชร์แล้ว คัดลอกลิงก์แล้ว: %1</translation>
+        </message>
+        <message>
+            <source>%1 added to your library; %2 could not be found on your sources.</source>
+            <translation>เพิ่ม %1 เรื่องลงในคลังแล้ว และหา %2 เรื่องไม่พบในแหล่งของคุณ</translation>
+        </message>
+        <message>
+            <source>All of it is in your library already.</source>
+            <translation>ทุกเรื่องอยู่ในคลังของคุณแล้ว</translation>
+        </message>
+        <message>
+            <source>%1 added to your library.</source>
+            <translation>เพิ่ม %1 เรื่องลงในคลังแล้ว</translation>
+        </message>
+        <message>
+            <source>Friends</source>
+            <translation>เพื่อน</translation>
+        </message>
+        <message>
+            <source>Follow each other on %1 to be friends</source>
+            <translation>ติดตามกันและกันบน %1 เพื่อเป็นเพื่อน</translation>
+        </message>
+        <message>
+            <source>Sign in (Settings → Sync) to add friends, see what they read and share lists.</source>
+            <translation>ลงชื่อเข้าใช้ (การตั้งค่า → ซิงค์) เพื่อเพิ่มเพื่อน ดูว่าพวกเขาอ่านอะไร และแชร์รายการ</translation>
+        </message>
+        <message>
+            <source>You</source>
+            <translation>คุณ</translation>
+        </message>
+        <message>
+            <source>Share what I read and watch</source>
+            <translation>แชร์สิ่งที่ฉันอ่านและดู</translation>
+        </message>
+        <message>
+            <source>Your friends see the series you read and watch, and the lists you share. Off: they see nothing.</source>
+            <translation>เพื่อนจะเห็นเรื่องที่คุณอ่านและดู และรายการที่คุณแชร์ ปิด: พวกเขาจะไม่เห็นอะไรเลย</translation>
+        </message>
+        <message>
+            <source>Add a friend</source>
+            <translation>เพิ่มเพื่อน</translation>
+        </message>
+        <message>
+            <source>Their username; when they add you too, you are friends. You are @%1.</source>
+            <translation>ชื่อผู้ใช้ของเขา เมื่อเขาเพิ่มคุณด้วย คุณจะเป็นเพื่อนกัน คุณคือ @%1</translation>
+        </message>
+        <message>
+            <source>username</source>
+            <translation>ชื่อผู้ใช้</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>เพิ่ม</translation>
+        </message>
+        <message>
+            <source>You follow @%1.</source>
+            <translation>คุณติดตาม @%1</translation>
+        </message>
+        <message>
+            <source>Asking to be friends</source>
+            <translation>ส่งคำขอเป็นเพื่อนแล้ว</translation>
+        </message>
+        <message>
+            <source>Added you</source>
+            <translation>เพิ่มคุณแล้ว</translation>
+        </message>
+        <message>
+            <source>Add back</source>
+            <translation>เพิ่มกลับ</translation>
+        </message>
+        <message>
+            <source>No friends yet.</source>
+            <translation>ยังไม่มีเพื่อน</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>นำออก</translation>
+        </message>
+        <message>
+            <source>Waiting for them to add you</source>
+            <translation>รอให้เขาเพิ่มคุณ</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>ยกเลิก</translation>
+        </message>
+        <message>
+            <source>What friends read</source>
+            <translation>สิ่งที่เพื่อนอ่าน</translation>
+        </message>
+        <message>
+            <source>Nothing yet: friends show here once they share what they read.</source>
+            <translation>ยังไม่มี: เพื่อนจะแสดงที่นี่เมื่อแชร์สิ่งที่อ่าน</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>เปิด</translation>
+        </message>
+        <message>
+            <source>Shared lists</source>
+            <translation>รายการที่แชร์</translation>
+        </message>
+        <message>
+            <source>Share a list from your library</source>
+            <translation>แชร์รายการจากคลังของคุณ</translation>
+        </message>
+        <message>
+            <source>Anyone with the link sees it, and can add it all to their library in SCANCORE.</source>
+            <translation>ทุกคนที่มีลิงก์จะเห็นรายการนี้ และเพิ่มทั้งหมดลงในคลังของตนใน SCANCORE ได้</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>แชร์</translation>
+        </message>
+        <message>
+            <source>Open a shared list</source>
+            <translation>เปิดรายการที่แชร์</translation>
+        </message>
+        <message>
+            <source>Its link or code.</source>
+            <translation>ลิงก์หรือรหัสของรายการ</translation>
+        </message>
+        <message>
+            <source>link or code</source>
+            <translation>ลิงก์หรือรหัส</translation>
+        </message>
+        <message>
+            <source>%1 series from @%2: %3</source>
+            <translation>%1 เรื่องจาก @%2: %3</translation>
+        </message>
+        <message>
+            <source>Add all to my library</source>
+            <translation>เพิ่มทั้งหมดลงในคลังของฉัน</translation>
+        </message>
+        <message>
+            <source>%1 series · shared %2</source>
+            <translation>%1 เรื่อง · แชร์เมื่อ %2</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>คัดลอกลิงก์</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>คัดลอกลิงก์แล้ว</translation>
+        </message>
+        <message>
+            <source>Stop sharing</source>
+            <translation>หยุดแชร์</translation>
+        </message>
+    </context>
+    <context>
         <name>HistoryPage</name>
         <message>
             <source>Today</source>
@@ -4091,6 +4318,74 @@
         <message>
             <source>Back to the default</source>
             <translation>คืนค่าเริ่มต้น</translation>
+        </message>
+        <message>
+            <source>Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. </source>
+            <translation>คลิกทางลัด แล้วกดปุ่มใหม่ Backspace ทำให้คำสั่งไม่มีปุ่ม ส่วน Esc คงปุ่มเดิมไว้ </translation>
+        </message>
+        <message>
+            <source>Everyday: </source>
+            <translation>ประจำ: </translation>
+        </message>
+        <message>
+            <source>none</source>
+            <translation>ไม่มี</translation>
+        </message>
+        <message>
+            <source>Back to the everyday keys</source>
+            <translation>กลับไปใช้ปุ่มประจำ</translation>
+        </message>
+        <message>
+            <source>Key profiles</source>
+            <translation>โปรไฟล์ปุ่ม</translation>
+        </message>
+        <message>
+            <source>Other keys for the readers, for the series you choose (in the reader's settings, under Keys): one-handed keys for webtoons, say. Keys a profile leaves alone stay as everyday.</source>
+            <translation>ปุ่มอื่นสำหรับตัวอ่าน ในเรื่องที่คุณเลือก (ในการตั้งค่าตัวอ่าน ใต้ปุ่ม): เช่น ปุ่มมือเดียวสำหรับเว็บตูน ปุ่มที่โปรไฟล์ไม่ได้เปลี่ยนจะเป็นแบบประจำ</translation>
+        </message>
+        <message>
+            <source>Readers' keys below</source>
+            <translation>ปุ่มของตัวอ่านอยู่ด้านล่าง</translation>
+        </message>
+        <message>
+            <source>Changing the profile “%1”</source>
+            <translation>กำลังเปลี่ยนโปรไฟล์ “%1”</translation>
+        </message>
+        <message>
+            <source>Changing the everyday keys</source>
+            <translation>กำลังเปลี่ยนปุ่มประจำ</translation>
+        </message>
+        <message>
+            <source>Key profile</source>
+            <translation>โปรไฟล์ปุ่ม</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>ปุ่มประจำ</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>ลบ</translation>
+        </message>
+        <message>
+            <source>New profile</source>
+            <translation>โปรไฟล์ใหม่</translation>
+        </message>
+        <message>
+            <source>Starts as the everyday keys</source>
+            <translation>เริ่มจากปุ่มประจำ</translation>
+        </message>
+        <message>
+            <source>Name, e.g. Webtoons</source>
+            <translation>ชื่อ เช่น Webtoon</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>เพิ่ม</translation>
+        </message>
+        <message>
+            <source>There is a profile with that name already.</source>
+            <translation>มีโปรไฟล์ชื่อนี้อยู่แล้ว</translation>
         </message>
     </context>
     <context>
@@ -5251,6 +5546,22 @@
             <source>Choose</source>
             <translation>เลือก</translation>
         </message>
+        <message>
+            <source>Also the other extension you had in %1</source>
+            <translation>รวมถึงส่วนขยายอีกรายการที่คุณมีใน %1</translation>
+        </message>
+        <message>
+            <source>Also the %1 other extensions you had in %2</source>
+            <translation>รวมถึงส่วนขยายอื่นอีก %1 รายการที่คุณมีใน %2</translation>
+        </message>
+        <message>
+            <source>Install the extension you had in %1</source>
+            <translation>ติดตั้งส่วนขยายที่คุณมีใน %1</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions you had in %2</source>
+            <translation>ติดตั้งส่วนขยาย %1 รายการที่คุณมีใน %2</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -5357,6 +5668,57 @@
         <message>
             <source>Settings</source>
             <translation>การตั้งค่า</translation>
+        </message>
+    </context>
+    <context>
+        <name>NeuralVoicesDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>กำลังเริ่ม…</translation>
+        </message>
+        <message>
+            <source>Voice ready: choose it under Voice.</source>
+            <translation>เสียงพร้อมแล้ว: เลือกได้ใต้ เสียงพูด</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>เสียงนิวรัล</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>Natural voices that read on this computer, with no internet once downloaded. The first one also brings the voice program (Piper, about 25 MB).</source>
+            <translation>เสียงธรรมชาติที่อ่านบนคอมพิวเตอร์เครื่องนี้ ไม่ต้องใช้อินเทอร์เน็ตเมื่อดาวน์โหลดแล้ว เสียงแรกจะมาพร้อมโปรแกรมเสียง (Piper ประมาณ 25 MB)</translation>
+        </message>
+        <message>
+            <source>Find a voice or language</source>
+            <translation>ค้นหาเสียงหรือภาษา</translation>
+        </message>
+        <message>
+            <source>Best quality</source>
+            <translation>คุณภาพดีที่สุด</translation>
+        </message>
+        <message>
+            <source>Good quality</source>
+            <translation>คุณภาพดี</translation>
+        </message>
+        <message>
+            <source>Smaller</source>
+            <translation>เล็กลง</translation>
+        </message>
+        <message>
+            <source>Smallest</source>
+            <translation>เล็กที่สุด</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>นำออก</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>ดาวน์โหลด</translation>
         </message>
     </context>
     <context>
@@ -5693,6 +6055,18 @@
         <message>
             <source>Pause between sentences · %1 s</source>
             <translation>เว้นระหว่างประโยค · %1 วินาที</translation>
+        </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>อ่านเรื่องอื่นข้าง ๆ</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>ปุ่มสำหรับเรื่องนี้</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>ปุ่มประจำ</translation>
         </message>
     </context>
     <context>
@@ -6107,6 +6481,61 @@
         <message>
             <source>Retro tiles</source>
             <translation>ไทล์ Retro</translation>
+        </message>
+    </context>
+    <context>
+        <name>OnDeviceDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>กำลังเริ่ม…</translation>
+        </message>
+        <message>
+            <source>Ready: pages in this language can be translated on this computer.</source>
+            <translation>พร้อม: หน้าในภาษานี้แปลบนคอมพิวเตอร์เครื่องนี้ได้</translation>
+        </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>แปลบนคอมพิวเตอร์เครื่องนี้</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>Each language brings what reading its pages and translating them into %1 needs: about 140 MB. Nothing is sent anywhere. ONNX Runtime (Microsoft), PaddleOCR and Opus-MT do the work.</source>
+            <translation>แต่ละภาษามีสิ่งที่จำเป็นสำหรับอ่านหน้าของภาษานั้นและแปลเป็น%1: ประมาณ 140 MB ไม่มีอะไรถูกส่งออกไป ONNX Runtime (Microsoft), PaddleOCR และ Opus-MT เป็นผู้ทำงาน</translation>
+        </message>
+        <message>
+            <source>Find a language</source>
+            <translation>ค้นหาภาษา</translation>
+        </message>
+        <message>
+            <source>Ready · through English</source>
+            <translation>พร้อม · ผ่านภาษาอังกฤษ</translation>
+        </message>
+        <message>
+            <source>Ready</source>
+            <translation>พร้อม</translation>
+        </message>
+        <message>
+            <source>About %1 MB</source>
+            <translation>ประมาณ %1 MB</translation>
+        </message>
+        <message>
+            <source>Nothing more to download</source>
+            <translation>ไม่มีอะไรให้ดาวน์โหลดอีก</translation>
+        </message>
+        <message>
+            <source> · through English</source>
+            <translation> · ผ่านภาษาอังกฤษ</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>นำออก</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>ดาวน์โหลด</translation>
         </message>
     </context>
     <context>
@@ -7293,6 +7722,50 @@
             <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
             <translation>ส่งภาพหน้าการ์ตูนไปพร้อมข้อความ เพื่อให้โมเดลเห็นว่าใครกำลังพูด ต้องใช้โมเดลที่อ่านภาพได้ และมีค่าใช้จ่ายมากขึ้น</translation>
         </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>แปลบนคอมพิวเตอร์เครื่องนี้</translation>
+        </message>
+        <message>
+            <source>Pages and chapters translated with nothing sent anywhere. Add or remove languages.</source>
+            <translation>หน้าและตอนที่แปลโดยไม่ส่งอะไรออกไปไหน เพิ่มหรือลบภาษา</translation>
+        </message>
+        <message>
+            <source>Download a language once; pages and chapters are then translated with nothing sent anywhere.</source>
+            <translation>ดาวน์โหลดภาษาครั้งเดียว แล้วหน้าและตอนจะถูกแปลโดยไม่ส่งอะไรออกไปไหน</translation>
+        </message>
+        <message>
+            <source>Languages…</source>
+            <translation>ภาษา…</translation>
+        </message>
+        <message>
+            <source>Translate novels in other languages</source>
+            <translation>แปลนิยายในภาษาอื่น</translation>
+        </message>
+        <message>
+            <source>Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.</source>
+            <translation>ตอนจากแหล่งในภาษาอื่น (ของ WTR-LAB เป็นภาษาอังกฤษ) จะเปิดแบบแปลแล้ว ปุ่มแปลในตัวอ่านเป็นตัวกำหนดสำหรับแต่ละเรื่อง</translation>
+        </message>
+        <message>
+            <source>Download a neural voice below, or add one in the system's text-to-speech settings.</source>
+            <translation>ดาวน์โหลดเสียงนิวรัลด้านล่าง หรือเพิ่มในการตั้งค่าแปลงข้อความเป็นเสียงพูดของระบบ</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>เสียงนิวรัล</translation>
+        </message>
+        <message>
+            <source>%1 downloaded; natural voices that need no internet</source>
+            <translation>ดาวน์โหลดแล้ว %1 เสียง เสียงธรรมชาติที่ไม่ต้องใช้อินเทอร์เน็ต</translation>
+        </message>
+        <message>
+            <source>Natural voices that read without the internet, downloaded once</source>
+            <translation>เสียงธรรมชาติที่อ่านได้โดยไม่ต้องใช้อินเทอร์เน็ต ดาวน์โหลดครั้งเดียว</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>เลือก…</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7868,6 +8341,22 @@
         <message>
             <source>Any OpenAI-compatible service, or one on your computer</source>
             <translation>บริการใดก็ได้ที่เข้ากันได้กับ OpenAI หรือบริการบนคอมพิวเตอร์ของคุณ</translation>
+        </message>
+        <message>
+            <source>To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a Google Cloud key there.</source>
+            <translation>หากต้องการแปลหน้าบนคอมพิวเตอร์ ให้ดาวน์โหลดภาษาใน การตั้งค่า → การอ่าน → แปลบนคอมพิวเตอร์เครื่องนี้ หรือเพิ่มคีย์ Google Cloud ที่นั่น</translation>
+        </message>
+        <message>
+            <source>This computer</source>
+            <translation>คอมพิวเตอร์เครื่องนี้</translation>
+        </message>
+        <message>
+            <source>Downloaded once; pages never leave the computer</source>
+            <translation>ดาวน์โหลดครั้งเดียว หน้าต่าง ๆ ไม่ออกจากคอมพิวเตอร์เลย</translation>
+        </message>
+        <message>
+            <source>Downloaded once; nothing leaves the computer</source>
+            <translation>ดาวน์โหลดครั้งเดียว ไม่มีอะไรออกจากคอมพิวเตอร์</translation>
         </message>
     </context>
     <context>
@@ -9069,6 +9558,37 @@
         </message>
     </context>
     <context>
+        <name>SplitPicker</name>
+        <message>
+            <source>No chapters to read</source>
+            <translation>ไม่มีตอนให้อ่าน</translation>
+        </message>
+        <message>
+            <source>Read beside</source>
+            <translation>อ่านคู่กัน</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>ปิด</translation>
+        </message>
+        <message>
+            <source>Nothing in progress yet: start a comic or a novel, then read it beside another.</source>
+            <translation>ยังไม่มีเรื่องที่อ่านค้างไว้: เริ่มการ์ตูนหรือนิยายสักเรื่อง แล้วอ่านคู่กับอีกเรื่อง</translation>
+        </message>
+        <message>
+            <source>Opening…</source>
+            <translation>กำลังเปิด…</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>นิยาย</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>การ์ตูน</translation>
+        </message>
+    </context>
+    <context>
         <name>StateView</name>
         <message>
             <source>Nothing here yet</source>
@@ -9767,6 +10287,18 @@
         <message>
             <source>Retro colours</source>
             <translation>สีของ Retro</translation>
+        </message>
+        <message>
+            <source>Glass</source>
+            <translation>กระจก</translation>
+        </message>
+        <message>
+            <source>Glass menus and sheets</source>
+            <translation>เมนูและแผงกระจก</translation>
+        </message>
+        <message>
+            <source>Menus, sheets and dialogs show what is behind them, blurred.</source>
+            <translation>เมนู แผง และกล่องโต้ตอบจะแสดงสิ่งที่อยู่ด้านหลังแบบเบลอ</translation>
         </message>
     </context>
     <context>
@@ -10990,6 +11522,10 @@
         <message>
             <source>The voice could not read this.</source>
             <translation>เสียงพูดอ่านส่วนนี้ไม่ได้</translation>
+        </message>
+        <message>
+            <source> (neural)</source>
+            <translation> (นิวรัล)</translation>
         </message>
     </context>
 </TS>

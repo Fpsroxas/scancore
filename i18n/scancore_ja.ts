@@ -545,6 +545,10 @@
             <source>Time counts while SCANCORE is in use: in a reader, playing an episode, or browsing. Chapters finished before time was kept come from your reading history.</source>
             <translation>SCANCORE の使用中に時間が記録されます: リーダー、エピソード再生中、閲覧中。記録開始前に読み終えた章は読書履歴から取得します。</translation>
         </message>
+        <message>
+            <source>Friends</source>
+            <translation>友達</translation>
+        </message>
     </context>
     <context>
         <name>AddRepositoryDialog</name>
@@ -1977,6 +1981,38 @@
             <source>Translate into %1</source>
             <translation>%1 に翻訳</translation>
         </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>隣に別の作品を読む</translation>
+        </message>
+        <message>
+            <source>React to this page</source>
+            <translation>このページにリアクション</translation>
+        </message>
+        <message>
+            <source>Downloading the upscaler (about 15 MB the first time)…</source>
+            <translation>高画質化ツールをダウンロード中 (初回は約 15 MB)…</translation>
+        </message>
+        <message>
+            <source>Enlarge downloaded pages (sharper; slower downloads)</source>
+            <translation>ダウンロードしたページを拡大 (より鮮明に、ダウンロードは遅く)</translation>
+        </message>
+        <message>
+            <source>Chapters downloaded from now on are enlarged.</source>
+            <translation>これからダウンロードする話は拡大されます。</translation>
+        </message>
+        <message>
+            <source>Keys</source>
+            <translation>キー</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>このシリーズのキー</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>普段のキー</translation>
+        </message>
     </context>
     <context>
         <name>ComicsPage</name>
@@ -2615,6 +2651,10 @@
         <message>
             <source>Choose folder</source>
             <translation>フォルダーを選択</translation>
+        </message>
+        <message>
+            <source>Your server: series read from other sources move forward on it too. It is managed in Settings → Sources → Your servers.</source>
+            <translation>自分のサーバー: ほかのソースで読んだシリーズの進み具合もここに反映されます。設定 → ソース → 自分のサーバー で管理します。</translation>
         </message>
     </context>
     <context>
@@ -3447,6 +3487,193 @@
         </message>
     </context>
     <context>
+        <name>FriendsPage</name>
+        <message>
+            <source>just now</source>
+            <translation>たった今</translation>
+        </message>
+        <message>
+            <source>%1 min ago</source>
+            <translation>%1 分前</translation>
+        </message>
+        <message>
+            <source>%1 h ago</source>
+            <translation>%1 時間前</translation>
+        </message>
+        <message>
+            <source>%1 days ago</source>
+            <translation>%1 日前</translation>
+        </message>
+        <message>
+            <source>%1 shared a list: %2</source>
+            <translation>%1 さんがリストを共有しました: %2</translation>
+        </message>
+        <message>
+            <source>%1 watched %2</source>
+            <translation>%1 さんが %2 を視聴しました</translation>
+        </message>
+        <message>
+            <source>%1 read %2</source>
+            <translation>%1 さんが %2 を読みました</translation>
+        </message>
+        <message>
+            <source>That list is empty.</source>
+            <translation>そのリストは空です。</translation>
+        </message>
+        <message>
+            <source>Shared. The link is copied: %1</source>
+            <translation>共有しました。リンクをコピーしました: %1</translation>
+        </message>
+        <message>
+            <source>%1 added to your library; %2 could not be found on your sources.</source>
+            <translation>%1 件をライブラリに追加しました。%2 件はソースで見つかりませんでした。</translation>
+        </message>
+        <message>
+            <source>All of it is in your library already.</source>
+            <translation>すべてライブラリにあります。</translation>
+        </message>
+        <message>
+            <source>%1 added to your library.</source>
+            <translation>%1 件をライブラリに追加しました。</translation>
+        </message>
+        <message>
+            <source>Friends</source>
+            <translation>友達</translation>
+        </message>
+        <message>
+            <source>Follow each other on %1 to be friends</source>
+            <translation>%1 でお互いをフォローすると友達になります</translation>
+        </message>
+        <message>
+            <source>Sign in (Settings → Sync) to add friends, see what they read and share lists.</source>
+            <translation>友達の追加、友達が読んでいるものの表示、リストの共有にはサインインしてください (設定 → 同期)。</translation>
+        </message>
+        <message>
+            <source>You</source>
+            <translation>あなた</translation>
+        </message>
+        <message>
+            <source>Share what I read and watch</source>
+            <translation>読んでいるもの・見ているものを共有</translation>
+        </message>
+        <message>
+            <source>Your friends see the series you read and watch, and the lists you share. Off: they see nothing.</source>
+            <translation>友達には、あなたが読んだり見たりしているシリーズと共有したリストが見えます。オフ: 何も見えません。</translation>
+        </message>
+        <message>
+            <source>Add a friend</source>
+            <translation>友達を追加</translation>
+        </message>
+        <message>
+            <source>Their username; when they add you too, you are friends. You are @%1.</source>
+            <translation>相手のユーザー名。相手もあなたを追加すると友達になります。あなたは @%1 です。</translation>
+        </message>
+        <message>
+            <source>username</source>
+            <translation>ユーザー名</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>追加</translation>
+        </message>
+        <message>
+            <source>You follow @%1.</source>
+            <translation>@%1 さんをフォロー中です。</translation>
+        </message>
+        <message>
+            <source>Asking to be friends</source>
+            <translation>友達リクエスト送信済み</translation>
+        </message>
+        <message>
+            <source>Added you</source>
+            <translation>あなたを追加しました</translation>
+        </message>
+        <message>
+            <source>Add back</source>
+            <translation>追加し返す</translation>
+        </message>
+        <message>
+            <source>No friends yet.</source>
+            <translation>まだ友達がいません。</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>削除</translation>
+        </message>
+        <message>
+            <source>Waiting for them to add you</source>
+            <translation>相手があなたを追加するのを待っています</translation>
+        </message>
+        <message>
+            <source>Cancel</source>
+            <translation>キャンセル</translation>
+        </message>
+        <message>
+            <source>What friends read</source>
+            <translation>友達が読んでいるもの</translation>
+        </message>
+        <message>
+            <source>Nothing yet: friends show here once they share what they read.</source>
+            <translation>まだ何もありません: 友達が読んでいるものを共有するとここに表示されます。</translation>
+        </message>
+        <message>
+            <source>Open</source>
+            <translation>開く</translation>
+        </message>
+        <message>
+            <source>Shared lists</source>
+            <translation>共有リスト</translation>
+        </message>
+        <message>
+            <source>Share a list from your library</source>
+            <translation>ライブラリからリストを共有</translation>
+        </message>
+        <message>
+            <source>Anyone with the link sees it, and can add it all to their library in SCANCORE.</source>
+            <translation>リンクを知っている人なら誰でも見られ、SCANCORE で自分のライブラリにまとめて追加できます。</translation>
+        </message>
+        <message>
+            <source>Share</source>
+            <translation>共有</translation>
+        </message>
+        <message>
+            <source>Open a shared list</source>
+            <translation>共有リストを開く</translation>
+        </message>
+        <message>
+            <source>Its link or code.</source>
+            <translation>リンクまたはコード。</translation>
+        </message>
+        <message>
+            <source>link or code</source>
+            <translation>リンクまたはコード</translation>
+        </message>
+        <message>
+            <source>%1 series from @%2: %3</source>
+            <translation>@%2 さんの %1 シリーズ: %3</translation>
+        </message>
+        <message>
+            <source>Add all to my library</source>
+            <translation>すべてライブラリに追加</translation>
+        </message>
+        <message>
+            <source>%1 series · shared %2</source>
+            <translation>%1 シリーズ · %2 に共有</translation>
+        </message>
+        <message>
+            <source>Copy link</source>
+            <translation>リンクをコピー</translation>
+        </message>
+        <message>
+            <source>Link copied</source>
+            <translation>リンクをコピーしました</translation>
+        </message>
+        <message>
+            <source>Stop sharing</source>
+            <translation>共有をやめる</translation>
+        </message>
+    </context>
+    <context>
         <name>HistoryPage</name>
         <message>
             <source>Today</source>
@@ -4099,6 +4326,74 @@
         <message>
             <source>Back to the default</source>
             <translation>初期設定に戻す</translation>
+        </message>
+        <message>
+            <source>Click a shortcut, then press the new keys. Backspace leaves an action without one; Esc keeps what it had. </source>
+            <translation>ショートカットをクリックし、新しいキーを押してください。Backspace でキーなしに、Esc で元のままにします。 </translation>
+        </message>
+        <message>
+            <source>Everyday: </source>
+            <translation>普段: </translation>
+        </message>
+        <message>
+            <source>none</source>
+            <translation>なし</translation>
+        </message>
+        <message>
+            <source>Back to the everyday keys</source>
+            <translation>普段のキーに戻す</translation>
+        </message>
+        <message>
+            <source>Key profiles</source>
+            <translation>キープロファイル</translation>
+        </message>
+        <message>
+            <source>Other keys for the readers, for the series you choose (in the reader's settings, under Keys): one-handed keys for webtoons, say. Keys a profile leaves alone stay as everyday.</source>
+            <translation>選んだシリーズでリーダーに使う別のキー (リーダーの設定の「キー」から): たとえば Webtoon 用の片手操作キー。プロファイルで変えないキーは普段のままです。</translation>
+        </message>
+        <message>
+            <source>Readers' keys below</source>
+            <translation>リーダーのキーは下にあります</translation>
+        </message>
+        <message>
+            <source>Changing the profile “%1”</source>
+            <translation>プロファイル「%1」を変更中</translation>
+        </message>
+        <message>
+            <source>Changing the everyday keys</source>
+            <translation>普段のキーを変更中</translation>
+        </message>
+        <message>
+            <source>Key profile</source>
+            <translation>キープロファイル</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>普段のキー</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>削除</translation>
+        </message>
+        <message>
+            <source>New profile</source>
+            <translation>新しいプロファイル</translation>
+        </message>
+        <message>
+            <source>Starts as the everyday keys</source>
+            <translation>普段のキーから始まります</translation>
+        </message>
+        <message>
+            <source>Name, e.g. Webtoons</source>
+            <translation>名前 (例: Webtoon)</translation>
+        </message>
+        <message>
+            <source>Add</source>
+            <translation>追加</translation>
+        </message>
+        <message>
+            <source>There is a profile with that name already.</source>
+            <translation>その名前のプロファイルはすでにあります。</translation>
         </message>
     </context>
     <context>
@@ -5259,6 +5554,22 @@
             <source>Choose</source>
             <translation>選択</translation>
         </message>
+        <message>
+            <source>Also the other extension you had in %1</source>
+            <translation>%1 にあったもう 1 つの拡張機能も</translation>
+        </message>
+        <message>
+            <source>Also the %1 other extensions you had in %2</source>
+            <translation>%2 にあったほかの %1 個の拡張機能も</translation>
+        </message>
+        <message>
+            <source>Install the extension you had in %1</source>
+            <translation>%1 にあった拡張機能をインストール</translation>
+        </message>
+        <message>
+            <source>Install the %1 extensions you had in %2</source>
+            <translation>%2 にあった %1 個の拡張機能をインストール</translation>
+        </message>
     </context>
     <context>
         <name>NativePlayer</name>
@@ -5365,6 +5676,57 @@
         <message>
             <source>Settings</source>
             <translation>設定</translation>
+        </message>
+    </context>
+    <context>
+        <name>NeuralVoicesDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>開始中…</translation>
+        </message>
+        <message>
+            <source>Voice ready: choose it under Voice.</source>
+            <translation>音声の準備ができました: 「音声」で選んでください。</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>ニューラル音声</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
+        </message>
+        <message>
+            <source>Natural voices that read on this computer, with no internet once downloaded. The first one also brings the voice program (Piper, about 25 MB).</source>
+            <translation>このコンピューターで読み上げる自然な音声。ダウンロード後はインターネット不要です。最初の音声と一緒に音声プログラム (Piper、約 25 MB) も入ります。</translation>
+        </message>
+        <message>
+            <source>Find a voice or language</source>
+            <translation>音声または言語を探す</translation>
+        </message>
+        <message>
+            <source>Best quality</source>
+            <translation>最高品質</translation>
+        </message>
+        <message>
+            <source>Good quality</source>
+            <translation>高品質</translation>
+        </message>
+        <message>
+            <source>Smaller</source>
+            <translation>小さめ</translation>
+        </message>
+        <message>
+            <source>Smallest</source>
+            <translation>最小</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>削除</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>ダウンロード</translation>
         </message>
     </context>
     <context>
@@ -5701,6 +6063,18 @@
         <message>
             <source>Pause between sentences · %1 s</source>
             <translation>文の間の間 · %1 秒</translation>
+        </message>
+        <message>
+            <source>Read another beside this</source>
+            <translation>隣に別の作品を読む</translation>
+        </message>
+        <message>
+            <source>Keys for this series</source>
+            <translation>このシリーズのキー</translation>
+        </message>
+        <message>
+            <source>Everyday keys</source>
+            <translation>普段のキー</translation>
         </message>
     </context>
     <context>
@@ -6115,6 +6489,61 @@
         <message>
             <source>Retro tiles</source>
             <translation>Retro タイル</translation>
+        </message>
+    </context>
+    <context>
+        <name>OnDeviceDialog</name>
+        <message>
+            <source>Starting…</source>
+            <translation>開始中…</translation>
+        </message>
+        <message>
+            <source>Ready: pages in this language can be translated on this computer.</source>
+            <translation>準備完了: この言語のページをこのコンピューターで翻訳できます。</translation>
+        </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>このコンピューターで翻訳</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
+        </message>
+        <message>
+            <source>Each language brings what reading its pages and translating them into %1 needs: about 140 MB. Nothing is sent anywhere. ONNX Runtime (Microsoft), PaddleOCR and Opus-MT do the work.</source>
+            <translation>各言語には、そのページを読み取り %1 に翻訳するのに必要なものが含まれます: 約 140 MB。何も送信されません。処理は ONNX Runtime (Microsoft)、PaddleOCR、Opus-MT が行います。</translation>
+        </message>
+        <message>
+            <source>Find a language</source>
+            <translation>言語を探す</translation>
+        </message>
+        <message>
+            <source>Ready · through English</source>
+            <translation>準備完了 · 英語経由</translation>
+        </message>
+        <message>
+            <source>Ready</source>
+            <translation>準備完了</translation>
+        </message>
+        <message>
+            <source>About %1 MB</source>
+            <translation>約 %1 MB</translation>
+        </message>
+        <message>
+            <source>Nothing more to download</source>
+            <translation>これ以上ダウンロードするものはありません</translation>
+        </message>
+        <message>
+            <source> · through English</source>
+            <translation> · 英語経由</translation>
+        </message>
+        <message>
+            <source>Remove</source>
+            <translation>削除</translation>
+        </message>
+        <message>
+            <source>Download</source>
+            <translation>ダウンロード</translation>
         </message>
     </context>
     <context>
@@ -7301,6 +7730,50 @@
             <source>Sends the comic page's picture with its text, so the model can see who speaks. Needs a model that reads images; costs more.</source>
             <translation>コミックのページの画像をテキストと一緒に送り、誰が話しているかをモデルが見られるようにします。画像を読めるモデルが必要で、費用が増えます。</translation>
         </message>
+        <message>
+            <source>Translate on this computer</source>
+            <translation>このコンピューターで翻訳</translation>
+        </message>
+        <message>
+            <source>Pages and chapters translated with nothing sent anywhere. Add or remove languages.</source>
+            <translation>どこにも送らずに翻訳されるページと話。言語を追加・削除します。</translation>
+        </message>
+        <message>
+            <source>Download a language once; pages and chapters are then translated with nothing sent anywhere.</source>
+            <translation>言語を一度ダウンロードすれば、ページや話はどこにも送らずに翻訳されます。</translation>
+        </message>
+        <message>
+            <source>Languages…</source>
+            <translation>言語…</translation>
+        </message>
+        <message>
+            <source>Translate novels in other languages</source>
+            <translation>他言語の小説を翻訳</translation>
+        </message>
+        <message>
+            <source>Chapters from a source in another language (WTR-LAB's, in English) open translated. The reader's Translate button decides for each series.</source>
+            <translation>他言語のソースの話 (WTR-LAB は英語) は翻訳して開きます。シリーズごとにリーダーの「翻訳」ボタンで切り替えられます。</translation>
+        </message>
+        <message>
+            <source>Download a neural voice below, or add one in the system's text-to-speech settings.</source>
+            <translation>下のニューラル音声をダウンロードするか、システムの読み上げ設定で追加してください。</translation>
+        </message>
+        <message>
+            <source>Neural voices</source>
+            <translation>ニューラル音声</translation>
+        </message>
+        <message>
+            <source>%1 downloaded; natural voices that need no internet</source>
+            <translation>%1 件ダウンロード済み。インターネット不要の自然な音声</translation>
+        </message>
+        <message>
+            <source>Natural voices that read without the internet, downloaded once</source>
+            <translation>インターネットなしで読み上げる自然な音声 (一度ダウンロード)</translation>
+        </message>
+        <message>
+            <source>Choose…</source>
+            <translation>選択…</translation>
+        </message>
     </context>
     <context>
         <name>RecentSearches</name>
@@ -7883,6 +8356,22 @@
         <message>
             <source>Any OpenAI-compatible service, or one on your computer</source>
             <translation>OpenAI 互換のサービス、またはパソコン上のサービス</translation>
+        </message>
+        <message>
+            <source>To translate pages on a computer, download a language in Settings → Reading → Translate on this computer, or add a Google Cloud key there.</source>
+            <translation>コンピューターでページを翻訳するには、設定 → 読書 → このコンピューターで翻訳 で言語をダウンロードするか、そこで Google Cloud のキーを追加してください。</translation>
+        </message>
+        <message>
+            <source>This computer</source>
+            <translation>このコンピューター</translation>
+        </message>
+        <message>
+            <source>Downloaded once; pages never leave the computer</source>
+            <translation>一度ダウンロード。ページがコンピューターの外に出ることはありません</translation>
+        </message>
+        <message>
+            <source>Downloaded once; nothing leaves the computer</source>
+            <translation>一度ダウンロード。何もコンピューターの外に出ません</translation>
         </message>
     </context>
     <context>
@@ -9084,6 +9573,37 @@
         </message>
     </context>
     <context>
+        <name>SplitPicker</name>
+        <message>
+            <source>No chapters to read</source>
+            <translation>読める話がありません</translation>
+        </message>
+        <message>
+            <source>Read beside</source>
+            <translation>並べて読む</translation>
+        </message>
+        <message>
+            <source>Close</source>
+            <translation>閉じる</translation>
+        </message>
+        <message>
+            <source>Nothing in progress yet: start a comic or a novel, then read it beside another.</source>
+            <translation>まだ読みかけがありません: コミックか小説を読み始めてから、別の作品と並べて読みましょう。</translation>
+        </message>
+        <message>
+            <source>Opening…</source>
+            <translation>開いています…</translation>
+        </message>
+        <message>
+            <source>Novel</source>
+            <translation>小説</translation>
+        </message>
+        <message>
+            <source>Comic</source>
+            <translation>コミック</translation>
+        </message>
+    </context>
+    <context>
         <name>StateView</name>
         <message>
             <source>Nothing here yet</source>
@@ -9782,6 +10302,18 @@
         <message>
             <source>Retro colours</source>
             <translation>Retro の色</translation>
+        </message>
+        <message>
+            <source>Glass</source>
+            <translation>ガラス</translation>
+        </message>
+        <message>
+            <source>Glass menus and sheets</source>
+            <translation>ガラスのメニューとシート</translation>
+        </message>
+        <message>
+            <source>Menus, sheets and dialogs show what is behind them, blurred.</source>
+            <translation>メニュー、シート、ダイアログの背後がぼかして透けて見えます。</translation>
         </message>
     </context>
     <context>
@@ -10998,6 +11530,10 @@
         <message>
             <source>The voice could not read this.</source>
             <translation>この部分は音声で読めませんでした。</translation>
+        </message>
+        <message>
+            <source> (neural)</source>
+            <translation> (ニューラル)</translation>
         </message>
     </context>
 </TS>
